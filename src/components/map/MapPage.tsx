@@ -58,41 +58,77 @@ function MapLegend() {
   );
 }
 
-// ── FlyTo zoom 18 ────────────────────────────────────────────
+// ── FlyTo: volar al predio seleccionado (zoom 18 = escala de predio) ──
 function FlyToFicha({ ficha }: { ficha: FichaPredio | null }) {
   const map = useMap();
+  const hasFlown = useRef<string | null>(null);
+
   useEffect(() => {
-    if (!ficha) return;
+    if (!ficha) { hasFlown.current = null; return; }
+    // Evitar volar dos veces al mismo punto
+    if (hasFlown.current === ficha.id) return;
+
     let lat: number | undefined, lng: number | undefined;
-    if (ficha.geo?.lat && ficha.geo?.lng) { lat = ficha.geo.lat; lng = ficha.geo.lng; }
-    else if (ficha._geojson?.coordinates) {
+    if (ficha.geo && ficha.geo.lat != null && ficha.geo.lng != null) {
+      lat = ficha.geo.lat;
+      lng = ficha.geo.lng;
+    } else if (ficha._geojson?.coordinates) {
       lng = ficha._geojson.coordinates[0] as number;
       lat = ficha._geojson.coordinates[1] as number;
     }
-    if (lat && lng) {
-      map.flyTo([lat, lng], 18, { duration: 1.5 });
-    }
+
+    if (lat == null || lng == null) return;
+
+    hasFlown.current = ficha.id;
+
+    // Delay para esperar que el mapa se inicialice completamente
+    const timer = setTimeout(() => {
+      try {
+        map.setView([lat!, lng!], 18, { animate: false });
+        // Luego animar suavemente
+        setTimeout(() => {
+          map.flyTo([lat!, lng!], 18, { duration: 1.2 });
+        }, 100);
+      } catch {
+        // Fallback directo
+        map.setView([lat!, lng!], 18);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
   }, [ficha, map]);
+
   return null;
 }
 
-// ── Auto-fit inicial ─────────────────────────────────────────
+// ── FitBounds: ajuste inicial solo si NO hay ficha seleccionada ──
 function FitBounds({ fichas, skip }: { fichas: FichaPredio[]; skip: boolean }) {
   const map = useMap();
   const fitted = useRef(false);
+
   useEffect(() => {
-    if (skip || fitted.current || fichas.length === 0) return;
-    const pts = fichas
-      .filter((f) => f.geo?.lat || f._geojson?.coordinates)
-      .map((f): [number, number] | null => {
-        if (f.geo) return [f.geo.lat, f.geo.lng];
-        if (f._geojson?.coordinates) return [f._geojson.coordinates[1] as number, f._geojson.coordinates[0] as number];
-        return null;
-      }).filter(Boolean) as [number, number][];
-    if (pts.length > 0) {
-      try { map.fitBounds(pts as any, { padding: [60, 60] }); fitted.current = true; } catch {}
-    }
+    // Si hay una ficha seleccionada, NO ajustar bounds
+    if (skip) return;
+    if (fitted.current || fichas.length === 0) return;
+
+    // Esperar un poco para no competir con FlyToFicha
+    const timer = setTimeout(() => {
+      if (skip) return; // re-check después del delay
+      const pts = fichas
+        .filter((f) => (f.geo && f.geo.lat != null) || f._geojson?.coordinates)
+        .map((f): [number, number] | null => {
+          if (f.geo) return [f.geo.lat, f.geo.lng];
+          if (f._geojson?.coordinates) return [f._geojson.coordinates[1] as number, f._geojson.coordinates[0] as number];
+          return null;
+        }).filter(Boolean) as [number, number][];
+      if (pts.length > 0) {
+        try { map.fitBounds(pts as any, { padding: [60, 60] }); fitted.current = true; } catch {}
+      }
+    }, 200);
+
+    return () => clearTimeout(timer);
   }, [fichas, map, skip]);
+
   return null;
 }
 
