@@ -3,12 +3,13 @@ import {
   MapContainer, TileLayer, GeoJSON, CircleMarker, Popup,
   LayersControl, useMap, Tooltip,
 } from 'react-leaflet';
-import type { CircleMarker as LeafletCircleMarker } from 'leaflet';
+import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff } from 'lucide-react';
 import { type FichaPredio, safeToDate } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
 import { useMapNav } from '../../hooks/useMapNav';
+import { wgs84ToUtm17S, type CRS } from '../../lib/utm';
 import 'leaflet/dist/leaflet.css';
 
 interface Props {
@@ -95,11 +96,59 @@ function FitBounds({ fichas, skip }: { fichas: FichaPredio[]; skip: boolean }) {
   return null;
 }
 
-// ── Marcador individual ──────────────────────────────────────
+// ── Visor de coordenadas del mouse ───────────────────────────
+function MouseCoordinates() {
+  const map = useMap();
+  const [pos, setPos] = useState<{ lat: number; lng: number } | null>(null);
+  const [crs, setCrs] = useState<CRS>('wgs84');
+
+  useEffect(() => {
+    const handler = (e: LeafletMouseEvent) => setPos(e.latlng);
+    map.on('mousemove', handler);
+    map.on('mouseout', () => setPos(null));
+    return () => { map.off('mousemove', handler); map.off('mouseout'); };
+  }, [map]);
+
+  if (!pos) return null;
+
+  const utmCoords = wgs84ToUtm17S(pos.lat, pos.lng);
+
+  return (
+    <div
+      className="absolute bottom-3 left-3 z-[1000] rounded-lg border px-3 py-1.5 shadow-lg backdrop-blur-sm flex items-center gap-3"
+      style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}
+    >
+      <div className="text-[11px] font-mono" style={{ color: 'var(--text-primary)' }}>
+        {crs === 'utm17s' ? (
+          <span>E <b>{utmCoords.este.toFixed(1)}</b>  N <b>{utmCoords.norte.toFixed(1)}</b></span>
+        ) : (
+          <span>
+            <b>{Math.abs(pos.lat).toFixed(6)}°</b> {pos.lat >= 0 ? 'N' : 'S'}{' '}
+            <b>{Math.abs(pos.lng).toFixed(6)}°</b> {pos.lng >= 0 ? 'E' : 'W'}
+          </span>
+        )}
+      </div>
+      <button
+        onClick={() => setCrs(crs === 'wgs84' ? 'utm17s' : 'wgs84')}
+        className="px-1.5 py-0.5 rounded text-[9px] font-bold border cursor-pointer transition-colors"
+        style={{
+          background: 'var(--bg-input)',
+          borderColor: 'var(--border-input)',
+          color: 'var(--text-secondary)',
+        }}
+        title={crs === 'wgs84' ? 'Cambiar a UTM 17S' : 'Cambiar a WGS84'}
+      >
+        {crs === 'wgs84' ? 'WGS84' : 'UTM 17S'}
+      </button>
+    </div>
+  );
+}
+
 function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, number] }) {
   const markerRef = useRef<LeafletCircleMarker | null>(null);
   const { selectedFichaMap } = useMapNav();
   const isSelected = selectedFichaMap?.id === ficha.id;
+  const [popupCrs, setPopupCrs] = useState<CRS>('utm17s');
 
   useEffect(() => {
     if (isSelected && markerRef.current) {
@@ -108,6 +157,10 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
   }, [isSelected]);
 
   const color = getColorTecnico(ficha.creado_por);
+  const lat = coords[0];
+  const lng = coords[1];
+  const utm = wgs84ToUtm17S(lat, lng);
+
   return (
     <CircleMarker
       ref={markerRef}
@@ -122,8 +175,8 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
       <Tooltip direction="top" offset={[0, -8]} opacity={0.9}>
         <span className="text-xs font-medium">{ficha.propietario || ficha.codigo_final}</span>
       </Tooltip>
-      <Popup maxWidth={300}>
-        <div className="text-xs space-y-1 min-w-[200px]">
+      <Popup maxWidth={320}>
+        <div className="text-xs space-y-1 min-w-[220px]">
           <div className="font-bold text-sm border-b pb-1 mb-2">
             {ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}
           </div>
@@ -144,6 +197,35 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
                 <span className="font-medium">{val}</span>
               </div>
             ))}
+          </div>
+
+          {/* ── Coordenadas con toggle UTM/WGS84 ── */}
+          <div className="mt-2 pt-2 border-t" style={{ borderColor: '#e5e7eb40' }}>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider opacity-60">Coordenadas</span>
+              <button
+                onClick={(e) => { e.stopPropagation(); setPopupCrs(popupCrs === 'wgs84' ? 'utm17s' : 'wgs84'); }}
+                className="px-1.5 py-0.5 rounded text-[9px] font-bold border cursor-pointer hover:opacity-80"
+                style={{ borderColor: '#9ca3af40' }}
+              >
+                {popupCrs === 'utm17s' ? 'UTM 17S' : 'WGS84'}
+              </button>
+            </div>
+            {popupCrs === 'utm17s' ? (
+              <div className="font-mono text-[11px] grid grid-cols-2 gap-x-2">
+                <span className="opacity-50">Este:</span>
+                <span className="font-semibold">{utm.este.toFixed(2)} m</span>
+                <span className="opacity-50">Norte:</span>
+                <span className="font-semibold">{utm.norte.toFixed(2)} m</span>
+              </div>
+            ) : (
+              <div className="font-mono text-[11px] grid grid-cols-2 gap-x-2">
+                <span className="opacity-50">Latitud:</span>
+                <span className="font-semibold">{lat.toFixed(6)}°</span>
+                <span className="opacity-50">Longitud:</span>
+                <span className="font-semibold">{lng.toFixed(6)}°</span>
+              </div>
+            )}
           </div>
         </div>
       </Popup>
@@ -288,6 +370,7 @@ export default function MapPage({ fichas, loading }: Props) {
         ))}
 
         <MapLegend />
+        <MouseCoordinates />
       </MapContainer>
     </div>
   );
