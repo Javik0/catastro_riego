@@ -4,7 +4,7 @@ import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_TITLE } from '../../lib/constan
 import { LogIn, Mail, Lock, AlertCircle, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
-  const { login, loading } = useAuth();
+  const { login, loading, sessionExpired } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -74,6 +74,13 @@ export default function LoginPage() {
               <h2 className="text-lg font-semibold text-white">Iniciar Sesión</h2>
               <p className="text-xs text-slate-400 mt-1">Accede al panel de administración</p>
             </div>
+
+            {sessionExpired && (
+              <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <AlertCircle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span className="text-sm text-amber-300">Tu sesión expiró por inactividad. Inicia sesión nuevamente.</span>
+              </div>
+            )}
 
             {error && (
               <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/20">

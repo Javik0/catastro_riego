@@ -1,8 +1,9 @@
 import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
+import { useAuth } from '../../hooks/useAuth';
 import { MobileMenuButton } from './Sidebar';
-import { Filter, X, Search, Sun, Moon } from 'lucide-react';
+import { Filter, X, Search, Sun, Moon, LogOut } from 'lucide-react';
 
 interface Props {
   onMobileMenuOpen: () => void;
@@ -11,6 +12,7 @@ interface Props {
 export default function Header({ onMobileMenuOpen }: Props) {
   const { filtros, setFiltro, resetFiltros, hasActiveFilters } = useFiltros();
   const { toggleTheme, isDark } = useTheme();
+  const { logout } = useAuth();
 
   const inputClass = "px-2 py-1.5 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-blue-500/40 cursor-pointer transition-colors";
   const inputStyle = {
@@ -57,6 +59,21 @@ export default function Header({ onMobileMenuOpen }: Props) {
           >
             {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
             <span className="hidden md:inline">{isDark ? 'Claro' : 'Oscuro'}</span>
+          </button>
+
+          {/* Logout button */}
+          <button
+            onClick={logout}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer border hover:bg-red-500/15"
+            style={{
+              background: 'rgba(239,68,68,0.06)',
+              borderColor: 'rgba(239,68,68,0.2)',
+              color: '#f87171',
+            }}
+            title="Cerrar sesión"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Salir</span>
           </button>
 
           <img src={LOGO_CONSORCIO} alt="Consorcio Cayambe SPT" className="h-9 w-auto object-contain hidden sm:block" />

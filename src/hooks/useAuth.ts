@@ -1,8 +1,9 @@
 // ═══════════════════════════════════════════════════════════
 // Hook de Autenticación — Firebase Auth
+// Con auto-logout por inactividad (10 minutos)
 // ═══════════════════════════════════════════════════════════
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -12,6 +13,8 @@ import {
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebaseConfig';
 import type { UserProfile, UserRole } from '../lib/types';
+
+const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutos
 
 interface AuthState {
   user: User | null;
@@ -27,7 +30,10 @@ export function useAuth() {
     loading: true,
     error: null,
   });
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [sessionExpired, setSessionExpired] = useState(false);
 
+  // ── Listener de autenticación ──
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -42,6 +48,7 @@ export function useAuth() {
                 rol: 'cliente' as UserRole,
               };
           setState({ user: firebaseUser, userProfile: profile, loading: false, error: null });
+          setSessionExpired(false);
         } catch {
           setState({
             user: firebaseUser,
@@ -62,8 +69,38 @@ export function useAuth() {
     return unsubscribe;
   }, []);
 
+  // ── Auto-logout por inactividad ──
+  const resetInactivityTimer = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (!state.user) return;
+
+    timeoutRef.current = setTimeout(async () => {
+      try {
+        await signOut(auth);
+        setSessionExpired(true);
+      } catch {}
+    }, INACTIVITY_TIMEOUT_MS);
+  }, [state.user]);
+
+  useEffect(() => {
+    if (!state.user) return;
+
+    // Eventos de actividad del usuario
+    const events = ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'];
+    const handler = () => resetInactivityTimer();
+
+    events.forEach((e) => window.addEventListener(e, handler, { passive: true }));
+    resetInactivityTimer(); // Iniciar el timer
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, handler));
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [state.user, resetInactivityTimer]);
+
   const login = useCallback(async (email: string, password: string) => {
     setState((s) => ({ ...s, loading: true, error: null }));
+    setSessionExpired(false);
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err: unknown) {
@@ -83,10 +120,11 @@ export function useAuth() {
   }, []);
 
   const logout = useCallback(async () => {
+    setSessionExpired(false);
     await signOut(auth);
   }, []);
 
   const isAdmin = state.userProfile?.rol === 'admin';
 
-  return { ...state, login, logout, isAdmin };
+  return { ...state, login, logout, isAdmin, sessionExpired };
 }

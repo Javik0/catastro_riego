@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import {
   FileDown, FileSpreadsheet, FileText, Calendar,
-  Users, MapPin, Filter, Loader2,
+  Users, MapPin, Filter, Loader2, BarChart3, Download,
+  CheckCircle2, Clock,
 } from 'lucide-react';
 import { type FichaPredio, safeToDate } from '../../lib/types';
 import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
@@ -23,11 +24,11 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
   const [filterTecnico, setFilterTecnico] = useState('');
   const [fechaDesde, setFechaDesde] = useState('');
   const [fechaHasta, setFechaHasta] = useState('');
-  const [generating, setGenerating] = useState(false);
+  const [generating, setGenerating] = useState<'pdf' | 'excel' | null>(null);
+  const [lastGenerated, setLastGenerated] = useState<string | null>(null);
 
   const getFilteredFichas = (): FichaPredio[] => {
     let result = [...fichas];
-
     switch (reportType) {
       case 'parroquia':
         if (filterParroquia) result = result.filter((f) => f.parroquia === filterParroquia);
@@ -44,66 +45,53 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         }
         break;
     }
-
     return result;
   };
 
   const generatePDF = async () => {
-    setGenerating(true);
+    setGenerating('pdf');
     try {
       const data = getFilteredFichas();
       const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-
-      // Header
       const pageWidth = doc.internal.pageSize.getWidth();
 
-      // Logos — cargar con proporción real para evitar distorsión
+      // Logos — proporción real
       try {
         const logoIzq = await loadImageWithSize('/logo-izq.png');
-        const hIzq = 14;  // altura fija en mm
-        const wIzq = (logoIzq.width / logoIzq.height) * hIzq; // ancho proporcional
+        const hIzq = 14;
+        const wIzq = (logoIzq.width / logoIzq.height) * hIzq;
         doc.addImage(logoIzq.data, 'PNG', 8, 6, wIzq, hIzq);
       } catch {}
       try {
         const logoDer = await loadImageWithSize('/logo-der.png');
-        const hDer = 12;  // un poco más pequeño
-        const wDer = (logoDer.width / logoDer.height) * hDer; // ancho proporcional
+        const hDer = 12;
+        const wDer = (logoDer.width / logoDer.height) * hDer;
         doc.addImage(logoDer.data, 'PNG', pageWidth - wDer - 8, 7, wDer, hDer);
       } catch {}
 
-      // Title
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(10); doc.setFont('helvetica', 'bold');
       doc.text(PROJECT_TITLE, pageWidth / 2, 12, { align: 'center' });
       doc.setFontSize(8);
       doc.text(PROJECT_SUBTITLE, pageWidth / 2, 17, { align: 'center' });
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(7);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
       doc.text(PROJECT_LOCATION, pageWidth / 2, 21, { align: 'center' });
 
-      // Subtitle
       const subtitles: Record<ReportType, string> = {
         general: 'REPORTE GENERAL DE FICHAS INVESTIGADAS',
         parroquia: `REPORTE POR PARROQUIA: ${filterParroquia || 'TODAS'}`,
         tecnico: `REPORTE POR TÉCNICO: ${filterTecnico ? getNombreTecnico(filterTecnico) : 'TODOS'}`,
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
       };
-
-      doc.setFontSize(8);
-      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(8); doc.setFont('helvetica', 'bold');
       doc.text(subtitles[reportType], pageWidth / 2, 26, { align: 'center' });
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
-      // Table
       const headers = ['#', 'Código', 'Propietario', 'Cédula', 'Parroquia', 'Sector', 'Área Total', 'Método Riego', 'Caudal', 'Técnico', 'Fecha'];
       const rows = data.map((f, i) => [
-        i + 1,
-        f.codigo_final,
+        i + 1, f.codigo_final,
         f.propietario || `${f.apellidos} ${f.nombres}`,
-        f.cedula || '',
-        f.parroquia,
-        f.sector,
+        f.cedula || '', f.parroquia, f.sector,
         f.area_total?.toLocaleString('es-EC') || '',
         [
           f.metodo_aspersion_pct ? `Asp:${f.metodo_aspersion_pct}%` : '',
@@ -116,42 +104,36 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       ]);
 
       autoTable(doc, {
-        head: [headers],
-        body: rows,
-        startY: 33,
+        head: [headers], body: rows, startY: 33,
         styles: { fontSize: 6, cellPadding: 1.5 },
         headStyles: { fillColor: [30, 41, 59], textColor: 255, fontStyle: 'bold', fontSize: 6 },
         alternateRowStyles: { fillColor: [241, 245, 249] },
         margin: { left: 10, right: 10 },
-        didDrawPage: (data) => {
-          // Footer
-          const pageCount = doc.getNumberOfPages();
-          doc.setFontSize(6);
-          doc.setTextColor(128);
+        didDrawPage: (d) => {
+          const pc = doc.getNumberOfPages();
+          doc.setFontSize(6); doc.setTextColor(128);
           doc.text(
-            `Página ${data.pageNumber} de ${pageCount} | Consorcio Cayambe SPT - Prefectura de Pichincha`,
-            pageWidth / 2,
-            doc.internal.pageSize.getHeight() - 5,
-            { align: 'center' }
+            `Página ${d.pageNumber} de ${pc} | Consorcio Cayambe SPT — Prefectura de Pichincha`,
+            pageWidth / 2, doc.internal.pageSize.getHeight() - 5, { align: 'center' }
           );
         },
       });
 
       doc.save(`reporte_${reportType}_${new Date().toISOString().split('T')[0]}.pdf`);
+      setLastGenerated(`PDF (${data.length} fichas)`);
     } catch (err) {
       console.error('Error generating PDF:', err);
     } finally {
-      setGenerating(false);
+      setGenerating(null);
     }
   };
 
   const generateExcel = () => {
-    setGenerating(true);
+    setGenerating('excel');
     try {
       const data = getFilteredFichas();
       const wb = XLSX.utils.book_new();
 
-      // Hoja 1: Fichas
       const fichasRows = data.map((f) => ({
         'Código': f.codigo_final,
         'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
@@ -178,101 +160,117 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         'Material Construcción': f.material_construccion,
         'Observaciones': f.observaciones,
       }));
-      const ws1 = XLSX.utils.json_to_sheet(fichasRows);
-      XLSX.utils.book_append_sheet(wb, ws1, 'Fichas');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(fichasRows), 'Fichas');
 
-      // Hoja 2: Cultivos
       const fichaIds = new Set(data.map((f) => f.id));
-      const cultivosFiltered = cultivosData.filter((c) => fichaIds.has(c.ficha_id));
-      if (cultivosFiltered.length > 0) {
-        const ws2 = XLSX.utils.json_to_sheet(cultivosFiltered);
-        XLSX.utils.book_append_sheet(wb, ws2, 'Cultivos');
-      }
+      const cultivosF = cultivosData.filter((c) => fichaIds.has(c.ficha_id));
+      if (cultivosF.length > 0) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cultivosF), 'Cultivos');
 
-      // Hoja 3: Animales
-      const animalesFiltered = animalesData.filter((a) => fichaIds.has(a.ficha_id));
-      if (animalesFiltered.length > 0) {
-        const ws3 = XLSX.utils.json_to_sheet(animalesFiltered);
-        XLSX.utils.book_append_sheet(wb, ws3, 'Animales');
-      }
+      const animalesF = animalesData.filter((a) => fichaIds.has(a.ficha_id));
+      if (animalesF.length > 0) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(animalesF), 'Animales');
 
-      // Hoja 4: Resumen
-      const resumen = [
-        { 'Métrica': 'Total Fichas', 'Valor': data.length },
-        { 'Métrica': 'Área Total (m²)', 'Valor': data.reduce((s, f) => s + (f.area_total || 0), 0) },
-        { 'Métrica': 'Cultivos Registrados', 'Valor': cultivosFiltered.length },
-        { 'Métrica': 'Animales Registrados', 'Valor': animalesFiltered.length },
-      ];
-      const ws4 = XLSX.utils.json_to_sheet(resumen);
-      XLSX.utils.book_append_sheet(wb, ws4, 'Resumen');
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet([
+        { Métrica: 'Total Fichas', Valor: data.length },
+        { Métrica: 'Área Total (m²)', Valor: data.reduce((s, f) => s + (f.area_total || 0), 0) },
+        { Métrica: 'Cultivos Registrados', Valor: cultivosF.length },
+        { Métrica: 'Animales Registrados', Valor: animalesF.length },
+      ]), 'Resumen');
 
       XLSX.writeFile(wb, `reporte_${reportType}_${new Date().toISOString().split('T')[0]}.xlsx`);
+      setLastGenerated(`Excel (${data.length} fichas, 4 hojas)`);
     } catch (err) {
       console.error('Error generating Excel:', err);
     } finally {
-      setGenerating(false);
+      setGenerating(null);
     }
   };
 
   const filteredCount = getFilteredFichas().length;
+  const areaTotal = getFilteredFichas().reduce((s, f) => s + (f.area_total || 0), 0);
+
+  const reportTypes = [
+    { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
+    { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#10b981' },
+    { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
+    { id: 'fecha' as const, label: 'Por Fecha', icon: Calendar, desc: 'Rango de fechas personalizado', color: '#8b5cf6' },
+  ];
+
+  const activeType = reportTypes.find((r) => r.id === reportType)!;
+
+  const selectStyle = {
+    background: 'var(--bg-input)',
+    border: '1px solid var(--border-input)',
+    color: 'var(--text-primary)',
+  };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 max-w-5xl">
+      {/* Header */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-1">Generador de Reportes</h2>
-        <p className="text-sm text-slate-400">Exporta datos del padrón de usuarios en PDF o Excel con encabezado institucional</p>
+        <h2 className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+          <BarChart3 className="w-6 h-6 text-blue-400" />
+          Generador de Reportes
+        </h2>
+        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+          Exporta datos del padrón de usuarios con encabezado institucional y logos oficiales
+        </p>
       </div>
 
-      {/* Tipo de reporte */}
-      <div className="bg-slate-800/40 rounded-xl border border-slate-700/30 p-5 space-y-4">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-          <Filter className="w-4 h-4 text-blue-400" />
-          Tipo de Reporte
-        </h3>
+      {/* Report Type Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {reportTypes.map(({ id, label, icon: Icon, desc, color }) => (
+          <button
+            key={id}
+            onClick={() => setReportType(id)}
+            className={`relative p-4 rounded-xl border-2 text-left transition-all cursor-pointer group overflow-hidden ${
+              reportType === id ? 'shadow-lg' : 'hover:shadow-md'
+            }`}
+            style={{
+              background: reportType === id ? `${color}10` : 'var(--bg-card)',
+              borderColor: reportType === id ? `${color}60` : 'var(--border-color)',
+            }}
+          >
+            {/* Glow effect when selected */}
+            {reportType === id && (
+              <div className="absolute inset-0 opacity-5" style={{ background: `radial-gradient(circle at 30% 30%, ${color}, transparent 70%)` }} />
+            )}
+            <div className="relative">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
+                style={{ background: `${color}20` }}
+              >
+                <Icon className="w-5 h-5" style={{ color }} />
+              </div>
+              <p className="text-sm font-semibold" style={{ color: reportType === id ? color : 'var(--text-primary)' }}>{label}</p>
+              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>{desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {([
-            { id: 'general', label: 'General', icon: FileText, desc: 'Todas las fichas' },
-            { id: 'parroquia', label: 'Por Parroquia', icon: MapPin, desc: 'Filtrado por parroquia' },
-            { id: 'tecnico', label: 'Por Técnico', icon: Users, desc: 'Producción por investigador' },
-            { id: 'fecha', label: 'Por Fecha', icon: Calendar, desc: 'Rango personalizado' },
-          ] as const).map(({ id, label, icon: Icon, desc }) => (
-            <button
-              key={id}
-              onClick={() => setReportType(id)}
-              className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
-                reportType === id
-                  ? 'bg-blue-500/10 border-blue-500/30 text-blue-400'
-                  : 'bg-slate-800/30 border-slate-700/30 text-slate-400 hover:border-slate-600'
-              }`}
-            >
-              <Icon className="w-5 h-5 mb-1" />
-              <p className="text-xs font-medium">{label}</p>
-              <p className="text-[10px] opacity-60">{desc}</p>
-            </button>
-          ))}
-        </div>
+      {/* Filters + Stats */}
+      <div
+        className="rounded-xl border p-5"
+        style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+      >
+        <div className="flex flex-wrap items-center gap-4">
+          {/* Icon del tipo seleccionado */}
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+            style={{ background: `${activeType.color}15` }}>
+            <Filter className="w-4 h-4" style={{ color: activeType.color }} />
+          </div>
 
-        {/* Filtros específicos */}
-        <div className="flex flex-wrap gap-3 pt-2">
+          {/* Filtros dinámicos */}
           {reportType === 'parroquia' && (
-            <select
-              value={filterParroquia}
-              onChange={(e) => setFilterParroquia(e.target.value)}
-              className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/40 text-sm text-white cursor-pointer"
-            >
+            <select value={filterParroquia} onChange={(e) => setFilterParroquia(e.target.value)}
+              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
               <option value="">Todas las parroquias</option>
-              {PARROQUIAS.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
+              {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
             </select>
           )}
           {reportType === 'tecnico' && (
-            <select
-              value={filterTecnico}
-              onChange={(e) => setFilterTecnico(e.target.value)}
-              className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/40 text-sm text-white cursor-pointer"
-            >
+            <select value={filterTecnico} onChange={(e) => setFilterTecnico(e.target.value)}
+              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
               <option value="">Todos los técnicos</option>
               {Object.entries(TECNICOS).map(([key, { nombre }]) => (
                 <option key={key} value={key}>{nombre}</option>
@@ -281,49 +279,118 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
           )}
           {reportType === 'fecha' && (
             <>
-              <input type="date" value={fechaDesde} onChange={(e) => setFechaDesde(e.target.value)}
-                className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/40 text-sm text-white cursor-pointer" />
-              <input type="date" value={fechaHasta} onChange={(e) => setFechaHasta(e.target.value)}
-                className="px-3 py-2 rounded-lg bg-slate-800/50 border border-slate-700/40 text-sm text-white cursor-pointer" />
+              <div className="flex items-center gap-2">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Desde:</span>
+                <input type="date" value={fechaDesde} onChange={(e) => setFechaDesde(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hasta:</span>
+                <input type="date" value={fechaHasta} onChange={(e) => setFechaHasta(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+              </div>
             </>
           )}
-        </div>
+          {reportType === 'general' && (
+            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Se exportarán todas las fichas investigadas sin filtros
+            </span>
+          )}
 
-        <div className="text-xs text-slate-400 pt-1">
-          📋 {filteredCount} fichas seleccionadas para el reporte
+          {/* Stats */}
+          <div className="ml-auto flex items-center gap-4">
+            <div className="text-right">
+              <p className="text-2xl font-bold" style={{ color: activeType.color }}>{filteredCount}</p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Fichas</p>
+            </div>
+            <div className="w-px h-10" style={{ background: 'var(--border-color)' }} />
+            <div className="text-right">
+              <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                {(areaTotal / 10000).toFixed(1)}
+              </p>
+              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Hectáreas</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Botones de descarga */}
+      {/* Download buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* PDF */}
         <button
           onClick={generatePDF}
-          disabled={generating || filteredCount === 0}
-          className="flex items-center justify-center gap-3 py-4 rounded-xl font-medium text-sm text-white transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
+          disabled={generating !== null || filteredCount === 0}
+          className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
           style={{
-            background: generating ? '#475569' : 'linear-gradient(135deg, #ef4444, #dc2626)',
-            boxShadow: '0 4px 14px rgba(239, 68, 68, 0.2)',
+            background: 'var(--bg-card)',
+            borderColor: generating === 'pdf' ? '#ef444480' : 'var(--border-color)',
           }}
         >
-          {generating ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileDown className="w-5 h-5" />}
-          Descargar PDF
-          <span className="text-xs opacity-70">(con logos)</span>
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.04), transparent)' }} />
+          <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: 'rgba(239,68,68,0.1)' }}>
+            {generating === 'pdf' ? (
+              <Loader2 className="w-6 h-6 text-red-400 animate-spin" />
+            ) : (
+              <FileDown className="w-6 h-6 text-red-400" />
+            )}
+          </div>
+          <div className="relative flex-1 min-w-0">
+            <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+              {generating === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              Reporte con logos institucionales y encabezado oficial
+            </p>
+          </div>
+          <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
         </button>
 
+        {/* Excel */}
         <button
           onClick={generateExcel}
-          disabled={generating || filteredCount === 0}
-          className="flex items-center justify-center gap-3 py-4 rounded-xl font-medium text-sm text-white transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed"
+          disabled={generating !== null || filteredCount === 0}
+          className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
           style={{
-            background: generating ? '#475569' : 'linear-gradient(135deg, #22c55e, #16a34a)',
-            boxShadow: '0 4px 14px rgba(34, 197, 94, 0.2)',
+            background: 'var(--bg-card)',
+            borderColor: generating === 'excel' ? '#22c55e80' : 'var(--border-color)',
           }}
         >
-          {generating ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileSpreadsheet className="w-5 h-5" />}
-          Descargar Excel
-          <span className="text-xs opacity-70">(4 hojas)</span>
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            style={{ background: 'linear-gradient(135deg, rgba(34,197,94,0.04), transparent)' }} />
+          <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: 'rgba(34,197,94,0.1)' }}>
+            {generating === 'excel' ? (
+              <Loader2 className="w-6 h-6 text-emerald-400 animate-spin" />
+            ) : (
+              <FileSpreadsheet className="w-6 h-6 text-emerald-400" />
+            )}
+          </div>
+          <div className="relative flex-1 min-w-0">
+            <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+              {generating === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              4 hojas: Fichas, Cultivos, Animales y Resumen estadístico
+            </p>
+          </div>
+          <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
         </button>
       </div>
+
+      {/* Last generated status */}
+      {lastGenerated && (
+        <div
+          className="flex items-center gap-2 px-4 py-3 rounded-lg border"
+          style={{ background: 'rgba(34,197,94,0.05)', borderColor: 'rgba(34,197,94,0.2)' }}
+        >
+          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-xs text-emerald-400">Último reporte generado: {lastGenerated}</span>
+          <Clock className="w-3 h-3 text-emerald-400/50 ml-1" />
+          <span className="text-[10px] text-emerald-400/50">{new Date().toLocaleTimeString('es-EC')}</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -338,11 +405,7 @@ function loadImageWithSize(src: string): Promise<{ data: string; width: number; 
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
       canvas.getContext('2d')?.drawImage(img, 0, 0);
-      resolve({
-        data: canvas.toDataURL('image/png'),
-        width: img.naturalWidth,
-        height: img.naturalHeight,
-      });
+      resolve({ data: canvas.toDataURL('image/png'), width: img.naturalWidth, height: img.naturalHeight });
     };
     img.onerror = reject;
     img.src = src;
