@@ -203,7 +203,12 @@ def export_fichas():
         if geom_blob:
             try:
                 srid, off = parse_gpkg_header(geom_blob)
-                coords = read_wkb_point(geom_blob, off)
+                # Fichas ya están en WGS84 (GPS) — NO convertir de UTM
+                wkb = geom_blob[off:]
+                bo = wkb[0]
+                fmt = '<' if bo == 1 else '>'
+                x, y = struct.unpack(f'{fmt}dd', wkb[5:21])
+                coords = [round(x, 7), round(y, 7)]
                 features.append({'type':'Feature','properties':props,'geometry':{'type':'Point','coordinates':coords}})
             except: pass
 

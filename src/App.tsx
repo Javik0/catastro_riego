@@ -147,8 +147,8 @@ export default function App() {
                   path="mapa"
                   element={
                     <FilteredDataProvider>
-                      {({ fichas, allFichas, loading }) => (
-                        <MapPage fichas={fichas} allFichas={allFichas} loading={loading} />
+                      {({ fichas, loading }) => (
+                        <MapPage fichas={fichas} loading={loading} />
                       )}
                     </FilteredDataProvider>
                   }

@@ -1,7 +1,8 @@
 import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
+import { useTheme } from '../../hooks/useTheme';
 import { MobileMenuButton } from './Sidebar';
-import { Filter, X, Search } from 'lucide-react';
+import { Filter, X, Search, Sun, Moon } from 'lucide-react';
 
 interface Props {
   onMobileMenuOpen: () => void;
@@ -9,6 +10,7 @@ interface Props {
 
 export default function Header({ onMobileMenuOpen }: Props) {
   const { filtros, setFiltro, resetFiltros, hasActiveFilters } = useFiltros();
+  const { toggleTheme, isDark } = useTheme();
 
   const inputClass = "px-2 py-1.5 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-blue-500/40 cursor-pointer transition-colors";
   const inputStyle = {
@@ -41,7 +43,24 @@ export default function Header({ onMobileMenuOpen }: Props) {
           </p>
         </div>
 
-        <img src={LOGO_CONSORCIO} alt="Consorcio Cayambe SPT" className="h-9 w-auto object-contain hidden sm:block" />
+        <div className="flex items-center gap-3">
+          {/* Theme toggle button */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer border"
+            style={{
+              background: isDark ? 'rgba(251,191,36,0.1)' : 'rgba(99,102,241,0.1)',
+              borderColor: isDark ? 'rgba(251,191,36,0.25)' : 'rgba(99,102,241,0.25)',
+              color: isDark ? '#fbbf24' : '#6366f1',
+            }}
+            title={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+          >
+            {isDark ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+            <span className="hidden md:inline">{isDark ? 'Claro' : 'Oscuro'}</span>
+          </button>
+
+          <img src={LOGO_CONSORCIO} alt="Consorcio Cayambe SPT" className="h-9 w-auto object-contain hidden sm:block" />
+        </div>
       </div>
 
       {/* Filter bar */}
@@ -51,7 +70,6 @@ export default function Header({ onMobileMenuOpen }: Props) {
       >
         <Filter className="w-4 h-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
 
-        {/* Search */}
         <div className="relative min-w-[160px]">
           <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
           <input
