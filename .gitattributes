@@ -1,0 +1,12 @@
+# Normalizar saltos de línea en Windows
+* text=auto eol=lf
+
+# Binarios — no modificar
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.svg text
+*.ico binary
+*.webp binary
+*.gpkg binary
+*.db binary
