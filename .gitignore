@@ -1,0 +1,66 @@
+# ─── Dependencias ────────────────────────────────────────────
+node_modules/
+
+# ─── Build output ────────────────────────────────────────────
+dist/
+dist-ssr/
+
+# ─── Logs ────────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── Variables de entorno (credenciales) ─────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+
+# ─── Firebase emulators ──────────────────────────────────────
+.firebase/
+firebase-debug.log
+
+# ─── GeoPackages (datos crudos — NO van en git, son grandes) ─
+*.gpkg
+*.db
+*.sqlite
+
+# ─── Datos de QField (se regeneran con sync_to_firestore.py) ─
+# Los archivos GeoJSON en public/geo SÍ van en git (son pequeños)
+# y sirven como snapshot del último sync.
+
+# ─── Fotos del campo (van en Firebase Storage, no en git) ─────
+public/DCIM/
+*.jpg
+*.jpeg
+*.png
+!public/logo-izq.png
+!public/logo-der.png
+!public/favicon.svg
+!public/icons.svg
+
+# ─── Editor ──────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# ─── OS ──────────────────────────────────────────────────────
+desktop.ini
+*.local
+
+# ─── Python cache ────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+scripts/__pycache__/

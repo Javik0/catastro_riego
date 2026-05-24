@@ -1,0 +1,1027 @@
+[
+  {
+    "fid": 1,
+    "id_adicional": "{eeddfc2c-1f0f-4123-9dec-c32fccad9199}",
+    "ficha_id": "{bd86ba47-7a6e-44e8-bcf7-6d54a242a0dd}",
+    "clave_catastral_otro": "1702521020017",
+    "area_total_otro": 1985.83,
+    "area_riego_otro": 1985.83,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 2,
+    "id_adicional": "{57a606d6-c6bd-4745-8be9-1a974bc1658d}",
+    "ficha_id": "{bd86ba47-7a6e-44e8-bcf7-6d54a242a0dd}",
+    "clave_catastral_otro": "1702520690040",
+    "area_total_otro": 2838.77,
+    "area_riego_otro": 2838.77,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 3,
+    "id_adicional": "{4c33d02e-8dd8-45a1-bef1-4417bc575945}",
+    "ficha_id": "{bd86ba47-7a6e-44e8-bcf7-6d54a242a0dd}",
+    "clave_catastral_otro": "1702520680006",
+    "area_total_otro": 562.36,
+    "area_riego_otro": 562.36,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 4,
+    "id_adicional": "{bce88dc4-07f0-48f1-9ed1-25e364fdcfb8}",
+    "ficha_id": "{bd86ba47-7a6e-44e8-bcf7-6d54a242a0dd}",
+    "clave_catastral_otro": "1702520540027",
+    "area_total_otro": 20893.37,
+    "area_riego_otro": 20893.37,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 5,
+    "id_adicional": "{4a902966-414a-426e-aa1e-3e6c6135f00c}",
+    "ficha_id": "{bd86ba47-7a6e-44e8-bcf7-6d54a242a0dd}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 6,
+    "id_adicional": "{1b4f9369-a364-418d-a17f-31d12e598c82}",
+    "ficha_id": "{518003c3-3f86-47bf-947a-7d5e996a1ede}",
+    "clave_catastral_otro": "1702521000187",
+    "area_total_otro": 2003.25,
+    "area_riego_otro": 2003.25,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 7,
+    "id_adicional": "{55a736db-8f0a-4f6d-b878-b08bc0c28643}",
+    "ficha_id": "{518003c3-3f86-47bf-947a-7d5e996a1ede}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 8,
+    "id_adicional": "{0230a904-3afe-4c65-9bf2-8b0a3e7aa96a}",
+    "ficha_id": "{1958c318-5e9b-4ab6-95e7-72e48563ca00}",
+    "clave_catastral_otro": "1702520680067",
+    "area_total_otro": 716.78,
+    "area_riego_otro": 716.78,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 9,
+    "id_adicional": "{a09879d3-1766-4d54-a312-dfd4436d5871}",
+    "ficha_id": "{e9bd97aa-d4ff-4089-aec4-6e0e0f9f21cf}",
+    "clave_catastral_otro": "1702520490072",
+    "area_total_otro": 24651.08,
+    "area_riego_otro": 24651.08,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 10,
+    "id_adicional": "{d2e7cdc9-b1ef-457b-a854-a31d2129a228}",
+    "ficha_id": "{4198776b-026a-4a91-8bd3-40c359d24741}",
+    "clave_catastral_otro": "1702520680120",
+    "area_total_otro": 1035.0,
+    "area_riego_otro": 1035.0,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 11,
+    "id_adicional": "{29f8bc27-77ee-4f9f-b10e-a5b1924a416c}",
+    "ficha_id": "{4198776b-026a-4a91-8bd3-40c359d24741}",
+    "clave_catastral_otro": "1702521080130",
+    "area_total_otro": 13807.7,
+    "area_riego_otro": 13807.7,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 12,
+    "id_adicional": "{0cf1b1f8-3a96-479b-aef3-a7233d6d30ce}",
+    "ficha_id": "{a8d151bb-cbb5-4877-97c3-67a5bf8d5e06}",
+    "clave_catastral_otro": "1702520510057",
+    "area_total_otro": 456.41,
+    "area_riego_otro": 456.41,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 13,
+    "id_adicional": "{f60e9a0a-43ee-4cbe-a379-476c528864a0}",
+    "ficha_id": "{1ca0f6e9-fd3e-4f99-8b2b-0bc729c2443e}",
+    "clave_catastral_otro": "1702520680090",
+    "area_total_otro": 8537.52,
+    "area_riego_otro": 8537.52,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 14,
+    "id_adicional": "{4cd11a10-701d-4fd0-abee-832b66bd2d68}",
+    "ficha_id": "{1ca0f6e9-fd3e-4f99-8b2b-0bc729c2443e}",
+    "clave_catastral_otro": "1702520680089",
+    "area_total_otro": 3654.41,
+    "area_riego_otro": 3654.41,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 15,
+    "id_adicional": "{ae86b9d5-e78b-4441-be19-abc06e09997d}",
+    "ficha_id": "{1ca0f6e9-fd3e-4f99-8b2b-0bc729c2443e}",
+    "clave_catastral_otro": "1702520510051",
+    "area_total_otro": 910.0,
+    "area_riego_otro": 910.0,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 16,
+    "id_adicional": "{6e509832-5660-49bf-a42f-9d3f3de85830}",
+    "ficha_id": "{52b763b6-7008-4ebd-a674-20c936ce8ee4}",
+    "clave_catastral_otro": "1702520490048",
+    "area_total_otro": 18229.44,
+    "area_riego_otro": 18229.44,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 17,
+    "id_adicional": "{54d3990c-c9a2-4089-a3fa-424fd3295973}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "clave_catastral_otro": "1702520680049",
+    "area_total_otro": 3273.03,
+    "area_riego_otro": 3273.03,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 18,
+    "id_adicional": "{47e4fc02-49c4-4fb2-82f1-12b5d8890bd6}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "clave_catastral_otro": "1702520680059",
+    "area_total_otro": 4924.33,
+    "area_riego_otro": 4924.33,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 19,
+    "id_adicional": "{49a9efb8-b399-4535-95e9-c91c768513c9}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "clave_catastral_otro": "1702520680041",
+    "area_total_otro": 2729.2,
+    "area_riego_otro": 2729.2,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 20,
+    "id_adicional": "{38389e68-a4db-4d9c-b01f-5762353bdb9f}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "clave_catastral_otro": "1702520560057",
+    "area_total_otro": 1800.28,
+    "area_riego_otro": 1800.28,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 21,
+    "id_adicional": "{cafaf0a9-b7c1-4699-a170-4fafd7c6e531}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "clave_catastral_otro": "1702520510012",
+    "area_total_otro": 3211.34,
+    "area_riego_otro": 3211.34,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 22,
+    "id_adicional": "{8baee178-1dc8-482c-b1b9-71d4d5715f57}",
+    "ficha_id": "{30ec22ac-4c4e-42d4-a01f-ecdc31583d70}",
+    "clave_catastral_otro": "1702520680009",
+    "area_total_otro": 825.61,
+    "area_riego_otro": 825.61,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 23,
+    "id_adicional": "{e066691f-ccb3-4800-8d45-9d8b2c120b87}",
+    "ficha_id": "{30ec22ac-4c4e-42d4-a01f-ecdc31583d70}",
+    "clave_catastral_otro": "1702521010113",
+    "area_total_otro": 4588.37,
+    "area_riego_otro": 4588.37,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 24,
+    "id_adicional": "{615d556d-291d-4d6c-8917-714f33e89b97}",
+    "ficha_id": "{05ee2c12-9f32-4d25-899d-6e6c4fca5ce0}",
+    "clave_catastral_otro": "1702520680025",
+    "area_total_otro": 6802.0,
+    "area_riego_otro": 6802.0,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 25,
+    "id_adicional": "{e54b7316-b311-4aab-a092-d3f8b2571104}",
+    "ficha_id": "{05ee2c12-9f32-4d25-899d-6e6c4fca5ce0}",
+    "clave_catastral_otro": "1702520510058",
+    "area_total_otro": 648.15,
+    "area_riego_otro": 648.15,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 26,
+    "id_adicional": "{eef6e775-7ba2-49f1-b5a8-bc8cffba0ad0}",
+    "ficha_id": "{05ee2c12-9f32-4d25-899d-6e6c4fca5ce0}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 27,
+    "id_adicional": "{9b3f1dae-1449-4d19-ad3b-5c35e7b0f293}",
+    "ficha_id": "{577f28a7-d471-406a-8ae2-d47c06d9230b}",
+    "clave_catastral_otro": "1702520510039",
+    "area_total_otro": 931.06,
+    "area_riego_otro": 931.06,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 28,
+    "id_adicional": "{73edfd64-a8ba-4ef5-a700-147d594b786e}",
+    "ficha_id": "{577f28a7-d471-406a-8ae2-d47c06d9230b}",
+    "clave_catastral_otro": "1702520680047",
+    "area_total_otro": 13400.97,
+    "area_riego_otro": 13400.97,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 29,
+    "id_adicional": "{40451ee1-d038-47cb-9135-e4315a20ec3d}",
+    "ficha_id": "{e2674918-2021-48bd-8833-9bb1e2b5969f}",
+    "clave_catastral_otro": "1702521020062",
+    "area_total_otro": 1173.68,
+    "area_riego_otro": 1173.68,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 30,
+    "id_adicional": "{01f2cba9-2427-48fc-932e-e207b003124c}",
+    "ficha_id": "{868326b0-ba41-4677-90be-3dc9df2f30a7}",
+    "clave_catastral_otro": "1702520680011",
+    "area_total_otro": 1092.45,
+    "area_riego_otro": 1092.45,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 31,
+    "id_adicional": "{db0e36df-3667-46d1-941c-cd3e83bc6492}",
+    "ficha_id": "{ce3b1fd1-4138-4ff8-a1fe-d1429c72df97}",
+    "area_total_otro": 0.0,
+    "area_riego_otro": 0.0,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 32,
+    "id_adicional": "{4c907939-2b51-450a-a574-c6fcea49ffff}",
+    "ficha_id": "{d7af62d3-3241-4ea5-b6b1-344a2ebefc19}",
+    "clave_catastral_otro": "1702520680126",
+    "area_total_otro": 4114.68,
+    "area_riego_otro": 4114.68,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 33,
+    "id_adicional": "{42c219b0-ee5b-40ef-bc4b-bb439f6014b1}",
+    "ficha_id": "{d7af62d3-3241-4ea5-b6b1-344a2ebefc19}",
+    "clave_catastral_otro": "1702520680127",
+    "area_total_otro": 4118.5,
+    "area_riego_otro": 4118.5,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 34,
+    "id_adicional": "{4a01d79d-40be-4704-8f5c-aa28cef5c7c9}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "clave_catastral_otro": "1702520680057",
+    "area_total_otro": 2592.71,
+    "area_riego_otro": 2592.71,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 35,
+    "id_adicional": "{82f16eea-eb6d-4768-b1cd-29f24c2a6108}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "clave_catastral_otro": "1702520680060",
+    "area_total_otro": 2498.95,
+    "area_riego_otro": 2498.95,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 36,
+    "id_adicional": "{006edc0d-b0d6-499a-81fa-59efba318ae4}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "clave_catastral_otro": "1702520680098",
+    "area_total_otro": 2674.86,
+    "area_riego_otro": 2674.86,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 37,
+    "id_adicional": "{5da488e3-f6a4-4e02-b0f5-5286b8a7811a}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "clave_catastral_otro": "1702520680095",
+    "area_total_otro": 3920.35,
+    "area_riego_otro": 3920.35,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 38,
+    "id_adicional": "{74dc340f-33c6-44f8-b4c2-d8b88da7a346}",
+    "ficha_id": "{16d4eb8d-e12f-4ae8-ac4a-e77fcc344b18}",
+    "clave_catastral_otro": "1702520680023",
+    "area_total_otro": 15902.46,
+    "area_riego_otro": 15902.46,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 39,
+    "id_adicional": "{9ecd73a0-0557-477b-b331-946a07fbba88}",
+    "ficha_id": "{ff47aecd-80b9-48b3-9db8-44cfc0273214}",
+    "clave_catastral_otro": "1702520490039",
+    "area_total_otro": 10650.52,
+    "area_riego_otro": 10650.52,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 40,
+    "id_adicional": "{150d611f-1ac8-484a-aa58-ff149fd507a0}",
+    "ficha_id": "{63d8966c-142f-4ffc-802e-b9d6e0b3514c}",
+    "clave_catastral_otro": "1702520490044",
+    "area_total_otro": 5135.49,
+    "area_riego_otro": 5135.49,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 41,
+    "id_adicional": "{4a15695f-09e3-4680-95df-37124f8c15c9}",
+    "ficha_id": "{fdc21531-f0f5-4f21-b3b9-0a4db190c503}",
+    "clave_catastral_otro": "1702520490079",
+    "area_total_otro": 8195.45,
+    "area_riego_otro": 8195.45,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 42,
+    "id_adicional": "{8e982c4d-c44e-4ea3-9c73-2b3efd0d935b}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "clave_catastral_otro": "1702520490099",
+    "area_total_otro": 19522.98,
+    "area_riego_otro": 19522.98,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 43,
+    "id_adicional": "{ce80d1d7-b4e2-4cb3-a911-c7a16dc4a1ce}",
+    "ficha_id": "{47483484-a062-4163-ad94-5d55f2c17d0b}",
+    "clave_catastral_otro": "1702521040094",
+    "area_total_otro": 9559.91,
+    "area_riego_otro": 9559.91,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 44,
+    "id_adicional": "{dde1de4e-164f-4c24-ace3-75f42a16d1bf}",
+    "ficha_id": "{cf678a6f-6942-428a-896f-7dc5207d9d26}",
+    "clave_catastral_otro": "1702520510037",
+    "area_total_otro": 3699.35,
+    "area_riego_otro": 3699.35,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 45,
+    "id_adicional": "{887344fd-38c0-462b-9df4-6a3e0467e4a3}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "clave_catastral_otro": "1702521020051",
+    "area_total_otro": 4916.8,
+    "area_riego_otro": 4916.8,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 46,
+    "id_adicional": "{e3ab450d-5966-40d4-bd9b-f07c3e029f2b}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "clave_catastral_otro": "1702521030021",
+    "area_total_otro": 455.71,
+    "area_riego_otro": 455.71,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 47,
+    "id_adicional": "{e0a17a94-3f1e-4411-9079-791ed09298c6}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "clave_catastral_otro": "1702521030059",
+    "area_total_otro": 448.71,
+    "area_riego_otro": 448.71,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 48,
+    "id_adicional": "{b09a3b50-f88a-41a3-8706-bc5e0d62f879}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "clave_catastral_otro": "1702521460049",
+    "area_total_otro": 5283.21,
+    "area_riego_otro": 5283.21,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 49,
+    "id_adicional": "{fd9f62bb-5cff-4ed5-82a1-550bad979e82}",
+    "ficha_id": "{5de068f7-5fec-4458-8032-db92db3a023e}",
+    "clave_catastral_otro": "1702521010109",
+    "area_total_otro": 280.2,
+    "area_riego_otro": 280.2,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 50,
+    "id_adicional": "{e14e2a00-9f86-44b2-ad55-4bd0dd5c8039}",
+    "ficha_id": "{ff7f62de-d90c-4a2b-888e-ab1b4c9c8ee8}",
+    "clave_catastral_otro": "1702520510052",
+    "area_total_otro": 710.21,
+    "area_riego_otro": 710.21,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 51,
+    "id_adicional": "{45049f95-c168-470c-97c2-b2338fce10b5}",
+    "ficha_id": "{192338da-e88a-466a-9445-31e35caa2421}",
+    "clave_catastral_otro": "1702520510032",
+    "area_total_otro": 10450.27,
+    "area_riego_otro": 10450.27,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 52,
+    "id_adicional": "{0343f13e-1452-4cb5-9079-b9553de64ce1}",
+    "ficha_id": "{027f6585-9d1a-42a7-afbb-e3ab714608d7}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 53,
+    "id_adicional": "{e2a0ce53-c6cf-4cff-87a7-895ab29f5251}",
+    "ficha_id": "{ada32ae7-0f52-4955-9df8-0b4088e52232}",
+    "clave_catastral_otro": "1702520490054",
+    "area_total_otro": 9506.65,
+    "area_riego_otro": 9506.65,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 54,
+    "id_adicional": "{ce15a432-a6e9-43b3-a64f-1089426c8b46}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "clave_catastral_otro": "1702520510021",
+    "area_total_otro": 10219.04,
+    "area_riego_otro": 10219.04,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 55,
+    "id_adicional": "{88195a7a-4a4a-423f-a9ce-804e5884bbc5}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "clave_catastral_otro": "1702520680044",
+    "area_total_otro": 8133.14,
+    "area_riego_otro": 8133.14,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 56,
+    "id_adicional": "{a28379e0-7f70-41f0-9cc9-a451b668c253}",
+    "ficha_id": "{b722580f-e5e3-4bc0-833f-26f26f71d620}",
+    "clave_catastral_otro": "1702520490080",
+    "area_total_otro": 3954.43,
+    "area_riego_otro": 3954.43,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 57,
+    "id_adicional": "{3252bfac-15ee-4083-9bce-f9f377a421d1}",
+    "ficha_id": "{b722580f-e5e3-4bc0-833f-26f26f71d620}",
+    "clave_catastral_otro": "1702521020059",
+    "area_total_otro": 2247.77,
+    "area_riego_otro": 2247.77,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 58,
+    "id_adicional": "{38dc9c97-bbbe-469f-a676-b054358954f5}",
+    "ficha_id": "{b722580f-e5e3-4bc0-833f-26f26f71d620}",
+    "clave_catastral_otro": "1702520490063",
+    "area_total_otro": 8531.78,
+    "area_riego_otro": 8531.78,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 59,
+    "id_adicional": "{065d09ee-77e5-45e4-a090-829af25f9dc7}",
+    "ficha_id": "{d6180a9a-1159-4340-bca8-95fdb2c47dbf}",
+    "clave_catastral_otro": "1702520490034",
+    "area_total_otro": 1773.53,
+    "area_riego_otro": 1773.53,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 60,
+    "id_adicional": "{be2dbe00-07d4-42b5-9a8e-9d2089f63466}",
+    "ficha_id": "{56a69006-d8ef-447e-9cfe-05a87889b364}",
+    "clave_catastral_otro": "1702520680061",
+    "area_total_otro": 1601.17,
+    "area_riego_otro": 1601.17,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 61,
+    "id_adicional": "{6d171b76-8ede-4e8e-b65c-349b7b2a531b}",
+    "ficha_id": "{ade2d88a-c6ef-4ab0-b8ab-71f11e82170d}",
+    "clave_catastral_otro": "1702520510054",
+    "area_total_otro": 737.43,
+    "area_riego_otro": 737.43,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 62,
+    "id_adicional": "{882d688f-bea8-4d37-a679-c1c49d08df54}",
+    "ficha_id": "{cc341d5b-f995-4442-a947-56d001a30a80}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 63,
+    "id_adicional": "{9736be2f-e9b1-4566-8d82-d32c26edbd2e}",
+    "ficha_id": "{7e402165-c7c2-4abd-a5bb-3af970ea087b}",
+    "clave_catastral_otro": "1702521010116",
+    "area_total_otro": 8902.37,
+    "area_riego_otro": 8902.37,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 64,
+    "id_adicional": "{ffdc3e69-1ff5-40c6-a7e8-1ef98ff5def7}",
+    "ficha_id": "{1a7ce578-5097-4073-9833-96cc07613210}",
+    "clave_catastral_otro": "1702521020061",
+    "area_total_otro": 3892.52,
+    "area_riego_otro": 3892.52,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 65,
+    "id_adicional": "{a911b25e-ffc0-45a3-92cc-fdbad09b7e1e}",
+    "ficha_id": "{f18e5287-4ff2-41dd-871d-a194da468ea6}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 66,
+    "id_adicional": "{95fef85a-3836-40bf-a28b-20bc3e7a7726}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "clave_catastral_otro": "1702521020052",
+    "area_total_otro": 5553.51,
+    "area_riego_otro": 5553.51,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 67,
+    "id_adicional": "{632123fe-b5a3-44bf-b822-5c8230b6c88d}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 68,
+    "id_adicional": "{e2603465-5ca8-48a3-b98a-fe7cef59558a}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "clave_catastral_otro": "1702521020053",
+    "area_total_otro": 10540.72,
+    "area_riego_otro": 10540.72,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 69,
+    "id_adicional": "{f15872eb-adba-4545-9c15-9f4cb5b9fb81}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 70,
+    "id_adicional": "{2e9976d2-3cbb-458e-baa8-5374fa0a19e0}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 71,
+    "id_adicional": "{76ba480f-1515-4e01-89a3-352536933591}",
+    "ficha_id": "{b9f0872c-31c4-4997-8e49-b5df35efe623}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 72,
+    "id_adicional": "{d6919b86-c2bd-4665-ad9f-d3926efb2742}",
+    "ficha_id": "{c6e0e184-4c58-4906-9d0c-7bcce0b1a07e}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 73,
+    "id_adicional": "{3becd842-41dd-49a7-adad-a684f2e7622d}",
+    "ficha_id": "{c6e0e184-4c58-4906-9d0c-7bcce0b1a07e}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 74,
+    "id_adicional": "{fac36aa3-0109-4b5b-9c8a-661ee6bab96b}",
+    "ficha_id": "{c6e0e184-4c58-4906-9d0c-7bcce0b1a07e}",
+    "clave_catastral_otro": "1702521100076",
+    "area_total_otro": 10971.1,
+    "area_riego_otro": 10971.1,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 75,
+    "id_adicional": "{e8ce7a59-9d43-4b86-9b0c-a71bf8580d64}",
+    "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 76,
+    "id_adicional": "{8250b59a-0388-4734-a602-8649368b8f28}",
+    "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 77,
+    "id_adicional": "{8e6f2777-9260-4049-ab4e-266a74899e16}",
+    "ficha_id": "{68399ea4-0b37-4043-85e7-00405d7cb21f}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 78,
+    "id_adicional": "{9898a5e5-4f4e-4ba8-b242-47fa07a2c8de}",
+    "ficha_id": "{68399ea4-0b37-4043-85e7-00405d7cb21f}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 79,
+    "id_adicional": "{0b1ff356-9552-48df-83a9-86d4c0401ebf}",
+    "ficha_id": "{8c8368e4-2bd9-4a56-b6e8-37d4db6f8ad9}",
+    "clave_catastral_otro": "1702521010105",
+    "area_total_otro": 5734.01,
+    "area_riego_otro": 5734.01,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 80,
+    "id_adicional": "{d1fbc7db-0f90-44e4-a3e8-286f4b9270fc}",
+    "ficha_id": "{8c8368e4-2bd9-4a56-b6e8-37d4db6f8ad9}",
+    "clave_catastral_otro": "1702520510016",
+    "area_total_otro": 18858.19,
+    "area_riego_otro": 18858.19,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 81,
+    "id_adicional": "{8b5bb478-8598-479e-b014-a2bbec35323d}",
+    "ficha_id": "{8c8368e4-2bd9-4a56-b6e8-37d4db6f8ad9}",
+    "clave_catastral_otro": "1702520680034",
+    "area_total_otro": 11131.18,
+    "area_riego_otro": 11131.18,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 82,
+    "id_adicional": "{240daca2-041f-4a26-ad00-bfd99ad6e42e}",
+    "ficha_id": "{a32bf31c-94a7-4dad-a77b-8b7fbd162bd1}",
+    "clave_catastral_otro": "1702521020022",
+    "area_total_otro": 4830.93,
+    "area_riego_otro": 4830.93,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 83,
+    "id_adicional": "{12f9fbdf-0e83-4a76-a417-a4676e0b139a}",
+    "ficha_id": "{a32bf31c-94a7-4dad-a77b-8b7fbd162bd1}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 84,
+    "id_adicional": "{e373423c-df7e-4025-99db-6aeec3857dde}",
+    "ficha_id": "{ccd90569-5eba-41f9-a8b9-46c2dbab7e8d}",
+    "clave_catastral_otro": "1702521020018",
+    "area_total_otro": 1428.85,
+    "area_riego_otro": 1428.85,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 85,
+    "id_adicional": "{293ee7de-0f27-4b83-bd54-cb58104d1b6b}",
+    "ficha_id": "{99b5f231-c50c-432e-a60a-631d51e9c5cf}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 86,
+    "id_adicional": "{b87a3767-55a5-4516-8cde-0a5dbb3cbe16}",
+    "ficha_id": "{99b5f231-c50c-432e-a60a-631d51e9c5cf}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 87,
+    "id_adicional": "{087971cd-cf45-4159-b85c-2718bc36ade5}",
+    "ficha_id": "{25db2eff-75c2-49c6-93d5-9c6c4c3933b6}",
+    "clave_catastral_otro": "1702520490076",
+    "area_total_otro": 29859.89,
+    "area_riego_otro": 29859.89,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 88,
+    "id_adicional": "{45d6945a-acde-443b-bc0f-413dc9720d23}",
+    "ficha_id": "{25db2eff-75c2-49c6-93d5-9c6c4c3933b6}",
+    "clave_catastral_otro": "1702520540034",
+    "area_total_otro": 13031.27,
+    "area_riego_otro": 13031.27,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 89,
+    "id_adicional": "{a22997c4-cee7-4225-a408-c8c671a78955}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "clave_catastral_otro": "1702520540002",
+    "area_total_otro": 28654.89,
+    "area_riego_otro": 28654.89,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 90,
+    "id_adicional": "{d97956f4-332f-4f52-ab07-08b94816dbf1}",
+    "ficha_id": "{ac7fb54d-f79a-480f-a7d1-b9c79a19377d}",
+    "clave_catastral_otro": "1702520490067",
+    "area_total_otro": 3942.04,
+    "area_riego_otro": 3942.04,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 91,
+    "id_adicional": "{450f8d93-a188-4629-b165-55202e809ad0}",
+    "ficha_id": "{ac7fb54d-f79a-480f-a7d1-b9c79a19377d}",
+    "clave_catastral_otro": "1702520490101",
+    "area_total_otro": 1499.65,
+    "area_riego_otro": 1499.65,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 92,
+    "id_adicional": "{de4cf865-a370-44b4-8e80-e59af07f7248}",
+    "ficha_id": "{ac7fb54d-f79a-480f-a7d1-b9c79a19377d}",
+    "clave_catastral_otro": "1702520490102",
+    "area_total_otro": 6363.86,
+    "area_riego_otro": 6363.86,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 93,
+    "id_adicional": "{aa69ed0a-e558-48a3-b635-3ad5db3a36cf}",
+    "ficha_id": "{b0211ab4-5ea5-49d5-9800-7575eb80c08a}",
+    "clave_catastral_otro": "1702520680086",
+    "area_total_otro": 5651.05,
+    "area_riego_otro": 5651.05,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 94,
+    "id_adicional": "{52ab0b31-f681-48ac-8241-61625722ac54}",
+    "ficha_id": "{b0211ab4-5ea5-49d5-9800-7575eb80c08a}",
+    "clave_catastral_otro": "1702521020083",
+    "area_total_otro": 353.13,
+    "area_riego_otro": 353.13,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 95,
+    "id_adicional": "{adaacee8-35ff-406e-accb-563117c635d8}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "clave_catastral_otro": "1702520510023",
+    "area_total_otro": 10087.0,
+    "area_riego_otro": 10087.0,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 96,
+    "id_adicional": "{22d5ae92-69da-474e-9cd3-cd33026a2c95}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "clave_catastral_otro": "1702520510038",
+    "area_total_otro": 855.74,
+    "area_riego_otro": 855.74,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 97,
+    "id_adicional": "{8382dd24-e513-4092-b3e7-1b5cd387e3df}",
+    "ficha_id": "{9d723738-8c0a-40bc-b1c4-716ef108d36c}",
+    "clave_catastral_otro": "1702521060029",
+    "area_total_otro": 21736.6,
+    "area_riego_otro": 21736.6,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 98,
+    "id_adicional": "{5c0c9a16-a054-449b-af43-76f5c4580af3}",
+    "ficha_id": "{4cdd004a-155a-40c0-ba31-da538e74c124}",
+    "clave_catastral_otro": "1702520680081",
+    "area_total_otro": 5894.59,
+    "area_riego_otro": 5894.59,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 99,
+    "id_adicional": "{0ef5a3b6-442f-45c6-8bf1-1a18a9b9c9fc}",
+    "ficha_id": "{fc4356e2-5af2-451a-8201-d361639713f3}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 100,
+    "id_adicional": "{8cdf52c4-fa7a-490f-bfd9-6eef23ba8af1}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "clave_catastral_otro": "1702520680063",
+    "area_total_otro": 1616.86,
+    "area_riego_otro": 1616.86,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 101,
+    "id_adicional": "{aca0b84c-7c1a-496c-bff4-cb24f13d1ac9}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "clave_catastral_otro": "1702520680077",
+    "area_total_otro": 2643.14,
+    "area_riego_otro": 2643.14,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 102,
+    "id_adicional": "{3f290dc7-ef94-4244-a35c-b525d0c94817}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "clave_catastral_otro": "1702520680076",
+    "area_total_otro": 2578.81,
+    "area_riego_otro": 2578.81,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 103,
+    "id_adicional": "{c5b3a933-847d-4470-a449-4f60d2e4ddd3}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 104,
+    "id_adicional": "{a4dd3866-1a18-4a1f-bfe9-7e6b73fb80cc}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "clave_catastral_otro": "1702521540014",
+    "area_total_otro": 1265056.07,
+    "area_riego_otro": 1265056.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 105,
+    "id_adicional": "{58720d78-271f-45d9-803e-21e91a118a76}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "clave_catastral_otro": "1702520510011",
+    "area_total_otro": 6116.33,
+    "area_riego_otro": 6116.33,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 106,
+    "id_adicional": "{4e755a5a-a02d-40c5-a7a0-0935a189597d}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "clave_catastral_otro": "1702520510011",
+    "area_total_otro": 6116.33,
+    "area_riego_otro": 6116.33,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 107,
+    "id_adicional": "{7945f5d7-d18e-403c-a04b-cd731c6b96b8}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "clave_catastral_otro": "1702520680073",
+    "area_total_otro": 8739.53,
+    "area_riego_otro": 8739.53,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 108,
+    "id_adicional": "{e8986c46-b2bb-4315-9744-9f39aa25f99d}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "clave_catastral_otro": "1702520700087",
+    "area_total_otro": 5849.76,
+    "area_riego_otro": 5849.76,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 109,
+    "id_adicional": "{f338f04b-49fd-4c27-be2e-b41af2d4de7e}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "clave_catastral_otro": "1702520680070",
+    "area_total_otro": 3092.07,
+    "area_riego_otro": 3092.07,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 110,
+    "id_adicional": "{e38f9d80-da2f-4988-af04-c363359d10fb}",
+    "ficha_id": "{ccbe9437-f390-4a9f-8e39-3bedc88d234f}",
+    "clave_catastral_otro": "1702520490067",
+    "area_total_otro": 3942.04,
+    "area_riego_otro": 3942.04,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 111,
+    "id_adicional": "{65e9815f-c513-4dac-82fb-5c7de99d605d}",
+    "ficha_id": "{ccbe9437-f390-4a9f-8e39-3bedc88d234f}",
+    "clave_catastral_otro": "1702520490087",
+    "area_total_otro": 2812.25,
+    "area_riego_otro": 2812.25,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 112,
+    "id_adicional": "{093e3f1a-8718-49d4-9f80-d7ad094d2501}",
+    "ficha_id": "{ccbe9437-f390-4a9f-8e39-3bedc88d234f}",
+    "clave_catastral_otro": "1702520490101",
+    "area_total_otro": 1499.65,
+    "area_riego_otro": 1499.65,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 113,
+    "id_adicional": "{d2d24916-69a2-4730-8273-55fbb6df3406}",
+    "ficha_id": "{ccbe9437-f390-4a9f-8e39-3bedc88d234f}",
+    "clave_catastral_otro": "1702520490102",
+    "area_total_otro": 6363.86,
+    "area_riego_otro": 6363.86,
+    "area_sin_riego_otro": 0.0
+  },
+  {
+    "fid": 114,
+    "id_adicional": "{b743bbd0-1c57-4200-9b33-2783ea081c0d}",
+    "ficha_id": "{b39d9594-b8be-4329-aa23-25b2aa314016}",
+    "clave_catastral_otro": "1702520690032",
+    "area_total_otro": 7124.37,
+    "area_riego_otro": 7124.37,
+    "area_sin_riego_otro": 0.0
+  }
+]

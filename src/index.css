@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-agri-50: #f0fdf4;
+  --color-agri-100: #dcfce7;
+  --color-agri-500: #22c55e;
+  --color-agri-600: #16a34a;
+  --color-agri-700: #15803d;
+  --color-agri-800: #166534;
+  --color-agri-900: #14532d;
+}
+
+/* ─── Tokens de color por tema ─── */
+:root,
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: rgba(30, 41, 59, 0.5);
+  --bg-card-hover: rgba(51, 65, 85, 0.4);
+  --bg-input: rgba(30, 41, 59, 0.6);
+  --bg-sidebar: #020617;
+  --bg-header: rgba(2, 6, 23, 0.95);
+  --border-color: rgba(51, 65, 85, 0.5);
+  --border-input: rgba(71, 85, 105, 0.4);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --text-heading: #f8fafc;
+  --row-hover: rgba(51, 65, 85, 0.3);
+  --row-alt: transparent;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --scrollbar-bg: #1e293b;
+  --scrollbar-thumb: #334155;
+}
+
+[data-theme="light"] {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-hover: rgba(241, 245, 249, 0.9);
+  --bg-input: rgba(241, 245, 249, 0.8);
+  --bg-sidebar: #1e3a5f;
+  --bg-header: rgba(255, 255, 255, 0.97);
+  --border-color: rgba(203, 213, 225, 0.8);
+  --border-input: rgba(203, 213, 225, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-heading: #1e293b;
+  --row-hover: rgba(241, 245, 249, 0.8);
+  --row-alt: rgba(248, 250, 252, 0.6);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --scrollbar-bg: #e2e8f0;
+  --scrollbar-thumb: #94a3b8;
+}
+
+/* ─── Base ─── */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* ─── Leaflet tweaks ─── */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.leaflet-popup-tip {
+  background: var(--bg-secondary) !important;
+}
+
+/* ─── Theme transition ─── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+/* Excluir animaciones para no ralentizar Recharts/Leaflet */
+.recharts-wrapper *, .leaflet-container * {
+  transition: none;
+}

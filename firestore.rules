@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Solo usuarios autenticados pueden leer
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Admin tiene escritura (rol almacenado en /usuarios/{uid})
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'admin';
+    }
+    
+    // Fichas de predios — lectura para autenticados, escritura para admin
+    match /fichas_predios/{fichaId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+      
+      // Subcolecciones (cultivos, animales)
+      match /{subcollection}/{docId} {
+        allow read: if isAuthenticated();
+        allow write: if isAdmin();
+      }
+    }
+    
+    // Predios adicionales
+    match /predios_adicionales/{predioId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Usuarios — cada uno puede leer su perfil, admin puede leer todos
+    match /usuarios/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Metadata (sync status, config)
+    match /metadata/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+  }
+}

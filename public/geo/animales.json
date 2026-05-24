@@ -1,0 +1,5158 @@
+[
+  {
+    "id_animal": "{87889793-74e4-4a1b-b5be-ab383d6640d1}",
+    "ficha_id": "{c1c42964-adec-4080-9118-b14d0343ea21}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3e12f389-87d8-4d36-840f-0373e8d84e33}",
+    "ficha_id": "{c1c42964-adec-4080-9118-b14d0343ea21}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{87e05400-abec-489d-b2a2-bc95a77f5a3b}",
+    "ficha_id": "{c1c42964-adec-4080-9118-b14d0343ea21}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2e121d45-33f8-4305-9265-d87ddcab9b5e}",
+    "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{699fc495-ee82-4d49-80bf-707cadb08c73}",
+    "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d79a7c58-a790-4671-84e6-7fcfc597224a}",
+    "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a9511fc5-3c6c-4ad5-bd36-0fd12b30619c}",
+    "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2eb3f654-2082-4f96-86d3-dac8b4431232}",
+    "ficha_id": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{36ef19ab-27dd-4668-80de-6ecab5192dc3}",
+    "ficha_id": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4cadb950-fef4-4a2c-83f9-c7d0fe903bc8}",
+    "ficha_id": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{988d3c70-613e-42cf-ac0f-60e73fbeed4e}",
+    "ficha_id": "{49db6aeb-39b2-425c-8c56-17b0f7a496af}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a98eb6d8-9117-4d17-a84b-e31552d24c1d}",
+    "ficha_id": "{49db6aeb-39b2-425c-8c56-17b0f7a496af}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d51d05fe-0d42-400e-8c28-1ad4951049b3}",
+    "ficha_id": "{49db6aeb-39b2-425c-8c56-17b0f7a496af}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{600988c1-cdaa-45d8-9b7d-346be95495ed}",
+    "ficha_id": "{49db6aeb-39b2-425c-8c56-17b0f7a496af}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3a6e0b5c-7b46-4815-b0ce-74c92b159110}",
+    "ficha_id": "{8dd51ea8-d83b-486f-8903-654e2324b427}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b5808b0c-4351-48c0-9909-9a45cb8b6f07}",
+    "ficha_id": "{8dd51ea8-d83b-486f-8903-654e2324b427}",
+    "especie": "Gallinas de campo",
+    "cantidad": 20,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7d24909a-2179-4d08-9693-aa8a09edb44c}",
+    "ficha_id": "{1015a0eb-5a24-4896-8a5b-a94121586e11}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f42f7367-4c1b-4005-8ca8-a0d37dfd5a4a}",
+    "ficha_id": "{1015a0eb-5a24-4896-8a5b-a94121586e11}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_mercado": 1,
+    "es_exportacion": 0
+  },
+  {
+    "id_animal": "{4b2c2b09-618d-4c7f-a334-ff5e254cd021}",
+    "ficha_id": "{7b889d03-e951-4379-bc6e-a8510ac38d2b}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a34726e6-9f33-4dd0-9d00-aa439cd45e18}",
+    "ficha_id": "{7b889d03-e951-4379-bc6e-a8510ac38d2b}",
+    "especie": "Gallinas de campo",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0a7c13fd-f57a-4379-8638-c69239e76191}",
+    "ficha_id": "{b5cc5dab-14f6-4288-afeb-4b909898204a}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{70f9ba4a-968c-4cdd-b5d6-9765574ee662}",
+    "ficha_id": "{b5cc5dab-14f6-4288-afeb-4b909898204a}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{48588ea0-9a52-4fd6-a575-917ad6347ef0}",
+    "ficha_id": "{505bee76-b557-4adb-b5a2-259395bde65b}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0128d8c7-918c-474c-9488-d1c6c54431ec}",
+    "ficha_id": "{505bee76-b557-4adb-b5a2-259395bde65b}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3d1e4332-8730-46e1-aea9-73faf4363d4a}",
+    "ficha_id": "{26c7581e-adab-4777-b8f8-b8a60fecac4d}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{aa2c13b7-38ab-4f38-b3d8-6a99fa848c47}",
+    "ficha_id": "{3e20335f-df67-40ce-bec4-7d1d8ab1e353}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{13234cb2-2535-4804-9222-59ec291d11f4}",
+    "ficha_id": "{3e20335f-df67-40ce-bec4-7d1d8ab1e353}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1e9e7b54-7b16-4b7f-881c-b5106cadca19}",
+    "ficha_id": "{3e20335f-df67-40ce-bec4-7d1d8ab1e353}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 0
+  },
+  {
+    "id_animal": "{ce0bf915-383f-4133-a9d2-f3683ca9ac85}",
+    "ficha_id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c67c23d0-ccbf-43eb-bf16-eedd31449b9e}",
+    "ficha_id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 80,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1f68e84a-47a1-41dc-9875-28ff705a7b78}",
+    "ficha_id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b22511ac-33e0-4872-b9b7-564507bfe6f5}",
+    "ficha_id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{41dbf3b2-6f2f-411d-acdd-04c28a3b1b96}",
+    "ficha_id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e9f98ce5-f18e-4448-ae1d-967de1e9a9a7}",
+    "ficha_id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 80,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ca25d359-8d14-478f-b15b-8522cbd86bb3}",
+    "ficha_id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d6d6c767-8160-4e6b-b2e4-6d40d8cb11ff}",
+    "ficha_id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2528fa04-2e49-407c-ab21-775980499ab0}",
+    "ficha_id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+    "especie": "Terneras",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{245153bd-7402-4dfe-8014-5f94cf16ef89}",
+    "ficha_id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e232da45-0250-4134-a0cc-764d91157968}",
+    "ficha_id": "{62deb8d9-2ca7-46ba-9ece-82c6ba558c8a}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7dae4804-e85e-473b-b2c6-29e31253fc97}",
+    "ficha_id": "{62deb8d9-2ca7-46ba-9ece-82c6ba558c8a}",
+    "especie": "Terneros",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{062c3cbf-db96-4a4e-828f-bdacbb66b5fc}",
+    "ficha_id": "{62deb8d9-2ca7-46ba-9ece-82c6ba558c8a}",
+    "especie": "Terneras",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{b938015f-ac43-44fb-8483-a4da26304c80}",
+    "ficha_id": "{62deb8d9-2ca7-46ba-9ece-82c6ba558c8a}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 38,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{318353d0-dcfd-4fa4-8c25-df22e254ae2d}",
+    "ficha_id": "{aafa4381-a436-4718-a7e7-5d2df5289b56}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 12,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e9667f33-f203-4c07-9de0-98dde6fb4713}",
+    "ficha_id": "{aafa4381-a436-4718-a7e7-5d2df5289b56}",
+    "especie": "Pollos de engorde",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e151760f-787c-463f-943d-42978452917a}",
+    "ficha_id": "{4d94eeb6-49e6-403e-af15-9958513b8a81}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6e541b62-b9b1-4453-a329-74b854da969d}",
+    "ficha_id": "{4d94eeb6-49e6-403e-af15-9958513b8a81}",
+    "especie": "Toretes",
+    "cantidad": 1,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1b8d4879-fb1d-4af9-8fe4-be527573cf0e}",
+    "ficha_id": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c9ac3e16-be90-43aa-b3f0-ed3dcd3c5544}",
+    "ficha_id": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
+    "especie": "Toretes",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{c0cba971-a64a-4c27-8f77-a5adff473dbb}",
+    "ficha_id": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3
+  },
+  {
+    "id_animal": "{014af59f-e492-4f88-a4f7-e1f2cb512e38}",
+    "ficha_id": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5
+  },
+  {
+    "id_animal": "{ea474205-ffc8-4f82-a66e-dda3d9f34b86}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cab49ac9-c8c7-450b-87c4-9f5d4bb9b522}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 27,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{eb90458b-739b-46cd-b0d1-2a270a27c1b6}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0a289550-d621-4376-be0b-60f15e29d828}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Terneros",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{d875e954-6c56-47c8-8934-ff68c48ab099}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Terneras",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{b817e3dc-5293-4bba-ab5f-4da3b95bfa8e}",
+    "ficha_id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+    "especie": "Toros",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{8e9b9084-a0d9-4685-bde5-0c925bd94981}",
+    "ficha_id": "{8e0603ce-05d7-44a3-81fa-7610624645bb}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f037c46f-e477-4c43-bcae-76c917798145}",
+    "ficha_id": "{8e0603ce-05d7-44a3-81fa-7610624645bb}",
+    "especie": "Vacas secas",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{af3c657f-4184-4d44-a0a2-107bc38a1475}",
+    "ficha_id": "{8e0603ce-05d7-44a3-81fa-7610624645bb}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f9dcf097-e4e8-4174-b268-527609c950e6}",
+    "ficha_id": "{8e0603ce-05d7-44a3-81fa-7610624645bb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8c8187e0-2000-4658-93e2-bdcf6ad23a4a}",
+    "ficha_id": "{e1151dfe-81c4-4eba-9c81-921a24423975}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{20cf7276-2103-432a-b2ef-621c7e9f7579}",
+    "ficha_id": "{e1151dfe-81c4-4eba-9c81-921a24423975}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 0
+  },
+  {
+    "id_animal": "{8a17501e-b807-40c6-ab4d-577aa8089740}",
+    "ficha_id": "{5daef8a7-2e48-4208-8341-9577bf96bb05}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{686c6f91-086e-4d07-9372-b966e382bab2}",
+    "ficha_id": "{f0fa68b9-8ce0-42df-89b9-1976f99e3404}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1e8fa844-5ed5-48c1-884e-747c05cccf29}",
+    "ficha_id": "{fb117630-697c-4c07-b32e-d4ca76a7940c}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2a47205a-c82b-472a-9f10-c4fad5f4bfde}",
+    "ficha_id": "{fb117630-697c-4c07-b32e-d4ca76a7940c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 60,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1c669779-704a-49b5-8bbb-2cd8b9849de2}",
+    "ficha_id": "{fb117630-697c-4c07-b32e-d4ca76a7940c}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d9bc06fa-be22-4254-9670-e972e9bf2fa0}",
+    "ficha_id": "{fc3655f5-de10-4392-8419-9cb4afdaa141}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c9a0c5ff-3af7-47e0-bdfc-8818dc1fa8f2}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Vacas en producción",
+    "cantidad": 8,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a4771226-c583-4ac3-88c6-38b001bcd6d8}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Vaconas",
+    "cantidad": 4
+  },
+  {
+    "id_animal": "{a7f6911b-4dd5-49f5-8d0c-9898cd447736}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Vaconas",
+    "cantidad": 4
+  },
+  {
+    "id_animal": "{98fe45e9-0f45-40e2-b2f6-5fdd5246d977}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Toretes",
+    "cantidad": 4
+  },
+  {
+    "id_animal": "{a07be10a-dfb3-4fd7-9bca-d7d47cebf3c8}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 9,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{08418ec7-3376-4570-802d-0adae4775e2b}",
+    "ficha_id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5b990db1-ce03-449a-95d4-c49342d35834}",
+    "ficha_id": "{6307c262-a515-4062-b683-92ede37b1216}",
+    "especie": "Pollos de engorde",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0003f9ef-aee0-4383-927f-a410f4e7337e}",
+    "ficha_id": "{34ba742f-37b8-4f25-8231-1cd79e9e7352}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e64fecb7-7319-4870-b4c0-51da33d6f2d7}",
+    "ficha_id": "{f50d2569-7c88-4e31-aa22-2a7c585ff838}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 38,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{804ebeda-92ed-4b9b-8acb-0796db9bdfa2}",
+    "ficha_id": "{f50d2569-7c88-4e31-aa22-2a7c585ff838}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{783a953d-5d3d-407c-a777-205e5bd91852}",
+    "ficha_id": "{f50d2569-7c88-4e31-aa22-2a7c585ff838}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c8abf12d-69e3-4e7f-996f-bde111ab9b1e}",
+    "ficha_id": "{f50d2569-7c88-4e31-aa22-2a7c585ff838}",
+    "especie": "Pollos de engorde",
+    "cantidad": 20,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{57efc354-44d7-4f2b-86c6-acfa0b1aed40}",
+    "ficha_id": "{09b7cccb-414c-4d73-97ea-b1e2b753ccd7}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ab311829-44ba-4877-b89e-d0cd10f7e50a}",
+    "ficha_id": "{d83eec50-5d30-446f-a97f-002571f55ff0}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 40,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{684e20b2-d637-4347-b050-56d106c1b7a6}",
+    "ficha_id": "{d83eec50-5d30-446f-a97f-002571f55ff0}",
+    "especie": "Pollos de engorde",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c4b30550-f44c-4b46-a79b-20552d937d5e}",
+    "ficha_id": "{af5416a5-6162-4b47-97ff-9a7b3026b853}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{90a40350-39a3-472d-a6eb-e6bdf1be736c}",
+    "ficha_id": "{af5416a5-6162-4b47-97ff-9a7b3026b853}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d626b041-7f38-4146-88dc-8281c1ff23f9}",
+    "ficha_id": "{af5416a5-6162-4b47-97ff-9a7b3026b853}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1ac51c08-0696-40d6-b70b-387c02f4e7ad}",
+    "ficha_id": "{af5416a5-6162-4b47-97ff-9a7b3026b853}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{010faf60-9ba8-4d82-bcaf-7133b0c08278}",
+    "ficha_id": "{f26c0ac1-1379-486a-97e2-02b9c4dd2222}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 9,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{246ec961-71be-4f69-ab9d-95b401e02124}",
+    "ficha_id": "{f26c0ac1-1379-486a-97e2-02b9c4dd2222}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 35,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f23f75fc-5def-47e1-b634-cd64afb45388}",
+    "ficha_id": "{f26c0ac1-1379-486a-97e2-02b9c4dd2222}",
+    "especie": "Pollos de engorde",
+    "cantidad": 20,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{26357cb8-b386-4c31-8f65-85c2dc2a8007}",
+    "ficha_id": "{fd56f9d1-51c9-44d4-b022-f35a1fcd4bc8}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{dd24d0bf-b0a6-498c-bc7b-c9bfc019e1d8}",
+    "ficha_id": "{fd56f9d1-51c9-44d4-b022-f35a1fcd4bc8}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4b223084-9b22-4523-b355-94bf6d3b2724}",
+    "ficha_id": "{4950738a-56c3-4bbc-b923-cabd9a03cc56}",
+    "especie": "Pollos de engorde",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e5c7fe56-99ec-494d-b056-2b5c17fead79}",
+    "ficha_id": "{4950738a-56c3-4bbc-b923-cabd9a03cc56}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{84bc577b-82c5-48cd-9815-64202c49296c}",
+    "ficha_id": "{4950738a-56c3-4bbc-b923-cabd9a03cc56}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{47d53932-e4b7-4e23-afd0-0e2ab067a12b}",
+    "ficha_id": "{4950738a-56c3-4bbc-b923-cabd9a03cc56}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a7331836-edc6-43d9-a07f-3e710ea0d73c}",
+    "ficha_id": "{c1abf3f4-c363-401a-b456-35d6b5e858b5}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{43d225bc-6411-4ed8-8c22-3ec26a82d6f2}",
+    "ficha_id": "{fbe76c97-abde-4fe1-b0ab-69e4956f56b4}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6761e8a6-237f-4235-9996-72f90ebc93b5}",
+    "ficha_id": "{53cd2127-9ed0-4b7b-b6bb-2d79918da930}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d93773b6-162b-4ce3-851c-026144127ea2}",
+    "ficha_id": "{53cd2127-9ed0-4b7b-b6bb-2d79918da930}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{19fcf549-4848-4eb7-b130-b244a379768f}",
+    "ficha_id": "{676290a7-126e-45cb-84eb-17a5e3be31d3}",
+    "especie": "Toretes",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8189f4e1-b031-4b57-b01c-dbf9ff4a9340}",
+    "ficha_id": "{676290a7-126e-45cb-84eb-17a5e3be31d3}",
+    "especie": "Pollos de engorde",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b4fdf814-7a27-4c3b-b102-62bd57476a37}",
+    "ficha_id": "{676290a7-126e-45cb-84eb-17a5e3be31d3}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0a69e494-fbbb-4136-88d4-70f32898dc7f}",
+    "ficha_id": "{229d6d92-232f-4ade-a72f-e289c6ee5e7d}",
+    "especie": "Terneras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a6c0e26f-ee2a-4341-a2f5-93fc6094783c}",
+    "ficha_id": "{27d6069e-193c-48cd-8da3-c71901d0dc03}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e8373e71-35ef-4811-977a-9ead74e4b92a}",
+    "ficha_id": "{27aa73fb-d121-47d8-8a1a-6d70678873e9}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{bc92b8ae-d7cc-47f7-a2d7-ce3780da0cc5}",
+    "ficha_id": "{27aa73fb-d121-47d8-8a1a-6d70678873e9}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{198bbc49-356c-4e1e-9be0-a7d8a7b2cf03}",
+    "ficha_id": "{27aa73fb-d121-47d8-8a1a-6d70678873e9}",
+    "especie": "Terneras",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{a0aec4db-2334-451b-ae08-15618a0992ac}",
+    "ficha_id": "{27aa73fb-d121-47d8-8a1a-6d70678873e9}",
+    "especie": "Terneros",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{abb8ab90-bccf-4bf2-889b-6ddd02528803}",
+    "ficha_id": "{27aa73fb-d121-47d8-8a1a-6d70678873e9}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 80,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{894a0190-39db-4400-8f21-be999a0cabce}",
+    "ficha_id": "{b0958a7d-34ff-4d1d-a9fc-b0c58bcc52eb}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{009dc302-1454-4c9e-ab9f-7ce8a16d8997}",
+    "ficha_id": "{b0958a7d-34ff-4d1d-a9fc-b0c58bcc52eb}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 60,
+    "es_autoconsumo": 1,
+    "es_mercado": 0
+  },
+  {
+    "id_animal": "{2fda7260-e1ce-46c9-913e-20a51b859161}",
+    "ficha_id": "{b0958a7d-34ff-4d1d-a9fc-b0c58bcc52eb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{41889e57-c0aa-49b2-8ce7-12d5c4a54eb1}",
+    "ficha_id": "{b0958a7d-34ff-4d1d-a9fc-b0c58bcc52eb}",
+    "especie": "Gallinas de campo",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1f8c5f41-1728-4d8d-b22e-695b7e32e915}",
+    "ficha_id": "{d2513269-8284-4615-ae7e-98db4664d13e}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c66d63a8-15b7-4381-8cc8-a5f912ca3467}",
+    "ficha_id": "{d2513269-8284-4615-ae7e-98db4664d13e}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b77d68b6-bcf8-4807-997e-7fd2fac4cfe3}",
+    "ficha_id": "{d2513269-8284-4615-ae7e-98db4664d13e}",
+    "especie": "Gallinas de campo",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cbfda495-3c2c-4fed-98c1-d3b5b495e9e2}",
+    "ficha_id": "{b366c19a-a50f-47d7-b768-56ef35329db2}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "es_agroindustria": 0
+  },
+  {
+    "id_animal": "{60738f4c-452e-4fc4-9db4-cd5a33d7c38e}",
+    "ficha_id": "{10282f00-c6c5-46b7-ba5f-1ff9c3241ff6}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 77,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cb1d2138-404c-4994-8091-95595f7b44c5}",
+    "ficha_id": "{10282f00-c6c5-46b7-ba5f-1ff9c3241ff6}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a8d5d283-c3cd-4b91-a5b6-d8fcf8268702}",
+    "ficha_id": "{10282f00-c6c5-46b7-ba5f-1ff9c3241ff6}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b81cd763-a63a-4e5a-acbe-d2601ab1cd8a}",
+    "ficha_id": "{10282f00-c6c5-46b7-ba5f-1ff9c3241ff6}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{04fa24f8-24dc-448b-8688-f40d489d8b7f}",
+    "ficha_id": "{49042622-4641-4a52-bd0e-2adce867754e}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{850cccfe-b83f-403c-ac7b-922b78599eb2}",
+    "ficha_id": "{49042622-4641-4a52-bd0e-2adce867754e}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b4feed46-ab50-48d3-80af-a45e9da7638b}",
+    "ficha_id": "{9171aa38-cea1-4299-942a-c58fc68673e9}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2e6e5c33-6070-402a-a522-f70a207fd45e}",
+    "ficha_id": "{eb875d1d-643e-4f93-a1e1-f8ba1a5e6d30}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8a357ea5-f8d7-4c33-b814-9554939c5a37}",
+    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a87287fa-906e-4a01-8bdb-96dc27833354}",
+    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e2468607-0aaa-4325-961b-ac7dc70605c1}",
+    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d60c1600-4ae2-4beb-8740-eb8fa2de7cdd}",
+    "ficha_id": "{e8c4e01d-7356-46ab-9dd0-ae1c90e87bac}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{34bf9cde-1322-4f83-a1a8-b45bbadd5ee4}",
+    "ficha_id": "{bfa5fb98-e492-4d99-becb-9ef76eddbfa4}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f56e07db-7ec7-4078-8409-10a0d9601d2f}",
+    "ficha_id": "{bfa5fb98-e492-4d99-becb-9ef76eddbfa4}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{33302269-e0f3-46c3-9cf8-f61e68ca27d7}",
+    "ficha_id": "{bfa5fb98-e492-4d99-becb-9ef76eddbfa4}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9ea59e1d-c5e7-45aa-8c1c-87663fddb631}",
+    "ficha_id": "{cf8b653c-1358-4cf9-8101-5121e8ac1de6}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b356ef83-8feb-4eca-abde-b7e38915eb9e}",
+    "ficha_id": "{cf8b653c-1358-4cf9-8101-5121e8ac1de6}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1721149e-5dca-4549-99db-081d4f4af5ed}",
+    "ficha_id": "{cf8b653c-1358-4cf9-8101-5121e8ac1de6}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{63dbe3ad-5a41-4f2d-9614-c855a5138dc7}",
+    "ficha_id": "{fb1545ea-db7f-4a40-9bf8-4add65521ed6}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{91da2167-af42-46e6-acb7-7fb8b8e9fe4e}",
+    "ficha_id": "{fb1545ea-db7f-4a40-9bf8-4add65521ed6}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4a608f0e-ff4c-431f-809b-7bb7ee7be4a7}",
+    "ficha_id": "{fb1545ea-db7f-4a40-9bf8-4add65521ed6}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c10aa1ab-5d84-4d6c-8cde-e651bf6c6145}",
+    "ficha_id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{95947e56-29ba-40e6-b391-6650f67d3167}",
+    "ficha_id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{71ff6d3a-0490-4d95-882d-a710a4968c84}",
+    "ficha_id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 10,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9a33d028-e559-4a78-aa40-1af0cfb4d6d6}",
+    "ficha_id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b96b045d-3bd6-4e1e-a336-067f3f659d8f}",
+    "ficha_id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{26938025-55cc-4d6a-8d71-d657df840bed}",
+    "ficha_id": "{ec441d1c-ebc5-4173-b353-0d5ba90370f3}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5c41a0a9-787c-4e27-9767-afee2ecb2815}",
+    "ficha_id": "{ec441d1c-ebc5-4173-b353-0d5ba90370f3}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f48a8a11-fdae-4fdb-beb3-715deb13e624}",
+    "ficha_id": "{bc604f2a-0729-4a62-8381-c91da34b0505}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "es_agroindustria": 0
+  },
+  {
+    "id_animal": "{726eb557-8064-47fb-884b-79a92d7dada0}",
+    "ficha_id": "{7569eca3-fa16-44ff-bd75-6a1f95a41f15}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0493796c-9838-4e52-87ed-371b0d77f79a}",
+    "ficha_id": "{7569eca3-fa16-44ff-bd75-6a1f95a41f15}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7a99ab48-632b-4a6f-9f9a-f24334beafb6}",
+    "ficha_id": "{98a1d205-0640-4c7c-a529-2edb264a3586}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3853457a-2f1a-4211-bdd2-28d926e9e253}",
+    "ficha_id": "{98a1d205-0640-4c7c-a529-2edb264a3586}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{70b25522-a97e-40cd-a47c-a1f1c611d93c}",
+    "ficha_id": "{2bbbff10-7f03-415d-93f4-6e6d4d7ef1e5}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ce7d5d7f-5a0e-4306-9e66-c9f7c5b70053}",
+    "ficha_id": "{c2f99fa4-2af3-4a05-afa6-f66dd97a5a1a}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{63ec1103-aa5c-49e3-8146-65ba9c65f61c}",
+    "ficha_id": "{2a370918-6d99-449f-9451-c32b1cd21661}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c6dd2342-503f-4709-bb33-006faf75fd3b}",
+    "ficha_id": "{305b448b-4059-447d-a810-03e0da6d8f88}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ea23329e-6a26-498c-8163-8817d309e565}",
+    "ficha_id": "{530d06c6-1610-41b2-9649-a07763cbe83e}",
+    "especie": "Toretes",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cc6b425d-0ea3-4354-84fd-ffd086a1d83c}",
+    "ficha_id": "{98c30748-15e9-4f57-b029-e47aeea22131}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{276b2f57-61fa-43fa-8f92-89894b78f8fb}",
+    "ficha_id": "{2e723ba3-6475-49a3-9db1-79ddb5794d08}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a978f68c-26d0-4497-a15c-3ad0449433a3}",
+    "ficha_id": "{41c9adb4-6df9-4f64-8379-5d7e621122c0}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b847f95b-56d0-40a1-aec9-e39b9c4348ac}",
+    "ficha_id": "{41c9adb4-6df9-4f64-8379-5d7e621122c0}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c9860f52-a100-4142-bd22-7787e49a3012}",
+    "ficha_id": "{41c9adb4-6df9-4f64-8379-5d7e621122c0}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7ef0a722-d4c7-4796-bfe5-3e5354a27b81}",
+    "ficha_id": "{41c9adb4-6df9-4f64-8379-5d7e621122c0}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{47c4fa6c-56f8-4d4a-a12f-865705967094}",
+    "ficha_id": "{38f95e87-fd56-439b-a19f-21bb1209b2ed}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2722cdfe-4405-4eea-8e27-90bdeaf876a9}",
+    "ficha_id": "{721b2696-ce34-4810-b72d-9741d5718a2d}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{37f86536-d8f6-490e-b724-d0f8da31be15}",
+    "ficha_id": "{721b2696-ce34-4810-b72d-9741d5718a2d}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{be701f3b-1f97-4670-9023-c4f75281a077}",
+    "ficha_id": "{95444bb2-7c88-4e64-88e6-d638f3248327}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0345de78-1c21-439d-8444-2b2c141eef7d}",
+    "ficha_id": "{95444bb2-7c88-4e64-88e6-d638f3248327}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fb111ffb-7918-4e2f-9248-d44edd41cc7f}",
+    "ficha_id": "{4a0fdec0-76a6-4c7e-8e9f-ebe01d68ebbb}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{adbf1571-60eb-46c9-9588-9786916f12eb}",
+    "ficha_id": "{4a0fdec0-76a6-4c7e-8e9f-ebe01d68ebbb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1ff4991f-bb44-406d-8859-67ccb971ee44}",
+    "ficha_id": "{1579ce5e-e0b2-459c-85c3-691a4fb6f402}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{868452e8-b096-419c-ba71-f60b0a543720}",
+    "ficha_id": "{1579ce5e-e0b2-459c-85c3-691a4fb6f402}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 45,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f1b0ac75-bda3-46b3-a358-55470f8cd09c}",
+    "ficha_id": "{1579ce5e-e0b2-459c-85c3-691a4fb6f402}",
+    "especie": "Gallinas de campo",
+    "cantidad": 25,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4154abf7-21b6-4b32-a859-db179ee35092}",
+    "ficha_id": "{42299571-ca76-4ae8-b8b0-da87b6213746}",
+    "especie": "Gallinas de campo",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5d38e8d1-2a6c-41f1-9622-ada8332609ea}",
+    "ficha_id": "{42299571-ca76-4ae8-b8b0-da87b6213746}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0f5b2bf7-d64a-4fa9-862a-d67b8e9464a7}",
+    "ficha_id": "{60b08f69-0c0f-4e56-8ec1-ea9df879caa7}"
+  },
+  {
+    "id_animal": "{c3f6e77a-8602-4e1c-829e-c0c7cb68d16d}",
+    "ficha_id": "{8f3980f4-1d8d-4019-a976-bdc36d4b7c9a}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{90e44e5c-d6c9-43f3-9c82-9aaaf2190627}",
+    "ficha_id": "{8f3980f4-1d8d-4019-a976-bdc36d4b7c9a}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{053f88cd-af60-437b-ac25-3be8af190c22}",
+    "ficha_id": "{84245715-e77f-4eb8-9f56-773589b1c396}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ff3be44b-31b5-403f-aa67-870befb630e8}",
+    "ficha_id": "{84245715-e77f-4eb8-9f56-773589b1c396}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ccbeb654-c399-45f6-b3d4-a7644263c918}",
+    "ficha_id": "{84245715-e77f-4eb8-9f56-773589b1c396}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{eccd9aeb-56b5-414b-80c2-3807adcb703b}",
+    "ficha_id": "{1855a7ea-f605-4967-b566-7786d3e96306}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8d7ed8dc-b64c-467e-a4f4-306355f58b79}",
+    "ficha_id": "{1855a7ea-f605-4967-b566-7786d3e96306}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{901460e6-174f-4c4c-b189-de59ed0c72c5}",
+    "ficha_id": "{99c8529c-3a5f-441c-8947-339710fddddf}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a1686c11-46bc-43a3-b18a-63ac50b86d41}",
+    "ficha_id": "{a7f98a3a-8271-4c3c-bb91-1b4080e17dab}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4fd4f6a8-873e-46b2-89d4-361e9baf2eaa}",
+    "ficha_id": "{ab6c4071-74b0-41ca-9360-8a6c46f8b9a3}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a058ad86-9d60-4637-ade1-2a65a45fc5cb}",
+    "ficha_id": "{ebaba46c-c8cf-4f74-a02f-83b28d1fae88}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c2d75965-88ad-41f1-9a5a-a7edbb1ca627}",
+    "ficha_id": "{ebaba46c-c8cf-4f74-a02f-83b28d1fae88}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2709c2bd-0959-49bb-aa40-e06df9b56bc4}",
+    "ficha_id": "{6eac69a1-d907-4984-9b07-7f0a141d6288}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7a77a16b-0474-45c4-98c6-756f96dc1406}",
+    "ficha_id": "{6eac69a1-d907-4984-9b07-7f0a141d6288}",
+    "especie": "Gallinas de campo",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0cd5a160-0eb3-4f3d-a5a2-6635990f657e}",
+    "ficha_id": "{6eac69a1-d907-4984-9b07-7f0a141d6288}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5036c0e9-0345-4ecc-9d56-4dfec362acd9}",
+    "ficha_id": "{b9b0a310-f50e-4bc9-be47-0fae56888a9a}",
+    "especie": "Gallinas de campo",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ef158ef2-abf0-4f98-9426-e6e22e4828d5}",
+    "ficha_id": "{b9b0a310-f50e-4bc9-be47-0fae56888a9a}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8a1fda41-ceaf-4b09-a0e1-c392885a6a5e}",
+    "ficha_id": "{55ff31ed-44e6-4645-ad29-99ea0e8e7785}",
+    "especie": "Gallinas de campo",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{69c00fdf-38c0-44ef-8762-5440b79f5f2c}",
+    "ficha_id": "{55ff31ed-44e6-4645-ad29-99ea0e8e7785}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2ef7e755-a84c-46d3-a687-b3b5ac16ddb2}",
+    "ficha_id": "{6d190362-8da4-4db9-9b7f-ff84668c6a74}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7b421f81-c82d-47d9-aad3-dbd1dbd358ee}",
+    "ficha_id": "{2ec9bdc5-5d76-4366-857e-dece2e3b4920}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{02a4db02-7459-4ee1-98b4-d5fb48102b32}",
+    "ficha_id": "{b7fd1a76-f668-4a35-a25b-03dbd02f2a05}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{33bd2643-5e57-4be1-a7df-572c62efa538}",
+    "ficha_id": "{30b48934-a847-4827-8a98-7e044fb678e7}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a7343d02-def9-4618-b458-3a5f170afa45}",
+    "ficha_id": "{4a7841c9-2adb-4f51-9d2e-57786324186b}",
+    "especie": "Vaconas",
+    "cantidad": 8,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{27dec77f-5e07-44e6-99ef-e995c5c2c9a7}",
+    "ficha_id": "{345d5e74-f993-4843-819f-c73f65eadef1}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{eafb5ccc-68e6-45e2-a5a2-40fa01e1c557}",
+    "ficha_id": "{e4a46960-1685-44be-a3ac-fe5f81e794fa}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9b58e8a0-f069-4f83-a0b1-bf5004e6778a}",
+    "ficha_id": "{27860307-ed9f-4d4d-a208-1a4f940db617}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c2ea0c79-87c7-4169-9b5a-7f69f2f8ba9f}",
+    "ficha_id": "{823daf3c-58b2-4ece-9a4f-58505c4253a8}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{66e39945-42a3-4191-85e9-d15858e0601a}",
+    "ficha_id": "{ae57988f-80f1-4778-8fcb-9b5d4fa7f198}",
+    "especie": "Vaconas",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5f7fe000-6ff2-4e2c-abe3-6acb79b4e220}",
+    "ficha_id": "{78607b5e-fc87-46e6-9e80-7369618fddfb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{23ad71f9-1de6-46c4-8e1a-c948f87b7b06}",
+    "ficha_id": "{4460ba35-f89d-4626-ad35-f7f4f35495e7}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ac91b4cd-4638-49d0-9e74-f6a2f12c110b}",
+    "ficha_id": "{c38da189-503f-4845-abd1-744c9b688811}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 80,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{72192445-2884-49f1-adb7-1a1bbcb98466}",
+    "ficha_id": "{c38da189-503f-4845-abd1-744c9b688811}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{320ce606-7970-4815-84fb-79e35e42c612}",
+    "ficha_id": "{c38da189-503f-4845-abd1-744c9b688811}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f58fafe4-1fc4-4a3e-87c9-7eb225e737b0}",
+    "ficha_id": "{7f33d697-5dd2-4b0f-a99d-3958ee08b72a}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 80,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f7e57154-fd6c-4d25-9be7-8af8d1e8cfbf}",
+    "ficha_id": "{7f33d697-5dd2-4b0f-a99d-3958ee08b72a}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5fc3d2b4-ca15-43f2-8e60-ca31b698d509}",
+    "ficha_id": "{7f33d697-5dd2-4b0f-a99d-3958ee08b72a}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{884ec537-b02e-40bd-b143-b7b1808102a2}",
+    "ficha_id": "{67c7fc8b-815e-4ba1-adc3-15be9400d80e}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{171f4a6f-3198-40cd-917f-d0b9a9987be3}",
+    "ficha_id": "{15d065c3-030d-4199-9ec8-4713f980e310}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{dd4bd6bd-ee6a-48ab-a252-283e25a3b755}",
+    "ficha_id": "{b8791c70-150d-4b4e-b608-556b8f055648}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b0092cca-b209-4b1c-9e84-43480e5e0971}",
+    "ficha_id": "{db061ed8-4831-4d42-a021-6ba45c50635f}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8d5391ff-927f-4bfb-aca5-5196f4005b78}",
+    "ficha_id": "{db061ed8-4831-4d42-a021-6ba45c50635f}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 85,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c11b108a-2851-4a66-a1a8-7ef004ff29cc}",
+    "ficha_id": "{7ae08dd9-8bbf-4357-894d-b43b1bbba884}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{96a46c22-af6e-4afc-bf36-b6c7b3ee2b89}",
+    "ficha_id": "{f0069aa8-3820-4c9e-b4c3-7dc650ef07ef}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{18635233-0621-419f-8551-6cd9a6e0dd0b}",
+    "ficha_id": "{f0069aa8-3820-4c9e-b4c3-7dc650ef07ef}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "fid": 2,
+    "id_animal": "{850e462e-ee83-4502-b308-2f78c1f31800}",
+    "ficha_id": "{0cd1547f-c294-42af-b3ff-e33ddec0976e}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fbd81c62-1050-48b2-8e98-ece2a670dce8}",
+    "ficha_id": "{5eefe708-e55f-4cc4-be94-2a9f618d2600}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cdcea040-68f9-43b1-8336-e534e7194e20}",
+    "ficha_id": "{e62f71bb-ae36-4109-a103-6c70e397c27e}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a7855c83-5d06-465d-95ef-05bdb2eb4454}",
+    "ficha_id": "{885d5169-fc16-4e95-90e3-0d011bee96a4}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{dd6712fd-ef99-46f3-9ccd-6b70f0043184}",
+    "ficha_id": "{a5576b71-b7e2-4658-a04a-b7b2415d5da7}",
+    "especie": "Otros",
+    "cantidad": 4000,
+    "es_mercado": 1,
+    "especie_otro": "Truchas "
+  },
+  {
+    "id_animal": "{6195dc8d-5462-478f-a26e-a5932f005df8}",
+    "ficha_id": "{7cbb3b8f-dd88-4cdd-b266-1521f1021651}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2922d980-d5ef-4286-aa9e-7c8517ea238a}",
+    "ficha_id": "{7cbb3b8f-dd88-4cdd-b266-1521f1021651}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5eee2874-8f8b-47a9-a493-f4f0503cea3c}",
+    "ficha_id": "{7e5e1a47-b9f3-497c-8d18-a59ca724d783}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{30d1da7f-d2f0-4b0c-b6ba-3a6dea2f3c0e}",
+    "ficha_id": "{c4506634-9c3b-48db-9aca-ccf8dfaa4e21}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{699948fd-5ef2-42cd-b97c-9e2bdaa4f585}",
+    "ficha_id": "{c4506634-9c3b-48db-9aca-ccf8dfaa4e21}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7ac3ae45-0ed3-41b5-8779-93fecd1b4df3}",
+    "ficha_id": "{79344b7f-daf9-4ba5-be44-949d4f275351}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0f1dcf6d-487f-4316-a716-58fc11f1b614}",
+    "ficha_id": "{a534ec42-a849-4abc-a4b1-b0118b3a0160}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a929f8f1-ef53-4aaa-a6c3-846c60ff1dff}",
+    "ficha_id": "{a534ec42-a849-4abc-a4b1-b0118b3a0160}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3a249399-be8e-47a7-9375-bb6063ba094d}",
+    "ficha_id": "{a534ec42-a849-4abc-a4b1-b0118b3a0160}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{da989817-6390-4a28-8bb9-856341e6423e}",
+    "ficha_id": "{4c23cca9-5079-4142-8fe8-48a52644f9f5}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{43207920-a793-4454-81a5-c4011062ba9c}",
+    "ficha_id": "{5dea5cef-2cbb-4248-a524-464b15d6b873}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 60,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{930faf28-b9c7-4232-8137-9b3f465c09a2}",
+    "ficha_id": "{5dea5cef-2cbb-4248-a524-464b15d6b873}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{57e4711c-f889-4441-9667-e3d9cb94bf65}",
+    "ficha_id": "{575c59c5-ccfe-4013-a274-cbca3aa23adc}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{df881e57-4389-4682-9e94-85f65f51ece0}",
+    "ficha_id": "{575c59c5-ccfe-4013-a274-cbca3aa23adc}",
+    "especie": "Pollos de engorde",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d7ea8421-0f85-4ed5-9101-647284144347}",
+    "ficha_id": "{575c59c5-ccfe-4013-a274-cbca3aa23adc}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f9eccc81-0972-464b-8d29-b754ff291013}",
+    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7d1de3d7-82ff-4299-9c63-7ab836609dae}",
+    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+    "especie": "Pollos de engorde",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2ad0c4d8-2388-4889-9464-ce547be8c5b0}",
+    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4d29c929-8531-46af-ab4e-e43e4cb0d37e}",
+    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0ace12f6-cab7-41d3-ac42-b076acf4f303}",
+    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a677421b-41a5-4abd-a789-ec59aaf06560}",
+    "ficha_id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{af3e8cd1-9f78-4042-870c-e92234aeb03d}",
+    "ficha_id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{809f3d59-18db-4a92-888a-b3c2d3bb4820}",
+    "ficha_id": "{b5d391db-3eb7-402d-916a-a70be6f909a5}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f4329a1d-de69-4056-8d97-be89cfb83e5a}",
+    "ficha_id": "{debfa4d4-91b7-4c83-aaec-009aeef17ec6}",
+    "especie": "PORCINO (CHANCHOS)",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{29051bd2-73c7-4bfe-be31-5dc8a2cc875d}",
+    "ficha_id": "{fad67c89-a06e-4ff9-9a68-be87c85b4c97}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c7f7c938-1d6e-4b02-a3ec-3496e9461819}",
+    "ficha_id": "{fad67c89-a06e-4ff9-9a68-be87c85b4c97}",
+    "especie": "Pollos de engorde",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5440d48f-b36c-4a8b-b4b7-07d8836029fa}",
+    "ficha_id": "{fad67c89-a06e-4ff9-9a68-be87c85b4c97}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2c86bbe3-217e-46c8-b8e1-e8dd6e693b51}",
+    "ficha_id": "{84e0077b-d37f-4d8c-b4bc-99f8212aa91f}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1,
+    "es_mercado": 0
+  },
+  {
+    "id_animal": "{84302a07-edde-41c1-975c-0c8121bcd770}",
+    "ficha_id": "{84e0077b-d37f-4d8c-b4bc-99f8212aa91f}",
+    "especie": "Pollos de engorde",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{86ecfcf7-25ca-4a8d-b2a2-d8b272653895}",
+    "ficha_id": "{84e0077b-d37f-4d8c-b4bc-99f8212aa91f}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ed4b3531-64a8-4ad4-ba2c-8281d728989b}",
+    "ficha_id": "{79f1b2fc-e42a-44b7-90c5-d5412c8d36fa}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{90107d29-1336-4c44-a2cf-7ab5617ca073}",
+    "ficha_id": "{79f1b2fc-e42a-44b7-90c5-d5412c8d36fa}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{dfcb3f40-7d00-42f4-91e9-cfa8f4367057}",
+    "ficha_id": "{0208ffa1-7131-420e-9243-af426fb4e839}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{df2fc4e8-077c-4c21-88b5-f78ea6475c16}",
+    "ficha_id": "{0208ffa1-7131-420e-9243-af426fb4e839}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9b4344d6-6958-40ae-bcdc-72776ffa6b57}",
+    "ficha_id": "{4eae7114-4008-49f1-baf8-b90d8bdef927}",
+    "especie": "Terneros",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ddf8a9fc-55f7-4440-880e-81209374b33b}",
+    "ficha_id": "{4eae7114-4008-49f1-baf8-b90d8bdef927}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2d6c048d-3669-4eb8-97a1-09914175d672}",
+    "ficha_id": "{4eae7114-4008-49f1-baf8-b90d8bdef927}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{01df3e02-2aee-445e-be86-616ab17ac5c5}",
+    "ficha_id": "{4eae7114-4008-49f1-baf8-b90d8bdef927}",
+    "especie": "Gallinas de campo",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9f8f3ee6-9153-4d1e-b6e4-94f729c6d0c6}",
+    "ficha_id": "{7038b855-211d-4112-b72c-627eed51b30e}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 12,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e6f2a596-3acb-4bde-afd0-c73a382eddd0}",
+    "ficha_id": "{7038b855-211d-4112-b72c-627eed51b30e}"
+  },
+  {
+    "id_animal": "{b2d1be44-cc03-43c2-954e-6d27432d3505}",
+    "ficha_id": "{308c3042-0143-4f80-8383-713d0e14489b}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{01440242-cc7c-44ce-8506-0e889256b760}",
+    "ficha_id": "{28bbf38c-5591-4a96-8d5a-f14c86f7f68c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8ae321f2-c3d8-4f24-b78f-2d320a728dd0}",
+    "ficha_id": "{28bbf38c-5591-4a96-8d5a-f14c86f7f68c}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5826f518-e441-4cb8-868d-82cde820c18e}",
+    "ficha_id": "{28bbf38c-5591-4a96-8d5a-f14c86f7f68c}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{510f6ae6-6c7a-4cd5-a61a-0117411bff33}",
+    "ficha_id": "{28bbf38c-5591-4a96-8d5a-f14c86f7f68c}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9c6af690-e828-403e-a1ac-c80fe74b61c3}",
+    "ficha_id": "{45973705-ec93-424d-bd32-d69419748d28}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{20759bca-daad-4aee-a684-47a19f4bf48e}",
+    "ficha_id": "{45973705-ec93-424d-bd32-d69419748d28}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3d5c494f-ca01-461f-a7d1-e5c3354cdf60}",
+    "ficha_id": "{0f9121bb-8c83-4b58-b2d7-8c716b780472}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 0
+  },
+  {
+    "id_animal": "{e92b7a34-f68b-4bb2-bc3d-7f8d6c391f0e}",
+    "ficha_id": "{0f9121bb-8c83-4b58-b2d7-8c716b780472}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{64e54e75-5ace-4cf3-8d98-21ba49771f70}",
+    "ficha_id": "{c678767e-f8b4-439f-90cc-3fc77c41ae14}",
+    "especie": "Vacas en producción",
+    "cantidad": 10,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ad233ee3-0b7c-4537-967e-bfeae00af87d}",
+    "ficha_id": "{40574b1a-646d-4bf9-be94-6fb99df75aee}",
+    "especie": "VACAS SECAS",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b32b9435-2c9c-40d4-9ddf-e4b2019215cb}",
+    "ficha_id": "{983ca905-f1ab-42bc-99cc-8009c11053a5}",
+    "especie": "Vacas secas",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1c0320ed-6570-434b-a446-9b68fdcea379}",
+    "ficha_id": "{4a56a466-1f48-49de-ba15-4d0626cc8315}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 60,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0cd48049-5fb7-46ce-b33d-2423334f0cf2}",
+    "ficha_id": "{4a56a466-1f48-49de-ba15-4d0626cc8315}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d6f54b83-2621-4d2c-ae27-7061141f38fb}",
+    "ficha_id": "{ca820cd1-0ff6-48ae-af4d-eeec4b884e1a}",
+    "especie": "Porcino (Chanchos)",
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7c87a3ac-0e47-4df4-b8ed-15d305f5ee0b}",
+    "ficha_id": "{ca820cd1-0ff6-48ae-af4d-eeec4b884e1a}",
+    "especie": "Vacas secas",
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8ea0d7ea-8b26-4831-91a2-4d4b52973c52}",
+    "ficha_id": "{2650fddb-324e-4afd-b385-c53863c364a3}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4cb22750-1850-44cf-847a-39920baa01e4}",
+    "ficha_id": "{650047a2-7c0a-478f-b1b2-b24580dfc1b4}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d08d3832-3785-4eaa-bc53-b04b7fe3f8f4}",
+    "ficha_id": "{650047a2-7c0a-478f-b1b2-b24580dfc1b4}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b919f9b0-223e-4ce2-8e6b-53df5aecb1ed}",
+    "ficha_id": "{2ef24cb8-af30-465e-bd92-dc8d5748c6c5}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{db5216d7-b8cd-4e80-a05a-d0cb005e388d}",
+    "ficha_id": "{2ef24cb8-af30-465e-bd92-dc8d5748c6c5}",
+    "especie": "GALLINAS PONEDORAS",
+    "cantidad": 6,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b7723959-5141-4046-8e60-1997c0dcaecb}",
+    "ficha_id": "{2ef24cb8-af30-465e-bd92-dc8d5748c6c5}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{66ef46de-c4b0-48e3-af51-0c9f6c80c597}",
+    "ficha_id": "{2a7e1ef5-aa80-4213-acda-75bfa3eccc36}",
+    "especie": "Vacas secas",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e2079023-8f67-47de-937d-21f0c4f8a831}",
+    "ficha_id": "{e227ae04-b2c9-4a94-ae07-2b26c1ff408e}",
+    "especie": "Vacas en producción",
+    "cantidad": 8,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6c745c8e-3628-4ad6-84af-f83718e95fca}",
+    "ficha_id": "{3840dc7e-6800-439f-9245-19938013bcc6}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 22,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{635b157d-bfd4-4059-bac5-db845b6df66c}",
+    "ficha_id": "{6cc8024b-28d8-4e99-9d59-51d7c861e26d}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b95bd808-bfcf-4b25-b4ab-18c57d739209}",
+    "ficha_id": "{6cc8024b-28d8-4e99-9d59-51d7c861e26d}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6d5281de-3b0b-4695-a9c1-9033b6732c08}",
+    "ficha_id": "{6cc8024b-28d8-4e99-9d59-51d7c861e26d}",
+    "especie": "Gallinas de campo",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{db2496fc-07dc-48d6-abf5-87ec004ced1b}",
+    "ficha_id": "{6cc8024b-28d8-4e99-9d59-51d7c861e26d}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f4cd0a05-399b-4360-9dc8-02d675212e77}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9e7c2679-d312-4e41-9e76-43a3e39b43cc}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cac02337-7bcc-438f-bdf9-d4a989366b46}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5d322493-2ba0-4aed-827d-6d17577ae389}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{79e966c8-9168-470b-802c-c539be526b69}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{46dd316b-ca0c-4dd6-ab01-017ee965b6e3}",
+    "ficha_id": "{13887547-0497-425e-a8a0-6521b4266589}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b71cc1f6-909c-4e6f-a056-abdd99ddc4d4}",
+    "ficha_id": "{bd85f792-b3ab-421d-a9fc-4c1d39431cc2}",
+    "especie": "Terneros",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1a0faf0e-0183-433e-a3c9-556df6a6d52d}",
+    "ficha_id": "{bd85f792-b3ab-421d-a9fc-4c1d39431cc2}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 11,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1e480db6-b5df-43ce-9ccd-7ec1b8115338}",
+    "ficha_id": "{bd85f792-b3ab-421d-a9fc-4c1d39431cc2}",
+    "especie": "Gallinas de campo",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{38020cc8-71d6-4a7f-bc5f-2c6b086fcdf1}",
+    "ficha_id": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d7cb8e95-56a9-4b77-8a2d-e514672e62e7}",
+    "ficha_id": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1f3e8cec-c27e-400c-9278-489fa8936477}",
+    "ficha_id": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9af31de2-f0ae-49d3-b7fa-4695b34073c1}",
+    "ficha_id": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
+    "especie": "Pollos de engorde",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c48b0830-79d5-46dd-a6f3-bc26344ab6f8}",
+    "ficha_id": "{d5b1aae8-6d1c-4517-856d-cab1f6769986}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8f4dc6ed-025c-454a-b071-c4c93f7c0a55}",
+    "ficha_id": "{d5b1aae8-6d1c-4517-856d-cab1f6769986}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0fb513cb-d6e1-48bd-8d8f-dbb4194279fd}",
+    "ficha_id": "{d5b1aae8-6d1c-4517-856d-cab1f6769986}",
+    "especie": "Gallinas de campo",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{201c5345-8a18-4fff-8f92-cf868399947d}",
+    "ficha_id": "{d5b1aae8-6d1c-4517-856d-cab1f6769986}",
+    "especie": "Pollos de engorde",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{735fa5df-2c9a-45c7-9420-147852c9bedb}",
+    "ficha_id": "{d5b1aae8-6d1c-4517-856d-cab1f6769986}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{719663d7-a465-4454-b427-20c2336f799e}",
+    "ficha_id": "{9d216965-0c9a-44f5-99d3-c7da5fbc7320}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7c8c4ce3-9f05-429f-b418-804e17bf0bae}",
+    "ficha_id": "{9d216965-0c9a-44f5-99d3-c7da5fbc7320}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c2c831df-fd3a-4c99-8864-8f1c82b4ce06}",
+    "ficha_id": "{9d216965-0c9a-44f5-99d3-c7da5fbc7320}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6847edc0-aecb-404c-8741-d72fe27d1395}",
+    "ficha_id": "{9d216965-0c9a-44f5-99d3-c7da5fbc7320}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 11,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{38ae179a-8dde-4289-a5a4-b8ff8972e712}",
+    "ficha_id": "{3bb25d51-466a-40da-8761-cd1db25f456b}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{37a99d3f-3595-428b-a9ef-01fe32122744}",
+    "ficha_id": "{3bb25d51-466a-40da-8761-cd1db25f456b}",
+    "especie": "Gallinas de campo",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{23a598df-bfaf-4e99-8ad0-500051c729da}",
+    "ficha_id": "{3bb25d51-466a-40da-8761-cd1db25f456b}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c9f155aa-7e74-4de7-bbac-40772797ea84}",
+    "ficha_id": "{0c24ae89-0803-4e83-9eb6-932c5ef73f61}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9221ea24-a149-401f-aa89-0a41154cdb4c}",
+    "ficha_id": "{0c24ae89-0803-4e83-9eb6-932c5ef73f61}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d89df5f0-b589-404b-8972-7e3c1678dc0a}",
+    "ficha_id": "{b9a0fc80-ffb8-4765-9dac-7572a65826f1}",
+    "especie": "Vacas secas",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{53c79b7f-a3df-402d-9f11-03e9a7a1df90}",
+    "ficha_id": "{968dfdd5-45e7-4e02-8daf-4ee9af32ea16}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{71561e9a-2997-43f6-9de7-b96493092c24}",
+    "ficha_id": "{968dfdd5-45e7-4e02-8daf-4ee9af32ea16}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{14725c5a-2510-4add-b790-4f03a480d4b1}",
+    "ficha_id": "{968dfdd5-45e7-4e02-8daf-4ee9af32ea16}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{db6f3e3e-2ba0-4866-8a81-f4d11284b228}",
+    "ficha_id": "{968dfdd5-45e7-4e02-8daf-4ee9af32ea16}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8c23add8-59b3-4a94-a3f2-65b6fa123e24}",
+    "ficha_id": "{52eeec6a-43f7-4684-91b8-bf1f1b060578}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3b8683a3-318e-4405-9b6f-8a398f1f7eb9}",
+    "ficha_id": "{9d4d951f-6073-404d-915c-ec9b04d7ec23}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c4c45f27-d723-4e3c-9bf7-bd4c32dd10f3}",
+    "ficha_id": "{1e69735e-3b54-48de-a1fe-efe03d057ded}",
+    "especie": "VACAS EN PRODUCCIÓN",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{17660324-94e8-41e8-a320-71ff51b3844b}",
+    "ficha_id": "{1107299a-5294-4da6-935d-fe25fc2c728f}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 8,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2407335e-2d30-4082-b684-ca91fea5bcb3}",
+    "ficha_id": "{1107299a-5294-4da6-935d-fe25fc2c728f}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{dc473ed3-6b52-41c8-bb4e-1eb5246867f1}",
+    "ficha_id": "{1107299a-5294-4da6-935d-fe25fc2c728f}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{07d5a62d-bc01-42e6-a877-0d20c7bbe4f0}",
+    "ficha_id": "{d673450a-3075-41e7-8e19-fda161dd52bd}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d9079b15-3274-4f86-9cf2-bf1a0e34f388}",
+    "ficha_id": "{d673450a-3075-41e7-8e19-fda161dd52bd}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{03238ca0-b11f-44b3-87ab-ad2652b686d7}",
+    "ficha_id": "{2ce4244c-d676-4d68-87d4-fbc5046861bc}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c4046079-6157-4b5b-b9b7-4b5e2ebea3bd}",
+    "ficha_id": "{2ce4244c-d676-4d68-87d4-fbc5046861bc}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a2238cd5-d80d-4888-a438-ce1aedeeeb77}",
+    "ficha_id": "{2ce4244c-d676-4d68-87d4-fbc5046861bc}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3ddcc4b8-973e-462a-aed2-1adc3115a508}",
+    "ficha_id": "{5472ccf0-9c6f-4d65-843e-3ea3940a0c93}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{933e43fd-1ee5-423e-8a93-81d264424883}",
+    "ficha_id": "{98f4aa5b-d87b-4b1b-8cc5-232491b2fca7}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{59410ccf-8289-45c0-bfd8-bf1a2b6b95fb}",
+    "ficha_id": "{98f4aa5b-d87b-4b1b-8cc5-232491b2fca7}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{859764f7-203a-4690-be96-d0c714689e28}",
+    "ficha_id": "{98f4aa5b-d87b-4b1b-8cc5-232491b2fca7}",
+    "especie": "Gallinas de campo",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{51bc8ec3-3725-4290-ac68-4bf26299134a}",
+    "ficha_id": "{de0f31cc-0b56-41ec-9e37-2a6329ee3381}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{bd09033d-2f81-49d1-80b2-a183d39ff6ed}",
+    "ficha_id": "{de0f31cc-0b56-41ec-9e37-2a6329ee3381}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{79a32a6d-58ad-4ced-9bca-3c5bd067b437}",
+    "ficha_id": "{4d7ed3a7-5b68-4a18-af8b-c40a8c5b0473}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2decc374-6479-4519-813d-aed55fd779f0}",
+    "ficha_id": "{4d7ed3a7-5b68-4a18-af8b-c40a8c5b0473}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7ad3a247-32a2-48ad-9a46-b3695111ce5a}",
+    "ficha_id": "{a00e749a-45f7-422b-a113-cdecb4aad253}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9cd197d5-4600-4d81-a5e5-3250c9930c69}",
+    "ficha_id": "{b814ebda-e3b2-4c21-885a-1c8accafc39a}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{38e9f277-916e-49f2-a9ef-70e7531a7e7b}",
+    "ficha_id": "{b814ebda-e3b2-4c21-885a-1c8accafc39a}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 35,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2701592c-0b2c-4e7a-b50a-e7660d22d911}",
+    "ficha_id": "{b814ebda-e3b2-4c21-885a-1c8accafc39a}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{936161b7-febb-4d3f-a59e-874fd56d1657}",
+    "ficha_id": "{6b436f39-5bcb-47d6-9ee3-c36171cca075}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9415fe1b-cf8c-42de-a811-e13115bb8dc2}",
+    "ficha_id": "{6b436f39-5bcb-47d6-9ee3-c36171cca075}",
+    "especie": "Gallinas de campo",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4bd453cc-8fd6-4ce1-ac17-771a7ac6f4d1}",
+    "ficha_id": "{5526f7d3-799a-4e4c-9f47-92e656e6d010}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{41ef0c45-e526-4650-8170-80cd8e9b5a79}",
+    "ficha_id": "{5526f7d3-799a-4e4c-9f47-92e656e6d010}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2c1cd495-da63-4cb0-8257-08f9fbce088d}",
+    "ficha_id": "{5526f7d3-799a-4e4c-9f47-92e656e6d010}",
+    "especie": "Gallinas de campo",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8baa96c6-5de0-498f-8c12-83f6eba5242b}",
+    "ficha_id": "{b72deb58-bc82-48f0-aaf7-8db412336601}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{df555248-c2ed-4431-a1ec-f4012cfdb08f}",
+    "ficha_id": "{b72deb58-bc82-48f0-aaf7-8db412336601}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7fe234a2-9a3d-4d6c-b815-683b435345a9}",
+    "ficha_id": "{b72deb58-bc82-48f0-aaf7-8db412336601}",
+    "especie": "Toretes",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a4aeb491-5a42-433a-8209-418ae58ffd82}",
+    "ficha_id": "{b72deb58-bc82-48f0-aaf7-8db412336601}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{81e4ff4a-46b2-408c-b2aa-02e1749780f8}",
+    "ficha_id": "{b72deb58-bc82-48f0-aaf7-8db412336601}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{509bde34-cda9-4b72-af4e-e21631a62ff5}",
+    "ficha_id": "{b39d9594-b8be-4329-aa23-25b2aa314016}",
+    "especie": "TERNEROS",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2c647688-ef84-4549-a6e1-e6e9f2a24da6}",
+    "ficha_id": "{7e7b30af-c7bd-43e7-b994-d05162551b44}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d811cca2-0988-49a1-acfb-515eeefc6afe}",
+    "ficha_id": "{7e7b30af-c7bd-43e7-b994-d05162551b44}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{71245ff0-612c-442b-8961-deba2724cc3d}",
+    "ficha_id": "{8c01fc48-990a-446c-b73a-6fa0a0afbb32}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6493b7fd-bbb1-4da8-a6db-6940369ca352}",
+    "ficha_id": "{00716b30-1d7f-4939-8cae-f83edd16b62d}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{57b55282-e39a-47f5-a100-e85ef4f5b884}",
+    "ficha_id": "{00716b30-1d7f-4939-8cae-f83edd16b62d}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6d3379f3-3819-4dc6-a9d5-6da7a2779c58}",
+    "ficha_id": "{00716b30-1d7f-4939-8cae-f83edd16b62d}",
+    "especie": "Terneras",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8ec1f386-855f-4cce-becb-3153f6b22329}",
+    "ficha_id": "{00716b30-1d7f-4939-8cae-f83edd16b62d}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c9be1bf3-206e-445a-9df1-698e95e5f9a5}",
+    "ficha_id": "{00716b30-1d7f-4939-8cae-f83edd16b62d}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 14,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b25dc0a6-a4e2-4c16-ae99-d4fab65af231}",
+    "ficha_id": "{db690e3c-bf2e-4756-86c7-77618b89f8e0}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{874d9fbe-cf6c-48fb-ae5f-eeffa4d83f6b}",
+    "ficha_id": "{b2accbc8-5702-4806-b158-154a6d3b0b7d}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5791f87c-b62c-4418-be38-1c9b90ab5b18}",
+    "ficha_id": "{b2accbc8-5702-4806-b158-154a6d3b0b7d}",
+    "especie": "Toretes",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{395f93e8-baad-489b-8981-d9c7b3f7257f}",
+    "ficha_id": "{b2accbc8-5702-4806-b158-154a6d3b0b7d}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2fa65fe5-5276-4afa-b413-ff1841b96ea7}",
+    "ficha_id": "{b2accbc8-5702-4806-b158-154a6d3b0b7d}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b0db8a00-ff51-4a83-883c-1f99cfc94d44}",
+    "ficha_id": "{b174a169-0777-4478-80b6-a460bbba08ae}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5cd04052-91c6-4dc3-b3ef-5a2c66f4951b}",
+    "ficha_id": "{b174a169-0777-4478-80b6-a460bbba08ae}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b78a1398-d206-4cac-a7ec-a4486ee8de49}",
+    "ficha_id": "{b174a169-0777-4478-80b6-a460bbba08ae}",
+    "especie": "TERNEROS",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0bd4692a-8180-42d2-a1d3-278a3cef7222}",
+    "ficha_id": "{b174a169-0777-4478-80b6-a460bbba08ae}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a21c301f-e93e-43e4-84f9-7afe9de98c03}",
+    "ficha_id": "{d5f9e2a4-9f51-4fde-803f-996e4d2c9792}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a4993460-a2f0-43e1-b8de-918eeec29228}",
+    "ficha_id": "{ebae129e-9aac-435c-9baa-13a43c32e231}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7e41c9eb-0e31-44aa-8ba4-d77d374ecf8c}",
+    "ficha_id": "{e7c26dcb-226d-46a5-9ed4-4e27fbdf3bb0}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{36a3b5e9-28ac-4701-8ca2-4d026034eba9}",
+    "ficha_id": "{e7c26dcb-226d-46a5-9ed4-4e27fbdf3bb0}",
+    "especie": "Terneros",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2a251817-2dcb-4a1a-b4a0-56a113e7b907}",
+    "ficha_id": "{e7c26dcb-226d-46a5-9ed4-4e27fbdf3bb0}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b367b211-fdfc-4802-931d-689a2430afd4}",
+    "ficha_id": "{915e51f1-7081-4393-9b59-05481e5ada8f}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{aabcba0e-4b98-4b7d-abe9-0117ca8f4299}",
+    "ficha_id": "{817821b6-17fd-429f-99e2-9e2dbc277390}",
+    "especie": "Vacas en producción",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{bae9e7af-a235-4afe-9c44-105de3f4fca7}",
+    "ficha_id": "{817821b6-17fd-429f-99e2-9e2dbc277390}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8ddd454a-6cb6-48ab-b136-8c2978e27104}",
+    "ficha_id": "{9c43e574-77d8-4ac2-a2ee-0f27230256f1}",
+    "especie": "Vaconas",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{50d91940-563f-4f39-8435-cc081d59e9b8}",
+    "ficha_id": "{9c43e574-77d8-4ac2-a2ee-0f27230256f1}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{028a0eff-068f-481f-b99e-d2e3ddc3db60}",
+    "ficha_id": "{9c43e574-77d8-4ac2-a2ee-0f27230256f1}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7024ea12-6e7a-45f6-8405-cf9dee5c594c}",
+    "ficha_id": "{9c43e574-77d8-4ac2-a2ee-0f27230256f1}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{14e8dcf9-9824-4947-b74a-08b7c8b8c59b}",
+    "ficha_id": "{25080524-97c3-41ba-acef-b7cc9277da31}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a14683a7-abe6-4534-a8de-120117d17fd7}",
+    "ficha_id": "{25080524-97c3-41ba-acef-b7cc9277da31}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 14,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b4660e62-df07-4b15-8531-ad6b835a2f52}",
+    "ficha_id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{05d028ac-5220-4361-a2b1-22f339888a46}",
+    "ficha_id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+    "especie": "CUYES / CONEJOS",
+    "cantidad": 100,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ab7638de-94f6-4f23-832d-e14d1c39a284}",
+    "ficha_id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+    "especie": "Gallinas de campo",
+    "cantidad": 25,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f9fb3ee2-45ac-451a-a531-e8efa6222135}",
+    "ficha_id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4d30f22e-d569-4b44-a37f-6b162e4c6bb7}",
+    "ficha_id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+    "especie": "TERNEROS",
+    "cantidad": 4,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ce46c3a4-1ae6-497b-b78d-c80f946a25cf}",
+    "ficha_id": "{8bf2c3c6-aafa-4a6a-8ed6-26455fe9f8d6}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{628369f1-481b-4976-9fc5-4835a38c7160}",
+    "ficha_id": "{8bf2c3c6-aafa-4a6a-8ed6-26455fe9f8d6}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 8,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{490e78a9-aabf-47a3-b169-3cfced3f25ea}",
+    "ficha_id": "{8395f019-602b-416c-86f5-3de801709c3f}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7df28a1c-d149-46e8-a219-700d3b4fdbf0}",
+    "ficha_id": "{8395f019-602b-416c-86f5-3de801709c3f}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b965278d-fc75-4de3-8cfd-76c793b25746}",
+    "ficha_id": "{8395f019-602b-416c-86f5-3de801709c3f}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0d1f201c-fbd7-4a08-9fa1-e502f944ee53}",
+    "ficha_id": "{1723c788-8aba-47a1-b975-f7cabce81a65}",
+    "especie": "Vaconas",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cc7a5aa2-8fe3-4873-9413-c86467365b9c}",
+    "ficha_id": "{1723c788-8aba-47a1-b975-f7cabce81a65}",
+    "especie": "Toretes",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b9e6002d-4703-481b-8fa0-5f5975b4d5bf}",
+    "ficha_id": "{258b9e12-1677-4e3e-8e14-8a18b8ba4205}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{94b27fd1-4622-4239-b9da-dceb9b8f6534}",
+    "ficha_id": "{258b9e12-1677-4e3e-8e14-8a18b8ba4205}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{bcdc22fb-259b-4a5c-8d0c-57049bcfff34}",
+    "ficha_id": "{2e0223ae-dcfb-4d4b-89f8-6612cc116126}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 8,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cce750d3-3539-499d-83f8-20d988f2bbf9}",
+    "ficha_id": "{2e0223ae-dcfb-4d4b-89f8-6612cc116126}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cf2f396a-191a-4e46-876c-7787a01f9ea2}",
+    "ficha_id": "{7d5ccf9c-fd3f-47d0-a68e-f7b2e4d091c0}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{054be8f3-fb4f-43e9-9b61-a0e766aa21ab}",
+    "ficha_id": "{85b98131-8f81-4b6b-bf20-635be2ccc618}",
+    "especie": "Vacas secas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{65809ac4-c553-4101-af75-3ab10ae36faf}",
+    "ficha_id": "{85b98131-8f81-4b6b-bf20-635be2ccc618}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 8,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{490fa67f-022f-4cbd-8182-b160c1d016bf}",
+    "ficha_id": "{dcf54571-eb66-40ca-bf00-645801875ace}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{73fe075f-7e0c-42f1-a75a-0b882edf9b85}",
+    "ficha_id": "{dcf54571-eb66-40ca-bf00-645801875ace}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 26,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9f334c60-16d7-463f-ae13-5ed00f7b25d4}",
+    "ficha_id": "{d28c0fe0-ecff-4212-9bab-48a04f9d01c3}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{22105c50-8278-4c22-b2c3-b318eec244b2}",
+    "ficha_id": "{4610142b-8083-40f0-a0eb-f106fa0cb1c4}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{96768662-e9bf-4644-979f-93d8a98ca952}",
+    "ficha_id": "{a4d37ec4-847a-4cac-8c4d-14e9b05b9339}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a1caed23-5dac-446f-b81a-dfe4a78796d1}",
+    "ficha_id": "{a4d37ec4-847a-4cac-8c4d-14e9b05b9339}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d1e15267-f3a1-405f-bcfd-68a5b6be99cb}",
+    "ficha_id": "{54dcd39c-9baf-4830-9975-876efb219f2a}",
+    "especie": "Vacas en producción",
+    "cantidad": 9,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8b0dd41c-3c1b-4e4b-9914-83a37c5bf534}",
+    "ficha_id": "{54dcd39c-9baf-4830-9975-876efb219f2a}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{64105dc8-34f4-4732-b844-6a999c9007e4}",
+    "ficha_id": "{4667986d-9fa0-43e3-b324-5f437dad6a88}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6083761e-b1ab-4db4-825d-dbc4aa84cc66}",
+    "ficha_id": "{4667986d-9fa0-43e3-b324-5f437dad6a88}",
+    "especie": "Terneros",
+    "cantidad": 6,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2c4fa564-3f81-4494-8c86-5d08d369d558}",
+    "ficha_id": "{d3f7411c-02cf-40ba-a59a-d9e544541bd7}",
+    "especie": "Terneros",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0f4847dc-5a15-449c-823d-4142a289dd81}",
+    "ficha_id": "{2ac9b548-a011-48e0-8280-a0fe06ccaff9}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{78e77239-cdcd-41e7-b37e-56942cec0043}",
+    "ficha_id": "{2ac9b548-a011-48e0-8280-a0fe06ccaff9}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7e921dc8-9528-4e43-a671-2a77ff2e2234}",
+    "ficha_id": "{c73c1e8a-457c-49c6-8866-55d82bd1f7fc}",
+    "especie": "Vacas en producción",
+    "cantidad": 8,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{86d96234-670b-4193-a5df-033af8626b6d}",
+    "ficha_id": "{c73c1e8a-457c-49c6-8866-55d82bd1f7fc}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a40d1da0-a916-4534-98b1-87836204823b}",
+    "ficha_id": "{b9279f38-f3a1-4534-a627-b52602b2ffec}",
+    "especie": "Vacas secas",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ade319f9-b7fd-4463-815d-58d379676297}",
+    "ficha_id": "{bdbeb8ac-8140-445a-ace5-7a94ce7cb6d8}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{daf6c102-d730-43de-aa87-c5c474ed5355}",
+    "ficha_id": "{e42a6b84-b03a-43a5-a228-9d7b40c53ff4}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a4548b54-0e98-4775-827a-5212d6024165}",
+    "ficha_id": "{e42a6b84-b03a-43a5-a228-9d7b40c53ff4}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e0444109-7abe-4238-ac00-0e4bfa718ca6}",
+    "ficha_id": "{f9377eef-04aa-4b09-a0bf-4b568e7d8eee}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5dc5c89e-c100-416b-b76b-fa27b00d8a1b}",
+    "ficha_id": "{c80dfb0d-513c-41bd-a8bd-0fb21f8430fd}",
+    "especie": "Vacas secas",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{964b2a81-ebc3-4a7f-a652-513d5d4664f8}",
+    "ficha_id": "{c80dfb0d-513c-41bd-a8bd-0fb21f8430fd}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0f2d67da-319b-42d0-b98f-38b2853430a4}",
+    "ficha_id": "{c80dfb0d-513c-41bd-a8bd-0fb21f8430fd}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{04c99a35-c906-44e5-ac6f-7af0c9860c8c}",
+    "ficha_id": "{b1751878-81d1-4015-a671-c6ac6fa56d6c}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5e8e215a-da32-4c4a-906c-2a546fac0970}",
+    "ficha_id": "{b1751878-81d1-4015-a671-c6ac6fa56d6c}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{056e5ed5-312a-4d18-9653-5a0a4adfc420}",
+    "ficha_id": "{b1751878-81d1-4015-a671-c6ac6fa56d6c}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6808f596-2929-4175-bfd0-5a4210212a7a}",
+    "ficha_id": "{34395bbf-8878-431d-a98b-4738bfdd0da9}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{dffd4372-861d-4618-bdd1-19d789b597b8}",
+    "ficha_id": "{34395bbf-8878-431d-a98b-4738bfdd0da9}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{2bc2e85f-af4a-4dc9-b767-4f142e51d9eb}",
+    "ficha_id": "{34395bbf-8878-431d-a98b-4738bfdd0da9}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e72aa224-bbc1-4cff-a0ad-0ec0e4adaa02}",
+    "ficha_id": "{6104f134-92e5-4598-8533-bf58c224232c}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cdb4856c-528b-4a61-8802-03444cd32451}",
+    "ficha_id": "{6104f134-92e5-4598-8533-bf58c224232c}",
+    "especie": "Terneros",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{037b2bc9-580c-45d5-9efa-b708dd7e68ca}",
+    "ficha_id": "{c7ba661c-703a-47f2-823e-eb8f2236b46c}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a09aa8bb-22cf-4226-ae03-8fed9ed44a03}",
+    "ficha_id": "{c7ba661c-703a-47f2-823e-eb8f2236b46c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 40,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{83d94e1a-eaaa-493b-88aa-d1067578236a}",
+    "ficha_id": "{e47bd8d3-bf9e-4387-9696-46d70bd0aeeb}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{893ca7ef-f9c9-4caf-bab2-19ecc024f513}",
+    "ficha_id": "{e47bd8d3-bf9e-4387-9696-46d70bd0aeeb}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 40,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{29f0e45b-2483-49f6-b77c-18abbf69cf2a}",
+    "ficha_id": "{d60048d0-a16b-47eb-ac6e-b18382d63531}",
+    "especie": "Vacas secas",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{45520b76-70d0-4001-98f2-205578b21b6b}",
+    "ficha_id": "{65e6b200-b402-4f91-977a-a8fd96012cf5}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{1587f9e9-86bb-4ec7-bfb3-65b58650d87a}",
+    "ficha_id": "{65e6b200-b402-4f91-977a-a8fd96012cf5}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f7ae55d7-1757-4f4f-9eb8-413e88274fa1}",
+    "ficha_id": "{592f6fd0-ecf0-4e6b-908e-b29ef5e99aa5}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{14f396ac-80e6-4c57-b296-f02812f723db}",
+    "ficha_id": "{592f6fd0-ecf0-4e6b-908e-b29ef5e99aa5}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 14,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{af7dc13a-e1d4-4ff9-8caf-edd009982c34}",
+    "ficha_id": "{e7f32332-330e-4b94-8380-b36e1cded925}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d44c6541-817d-4209-8897-be151a4ec6c3}",
+    "ficha_id": "{e7f32332-330e-4b94-8380-b36e1cded925}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{211cb2b7-3515-470d-ab3f-e8f662e4243f}",
+    "ficha_id": "{ed70f3ea-cc13-4445-8a8e-1007bcbc8b72}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{aed395d3-a783-471c-b335-a75fb9eda27a}",
+    "ficha_id": "{ed70f3ea-cc13-4445-8a8e-1007bcbc8b72}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{619d35f4-4363-4583-ac11-7d5b65af5149}",
+    "ficha_id": "{fd93f4c7-e860-4da2-b50f-25d74f6ccab6}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8e250d39-d020-4e6a-862d-ce828df3ea73}",
+    "ficha_id": "{fd93f4c7-e860-4da2-b50f-25d74f6ccab6}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fc8ab88c-2d15-477b-892a-ca3259c9720b}",
+    "ficha_id": "{fd93f4c7-e860-4da2-b50f-25d74f6ccab6}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e70ec617-b3c6-4be8-913e-55029d170da6}",
+    "ficha_id": "{4a485b5a-3f3e-4aa8-99ad-79bc09b46f48}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d3591fc8-3a8f-430f-889b-12ecaae10265}",
+    "ficha_id": "{4a485b5a-3f3e-4aa8-99ad-79bc09b46f48}",
+    "especie": "Terneros",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e6a481c2-e28f-4c1e-b6a5-688f3204aea6}",
+    "ficha_id": "{6be80492-3e8e-4a7e-b358-6c3faa6fee09}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d23617e8-1a9b-4d6a-b7fb-609a3cfebd98}",
+    "ficha_id": "{6be80492-3e8e-4a7e-b358-6c3faa6fee09}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b70f37c2-f116-45ea-9ad2-8d2093ba6d49}",
+    "ficha_id": "{81fbfb3e-d223-497d-8448-15ee2e1aaca2}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b6d7bdf6-01fe-4d0d-8b12-8f1770899e5b}",
+    "ficha_id": "{81fbfb3e-d223-497d-8448-15ee2e1aaca2}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{dc686694-dda8-4812-9d99-b1c54bd60610}",
+    "ficha_id": "{5f9adba2-e535-45c6-a44e-cf233297ce49}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6b2f5865-b7d2-40ec-b7c6-57cc643c7d90}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 150,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{18913f38-8833-41f3-9e61-65df54a64cac}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Vacas en producción",
+    "cantidad": 14,
+    "es_agroindustria": 1
+  },
+  {
+    "id_animal": "{49d37daa-bfce-4bcd-a6c1-09674d907898}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Vaconas",
+    "cantidad": 13,
+    "es_agroindustria": 1
+  },
+  {
+    "id_animal": "{bf43cc28-f08a-4986-a9a0-e594c09fdf97}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Terneros",
+    "cantidad": 5,
+    "es_agroindustria": 1
+  },
+  {
+    "id_animal": "{c89df700-1ffb-4b0c-9cc8-29956e8dcf3d}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f4da374f-6f17-4580-a996-40be029b2da3}",
+    "ficha_id": "{53d1ed52-2c6c-406b-bbcc-80c59e44a43c}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{36396f80-c9f3-4e4e-b389-48ac94313afa}",
+    "ficha_id": "{716d6de5-a80e-4430-863b-1680a3ca7175}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{bd1791e8-b555-4236-b132-ce40c5797b1f}",
+    "ficha_id": "{55b6257e-c139-4699-9a4f-b01d40a6acd7}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9ca69504-7fa8-47dd-9204-705855f60c75}",
+    "ficha_id": "{55b6257e-c139-4699-9a4f-b01d40a6acd7}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{64fde325-7412-4971-b243-4bf4544caf19}",
+    "ficha_id": "{b6ff6529-8928-4371-a3be-d4b5edeb4ed9}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{fb04e262-5d5b-4c4f-bf56-b38c924ade3f}",
+    "ficha_id": "{b6ff6529-8928-4371-a3be-d4b5edeb4ed9}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{449c24b4-13be-4dcf-8676-fc8dd46ecca7}",
+    "ficha_id": "{ad688211-67e4-4497-b152-fd6444385ed3}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4ebbdc80-5632-4a2d-9d6c-01d500d36dd2}",
+    "ficha_id": "{ad688211-67e4-4497-b152-fd6444385ed3}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d338321d-2b0e-46c6-8a3e-02176816d7af}",
+    "ficha_id": "{5218b801-ef15-4dd1-b0cc-8c142e8eecfb}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{44bf18c1-9bd8-4229-bb44-c142a3d58c01}",
+    "ficha_id": "{6affb2ca-518f-4404-bc0f-a6e78d39deca}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{531ab1f5-9f6b-4d03-9628-d847bbc0e373}",
+    "ficha_id": "{6affb2ca-518f-4404-bc0f-a6e78d39deca}",
+    "especie": "TERNEROS",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ae00aa00-428b-4b04-ac70-af0977d99645}",
+    "ficha_id": "{6affb2ca-518f-4404-bc0f-a6e78d39deca}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f2709bc0-4f32-494f-ac32-8b869abcc0ad}",
+    "ficha_id": "{2c61759c-a314-463e-8254-8c1f73cf7f61}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{79b8188a-2bc3-416a-9c20-58d28f738bed}",
+    "ficha_id": "{2c61759c-a314-463e-8254-8c1f73cf7f61}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b035e9c0-75f6-4573-a877-a6dfc987580d}",
+    "ficha_id": "{2c61759c-a314-463e-8254-8c1f73cf7f61}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{303c8a02-d724-451a-b2c9-403eee8343e0}",
+    "ficha_id": "{e6911808-6dd5-4491-aaa6-0f5ae8b91b49}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{99f3ceb3-eac8-4122-b0cc-bc65593961e2}",
+    "ficha_id": "{e6911808-6dd5-4491-aaa6-0f5ae8b91b49}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b26b27e8-58b2-4093-a29f-401fb61c6d8c}",
+    "ficha_id": "{f3e9e66e-49a3-4afc-b59e-dae2a7584144}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{482ba681-383c-47f3-97f3-ba998cf0f228}",
+    "ficha_id": "{f3e9e66e-49a3-4afc-b59e-dae2a7584144}",
+    "especie": "Toretes",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{325a7516-7141-46d1-a0b4-3b05dedae525}",
+    "ficha_id": "{24bb6353-775c-4f5d-8ad2-aa21a4645a18}",
+    "especie": "Vacas en producción",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6fb29bdd-2103-4db5-8f4d-cf12a3dc869b}",
+    "ficha_id": "{24bb6353-775c-4f5d-8ad2-aa21a4645a18}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{209c8a99-b332-417e-86a2-bd7ca09a7369}",
+    "ficha_id": "{24bb6353-775c-4f5d-8ad2-aa21a4645a18}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{02db89ed-e77c-4bed-ae2c-bd3c314a8211}",
+    "ficha_id": "{24bb6353-775c-4f5d-8ad2-aa21a4645a18}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{70301cbe-ec76-440b-ab40-f4d38879f557}",
+    "ficha_id": "{518003c3-3f86-47bf-947a-7d5e996a1ede}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4892f5ed-ea96-4240-b243-64c98177e88a}",
+    "ficha_id": "{1958c318-5e9b-4ab6-95e7-72e48563ca00}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7ff84927-cb52-4da5-8f5c-dc02d391af46}",
+    "ficha_id": "{1958c318-5e9b-4ab6-95e7-72e48563ca00}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{44101374-5774-499a-8c2c-99b180eb3e2c}",
+    "ficha_id": "{effca747-3ebe-4a85-acb5-721de8a0da88}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{34593937-3d51-4749-af91-45d076ccaf67}",
+    "ficha_id": "{effca747-3ebe-4a85-acb5-721de8a0da88}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d8b6733d-0920-4b5d-a82c-a0c38c8fdb00}",
+    "ficha_id": "{c5a4b1c1-06fc-4e55-b465-06d9b790a502}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{39276f91-0942-4c96-a901-3888d490ba59}",
+    "ficha_id": "{c5a4b1c1-06fc-4e55-b465-06d9b790a502}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{bf7d8d29-7c12-487e-bbba-fe0df16cd66d}",
+    "ficha_id": "{c5a4b1c1-06fc-4e55-b465-06d9b790a502}",
+    "especie": "Pollos de engorde",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{27c70bdb-fda2-454e-972e-f0a297a91a38}",
+    "ficha_id": "{64517f52-6bbf-4c48-91d2-717d9b42ae34}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{92329e8c-4cd5-4ab0-b6d7-f8740ae2395e}",
+    "ficha_id": "{64517f52-6bbf-4c48-91d2-717d9b42ae34}",
+    "especie": "Gallinas de campo",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cdf24512-d3e9-4d2d-81d0-75ccda29bf72}",
+    "ficha_id": "{64517f52-6bbf-4c48-91d2-717d9b42ae34}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{570ccd5a-7619-4692-9df3-5a48e56a50ea}",
+    "ficha_id": "{64517f52-6bbf-4c48-91d2-717d9b42ae34}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e234c343-548c-4f60-be54-26119c374c83}",
+    "ficha_id": "{64517f52-6bbf-4c48-91d2-717d9b42ae34}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0cc0179b-643e-46ff-b342-112459c5a63f}",
+    "ficha_id": "{299c16f5-d5ee-4a0e-ae38-5f727a555af4}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4c3853e4-0177-4f31-8ffb-d4ff6a4abcc3}",
+    "ficha_id": "{b8dda10a-66f9-46c1-9edf-621a9a291c9c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 70,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2c1b5f8e-c176-447f-923d-0b507cbde5c9}",
+    "ficha_id": "{b8dda10a-66f9-46c1-9edf-621a9a291c9c}",
+    "especie": "Gallinas de campo",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b1292e8f-1e44-4261-b0e4-b6caad624c8e}",
+    "ficha_id": "{e9bd97aa-d4ff-4089-aec4-6e0e0f9f21cf}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c7c55fc3-779b-45dd-91b4-344f5f4fa31e}",
+    "ficha_id": "{e9bd97aa-d4ff-4089-aec4-6e0e0f9f21cf}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{91e2a375-0b57-4e74-98b0-5ce1006f9e5d}",
+    "ficha_id": "{e9bd97aa-d4ff-4089-aec4-6e0e0f9f21cf}",
+    "especie": "Gallinas de campo",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{87a61816-56f4-4ab2-a1e7-a53732ecfb36}",
+    "ficha_id": "{a8d151bb-cbb5-4877-97c3-67a5bf8d5e06}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f76349d7-463c-465b-8880-694e790d8f53}",
+    "ficha_id": "{a8d151bb-cbb5-4877-97c3-67a5bf8d5e06}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{90226cf8-ca12-4d87-8d0c-c3f4d09bd684}",
+    "ficha_id": "{a8d151bb-cbb5-4877-97c3-67a5bf8d5e06}",
+    "especie": "Gallinas de campo",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e1d0e3e0-48d6-4855-878c-9404122809fb}",
+    "ficha_id": "{a8d151bb-cbb5-4877-97c3-67a5bf8d5e06}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7b122df1-8afe-4701-93ae-f2a6c6ac7711}",
+    "ficha_id": "{1ca0f6e9-fd3e-4f99-8b2b-0bc729c2443e}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e64f62b6-f447-4416-b128-a4bc4d543856}",
+    "ficha_id": "{1ca0f6e9-fd3e-4f99-8b2b-0bc729c2443e}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b8db7083-36c0-4c63-bb51-28546da847da}",
+    "ficha_id": "{a2908a3b-ebe5-4425-82a3-387551c403e9}",
+    "especie": "Vacas en producción",
+    "cantidad": 6,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e981c1bf-4055-444d-9016-1d2030b90bc0}",
+    "ficha_id": "{a2908a3b-ebe5-4425-82a3-387551c403e9}",
+    "especie": "Terneros",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{04f5aa5c-32af-48da-84ee-82933d6fa98d}",
+    "ficha_id": "{a2908a3b-ebe5-4425-82a3-387551c403e9}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{73fe19e4-c82f-44c3-b9c6-3c1238ef05e3}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{58cc4089-6847-4fd0-a52b-838ed4ecca03}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e560696e-4fdf-409f-9d6d-5a3ae9a3d793}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "especie": "Pollos de engorde",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4f9a6120-8ce5-49bf-be46-f659de334a6a}",
+    "ficha_id": "{6d630e5a-d819-4652-97d2-ac8d7ae66b69}",
+    "especie": "Gallinas de campo",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2e2d67d9-125f-4ea3-a759-00da56c28f2a}",
+    "ficha_id": "{209f3040-39df-4277-b491-1d60d5f4c434}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 25,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0161e667-0d7c-4b80-9252-b87e60873845}",
+    "ficha_id": "{209f3040-39df-4277-b491-1d60d5f4c434}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{64f1dad1-481d-47a2-afbd-1b047616b774}",
+    "ficha_id": "{209f3040-39df-4277-b491-1d60d5f4c434}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7eedc02b-bd0b-41e5-8c80-dc86732c043b}",
+    "ficha_id": "{209f3040-39df-4277-b491-1d60d5f4c434}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c8e01da4-a76f-4d03-84e7-81ddad2423dd}",
+    "ficha_id": "{05ee2c12-9f32-4d25-899d-6e6c4fca5ce0}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c10d5ba4-2ae8-4b55-a87c-4177f1919dcd}",
+    "ficha_id": "{05ee2c12-9f32-4d25-899d-6e6c4fca5ce0}",
+    "especie": "Terneros",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{bbe5646d-b549-48a1-8c7f-11c911aed7a9}",
+    "ficha_id": "{577f28a7-d471-406a-8ae2-d47c06d9230b}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{74859026-1cac-4879-9689-751d2086db18}",
+    "ficha_id": "{e2674918-2021-48bd-8833-9bb1e2b5969f}",
+    "especie": "Otros",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "especie_otro": "Burros"
+  },
+  {
+    "id_animal": "{8fb62340-ba10-46b4-aa42-a0404b108856}",
+    "ficha_id": "{868326b0-ba41-4677-90be-3dc9df2f30a7}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e64fff61-7f42-4b16-927e-32bd9d76bb95}",
+    "ficha_id": "{868326b0-ba41-4677-90be-3dc9df2f30a7}",
+    "especie": "Gallinas de campo",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8551235c-fa69-4d20-b563-844292a43559}",
+    "ficha_id": "{868326b0-ba41-4677-90be-3dc9df2f30a7}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{eec42b68-a9ff-463b-af5a-ac034607dde5}",
+    "ficha_id": "{ce3b1fd1-4138-4ff8-a1fe-d1429c72df97}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8525880c-29d2-4d58-bbd7-9156b5dc8df1}",
+    "ficha_id": "{2cae0c7b-4324-4277-b282-b702e313fa51}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8c4d772c-9778-4c87-a424-5a1a61b8b66b}",
+    "ficha_id": "{2cae0c7b-4324-4277-b282-b702e313fa51}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{93530195-0e86-463f-abd4-a6f9b15803c3}",
+    "ficha_id": "{2cae0c7b-4324-4277-b282-b702e313fa51}",
+    "especie": "Gallinas de campo",
+    "cantidad": 21,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{70b05574-b115-4635-8f41-50ba7870d0ed}",
+    "ficha_id": "{2cae0c7b-4324-4277-b282-b702e313fa51}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f20c93ff-5377-4f10-a182-774fb91d2e9b}",
+    "ficha_id": "{2cae0c7b-4324-4277-b282-b702e313fa51}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{fc3a17ba-f20e-4269-bc32-85289cba1511}",
+    "ficha_id": "{63d64fb9-198b-436d-a5dc-9196610b01cb}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5ec752c8-bab5-4306-943e-a51f06e41d16}",
+    "ficha_id": "{63d64fb9-198b-436d-a5dc-9196610b01cb}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f7bf1347-209b-4113-8e37-0620d648b21b}",
+    "ficha_id": "{87fa7b24-444c-495a-b01e-97565ef76c7f}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{050d0849-87ac-4736-af90-4f7a756ec210}",
+    "ficha_id": "{87fa7b24-444c-495a-b01e-97565ef76c7f}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d958dd8f-e9a4-47c3-ac72-f423e7bf72be}",
+    "ficha_id": "{87fa7b24-444c-495a-b01e-97565ef76c7f}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cb88e8c2-4504-4b7f-9e33-8b7f1b1d1395}",
+    "ficha_id": "{98f1fb3d-54c2-4abc-b60c-73ba024f7c76}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6594673b-a729-4f5a-aec2-3ea27756f0bf}",
+    "ficha_id": "{98f1fb3d-54c2-4abc-b60c-73ba024f7c76}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e483b00c-699c-4e97-a4c4-0aaac6bd7fad}",
+    "ficha_id": "{98f1fb3d-54c2-4abc-b60c-73ba024f7c76}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 70,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5dbd4382-0bf1-460c-9efb-42d91134ba5f}",
+    "ficha_id": "{98f1fb3d-54c2-4abc-b60c-73ba024f7c76}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 25,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c6e2ce95-8dd9-4162-80ec-b704e2b2f3ee}",
+    "ficha_id": "{d7af62d3-3241-4ea5-b6b1-344a2ebefc19}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{182d11f0-80fc-41ad-aa24-a2e389b21077}",
+    "ficha_id": "{d7af62d3-3241-4ea5-b6b1-344a2ebefc19}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3f4617c2-8b38-462b-8127-31b6e55cb21b}",
+    "ficha_id": "{d7af62d3-3241-4ea5-b6b1-344a2ebefc19}",
+    "especie": "Gallinas de campo",
+    "cantidad": 14,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{78dedba6-1489-4bd6-891c-f655fb48135e}",
+    "ficha_id": "{df80cd40-5100-4869-9c3f-30fa482f6622}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{fae41c28-e38c-4e4d-839e-3e6d391651ea}",
+    "ficha_id": "{df80cd40-5100-4869-9c3f-30fa482f6622}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a46998c7-9bd0-49cb-8f95-662ac832e577}",
+    "ficha_id": "{df80cd40-5100-4869-9c3f-30fa482f6622}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{edc5fc6f-069b-4ed4-a185-031fe1dd4363}",
+    "ficha_id": "{df80cd40-5100-4869-9c3f-30fa482f6622}",
+    "especie": "Gallinas de campo",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{98d89d52-53b7-48fa-95f7-ec89a56723a2}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ad7848fa-aea3-4451-ab8a-9370944eeadd}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c94a0ab7-eb57-4924-949a-0fcf0a2ea079}",
+    "ficha_id": "{529ae0a2-c594-408e-9cfb-744c2f3d717e}",
+    "especie": "Toros",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0f9c9a66-cd39-4da8-97ea-6ffa94e316fc}",
+    "ficha_id": "{16d4eb8d-e12f-4ae8-ac4a-e77fcc344b18}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4009ce0c-7f66-4fce-a51e-7583f0f056c3}",
+    "ficha_id": "{16d4eb8d-e12f-4ae8-ac4a-e77fcc344b18}",
+    "especie": "Gallinas de campo",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ab88b0b0-500c-43a1-a371-01be8919ec4a}",
+    "ficha_id": "{16d4eb8d-e12f-4ae8-ac4a-e77fcc344b18}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3d332cd3-6c8b-42e7-beff-c0b718bb8292}",
+    "ficha_id": "{ff47aecd-80b9-48b3-9db8-44cfc0273214}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0caa7cac-de59-4066-bacc-b268d39cdeb8}",
+    "ficha_id": "{ff47aecd-80b9-48b3-9db8-44cfc0273214}",
+    "especie": "Terneros",
+    "cantidad": 5,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7ef73fea-434f-4e5d-ae01-0de685bb8592}",
+    "ficha_id": "{ff47aecd-80b9-48b3-9db8-44cfc0273214}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f6361873-621a-47bd-b70a-8405ffb3f880}",
+    "ficha_id": "{ff47aecd-80b9-48b3-9db8-44cfc0273214}",
+    "especie": "Gallinas de campo",
+    "cantidad": 15,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2c50edf6-98e2-42ec-82ee-5521f0a3e4e5}",
+    "ficha_id": "{63d8966c-142f-4ffc-802e-b9d6e0b3514c}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e8c0e0ae-fa88-4b84-a918-ecb0eba0fb36}",
+    "ficha_id": "{63d8966c-142f-4ffc-802e-b9d6e0b3514c}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ab7df432-64c8-4538-940b-6d2f7e9b9f6e}",
+    "ficha_id": "{fdc21531-f0f5-4f21-b3b9-0a4db190c503}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{cdf7af9f-45b8-4849-8d74-04ded1c115b6}",
+    "ficha_id": "{fdc21531-f0f5-4f21-b3b9-0a4db190c503}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c3c065d4-f0cd-4bbe-8127-a5409235261c}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Vacas en producción",
+    "cantidad": 10,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{498797f7-e612-4838-91d8-725c9afe083f}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Vacas secas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{7c260740-ac22-4f7b-bc1d-7d118b13a858}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Vaconas",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{dcfd16b0-1060-4f20-912b-e7ec13476c1e}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Toretes",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{025dcc6e-3cb5-49af-8fcb-fa860015ee42}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Terneras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fc7b4b61-e1e4-4f53-93a1-5c271cd3c0ef}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5a051f50-01a0-436f-969b-b6ba2ba8040e}",
+    "ficha_id": "{544d251a-6ff3-48a1-89b4-ba51b3ca7c28}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 250,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8abf9fc7-f4e4-4c96-b8b2-28ca34f4c07e}",
+    "ficha_id": "{d6989db0-dbca-4dbd-90b5-7d3b73b81b64}",
+    "especie": "VACAS SECAS",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a386d9ef-f0dd-4533-8a3f-aaf7edafc761}",
+    "ficha_id": "{d6989db0-dbca-4dbd-90b5-7d3b73b81b64}",
+    "especie": "Gallinas de campo",
+    "cantidad": 8,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{9d7d8fe5-9b03-47bd-b280-ae5f2ac7d1c4}",
+    "ficha_id": "{cf678a6f-6942-428a-896f-7dc5207d9d26}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{01d260d0-8830-449e-9685-9cbe112c3c35}",
+    "ficha_id": "{cf678a6f-6942-428a-896f-7dc5207d9d26}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4ee24166-40a7-4a01-9dfe-4c3d67829535}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{53af1b14-c472-4f09-92a2-cd5dadd78e47}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{81fff8c3-e3b1-458a-9bc6-202eb0db7e0f}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8be5a8dc-a024-4a26-bf61-dc482e341f91}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e6caff48-6cb6-4868-a8cc-f79b08559853}",
+    "ficha_id": "{12071618-6362-4e28-93f0-d79009968464}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{fdf69333-9293-4515-bd7c-15a76da4f55b}",
+    "ficha_id": "{5de068f7-5fec-4458-8032-db92db3a023e}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ab5af21b-481d-459e-ae72-81d9e970bb3b}",
+    "ficha_id": "{5de068f7-5fec-4458-8032-db92db3a023e}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cf9c67c6-1e41-463e-93ab-87d9f3b43d72}",
+    "ficha_id": "{ff7f62de-d90c-4a2b-888e-ab1b4c9c8ee8}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{185ee693-5846-4f38-ab84-c17f11799a88}",
+    "ficha_id": "{ff7f62de-d90c-4a2b-888e-ab1b4c9c8ee8}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{db6681f6-9c06-4d87-8e4e-64d00d2f9a7b}",
+    "ficha_id": "{ff7f62de-d90c-4a2b-888e-ab1b4c9c8ee8}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{7cbe5d70-825f-4ae1-bbbe-73c375ed6eb5}",
+    "ficha_id": "{192338da-e88a-466a-9445-31e35caa2421}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4a673444-605b-4658-b05f-9e1e4f7a5b20}",
+    "ficha_id": "{192338da-e88a-466a-9445-31e35caa2421}",
+    "especie": "Toretes",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fd7a42e5-fbd5-4dd3-9a24-ac1e0b9ca917}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "especie": "VACAS EN PRODUCCIÓN",
+    "cantidad": 6,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0c4bb17a-38fe-4458-b3fe-b6e57da7f328}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "especie": "Gallinas de campo",
+    "cantidad": 10,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{82bfb000-8950-4db3-b9be-42f69d019b73}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{132a69fb-f572-43fb-86bf-13718c19597c}",
+    "ficha_id": "{7c83f11b-5eb5-4209-aa11-ec60dad504a8}",
+    "especie": "Otros",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "especie_otro": "Patos"
+  },
+  {
+    "id_animal": "{c81e6912-d052-46b0-b1fc-8afc7d6fbd07}",
+    "ficha_id": "{b722580f-e5e3-4bc0-833f-26f26f71d620}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b5add057-90fd-4ce9-8fa3-cfec4b4700a4}",
+    "ficha_id": "{b722580f-e5e3-4bc0-833f-26f26f71d620}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8571908f-39da-472c-8072-ad99ea8e39d6}",
+    "ficha_id": "{d6180a9a-1159-4340-bca8-95fdb2c47dbf}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{faf76040-eba5-4efa-8630-42a7111d133d}",
+    "ficha_id": "{3d0414f2-a160-4494-b863-c0e6783c66cf}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{973f6f1e-d29a-4936-9628-9f53ede7e583}",
+    "ficha_id": "{3d0414f2-a160-4494-b863-c0e6783c66cf}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9bf9e796-8151-4e52-9777-df466e2d77c8}",
+    "ficha_id": "{ae307573-70d2-40be-9093-b4379d8fec8a}",
+    "especie": "CUYES / CONEJOS",
+    "cantidad": 30,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c133fd88-908e-4d4f-b8d1-2072b16db9f5}",
+    "ficha_id": "{ae307573-70d2-40be-9093-b4379d8fec8a}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{99d9b659-7e12-4959-84f5-06e44df2c54b}",
+    "ficha_id": "{86099e9b-3a56-4cc3-9674-6c088ac81af3}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 15,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8798cdf0-7213-421e-bcc6-908953edd8cc}",
+    "ficha_id": "{86099e9b-3a56-4cc3-9674-6c088ac81af3}",
+    "especie": "Vacas secas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{31bae02f-f1f7-488a-bffe-ee68b7e9916d}",
+    "ficha_id": "{77a233df-9cf3-4286-9d55-eb7356835e92}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f9bd634c-de08-4f91-a0f5-7f28e9580019}",
+    "ficha_id": "{ade2d88a-c6ef-4ab0-b8ab-71f11e82170d}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{c17166f3-3910-4f1e-8f28-d4022477b94e}",
+    "ficha_id": "{092354e4-27a3-4fc9-97ed-316476471edb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{94c86b74-c93c-4c99-8f0a-63ed5c065266}",
+    "ficha_id": "{092354e4-27a3-4fc9-97ed-316476471edb}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{a5841a42-4823-4c59-bfd5-ca51135e9cb1}",
+    "ficha_id": "{092354e4-27a3-4fc9-97ed-316476471edb}",
+    "especie": "Gallinas de campo",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{aedf4cc3-68e5-4ec9-b04e-98c87900fa3f}",
+    "ficha_id": "{a6320c6e-73bb-4874-8bcc-e64453ba7d03}",
+    "especie": "Vacas en producción",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3131348b-6fd6-4db8-b5c4-692d501eeffe}",
+    "ficha_id": "{a6320c6e-73bb-4874-8bcc-e64453ba7d03}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e93a4759-4fdb-4fe4-906d-b5f84aaa3d4c}",
+    "ficha_id": "{a6320c6e-73bb-4874-8bcc-e64453ba7d03}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a445f949-23c4-49f5-a9dc-c581ffd1eb41}",
+    "ficha_id": "{93509db0-4b46-47b2-b813-b704675712bc}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{671869f3-9d0e-4d71-b90c-9635bf16c6f1}",
+    "ficha_id": "{93509db0-4b46-47b2-b813-b704675712bc}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{88eed6a9-a1c1-4bf0-819c-56a9f289d20d}",
+    "ficha_id": "{ea17b148-46ee-49cc-8506-964953369f90}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5484a438-5390-4bfe-af83-b14bfe27cfbb}",
+    "ficha_id": "{ea17b148-46ee-49cc-8506-964953369f90}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{34c10a6e-5f14-4c03-bbfa-7dba1b568719}",
+    "ficha_id": "{ea17b148-46ee-49cc-8506-964953369f90}",
+    "especie": "Terneras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{48ba1016-ee27-40fa-90a2-bc127aea719b}",
+    "ficha_id": "{3015f03d-edd8-435c-9c66-e0fc80bf29ed}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{ce3eec9e-8735-469d-9834-f83936a1cec4}",
+    "ficha_id": "{3015f03d-edd8-435c-9c66-e0fc80bf29ed}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{77ded8a8-b200-46ea-bcee-2c9827680744}",
+    "ficha_id": "{3015f03d-edd8-435c-9c66-e0fc80bf29ed}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{341a4ebe-68f1-4edd-b5e2-db0f14408a1f}",
+    "ficha_id": "{66d24dc9-6233-45ef-b460-06f3cc16086e}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{b90726c3-d528-4f30-9c39-ad17c2bf83b4}",
+    "ficha_id": "{66d24dc9-6233-45ef-b460-06f3cc16086e}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{276ff916-0d70-48ea-9311-a527c330c91f}",
+    "ficha_id": "{66d24dc9-6233-45ef-b460-06f3cc16086e}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{bdc3146d-faea-46af-b034-3da81d5795d0}",
+    "ficha_id": "{30c12c6a-bc61-42be-88f2-1ec67d063138}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{045007dd-f5a3-492f-b986-1c8e81b1b1ad}",
+    "ficha_id": "{30c12c6a-bc61-42be-88f2-1ec67d063138}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{391a93ba-86e1-4486-a372-c680ec2342e8}",
+    "ficha_id": "{30c12c6a-bc61-42be-88f2-1ec67d063138}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8d53ea20-8a56-443e-b4ef-af9f69533676}",
+    "ficha_id": "{8c6cc0ae-fb11-4ab7-80fa-3fbd551f2e68}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{06fefaac-a4c9-4189-8ae3-3478c52f091d}",
+    "ficha_id": "{8c6cc0ae-fb11-4ab7-80fa-3fbd551f2e68}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f4f26b59-3497-4df7-a9c3-43a0197e3a55}",
+    "ficha_id": "{8c6cc0ae-fb11-4ab7-80fa-3fbd551f2e68}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f9cfb320-9270-40e8-b451-39d0aabc781d}",
+    "ficha_id": "{035d3559-5e42-4fb5-b719-b39d5d1efb03}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{cf7dca3b-675f-4054-8f94-4f794130e6c2}",
+    "ficha_id": "{ddbc733a-1d0e-4d63-8a0a-8e3cb0c1b973}",
+    "especie": "Vacas secas",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{6be8c5cd-5468-41f4-80e8-f33d648b7162}",
+    "ficha_id": "{ddbc733a-1d0e-4d63-8a0a-8e3cb0c1b973}",
+    "especie": "Toretes",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{a15aa4cc-d4bb-4532-977c-c606796c06d6}",
+    "ficha_id": "{ddbc733a-1d0e-4d63-8a0a-8e3cb0c1b973}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 12,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{26a360f9-02f0-43ce-a4fd-2cc19b106d4b}",
+    "ficha_id": "{ddbc733a-1d0e-4d63-8a0a-8e3cb0c1b973}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{968d0d33-26ae-405d-b844-4fe80099f566}",
+    "ficha_id": "{0732ac48-eeeb-4419-81b0-9ef97e7c1d41}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fb8993d7-f492-43f4-bc83-35b3c2c729a4}",
+    "ficha_id": "{f18e5287-4ff2-41dd-871d-a194da468ea6}",
+    "especie": "Gallinas de campo",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{50d95265-a717-4937-bc75-c88a545b11c3}",
+    "ficha_id": "{f18e5287-4ff2-41dd-871d-a194da468ea6}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 7,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{62b82a89-1c56-4de4-9d5d-a76789028cb9}",
+    "ficha_id": "{2e079fc0-bfac-44d1-abbe-5c07b65ff4d0}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{0bc9d575-3fec-4c0c-a730-d45f207c5106}",
+    "ficha_id": "{b9f0872c-31c4-4997-8e49-b5df35efe623}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{5e8a6751-7218-45b7-ac37-3cffb602a4ba}",
+    "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6b28c065-4726-4558-9ecf-36cea200ea9c}",
+    "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
+    "especie": "Pollos de engorde",
+    "cantidad": 15,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3d024e75-9416-4081-883b-2f60136e5fff}",
+    "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
+    "especie": "Vacas secas",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e9996dc3-99be-4341-a15c-28cdc4d27c27}",
+    "ficha_id": "{faa703df-f8d3-4e9b-adfb-76715e0874ed}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{793369bf-d291-46bf-b06a-3c75a1fe1e68}",
+    "ficha_id": "{faa703df-f8d3-4e9b-adfb-76715e0874ed}",
+    "especie": "Pollos de engorde",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{5520999a-effa-4e4a-a38a-5911f2ff597b}",
+    "ficha_id": "{faa703df-f8d3-4e9b-adfb-76715e0874ed}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{68a34824-e364-4354-bb4e-27b3120b06d3}",
+    "ficha_id": "{faa703df-f8d3-4e9b-adfb-76715e0874ed}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ebe6db4b-fe7b-4f16-a179-13f2f006bf68}",
+    "ficha_id": "{faa703df-f8d3-4e9b-adfb-76715e0874ed}",
+    "especie": "Porcino (Chanchos)",
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{3c19b9f4-a393-4bf1-bc35-1f52186441ee}",
+    "ficha_id": "{68399ea4-0b37-4043-85e7-00405d7cb21f}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{305e15da-3eb4-4f07-9025-4f24aa132585}",
+    "ficha_id": "{8c8368e4-2bd9-4a56-b6e8-37d4db6f8ad9}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{34277fe8-043f-44b6-a70e-12e12e766c36}",
+    "ficha_id": "{81766cdc-2643-47d1-a0ef-b09c5e1fdcd0}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{25d10e16-6533-46da-9a12-ddd7e5ae180a}",
+    "ficha_id": "{81766cdc-2643-47d1-a0ef-b09c5e1fdcd0}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{862cc302-0721-414c-a0c9-ecf9991170fb}",
+    "ficha_id": "{a32bf31c-94a7-4dad-a77b-8b7fbd162bd1}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 50,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f64df21d-86f5-4aa0-a0ce-d808a640ce97}",
+    "ficha_id": "{ccd90569-5eba-41f9-a8b9-46c2dbab7e8d}",
+    "especie": "Vacas en producción",
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d5f7f7a9-f29f-4c2d-90da-211dcd1fb110}",
+    "ficha_id": "{ccd90569-5eba-41f9-a8b9-46c2dbab7e8d}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9e432857-8306-4cf8-9db0-cac526eae7c4}",
+    "ficha_id": "{ccd90569-5eba-41f9-a8b9-46c2dbab7e8d}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 8,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{aabd976a-1d25-451f-972b-209cf98a0092}",
+    "ficha_id": "{ccd90569-5eba-41f9-a8b9-46c2dbab7e8d}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 150,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e0c17612-547f-4b0a-8c8d-e77de0d63500}",
+    "ficha_id": "{99b5f231-c50c-432e-a60a-631d51e9c5cf}",
+    "especie": "Vaconas",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{24f78fb4-ca21-4fb9-a906-3403bd0bc306}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 100,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{82710be1-07a8-4b9d-afd5-3000582f6815}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "especie": "Gallinas de campo",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4dd88950-a52c-4d1e-a292-1e7abd0ba60c}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c6b2ec5b-d484-48c6-9a33-12808edbfa8f}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "especie": "Equinos",
+    "cantidad": 1,
+    "es_autoconsumo": 0
+  },
+  {
+    "id_animal": "{0aa581a6-0013-407b-8d8b-75d6eca6dda2}",
+    "ficha_id": "{df65d978-ff39-4e61-a791-8827f3f0b5f3}",
+    "especie": "Vaconas",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{1f8e721b-aa5f-4427-8d39-d3241b8dc363}",
+    "ficha_id": "{5c562a21-0bad-4cbc-b017-fe385ce4e8d0}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{da8ca839-aa31-4290-a0b9-ca35ad4c5cc4}",
+    "ficha_id": "{5c562a21-0bad-4cbc-b017-fe385ce4e8d0}",
+    "especie": "TERNERAS",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0399c758-c3ea-4e9b-b525-cdc901832a6d}",
+    "ficha_id": "{5c562a21-0bad-4cbc-b017-fe385ce4e8d0}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 35,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{598a0c88-8dec-4a58-aa97-3d94ead374f2}",
+    "ficha_id": "{5c562a21-0bad-4cbc-b017-fe385ce4e8d0}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4d10a306-3832-4873-85d0-f4869ee346cb}",
+    "ficha_id": "{5c562a21-0bad-4cbc-b017-fe385ce4e8d0}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 7,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{fcdd2d02-8ab7-4a36-950d-d069573b50d6}",
+    "ficha_id": "{b0211ab4-5ea5-49d5-9800-7575eb80c08a}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{571c4909-b553-4da7-9272-e107afd52e97}",
+    "ficha_id": "{b0211ab4-5ea5-49d5-9800-7575eb80c08a}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f264cdbe-bd65-4baa-b688-2604e06d02d2}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "especie": "Vacas en producción",
+    "cantidad": 9,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d558f126-fd96-43c5-a904-c4e164e86cdb}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "especie": "Vaconas",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{4cb99f05-109a-452e-9211-1830dcd2c571}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{48b15f60-370f-4d37-80c4-f09123201859}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "especie": "Terneros",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{944e7fb0-cd14-4ee4-886a-12e71fe355da}",
+    "ficha_id": "{dcba67cd-3aa1-4009-a38f-ff9474ff9f2c}",
+    "especie": "Terneras",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{84357870-9dbd-4e80-b324-e0933645c227}",
+    "ficha_id": "{06f93973-92c3-4545-a579-1d45fe7b7068}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{d26852bd-e97f-48cb-9401-6cd6da5a4221}",
+    "ficha_id": "{efa74f10-ac6f-4ef9-96b9-7aa2da727952}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{93023871-1f82-44d9-b3f4-1ca230652f64}",
+    "ficha_id": "{efa74f10-ac6f-4ef9-96b9-7aa2da727952}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4dc8415e-7b58-41f4-b323-8efd22661439}",
+    "ficha_id": "{9d803c4a-476d-4d4f-8626-6ebc2693f988}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{6c2d1f9d-2c17-4220-8085-1a05faccb522}",
+    "ficha_id": "{737a7d81-a751-452b-a2e7-0ed88d1f6ec3}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{aafb9b81-e25b-4e55-a074-76ac041c1607}",
+    "ficha_id": "{737a7d81-a751-452b-a2e7-0ed88d1f6ec3}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2bcbc24b-405a-4709-9c7d-9c138e14b694}",
+    "ficha_id": "{9d723738-8c0a-40bc-b1c4-716ef108d36c}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{bd0e9e24-a3a5-4308-b24d-b7fdbe2e51db}",
+    "ficha_id": "{99bf5dfc-e29b-4d6a-b4bb-d5f18af650d3}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{435ccd1c-5640-444e-938d-0d4a669cd7a3}",
+    "ficha_id": "{99bf5dfc-e29b-4d6a-b4bb-d5f18af650d3}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 0
+  },
+  {
+    "id_animal": "{8021b2c0-2a2b-4c7f-a5c4-c497ecaad9e3}",
+    "ficha_id": "{4cdd004a-155a-40c0-ba31-da538e74c124}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 10,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e0d10fb8-df3f-4152-85b3-b6d6881aa298}",
+    "ficha_id": "{4cdd004a-155a-40c0-ba31-da538e74c124}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{693a1d66-6e8e-4aed-bdbb-1c4508d0eddc}",
+    "ficha_id": "{64953011-317d-4ab3-9865-f38887f9634e}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c61fbf68-e609-4e43-b836-e50e32bf6830}",
+    "ficha_id": "{fc4356e2-5af2-451a-8201-d361639713f3}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0d2d8ffd-a1cf-44f1-ae4a-8236b35e1cd1}",
+    "ficha_id": "{fc4356e2-5af2-451a-8201-d361639713f3}",
+    "especie": "Vacas en producción",
+    "cantidad": 3,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{963661c4-2bd3-4c38-aab4-ee5bca45c8db}",
+    "ficha_id": "{7dec6702-387f-4148-896f-2042926f853b}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{869eac1b-51a3-45bc-a6a1-55d7af276d29}",
+    "ficha_id": "{7dec6702-387f-4148-896f-2042926f853b}",
+    "especie": "Vaconas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b88d5853-b598-447f-a53f-8778bca23e12}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "especie": "Vacas en producción",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{aa362b24-8232-44e3-95b8-225e03626263}",
+    "ficha_id": "{37aa3459-9d12-4979-8433-25a90a6e3bcb}",
+    "especie": "Terneros",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{613b8c1a-1b13-4725-8f20-a04ac75aea00}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e8619033-d443-4afb-a594-2d2aacd89851}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "especie": "Vaconas",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{0719da73-e2ff-4690-9a00-0f3238c536db}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{dadfcaac-8f72-4eb8-8007-5b13be4cea9f}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 7,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{679e5ab0-9ff2-4112-b4d1-41c537141ac4}",
+    "ficha_id": "{80eb2fce-f9b6-4859-833c-79cf14bfbd69}",
+    "especie": "Pollos de engorde",
+    "cantidad": 3,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{377d1926-6641-4d1b-a4a0-d14ebe68dd88}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "especie": "Vacas en producción",
+    "cantidad": 8,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{e74c6343-1d9d-4c60-94c3-04447f1eee23}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "especie": "Vacas secas",
+    "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{eebce470-7b55-4d7b-abba-1a42a37690b2}",
+    "ficha_id": "{90274951-2fc9-4f75-b817-038121371b8c}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 40,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{754d5c07-2344-4020-a984-aed6d856217a}",
+    "ficha_id": "{ccbe9437-f390-4a9f-8e39-3bedc88d234f}",
+    "especie": "VACAS EN PRODUCCIÓN",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{3c826a9d-c2c6-4ac1-903f-a3c5ef99c988}",
+    "ficha_id": "{24c3b2a8-3c49-402d-a74d-ebba0bc2c3bd}",
+    "especie": "Vacas en producción",
+    "cantidad": 5,
+    "es_autoconsumo": 0,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{f2def81c-4806-4238-98aa-33e8f12a711b}",
+    "ficha_id": "{24c3b2a8-3c49-402d-a74d-ebba0bc2c3bd}",
+    "especie": "Vaconas",
+    "cantidad": 3
+  },
+  {
+    "id_animal": "{e1e91a18-b762-4f2b-b1ef-c03ee38ce8e4}",
+    "ficha_id": "{24c3b2a8-3c49-402d-a74d-ebba0bc2c3bd}",
+    "especie": "Terneras",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{7cca0d41-9b60-4c93-9e83-ffbdd46423dc}",
+    "ficha_id": "{d12d86e1-11d3-432c-a207-a7dd45deed7a}",
+    "especie": "TORETES",
+    "cantidad": 4,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{06a58869-5a71-423d-8b23-9e3f2c7c4712}",
+    "ficha_id": "{d12d86e1-11d3-432c-a207-a7dd45deed7a}",
+    "especie": "VACONAS",
+    "cantidad": 1
+  },
+  {
+    "id_animal": "{0689d0aa-711a-4095-91a3-6cbbfef9a178}",
+    "ficha_id": "{d12d86e1-11d3-432c-a207-a7dd45deed7a}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{90eb2c78-e7c3-4a78-a3e4-d1f6da23ceb3}",
+    "ficha_id": "{b39d9594-b8be-4329-aa23-25b2aa314016}",
+    "especie": "Vaconas",
+    "cantidad": 2
+  },
+  {
+    "id_animal": "{9400016a-c78c-4bec-a627-9de416ab8e47}",
+    "ficha_id": "{b39d9594-b8be-4329-aa23-25b2aa314016}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{8e7d5dfd-359d-4acd-a4dd-b114c567dc5c}",
+    "ficha_id": "{b39d9594-b8be-4329-aa23-25b2aa314016}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  }
+]
