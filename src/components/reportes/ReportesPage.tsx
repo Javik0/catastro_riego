@@ -57,14 +57,18 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       // Header
       const pageWidth = doc.internal.pageSize.getWidth();
 
-      // Logos
+      // Logos — cargar con proporción real para evitar distorsión
       try {
-        const logoIzq = await loadImage('/logo-izq.png');
-        doc.addImage(logoIzq, 'PNG', 10, 5, 25, 22);
+        const logoIzq = await loadImageWithSize('/logo-izq.png');
+        const hIzq = 14;  // altura fija en mm
+        const wIzq = (logoIzq.width / logoIzq.height) * hIzq; // ancho proporcional
+        doc.addImage(logoIzq.data, 'PNG', 8, 6, wIzq, hIzq);
       } catch {}
       try {
-        const logoDer = await loadImage('/logo-der.png');
-        doc.addImage(logoDer, 'PNG', pageWidth - 35, 5, 25, 22);
+        const logoDer = await loadImageWithSize('/logo-der.png');
+        const hDer = 12;  // un poco más pequeño
+        const wDer = (logoDer.width / logoDer.height) * hDer; // ancho proporcional
+        doc.addImage(logoDer.data, 'PNG', pageWidth - wDer - 8, 7, wDer, hDer);
       } catch {}
 
       // Title
@@ -324,17 +328,21 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
   );
 }
 
-// ── Utilidad: cargar imagen como base64 ──
-function loadImage(src: string): Promise<string> {
+// ── Utilidad: cargar imagen con dimensiones reales ──
+function loadImageWithSize(src: string): Promise<{ data: string; width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      canvas.width = img.width;
-      canvas.height = img.height;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
       canvas.getContext('2d')?.drawImage(img, 0, 0);
-      resolve(canvas.toDataURL('image/png'));
+      resolve({
+        data: canvas.toDataURL('image/png'),
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
     };
     img.onerror = reject;
     img.src = src;
