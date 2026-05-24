@@ -86,22 +86,28 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
       {/* Bottom section */}
       <div className="border-t p-3 space-y-2" style={{ borderColor: 'var(--border-color)' }}>
-        {/* Theme toggle */}
+        {/* Theme toggle — botón claramente visible */}
         <button
           onClick={toggleTheme}
-          className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer hover:bg-white/10 ${
+          className={`flex items-center gap-2 w-full px-3 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer border ${
             collapsed ? 'justify-center' : ''
           }`}
-          style={{ color: 'var(--text-secondary)' }}
+          style={{
+            background: isDark ? 'rgba(251,191,36,0.12)' : 'rgba(99,102,241,0.12)',
+            borderColor: isDark ? 'rgba(251,191,36,0.3)' : 'rgba(99,102,241,0.3)',
+            color: isDark ? '#fbbf24' : '#818cf8',
+          }}
           title={isDark ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
         >
           {isDark ? (
-            <Sun className="w-4 h-4 shrink-0 text-amber-400" />
+            <Sun className="w-4 h-4 shrink-0" />
           ) : (
-            <Moon className="w-4 h-4 shrink-0 text-blue-400" />
+            <Moon className="w-4 h-4 shrink-0" />
           )}
           {!collapsed && (
-            <span>{isDark ? 'Tema claro' : 'Tema oscuro'}</span>
+            <span className="text-xs font-semibold">
+              {isDark ? '☀ Tema claro' : '🌙 Tema oscuro'}
+            </span>
           )}
         </button>
 
