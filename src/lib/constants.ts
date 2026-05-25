@@ -13,6 +13,7 @@ export const TECNICOS: Record<string, { nombre: string; color: string }> = {
   'u0_a362': { nombre: 'Martha Simbaña', color: '#FFFF00' },
   'u0_a2':   { nombre: 'JVK-DIGITALIZACION', color: '#FFA500' },
   'u0_a302': { nombre: 'Dylan Chavez', color: '#111111' },
+  'u0_a200': { nombre: 'Melanie2', color: '#a855f7' },
 };
 
 export function getNombreTecnico(username: string): string {

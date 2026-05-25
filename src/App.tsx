@@ -84,6 +84,7 @@ function FilteredDataProvider({ children }: { children: (props: {
     if (filtros.parroquia && f.parroquia !== filtros.parroquia) return false;
     if (filtros.sector && f.sector !== filtros.sector) return false;
     if (filtros.tecnico && f.creado_por !== filtros.tecnico) return false;
+    if (filtros.comunidad && (f.sector_comunidad || '').trim() !== filtros.comunidad) return false;
     if (filtros.fechaDesde && safeToDate(f.fecha_creacion) < new Date(filtros.fechaDesde)) return false;
     if (filtros.fechaHasta) {
       const hasta = new Date(filtros.fechaHasta);

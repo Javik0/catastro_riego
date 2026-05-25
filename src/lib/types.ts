@@ -185,6 +185,7 @@ export interface FiltrosState {
   parroquia: string;
   sector: string;
   tecnico: string;
+  comunidad: string;
   fechaDesde: string;
   fechaHasta: string;
   busqueda: string;

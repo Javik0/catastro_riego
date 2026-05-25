@@ -9,6 +9,7 @@ const INITIAL_FILTROS: FiltrosState = {
   parroquia: '',
   sector: '',
   tecnico: '',
+  comunidad: '',
   fechaDesde: '',
   fechaHasta: '',
   busqueda: '',
