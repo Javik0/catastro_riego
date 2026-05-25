@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   FileDown, FileSpreadsheet, FileText, Calendar,
   Users, MapPin, Filter, Loader2, BarChart3, Download,
-  CheckCircle2, Clock,
+  CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, safeToDate } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -16,22 +16,40 @@ interface Props {
   animalesData: { especie: string; ficha_id: string; cantidad: number }[];
   loading: boolean;
 }
-type ReportType = 'general' | 'parroquia' | 'tecnico' | 'fecha';
+type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha';
 
 export default function ReportesPage({ fichas, cultivosData, animalesData }: Props) {
   const [reportType, setReportType] = useState<ReportType>('general');
+  const [filterSector, setFilterSector] = useState('');
   const [filterParroquia, setFilterParroquia] = useState('');
+  const [filterComunidad, setFilterComunidad] = useState('');
   const [filterTecnico, setFilterTecnico] = useState('');
   const [fechaDesde, setFechaDesde] = useState('');
   const [fechaHasta, setFechaHasta] = useState('');
   const [generating, setGenerating] = useState<'pdf' | 'excel' | null>(null);
   const [lastGenerated, setLastGenerated] = useState<string | null>(null);
 
+  // Lista dinámica de comunidades obtenida de las fichas reales
+  const comunidadesList = useMemo(() => {
+    const set = new Set<string>();
+    fichas.forEach((f) => {
+      const c = (f.sector_comunidad || '').trim();
+      if (c) set.add(c);
+    });
+    return Array.from(set).sort();
+  }, [fichas]);
+
   const getFilteredFichas = (): FichaPredio[] => {
     let result = [...fichas];
     switch (reportType) {
+      case 'sector':
+        if (filterSector) result = result.filter((f) => f.sector === filterSector);
+        break;
       case 'parroquia':
         if (filterParroquia) result = result.filter((f) => f.parroquia === filterParroquia);
+        break;
+      case 'comunidad':
+        if (filterComunidad) result = result.filter((f) => (f.sector_comunidad || '').trim() === filterComunidad);
         break;
       case 'tecnico':
         if (filterTecnico) result = result.filter((f) => f.creado_por === filterTecnico);
@@ -78,7 +96,9 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
 
       const subtitles: Record<ReportType, string> = {
         general: 'REPORTE GENERAL DE FICHAS INVESTIGADAS',
+        sector: `REPORTE POR SECTOR: ${filterSector || 'TODOS'}`,
         parroquia: `REPORTE POR PARROQUIA: ${filterParroquia || 'TODAS'}`,
+        comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
         tecnico: `REPORTE POR TÉCNICO: ${filterTecnico ? getNombreTecnico(filterTecnico) : 'TODOS'}`,
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
       };
@@ -87,11 +107,12 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
-      const headers = ['#', 'Código', 'Propietario', 'Cédula', 'Parroquia', 'Sector', 'Área Total', 'Método Riego', 'Caudal', 'Técnico', 'Fecha'];
+      const headers = ['#', 'Código', 'Propietario', 'Cédula', 'Parroquia', 'Sector', 'Comunidad', 'Área Total', 'Método Riego', 'Caudal', 'Técnico', 'Fecha'];
       const rows = data.map((f, i) => [
         i + 1, f.codigo_final,
         f.propietario || `${f.apellidos} ${f.nombres}`,
         f.cedula || '', f.parroquia, f.sector,
+        (f.sector_comunidad || '').trim(),
         f.area_total?.toLocaleString('es-EC') || '',
         [
           f.metodo_aspersion_pct ? `Asp:${f.metodo_aspersion_pct}%` : '',
@@ -190,7 +211,9 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
 
   const reportTypes = [
     { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
+    { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Guanguilqui / Guang-Porotog', color: '#06b6d4' },
     { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#10b981' },
+    { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${comunidadesList.length} comunidades`, color: '#ec4899' },
     { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
     { id: 'fecha' as const, label: 'Por Fecha', icon: Calendar, desc: 'Rango de fechas personalizado', color: '#8b5cf6' },
   ];
@@ -217,7 +240,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       </div>
 
       {/* Report Type Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
         {reportTypes.map(({ id, label, icon: Icon, desc, color }) => (
           <button
             key={id}
@@ -261,11 +284,25 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
           </div>
 
           {/* Filtros dinámicos */}
+          {reportType === 'sector' && (
+            <select value={filterSector} onChange={(e) => setFilterSector(e.target.value)}
+              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
+              <option value="">Todos los sectores</option>
+              {SECTORES.map((s) => <option key={s} value={s}>{s}</option>)}
+            </select>
+          )}
           {reportType === 'parroquia' && (
             <select value={filterParroquia} onChange={(e) => setFilterParroquia(e.target.value)}
               className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
               <option value="">Todas las parroquias</option>
               {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
+            </select>
+          )}
+          {reportType === 'comunidad' && (
+            <select value={filterComunidad} onChange={(e) => setFilterComunidad(e.target.value)}
+              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
+              <option value="">Todas las comunidades ({comunidadesList.length})</option>
+              {comunidadesList.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           )}
           {reportType === 'tecnico' && (
