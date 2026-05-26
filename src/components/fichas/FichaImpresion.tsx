@@ -724,14 +724,6 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <p className="detail-label">Investigador (Técnico)</p>
           <p className="detail-value">{getNombreTecnico(ficha.creado_por)}</p>
         </div>
-        <div className="detail-item">
-          <p className="detail-label">Dispositivo</p>
-          <p className="detail-value font-mono text-[7pt] truncate">{ficha.dispositivo || '—'}</p>
-        </div>
-        <div className="detail-item">
-          <p className="detail-label">Precisión GPS</p>
-          <p className="detail-value font-mono">{ficha.precision_gps ? `${ficha.precision_gps.toFixed(2)} m` : '—'}</p>
-        </div>
         <div className="detail-item col-4">
           <p className="detail-label">Observaciones Generales</p>
           <p className="detail-value text-slate-600 italic">"{ficha.observaciones || 'Sin observaciones registradas.'}"</p>

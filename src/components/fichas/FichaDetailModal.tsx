@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { 
   X, User, MapPin, Droplets, Sprout, ClipboardList, Building, Image as ImageIcon, Printer,
   Hash, CreditCard, Phone, Users, Award, BookOpen, Ruler, Waves, Calendar, Percent, 
-  DollarSign, Lightbulb, Compass, Activity, FileText, Smartphone 
+  DollarSign, Lightbulb, Compass, Activity, FileText 
 } from 'lucide-react';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
 import { getNombreTecnico } from '../../lib/constants';
@@ -86,6 +86,24 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
       setLoadingRelational(false);
     });
   }, [ficha.id]);
+ 
+  useEffect(() => {
+    const originalTitle = document.title;
+    const cleanName = (ficha.propietario || `${ficha.apellidos}_${ficha.nombres}`)
+      .trim()
+      .replace(/\s+/g, '_')
+      .replace(/[^a-zA-Z0-9_À-ÿ-]/g, '');
+    const cleanClave = (ficha.clave_catastral || ficha.codigo_final || 'Predio')
+      .trim()
+      .replace(/\s+/g, '_')
+      .replace(/[^a-zA-Z0-9_-]/g, '');
+    
+    document.title = `Ficha_Catastral_${cleanClave}_${cleanName}`;
+    
+    return () => {
+      document.title = originalTitle;
+    };
+  }, [ficha]);
 
   const obtenerDestino = (item: { es_autoconsumo?: boolean | number; es_mercado?: boolean | number; es_agroindustria?: boolean | number; es_exportacion?: boolean | number }) => {
     const destinos = [];
@@ -314,8 +332,6 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
               <Field label="ID" value={ficha.id} icon={Hash} />
               <Field label="Investigado por" value={getNombreTecnico(ficha.creado_por)} icon={User} />
               <Field label="Fecha de Registro" value={safeToDate(ficha.fecha_creacion).toLocaleString('es-EC')} icon={Calendar} />
-              <Field label="Dispositivo" value={ficha.dispositivo} icon={Smartphone} />
-              <Field label="Precisión GPS" value={ficha.precision_gps ? `${ficha.precision_gps.toFixed(2)} m` : null} icon={Compass} />
               <Field label="Nombre Archivo Foto" value={ficha.foto_predio} icon={ImageIcon} />
               <div className="col-span-full">
                 <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />
