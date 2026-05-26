@@ -146,7 +146,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
           }
           /* Ocultar barra lateral, cabecera y controles de la app web */
-          aside, header, nav, .no-print, button, .app-navigation, .fixed, .z-50 {
+          aside, header, nav, main, .no-print, button, .app-navigation, .fixed, .z-50, #root {
             display: none !important;
           }
           /* Mostrar únicamente el contenedor de impresión */

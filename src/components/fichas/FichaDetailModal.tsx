@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   X, User, MapPin, Droplets, Sprout, ClipboardList, Building, Image as ImageIcon, Printer,
   Hash, CreditCard, Phone, Users, Award, BookOpen, Ruler, Waves, Calendar, Percent, 
@@ -422,14 +423,17 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
       </div>
 
       {/* Reporte de impresión invisible en pantalla, visible solo en papel */}
-      <div className="hidden print:block">
-        <FichaImpresion
-          ficha={ficha}
-          cultivos={cultivos}
-          animales={animales}
-          prediosAdicionales={prediosAdicionales}
-        />
-      </div>
+      {createPortal(
+        <div className="hidden print:block">
+          <FichaImpresion
+            ficha={ficha}
+            cultivos={cultivos}
+            animales={animales}
+            prediosAdicionales={prediosAdicionales}
+          />
+        </div>,
+        document.body
+      )}
     </div>
   );
 }
