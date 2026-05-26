@@ -199,8 +199,13 @@ function MouseCoordinates() {
   );
 }
 
-// ── FlyToSearch: volar al resultado de búsqueda ──
-function FlyToSearch({ target }: { target: { lat: number; lng: number } | null }) {
+// ── FlyToSearch: volar al resultado de búsqueda (usa bounds del polígono si está disponible) ──
+function FlyToSearch(
+  { target, polygonData }: {
+    target: { lat: number; lng: number } | null;
+    polygonData: FeatureCollection | null;
+  }
+) {
   const map = useMap();
   const lastTarget = useRef<string | null>(null);
 
@@ -212,14 +217,24 @@ function FlyToSearch({ target }: { target: { lat: number; lng: number } | null }
 
     const timer = setTimeout(() => {
       try {
+        // Intentar usar fitBounds del polígono para un encuadre perfecto
+        if (polygonData && polygonData.features.length > 0) {
+          const geoLayer = L.geoJSON(polygonData);
+          const bounds = geoLayer.getBounds();
+          if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [60, 60], maxZoom: 18, animate: true });
+            return;
+          }
+        }
+        // Fallback: volar al centroide
         map.flyTo([target.lat, target.lng], 18, { duration: 1.5 });
       } catch {
         map.setView([target.lat, target.lng], 18);
       }
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, [target, map]);
+  }, [target, polygonData, map]);
 
   return null;
 }
@@ -656,7 +671,7 @@ export default function MapPage({ fichas, loading }: Props) {
         {/* ── Fichas: NO dentro de LayersControl para evitar checkboxes ── */}
         <FitBounds fichas={fichasConGeo} skip={!!selectedFichaMap || !!searchTarget} />
         <FlyToFicha ficha={selectedFichaMap} />
-        <FlyToSearch target={searchFlyTarget} />
+        <FlyToSearch target={searchFlyTarget} polygonData={searchPolygonGeo} />
 
         {fichasConGeo.map((ficha) => (
           <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />
