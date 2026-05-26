@@ -271,6 +271,82 @@ def export_catastro(fichas_features):
     print(f"  ✓ {ok} polígonos con geometría, {skip} sin geometría → catastro_geo.geojson")
     conn.close()
 
+
+# ══════════════════════════════════════════════════════════════
+# 2b. Índice de búsqueda del Catastro (TODOS los 24K+ predios)
+# ══════════════════════════════════════════════════════════════
+
+def _calc_centroid(geom):
+    """Calcula el centroide aproximado de un GeoJSON geometry."""
+    coords_list = []
+
+    def _extract_coords(obj):
+        if isinstance(obj, list):
+            if len(obj) >= 2 and isinstance(obj[0], (int, float)):
+                coords_list.append(obj[:2])
+            else:
+                for item in obj:
+                    _extract_coords(item)
+
+    if geom and geom.get('coordinates'):
+        _extract_coords(geom['coordinates'])
+
+    if not coords_list:
+        return None, None
+
+    avg_lng = sum(c[0] for c in coords_list) / len(coords_list)
+    avg_lat = sum(c[1] for c in coords_list) / len(coords_list)
+    return round(avg_lat, 6), round(avg_lng, 6)
+
+
+def export_catastro_busqueda():
+    """Exporta TODOS los predios catastrales como índice de búsqueda ligero (sin geometría, solo centroide)."""
+    print("\n🔍 Exportando índice de búsqueda catastral (TODOS los predios)...")
+    conn = sqlite3.connect(CATASTRO_GPKG)
+    cursor = conn.cursor()
+    table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
+
+    cursor.execute(f'PRAGMA table_info("{table}")')
+    cols = [c[1] for c in cursor.fetchall()]
+    geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+    if not geom_col:
+        print("  ❌ No se encontró columna de geometría"); conn.close(); return
+
+    cursor.execute(
+        f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
+        f'FROM "{table}"'
+    )
+    rows = cursor.fetchall()
+    registros = []
+    ok, skip = 0, 0
+    for row in rows:
+        fid, clave, area, ape, nom, ced, com, blob = row
+        geom = parse_geometry(blob)
+        lat, lng = _calc_centroid(geom)
+        if lat is not None:
+            ok += 1
+        else:
+            skip += 1
+        registros.append({
+            'fid': fid,
+            'clave_cata': clave or '',
+            'area_predi': round(area, 2) if area else 0,
+            'apellidos': ape or '',
+            'nombres': nom or '',
+            'cedula': ced or '',
+            'comunidad': com or '',
+            'lat': lat,
+            'lng': lng,
+        })
+
+    path = os.path.join(OUTPUT_DIR, 'catastro_busqueda.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(registros, f, ensure_ascii=False)
+    size_kb = os.path.getsize(path) / 1024
+    print(f"  💾 catastro_busqueda.json ({size_kb:.0f} KB)")
+    print(f"  ✓ {ok} predios con centroide, {skip} sin coordenadas → catastro_busqueda.json")
+    conn.close()
+
 # ══════════════════════════════════════════════════════════════
 # 3. Ramales de Riego (líneas)
 # ══════════════════════════════════════════════════════════════
@@ -370,6 +446,7 @@ if __name__ == '__main__':
 
     fichas = export_fichas()
     export_catastro(fichas)
+    export_catastro_busqueda()
     export_ramales()
     export_tablas_hijas()
 
