@@ -5,7 +5,7 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
-import type { FeatureCollection } from 'geojson';
+import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X } from 'lucide-react';
 import { type FichaPredio, safeToDate } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
@@ -478,7 +478,11 @@ export default function MapPage({ fichas, loading }: Props) {
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
+  const poligonosRef = useRef<Record<string, Geometry> | null>(null);
+  const [poligonosLoaded, setPoligonosLoaded] = useState(false);
+  const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
 
+  // Cargar capas base (catastro investigado + ramales)
   useEffect(() => {
     fetch('/geo/catastro_geo.geojson')
       .then((r) => r.json())
@@ -496,8 +500,44 @@ export default function MapPage({ fichas, loading }: Props) {
         setLayerInfo((p) => ({ ...p, ramales: valid.length }));
       }).catch(() => {});
 
+    // Cargar polígonos catastrales en background (lazy, ~4MB gzip)
+    fetch('/geo/catastro_poligonos.json')
+      .then((r) => r.json())
+      .then((data: Record<string, Geometry>) => {
+        poligonosRef.current = data;
+        setPoligonosLoaded(true);
+      }).catch(() => {});
+
     return () => clearMapSelection();
   }, []);
+
+  // Cuando se selecciona un resultado de búsqueda, buscar su polígono
+  useEffect(() => {
+    if (!searchTarget || !poligonosRef.current) {
+      setSearchPolygonGeo(null);
+      return;
+    }
+    const geom = poligonosRef.current[String(searchTarget.fid)];
+    if (geom) {
+      setSearchPolygonGeo({
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          properties: {
+            fid: searchTarget.fid,
+            clave_cata: searchTarget.clave_cata,
+            apellidos: searchTarget.apellidos,
+            nombres: searchTarget.nombres,
+            comunidad: searchTarget.comunidad,
+            area_predi: searchTarget.area_predi,
+          },
+          geometry: geom,
+        }],
+      });
+    } else {
+      setSearchPolygonGeo(null);
+    }
+  }, [searchTarget, poligonosLoaded]);
 
   const handleSearchSelect = useCallback((item: CatastroBusqueda) => {
     setSearchTarget(item);
@@ -624,6 +664,34 @@ export default function MapPage({ fichas, loading }: Props) {
         {fichasConGeo.map((ficha) => (
           <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />
         ))}
+
+        {/* ── Polígono resaltado del resultado de búsqueda ── */}
+        {searchPolygonGeo && (
+          <GeoJSON
+            key={`search-poly-${searchTarget?.fid}`}
+            data={searchPolygonGeo}
+            style={{
+              color: '#06b6d4',
+              weight: 3,
+              fillColor: '#06b6d4',
+              fillOpacity: 0.2,
+              opacity: 1,
+              dashArray: '0',
+            }}
+            onEachFeature={(feature, layer) => {
+              const p = feature.properties;
+              if (p) {
+                layer.bindTooltip(
+                  `<b>${p.apellidos || ''} ${p.nombres || ''}</b><br/>
+                   Clave: ${p.clave_cata || '—'}<br/>
+                   Comunidad: ${p.comunidad || '—'}<br/>
+                   Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}`,
+                  { sticky: true, opacity: 0.95 }
+                );
+              }
+            }}
+          />
+        )}
 
         {/* ── Marcador pulsante del resultado de búsqueda ── */}
         {searchTarget && searchTarget.lat != null && searchTarget.lng != null && (

@@ -347,6 +347,60 @@ def export_catastro_busqueda():
     print(f"  ✓ {ok} predios con centroide, {skip} sin coordenadas → catastro_busqueda.json")
     conn.close()
 
+
+# ══════════════════════════════════════════════════════════════
+# 2c. Geometrías de polígonos catastrales (para visualizar en búsqueda)
+# ══════════════════════════════════════════════════════════════
+
+def _round_coords(obj, decimals=5):
+    """Redondea recursivamente todas las coordenadas en un GeoJSON geometry."""
+    if isinstance(obj, list):
+        if len(obj) >= 2 and isinstance(obj[0], (int, float)):
+            return [round(obj[0], decimals), round(obj[1], decimals)]
+        return [_round_coords(item, decimals) for item in obj]
+    return obj
+
+
+def export_catastro_poligonos():
+    """Exporta TODOS los polígonos catastrales indexados por fid (solo geometría, sin propiedades).
+    Archivo: catastro_poligonos.json = { "fid": { "type": "...", "coordinates": [...] }, ... }
+    Coordenadas redondeadas a 5 decimales (~1.1m precisión) para reducir tamaño.
+    """
+    print("\n🗺️  Exportando polígonos catastrales (TODOS, para búsqueda visual)...")
+    conn = sqlite3.connect(CATASTRO_GPKG)
+    cursor = conn.cursor()
+    table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
+
+    cursor.execute(f'PRAGMA table_info("{table}")')
+    cols = [c[1] for c in cursor.fetchall()]
+    geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+    if not geom_col:
+        print("  ❌ No se encontró columna de geometría"); conn.close(); return
+
+    cursor.execute(f'SELECT fid, "{geom_col}" FROM "{table}"')
+    rows = cursor.fetchall()
+    poligonos = {}
+    ok, skip = 0, 0
+    for row in rows:
+        fid, blob = row
+        geom = parse_geometry(blob)
+        if geom and geom.get('coordinates'):
+            geom['coordinates'] = _round_coords(geom['coordinates'])
+            poligonos[str(fid)] = geom
+            ok += 1
+        else:
+            skip += 1
+
+    path = os.path.join(OUTPUT_DIR, 'catastro_poligonos.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(poligonos, f, ensure_ascii=False)
+    size_kb = os.path.getsize(path) / 1024
+    size_mb = size_kb / 1024
+    print(f"  💾 catastro_poligonos.json ({size_mb:.1f} MB)")
+    print(f"  ✓ {ok} polígonos exportados, {skip} sin geometría")
+    print(f"  ℹ  Firebase Hosting sirve gzip (~{size_mb*0.15:.1f} MB transferido)")
+    conn.close()
+
 # ══════════════════════════════════════════════════════════════
 # 3. Ramales de Riego (líneas)
 # ══════════════════════════════════════════════════════════════
@@ -447,6 +501,7 @@ if __name__ == '__main__':
     fichas = export_fichas()
     export_catastro(fichas)
     export_catastro_busqueda()
+    export_catastro_poligonos()
     export_ramales()
     export_tablas_hijas()
 
