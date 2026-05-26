@@ -22,6 +22,20 @@ if %ERRORLEVEL% neq 0 (
 echo.
 echo ──────────────────────────────────────────────────
 
+:: Paso 1.5: Sincronizar Fotos a Firebase Storage
+echo [1.5/3] Sincronizando fotos a Firebase Storage...
+echo.
+python scripts/sync_photos.py
+if %ERRORLEVEL% neq 0 (
+    echo.
+    echo ❌ ERROR en la sincronización de fotos.
+    pause
+    exit /b 1
+)
+
+echo.
+echo ──────────────────────────────────────────────────
+
 :: Paso 2: Subir a GitHub
 echo [2/3] Subiendo cambios a GitHub...
 echo.
