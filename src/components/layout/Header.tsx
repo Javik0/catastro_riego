@@ -4,6 +4,7 @@ import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
 import { MobileMenuButton } from './Sidebar';
+import { useLocation } from 'react-router-dom';
 import { Filter, X, Search, Sun, Moon, LogOut } from 'lucide-react';
 
 interface Props {
@@ -14,6 +15,7 @@ export default function Header({ onMobileMenuOpen }: Props) {
   const { filtros, setFiltro, resetFiltros, hasActiveFilters } = useFiltros();
   const { toggleTheme, isDark } = useTheme();
   const { logout } = useAuth();
+  const location = useLocation();
 
   const [comunidades, setComunidades] = useState<string[]>([]);
 
@@ -104,17 +106,19 @@ export default function Header({ onMobileMenuOpen }: Props) {
       >
         <Filter className="w-4 h-4 shrink-0" style={{ color: 'var(--text-muted)' }} />
 
-        <div className="relative min-w-[160px]">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
-          <input
-            type="text"
-            value={filtros.busqueda}
-            onChange={(e) => setFiltro('busqueda', e.target.value)}
-            placeholder="Buscar propietario, cédula..."
-            className={`w-full pl-7 pr-3 ${inputClass}`}
-            style={{ ...inputStyle, minWidth: 170 }}
-          />
-        </div>
+        {location.pathname !== '/mapa' && (
+          <div className="relative min-w-[160px]">
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+            <input
+              type="text"
+              value={filtros.busqueda}
+              onChange={(e) => setFiltro('busqueda', e.target.value)}
+              placeholder="Buscar propietario, cédula..."
+              className={`w-full pl-7 pr-3 ${inputClass}`}
+              style={{ ...inputStyle, minWidth: 170 }}
+            />
+          </div>
+        )}
 
         <select value={filtros.parroquia} onChange={(e) => setFiltro('parroquia', e.target.value)}
           className={`${inputClass} min-w-[110px]`} style={inputStyle}>

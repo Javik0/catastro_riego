@@ -212,10 +212,7 @@ function FlyToSearch({ target }: { target: { lat: number; lng: number } | null }
 
     const timer = setTimeout(() => {
       try {
-        map.setView([target.lat, target.lng], 18, { animate: false });
-        setTimeout(() => {
-          map.flyTo([target.lat, target.lng], 18, { duration: 1.2 });
-        }, 100);
+        map.flyTo([target.lat, target.lng], 18, { duration: 1.5 });
       } catch {
         map.setView([target.lat, target.lng], 18);
       }
@@ -567,7 +564,7 @@ export default function MapPage({ fichas, loading }: Props) {
       style={{ height: 'calc(100vh - 180px)', borderColor: 'var(--border-color)' }}>
 
       {/* Stats overlay */}
-      <div className="absolute top-3 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm"
+      <div className="absolute top-16 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm"
         style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center gap-2 text-xs">
           <MapPin className="w-4 h-4 text-blue-400" />
