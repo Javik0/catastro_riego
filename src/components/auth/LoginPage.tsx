@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_TITLE } from '../../lib/constants';
 import { LogIn, Mail, Lock, AlertCircle, Loader2, Droplets, Shield } from 'lucide-react';
@@ -9,6 +9,22 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [stats, setStats] = useState({ fichas: '777+', predios: '640', tecnicos: '9' });
+
+  useEffect(() => {
+    fetch(`/geo/stats.json?t=${Date.now()}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.fichas && data.predios && data.tecnicos) {
+          setStats({
+            fichas: `${data.fichas}+`,
+            predios: String(data.predios),
+            tecnicos: String(data.tecnicos),
+          });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,9 +88,9 @@ export default function LoginPage() {
           {/* Stats cards */}
           <div className="grid grid-cols-3 gap-3 mb-10">
             {[
-              { value: '524+', label: 'Fichas', color: '#38bdf8' },
-              { value: '399', label: 'Predios', color: '#10b981' },
-              { value: '10', label: 'Técnicos', color: '#f59e0b' },
+              { value: stats.fichas, label: 'Fichas', color: '#38bdf8' },
+              { value: stats.predios, label: 'Predios', color: '#10b981' },
+              { value: stats.tecnicos, label: 'Técnicos', color: '#f59e0b' },
             ].map(({ value, label, color }) => (
               <div key={label} className="rounded-xl p-3 text-center"
                 style={{ background: `${color}08`, border: `1px solid ${color}15` }}>

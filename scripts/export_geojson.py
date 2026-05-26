@@ -484,6 +484,30 @@ def _save(features, filename):
     size_kb = os.path.getsize(path) / 1024
     print(f"  💾 {filename} ({size_kb:.0f} KB)")
 
+
+def export_stats(fichas):
+    print("\n📊 Generando estadísticas para el Login...")
+    claves = set()
+    tecnicos = set()
+    for f in fichas:
+        c = f['properties'].get('cod_poligono') or f['properties'].get('clave_catastral')
+        if c:
+            claves.add(c)
+        t = f['properties'].get('creado_por')
+        if t:
+            tecnicos.add(t)
+            
+    stats = {
+        "fichas": len(fichas),
+        "predios": len(claves),
+        "tecnicos": len(tecnicos) if len(tecnicos) > 0 else 9
+    }
+    
+    path = os.path.join(OUTPUT_DIR, 'stats.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(stats, f, ensure_ascii=False, indent=2)
+    print(f"  ✓ {stats['fichas']} fichas, {stats['predios']} predios, {stats['tecnicos']} técnicos → stats.json")
+
 # ══════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════
@@ -504,6 +528,7 @@ if __name__ == '__main__':
     export_catastro_poligonos()
     export_ramales()
     export_tablas_hijas()
+    export_stats(fichas)
 
     print("\n" + "═" * 60)
     print("  ✅ EXPORTACIÓN COMPLETADA")
