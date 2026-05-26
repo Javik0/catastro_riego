@@ -161,6 +161,17 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             box-shadow: none !important;
             background: #fff !important;
           }
+          .print-container-portal {
+            position: static !important;
+            left: auto !important;
+            top: auto !important;
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+            opacity: 1 !important;
+            pointer-events: auto !important;
+            display: block !important;
+          }
           /* Márgenes de página */
           @page {
             size: A4 portrait;
@@ -375,7 +386,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 15px;
-          margin-top: 20px;
+          margin-top: 60px;
           break-inside: avoid;
         }
 

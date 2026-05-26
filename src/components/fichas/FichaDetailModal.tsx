@@ -424,7 +424,19 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
 
       {/* Reporte de impresión invisible en pantalla, visible solo en papel */}
       {createPortal(
-        <div className="hidden print:block">
+        <div 
+          className="print-container-portal"
+          style={{
+            position: 'absolute',
+            left: '-9999px',
+            top: '-9999px',
+            width: '820px',
+            height: 'auto',
+            overflow: 'hidden',
+            opacity: 0,
+            pointerEvents: 'none'
+          }}
+        >
           <FichaImpresion
             ficha={ficha}
             cultivos={cultivos}
