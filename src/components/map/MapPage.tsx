@@ -42,8 +42,12 @@ const pulseIcon = L.divIcon({
   iconAnchor: [12, 12],
 });
 
-// ── Leyenda ──────────────────────────────────────────────────
-function MapLegend() {
+// ── Leyenda ──────────────────────────────────────────────────────────
+function MapLegend({ showAll, onToggleAll, allLoaded }: {
+  showAll: boolean;
+  onToggleAll: () => void;
+  allLoaded: boolean;
+}) {
   const [show, setShow] = useState(true);
   return (
     <div className="absolute bottom-4 right-4 z-[1000]">
@@ -55,7 +59,7 @@ function MapLegend() {
         {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
       </button>
       {show && (
-        <div className="rounded-lg border p-3 max-w-[190px] shadow-lg"
+        <div className="rounded-lg border p-3 max-w-[210px] shadow-lg"
           style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
           <p className="text-[10px] font-semibold mb-2 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Técnicos</p>
           <div className="space-y-1.5">
@@ -70,17 +74,67 @@ function MapLegend() {
             <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Capas</p>
             <div className="flex items-center gap-2">
               <div className="w-3 h-2 rounded-sm border border-orange-400/60" style={{ background: 'rgba(249,115,22,0.15)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Catastro rural</span>
+              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Catastro investigado</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-5 h-0.5 rounded" style={{ background: '#38bdf8' }} />
               <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Canales de riego</span>
             </div>
+            <label className="flex items-center gap-2 cursor-pointer mt-1 pt-1 border-t" style={{ borderColor: 'var(--border-color)' }}>
+              <input
+                type="checkbox"
+                checked={showAll}
+                onChange={onToggleAll}
+                disabled={!allLoaded}
+                className="w-3 h-3 rounded accent-cyan-400 cursor-pointer"
+              />
+              <div>
+                <span className="text-[10px] font-medium" style={{ color: showAll ? '#06b6d4' : 'var(--text-secondary)' }}>
+                  Todos los predios
+                </span>
+                <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
+                  {allLoaded ? '24K polígonos (Canvas)' : 'Cargando...'}
+                </span>
+              </div>
+            </label>
           </div>
         </div>
       )}
     </div>
   );
+}
+
+// ── Capa de TODOS los polígonos catastrales (24K, Canvas renderer) ──
+function AllCatastroLayer({ data }: { data: FeatureCollection }) {
+  const map = useMap();
+  const layerRef = useRef<L.GeoJSON | null>(null);
+
+  useEffect(() => {
+    // Crear capa con Canvas renderer para rendimiento óptimo
+    layerRef.current = L.geoJSON(data as any, {
+      renderer: L.canvas({ padding: 0.5 }),
+      style: {
+        color: '#94a3b8',
+        weight: 0.8,
+        fillColor: '#e2e8f0',
+        fillOpacity: 0.04,
+        opacity: 0.5,
+      },
+      interactive: false, // Sin eventos = máximo rendimiento
+    } as any);
+    layerRef.current.addTo(map);
+    // Insertar debajo de las demás capas
+    layerRef.current.bringToBack();
+
+    return () => {
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
+    };
+  }, [data, map]);
+
+  return null;
 }
 
 // ── FlyTo: volar al predio seleccionado (zoom 18 = escala de predio) ──
@@ -493,6 +547,18 @@ export default function MapPage({ fichas, loading }: Props) {
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
   const [poligonosLoaded, setPoligonosLoaded] = useState(false);
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
+  const [showAllCatastro, setShowAllCatastro] = useState(false);
+
+  // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
+  const allCatastroFC = useMemo<FeatureCollection | null>(() => {
+    if (!poligonosRef.current) return null;
+    const features = Object.entries(poligonosRef.current).map(([fid, geom]) => ({
+      type: 'Feature' as const,
+      properties: { fid: Number(fid) },
+      geometry: geom,
+    }));
+    return { type: 'FeatureCollection', features } as FeatureCollection;
+  }, [poligonosLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Cargar capas base (catastro investigado + ramales)
   useEffect(() => {
@@ -730,7 +796,14 @@ export default function MapPage({ fichas, loading }: Props) {
           </Marker>
         )}
 
-        <MapLegend />
+        {/* ── Capa de TODOS los 24K polígonos (Canvas renderer, toggle en leyenda) ── */}
+        {showAllCatastro && allCatastroFC && <AllCatastroLayer data={allCatastroFC} />}
+
+        <MapLegend
+          showAll={showAllCatastro}
+          onToggleAll={() => setShowAllCatastro(!showAllCatastro)}
+          allLoaded={poligonosLoaded}
+        />
         <MouseCoordinates />
       </MapContainer>
     </div>
