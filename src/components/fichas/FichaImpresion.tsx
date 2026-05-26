@@ -11,7 +11,6 @@ interface Props {
   cultivos: CultivoAgricola[];
   animales: AnimalEspecie[];
   prediosAdicionales: PredioAdicional[];
-  onClose: () => void;
 }
 
 const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
@@ -29,7 +28,7 @@ function MapController({ center }: { center: [number, number] }) {
   return null;
 }
 
-export default function FichaImpresion({ ficha, cultivos, animales, prediosAdicionales, onClose }: Props) {
+export default function FichaImpresion({ ficha, cultivos, animales, prediosAdicionales }: Props) {
   const [mapPolygon, setMapPolygon] = useState<FeatureCollection | null>(null);
   const [loadingPolygon, setLoadingPolygon] = useState(true);
   const [coords, setCoords] = useState<[number, number] | null>(null);
@@ -128,15 +127,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
     return destinos.length > 0 ? destinos.join(', ') : '—';
   };
 
-  // Lanzar la impresión solo cuando la geometría esté resuelta
-  useEffect(() => {
-    if (!loadingPolygon) {
-      const timer = setTimeout(() => {
-        window.print();
-      }, 2000); // 2 segundos para dar tiempo de renderizado a Leaflet tiles, polígonos y la foto
-      return () => clearTimeout(timer);
-    }
-  }, [loadingPolygon]);
+
 
   const utm = coords ? wgs84ToUtm17S(coords[0], coords[1]) : null;
 
@@ -398,12 +389,6 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         }
       `}</style>
 
-      {/* Botones de acción flotantes (visibles en pantalla, ocultos en papel) */}
-      <div className="print-footer-actions no-print">
-        <button className="print-btn" onClick={() => window.print()}>Imprimir Ficha</button>
-        <button className="close-btn" onClick={onClose}>Volver al Sistema</button>
-      </div>
-
       {/* Cabecera oficial del reporte */}
       <div className="report-header">
         <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
@@ -598,17 +583,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* Salto de página para la evidencia y mapas */}
-      <div className="page-break"></div>
 
-      <div className="report-header">
-        <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
-        <div className="report-title-block">
-          <h1 className="text-[10px] font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
-          <p className="text-[7px] text-slate-400 font-mono">Código Predio: {ficha.codigo_final}</p>
-        </div>
-        <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
-      </div>
 
       {/* ── SECCIÓN 5: ACTIVIDAD AGROPECUARIA ── */}
       <div className="report-section-title">
@@ -683,6 +658,18 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             </table>
           )}
         </div>
+      </div>
+
+      {/* Salto de página para la evidencia y mapas */}
+      <div className="page-break"></div>
+
+      <div className="report-header">
+        <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
+        <div className="report-title-block">
+          <h1 className="text-[10px] font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
+          <p className="text-[7px] text-slate-400 font-mono">Código Predio: {ficha.codigo_final}</p>
+        </div>
+        <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
       </div>
 
       {/* ── SECCIÓN 6: ENCUESTA COMUNITARIA Y AUDITORÍA ── */}

@@ -55,7 +55,6 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
   const [animales, setAnimales] = useState<AnimalEspecie[]>([]);
   const [prediosAdicionales, setPrediosAdicionales] = useState<PredioAdicional[]>([]);
   const [loadingRelational, setLoadingRelational] = useState(true);
-  const [imprimiendo, setImprimiendo] = useState(false);
 
   useEffect(() => {
     const timestamp = Date.now();
@@ -95,18 +94,6 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
     if (item.es_exportacion) destinos.push('Exportación');
     return destinos.length > 0 ? destinos.join(', ') : 'No especificado';
   };
-
-  if (imprimiendo) {
-    return (
-      <FichaImpresion
-        ficha={ficha}
-        cultivos={cultivos}
-        animales={animales}
-        prediosAdicionales={prediosAdicionales}
-        onClose={() => setImprimiendo(false)}
-      />
-    );
-  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -394,7 +381,7 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setImprimiendo(true)}
+              onClick={() => window.print()}
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition-all duration-200 cursor-pointer shadow-lg shadow-blue-600/15 hover:shadow-blue-500/20 hover:scale-[1.02]"
               title="Imprimir Ficha Técnica A4"
             >
@@ -432,6 +419,16 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
         <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-850">
           {renderContent()}
         </div>
+      </div>
+
+      {/* Reporte de impresión invisible en pantalla, visible solo en papel */}
+      <div className="hidden print:block">
+        <FichaImpresion
+          ficha={ficha}
+          cultivos={cultivos}
+          animales={animales}
+          prediosAdicionales={prediosAdicionales}
+        />
       </div>
     </div>
   );
