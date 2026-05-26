@@ -300,7 +300,7 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetch('/geo/catastro_busqueda.json')
+    fetch(`/geo/catastro_busqueda.json?t=${Date.now()}`)
       .then((r) => r.json())
       .then((d: CatastroBusqueda[]) => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
@@ -560,7 +560,8 @@ export default function MapPage({ fichas, loading }: Props) {
 
   // Cargar capas base (catastro investigado + ramales)
   useEffect(() => {
-    fetch('/geo/catastro_geo.geojson')
+    const timestamp = Date.now();
+    fetch(`/geo/catastro_geo.geojson?t=${timestamp}`)
       .then((r) => r.json())
       .then((data: FeatureCollection) => {
         const valid = data.features?.filter((f) => f.geometry != null) || [];
@@ -568,7 +569,7 @@ export default function MapPage({ fichas, loading }: Props) {
         setLayerInfo((p) => ({ ...p, catastro: valid.length }));
       }).catch(() => {});
 
-    fetch('/geo/ramales_riego.geojson')
+    fetch(`/geo/ramales_riego.geojson?t=${timestamp}`)
       .then((r) => r.json())
       .then((data: FeatureCollection) => {
         const valid = data.features?.filter((f) => f.geometry != null) || [];
@@ -577,7 +578,7 @@ export default function MapPage({ fichas, loading }: Props) {
       }).catch(() => {});
 
     // Cargar polígonos catastrales en background (lazy, ~4MB gzip)
-    fetch('/geo/catastro_poligonos.json')
+    fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
       .then((r) => r.json())
       .then((data: Record<string, Geometry>) => {
         poligonosRef.current = data;
