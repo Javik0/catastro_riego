@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
-import { X, User, MapPin, Droplets, Sprout, ClipboardList, Building, Image as ImageIcon, Printer } from 'lucide-react';
+import { 
+  X, User, MapPin, Droplets, Sprout, ClipboardList, Building, Image as ImageIcon, Printer,
+  Hash, CreditCard, Phone, Users, Award, BookOpen, Ruler, Waves, Calendar, Percent, 
+  DollarSign, Lightbulb, Compass, Activity, FileText, Smartphone 
+} from 'lucide-react';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
 import { getNombreTecnico } from '../../lib/constants';
 import FichaImpresion from './FichaImpresion';
@@ -21,13 +25,26 @@ const TABS = [
   { id: 'auditoria', label: '7. Auditoría', icon: MapPin },
 ] as const;
 
-function Field({ label, value }: { label: string; value: unknown }) {
+interface FieldProps {
+  label: string;
+  value: unknown;
+  icon?: React.ComponentType<{ className?: string }>;
+}
+
+function Field({ label, value, icon: Icon }: FieldProps) {
   if (value == null || value === '') return null;
   const display = typeof value === 'boolean' ? (value ? 'Sí' : 'No') : String(value);
   return (
-    <div className="flex flex-col gap-0.5">
-      <span className="text-[10px] text-slate-500 uppercase tracking-wider">{label}</span>
-      <span className="text-sm text-white">{display}</span>
+    <div className="flex items-start gap-3 p-3 rounded-xl border border-slate-800 bg-slate-900/40 hover:border-slate-700/50 hover:bg-slate-800/30 transition-all duration-200 group">
+      {Icon && (
+        <div className="flex-shrink-0 p-1.5 rounded-lg bg-slate-800/80 text-blue-400 group-hover:text-blue-300 group-hover:bg-slate-800/50 transition-colors">
+          <Icon className="w-3.5 h-3.5" />
+        </div>
+      )}
+      <div className="flex flex-col min-w-0">
+        <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">{label}</span>
+        <span className="text-xs text-slate-100 font-medium break-words mt-0.5">{display}</span>
+      </div>
     </div>
   );
 }
@@ -96,64 +113,64 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
       case 'propietario':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Código del Predio" value={ficha.codigo_final} />
-            <Field label="Clave Catastral" value={ficha.clave_catastral} />
-            <Field label="Apellidos" value={ficha.apellidos} />
-            <Field label="Nombres" value={ficha.nombres} />
-            <Field label="Cédula" value={ficha.cedula} />
-            <Field label="Parroquia" value={ficha.parroquia} />
-            <Field label="Sector" value={ficha.sector} />
-            <Field label="Sector Comunidad" value={ficha.sector_comunidad} />
-            <Field label="Teléfono Celular" value={ficha.telefono_celular} />
-            <Field label="Teléfono Casa" value={ficha.telefono_casa} />
-            <Field label="Hijos (Hombres)" value={ficha.hijos_hombres} />
-            <Field label="Hijos (Mujeres)" value={ficha.hijos_mujeres} />
-            <Field label="Tenencia del Predio" value={ficha.tenencia_predio} />
-            <Field label="Nivel de Instrucción" value={ficha.nivel_instruccion} />
+            <Field label="Código del Predio" value={ficha.codigo_final} icon={Hash} />
+            <Field label="Clave Catastral" value={ficha.clave_catastral} icon={CreditCard} />
+            <Field label="Apellidos" value={ficha.apellidos} icon={User} />
+            <Field label="Nombres" value={ficha.nombres} icon={User} />
+            <Field label="Cédula" value={ficha.cedula} icon={CreditCard} />
+            <Field label="Parroquia" value={ficha.parroquia} icon={MapPin} />
+            <Field label="Sector" value={ficha.sector} icon={MapPin} />
+            <Field label="Sector Comunidad" value={ficha.sector_comunidad} icon={MapPin} />
+            <Field label="Teléfono Celular" value={ficha.telefono_celular} icon={Phone} />
+            <Field label="Teléfono Casa" value={ficha.telefono_casa} icon={Phone} />
+            <Field label="Hijos (Hombres)" value={ficha.hijos_hombres} icon={Users} />
+            <Field label="Hijos (Mujeres)" value={ficha.hijos_mujeres} icon={Users} />
+            <Field label="Tenencia del Predio" value={ficha.tenencia_predio} icon={Award} />
+            <Field label="Nivel de Instrucción" value={ficha.nivel_instruccion} icon={BookOpen} />
           </div>
         );
       case 'predio':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Org. de Riego" value={ficha.org_riego} />
-            <Field label="Canal" value={ficha.canal} />
-            <Field label="Caudal (l/s)" value={ficha.caudal_valor} />
-            <Field label="Tipo de Caudal" value={ficha.caudal_tipo} />
-            <Field label="Área Total (m²)" value={ficha.area_total?.toLocaleString('es-EC')} />
-            <Field label="Área con Riego (m²)" value={ficha.area_riego?.toLocaleString('es-EC')} />
-            <Field label="Área sin Riego (m²)" value={ficha.area_sin_riego?.toLocaleString('es-EC')} />
-            <Field label="Frecuencia de Riego" value={ficha.frecuencia_riego} />
-            <Field label="Gravedad (%)" value={ficha.metodo_gravedad_pct} />
-            <Field label="Aspersión (%)" value={ficha.metodo_aspersion_pct} />
-            <Field label="Goteo (%)" value={ficha.metodo_goteo_pct} />
-            <Field label="Días de Riego" value={ficha.dias_riego} />
-            <Field label="Horas por Turno" value={ficha.horas_turno} />
-            <Field label="Valor Tarifa ($)" value={ficha.valor_tarifa} />
-            <Field label="Tipo de Tarifa" value={ficha.tipo_tarifa} />
-            <Field label="¿Tiene Reservorio?" value={ficha.tiene_reservorio} />
+            <Field label="Org. de Riego" value={ficha.org_riego} icon={Waves} />
+            <Field label="Canal" value={ficha.canal} icon={Ruler} />
+            <Field label="Caudal (l/s)" value={ficha.caudal_valor} icon={Waves} />
+            <Field label="Tipo de Caudal" value={ficha.caudal_tipo} icon={Waves} />
+            <Field label="Área Total (m²)" value={ficha.area_total?.toLocaleString('es-EC')} icon={Ruler} />
+            <Field label="Área con Riego (m²)" value={ficha.area_riego?.toLocaleString('es-EC')} icon={Droplets} />
+            <Field label="Área sin Riego (m²)" value={ficha.area_sin_riego?.toLocaleString('es-EC')} icon={Droplets} />
+            <Field label="Frecuencia de Riego" value={ficha.frecuencia_riego} icon={Calendar} />
+            <Field label="Gravedad (%)" value={ficha.metodo_gravedad_pct} icon={Percent} />
+            <Field label="Aspersión (%)" value={ficha.metodo_aspersion_pct} icon={Percent} />
+            <Field label="Goteo (%)" value={ficha.metodo_goteo_pct} icon={Percent} />
+            <Field label="Días de Riego" value={ficha.dias_riego} icon={Calendar} />
+            <Field label="Horas por Turno" value={ficha.horas_turno} icon={Calendar} />
+            <Field label="Valor Tarifa ($)" value={ficha.valor_tarifa} icon={DollarSign} />
+            <Field label="Tipo de Tarifa" value={ficha.tipo_tarifa} icon={DollarSign} />
+            <Field label="¿Tiene Reservorio?" value={ficha.tiene_reservorio} icon={Droplets} />
           </div>
         );
       case 'servicios':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Agua Consumo" value={ficha.agua_consumo} />
-            <Field label="Energía Eléctrica" value={ficha.energia_electrica} />
-            <Field label="Material Construcción" value={ficha.material_construccion} />
-            <Field label="Material (otro)" value={ficha.material_constr_otro} />
-            <Field label="COTA (msnm)" value={ficha.cota_msnm} />
-            <Field label="Coordenada X (UTM)" value={ficha.coord_x_utm} />
-            <Field label="Coordenada Y (UTM)" value={ficha.coord_y_utm} />
+            <Field label="Agua Consumo" value={ficha.agua_consumo} icon={Droplets} />
+            <Field label="Energía Eléctrica" value={ficha.energia_electrica} icon={Lightbulb} />
+            <Field label="Material Construcción" value={ficha.material_construccion} icon={Building} />
+            <Field label="Material (otro)" value={ficha.material_constr_otro} icon={Building} />
+            <Field label="COTA (msnm)" value={ficha.cota_msnm} icon={Compass} />
+            <Field label="Coordenada X (UTM)" value={ficha.coord_x_utm} icon={Compass} />
+            <Field label="Coordenada Y (UTM)" value={ficha.coord_y_utm} icon={Compass} />
           </div>
         );
       case 'produccion':
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Soberanía Alimentaria (%)" value={ficha.soberania_aliment_pct} />
-              <Field label="Act. Productivas (%)" value={ficha.act_productivas_pct} />
-              <Field label="Actividad Productiva" value={ficha.actividad_productiva} />
+              <Field label="Soberanía Alimentaria (%)" value={ficha.soberania_aliment_pct} icon={Percent} />
+              <Field label="Act. Productivas (%)" value={ficha.act_productivas_pct} icon={Percent} />
+              <Field label="Actividad Productiva" value={ficha.actividad_productiva} icon={Activity} />
             </div>
-
+ 
             {loadingRelational ? (
               <div className="text-center py-4 text-xs text-slate-400">Cargando producción...</div>
             ) : (
@@ -197,7 +214,7 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
                     </div>
                   )}
                 </div>
-
+ 
                 {/* Tabla Animales */}
                 <div className="border border-slate-700/40 rounded-xl overflow-hidden">
                   <div className="bg-slate-800/40 px-4 py-2 border-b border-slate-700/40 flex items-center gap-2">
@@ -259,25 +276,25 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-wider">Área Total</span>
-                        <span className="text-xs font-semibold text-white">{pa.area_total_otro?.toLocaleString('es-EC')} m²</span>
+                        <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Área Total</span>
+                        <span className="text-xs font-semibold text-white mt-0.5">{pa.area_total_otro?.toLocaleString('es-EC')} m²</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-wider">Lote Asignado</span>
-                        <span className="text-xs font-semibold text-white">{pa.area_lote_asignado_otro?.toLocaleString('es-EC')} m²</span>
+                        <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Lote Asignado</span>
+                        <span className="text-xs font-semibold text-white mt-0.5">{pa.area_lote_asignado_otro?.toLocaleString('es-EC')} m²</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-wider">Área Riego</span>
-                        <span className="text-xs font-semibold text-white">{pa.area_riego_otro?.toLocaleString('es-EC')} m²</span>
+                        <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Área Riego</span>
+                        <span className="text-xs font-semibold text-white mt-0.5">{pa.area_riego_otro?.toLocaleString('es-EC')} m²</span>
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-[9px] text-slate-500 uppercase tracking-wider">Área Sin Riego</span>
-                        <span className="text-xs font-semibold text-white">{pa.area_sin_riego_otro?.toLocaleString('es-EC')} m²</span>
+                        <span className="text-[9px] text-slate-500 uppercase tracking-wider font-semibold">Área Sin Riego</span>
+                        <span className="text-xs font-semibold text-white mt-0.5">{pa.area_sin_riego_otro?.toLocaleString('es-EC')} m²</span>
                       </div>
                     </div>
                     {pa.tiene_observaciones && pa.observaciones_otro && (
                       <div className="mt-2 pt-2 border-t border-slate-700/10 flex flex-col gap-0.5">
-                        <span className="text-[9px] text-amber-500/80 uppercase tracking-wider">Observaciones</span>
+                        <span className="text-[9px] text-amber-500/80 uppercase tracking-wider font-semibold">Observaciones</span>
                         <p className="text-xs text-slate-300 italic">"{pa.observaciones_otro}"</p>
                       </div>
                     )}
@@ -290,47 +307,46 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
       case 'encuesta':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="¿Conoce el Proyecto Presa?" value={ficha.conoce_presa} />
-            <Field label="¿Cómo se elige la directiva?" value={ficha.como_elige_dir} />
-            <Field label="Otro método" value={ficha.como_elige_dir_otro} />
-            <Field label="Presidente Junta de Agua" value={ficha.nom_presidente} />
-            <Field label="Operador del Sistema" value={ficha.operador_sector} />
-            <Field label="Años del Sistema" value={ficha.anios_sistema} />
-            <Field label="Km del Canal Principal" value={ficha.km_canal} />
-            <Field label="¿Recibió Capacitación?" value={ficha.recibio_capacitacion} />
-            <Field label="¿Le gustaría Capacitación?" value={ficha.le_gustaria_cap} />
-            <Field label="Temas de Capacitación" value={ficha.temas_capacitacion} />
+            <Field label="¿Conoce el Proyecto Presa?" value={ficha.conoce_presa} icon={Lightbulb} />
+            <Field label="¿Cómo se elige la directiva?" value={ficha.como_elige_dir} icon={Users} />
+            <Field label="Otro método" value={ficha.como_elige_dir_otro} icon={Users} />
+            <Field label="Presidente Junta de Agua" value={ficha.nom_presidente} icon={User} />
+            <Field label="Operador del Sistema" value={ficha.operador_sector} icon={User} />
+            <Field label="Años del Sistema" value={ficha.anios_sistema} icon={Calendar} />
+            <Field label="Km del Canal Principal" value={ficha.km_canal} icon={Ruler} />
+            <Field label="¿Recibió Capacitación?" value={ficha.recibio_capacitacion} icon={BookOpen} />
+            <Field label="¿Le gustaría Capacitación?" value={ficha.le_gustaria_cap} icon={BookOpen} />
+            <Field label="Temas de Capacitación" value={ficha.temas_capacitacion} icon={BookOpen} />
           </div>
         );
       case 'auditoria':
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="ID" value={ficha.id} />
-              <Field label="Investigado por" value={getNombreTecnico(ficha.creado_por)} />
-              <Field label="Fecha de Registro" value={safeToDate(ficha.fecha_creacion).toLocaleString('es-EC')} />
-              <Field label="Dispositivo" value={ficha.dispositivo} />
-              <Field label="Precisión GPS" value={ficha.precision_gps ? `${ficha.precision_gps.toFixed(2)} m` : null} />
-              <Field label="Nombre Archivo Foto" value={ficha.foto_predio} />
+              <Field label="ID" value={ficha.id} icon={Hash} />
+              <Field label="Investigado por" value={getNombreTecnico(ficha.creado_por)} icon={User} />
+              <Field label="Fecha de Registro" value={safeToDate(ficha.fecha_creacion).toLocaleString('es-EC')} icon={Calendar} />
+              <Field label="Dispositivo" value={ficha.dispositivo} icon={Smartphone} />
+              <Field label="Precisión GPS" value={ficha.precision_gps ? `${ficha.precision_gps.toFixed(2)} m` : null} icon={Compass} />
+              <Field label="Nombre Archivo Foto" value={ficha.foto_predio} icon={ImageIcon} />
               <div className="col-span-full">
-                <Field label="Observaciones" value={ficha.observaciones} />
+                <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />
               </div>
             </div>
-
+ 
             {/* Foto del Predio */}
             <div className="border border-slate-700/40 rounded-xl overflow-hidden">
               <div className="bg-slate-800/40 px-4 py-2 border-b border-slate-700/40 flex items-center gap-2">
                 <ImageIcon className="w-4 h-4 text-sky-400" />
-                <span className="text-xs font-semibold text-white uppercase tracking-wider">Fotografía Evidencia</span>
+                <span className="text-xs font-semibold text-white uppercase tracking-wider font-semibold">Fotografía Evidencia</span>
               </div>
               <div className="p-4 flex justify-center bg-slate-950/40">
                 {ficha.foto_predio ? (
                   <img
-                    src={`https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/fotos_predios%2F${encodeURIComponent(ficha.foto_predio.replace('DCIM/', ''))}?alt=media`}
+                    src={`https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/fotos_predios%2F${encodeURIComponent(ficha.foto_predio.replace(/\\/g, '/').split('/').pop() || '')}?alt=media`}
                     alt="Evidencia Predio"
                     className="max-h-[300px] w-auto rounded-lg object-contain border border-slate-800 shadow-md"
                     onError={(e) => {
-                      // Fallback en caso de que falle la carga (ej. no está en Storage)
                       const target = e.target as HTMLImageElement;
                       target.src = '';
                       target.style.display = 'none';
@@ -357,56 +373,63 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Modal */}
-      <div className="relative bg-slate-900 rounded-2xl border border-slate-700/50 shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col">
+      {/* Overlay con blur fino */}
+      <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={onClose} />
+ 
+      {/* Modal con Glassmorphism Premium */}
+      <div className="relative bg-slate-950/95 backdrop-blur-xl rounded-2xl border border-slate-800/80 shadow-2xl shadow-blue-500/5 w-full max-w-2xl max-h-[85vh] flex flex-col transition-all duration-300">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-700/30">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800/60 bg-slate-900/10">
           <div>
-            <h2 className="text-lg font-bold text-white">
+            <h2 className="text-base font-bold text-white tracking-wide">
               {ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}
             </h2>
-            <p className="text-xs text-slate-400">
-              {ficha.codigo_final} · {ficha.parroquia} · {ficha.sector}
+            <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+              <span className="px-1.5 py-0.5 rounded bg-blue-900/20 text-blue-400 border border-blue-500/10 font-mono text-[10px]">{ficha.codigo_final}</span>
+              <span className="text-slate-600">•</span>
+              <span>{ficha.parroquia}</span>
+              <span className="text-slate-600">•</span>
+              <span className="truncate max-w-[150px] sm:max-w-none">{ficha.sector}</span>
             </p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setImprimiendo(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-semibold text-white transition-all duration-200 cursor-pointer shadow-lg shadow-blue-600/15 hover:shadow-blue-500/20 hover:scale-[1.02]"
               title="Imprimir Ficha Técnica A4"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-3.5 h-3.5" />
               <span>Imprimir</span>
             </button>
-            <button onClick={onClose} className="p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white cursor-pointer">
-              <X className="w-5 h-5" />
+            <button 
+              onClick={onClose} 
+              className="p-2 rounded-xl border border-slate-800 bg-slate-900/40 text-slate-400 hover:text-white hover:bg-slate-800/60 hover:border-slate-700/50 transition-all duration-150 cursor-pointer"
+            >
+              <X className="w-4 h-4" />
             </button>
           </div>
         </div>
-
-        {/* Tabs */}
-        <div className="flex overflow-x-auto border-b border-slate-700/30 px-4">
+ 
+        {/* Tabs Modernas en Píldoras */}
+        <div className="flex overflow-x-auto gap-1 border-b border-slate-800/60 px-6 py-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-800">
           {TABS.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex items-center gap-1.5 px-3 py-2.5 text-xs font-medium whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer border ${
                 activeTab === id
-                  ? 'border-blue-400 text-blue-400'
-                  : 'border-transparent text-slate-400 hover:text-white'
+                  ? 'bg-blue-600/10 text-blue-400 border-blue-500/20 shadow-inner'
+                  : 'bg-transparent text-slate-400 border-transparent hover:text-white hover:bg-slate-900/50 hover:border-slate-800/40'
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{label}</span>
+              <span>{label.split('. ')[1]}</span>
             </button>
           ))}
         </div>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-6">
+ 
+        {/* Content con Scrollbar Estilizado */}
+        <div className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-850">
           {renderContent()}
         </div>
       </div>

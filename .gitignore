@@ -64,3 +64,7 @@ __pycache__/
 *.pyc
 *.pyo
 scripts/__pycache__/
+
+# ─── Claves privadas y logs de sincronización locales ─────────
+firebase-key.json
+scripts/photos_sync_log.json

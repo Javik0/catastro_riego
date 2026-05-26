@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, CircleMarker, useMap } from 'react-leaflet';
 import type { FeatureCollection } from 'geojson';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
 import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
@@ -16,40 +16,108 @@ interface Props {
 
 const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
 
+// Componente para forzar a Leaflet a recalcular sus dimensiones en impresión y centrar
+function MapController({ center }: { center: [number, number] }) {
+  const map = useMap();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+      map.setView(center, 17);
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [map, center]);
+  return null;
+}
+
 export default function FichaImpresion({ ficha, cultivos, animales, prediosAdicionales, onClose }: Props) {
   const [mapPolygon, setMapPolygon] = useState<FeatureCollection | null>(null);
+  const [loadingPolygon, setLoadingPolygon] = useState(true);
+  const [coords, setCoords] = useState<[number, number] | null>(null);
 
-  // Intentar cargar la geometría del predio desde catastro_poligonos.json para mostrar su dibujo
+  // Inicializar coords con los datos de la ficha
   useEffect(() => {
-    fetch(`/geo/catastro_poligonos.json?t=${Date.now()}`)
+    if (ficha.geo?.lat && ficha.geo?.lng) {
+      setCoords([ficha.geo.lat, ficha.geo.lng]);
+    } else if (ficha._geojson?.coordinates) {
+      setCoords([ficha._geojson.coordinates[1], ficha._geojson.coordinates[0]]);
+    }
+  }, [ficha]);
+
+  // Cargar geometría cruzando clave_catastral de la ficha con catastro_geo.geojson o index general
+  useEffect(() => {
+    const timestamp = Date.now();
+    setLoadingPolygon(true);
+    const targetClave = (ficha.clave_catastral || '').trim();
+
+    if (!targetClave) {
+      setLoadingPolygon(false);
+      return;
+    }
+
+    // 1. Obtener datos básicos de búsqueda para tener el centroide si la ficha no tiene coordenadas
+    fetch(`/geo/catastro_busqueda.json?t=${timestamp}`)
       .then((r) => r.json())
-      .then((data) => {
-        // Encontrar el polígono asociado por el fid de la ficha o código de predio
-        const fidKey = String(ficha.fid);
-        const geom = data[fidKey];
-        if (geom) {
-          setMapPolygon({
-            type: 'FeatureCollection',
-            features: [{
-              type: 'Feature',
-              properties: { fid: ficha.fid, clave_cata: ficha.clave_catastral },
-              geometry: geom
-            }]
-          });
+      .then((busquedaData: any[]) => {
+        const match = busquedaData.find(
+          (item) => item.clave_cata && item.clave_cata.trim() === targetClave
+        );
+
+        if (match) {
+          // Si no tiene coordenadas geográficas de campo, usar el centroide catastral rural
+          if (!ficha.geo?.lat && !ficha._geojson?.coordinates && match.lat && match.lng) {
+            setCoords([match.lat, match.lng]);
+          }
+
+          // 2. Intentar buscar geometría primero en catastro_geo.geojson (ligero, predios con fichas)
+          fetch(`/geo/catastro_geo.geojson?t=${timestamp}`)
+            .then((r) => r.json())
+            .then((geoData: any) => {
+              const feature = geoData.features.find(
+                (f: any) => f.properties && f.properties.clave_cata && f.properties.clave_cata.trim() === targetClave
+              );
+
+              if (feature) {
+                setMapPolygon({
+                  type: 'FeatureCollection',
+                  features: [feature]
+                });
+                setLoadingPolygon(false);
+              } else {
+                // Fallback extremo: consultar catastro_poligonos.json completo solo si es necesario
+                fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
+                  .then((r) => r.json())
+                  .then((poligonosData) => {
+                    const geom = poligonosData[String(match.fid)];
+                    if (geom) {
+                      setMapPolygon({
+                        type: 'FeatureCollection',
+                        features: [{
+                          type: 'Feature',
+                          properties: { 
+                            fid: match.fid, 
+                            clave_cata: match.clave_cata,
+                            apellidos: match.apellidos,
+                            nombres: match.nombres
+                          },
+                          geometry: geom
+                        }]
+                      });
+                    }
+                    setLoadingPolygon(false);
+                  })
+                  .catch(() => setLoadingPolygon(false));
+              }
+            })
+            .catch(() => setLoadingPolygon(false));
+        } else {
+          setLoadingPolygon(false);
         }
       })
-      .catch((e) => console.error("Error al cargar polígono para mapa de impresión:", e));
-  }, [ficha.fid, ficha.clave_catastral]);
-
-  // Coordenadas
-  const getCoords = (): [number, number] | null => {
-    if (ficha.geo?.lat && ficha.geo?.lng) return [ficha.geo.lat, ficha.geo.lng];
-    if (ficha._geojson?.coordinates) return [ficha._geojson.coordinates[1], ficha._geojson.coordinates[0]];
-    return null;
-  };
-
-  const coords = getCoords();
-  const utm = coords ? wgs84ToUtm17S(coords[0], coords[1]) : null;
+      .catch((e) => {
+        console.error("Error al cargar datos catastrales:", e);
+        setLoadingPolygon(false);
+      });
+  }, [ficha.clave_catastral, ficha.geo, ficha._geojson]);
 
   const obtenerDestino = (item: { es_autoconsumo?: boolean | number; es_mercado?: boolean | number; es_agroindustria?: boolean | number; es_exportacion?: boolean | number }) => {
     const destinos = [];
@@ -60,13 +128,17 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
     return destinos.length > 0 ? destinos.join(', ') : '—';
   };
 
-  // Lanzar la impresión automáticamente en cuanto cargue el componente
+  // Lanzar la impresión solo cuando la geometría esté resuelta
   useEffect(() => {
-    const timer = setTimeout(() => {
-      window.print();
-    }, 1500); // 1.5s para dar tiempo a que carguen Leaflet tiles y fotos
-    return () => clearTimeout(timer);
-  }, []);
+    if (!loadingPolygon) {
+      const timer = setTimeout(() => {
+        window.print();
+      }, 2000); // 2 segundos para dar tiempo de renderizado a Leaflet tiles, polígonos y la foto
+      return () => clearTimeout(timer);
+    }
+  }, [loadingPolygon]);
+
+  const utm = coords ? wgs84ToUtm17S(coords[0], coords[1]) : null;
 
   return (
     <div className="print-report-view">
@@ -79,7 +151,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             color: #000000 !important;
             margin: 0 !important;
             padding: 0 !important;
-            font-size: 9pt !important;
+            font-size: 8pt !important;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
           }
           /* Ocultar barra lateral, cabecera y controles de la app web */
@@ -101,11 +173,11 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           /* Márgenes de página */
           @page {
             size: A4 portrait;
-            margin: 12mm 12mm 12mm 12mm;
+            margin: 6mm 8mm 6mm 8mm;
           }
           .page-break {
             page-break-before: always;
-            padding-top: 10mm;
+            padding-top: 3mm;
           }
           .section-block {
             break-inside: avoid;
@@ -117,12 +189,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           background: #ffffff;
           color: #1e293b;
           font-family: 'Inter', sans-serif;
-          max-width: 800px;
-          margin: 20px auto;
-          padding: 30px;
+          max-width: 820px;
+          margin: 15px auto;
+          padding: 20px 25px;
           box-shadow: 0 10px 25px rgba(0,0,0,0.15);
           border-radius: 8px;
-          line-height: 1.35;
+          line-height: 1.3;
         }
 
         .report-header {
@@ -130,18 +202,18 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           align-items: center;
           justify-content: space-between;
           border-bottom: 2px solid #0f172a;
-          padding-bottom: 10px;
-          margin-bottom: 15px;
+          padding-bottom: 6px;
+          margin-bottom: 10px;
         }
 
         .report-title-block {
           text-align: center;
-          flex-1: 1;
-          padding: 0 15px;
+          flex: 1;
+          padding: 0 10px;
         }
 
         .report-logo {
-          height: 48px;
+          height: 40px;
           width: auto;
           object-fit: contain;
         }
@@ -149,17 +221,13 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         .grid-details {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 6px;
-          margin-bottom: 15px;
-        }
-
-        .grid-details.two-col {
-          grid-template-columns: repeat(2, 1fr);
+          gap: 5px;
+          margin-bottom: 10px;
         }
 
         .detail-item {
-          border: 1px solid #e2e8f0;
-          padding: 4px 8px;
+          border: 1px solid #cbd5e1;
+          padding: 3px 6px;
           border-radius: 4px;
           background: #f8fafc;
         }
@@ -173,29 +241,29 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         }
 
         .detail-label {
-          font-size: 7.5pt;
+          font-size: 7pt;
           text-transform: uppercase;
-          color: #64748b;
-          font-weight: 600;
-          letter-spacing: 0.05em;
+          color: #475569;
+          font-weight: 700;
+          letter-spacing: 0.03em;
         }
 
         .detail-value {
-          font-size: 9pt;
+          font-size: 8.5pt;
           font-weight: 500;
           color: #0f172a;
         }
 
         .report-section-title {
-          font-size: 10.5pt;
+          font-size: 9pt;
           font-weight: 700;
           color: #ffffff;
           background: #1e3a8a;
-          padding: 4px 10px;
-          margin-top: 15px;
-          margin-bottom: 8px;
+          padding: 3px 8px;
+          margin-top: 10px;
+          margin-bottom: 6px;
           text-transform: uppercase;
-          border-radius: 4px;
+          border-radius: 3px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -206,23 +274,23 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         .report-table {
           width: 100%;
           border-collapse: collapse;
-          font-size: 8.5pt;
-          margin-bottom: 10px;
+          font-size: 8pt;
+          margin-bottom: 8px;
         }
 
         .report-table th {
-          background: #f1f5f9;
-          color: #334155;
+          background: #e2e8f0;
+          color: #1e293b;
           font-weight: 700;
           text-transform: uppercase;
-          font-size: 8pt;
+          font-size: 7.5pt;
           border: 1px solid #cbd5e1;
-          padding: 4px 8px;
+          padding: 3px 6px;
         }
 
         .report-table td {
           border: 1px solid #cbd5e1;
-          padding: 4px 8px;
+          padding: 3px 6px;
         }
 
         .report-table tr:nth-child(even) {
@@ -265,8 +333,8 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         .visuals-container {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 15px;
-          margin-top: 15px;
+          gap: 12px;
+          margin-top: 10px;
           break-inside: avoid;
         }
 
@@ -280,11 +348,11 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         }
 
         .visual-title {
-          font-size: 8pt;
+          font-size: 7.5pt;
           font-weight: 700;
           background: #e2e8f0;
-          color: #334155;
-          padding: 4px 10px;
+          color: #1e293b;
+          padding: 3px 8px;
           text-transform: uppercase;
           border-bottom: 1px solid #cbd5e1;
         }
@@ -294,29 +362,29 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 10px;
-          min-height: 200px;
+          padding: 6px;
+          min-height: 180px;
         }
 
         .visual-img {
-          max-height: 200px;
+          max-height: 180px;
           max-width: 100%;
           object-fit: contain;
           border-radius: 4px;
-          border: 1px solid #e2e8f0;
+          border: 1px solid #cbd5e1;
         }
 
         .no-visual {
-          font-size: 8pt;
-          color: #94a3b8;
+          font-size: 7.5pt;
+          color: #64748b;
           text-align: center;
         }
 
         .signatures-block {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
-          margin-top: 40px;
+          gap: 15px;
+          margin-top: 20px;
           break-inside: avoid;
         }
 
@@ -324,8 +392,9 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           border-top: 1px solid #475569;
           padding-top: 6px;
           text-align: center;
-          font-size: 8pt;
-          color: #475569;
+          font-size: 7.5pt;
+          color: #334155;
+          margin-top: 50px; /* Generoso espacio vertical de 50px sobre la línea de firma */
         }
       `}</style>
 
@@ -339,18 +408,18 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       <div className="report-header">
         <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
         <div className="report-title-block">
-          <h1 className="text-sm font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
-          <h2 className="text-xs text-slate-600 mt-0.5">{PROJECT_SUBTITLE}</h2>
+          <h1 className="text-xs font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
+          <h2 className="text-[10px] text-slate-600 mt-0.5">{PROJECT_SUBTITLE}</h2>
           <p className="text-[8px] text-slate-400 mt-0.5 font-medium">{PROJECT_LOCATION}</p>
         </div>
         <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
       </div>
 
-      <div className="text-center mb-4">
-        <h2 className="text-xs font-extrabold text-blue-900 bg-blue-50 border border-blue-200/50 py-1 rounded uppercase tracking-wider">
+      <div className="text-center mb-3">
+        <h2 className="text-[10px] font-extrabold text-blue-900 bg-blue-50 border border-blue-200/40 py-0.5 rounded uppercase tracking-wider">
           Ficha Técnica de Información de Regante
         </h2>
-        <p className="text-[8px] text-slate-500 mt-1 font-mono">
+        <p className="text-[8px] text-slate-500 mt-0.5 font-mono">
           Código: <b>{ficha.codigo_final}</b> | Clave: {ficha.clave_catastral} | Registro: {safeToDate(ficha.fecha_creacion).toLocaleDateString('es-EC')}
         </p>
       </div>
@@ -408,7 +477,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       </div>
       <div className="grid-details">
         <div className="detail-item">
-          <p className="detail-label">Área Total</p>
+          <p className="detail-label">Árefa Total</p>
           <p className="detail-value font-semibold">{ficha.area_total?.toLocaleString('es-EC')} m²</p>
         </div>
         <div className="detail-item">
@@ -465,7 +534,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <span>3. Otros Pedidos del Regante (Prorrateo / Lotes Adicionales)</span>
         </div>
         {prediosAdicionales.length === 0 ? (
-          <p className="text-xs text-slate-500 italic p-1">No se registraron predios o pedidos adicionales asociados a este regante.</p>
+          <p className="text-[8pt] text-slate-500 italic p-1">No se registraron predios o pedidos adicionales asociados a este regante.</p>
         ) : (
           <table className="report-table">
             <thead>
@@ -500,7 +569,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       </div>
       <div className="grid-details">
         <div className="detail-item">
-          <p className="detail-label">Agua Consumo Humano</p>
+          <p className="detail-label">Agua Consumo</p>
           <p className="detail-value">{ficha.agua_consumo ? 'Sí' : 'No'}</p>
         </div>
         <div className="detail-item">
@@ -508,18 +577,24 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <p className="detail-value">{ficha.energia_electrica ? 'Sí' : 'No'}</p>
         </div>
         <div className="detail-item col-2">
-          <p className="detail-label">Material de Construcción (Vivienda)</p>
+          <p className="detail-label">Material de Construcción</p>
           <p className="detail-value">{ficha.material_construccion === 'Otros' ? ficha.material_constr_otro : ficha.material_construccion || '—'}</p>
         </div>
         <div className="detail-item">
           <p className="detail-label">Cota Altura</p>
           <p className="detail-value font-mono">{ficha.cota_msnm ? `${ficha.cota_msnm.toLocaleString('es-EC')} msnm` : '—'}</p>
         </div>
-        <div className="detail-item col-3">
-          <p className="detail-label">Coordenadas UTM (Zona 17S)</p>
-          <p className="detail-value font-mono">
-            {utm ? `E ${utm.este.toFixed(1)} m  |  N ${utm.norte.toFixed(1)} m` : '—'}
-          </p>
+        <div className="detail-item">
+          <p className="detail-label font-bold text-sky-700">Este (X)</p>
+          <p className="detail-value font-mono text-sky-800 font-semibold">{utm ? `${utm.este.toFixed(1)} m` : '—'}</p>
+        </div>
+        <div className="detail-item">
+          <p className="detail-label font-bold text-sky-700">Norte (Y)</p>
+          <p className="detail-value font-mono text-sky-800 font-semibold">{utm ? `${utm.norte.toFixed(1)} m` : '—'}</p>
+        </div>
+        <div className="detail-item">
+          <p className="detail-label">Zona UTM</p>
+          <p className="detail-value font-mono">17S</p>
         </div>
       </div>
 
@@ -529,7 +604,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       <div className="report-header">
         <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
         <div className="report-title-block">
-          <h1 className="text-xs font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
+          <h1 className="text-[10px] font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
           <p className="text-[7px] text-slate-400 font-mono">Código Predio: {ficha.codigo_final}</p>
         </div>
         <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
@@ -539,7 +614,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       <div className="report-section-title">
         <span>5. Producción y Actividad Agropecuaria</span>
       </div>
-      <div className="grid-details mb-3">
+      <div className="grid-details mb-2">
         <div className="detail-item col-2">
           <p className="detail-label">Actividad Productiva Principal</p>
           <p className="detail-value">{ficha.actividad_productiva || '—'}</p>
@@ -554,12 +629,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-3">
         {/* Tabla Cultivos */}
         <div className="section-block">
-          <p className="text-[8.5pt] font-bold text-slate-700 uppercase tracking-wide mb-1 border-b pb-0.5">Cultivos Agrícolas</p>
+          <p className="text-[7.5pt] font-bold text-slate-700 uppercase tracking-wide mb-1 border-b pb-0.5">Cultivos Agrícolas</p>
           {cultivos.length === 0 ? (
-            <p className="text-[8pt] text-slate-400 italic">Sin cultivos registrados.</p>
+            <p className="text-[7.5pt] text-slate-400 italic">Sin cultivos registrados.</p>
           ) : (
             <table className="report-table">
               <thead>
@@ -584,9 +659,9 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
         {/* Tabla Animales */}
         <div className="section-block">
-          <p className="text-[8.5pt] font-bold text-slate-700 uppercase tracking-wide mb-1 border-b pb-0.5">Producción Pecuaria</p>
+          <p className="text-[7.5pt] font-bold text-slate-700 uppercase tracking-wide mb-1 border-b pb-0.5">Producción Pecuaria</p>
           {animales.length === 0 ? (
-            <p className="text-[8pt] text-slate-400 italic">Sin animales registrados.</p>
+            <p className="text-[7.5pt] text-slate-400 italic">Sin animales registrados.</p>
           ) : (
             <table className="report-table">
               <thead>
@@ -653,7 +728,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
         <div className="detail-item">
           <p className="detail-label">Dispositivo</p>
-          <p className="detail-value font-mono text-[8pt] truncate">{ficha.dispositivo || '—'}</p>
+          <p className="detail-value font-mono text-[7pt] truncate">{ficha.dispositivo || '—'}</p>
         </div>
         <div className="detail-item">
           <p className="detail-label">Precisión GPS</p>
@@ -670,7 +745,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         {/* Contenedor del Mini Mapa Leaflet */}
         <div className="visual-box">
           <div className="visual-title">Ubicación y Emplazamiento Catastral</div>
-          <div className="visual-content relative" style={{ height: '220px', padding: 0 }}>
+          <div className="visual-content relative" style={{ height: '180px', padding: 0 }}>
             {coords ? (
               <MapContainer
                 center={coords}
@@ -686,12 +761,29 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   attribution="&copy; ESRI"
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                 />
-                {mapPolygon && (
+                
+                {/* Controlador para invalidar el tamaño y re-centrar Leaflet en la impresión */}
+                <MapController center={coords} />
+
+                {/* 1. Dibujar el polígono catastral del predio en rojo si está disponible */}
+                {!loadingPolygon && mapPolygon && (
                   <GeoJSON
                     data={mapPolygon}
                     style={{ color: '#ef4444', weight: 3, fillColor: '#ef4444', fillOpacity: 0.15 }}
                   />
                 )}
+                
+                {/* 2. Dibujar el punto GPS de la ficha levantada en campo en azul/blanco */}
+                <CircleMarker
+                  center={coords}
+                  radius={7}
+                  pathOptions={{
+                    fillColor: '#3b82f6',
+                    fillOpacity: 1,
+                    color: '#ffffff',
+                    weight: 2
+                  }}
+                />
               </MapContainer>
             ) : (
               <div className="no-visual">Coordenadas geográficas no disponibles</div>
@@ -702,10 +794,10 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         {/* Contenedor de la Fotografía */}
         <div className="visual-box">
           <div className="visual-title">Fotografía de Evidencia en Campo</div>
-          <div className="visual-content bg-slate-50">
+          <div className="visual-content bg-slate-50" style={{ height: '180px' }}>
             {ficha.foto_predio ? (
               <img
-                src={`https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/fotos_predios%2F${encodeURIComponent(ficha.foto_predio.replace('DCIM/', ''))}?alt=media`}
+                src={`https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/fotos_predios%2F${encodeURIComponent(ficha.foto_predio.replace(/\\/g, '/').split('/').pop() || '')}?alt=media`}
                 alt="Foto Ficha"
                 className="visual-img"
                 onError={(e) => {
@@ -713,12 +805,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   target.src = '';
                   target.style.display = 'none';
                   const sibling = target.nextElementSibling as HTMLElement;
-                  if (sibling) sibling.style.display = 'block';
+                  if (sibling) sibling.style.display = 'flex';
                 }}
               />
             ) : null}
             <div
-              className="no-visual flex flex-col items-center"
+              className="no-visual flex flex-col items-center justify-center h-full w-full"
               style={{ display: ficha.foto_predio ? 'none' : 'flex' }}
             >
               <svg className="w-8 h-8 text-slate-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -732,17 +824,17 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
       {/* Bloque de Firmas de Responsabilidad */}
       <div className="signatures-block">
-        <div className="signature-line" style={{ marginTop: '20px' }}>
+        <div className="signature-line">
           <p className="font-semibold text-slate-800">{getNombreTecnico(ficha.creado_por)}</p>
-          <p className="text-[7pt] uppercase">Firma del Investigador (Técnico)</p>
+          <p className="text-[6.5pt] uppercase">Firma del Investigador (Técnico)</p>
         </div>
-        <div className="signature-line" style={{ marginTop: '20px' }}>
-          <p className="font-semibold text-slate-800" style={{ minHeight: '14px' }}>&nbsp;</p>
-          <p className="text-[7pt] uppercase">Firma del Regante / Propietario</p>
+        <div className="signature-line">
+          <p className="font-semibold text-slate-800" style={{ minHeight: '12px' }}>&nbsp;</p>
+          <p className="text-[6.5pt] uppercase">Firma del Regante / Propietario</p>
         </div>
-        <div className="signature-line" style={{ marginTop: '20px' }}>
-          <p className="font-semibold text-slate-800" style={{ minHeight: '14px' }}>&nbsp;</p>
-          <p className="text-[7pt] uppercase">Sello y Firma de Directiva Junta</p>
+        <div className="signature-line">
+          <p className="font-semibold text-slate-800" style={{ minHeight: '12px' }}>&nbsp;</p>
+          <p className="text-[6.5pt] uppercase">Sello y Firma de Directiva Junta</p>
         </div>
       </div>
     </div>
