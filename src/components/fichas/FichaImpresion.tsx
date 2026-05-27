@@ -78,48 +78,55 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             setCoords([match.lat, match.lng]);
           }
 
-          // 2. Intentar buscar geometría primero en catastro_geo.geojson (ligero, predios con fichas)
-          fetch(`/geo/catastro_geo.geojson?t=${timestamp}`)
+          // 2. Cargar TODAS las geometrías para dibujar vecinos (usamos catastro_poligonos.json que tiene todo)
+          fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
             .then((r) => r.json())
-            .then((geoData: any) => {
-              setAllPolygons(geoData); // Guardamos todos para mostrar predios vecinos
-              const feature = geoData.features.find(
-                (f: any) => f.properties && f.properties.clave_cata && f.properties.clave_cata.trim() === targetClave
-              );
-
-              if (feature) {
+            .then((poligonosData) => {
+              const targetGeom = poligonosData[String(match.fid)];
+              if (targetGeom) {
                 setMapPolygon({
                   type: 'FeatureCollection',
-                  features: [feature]
+                  features: [{
+                    type: 'Feature',
+                    properties: { fid: match.fid, clave_cata: match.clave_cata },
+                    geometry: targetGeom
+                  }]
                 });
-                setLoadingPolygon(false);
-              } else {
-                // Fallback extremo: consultar catastro_poligonos.json completo solo si es necesario
-                fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
-                  .then((r) => r.json())
-                  .then((poligonosData) => {
-                    const geom = poligonosData[String(match.fid)];
-                    if (geom) {
-                      setMapPolygon({
-                        type: 'FeatureCollection',
-                        features: [{
-                          type: 'Feature',
-                          properties: { 
-                            fid: match.fid, 
-                            clave_cata: match.clave_cata,
-                            apellidos: match.apellidos,
-                            nombres: match.nombres
-                          },
-                          geometry: geom
-                        }]
-                      });
-                    }
-                    setLoadingPolygon(false);
-                  })
-                  .catch(() => setLoadingPolygon(false));
               }
+
+              // Extraer polígonos vecinos (±0.006 grados aprox 600m)
+              const neighbors: any[] = [];
+              const targetLat = match.lat || (coords ? coords[0] : null);
+              const targetLng = match.lng || (coords ? coords[1] : null);
+
+              if (targetLat && targetLng) {
+                for (const [fid, geom] of Object.entries(poligonosData)) {
+                  const g = geom as any;
+                  if (!g || !g.coordinates || !g.coordinates[0] || !g.coordinates[0][0]) continue;
+                  // Usar el primer vértice como aproximación rápida para saber si está cerca
+                  const polyLng = g.coordinates[0][0][0];
+                  const polyLat = g.coordinates[0][0][1];
+                  
+                  if (Math.abs(polyLat - targetLat) < 0.006 && Math.abs(polyLng - targetLng) < 0.006) {
+                    neighbors.push({
+                      type: 'Feature',
+                      properties: { fid },
+                      geometry: g
+                    });
+                  }
+                }
+              }
+
+              if (neighbors.length > 0) {
+                setAllPolygons({ type: 'FeatureCollection', features: neighbors });
+              }
+              
+              setLoadingPolygon(false);
             })
-            .catch(() => setLoadingPolygon(false));
+            .catch((e) => {
+              console.error("Error al cargar polígonos", e);
+              setLoadingPolygon(false);
+            });
         } else {
           setLoadingPolygon(false);
         }
@@ -953,11 +960,9 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         {/* Columna 1: Investigador */}
         <div className="audit-item">
           <div className="audit-item-label">Investigador (Técnico)</div>
-          <p className="audit-item-value flex items-center justify-between">
-            <span>{getNombreTecnico(ficha.creado_por)}</span>
-          </p>
-          <div className="flex items-center justify-between mt-[2px]">
-            <p className="audit-item-sub !mt-0">Responsable del Levantamiento</p>
+          <p className="audit-item-value">{getNombreTecnico(ficha.creado_por)}</p>
+          <p className="audit-item-sub !mt-0">Responsable del Levantamiento</p>
+          <div className="mt-1">
             <span style={{
               fontSize: '5pt',
               fontWeight: 700,
@@ -966,7 +971,8 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
               padding: '1px 4px',
               borderRadius: '2px',
               border: '1px solid #cbd5e1',
-              letterSpacing: '0.05em'
+              letterSpacing: '0.05em',
+              display: 'inline-block'
             }}>
               AP&CATASTROS
             </span>
