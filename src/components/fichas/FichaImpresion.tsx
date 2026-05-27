@@ -834,6 +834,30 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
             ) : (
               <div className="no-visual">Coordenadas geográficas no disponibles</div>
             )}
+            {/* Etiqueta flotante de ubicación geográfica (Provincia › Cantón › Parroquia › Comunidad) */}
+            <div style={{
+              position: 'absolute',
+              top: '6px',
+              left: '6px',
+              zIndex: 999, // Para asegurar que esté por encima del mapa
+              background: 'rgba(15, 23, 42, 0.75)', // Fondo oscuro semi-transparente para alto contraste
+              backdropFilter: 'blur(2px)',
+              color: '#f8fafc',
+              padding: '4px 8px',
+              borderRadius: '4px',
+              fontSize: '6pt',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+              maxWidth: '95%',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              pointerEvents: 'none'
+            }}>
+              PICHINCHA › CAYAMBE › {ficha.parroquia || 'SIN PARROQUIA'} › {ficha.sector_comunidad || ficha.sector || 'SIN COMUNIDAD'}
+            </div>
           </div>
         </div>
 
