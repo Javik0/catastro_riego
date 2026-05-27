@@ -102,12 +102,22 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
               if (targetLat && targetLng) {
                 for (const [fid, geom] of Object.entries(poligonosData)) {
                   const g = geom as any;
-                  if (!g || !g.coordinates || !g.coordinates[0] || !g.coordinates[0][0]) continue;
-                  // Usar el primer vértice como aproximación rápida para saber si está cerca
-                  const polyLng = g.coordinates[0][0][0];
-                  const polyLat = g.coordinates[0][0][1];
+                  if (!g || !g.coordinates) continue;
+
+                  let point;
+                  if (g.type === 'MultiPolygon' && g.coordinates[0] && g.coordinates[0][0]) {
+                    point = g.coordinates[0][0][0]; // Primer punto del primer anillo del primer polígono
+                  } else if (g.type === 'Polygon' && g.coordinates[0]) {
+                    point = g.coordinates[0][0]; // Primer punto del primer anillo
+                  }
+
+                  if (!point) continue;
+
+                  const polyLng = point[0];
+                  const polyLat = point[1];
                   
-                  if (Math.abs(polyLat - targetLat) < 0.006 && Math.abs(polyLng - targetLng) < 0.006) {
+                  // Incrementar un poco el margen de búsqueda a ±0.008 (aprox 800m)
+                  if (Math.abs(polyLat - targetLat) < 0.008 && Math.abs(polyLng - targetLng) < 0.008) {
                     neighbors.push({
                       type: 'Feature',
                       properties: { fid },
@@ -449,23 +459,28 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       `}</style>
 
       {/* Cabecera oficial del reporte */}
-      <div className="report-header">
+      <div className="report-header" style={{ borderBottom: '2.5px solid #1e3a8a', paddingBottom: '10px', marginBottom: '14px' }}>
         <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
-        <div className="report-title-block">
-          <h1 className="text-xs font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
-          <h2 className="text-[10px] text-slate-600 mt-0.5">{PROJECT_SUBTITLE}</h2>
-          <p className="text-[8px] text-slate-400 mt-0.5 font-medium">{PROJECT_LOCATION}</p>
+        <div className="report-title-block" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <h2 className="text-[7pt] font-bold text-slate-500 uppercase tracking-[0.12em] mb-1">{PROJECT_TITLE}</h2>
+          <h1 className="text-[10pt] font-black text-[#0f172a] uppercase tracking-tight leading-tight">{PROJECT_SUBTITLE}</h1>
+          <p className="text-[7pt] text-slate-500 mt-1 font-medium tracking-wide">{PROJECT_LOCATION}</p>
         </div>
         <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
       </div>
 
-      <div className="text-center mb-3">
-        <h2 className="text-[10px] font-extrabold text-blue-900 bg-blue-50 border border-blue-200/40 py-0.5 rounded uppercase tracking-wider">
+      <div className="text-center mb-4 flex flex-col items-center">
+        <h3 className="text-[10.5pt] font-extrabold text-[#1e3a8a] uppercase tracking-[0.08em] relative inline-block">
           Ficha Técnica de Información de Regante
-        </h2>
-        <p className="text-[8px] text-slate-500 mt-0.5 font-mono">
-          Código: <b>{ficha.codigo_final}</b> | Clave: {ficha.clave_catastral} | Registro: {safeToDate(ficha.fecha_creacion).toLocaleDateString('es-EC')}
-        </p>
+          <div className="absolute -bottom-1.5 left-[15%] right-[15%] h-[2px] bg-blue-500/60 rounded-full"></div>
+        </h3>
+        <div className="flex gap-4 mt-3.5 text-[7.5pt] font-mono text-slate-700 bg-slate-50/80 px-4 py-1.5 rounded-md border border-slate-200 shadow-sm">
+          <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">CÓDIGO:</span> <b className="text-slate-900">{ficha.codigo_final}</b></span>
+          <span className="text-slate-300">|</span>
+          <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">CLAVE:</span> <span className="text-slate-900">{ficha.clave_catastral || 'S/N'}</span></span>
+          <span className="text-slate-300">|</span>
+          <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">REGISTRO:</span> <span className="text-slate-900">{safeToDate(ficha.fecha_creacion).toLocaleDateString('es-EC')}</span></span>
+        </div>
       </div>
 
       {/* ── SECCIÓN 1: DATOS PROPIETARIO ── */}
@@ -961,18 +976,17 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         <div className="audit-item">
           <div className="audit-item-label">Investigador (Técnico)</div>
           <p className="audit-item-value">{getNombreTecnico(ficha.creado_por)}</p>
-          <p className="audit-item-sub !mt-0">Responsable del Levantamiento</p>
-          <div className="mt-1">
+          <p className="audit-item-sub">Responsable del Levantamiento</p>
+          <div className="mt-1 flex items-start">
             <span style={{
-              fontSize: '5pt',
+              fontSize: '5.5pt',
               fontWeight: 700,
               color: '#475569',
               backgroundColor: '#f1f5f9',
-              padding: '1px 4px',
-              borderRadius: '2px',
+              padding: '2px 5px',
+              borderRadius: '3px',
               border: '1px solid #cbd5e1',
-              letterSpacing: '0.05em',
-              display: 'inline-block'
+              letterSpacing: '0.05em'
             }}>
               AP&CATASTROS
             </span>
