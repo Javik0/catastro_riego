@@ -1,6 +1,6 @@
 """
 Convierte el shapefile de PARROQUIAS a GeoJSON con geometrías incluidas.
-El shapefile original tiene proyección UTM 17S (EPSG:32617), por lo que
+El shapefile original tiene proyección UTM 17S (EPSG:32717), por lo que
 se reprojecta a WGS84 (EPSG:4326) para uso en Leaflet.
 """
 import shapefile
@@ -25,7 +25,7 @@ if os.path.exists(prj_path):
 
 # Crear transformador de coordenadas
 # Detectar si es UTM 17S basándose en el .prj
-transformer = Transformer.from_crs("EPSG:32617", "EPSG:4326", always_xy=True)
+transformer = Transformer.from_crs("EPSG:32717", "EPSG:4326", always_xy=True)
 
 # Leer shapefile
 sf = shapefile.Reader(SHP_PATH)

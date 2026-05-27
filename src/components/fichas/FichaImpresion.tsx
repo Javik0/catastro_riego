@@ -848,19 +848,19 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   />
                 )}
 
-                {/* Recuadro localizador (Bounding Box) que representa el área del Emplazamiento Predial
-                    El zoom 17 a 512px equivale aprox. a un área de ~0.004° lat/lng en cada lado */}
+                {/* Recuadro localizador (Bounding Box) que representa el área del Emplazamiento Predial.
+                    Se dibuja un recuadro amplio para que sea visible a zoom 11 */}
                 <Rectangle
                   bounds={[
-                    [coords[0] - 0.003, coords[1] - 0.004],
-                    [coords[0] + 0.003, coords[1] + 0.004]
+                    [coords[0] - 0.012, coords[1] - 0.015],
+                    [coords[0] + 0.012, coords[1] + 0.015]
                   ]}
                   pathOptions={{
-                    color: '#1d4ed8',
-                    weight: 2,
-                    fillColor: '#3b82f6',
-                    fillOpacity: 0.15,
-                    dashArray: '4 3'
+                    color: '#facc15',
+                    weight: 3,
+                    fillColor: '#facc15',
+                    fillOpacity: 0.12,
+                    dashArray: '8 4'
                   }}
                 />
 
