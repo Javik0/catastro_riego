@@ -5,6 +5,7 @@ import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie,
 import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
 import { wgs84ToUtm17S } from '../../lib/utm';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 interface Props {
   ficha: FichaPredio;
@@ -25,6 +26,28 @@ function MapController({ center, zoom }: { center: [number, number]; zoom: numbe
     }, 300);
     return () => clearTimeout(timer);
   }, [map, center, zoom]);
+  return null;
+}
+
+// Componente inteligente que centra el mapa en los límites de un polígono, o cae al zoom por defecto
+function PolygonBoundsController({ feature, center, defaultZoom }: { feature: any, center: [number, number], defaultZoom: number }) {
+  const map = useMap();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+      if (feature && feature.features && feature.features.length > 0) {
+        try {
+          const geoJsonLayer = L.geoJSON(feature);
+          map.fitBounds(geoJsonLayer.getBounds(), { padding: [15, 15], maxZoom: 19 });
+        } catch (e) {
+          map.setView(center, defaultZoom);
+        }
+      } else {
+        map.setView(center, defaultZoom);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [map, feature, center, defaultZoom]);
   return null;
 }
 
@@ -902,7 +925,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   attribution="&copy; ESRI"
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                 />
-                <MapController center={coords} zoom={17} />
+                <PolygonBoundsController feature={mapPolygon} center={coords} defaultZoom={17} />
 
                 {/* Polígonos catastrales vecinos (fondo tenue) */}
                 {!loadingPolygon && allPolygons && (
