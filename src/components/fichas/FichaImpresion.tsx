@@ -16,15 +16,15 @@ interface Props {
 const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
 
 // Componente para forzar a Leaflet a recalcular sus dimensiones en impresión y centrar
-function MapController({ center }: { center: [number, number] }) {
+function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
   const map = useMap();
   useEffect(() => {
     const timer = setTimeout(() => {
       map.invalidateSize();
-      map.setView(center, 17);
-    }, 250);
+      map.setView(center, zoom);
+    }, 300);
     return () => clearTimeout(timer);
-  }, [map, center]);
+  }, [map, center, zoom]);
   return null;
 }
 
@@ -32,6 +32,16 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
   const [mapPolygon, setMapPolygon] = useState<FeatureCollection | null>(null);
   const [loadingPolygon, setLoadingPolygon] = useState(true);
   const [coords, setCoords] = useState<[number, number] | null>(null);
+  const [parroquiasGeoJson, setParroquiasGeoJson] = useState<FeatureCollection | null>(null);
+
+  // Cargar las parroquias para el mapa de ubicación general
+  useEffect(() => {
+    const timestamp = Date.now();
+    fetch(`/geo/parroquias.geojson?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data) => setParroquiasGeoJson(data))
+      .catch((e) => console.error("Error al cargar parroquias.geojson:", e));
+  }, []);
 
   // Inicializar coords con los datos de la ficha
   useEffect(() => {
@@ -334,8 +344,8 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
         .visuals-container {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          grid-template-columns: 38fr 38fr 24fr;
+          gap: 10px;
           margin-top: 10px;
           break-inside: avoid;
         }
@@ -720,21 +730,68 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <p className="detail-label">Temas Solicitados</p>
           <p className="detail-value">{ficha.temas_capacitacion || '—'}</p>
         </div>
-        <div className="detail-item col-2">
-          <p className="detail-label">Investigador (Técnico)</p>
-          <p className="detail-value">{getNombreTecnico(ficha.creado_por)}</p>
-        </div>
-        <div className="detail-item col-4">
-          <p className="detail-label">Observaciones Generales</p>
-          <p className="detail-value text-slate-600 italic">"{ficha.observaciones || 'Sin observaciones registradas.'}"</p>
-        </div>
+
       </div>
 
-      {/* ── SECCIÓN 7: EMPLAZAMIENTO Y FOTO ── */}
+      {/* ── SECCIÓN 7: UBICACIÓN, EMPLAZAMIENTO Y FOTO ── */}
       <div className="visuals-container">
-        {/* Contenedor del Mini Mapa Leaflet */}
+        {/* 1. Contenedor del Mapa de Ubicación Regional */}
         <div className="visual-box">
-          <div className="visual-title">Ubicación y Emplazamiento Catastral</div>
+          <div className="visual-title">Ubicación Regional</div>
+          <div className="visual-content relative" style={{ height: '180px', padding: 0 }}>
+            {coords ? (
+              <MapContainer
+                center={coords}
+                zoom={12}
+                dragging={false}
+                zoomControl={false}
+                scrollWheelZoom={false}
+                doubleClickZoom={false}
+                touchZoom={false}
+                className="h-full w-full z-0"
+              >
+                <TileLayer
+                  attribution="&copy; ESRI"
+                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                />
+                
+                {/* Controlador para invalidar el tamaño y re-centrar Leaflet en la impresión a zoom amplio */}
+                <MapController center={coords} zoom={12} />
+
+                {/* Dibujar las parroquias */}
+                {parroquiasGeoJson && (
+                  <GeoJSON
+                    data={parroquiasGeoJson}
+                    style={{
+                      color: '#fbbf24', // Amarillo brillante
+                      weight: 1.5,
+                      fillColor: '#fbbf24',
+                      fillOpacity: 0.05
+                    }}
+                  />
+                )}
+                
+                {/* Dibujar el punto GPS del predio en rojo grande */}
+                <CircleMarker
+                  center={coords}
+                  radius={8}
+                  pathOptions={{
+                    fillColor: '#ef4444',
+                    fillOpacity: 1,
+                    color: '#ffffff',
+                    weight: 2
+                  }}
+                />
+              </MapContainer>
+            ) : (
+              <div className="no-visual">Coordenadas geográficas no disponibles</div>
+            )}
+          </div>
+        </div>
+
+        {/* 2. Contenedor del Mapa de Emplazamiento Catastral */}
+        <div className="visual-box">
+          <div className="visual-title">Emplazamiento Predial</div>
           <div className="visual-content relative" style={{ height: '180px', padding: 0 }}>
             {coords ? (
               <MapContainer
@@ -752,10 +809,10 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                 />
                 
-                {/* Controlador para invalidar el tamaño y re-centrar Leaflet en la impresión */}
-                <MapController center={coords} />
+                {/* Controlador para invalidar el tamaño y re-centrar Leaflet en la impresión a zoom cerrado */}
+                <MapController center={coords} zoom={17} />
 
-                {/* 1. Dibujar el polígono catastral del predio en rojo si está disponible */}
+                {/* Dibujar el polígono catastral del predio en rojo si está disponible */}
                 {!loadingPolygon && mapPolygon && (
                   <GeoJSON
                     data={mapPolygon}
@@ -763,10 +820,10 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   />
                 )}
                 
-                {/* 2. Dibujar el punto GPS de la ficha levantada en campo en azul/blanco */}
+                {/* Dibujar el punto GPS de la ficha levantada en campo en azul/blanco */}
                 <CircleMarker
                   center={coords}
-                  radius={7}
+                  radius={6}
                   pathOptions={{
                     fillColor: '#3b82f6',
                     fillOpacity: 1,
@@ -781,9 +838,9 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           </div>
         </div>
 
-        {/* Contenedor de la Fotografía */}
+        {/* 3. Contenedor de la Fotografía */}
         <div className="visual-box">
-          <div className="visual-title">Fotografía de Evidencia en Campo</div>
+          <div className="visual-title">Evidencia en Campo</div>
           <div className="visual-content bg-slate-50" style={{ height: '180px' }}>
             {ficha.foto_predio ? (
               <img
@@ -806,8 +863,24 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
               <svg className="w-8 h-8 text-slate-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
-              <span>Fotografía no vinculada en Firebase Storage</span>
+              <span>Sin foto</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── AUDITORÍA Y OBSERVACIONES AL FINAL ── */}
+      <div className="section-block mt-4 mb-2">
+        <div className="grid-details" style={{ marginBottom: 0 }}>
+          <div className="detail-item col-1">
+            <p className="detail-label">Investigador (Técnico)</p>
+            <p className="detail-value">{getNombreTecnico(ficha.creado_por)}</p>
+          </div>
+          <div className="detail-item col-3">
+            <p className="detail-label">Observaciones Generales</p>
+            <p className="detail-value text-slate-600 italic">
+              {ficha.observaciones ? `"${ficha.observaciones}"` : "Sin observaciones registradas."}
+            </p>
           </div>
         </div>
       </div>
