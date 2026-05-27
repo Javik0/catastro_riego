@@ -30,6 +30,7 @@ function MapController({ center, zoom }: { center: [number, number]; zoom: numbe
 
 export default function FichaImpresion({ ficha, cultivos, animales, prediosAdicionales }: Props) {
   const [mapPolygon, setMapPolygon] = useState<FeatureCollection | null>(null);
+  const [allPolygons, setAllPolygons] = useState<FeatureCollection | null>(null);
   const [loadingPolygon, setLoadingPolygon] = useState(true);
   const [coords, setCoords] = useState<[number, number] | null>(null);
   const [parroquiasGeoJson, setParroquiasGeoJson] = useState<FeatureCollection | null>(null);
@@ -81,6 +82,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           fetch(`/geo/catastro_geo.geojson?t=${timestamp}`)
             .then((r) => r.json())
             .then((geoData: any) => {
+              setAllPolygons(geoData); // Guardamos todos para mostrar predios vecinos
               const feature = geoData.features.find(
                 (f: any) => f.properties && f.properties.clave_cata && f.properties.clave_cata.trim() === targetClave
               );
@@ -344,7 +346,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
         .visuals-container {
           display: grid;
-          grid-template-columns: 37fr 43fr 20fr;
+          grid-template-columns: 43fr 37fr 20fr;
           gap: 10px;
           margin-top: 10px;
           break-inside: avoid;
@@ -563,10 +565,10 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* ── SECCIÓN 3: OTROS PEDIDOS DEL REGANTE ── */}
+      {/* ── SECCIÓN 3: OTROS PREDIOS DEL REGANTE ── */}
       <div className="section-block">
         <div className="report-section-title">
-          <span>3. Otros Pedidos del Regante (Prorrateo / Lotes Adicionales)</span>
+          <span>3. Otros Predios del Regante (Prorrateo / Lotes Adicionales)</span>
         </div>
         {prediosAdicionales.length === 0 ? (
           <p className="text-[8pt] text-slate-500 italic p-1">No se registraron predios o pedidos adicionales asociados a este regante.</p>
@@ -762,57 +764,10 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
       </div>
 
-      {/* ── SECCIÓN 7: EMPLAZAMIENTO, UBICACIÓN REGIONAL Y FOTO ── */}
+      {/* ── SECCIÓN 7: UBICACIÓN REGIONAL, EMPLAZAMIENTO Y FOTO ── */}
       <div className="visuals-container">
 
-        {/* 1. EMPLAZAMIENTO PREDIAL (zoom cerrado con polígono) */}
-        <div className="visual-box">
-          <div className="visual-title">Emplazamiento Predial</div>
-          <div className="visual-content relative" style={{ height: '190px', padding: 0 }}>
-            {coords ? (
-              <MapContainer
-                center={coords}
-                zoom={17}
-                dragging={false}
-                zoomControl={false}
-                scrollWheelZoom={false}
-                doubleClickZoom={false}
-                touchZoom={false}
-                className="h-full w-full z-0"
-              >
-                <TileLayer
-                  attribution="&copy; ESRI"
-                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-                />
-                <MapController center={coords} zoom={17} />
-
-                {/* Polígono catastral del predio en rojo */}
-                {!loadingPolygon && mapPolygon && (
-                  <GeoJSON
-                    data={mapPolygon}
-                    style={{ color: '#ef4444', weight: 3, fillColor: '#ef4444', fillOpacity: 0.20 }}
-                  />
-                )}
-
-                {/* Punto GPS levantado en campo (azul) */}
-                <CircleMarker
-                  center={coords}
-                  radius={6}
-                  pathOptions={{
-                    fillColor: '#3b82f6',
-                    fillOpacity: 1,
-                    color: '#ffffff',
-                    weight: 2
-                  }}
-                />
-              </MapContainer>
-            ) : (
-              <div className="no-visual">Coordenadas geográficas no disponibles</div>
-            )}
-          </div>
-        </div>
-
-        {/* 2. UBICACIÓN REGIONAL (zoom amplio con parroquias + bounding box localizador) */}
+        {/* 1. UBICACIÓN REGIONAL (zoom amplio con parroquias + bounding box localizador) */}
         <div className="visual-box">
           <div className="visual-title">Ubicación Regional</div>
           <div className="visual-content relative" style={{ height: '190px', padding: 0 }}>
@@ -870,6 +825,61 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                   radius={5}
                   pathOptions={{
                     fillColor: '#ef4444',
+                    fillOpacity: 1,
+                    color: '#ffffff',
+                    weight: 2
+                  }}
+                />
+              </MapContainer>
+            ) : (
+              <div className="no-visual">Coordenadas geográficas no disponibles</div>
+            )}
+          </div>
+        </div>
+
+        {/* 2. EMPLAZAMIENTO PREDIAL (zoom cerrado con polígono) */}
+        <div className="visual-box">
+          <div className="visual-title">Emplazamiento Predial</div>
+          <div className="visual-content relative" style={{ height: '190px', padding: 0 }}>
+            {coords ? (
+              <MapContainer
+                center={coords}
+                zoom={17}
+                dragging={false}
+                zoomControl={false}
+                scrollWheelZoom={false}
+                doubleClickZoom={false}
+                touchZoom={false}
+                className="h-full w-full z-0"
+              >
+                <TileLayer
+                  attribution="&copy; ESRI"
+                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                />
+                <MapController center={coords} zoom={17} />
+
+                {/* Polígonos catastrales vecinos (fondo tenue) */}
+                {!loadingPolygon && allPolygons && (
+                  <GeoJSON
+                    data={allPolygons}
+                    style={{ color: '#94a3b8', weight: 1.5, fillColor: 'transparent' }}
+                  />
+                )}
+
+                {/* Polígono catastral del predio seleccionado en rojo (más grueso y con relleno) */}
+                {!loadingPolygon && mapPolygon && (
+                  <GeoJSON
+                    data={mapPolygon}
+                    style={{ color: '#ef4444', weight: 3.5, fillColor: '#ef4444', fillOpacity: 0.25 }}
+                  />
+                )}
+
+                {/* Punto GPS levantado en campo (azul) */}
+                <CircleMarker
+                  center={coords}
+                  radius={6}
+                  pathOptions={{
+                    fillColor: '#3b82f6',
                     fillOpacity: 1,
                     color: '#ffffff',
                     weight: 2
