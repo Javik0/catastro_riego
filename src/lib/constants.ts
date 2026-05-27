@@ -6,21 +6,31 @@
 // ── Técnicos investigadores (colores idénticos a QGIS) ──
 export const TECNICOS: Record<string, { nombre: string; color: string }> = {
   'u0_a314': { nombre: 'Melany Jara', color: '#FF0000' },
+  'u0_a319': { nombre: 'Melany Jara', color: '#FF0000' },
   'jvk-editor': { nombre: 'Melany Jara', color: '#FF0000' },
+  
   'u0_a504': { nombre: 'Adriana Cuascota', color: '#0000FF' },
   'jvk-editor6': { nombre: 'Adriana Cuascota', color: '#0000FF' },
+  
   'u0_a279': { nombre: 'Huguito Ipial', color: '#00FF00' },
   'jvk-editor2': { nombre: 'Huguito Ipial', color: '#00FF00' },
+  
   'u0_a70':  { nombre: 'Pablo Barrionuevo', color: '#800080' },
   'jvk-editor5': { nombre: 'Pablo Barrionuevo', color: '#800080' },
+  
   'u0_a330': { nombre: 'Mayra Benavides', color: '#00FFFF' },
   'mayralisseth201': { nombre: 'Mayra Benavides', color: '#00FFFF' },
+  
   'u0_a362': { nombre: 'Martha Simbaña', color: '#FFFF00' },
+  'u0_a335': { nombre: 'Martha Simbaña', color: '#FFFF00' },
   'jvk-editor4': { nombre: 'Martha Simbaña', color: '#FFFF00' },
+  
   'u0_a2':   { nombre: 'JVK-DIGITALIZACION', color: '#FFA500' },
   'jvk-digitalizacion': { nombre: 'JVK-DIGITALIZACION', color: '#FFA500' },
+  
   'u0_a302': { nombre: 'Dylan Chavez', color: '#111111' },
   'jvk-editor3': { nombre: 'Dylan Chavez', color: '#111111' },
+  
   'u0_a200': { nombre: 'Melanie2', color: '#a855f7' },
 };
 
