@@ -953,8 +953,24 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         {/* Columna 1: Investigador */}
         <div className="audit-item">
           <div className="audit-item-label">Investigador (Técnico)</div>
-          <p className="audit-item-value">{getNombreTecnico(ficha.creado_por)}</p>
-          <p className="audit-item-sub">Responsable del Levantamiento</p>
+          <p className="audit-item-value flex items-center justify-between">
+            <span>{getNombreTecnico(ficha.creado_por)}</span>
+          </p>
+          <div className="flex items-center justify-between mt-[2px]">
+            <p className="audit-item-sub !mt-0">Responsable del Levantamiento</p>
+            <span style={{
+              fontSize: '5pt',
+              fontWeight: 700,
+              color: '#475569',
+              backgroundColor: '#f1f5f9',
+              padding: '1px 4px',
+              borderRadius: '2px',
+              border: '1px solid #cbd5e1',
+              letterSpacing: '0.05em'
+            }}>
+              AP&CATASTROS
+            </span>
+          </div>
         </div>
         {/* Columna 2: Fecha de Investigación */}
         <div className="audit-item">
