@@ -393,26 +393,49 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         }
 
         .audit-block {
-          border: 1px solid #cbd5e1;
+          border: 1.5px solid #1e3a8a;
           border-radius: 6px;
           background: #f8fafc;
-          padding: 8px 12px;
+          padding: 0;
           margin-top: 14px;
           display: grid;
-          grid-template-columns: 1fr 3fr;
-          gap: 10px;
-          align-items: start;
+          grid-template-columns: 1fr 1fr 2fr;
           break-inside: avoid;
+          overflow: hidden;
         }
 
         .audit-item {
-          border-right: 1px solid #e2e8f0;
-          padding-right: 10px;
+          padding: 6px 10px;
+          border-right: 1px solid #cbd5e1;
         }
 
         .audit-item:last-child {
           border-right: none;
-          padding-right: 0;
+        }
+
+        .audit-item-label {
+          font-size: 6.5pt;
+          text-transform: uppercase;
+          color: #1e3a8a;
+          font-weight: 700;
+          letter-spacing: 0.03em;
+          margin-bottom: 2px;
+          background: #e2e8f0;
+          margin: -6px -10px 4px -10px;
+          padding: 3px 10px;
+          border-bottom: 1px solid #cbd5e1;
+        }
+
+        .audit-item-value {
+          font-size: 8.5pt;
+          font-weight: 600;
+          color: #0f172a;
+        }
+
+        .audit-item-sub {
+          font-size: 6pt;
+          color: #94a3b8;
+          margin-top: 2px;
         }
       `}</style>
 
@@ -804,22 +827,23 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
                 touchZoom={false}
                 className="h-full w-full z-0"
               >
-                {/* Mapa base claro para que los límites de parroquias resalten */}
+                {/* Mapa base satelital (misma fuente que Emplazamiento) */}
                 <TileLayer
-                  attribution="&copy; OpenStreetMap"
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="&copy; ESRI"
+                  url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
                 />
                 <MapController center={coords} zoom={11} />
 
-                {/* Límites de parroquias en rojo oscuro sobre mapa claro */}
+                {/* Límites de parroquias en blanco/cian brillante para alto contraste sobre fondo satelital */}
                 {parroquiasGeoJson && (
                   <GeoJSON
                     data={parroquiasGeoJson}
                     style={{
-                      color: '#b91c1c',
-                      weight: 2,
-                      fillColor: '#fca5a5',
-                      fillOpacity: 0.10
+                      color: '#ffffff',
+                      weight: 2.5,
+                      fillColor: '#06b6d4',
+                      fillOpacity: 0.08,
+                      dashArray: '6 3'
                     }}
                   />
                 )}
@@ -890,20 +914,31 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* ── BLOQUE FINAL: AUDITORÍA E INVESTIGADOR ── */}
+      {/* ── BLOQUE FINAL: AUDITORÍA, FECHA E INVESTIGADOR ── */}
       <div className="audit-block">
-        {/* Columna izquierda: Investigador responsable */}
+        {/* Columna 1: Investigador */}
         <div className="audit-item">
-          <p className="detail-label" style={{ fontSize: '6.5pt', marginBottom: '3px' }}>Responsable del Levantamiento</p>
-          <p className="detail-value font-semibold" style={{ fontSize: '8.5pt', color: '#0f172a' }}>
-            {getNombreTecnico(ficha.creado_por)}
-          </p>
-          <p className="detail-label" style={{ fontSize: '6pt', marginTop: '4px', color: '#94a3b8' }}>Investigador / Técnico de Campo</p>
+          <div className="audit-item-label">Investigador (Técnico)</div>
+          <p className="audit-item-value">{getNombreTecnico(ficha.creado_por)}</p>
+          <p className="audit-item-sub">Responsable del Levantamiento</p>
         </div>
-        {/* Columna derecha: Observaciones generales */}
-        <div>
-          <p className="detail-label" style={{ fontSize: '6.5pt', marginBottom: '3px' }}>Observaciones Generales</p>
-          <p className="detail-value text-slate-600" style={{ fontSize: '8pt', fontStyle: ficha.observaciones ? 'italic' : 'normal', lineHeight: '1.4' }}>
+        {/* Columna 2: Fecha de Investigación */}
+        <div className="audit-item">
+          <div className="audit-item-label">Fecha de Investigación</div>
+          <p className="audit-item-value">
+            {safeToDate(ficha.fecha_creacion).toLocaleDateString('es-EC', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </p>
+          <p className="audit-item-sub">Registro en campo</p>
+        </div>
+        {/* Columna 3: Observaciones */}
+        <div className="audit-item">
+          <div className="audit-item-label">Observaciones Generales</div>
+          <p className="audit-item-value" style={{ fontWeight: '400', fontStyle: ficha.observaciones ? 'italic' : 'normal', fontSize: '8pt', lineHeight: '1.4', color: '#334155' }}>
             {ficha.observaciones ? `"${ficha.observaciones}"` : 'Sin observaciones registradas.'}
           </p>
         </div>
