@@ -25,7 +25,7 @@ export default function Header({ onMobileMenuOpen }: Props) {
       .then((data) => {
         const set = new Set<string>();
         data.features.forEach((f: any) => {
-          const c = (f.properties?.sector_comunidad || '').trim();
+          const c = (f.properties?.comunidad || f.properties?.sector_comunidad || '').trim();
           if (c) set.add(c);
         });
         setComunidades(Array.from(set).sort());
@@ -141,9 +141,11 @@ export default function Header({ onMobileMenuOpen }: Props) {
         <select value={filtros.tecnico} onChange={(e) => setFiltro('tecnico', e.target.value)}
           className={`${inputClass} min-w-[130px] hidden md:block`} style={inputStyle}>
           <option value="">Técnico</option>
-          {Object.entries(TECNICOS).map(([key, { nombre }]) => (
-            <option key={key} value={key}>{nombre}</option>
-          ))}
+          {Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre)))
+            .sort()
+            .map((nombre) => (
+              <option key={nombre} value={nombre}>{nombre}</option>
+            ))}
         </select>
 
         <input type="date" value={filtros.fechaDesde} onChange={(e) => setFiltro('fechaDesde', e.target.value)}

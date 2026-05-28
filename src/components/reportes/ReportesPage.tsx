@@ -33,7 +33,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
   const comunidadesList = useMemo(() => {
     const set = new Set<string>();
     fichas.forEach((f) => {
-      const c = (f.sector_comunidad || '').trim();
+      const c = (f.comunidad || '').trim();
       if (c) set.add(c);
     });
     return Array.from(set).sort();
@@ -49,7 +49,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         if (filterParroquia) result = result.filter((f) => f.parroquia === filterParroquia);
         break;
       case 'comunidad':
-        if (filterComunidad) result = result.filter((f) => (f.sector_comunidad || '').trim() === filterComunidad);
+        if (filterComunidad) result = result.filter((f) => (f.comunidad || '').trim() === filterComunidad);
         break;
       case 'tecnico':
         if (filterTecnico) result = result.filter((f) => f.creado_por === filterTecnico);
@@ -112,7 +112,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         i + 1, f.codigo_final,
         f.propietario || `${f.apellidos} ${f.nombres}`,
         f.cedula || '', f.parroquia, f.sector,
-        (f.sector_comunidad || '').trim(),
+        (f.comunidad || '').trim(),
         f.area_total?.toLocaleString('es-EC') || '',
         [
           f.metodo_aspersion_pct ? `Asp:${f.metodo_aspersion_pct}%` : '',
@@ -161,6 +161,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         'Cédula': f.cedula,
         'Parroquia': f.parroquia,
         'Sector': f.sector,
+        'Comunidad': f.comunidad,
         'Sector Comunidad': f.sector_comunidad,
         'Clave Catastral': f.clave_catastral,
         'Área Total (m²)': f.area_total,

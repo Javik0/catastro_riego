@@ -193,6 +193,130 @@ def export_fichas():
     cursor.execute(f'SELECT * FROM "{fichas_table}"')
     rows = cursor.fetchall()
 
+    # Mapeo automático: derivar 'comunidad' del 'sector_comunidad' para fichas antiguas
+    # Diccionario de variantes ortográficas → comunidad oficial
+    # Ordenado de más específico a más general para evitar falsos positivos
+    VARIANTES_COMUNIDAD = [
+        # LARCACOCHA (escrito como Larcachaca, Larcacocha, La Arcacha, etc.)
+        ("LARCACHACA", "LARCACOCHA"),
+        ("LARCACACHA", "LARCACOCHA"),
+        ("LARCACOCHA", "LARCACOCHA"),
+        ("LARCACHA", "LARCACOCHA"),
+        ("LA ARCACHA", "LARCACOCHA"),
+        ("ALCACHACA", "LARCACOCHA"),
+        ("HUASIPUNGO", "LARCACOCHA"),
+        ("GUASIPUNGO", "LARCACOCHA"),
+        ("GUALIMBURO", "LARCACOCHA"),
+        ("PARCELA", "LARCACOCHA"),
+        ("MORAS", "LARCACOCHA"),
+        ("PÁRAMO", "LARCACOCHA"),
+        # LA LIBERTAD
+        ("LIBERAD", "LA LIBERTAD"),
+        ("LIBERTAD", "LA LIBERTAD"),
+        ("CENTRAL LIBERTAD", "LA LIBERTAD"),
+        # SAN ANTONIO
+        ("SAN ANTONIO", "SAN ANTONIO"),
+        ("SAM ANTONIO", "SAN ANTONIO"),
+        ("PAILLACO", "SAN ANTONIO"),
+        ("PAYLLACHO", "SAN ANTONIO"),
+        ("PAILLACHO", "SAN ANTONIO"),
+        # SAN JOSÉ (variantes con sectores internos)
+        ("SAN JOSÉ", "SAN JOSÉ"),
+        ("SAN JOSE", "SAN JOSÉ"),
+        ("SAN  PEDRO", "SAN JOSÉ"),
+        ("SAN PEDRO", "SAN JOSÉ"),
+        ("YACUTIGRANA", "SAN JOSÉ"),
+        ("PORTADAS", "SAN JOSÉ"),
+        ("NINARUMI", "SAN JOSÉ"),
+        ("NINA RUMI", "SAN JOSÉ"),
+        ("INARUMI", "SAN JOSÉ"),
+        ("ÑAVIPOGYO", "SAN JOSÉ"),
+        ("ÑAVIPUYO", "SAN JOSÉ"),
+        ("ÑAWIPUKYU", "SAN JOSÉ"),
+        ("GUALIMPURO", "SAN JOSÉ"),
+        ("LOS ANDES", "SAN JOSÉ"),
+        # MILAGRO
+        ("MILAGRO", "MILAGRO"),
+        # ASOCIACIÓN 17 DE JUNIO
+        ("ASOSIACION 17", "ASOCIACIÓN 17 DE JUNIO"),
+        ("ASOCIACIÓN 17", "ASOCIACIÓN 17 DE JUNIO"),
+        ("ASOCIACION 17", "ASOCIACIÓN 17 DE JUNIO"),
+        ("17 DE JUNIO", "ASOCIACIÓN 17 DE JUNIO"),
+        ("17 DE JULIO", "ASOCIACIÓN 17 DE JUNIO"),
+        # AVELLANEDA
+        ("AVELLANEDA", "AVELLANEDA"),
+        # CHAMBITOLA
+        ("CHAMBITOLA", "CHAMBITOLA"),
+        ("CHAMITOLA", "CHAMBITOLA"),
+        ("CAMBITOLA", "CHAMBITOLA"),
+        ("CHIMBATOLA", "CHAMBITOLA"),
+        # LA CANDELARIA
+        ("CANDELARIA", "LA CANDELARIA"),
+        # CARRERA
+        ("CARRERA", "CARRERA"),
+        ("CARERRA", "CARRERA"),
+        ("ACERO LOMA", "CARRERA"),
+        # MATÍAS IMBAGO
+        ("MATÍAS IMBAGO", "MATÍAS IMBAGO"),
+        ("MATIAS IMBAGO", "MATÍAS IMBAGO"),
+        # COCHAPAMBA
+        ("COCHAPAMBA", "COCHAPAMBA"),
+        # JESÚS GRAN PODER
+        ("GRAN PODER", "JESÚS GRAN PODER"),
+        # SANTA BÁRBARA
+        ("SANTA BÁRBARA", "SANTA BÁRBARA"),
+        ("SANTA BARBARA", "SANTA BÁRBARA"),
+        # ASOCIACIÓN POROTOG
+        ("ASOCIACIÓN POROTOG", "ASOCIACIÓN POROTOG"),
+        ("ASOCIACION POROTOG", "ASOCIACIÓN POROTOG"),
+        # COMUNA POROTOG
+        ("COMUNA POROTOG", "COMUNA POROTOG"),
+        # CORDILLERAS DE LOS ANDES
+        ("CORDILLERAS", "CORDILLERAS DE LOS ANDES"),
+        # COMUNA INSACATA
+        ("COMUNA INSACATA", "COMUNA INSACATA"),
+        ("IZACATA", "COMUNA INSACATA"),
+        ("INSACATA", "COMUNA INSACATA"),
+        # INSACATA GRANDE
+        ("INSACATA GRANDE", "INSACATA GRANDE"),
+        # LOS ANDES INSACATA
+        ("LOS ANDES INSACATA", "LOS ANDES INSACATA"),
+        # LOMA GORDA
+        ("LOMA GORDA", "LOMA GORDA"),
+        # SAN JACINTO
+        ("SAN JACINTO", "SAN JACINTO"),
+        # Otros sectores genéricos → intentar mapear
+        ("CRUZ LOMA", "SAN JOSÉ"),
+        ("CRUZLOMA", "SAN JOSÉ"),
+        ("TOTORA", "SAN JOSÉ"),
+        ("TOTORAS", "SAN JOSÉ"),
+        ("MULAPOTERO", "SAN JOSÉ"),
+        ("MULA POTRERO", "SAN JOSÉ"),
+        ("BANDURRIA", "SAN JOSÉ"),
+        ("BANDURIA", "SAN JOSÉ"),
+        ("BARROLOMA", "SAN JOSÉ"),
+        ("PLAYA", "SAN JOSÉ"),
+        ("CALDERA", "SAN JOSÉ"),
+        ("POCARALOMA", "SAN JOSÉ"),
+        ("CENTRAL", "SAN JOSÉ"),
+        ("CÓNDOR LOMA", "SAN JOSÉ"),
+        ("PUKARA", "SAN JOSÉ"),
+        ("SOPALO LOMA", "LA CANDELARIA"),
+        ("GUANGUILQUI", "LARCACOCHA"),
+        ("CANGAHUA", "LARCACOCHA"),
+    ]
+    # Ordenar variantes de mayor a menor longitud para priorizar las más específicas
+    VARIANTES_COMUNIDAD.sort(key=lambda x: len(x[0]), reverse=True)
+
+    def derivar_comunidad(sector_comunidad_valor):
+        sc = (sector_comunidad_valor or '').upper().strip()
+        if not sc:
+            return None
+        for variante, comunidad_oficial in VARIANTES_COMUNIDAD:
+            if variante in sc:
+                return comunidad_oficial
+        return None
+
     features = []
     for row in rows:
         props, geom_blob = {}, None
@@ -200,6 +324,13 @@ def export_fichas():
             if col == 'geom': geom_blob = row[i]
             elif col == 'fid_1': continue
             elif row[i] is not None: props[col] = row[i]
+
+        # Si 'comunidad' no existe o está vacío, derivar del 'sector_comunidad'
+        if not props.get('comunidad'):
+            com_derivada = derivar_comunidad(props.get('sector_comunidad'))
+            if com_derivada:
+                props['comunidad'] = com_derivada
+
         if geom_blob:
             try:
                 srid, off = parse_gpkg_header(geom_blob)
@@ -485,6 +616,28 @@ def _save(features, filename):
     print(f"  💾 {filename} ({size_kb:.0f} KB)")
 
 
+MAPEO_TECNICOS = {
+    'u0_a314': 'Melany Jara',
+    'u0_a319': 'Melany Jara',
+    'jvk-editor': 'Melany Jara',
+    'u0_a504': 'Adriana Cuascota',
+    'jvk-editor6': 'Adriana Cuascota',
+    'u0_a279': 'Huguito Ipial',
+    'jvk-editor2': 'Huguito Ipial',
+    'u0_a70': 'Pablo Barrionuevo',
+    'jvk-editor5': 'Pablo Barrionuevo',
+    'u0_a330': 'Mayra Benavides',
+    'mayralisseth201': 'Mayra Benavides',
+    'u0_a362': 'Martha Simbaña',
+    'u0_a335': 'Martha Simbaña',
+    'jvk-editor4': 'Martha Simbaña',
+    'u0_a2': 'JVK-DIGITALIZACION',
+    'jvk-digitalizacion': 'JVK-DIGITALIZACION',
+    'u0_a302': 'Dylan Chavez',
+    'jvk-editor3': 'Dylan Chavez',
+    'u0_a200': 'Melanie2',
+}
+
 def export_stats(fichas):
     print("\n📊 Generando estadísticas para el Login...")
     claves = set()
@@ -495,7 +648,8 @@ def export_stats(fichas):
             claves.add(c)
         t = f['properties'].get('creado_por')
         if t:
-            tecnicos.add(t)
+            nombre_tec = MAPEO_TECNICOS.get(t.strip(), t.strip())
+            tecnicos.add(nombre_tec)
             
     stats = {
         "fichas": len(fichas),

@@ -38,7 +38,7 @@ function PolygonBoundsController({ feature, center, defaultZoom }: { feature: an
       if (feature && feature.features && feature.features.length > 0) {
         try {
           const geoJsonLayer = L.geoJSON(feature);
-          map.fitBounds(geoJsonLayer.getBounds(), { padding: [15, 15], maxZoom: 19 });
+          map.fitBounds(geoJsonLayer.getBounds(), { padding: [25, 25], maxZoom: 18 });
         } catch (e) {
           map.setView(center, defaultZoom);
         }
@@ -100,69 +100,65 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           if (!ficha.geo?.lat && !ficha._geojson?.coordinates && match.lat && match.lng) {
             setCoords([match.lat, match.lng]);
           }
-
-          // 2. Cargar TODAS las geometrías para dibujar vecinos (usamos catastro_poligonos.json que tiene todo)
-          fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
-            .then((r) => r.json())
-            .then((poligonosData) => {
-              const targetGeom = poligonosData[String(match.fid)];
-              if (targetGeom) {
-                setMapPolygon({
-                  type: 'FeatureCollection',
-                  features: [{
-                    type: 'Feature',
-                    properties: { fid: match.fid, clave_cata: match.clave_cata },
-                    geometry: targetGeom
-                  }]
-                });
-              }
-
-              // Extraer polígonos vecinos (±0.006 grados aprox 600m)
-              const neighbors: any[] = [];
-              const targetLat = match.lat || (coords ? coords[0] : null);
-              const targetLng = match.lng || (coords ? coords[1] : null);
-
-              if (targetLat && targetLng) {
-                for (const [fid, geom] of Object.entries(poligonosData)) {
-                  const g = geom as any;
-                  if (!g || !g.coordinates) continue;
-
-                  let point;
-                  if (g.type === 'MultiPolygon' && g.coordinates[0] && g.coordinates[0][0]) {
-                    point = g.coordinates[0][0][0]; // Primer punto del primer anillo del primer polígono
-                  } else if (g.type === 'Polygon' && g.coordinates[0]) {
-                    point = g.coordinates[0][0]; // Primer punto del primer anillo
-                  }
-
-                  if (!point) continue;
-
-                  const polyLng = point[0];
-                  const polyLat = point[1];
-                  
-                  // Incrementar un poco el margen de búsqueda a ±0.008 (aprox 800m)
-                  if (Math.abs(polyLat - targetLat) < 0.008 && Math.abs(polyLng - targetLng) < 0.008) {
-                    neighbors.push({
-                      type: 'Feature',
-                      properties: { fid },
-                      geometry: g
-                    });
-                  }
-                }
-              }
-
-              if (neighbors.length > 0) {
-                setAllPolygons({ type: 'FeatureCollection', features: neighbors });
-              }
-              
-              setLoadingPolygon(false);
-            })
-            .catch((e) => {
-              console.error("Error al cargar polígonos", e);
-              setLoadingPolygon(false);
-            });
-        } else {
-          setLoadingPolygon(false);
         }
+
+        // 2. Cargar geometrías desde catastro_geo.geojson (en lugar del archivo pesado catastro_poligonos.json)
+        fetch(`/geo/catastro_geo.geojson?t=${timestamp}`)
+          .then((r) => r.json())
+          .then((geoData: FeatureCollection) => {
+            const targetFeature = geoData.features.find(
+              (f: any) => f.properties?.clave_cata && f.properties.clave_cata.trim() === targetClave
+            );
+
+            if (targetFeature) {
+              setMapPolygon({
+                type: 'FeatureCollection',
+                features: [targetFeature]
+              });
+            }
+
+            // Extraer polígonos vecinos (±0.008 grados aprox 800m)
+            const neighbors: any[] = [];
+            const targetLat = (targetFeature?.geometry as any)?.coordinates?.[0]?.[0]?.[1] || coords?.[0] || match?.lat;
+            const targetLng = (targetFeature?.geometry as any)?.coordinates?.[0]?.[0]?.[0] || coords?.[1] || match?.lng;
+
+            if (targetLat && targetLng) {
+              geoData.features.forEach((f: any) => {
+                const g = f.geometry;
+                if (!g || !g.coordinates) return;
+
+                let point;
+                if (g.type === 'MultiPolygon' && g.coordinates[0] && g.coordinates[0][0]) {
+                  point = g.coordinates[0][0][0];
+                } else if (g.type === 'Polygon' && g.coordinates[0]) {
+                  point = g.coordinates[0][0];
+                }
+
+                if (!point) return;
+
+                const polyLng = point[0];
+                const polyLat = point[1];
+
+                if (
+                  f.properties?.clave_cata?.trim() !== targetClave &&
+                  Math.abs(polyLat - targetLat) < 0.008 &&
+                  Math.abs(polyLng - targetLng) < 0.008
+                ) {
+                  neighbors.push(f);
+                }
+              });
+            }
+
+            if (neighbors.length > 0) {
+              setAllPolygons({ type: 'FeatureCollection', features: neighbors });
+            }
+
+            setLoadingPolygon(false);
+          })
+          .catch((e) => {
+            console.error("Error al cargar geojson de catastro", e);
+            setLoadingPolygon(false);
+          });
       })
       .catch((e) => {
         console.error("Error al cargar datos catastrales:", e);

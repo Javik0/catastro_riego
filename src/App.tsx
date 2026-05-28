@@ -5,6 +5,7 @@ import { FiltrosProvider, useFiltros } from './hooks/useFiltros';
 import { ThemeProvider } from './hooks/useTheme';
 import { MapNavProvider } from './hooks/useMapNav';
 import { type FichaPredio, safeToDate } from './lib/types';
+import { getNombreTecnico } from './lib/constants';
 import LoginPage from './components/auth/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
@@ -39,6 +40,7 @@ function useLocalData() {
           area_sin_riego: f.properties.area_sin_riego || 0,
           creado_por: f.properties.creado_por || '',
           parroquia: f.properties.parroquia || '',
+          comunidad: f.properties.comunidad || '',
           sector: f.properties.sector || '',
           cedula: f.properties.cedula || '',
           codigo_final: f.properties.codigo_final || '',
@@ -83,8 +85,8 @@ function FilteredDataProvider({ children }: { children: (props: {
   const filtered = allFichas.filter((f) => {
     if (filtros.parroquia && f.parroquia !== filtros.parroquia) return false;
     if (filtros.sector && f.sector !== filtros.sector) return false;
-    if (filtros.tecnico && f.creado_por !== filtros.tecnico) return false;
-    if (filtros.comunidad && (f.sector_comunidad || '').trim() !== filtros.comunidad) return false;
+    if (filtros.tecnico && getNombreTecnico(f.creado_por) !== filtros.tecnico) return false;
+    if (filtros.comunidad && (f.comunidad || f.sector_comunidad || '').trim() !== filtros.comunidad) return false;
     if (filtros.fechaDesde && safeToDate(f.fecha_creacion) < new Date(filtros.fechaDesde)) return false;
     if (filtros.fechaHasta) {
       const hasta = new Date(filtros.fechaHasta);

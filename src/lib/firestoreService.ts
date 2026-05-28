@@ -141,7 +141,7 @@ export function calcularEstadisticas(fichas: FichaPredio[]): EstadisticasResumen
     // Por técnico
     const tecNombre = getNombreTecnico(f.creado_por);
     fichasPorTecnico[tecNombre] = (fichasPorTecnico[tecNombre] || 0) + 1;
-    if (f.creado_por) tecnicosSet.add(f.creado_por);
+    if (f.creado_por) tecnicosSet.add(tecNombre);
 
     // Por fecha
     const fecha = safeToDate(f.fecha_creacion).toISOString().split('T')[0];
@@ -164,6 +164,8 @@ export function calcularEstadisticas(fichas: FichaPredio[]): EstadisticasResumen
 
   const n = fichas.length || 1;
 
+  const totalTecnicosUnicos = new Set(Object.values(TECNICOS).map((t) => t.nombre)).size;
+
   return {
     totalFichas: fichas.length,
     totalPoligonos: 24452,
@@ -173,7 +175,7 @@ export function calcularEstadisticas(fichas: FichaPredio[]): EstadisticasResumen
     areaTotal,
     areaRiego,
     areaSinRiego,
-    tecnicosActivos: tecnicosSet.size || Object.keys(TECNICOS).length,
+    tecnicosActivos: tecnicosSet.size || totalTecnicosUnicos,
     fichasPorParroquia,
     fichasPorTecnico,
     fichasPorFecha,
