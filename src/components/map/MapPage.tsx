@@ -63,12 +63,18 @@ function MapLegend({ showAll, onToggleAll, allLoaded }: {
           style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
           <p className="text-[10px] font-semibold mb-2 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Técnicos</p>
           <div className="space-y-1.5">
-            {Object.entries(TECNICOS).map(([key, { nombre, color }]) => (
-              <div key={key} className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full shrink-0 border border-white/20" style={{ background: color }} />
-                <span className="text-[10px] truncate" style={{ color: 'var(--text-secondary)' }}>{nombre}</span>
-              </div>
-            ))}
+            {Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre)))
+              .sort()
+              .map((nombre) => {
+                const tec = Object.values(TECNICOS).find((t) => t.nombre === nombre);
+                if (!tec) return null;
+                return (
+                  <div key={nombre} className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full shrink-0 border border-white/20" style={{ background: tec.color }} />
+                    <span className="text-[10px] truncate" style={{ color: 'var(--text-secondary)' }}>{nombre}</span>
+                  </div>
+                );
+              })}
           </div>
           <div className="mt-3 pt-2 border-t space-y-1.5" style={{ borderColor: 'var(--border-color)' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Capas</p>
