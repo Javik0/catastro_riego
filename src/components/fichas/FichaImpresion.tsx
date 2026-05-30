@@ -14,7 +14,7 @@ interface Props {
   prediosAdicionales: PredioAdicional[];
 }
 
-const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
+
 
 // Componente para forzar a Leaflet a recalcular sus dimensiones en impresión y centrar
 function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
