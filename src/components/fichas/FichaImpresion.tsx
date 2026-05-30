@@ -382,7 +382,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
         .visuals-container {
           display: grid;
-          grid-template-columns: 43fr 37fr 20fr;
+          grid-template-columns: 1fr 1fr;
           gap: 10px;
           margin-top: 10px;
           break-inside: avoid;
@@ -957,36 +957,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           </div>
         </div>
 
-        {/* 3. ANEXO FOTOGRÁFICO */}
-        <div className="visual-box">
-          <div className="visual-title">Anexo Fotográfico</div>
-          <div className="visual-content bg-slate-50" style={{ height: '190px', padding: '4px' }}>
-            {ficha.foto_predio ? (
-              <img
-                src={`https://firebasestorage.googleapis.com/v0/b/${BUCKET_NAME}/o/fotos_predios%2F${encodeURIComponent(ficha.foto_predio.replace(/\\/g, '/').split('/').pop() || '')}?alt=media`}
-                alt="Foto Ficha"
-                className="visual-img"
-                style={{ maxHeight: '182px', objectFit: 'cover', width: '100%', borderRadius: '3px' }}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = '';
-                  target.style.display = 'none';
-                  const sibling = target.nextElementSibling as HTMLElement;
-                  if (sibling) sibling.style.display = 'flex';
-                }}
-              />
-            ) : null}
-            <div
-              className="no-visual flex flex-col items-center justify-center h-full w-full"
-              style={{ display: ficha.foto_predio ? 'none' : 'flex' }}
-            >
-              <svg className="w-8 h-8 text-slate-300 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <span className="text-[7pt] text-slate-400">Sin fotografía registrada</span>
-            </div>
-          </div>
-        </div>
+
       </div>
 
       {/* ── BLOQUE FINAL: AUDITORÍA, FECHA E INVESTIGADOR ── */}
