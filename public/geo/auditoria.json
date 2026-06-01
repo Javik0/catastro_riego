@@ -1,0 +1,3984 @@
+{
+  "resumen": {
+    "totalFichasOriginales": 1459,
+    "totalRegantesUnicosDuplicados": 114,
+    "totalFichasDuplicadas": 306,
+    "fichasRedundantesReducidas": 192,
+    "totalFichasUnificadas": 1267,
+    "porcentajeReduccion": 13.16
+  },
+  "regantesUnificados": [
+    {
+      "id": "1710820612",
+      "cedula": "1710820612",
+      "apellidos": "SOPALO TIPANLUISA",
+      "nombres": "ROSA CARMEN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
+        "claveCatastral": "1702521470029",
+        "areaTotal": 14991.66,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "JVK-DIGITALIZACION",
+        "fechaCreacion": "2026-05-21T10:19:59.161Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
+          "claveCatastral": "1702521050020",
+          "areaTotal": 3384.36,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T10:32:15.639Z",
+          "cantCultivos": 1,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1709940108",
+      "cedula": "1709940108",
+      "apellidos": "SOPALO SOPALO",
+      "nombres": "VICTOR ELOY",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b5cc5dab-14f6-4288-afeb-4b909898204a}",
+        "claveCatastral": "1702521470029",
+        "areaTotal": 14991.66,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "JVK-DIGITALIZACION",
+        "fechaCreacion": "2026-05-21T11:25:26.854Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{49db6aeb-39b2-425c-8c56-17b0f7a496af}",
+          "claveCatastral": "1702521010036",
+          "areaTotal": 8139.6,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T10:37:54.037Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1724637325",
+      "cedula": "1724637325",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "BYRON PAUL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7b889d03-e951-4379-bc6e-a8510ac38d2b}",
+        "claveCatastral": "1702521470029",
+        "areaTotal": 14991.66,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "JVK-DIGITALIZACION",
+        "fechaCreacion": "2026-05-21T11:20:41.395Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{8dd51ea8-d83b-486f-8903-654e2324b427}",
+          "claveCatastral": "1702521470025",
+          "areaTotal": 9319.91,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T10:42:26.116Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{3b19a7eb-8645-4cb6-a282-693b112c92be}",
+          "claveCatastral": "1702521010002",
+          "areaTotal": 4896.13,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T11:01:38.404Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{490f4f26-c493-4a1c-b96d-e25ed2639e5b}",
+          "claveCatastral": "1702521040096",
+          "areaTotal": 4086.94,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T10:52:16.044Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1725224883",
+      "cedula": "1725224883",
+      "apellidos": "SOPALO SOPALO",
+      "nombres": "VICTOR ELOY",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{1015a0eb-5a24-4896-8a5b-a94121586e11}",
+        "claveCatastral": "1702521470027",
+        "areaTotal": 5516.31,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "JVK-DIGITALIZACION",
+        "fechaCreacion": "2026-05-21T10:48:16.738Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e2286020-3488-4753-b4c3-649545484a00}",
+          "claveCatastral": "1702521010002",
+          "areaTotal": 4896.13,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T11:06:22.949Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{7abeea3f-0636-4b6e-9d5c-84313ab10b9e}",
+          "claveCatastral": "1702521040096",
+          "areaTotal": 4086.94,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T10:58:10.657Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1714158878",
+      "cedula": "1714158878",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "JOSE CARLOS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{26c7581e-adab-4777-b8f8-b8a60fecac4d}",
+        "claveCatastral": "1702521010069",
+        "areaTotal": 5521.29,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "JVK-DIGITALIZACION",
+        "fechaCreacion": "2026-05-21T12:06:03.072Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{505bee76-b557-4adb-b5a2-259395bde65b}",
+          "claveCatastral": "1702521040053",
+          "areaTotal": 1238.1,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T11:42:06.958Z",
+          "cantCultivos": 3,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1714128665",
+      "cedula": "1714128665",
+      "apellidos": "IMBAQUINGO CABASCANGO",
+      "nombres": "BEATRIZ",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
+        "claveCatastral": "1702521050010",
+        "areaTotal": 10062.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:56:56.256Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{518f92a3-a89b-49ef-a1c5-97ca742ac4a0}",
+          "claveCatastral": "1702521040023",
+          "areaTotal": 837.21,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T12:19:03.116Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{84e0077b-d37f-4d8c-b4bc-99f8212aa91f}",
+          "claveCatastral": "1702521040052",
+          "areaTotal": 734.04,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T22:15:28.799Z",
+          "cantCultivos": 3,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1710592427",
+      "cedula": "1710592427",
+      "apellidos": "QUINATOA ULCUANGO",
+      "nombres": "JUAN CARLOS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0e21acb1-bdec-4489-82ed-d736b9f3ae39}",
+        "claveCatastral": "1702521050002",
+        "areaTotal": 10583.69,
+        "sectorComunidad": "Alcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T08:25:46.683Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{96379eb1-975d-4226-80a5-c0037749d4a5}",
+          "claveCatastral": "1702521040069",
+          "areaTotal": 1939.02,
+          "sectorComunidad": "Alcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T08:01:51.386Z",
+          "cantCultivos": 1,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1704004124",
+      "cedula": "1704004124",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "MARIA LUISA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{aafa4381-a436-4718-a7e7-5d2df5289b56}",
+        "claveCatastral": "1702521010052",
+        "areaTotal": 9785.79,
+        "sectorComunidad": "Alcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T08:55:56.778Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{74a97563-f27c-4e9c-bc12-aaa1a621f6c2}",
+          "claveCatastral": "1702521010052",
+          "areaTotal": 9785.79,
+          "sectorComunidad": "",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T08:56:13.907Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{674e7ee4-4f35-471f-9628-848c6478c6ee}",
+          "claveCatastral": "1702521010052",
+          "areaTotal": 9785.79,
+          "sectorComunidad": "",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T10:49:09.989Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1722268917",
+      "cedula": "1722268917",
+      "apellidos": "SOPALO PILCA",
+      "nombres": "FANNY YOLANDA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{a975653f-2299-4f9b-9dec-f85a0268018e}",
+        "claveCatastral": "1702521450005",
+        "areaTotal": 12464.37,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T09:40:33.226Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4d94eeb6-49e6-403e-af15-9958513b8a81}",
+          "claveCatastral": "1702521010003",
+          "areaTotal": 9799.08,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T09:08:05.531Z",
+          "cantCultivos": 4,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1000669869",
+      "cedula": "1000669869",
+      "apellidos": "AIGAJE TIPANLUISA",
+      "nombres": "JUAN FABIAN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{39011801-a802-41cb-8ed8-4abc9694f572}",
+        "claveCatastral": "1702521010011",
+        "areaTotal": 6238.11,
+        "sectorComunidad": "",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T09:24:39.058Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
+          "claveCatastral": "1702521010011",
+          "areaTotal": 6238.11,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T09:25:13.079Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1714454061",
+      "cedula": "1714454061",
+      "apellidos": "IMBAQUINGO TIPANLUISA",
+      "nombres": "RAMON RAMIRO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2c01d453-b08a-4c95-95fc-16ba9822fb5e}",
+        "claveCatastral": "1702521430126",
+        "areaTotal": 3551.88,
+        "sectorComunidad": "LA CANDELARIA CHAUPILOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-27T14:05:50.844Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7ed7fc50-5341-414b-81c8-f47b0d8f8366}",
+          "claveCatastral": "1702521040153",
+          "areaTotal": 1271.15,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:03:32.703Z",
+          "cantCultivos": 2,
+          "cantAnimales": 6
+        }
+      ]
+    },
+    {
+      "id": "1717934440",
+      "cedula": "1717934440",
+      "apellidos": "INGA IMBAQUINGO",
+      "nombres": "SEGUNDO SIMON",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
+        "claveCatastral": "1702521470028",
+        "areaTotal": 10348.24,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-21T16:07:36.129Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e75735da-9b8e-40b6-bf30-1f3d1c30a3ca}",
+          "claveCatastral": "1702521040031",
+          "areaTotal": 1962.31,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:19:50.102Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{8e0603ce-05d7-44a3-81fa-7610624645bb}",
+          "claveCatastral": "1702521010063",
+          "areaTotal": 1087.34,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:11:35.341Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1714487772",
+      "cedula": "1714487772",
+      "apellidos": "IMBAQUINGO ACERO",
+      "nombres": "JUAN MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{09620c53-81fb-4789-9684-9be55c74d0a8}",
+        "claveCatastral": "1702521430118",
+        "areaTotal": 30072.11,
+        "sectorComunidad": "LA CANDELARIA CHAUPILOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-27T07:49:22.301Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7cde89bf-319c-44cb-af1d-c14324d151b3}",
+          "claveCatastral": "1702521040020",
+          "areaTotal": 3308.34,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:22:33.795Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1717937344",
+      "cedula": "1717937344",
+      "apellidos": "AIGAJE IMBAQUINGO",
+      "nombres": "CLEMENTE LEONARDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8a6bc54f-df83-4b34-ad88-ba7bcf8a158b}",
+        "claveCatastral": "1702521470024",
+        "areaTotal": 10462.8,
+        "sectorComunidad": "Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T16:51:16.488Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e1151dfe-81c4-4eba-9c81-921a24423975}",
+          "claveCatastral": "1702521040072",
+          "areaTotal": 7904.15,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:44:48.150Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{b5f22097-6f81-4ece-9744-c645f456660b}",
+          "claveCatastral": "1702521040038",
+          "areaTotal": 6991.56,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T09:56:55.184Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{5daef8a7-2e48-4208-8341-9577bf96bb05}",
+          "claveCatastral": "1702521450017",
+          "areaTotal": 6358.24,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:54:15.793Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{2ec9bdc5-5d76-4366-857e-dece2e3b4920}",
+          "claveCatastral": "1702521010043",
+          "areaTotal": 2393.76,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T10:45:26.632Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{5e0e44c9-c19c-4e31-9622-060dd5904ba9}",
+          "claveCatastral": "1702521010014",
+          "areaTotal": 370.21,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:31:52.185Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1705500260",
+      "cedula": "1705500260",
+      "apellidos": "AIGAJE TIPANLUISA",
+      "nombres": "MAGDALENO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{9768fdc9-9150-4d57-afdb-a101880c71f8}",
+        "claveCatastral": "1702521450007",
+        "areaTotal": 10180.92,
+        "sectorComunidad": "",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T11:20:53.122Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5d356e53-b2ad-483a-81f5-b5c6b99cbfbb}",
+          "claveCatastral": "1702521040072",
+          "areaTotal": 7904.15,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:43:54.807Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{b0958a7d-34ff-4d1d-a9fc-b0c58bcc52eb}",
+          "claveCatastral": "1702521010012",
+          "areaTotal": 6194.91,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T14:09:03.423Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1703986842",
+      "cedula": "1703986842",
+      "apellidos": "SOPALO IMBAGO",
+      "nombres": "MARIA REGINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6b37678f-38ad-4bfd-a2ac-5b1a3dceff98}",
+        "claveCatastral": "1702521470024",
+        "areaTotal": 10462.8,
+        "sectorComunidad": "Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T16:48:09.458Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{cf2a5e0c-9148-4b69-87de-c7339453381f}",
+          "claveCatastral": "1702521040038",
+          "areaTotal": 6991.56,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T08:21:47.548Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{63e868d6-831f-47e6-9e71-116a8ac8d8a0}",
+          "claveCatastral": "1702521040038",
+          "areaTotal": 6991.56,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T11:07:32.442Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{3779d216-cd94-44d7-9afc-8ef1ee7ec4d2}",
+          "claveCatastral": "1702521450017",
+          "areaTotal": 6358.24,
+          "sectorComunidad": "",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T10:53:37.096Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1001264629",
+      "cedula": "1001264629",
+      "apellidos": "LECHON CHICAIZA",
+      "nombres": "SEGUNDO RAFAEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{061d4820-d4f0-40b1-96f7-a011a09581e1}",
+        "claveCatastral": "1702521040148",
+        "areaTotal": 4513.92,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T11:12:21.052Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f0fa68b9-8ce0-42df-89b9-1976f99e3404}",
+          "claveCatastral": "1702521050076",
+          "areaTotal": 2767.52,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T11:05:44.360Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1710714039",
+      "cedula": "1710714039",
+      "apellidos": "IMBAQUINGO LANCHIMBA",
+      "nombres": "Jose Manuel",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6b6762f8-7add-43aa-bf2c-f09b108a7b0d}",
+        "claveCatastral": "1702521470022",
+        "areaTotal": 13168.17,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T11:22:16.692Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{95444bb2-7c88-4e64-88e6-d638f3248327}",
+          "claveCatastral": "1702521040001",
+          "areaTotal": 3653.13,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T14:13:26.214Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1715304851",
+      "cedula": "1715304851",
+      "apellidos": "SOPALO LANCHIMBA",
+      "nombres": "GLADYS YOLANDA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{edf61199-56b7-4458-92eb-0060d71304df}",
+        "claveCatastral": "1702521050017",
+        "areaTotal": 10502.55,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T11:45:39.236Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{25659ea1-80dd-418b-a25f-95f8fb65f7a0}",
+          "claveCatastral": "1702521040057",
+          "areaTotal": 7768.23,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T11:27:18.405Z",
+          "cantCultivos": 3,
+          "cantAnimales": 6
+        },
+        {
+          "id": "{5d84e42c-af11-4c8a-a28c-755b948a28bd}",
+          "claveCatastral": "1702521040056",
+          "areaTotal": 938.51,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T11:40:29.811Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1712955382",
+      "cedula": "1712955382",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "SEGUNDO MARCELO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c452f756-ea03-4c0d-9272-6183a21c5ead}",
+        "claveCatastral": "1702521470024",
+        "areaTotal": 10462.8,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T12:09:13.334Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{97b30774-25e8-41a5-a355-5a6b9580550a}",
+          "claveCatastral": "1702521050010",
+          "areaTotal": 10062.59,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T15:59:43.225Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{34ba742f-37b8-4f25-8231-1cd79e9e7352}",
+          "claveCatastral": "1702521040143",
+          "areaTotal": 4519.01,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T12:18:34.444Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{4cf1d6f8-84e6-4ff3-bd45-0f7db78886a4}",
+          "claveCatastral": "1702521040143",
+          "areaTotal": 4519.01,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T11:53:30.025Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{b8a98543-909c-4541-b2ae-eb42f368c18c}",
+          "claveCatastral": "1702521010088",
+          "areaTotal": 3541.99,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T12:01:51.858Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{d3d53b44-90b8-4290-a198-925e08a30bbb}",
+          "claveCatastral": "1702521010097",
+          "areaTotal": 1011.54,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T12:05:29.245Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1716656614",
+      "cedula": "1716656614",
+      "apellidos": "AIGAJE LANCHIMBA",
+      "nombres": "LUIS ROBERTO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{cb8b825e-e858-4b27-9249-e691d5e1fa65}",
+        "claveCatastral": "1702521040143",
+        "areaTotal": 4519.01,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T12:23:00.647Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f513554b-07e9-4371-b2d6-8ab58e53f967}",
+          "claveCatastral": "1702521040143",
+          "areaTotal": 4519.01,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T11:53:51.411Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1715300735",
+      "cedula": "1715300735",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "SEGUNDO JORGE",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{15123613-c7d0-4d03-bbae-8c5c6ee95cb4}",
+        "claveCatastral": "1702521040143",
+        "areaTotal": 4519.01,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T12:27:06.756Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4ea80cdd-5f61-442f-b5cf-2bbb1cf18ce6}",
+          "claveCatastral": "1702521010030",
+          "areaTotal": 2138.07,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T11:59:23.197Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1720660545",
+      "cedula": "1720660545",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "Miriam Patricia",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2aa14b73-7321-402e-8af1-dad0088a74c0}",
+        "claveCatastral": "1702521050026",
+        "areaTotal": 13629.42,
+        "sectorComunidad": "Moras guanguilqui",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T09:02:38.948Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f50d2569-7c88-4e31-aa22-2a7c585ff838}",
+          "claveCatastral": "1702521040134",
+          "areaTotal": 11887.03,
+          "sectorComunidad": "Parcela",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T08:07:50.839Z",
+          "cantCultivos": 2,
+          "cantAnimales": 4
+        },
+        {
+          "id": "{09b7cccb-414c-4d73-97ea-b1e2b753ccd7}",
+          "claveCatastral": "1702521010033",
+          "areaTotal": 6420.78,
+          "sectorComunidad": "HUASIPUNGO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T08:28:05.116Z",
+          "cantCultivos": 5,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1707015259",
+      "cedula": "1707015259",
+      "apellidos": "IMBAQUINGO ULCUANGO",
+      "nombres": "ROGELIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d83eec50-5d30-446f-a97f-002571f55ff0}",
+        "claveCatastral": "1702521050026",
+        "areaTotal": 13629.42,
+        "sectorComunidad": "Moras guanguilqui",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T08:49:38.133Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{728ae6a8-1822-4f9d-9925-6bf0fa3fc679}",
+          "claveCatastral": "1702521010033",
+          "areaTotal": 6420.78,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T08:26:08.894Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{317d2654-edae-4618-83b3-d457cabf0df0}",
+          "claveCatastral": "1702521050021",
+          "areaTotal": 3789.97,
+          "sectorComunidad": "Moras guanguilqui",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T09:51:45.771Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1723970032",
+      "cedula": "1723970032",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "Milton Byron",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{af5416a5-6162-4b47-97ff-9a7b3026b853}",
+        "claveCatastral": "1702521050026",
+        "areaTotal": 13629.42,
+        "sectorComunidad": "Moras guanguilqui",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T09:12:25.329Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ccc3242a-1dc2-4e40-8472-b7c0a554a264}",
+          "claveCatastral": "1702521010010",
+          "areaTotal": 6541.22,
+          "sectorComunidad": "Huasipungo",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T09:39:24.106Z",
+          "cantCultivos": 3,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1724453517",
+      "cedula": "1724453517",
+      "apellidos": "Sopalo maquinga",
+      "nombres": "Segundo Humberto",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f26c0ac1-1379-486a-97e2-02b9c4dd2222}",
+        "claveCatastral": "1702521050026",
+        "areaTotal": 13629.42,
+        "sectorComunidad": "Moras guanguilqui",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T09:21:42.118Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7b6fac62-3a3f-457b-b40b-101b818d0de9}",
+          "claveCatastral": "1702521040134",
+          "areaTotal": 11887.03,
+          "sectorComunidad": "Parcela",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T09:29:49.203Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1703958981",
+      "cedula": "1703958981",
+      "apellidos": "SOPALO SOPALO",
+      "nombres": "SEGUNDO LINO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{fd56f9d1-51c9-44d4-b022-f35a1fcd4bc8}",
+        "claveCatastral": "1702521050013",
+        "areaTotal": 9666.8,
+        "sectorComunidad": "Larcachaca moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T10:02:28.661Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ebaba46c-c8cf-4f74-a02f-83b28d1fae88}",
+          "claveCatastral": "1702521040034",
+          "areaTotal": 3379.39,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T14:59:21.466Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1727671537",
+      "cedula": "1727671537",
+      "apellidos": "SOPALO AIGAJE",
+      "nombres": "DANILO DARWIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{05a9f1c0-2593-47e7-b258-a2112ff23936}",
+        "claveCatastral": "1702521450004",
+        "areaTotal": 11570.02,
+        "sectorComunidad": "Larcachaca guasipungo",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T10:55:42.882Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ba62dd31-a0de-4c2f-97e2-43492af69b11}",
+          "claveCatastral": "1702521450007",
+          "areaTotal": 10180.92,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T11:22:07.634Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{b7092d1f-9336-427d-96d2-7c4eceaaec4c}",
+          "claveCatastral": "1702521010013",
+          "areaTotal": 5999.33,
+          "sectorComunidad": "Larcachaca guasipungo",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T10:42:34.401Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{1e3841f5-2ed2-4b5e-b1f5-3254c077408c}",
+          "claveCatastral": "1702521040073",
+          "areaTotal": 3688.58,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T10:25:12.319Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1712505328",
+      "cedula": "1712505328",
+      "apellidos": "SOPALO ACERO",
+      "nombres": "JUAN JOSE",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c1abf3f4-c363-401a-b456-35d6b5e858b5}",
+        "claveCatastral": "1702521450004",
+        "areaTotal": 11570.02,
+        "sectorComunidad": "Larcachaca guasipungo",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T10:50:06.583Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4950738a-56c3-4bbc-b923-cabd9a03cc56}",
+          "claveCatastral": "1702521010013",
+          "areaTotal": 5999.33,
+          "sectorComunidad": "Larcachaca guasipungo",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T10:34:44.615Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1711081149",
+      "cedula": "1711081149",
+      "apellidos": "Sopalo lanchimba",
+      "nombres": "Segundo Jacinto",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{cc235b04-cdad-4e53-bd91-0fc2b2c997a2}",
+        "claveCatastral": "1702521450007",
+        "areaTotal": 10180.92,
+        "sectorComunidad": "Larcachaca moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T11:21:58.959Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{fbe76c97-abde-4fe1-b0ab-69e4956f56b4}",
+          "claveCatastral": "1702521050011",
+          "areaTotal": 9990.29,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T11:44:05.710Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{56adf2f8-e381-4629-85d5-621cebc96d14}",
+          "claveCatastral": "1702521010018",
+          "areaTotal": 5640.32,
+          "sectorComunidad": "",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T11:39:15.555Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1715838577",
+      "cedula": "1715838577",
+      "apellidos": "ACERO IMBAQUINGO",
+      "nombres": "MARIA DE LOURDES",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{5e5c5f10-bcf5-4745-b2e3-0149fe3e7a8f}",
+        "claveCatastral": "1702521040017",
+        "areaTotal": 3578.57,
+        "sectorComunidad": "Guanguilqui",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T12:14:54.322Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{38f95e87-fd56-439b-a19f-21bb1209b2ed}",
+          "claveCatastral": "1702521010142",
+          "areaTotal": 570.67,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T13:52:37.486Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1705441382",
+      "cedula": "1705441382",
+      "apellidos": "ACERO ACERO",
+      "nombres": "PETRONA MARIA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{27d6069e-193c-48cd-8da3-c71901d0dc03}",
+        "claveCatastral": "1702521050009",
+        "areaTotal": 10588.33,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T13:23:36.827Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e63de7ff-229d-4b48-8f69-3d8fe221a052}",
+          "claveCatastral": "1702521010056",
+          "areaTotal": 6131.36,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T13:36:00.109Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1712474194",
+      "cedula": "1712474194",
+      "apellidos": "IMBAQUINGO LANCHIMBA",
+      "nombres": "RAFAEL FERNANDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{303bb264-ba75-448f-8fa9-2838179cc324}",
+        "claveCatastral": "1702521400006",
+        "areaTotal": 40373.39,
+        "sectorComunidad": "ASOCIACIÓN 17 DE JUNIO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-25T15:46:35.307Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{15b70bcc-af20-40be-8bbf-1817e2de594f}",
+          "claveCatastral": "1702521040002",
+          "areaTotal": 9963.53,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T11:39:19.318Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{b366c19a-a50f-47d7-b768-56ef35329db2}",
+          "claveCatastral": "1702521040048",
+          "areaTotal": 8227.41,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T14:22:20.273Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1717937393",
+      "cedula": "1717937393",
+      "apellidos": "SOPALO PILCA",
+      "nombres": "ANGEL OSWALDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{10282f00-c6c5-46b7-ba5f-1ff9c3241ff6}",
+        "claveCatastral": "1702521450005",
+        "areaTotal": 12464.37,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T14:49:12.688Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{927b7d35-8deb-4627-bbee-846c571ebf98}",
+          "claveCatastral": "1702521040089",
+          "areaTotal": 3626.21,
+          "sectorComunidad": "Parcela ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T14:46:44.767Z",
+          "cantCultivos": 3,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1707143135",
+      "cedula": "1707143135",
+      "apellidos": "SOPALO TIPANLUISA",
+      "nombres": "SEGUNDO JOAQUIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{530d06c6-1610-41b2-9649-a07763cbe83e}",
+        "claveCatastral": "1702521050023",
+        "areaTotal": 11584.45,
+        "sectorComunidad": "Larcachaca Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T15:03:50.310Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{49042622-4641-4a52-bd0e-2adce867754e}",
+          "claveCatastral": "1702521010037",
+          "areaTotal": 6596.55,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T15:04:19.690Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1708457815",
+      "cedula": "1708457815",
+      "apellidos": "SOPALO TIPANLUISA",
+      "nombres": "FRANCISCO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{06d0ab01-e7e3-409f-9af8-71af6cd57fe0}",
+        "claveCatastral": "1702521050024",
+        "areaTotal": 12625.05,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:13:59.279Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c4506634-9c3b-48db-9aca-ccf8dfaa4e21}",
+          "claveCatastral": "1702521050024",
+          "areaTotal": 12625.05,
+          "sectorComunidad": "Larcachaca moras ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T11:38:42.397Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{d44a8aef-7e7f-496f-977f-e6ea688547e9}",
+          "claveCatastral": "1702521040067",
+          "areaTotal": 7861.59,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T15:28:33.728Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{9171aa38-cea1-4299-942a-c58fc68673e9}",
+          "claveCatastral": "1702521010042",
+          "areaTotal": 6017.69,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T15:34:26.092Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{2db55e4e-dfdb-4bae-b1a2-6f857f188262}",
+          "claveCatastral": "1702521010136",
+          "areaTotal": 1933.42,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T16:06:51.937Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1718585753",
+      "cedula": "1718585753",
+      "apellidos": "SOPALO IMBAQUINGO",
+      "nombres": "CLEVER MAURO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{a220d2de-6722-4bd8-ae2e-f1122669649d}",
+        "claveCatastral": "1702521050024",
+        "areaTotal": 12625.05,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:18:55.212Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7c1d7d99-e34c-4299-937e-d9e9d3026873}",
+          "claveCatastral": "1702521050024",
+          "areaTotal": 12625.05,
+          "sectorComunidad": "LARCACHACA MORAS ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T11:56:16.562Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{7e5e1a47-b9f3-497c-8d18-a59ca724d783}",
+          "claveCatastral": "1702521010007",
+          "areaTotal": 4506.47,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T11:28:12.863Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{79344b7f-daf9-4ba5-be44-949d4f275351}",
+          "claveCatastral": "1702521010040",
+          "areaTotal": 780.49,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T12:03:25.075Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1718585746",
+      "cedula": "1718585746",
+      "apellidos": "SOPALO IMBAQUINGO",
+      "nombres": "VICTOR HUGO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{603e98a8-0307-4ede-84d3-d365aba885a3}",
+        "claveCatastral": "1702521050024",
+        "areaTotal": 12625.05,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:22:07.621Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{0a7a3ecd-a355-4d37-b771-8d3e0bf4783c}",
+          "claveCatastral": "1702521040067",
+          "areaTotal": 7861.59,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T15:31:09.716Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1725242620",
+      "cedula": "1725242620",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "WILMER EFRAIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c361dec4-b23b-4ffd-8075-e349fb6c9a27}",
+        "claveCatastral": "1702521050024",
+        "areaTotal": 12625.05,
+        "sectorComunidad": "LARCACHACA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:24:26.304Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5c9ee680-a386-4e62-854e-6f5b065d1db2}",
+          "claveCatastral": "1702521470028",
+          "areaTotal": 10348.24,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T15:57:47.586Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{4a56a466-1f48-49de-ba15-4d0626cc8315}",
+          "claveCatastral": "1702521010006",
+          "areaTotal": 5093.64,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T11:18:22.655Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1726101981",
+      "cedula": "1726101981",
+      "apellidos": "IMBAQUINGO CABASCANGO",
+      "nombres": "SERGIO DAVID",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{a102741c-37f2-4fef-801a-9c8712c4949e}",
+        "claveCatastral": "1702521050010",
+        "areaTotal": 10062.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:38:47.951Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{79f1b2fc-e42a-44b7-90c5-d5412c8d36fa}",
+          "claveCatastral": "1702521040028",
+          "areaTotal": 2791.66,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T22:29:46.594Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1717097057",
+      "cedula": "1717097057",
+      "apellidos": "IMBAQUINGO CABASCANGO",
+      "nombres": "JAIME ROGELIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{eb875d1d-643e-4f93-a1e1-f8ba1a5e6d30}",
+        "claveCatastral": "1702521050010",
+        "areaTotal": 10062.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:41:43.485Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b9b0a310-f50e-4bc9-be47-0fae56888a9a}",
+          "claveCatastral": "1702521040025",
+          "areaTotal": 1125.03,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T15:46:33.438Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1719100354",
+      "cedula": "1719100354",
+      "apellidos": "IMBAQUINGO CABASCANGO",
+      "nombres": "Maria ines",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ce4e7497-37b1-4359-b1e4-696ebef72623}",
+        "claveCatastral": "1702521050010",
+        "areaTotal": 10062.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T15:52:11.320Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{0208ffa1-7131-420e-9243-af426fb4e839}",
+          "claveCatastral": "1702521040026",
+          "areaTotal": 1177.45,
+          "sectorComunidad": "LARCACHACA PARCELA",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T22:43:20.386Z",
+          "cantCultivos": 3,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1003501648",
+      "cedula": "1003501648",
+      "apellidos": "IMBAQUINGO CABASCANGO",
+      "nombres": "BLANCA SUSANA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c8826ed0-3904-4b27-bd77-9736200330e8}",
+        "claveCatastral": "1702521050010",
+        "areaTotal": 10062.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-21T16:12:47.277Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e8c4e01d-7356-46ab-9dd0-ae1c90e87bac}",
+          "claveCatastral": "1702521040027",
+          "areaTotal": 922.32,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-21T16:06:44.197Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1711714798",
+      "cedula": "1711714798",
+      "apellidos": "ACERO IMBAQUINGO",
+      "nombres": "ANA LUISA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{bfa5fb98-e492-4d99-becb-9ef76eddbfa4}",
+        "claveCatastral": "1702521010121",
+        "areaTotal": 2958.5,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T07:33:56.841Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b7fd1a76-f668-4a35-a25b-03dbd02f2a05}",
+          "claveCatastral": "1702521010043 ",
+          "areaTotal": 2393.76,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T10:51:28.666Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1000746741",
+      "cedula": "1000746741",
+      "apellidos": "ACERO ACERO",
+      "nombres": "SEGUNDO VIRGILIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{25ad532b-da01-48a2-85af-d9f83042364e}",
+        "claveCatastral": "1702521450023",
+        "areaTotal": 10052.8,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T08:28:07.733Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{fb1545ea-db7f-4a40-9bf8-4add65521ed6}",
+          "claveCatastral": "1702521450023",
+          "areaTotal": 10052.8,
+          "sectorComunidad": "Guanguilqui Porotog",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T08:30:17.179Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1716641905",
+      "cedula": "1716641905",
+      "apellidos": "SOPALO AIGAJE",
+      "nombres": "JOSÉ MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ec441d1c-ebc5-4173-b353-0d5ba90370f3}",
+        "claveCatastral": "1702521450005",
+        "areaTotal": 12464.37,
+        "sectorComunidad": "Larcachaca Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T09:24:59.440Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7569eca3-fa16-44ff-bd75-6a1f95a41f15}",
+          "claveCatastral": "1702521010023",
+          "areaTotal": 7513.89,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T09:54:52.561Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{bc604f2a-0729-4a62-8381-c91da34b0505}",
+          "claveCatastral": "1702521040085",
+          "areaTotal": 3742.62,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T09:42:31.123Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{5f3bcf9b-1182-4825-a8a0-98fdc26ac7a4}",
+          "claveCatastral": "1702521050005",
+          "areaTotal": 2908.73,
+          "sectorComunidad": "Larcachaca Moras",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T11:50:42.789Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1706573852",
+      "cedula": "1706573852",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "SEGUNDO EUGENIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{98a1d205-0640-4c7c-a529-2edb264a3586}",
+        "claveCatastral": "1702521050019",
+        "areaTotal": 14277.28,
+        "sectorComunidad": "Larcachaca Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T10:19:14.809Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2e44aef1-2458-4f1b-930e-48b00cbc0c45}",
+          "claveCatastral": "1702521010052",
+          "areaTotal": 9785.79,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T10:50:42.719Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{bc38a345-6c3d-4717-b47d-e32cfe111664}",
+          "claveCatastral": "1702521040037",
+          "areaTotal": 7575.62,
+          "sectorComunidad": "Larcachaca Parcela",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T10:10:03.653Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1718184151",
+      "cedula": "1718184151",
+      "apellidos": "IMBAQUINGO AIGAJE",
+      "nombres": "SEGUNDO EUGENIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{14c0c53e-d2df-491b-b19c-d0220310b63b}",
+        "claveCatastral": "1702521050019",
+        "areaTotal": 14277.28,
+        "sectorComunidad": "Larcachaca Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T10:35:03.695Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ebfb4397-eead-4a16-8d08-2659533d5c97}",
+          "claveCatastral": "1702521470022",
+          "areaTotal": 13168.17,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T11:23:31.968Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{2bbbff10-7f03-415d-93f4-6e6d4d7ef1e5}",
+          "claveCatastral": "1702521010052",
+          "areaTotal": 9785.79,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T10:58:10.575Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1701681841",
+      "cedula": "1701681841",
+      "apellidos": "IMBAQUINGO FARINANGO",
+      "nombres": "RICARDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2f3d8aae-55c0-4d87-b158-ec6113f33331}",
+        "claveCatastral": "1702521470022",
+        "areaTotal": 13168.17,
+        "sectorComunidad": "",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T14:45:36.762Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c2f99fa4-2af3-4a05-afa6-f66dd97a5a1a}",
+          "claveCatastral": "1702521040002",
+          "areaTotal": 9963.53,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T11:15:35.590Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1718241183",
+      "cedula": "1718241183",
+      "apellidos": "MALDONADO",
+      "nombres": "BLANCA FANNY",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{9dc9774d-1488-4623-b698-1e635cc56bfa}",
+        "claveCatastral": "1702521050015",
+        "areaTotal": 11823.68,
+        "sectorComunidad": "Larcacacha-Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T10:56:52.362Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e8e04813-d645-40c8-a001-5f7c9115ecbe}",
+          "claveCatastral": "1702521010008",
+          "areaTotal": 6404.33,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T12:32:36.492Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{a0e4d9d7-2760-4c0c-9335-9ba4684ee5e6}",
+          "claveCatastral": "1702521010008",
+          "areaTotal": 6404.33,
+          "sectorComunidad": "Larcacacha- Huashipungo",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T13:17:07.370Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{ab6c4071-74b0-41ca-9360-8a6c46f8b9a3}",
+          "claveCatastral": "1702521010127",
+          "areaTotal": 695.09,
+          "sectorComunidad": "Larcacacha",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T12:35:27.468Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1724571409",
+      "cedula": "1724571409",
+      "apellidos": "AIGAJE IMBAQUINGO",
+      "nombres": "SEGUNDO GONZALO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{e8477dd3-4048-40da-b943-53331f813527}",
+        "claveCatastral": "1702521040072",
+        "areaTotal": 7904.15,
+        "sectorComunidad": "Larcachaca Parcela",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T13:21:30.792Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ac6717ec-50d9-443c-bcaf-bc9e366a4aa3}",
+          "claveCatastral": "1702521040148",
+          "areaTotal": 4513.92,
+          "sectorComunidad": "Larcachaca Parcela",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T13:37:28.549Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{305b448b-4059-447d-a810-03e0da6d8f88}",
+          "claveCatastral": "1702521050078",
+          "areaTotal": 2607.77,
+          "sectorComunidad": "Larcachaca Moras",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T13:03:16.774Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1704001229",
+      "cedula": "1704001229",
+      "apellidos": "QUINATOA CHURACO",
+      "nombres": "VIRGILIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{00197c34-74e4-44eb-bd08-4589721432e8}",
+        "claveCatastral": "1702521450006",
+        "areaTotal": 10890.92,
+        "sectorComunidad": "Larcachaca Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T14:55:11.512Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4a0fdec0-76a6-4c7e-8e9f-ebe01d68ebbb}",
+          "claveCatastral": "1702521040093",
+          "areaTotal": 5941.75,
+          "sectorComunidad": "LARCACHACA",
+          "creadoPor": "JVK-DIGITALIZACION",
+          "fechaCreacion": "2026-05-21T14:56:29.343Z",
+          "cantCultivos": 3,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1712952140",
+      "cedula": "1712952140",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "ROSA CRISTINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{98c30748-15e9-4f57-b029-e47aeea22131}",
+        "claveCatastral": "1702521040021",
+        "areaTotal": 3019.88,
+        "sectorComunidad": "Larcachaca Parcela",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-21T15:47:28.375Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{d57f86ec-501b-46ba-bf20-94f89944c1f3}",
+          "claveCatastral": "1702521040021",
+          "areaTotal": 3019.88,
+          "sectorComunidad": "",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-21T22:42:18.742Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1711663987",
+      "cedula": "1711663987",
+      "apellidos": "BEDOYA LANCHIMBA",
+      "nombres": "SEGUNDO CARLOS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8f3980f4-1d8d-4019-a976-bdc36d4b7c9a}",
+        "claveCatastral": "1702521010085",
+        "areaTotal": 7091.36,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T08:34:07.025Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{84245715-e77f-4eb8-9f56-773589b1c396}",
+          "claveCatastral": "1702521010079",
+          "areaTotal": 5458.0,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T08:55:05.822Z",
+          "cantCultivos": 1,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{60b08f69-0c0f-4e56-8ec1-ea9df879caa7}",
+          "claveCatastral": "1702521450010",
+          "areaTotal": 2908.77,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T08:05:57.909Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1709771511",
+      "cedula": "1709771511",
+      "apellidos": "SOPALO UMAQUINGA",
+      "nombres": "SEGUNDO ESTEBAN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{dce75112-8a95-478b-8b73-e0c46dfc93f8}",
+        "claveCatastral": "1702521040060",
+        "areaTotal": 7864.59,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T09:11:22.343Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{99c8529c-3a5f-441c-8947-339710fddddf}",
+          "claveCatastral": "1702521050007",
+          "areaTotal": 4561.8,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T09:54:42.503Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{1855a7ea-f605-4967-b566-7786d3e96306}",
+          "claveCatastral": "1702521010090",
+          "areaTotal": 3065.93,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T09:40:28.569Z",
+          "cantCultivos": 4,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1714188313",
+      "cedula": "1714188313",
+      "apellidos": "MALDONADO SOPALO",
+      "nombres": "ANGEL LEONIDAS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{1c34bb4c-ac8d-4c7d-91aa-72173db49883}",
+        "claveCatastral": "1702521050015",
+        "areaTotal": 11823.68,
+        "sectorComunidad": "Larcacacha-Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T10:48:06.634Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{249a0bde-c3e2-4129-916a-f36049c50fe4}",
+          "claveCatastral": "1702521010022",
+          "areaTotal": 4845.91,
+          "sectorComunidad": "Larcacacha-Gualimburo",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T12:12:13.135Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{171b2305-3b7d-4f6c-9e7c-b312837a4ffa}",
+          "claveCatastral": "1702521010128",
+          "areaTotal": 1259.0,
+          "sectorComunidad": "Larcacacha",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T12:56:09.664Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1727679704",
+      "cedula": "1727679704",
+      "apellidos": "MALDONADO",
+      "nombres": "ISAURO STHALIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0e3eb7ce-928e-4870-aadd-3888891a45ed}",
+        "claveCatastral": "1702521050015",
+        "areaTotal": 11823.68,
+        "sectorComunidad": "Larcacacha-Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T11:03:14.541Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a7f98a3a-8271-4c3c-bb91-1b4080e17dab}",
+          "claveCatastral": "1702521010126",
+          "areaTotal": 996.55,
+          "sectorComunidad": "Larcacacha",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T12:26:23.198Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1727679696",
+      "cedula": "1727679696",
+      "apellidos": "MALDONADO SOPALO",
+      "nombres": "HILDA FLOR",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b9c2d3f0-d01d-4b8c-ae4b-482e0f8fc1d3}",
+        "claveCatastral": "1702521050015",
+        "areaTotal": 11823.68,
+        "sectorComunidad": "Larcacacha-Moras",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-21T11:10:43.568Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5bdb87b5-1694-44b1-adf0-0b8db3a363e8}",
+          "claveCatastral": "1702521010129",
+          "areaTotal": 795.51,
+          "sectorComunidad": "Larcacacha",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-21T12:45:34.510Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1714489455",
+      "cedula": "1714489455",
+      "apellidos": "GUALAVISI IMBAQUINGO",
+      "nombres": "SEGUNDO MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
+        "claveCatastral": "1702521470028",
+        "areaTotal": 10348.24,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-21T16:11:01.107Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{d6bb23f7-74f7-4f0a-a559-64d5baefab45}",
+          "claveCatastral": "1702521040038",
+          "areaTotal": 6991.56,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T10:09:04.018Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1717088239",
+      "cedula": "1717088239",
+      "apellidos": "Gualavisi Imbaquingo",
+      "nombres": "Jose Agustín",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6d190362-8da4-4db9-9b7f-ff84668c6a74}",
+        "claveCatastral": "1702521010043",
+        "areaTotal": 2393.76,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-21T10:39:25.299Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{37ea604e-43cd-4a21-b59b-27b83e26b048}",
+          "claveCatastral": "1702521040042",
+          "areaTotal": 790.69,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T10:15:15.256Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{30b48934-a847-4827-8a98-7e044fb678e7}",
+          "claveCatastral": "1702521010014",
+          "areaTotal": 370.21,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T11:00:50.046Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1755060819",
+      "cedula": "1755060819",
+      "apellidos": "PILCA SOPALO",
+      "nombres": "VIOLETA NATIVIDAD",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{e4a46960-1685-44be-a3ac-fe5f81e794fa}",
+        "claveCatastral": "1702521010140",
+        "areaTotal": 1500.53,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-21T11:27:43.219Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{27860307-ed9f-4d4d-a208-1a4f940db617}",
+          "claveCatastral": "1702521010140",
+          "areaTotal": 1500.53,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T11:34:16.936Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1726232661",
+      "cedula": "1726232661",
+      "apellidos": "IMBAQUINGO Sopalo",
+      "nombres": "MARIA ELIZA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{260554bc-8ce1-474b-a973-bd9192cc2297}",
+        "claveCatastral": "1702521050001",
+        "areaTotal": 12346.05,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-21T12:32:00.518Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{78607b5e-fc87-46e6-9e80-7369618fddfb}",
+          "claveCatastral": "1702521010009",
+          "areaTotal": 6669.33,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T12:03:34.306Z",
+          "cantCultivos": 5,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{7f33d697-5dd2-4b0f-a99d-3958ee08b72a}",
+          "claveCatastral": "1702521010009",
+          "areaTotal": 6669.33,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T12:19:58.201Z",
+          "cantCultivos": 4,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1712289949",
+      "cedula": "1712289949",
+      "apellidos": "SOPALO UMAQUINGA",
+      "nombres": "JOSE JOAQUIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{db061ed8-4831-4d42-a021-6ba45c50635f}",
+        "claveCatastral": "1702521010051",
+        "areaTotal": 11034.92,
+        "sectorComunidad": "Larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-21T12:59:32.663Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4c23cca9-5079-4142-8fe8-48a52644f9f5}",
+          "claveCatastral": "1702521450069",
+          "areaTotal": 5817.83,
+          "sectorComunidad": "Gualimburo ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T13:06:30.619Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{0223a662-c609-4f29-92e0-d717d507d570}",
+          "claveCatastral": "1702521050006",
+          "areaTotal": 2812.12,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T13:06:02.313Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{9001e128-f8c7-43c2-9dcc-ecc40a981d94}",
+          "claveCatastral": "1702521040055",
+          "areaTotal": 1851.46,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-21T12:51:58.945Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1704004140",
+      "cedula": "1704004140",
+      "apellidos": "IMBAQUINGO ULCUANGO",
+      "nombres": "FERNANDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f388862a-ce8d-4a43-832c-44b1d5fe9df1}",
+        "claveCatastral": "1702521470028",
+        "areaTotal": 10348.24,
+        "sectorComunidad": "",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-21T15:49:42.953Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5dea5cef-2cbb-4248-a524-464b15d6b873}",
+          "claveCatastral": "1702521470028",
+          "areaTotal": 10348.24,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T15:39:38.561Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1717275448",
+      "cedula": "1717275448",
+      "apellidos": "TIPANLUISA LANCHIMBA",
+      "nombres": "JOSE LINO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{4a7321dc-edbd-42c6-809d-794fa8505eaa}",
+        "claveCatastral": "1702521010143",
+        "areaTotal": 2503.51,
+        "sectorComunidad": "La Arcacha ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-21T08:41:49.253Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5eefe708-e55f-4cc4-be94-2a9f618d2600}",
+          "claveCatastral": "1702521010143",
+          "areaTotal": 2503.51,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T08:56:33.246Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1709839813",
+      "cedula": "1709839813",
+      "apellidos": "ACERO CHIQUIMBA",
+      "nombres": "JOSE TORIBIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{63478567-b7f6-4c8c-b7ba-62f33266031e}",
+        "claveCatastral": "1702521440026",
+        "areaTotal": 25387.36,
+        "sectorComunidad": "CENTRAL",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-30T13:25:43.403Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e62f71bb-ae36-4109-a103-6c70e397c27e}",
+          "claveCatastral": "1702521010001",
+          "areaTotal": 6180.54,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T10:06:01.136Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1708793490",
+      "cedula": "1708793490",
+      "apellidos": "IMBAQUINGO LANCHIMBA",
+      "nombres": "CARLOS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{5552a947-cc82-42ce-a1e1-e71569c436fb}",
+        "claveCatastral": "1702521470021",
+        "areaTotal": 8864.51,
+        "sectorComunidad": "larcachaca",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-21T10:35:33.487Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c6b649e7-e684-4f84-b8b4-6c17c4c02fc2}",
+          "claveCatastral": "1702521040054",
+          "areaTotal": 5869.58,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T10:26:10.662Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{a5576b71-b7e2-4658-a04a-b7b2415d5da7}",
+          "claveCatastral": "1702521040081",
+          "areaTotal": 2139.22,
+          "sectorComunidad": "Larcachaca",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T10:43:19.356Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1713627444",
+      "cedula": "1713627444",
+      "apellidos": "SOPALO TIPANLUISA",
+      "nombres": "MARIA AVELINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{3cbba515-e8a7-4307-ac96-a6543178f28b}",
+        "claveCatastral": "1702521010034",
+        "areaTotal": 8096.09,
+        "sectorComunidad": "Larcachaca ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-21T12:29:12.933Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a534ec42-a849-4abc-a4b1-b0118b3a0160}",
+          "claveCatastral": "1702521010084",
+          "areaTotal": 4282.6,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T12:17:43.024Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{ed860472-89fb-4b79-9aa6-8a8323ff63d7}",
+          "claveCatastral": "1702521040064",
+          "areaTotal": 4226.05,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T12:41:22.008Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{c481f415-0576-41a3-8613-09c2cb5bcc71}",
+          "claveCatastral": "1702521050022",
+          "areaTotal": 3644.0,
+          "sectorComunidad": "Larcachaca ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-21T12:34:43.869Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1703166809",
+      "cedula": "1703166809",
+      "apellidos": "TIPANLUISA SOPALO",
+      "nombres": "JOSE LINO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b5d391db-3eb7-402d-916a-a70be6f909a5}",
+        "claveCatastral": "1702521040167",
+        "areaTotal": 1306.17,
+        "sectorComunidad": "",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-21T15:46:51.934Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a2b421c7-8a8d-479d-9a84-f8d8df15c2c4}",
+          "claveCatastral": "1702521450106",
+          "areaTotal": 925.64,
+          "sectorComunidad": "LARCACOCHA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-21T16:14:08.631Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1711051290",
+      "cedula": "1711051290",
+      "apellidos": "LANCHIMBA TANDAYAMO",
+      "nombres": "JUAN CRUZ",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{4eae7114-4008-49f1-baf8-b90d8bdef927}",
+        "claveCatastral": "1702521410001",
+        "areaTotal": 10457.89,
+        "sectorComunidad": "CÓNDOR LOMA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-22T08:07:46.066Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{30a682e6-eea1-416c-a0ff-16f10ae3e0d3}",
+          "claveCatastral": "1702521020102",
+          "areaTotal": 6798.17,
+          "sectorComunidad": "CENTRAL LIBERTAD",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-22T08:56:35.195Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{198d5aa6-329b-4e95-bc33-9e001223b35e}",
+          "claveCatastral": "1702521410054",
+          "areaTotal": 4315.2,
+          "sectorComunidad": "CENTRAL LIBERTAD",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-22T09:14:33.495Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1710423532",
+      "cedula": "1710423532",
+      "apellidos": "MALDONADO TIPANLUIZA",
+      "nombres": "ASCIENCIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7038b855-211d-4112-b72c-627eed51b30e}",
+        "claveCatastral": "1702520510005",
+        "areaTotal": 17362.07,
+        "sectorComunidad": "SAN  PEDRO SANTA INES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T08:07:05.110Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{fbfa64a7-f6be-4a27-ada8-d090b7e30012}",
+          "claveCatastral": "1702521100089",
+          "areaTotal": 10363.39,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T08:50:51.084Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{f829f21a-c0fe-4ea9-8632-63af7e7a167d}",
+          "claveCatastral": "1702521020112",
+          "areaTotal": 3082.59,
+          "sectorComunidad": "",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T16:25:07.791Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1708268683",
+      "cedula": "1708268683",
+      "apellidos": "ANDRANGO PILLAJO",
+      "nombres": "MARIANO ASIENCIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{734a764e-916c-49c3-8651-9a90e7307b8f}",
+        "claveCatastral": "1702520530031",
+        "areaTotal": 16631.98,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-22T09:44:55.796Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{03e7e74b-24c9-4a80-8300-3965a807c442}",
+          "claveCatastral": "1702520690036",
+          "areaTotal": 4595.97,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T10:30:23.253Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{f97f98de-43f8-4919-9c42-cefb4c8e2d2d}",
+          "claveCatastral": "1702520530068",
+          "areaTotal": 2577.29,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T10:21:58.461Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{c3bf4da3-6977-4397-a792-10a468f7ab01}",
+          "claveCatastral": "1702520530068",
+          "areaTotal": 2576.77,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T10:18:57.436Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1704409695",
+      "cedula": "1704409695",
+      "apellidos": "LANCHIMBA TANDAYAMO",
+      "nombres": "ASIENCIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c678767e-f8b4-439f-90cc-3fc77c41ae14}",
+        "claveCatastral": "1702520530001",
+        "areaTotal": 23029.22,
+        "sectorComunidad": "LA LIBERTAD SAN PEDRO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-22T10:50:43.700Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b98744e8-62f1-4181-9ba6-95c703a53198}",
+          "claveCatastral": "1702520530001",
+          "areaTotal": 12691.27,
+          "sectorComunidad": "LA LIBERTAD SAN PEDRO",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T11:09:48.296Z",
+          "cantCultivos": 3,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{983ca905-f1ab-42bc-99cc-8009c11053a5}",
+          "claveCatastral": "1702520530001",
+          "areaTotal": 6423.82,
+          "sectorComunidad": "LA LIBERTAD SAN PEDRO",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T11:06:23.265Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{40574b1a-646d-4bf9-be94-6fb99df75aee}",
+          "claveCatastral": "1702520530001",
+          "areaTotal": 1640.3,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-22T11:01:04.982Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1726801069",
+      "cedula": "1726801069",
+      "apellidos": "AIGAJE QUINATOA",
+      "nombres": "SILVIA ESTELA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{fa4970b3-bd19-428e-b47f-7cec734252d7}",
+        "claveCatastral": "1702606901",
+        "areaTotal": 3237394.0,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-22T09:03:52.910Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
+          "claveCatastral": "1702521020106",
+          "areaTotal": 3073.78,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T08:32:14.137Z",
+          "cantCultivos": 2,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1709077968",
+      "cedula": "1709077968",
+      "apellidos": "CAIZA TOAPANTA",
+      "nombres": "JUAN ROGELIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{3bb25d51-466a-40da-8761-cd1db25f456b}",
+        "claveCatastral": "1702520690047",
+        "areaTotal": 4068.94,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-22T09:49:02.585Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{fead609e-f2b8-485a-b34c-527ddbe3e0fc}",
+          "claveCatastral": "1702520540077",
+          "areaTotal": 3000.68,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T09:39:28.900Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{29ce4240-7e66-46e4-97f4-b4ff3e70c712}",
+          "claveCatastral": "1702521100139",
+          "areaTotal": 1774.25,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T09:45:26.161Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1725223802",
+      "cedula": "1725223802",
+      "apellidos": "CAIZA TOAPANTA",
+      "nombres": "JUAN ROGELIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0c24ae89-0803-4e83-9eb6-932c5ef73f61}",
+        "claveCatastral": "1702520690047",
+        "areaTotal": 4068.94,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-22T09:52:20.831Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5e4b4df4-dcdc-422f-8796-c6300bcd7c92}",
+          "claveCatastral": "1702520540077",
+          "areaTotal": 3000.68,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T10:02:14.391Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1707796080",
+      "cedula": "1707796080",
+      "apellidos": "CHOLANGO AIGAJE",
+      "nombres": "MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{968dfdd5-45e7-4e02-8daf-4ee9af32ea16}",
+        "claveCatastral": "1702520530022",
+        "areaTotal": 25235.69,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-22T10:29:18.882Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b9a0fc80-ffb8-4765-9dac-7572a65826f1}",
+          "claveCatastral": "1702521410027",
+          "areaTotal": 10737.27,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T10:17:33.013Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{3b2d306f-b365-4451-a946-53994291569c}",
+          "claveCatastral": "1702520530023",
+          "areaTotal": 6058.87,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T10:34:27.665Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{d3ccacd6-75e0-456a-9530-87b89b06825a}",
+          "claveCatastral": "1702520690012",
+          "areaTotal": 3970.31,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T10:24:00.095Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1000741452",
+      "cedula": "1000741452",
+      "apellidos": "QUINATOA CALUGUILLIN",
+      "nombres": "PASTORA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8c01fc48-990a-446c-b73a-6fa0a0afbb32}",
+        "claveCatastral": "1702520530040",
+        "areaTotal": 18951.31,
+        "sectorComunidad": "LA LIBERTAD ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-22T10:43:43.965Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{1e69735e-3b54-48de-a1fe-efe03d057ded}",
+          "claveCatastral": "1702521410016",
+          "areaTotal": 9869.36,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T11:29:29.112Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{edb7299d-c0b1-43ec-8272-4aa4f6e28381}",
+          "claveCatastral": "1702520530029",
+          "areaTotal": 5525.53,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-22T11:28:52.983Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{db430812-60ad-4141-ae35-f774be361271}",
+          "claveCatastral": "1702520690018",
+          "areaTotal": 5463.39,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-22T11:12:49.890Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{58bb88c2-de44-443d-8c74-4201fce36a96}",
+          "claveCatastral": "1702520690019",
+          "areaTotal": 5415.3,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-22T11:11:57.040Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1704701257",
+      "cedula": "1704701257",
+      "apellidos": "SALAZAR AIGAJE",
+      "nombres": "SEGUNDO CAMILO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{98f4aa5b-d87b-4b1b-8cc5-232491b2fca7}",
+        "claveCatastral": "1702520690021",
+        "areaTotal": 8149.87,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-22T13:38:12.814Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ab660d6d-a818-40fd-a444-3c10e5f7922c}",
+          "claveCatastral": "1702520530021",
+          "areaTotal": 8149.87,
+          "sectorComunidad": "MULAPOTERO ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T15:03:18.675Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{e42a6b84-b03a-43a5-a228-9d7b40c53ff4}",
+          "claveCatastral": "1702520530010",
+          "areaTotal": 6935.66,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-22T13:07:06.604Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1705543880",
+      "cedula": "1705543880",
+      "apellidos": "ACERO SALAZAR",
+      "nombres": "SEGUNDO JUAN CRUZ",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{817821b6-17fd-429f-99e2-9e2dbc277390}",
+        "claveCatastral": "1702520530039",
+        "areaTotal": 25426.55,
+        "sectorComunidad": "LA LIBERTAD CÓNDOR LOMA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T10:16:58.125Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{29fc1d0f-3ff4-4c74-b696-3052c92117c7}",
+          "claveCatastral": "1702521410003",
+          "areaTotal": 12222.14,
+          "sectorComunidad": "CENTRAL LIBERTAD",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-22T09:25:45.587Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{25080524-97c3-41ba-acef-b7cc9277da31}",
+          "claveCatastral": "1702521410003",
+          "areaTotal": 12222.14,
+          "sectorComunidad": "LA LIBERTAD CÓNDOR LOMA ALTO",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T10:46:21.961Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{9c43e574-77d8-4ac2-a2ee-0f27230256f1}",
+          "claveCatastral": "1702521410019",
+          "areaTotal": 11455.02,
+          "sectorComunidad": "LA LIBERTAD CÓNDOR LOMA ALTO",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T10:39:50.881Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1717859050",
+      "cedula": "1717859050",
+      "apellidos": "CAIZA TOAPANTA",
+      "nombres": "MARIA YOLANDA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ecb32e10-fd6b-4a17-8b21-e31eaa6a2eb7}",
+        "claveCatastral": "1702520690046",
+        "areaTotal": 4075.94,
+        "sectorComunidad": "LA LIBERTAD ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T09:22:48.452Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e7c26dcb-226d-46a5-9ed4-4e27fbdf3bb0}",
+          "claveCatastral": "1702520540078",
+          "areaTotal": 3000.69,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T09:09:58.365Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{71c4d143-532d-4b80-923c-a76add47ab34}",
+          "claveCatastral": "1702521100141",
+          "areaTotal": 1774.09,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T09:16:59.418Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1705306874",
+      "cedula": "1705306874",
+      "apellidos": "QUINATOA ULCUANGO",
+      "nombres": "TEODORO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f6c9bbfc-a872-44fc-b1cd-635a4c726726}",
+        "claveCatastral": "1702520540022",
+        "areaTotal": 23501.53,
+        "sectorComunidad": "LA LIBERTAD CRUZ LOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T10:59:00.093Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c6624888-7371-4117-873e-2c0348112c7d}",
+          "claveCatastral": "1702521100024",
+          "areaTotal": 10964.84,
+          "sectorComunidad": "LA LIBERTAD TOTORAS",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T11:25:48.544Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{4f527c13-8cd2-47b0-9a8e-bfae444d3de9}",
+          "claveCatastral": "1702521100024",
+          "areaTotal": 10964.84,
+          "sectorComunidad": "LA LIBERTAD TOTORAS",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T11:29:02.738Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1720139276",
+      "cedula": "1720139276",
+      "apellidos": "REA CAIZA",
+      "nombres": "WASHINGTON LENIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d28c0fe0-ecff-4212-9bab-48a04f9d01c3}",
+        "claveCatastral": "1702520540080",
+        "areaTotal": 3000.69,
+        "sectorComunidad": " LA LIBERTAD CRUZ LOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T16:10:24.933Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b3049f2c-792a-4a40-94af-62161004d753}",
+          "claveCatastral": "1702521100141",
+          "areaTotal": 1774.09,
+          "sectorComunidad": " LA LIBERTAD CRUZ LOMA",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-22T16:13:42.648Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1710423086",
+      "cedula": "1710423086",
+      "apellidos": "MALDONADO ULCUANGO",
+      "nombres": "CESAR",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{54dcd39c-9baf-4830-9975-876efb219f2a}",
+        "claveCatastral": "1702520510008",
+        "areaTotal": 24494.95,
+        "sectorComunidad": " LA LIBERTAD SANTA INES",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-22T17:06:06.831Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c80dfb0d-513c-41bd-a8bd-0fb21f8430fd}",
+          "claveCatastral": "1702520510008",
+          "areaTotal": 24494.95,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-22T14:55:49.460Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1719737403",
+      "cedula": "1719737403",
+      "apellidos": "ANDRANGO TUGULINAGO",
+      "nombres": "MARIA AURORA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{5710110e-18e4-4163-a90e-8f3ad3553dfe}",
+        "claveCatastral": "1702520530069",
+        "areaTotal": 8166.45,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-22T10:48:41.730Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2ac9b548-a011-48e0-8280-a0fe06ccaff9}",
+          "claveCatastral": "1702520690035",
+          "areaTotal": 833.85,
+          "sectorComunidad": "LARCACHACA GUASIPUNGO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-22T10:58:21.693Z",
+          "cantCultivos": 0,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1002781530",
+      "cedula": "1002781530",
+      "apellidos": "MALDONADO LINCANGO",
+      "nombres": "SEGUNDO RENE",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7faabc80-85ed-444c-a660-b5eb311372d7}",
+        "claveCatastral": "1702521020006",
+        "areaTotal": 8676.67,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-22T11:38:20.787Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c73c1e8a-457c-49c6-8866-55d82bd1f7fc}",
+          "claveCatastral": "1702521020003",
+          "areaTotal": 3268.17,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-22T11:29:11.614Z",
+          "cantCultivos": 0,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1003993134",
+      "cedula": "1003993134",
+      "apellidos": "ASCANTA CASCO",
+      "nombres": "JANETH ALEXANDRA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{55b6257e-c139-4699-9a4f-b01d40a6acd7}",
+        "claveCatastral": "1702520540065",
+        "areaTotal": 5575.98,
+        "sectorComunidad": "CRUZ LOMA- LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-22T11:14:07.702Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b9279f38-f3a1-4534-a627-b52602b2ffec}",
+          "claveCatastral": "1702521100086",
+          "areaTotal": 2500.0,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-22T11:57:02.333Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1722776844",
+      "cedula": "1722776844",
+      "apellidos": "LANCHIMBA QUINATOA",
+      "nombres": "SEGUNDO FERMIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{1871b8e1-a098-4bfa-88ce-ad56317b0fde}",
+        "claveCatastral": "1702520510130",
+        "areaTotal": 8566.54,
+        "sectorComunidad": "IZACATA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-22T09:39:28.786Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{6104f134-92e5-4598-8533-bf58c224232c}",
+          "claveCatastral": "1702520510130",
+          "areaTotal": 5739.66,
+          "sectorComunidad": "SAN PEDRO ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T09:08:00.771Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1722086046",
+      "cedula": "1722086046",
+      "apellidos": "LANCHIMBA SALAZAR",
+      "nombres": "IRENE BANESA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ce312110-225c-46f2-9fa3-1a1a64efaad2}",
+        "claveCatastral": "1702520510130",
+        "areaTotal": 10214.27,
+        "sectorComunidad": "IZACATA ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-22T09:51:26.579Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{13bf2509-4dac-4812-ae3f-5cb764c939ae}",
+          "claveCatastral": "1702521580174",
+          "areaTotal": 10214.27,
+          "sectorComunidad": "",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T10:19:30.626Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{893cb8f5-5362-4892-af34-5aee823242a5}",
+          "claveCatastral": "1702520510130",
+          "areaTotal": 2886.53,
+          "sectorComunidad": "IZACATA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T09:28:33.975Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1707216758",
+      "cedula": "1707216758",
+      "apellidos": "SALAZAR MALDONADO",
+      "nombres": "LORENZO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f4b8a49a-db1f-47ae-b96f-3e08e77126cd}",
+        "claveCatastral": "1702521020025",
+        "areaTotal": 13011.09,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-22T11:15:03.063Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c7ba661c-703a-47f2-823e-eb8f2236b46c}",
+          "claveCatastral": "1702521020025",
+          "areaTotal": 8140.37,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T10:46:42.715Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{28461365-39c9-4997-86ed-ceb29786de05}",
+          "claveCatastral": "1702521020025",
+          "areaTotal": 8140.37,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T10:57:36.392Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{e47bd8d3-bf9e-4387-9696-46d70bd0aeeb}",
+          "claveCatastral": "1702521020025",
+          "areaTotal": 8140.37,
+          "sectorComunidad": "LA LIBERTAD",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T10:58:19.575Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1714950324",
+      "cedula": "1714950324",
+      "apellidos": "SALAZAR QUINATOA",
+      "nombres": "LUIS ENRIQUE",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{592f6fd0-ecf0-4e6b-908e-b29ef5e99aa5}",
+        "claveCatastral": "1702520540020",
+        "areaTotal": 10921.16,
+        "sectorComunidad": "CRUZ LOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-22T12:46:29.104Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{d60048d0-a16b-47eb-ac6e-b18382d63531}",
+          "claveCatastral": "1702520540020",
+          "areaTotal": 5785.68,
+          "sectorComunidad": "TOTORA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T12:26:18.687Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{65e6b200-b402-4f91-977a-a8fd96012cf5}",
+          "claveCatastral": "1702520540020",
+          "areaTotal": 2542.08,
+          "sectorComunidad": "TOTORA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T12:34:34.982Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1717937278",
+      "cedula": "1717937278",
+      "apellidos": "CAIZA TOAPANTA",
+      "nombres": "EDISON PATRICIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ed70f3ea-cc13-4445-8a8e-1007bcbc8b72}",
+        "claveCatastral": "1702520540081",
+        "areaTotal": 8147.94,
+        "sectorComunidad": "LA LIBERTAD",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-22T13:27:35.320Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e7f32332-330e-4b94-8380-b36e1cded925}",
+          "claveCatastral": "1702520540081",
+          "areaTotal": 3111.07,
+          "sectorComunidad": "MULAPOTERO",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T13:16:37.807Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{bd67c51f-392d-45dd-8b49-944aa991c647}",
+          "claveCatastral": "1702520540081",
+          "areaTotal": 1774.09,
+          "sectorComunidad": "TOTORA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-22T13:33:58.490Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1706751425",
+      "cedula": "1706751425",
+      "apellidos": "IMBAQUINGO CHOLANGO",
+      "nombres": "MARIA NICOLASA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{81fbfb3e-d223-497d-8448-15ee2e1aaca2}",
+        "claveCatastral": "1702520530002",
+        "areaTotal": 22554.8,
+        "sectorComunidad": "LA LIBERTAD ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-22T09:13:03.825Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5f9adba2-e535-45c6-a44e-cf233297ce49}",
+          "claveCatastral": "1702521410017",
+          "areaTotal": 12684.46,
+          "sectorComunidad": "LA LIBERTAD CONDOR LOMA",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-22T09:34:06.827Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{df35f0d1-b6bf-4183-9421-a0495f124c75}",
+          "claveCatastral": "1702520690014",
+          "areaTotal": 2777.67,
+          "sectorComunidad": "LA LIBERTAD ",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-22T08:50:35.732Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1711657534",
+      "cedula": "1711657534",
+      "apellidos": "IMBAGO LANCHIMBA",
+      "nombres": "SEGUNDO MATIAS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d033e40b-02b5-49ff-8f36-75eee1c2dd07}",
+        "claveCatastral": "1702520440024",
+        "areaTotal": 27735.89,
+        "sectorComunidad": "CARRERA WAIRACUNGA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-05-28T15:39:15.193Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{00bf4029-a65f-4a3f-b514-52c22613d75f}",
+          "claveCatastral": "1702520490078",
+          "areaTotal": 26129.12,
+          "sectorComunidad": "SAN ANTONIO LOMA CALIXTO",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-05-28T14:30:53.660Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{9d723738-8c0a-40bc-b1c4-716ef108d36c}",
+          "claveCatastral": "1702520510013",
+          "areaTotal": 19094.08,
+          "sectorComunidad": "SAN ANTONIO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-23T14:21:12.807Z",
+          "cantCultivos": 3,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1712768678",
+      "cedula": "1712768678",
+      "apellidos": "COYAGO IMBAQUINGO",
+      "nombres": "MARIA ORFELINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0eaf5d7f-70c0-4738-a2b6-daec6da7dfa5}",
+        "claveCatastral": "1702521400074",
+        "areaTotal": 26488.13,
+        "sectorComunidad": "BANDURRIA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-25T15:07:32.404Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{48cf5962-f087-49f7-95d2-af7027ce6cba}",
+          "claveCatastral": "1702521430233",
+          "areaTotal": 4494.91,
+          "sectorComunidad": "LA CANDELARIA-CHAUPILOMA",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-27T09:19:51.343Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1715902795",
+      "cedula": "1715902795",
+      "apellidos": "AIGAJE SOPALO",
+      "nombres": "MANUEL MELCHOR",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{36ee1cce-5160-4e16-b47e-677ec6f7ceb3}",
+        "claveCatastral": "1702520660079",
+        "areaTotal": 55046.95,
+        "sectorComunidad": "POCARALOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-25T15:07:40.037Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ba9ce883-06f1-4bc2-897c-532cc884752a}",
+          "claveCatastral": "1702520660070",
+          "areaTotal": 4968.51,
+          "sectorComunidad": "CHAMBITOLA CENTRAL ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-26T09:32:04.948Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1704304805",
+      "cedula": "1704304805",
+      "apellidos": "LANCHIMBA LANCHIMBA",
+      "nombres": "ERCILIA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{879e6094-2749-408e-b55a-e6c18b42e812}",
+        "claveCatastral": "1702520660013",
+        "areaTotal": 31615.27,
+        "sectorComunidad": "CHAMBITOLA CENTRAL ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-26T10:19:18.074Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e274946f-f448-40d8-9379-012b313f71d6}",
+          "claveCatastral": "1702520660013",
+          "areaTotal": 31615.27,
+          "sectorComunidad": "CHAMBITOLA CENTRAL ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-26T10:31:52.796Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1720730082",
+      "cedula": "1720730082",
+      "apellidos": "SOPALO IMBAQUINGO",
+      "nombres": "ANTONIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2d4ffcd7-1a9a-4545-bf72-eec251b19155}",
+        "claveCatastral": "1702521040110",
+        "areaTotal": 13398.0,
+        "sectorComunidad": "LA CANDELARIA CHAUPILOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-27T08:30:23.993Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{76925021-c1d8-473b-8651-388e10317d1b}",
+          "claveCatastral": "1702520580014",
+          "areaTotal": 7528.03,
+          "sectorComunidad": "LA CANDELARIA  ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-27T10:10:37.143Z",
+          "cantCultivos": 3,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1704001070",
+      "cedula": "1704001070",
+      "apellidos": "IMBAQUINGO AIGAJE HEREDEROS",
+      "nombres": "RAMON",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{04c0d6dd-9886-4ce2-bfb6-758f7a783c9e}",
+        "claveCatastral": "1702521430093",
+        "areaTotal": 41501.01,
+        "sectorComunidad": "LA CANDELARIA- CHAUPILOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-27T07:49:59.487Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{28522170-f5c7-485a-a609-93215960839b}",
+          "claveCatastral": "1702521430093",
+          "areaTotal": 41501.01,
+          "sectorComunidad": "LA CANDELARIA- CHAUPILOMA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-27T07:53:33.508Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{36333f39-88aa-46bb-ae27-774e52ef21f7}",
+          "claveCatastral": "1702521430093",
+          "areaTotal": 6000.0,
+          "sectorComunidad": "LA CANDELARIA- CHAUPILOMA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-27T07:43:13.871Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1706535315",
+      "cedula": "1706535315",
+      "apellidos": "AIGAJE IMBAGO",
+      "nombres": "MARIA REGINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{424d787e-41ec-415c-bdef-db4e9b24fef5}",
+        "claveCatastral": "1702520570077",
+        "areaTotal": 4500.0,
+        "sectorComunidad": "LA CANDELARIA - SUPALOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-27T10:01:11.874Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4e0edfde-0b8a-4c25-b3eb-d4dd7b3b6c08}",
+          "claveCatastral": "1702520570077",
+          "areaTotal": 4060.0,
+          "sectorComunidad": "LA CANDELARIA - SUPALOMA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-27T09:51:57.072Z",
+          "cantCultivos": 3,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1705541355",
+      "cedula": "1705541355",
+      "apellidos": "ULCUANGO IMBAQUINGO",
+      "nombres": "DOMINGO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ae602cd8-e2d4-4784-82ad-8cc06cd3c34a}",
+        "claveCatastral": "1702521430091",
+        "areaTotal": 17398.02,
+        "sectorComunidad": "CANDELARIA ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-27T10:17:26.664Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{bc4b22f8-2d95-4d13-b5b1-f0fd4ef1eaeb}",
+          "claveCatastral": "1702521450042",
+          "areaTotal": 5400.0,
+          "sectorComunidad": "LA CANDELARIA - CHAUPILOMA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-27T12:23:49.973Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1722920152",
+      "cedula": "1722920152",
+      "apellidos": "SOPALO Coyago",
+      "nombres": "Luis Guillermo",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{89ef8e14-ffea-4f68-ad59-d8afe8fd1bec}",
+        "claveCatastral": "1702521430083",
+        "areaTotal": 39689.41,
+        "sectorComunidad": "LA CANDELARIA SOPALOLOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-27T14:26:49.470Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e36bce92-f9f9-45ba-b2a6-34c6573b7650}",
+          "claveCatastral": "1702521430073",
+          "areaTotal": 12722.84,
+          "sectorComunidad": "LA CANDELARIA CHAUPILOMA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-27T15:59:05.695Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1715352017",
+      "cedula": "1715352017",
+      "apellidos": "TOAPANTA LANCHIMBA",
+      "nombres": "SEGUNDO ANDRES",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{246465ff-d84a-4e5d-b5b5-fcd3207efff8}",
+        "claveCatastral": "1702521000074",
+        "areaTotal": 6389.92,
+        "sectorComunidad": "CARRERA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-28T09:17:34.376Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{8feb21d6-2ad4-4858-80a9-82ca19a8bb26}",
+          "claveCatastral": "1702521000074",
+          "areaTotal": 6389.92,
+          "sectorComunidad": "CARRERA ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-05-28T08:44:27.515Z",
+          "cantCultivos": 4,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1708755226",
+      "cedula": "1708755226",
+      "apellidos": "TIPANLUISA ACERO",
+      "nombres": "VIRGILIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7cee2422-5539-4ed6-9ae3-3a5b4b8e654a}",
+        "claveCatastral": "1702520370024",
+        "areaTotal": 17602.29,
+        "sectorComunidad": "CARRERA ACEROLOMA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-28T12:53:06.735Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f436d475-344b-452d-b723-1922d02a225f}",
+          "claveCatastral": "1702520370024",
+          "areaTotal": 17602.29,
+          "sectorComunidad": "CARRERA- CATEQUILLA ",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-28T10:21:23.220Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1705312591",
+      "cedula": "1705312591",
+      "apellidos": "LANCHIMBA ACERO",
+      "nombres": "MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{45e3d645-a85b-4ac1-aea7-fc2e3028bebd}",
+        "claveCatastral": "1702520990034",
+        "areaTotal": 19926.8,
+        "sectorComunidad": "CARRERA KACHICUNKA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-29T11:55:56.141Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a5e066af-eaa3-4754-8280-f2c3a5fd9875}",
+          "claveCatastral": "1702520990034",
+          "areaTotal": 1500.0,
+          "sectorComunidad": "KACHICUNKA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-29T08:04:47.265Z",
+          "cantCultivos": 2,
+          "cantAnimales": 6
+        }
+      ]
+    },
+    {
+      "id": "1709513921",
+      "cedula": "1709513921",
+      "apellidos": "Quishpe Navas",
+      "nombres": "Isabel Esperanza",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{1aa45cc6-788c-4e86-a6bd-c6945108e8bf}",
+        "claveCatastral": "1702520440002",
+        "areaTotal": 5845.98,
+        "sectorComunidad": "GUAYRACUNGA ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-05-29T11:52:26.606Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a4de03ea-f0fd-4a38-aa4f-79a0e64a351c}",
+          "claveCatastral": "1702520440002",
+          "areaTotal": 4146.13,
+          "sectorComunidad": "CARRERA GUAYRACUNGA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-05-29T13:06:01.229Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1717935298",
+      "cedula": "1717935298",
+      "apellidos": "AULES ULCUANGO",
+      "nombres": "LUIS ANIBAL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{be25b417-d561-433e-9f2b-1b09945d32d3}",
+        "claveCatastral": "1702520720195",
+        "areaTotal": 14825.43,
+        "sectorComunidad": "LA ALEGRIA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-31T13:19:49.944Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{86e00537-54bb-474a-82c8-39d061d727ad}",
+          "claveCatastral": "1702520940126",
+          "areaTotal": 6951.49,
+          "sectorComunidad": "LA ALEGRÍA ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-31T10:02:42.915Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1726111055",
+      "cedula": "1726111055",
+      "apellidos": "ULCUANGO PILATAXI",
+      "nombres": "GABRIEL EFRAIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{bb5ad5a7-05f6-41bf-9914-dd12394235f7}",
+        "claveCatastral": "1702520940152",
+        "areaTotal": 2326.81,
+        "sectorComunidad": "LA PLAYITA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-31T12:44:37.313Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{24cd016b-6201-44e8-8385-2d2b8162305e}",
+          "claveCatastral": "1702520940153",
+          "areaTotal": 2326.63,
+          "sectorComunidad": "SECTOR SESENTA ",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-31T09:53:26.175Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1703252989",
+      "cedula": "1703252989",
+      "apellidos": "ALCASIGA QUILUMBAQUIN",
+      "nombres": "SEGUNDO CARLOS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{414714dc-b129-4887-849e-714f02926fcc}",
+        "claveCatastral": "1702520730144",
+        "areaTotal": 37302.74,
+        "sectorComunidad": "SECTOR LAS ANTENAS",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-31T14:24:04.770Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b5ba6068-fd71-4c05-a568-811b18395c01}",
+          "claveCatastral": "1702520730125",
+          "areaTotal": 1759.62,
+          "sectorComunidad": "PUGYUCHUPA",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-31T14:40:43.959Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1726803081",
+      "cedula": "1726803081",
+      "apellidos": "AULES PILCA",
+      "nombres": "JOSÉ MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{109279a0-9258-4674-9ce2-bcfd14664dc8}",
+        "claveCatastral": "1702520720292",
+        "areaTotal": 9092.18,
+        "sectorComunidad": "LA ALEGRÍA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-31T16:21:40.829Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{aabcc878-d05e-4381-84b8-e004dd91c902}",
+          "claveCatastral": "1702520730135",
+          "areaTotal": 3370.19,
+          "sectorComunidad": "JESÚS DEL GRAN PODER",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-31T16:33:21.787Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "IMBAQUINGO SOPALO MARIA MARTINA",
+      "cedula": "",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "MARIA MARTINA",
+      "criterio": "nombre",
+      "fichaMadre": {
+        "id": "{24bb6353-775c-4f5d-8ad2-aa21a4645a18}",
+        "claveCatastral": "1702520680018",
+        "areaTotal": 12890.54,
+        "sectorComunidad": "NINARUMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-23T06:58:36.426Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{a6320c6e-73bb-4874-8bcc-e64453ba7d03}",
+          "claveCatastral": "1702520680018",
+          "areaTotal": 12890.54,
+          "sectorComunidad": "NINARUMI",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T07:28:12.955Z",
+          "cantCultivos": 1,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{cc341d5b-f995-4442-a947-56d001a30a80}",
+          "claveCatastral": "1702520680002",
+          "areaTotal": 424.69,
+          "sectorComunidad": "NINARUMI",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T07:39:33.187Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "ASCANTA AIGAJE JUAN VICENTE",
+      "cedula": "",
+      "apellidos": "ASCANTA AIGAJE",
+      "nombres": "JUAN VICENTE",
+      "criterio": "nombre",
+      "fichaMadre": {
+        "id": "{3015f03d-edd8-435c-9c66-e0fc80bf29ed}",
+        "claveCatastral": "1702520680002",
+        "areaTotal": 10949.78,
+        "sectorComunidad": "NINARUMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-23T08:20:54.187Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{8777a2b6-2846-4404-9691-226979eadd32}",
+          "claveCatastral": "1702520680002",
+          "areaTotal": 10648.51,
+          "sectorComunidad": "NINARUMI",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T08:40:09.401Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{8c6cc0ae-fb11-4ab7-80fa-3fbd551f2e68}",
+          "claveCatastral": "1702520510024",
+          "areaTotal": 10648.51,
+          "sectorComunidad": "PAILLACHO",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T09:01:31.541Z",
+          "cantCultivos": 3,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{30c12c6a-bc61-42be-88f2-1ec67d063138}",
+          "claveCatastral": "1702520510024",
+          "areaTotal": 9643.1,
+          "sectorComunidad": "PAILLACHO",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T08:50:09.665Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{66d24dc9-6233-45ef-b460-06f3cc16086e}",
+          "claveCatastral": "1702520680002",
+          "areaTotal": 3013.55,
+          "sectorComunidad": "NINARUMI",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T08:27:32.108Z",
+          "cantCultivos": 1,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{d83ef1be-08fe-4647-9784-c50ee063b530}",
+          "claveCatastral": "1702520680002",
+          "areaTotal": 824.26,
+          "sectorComunidad": "PAILLACHO",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T08:32:41.500Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "TANDAYAMO TANDAYAMO SEGUNDO CARLOS",
+      "cedula": "",
+      "apellidos": "TANDAYAMO TANDAYAMO",
+      "nombres": "SEGUNDO CARLOS",
+      "criterio": "nombre",
+      "fichaMadre": {
+        "id": "{7e402165-c7c2-4abd-a5bb-3af970ea087b}",
+        "claveCatastral": "1702520510024",
+        "areaTotal": 8717.89,
+        "sectorComunidad": "ÑAVIPOGYO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-23T09:22:13.704Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{284de796-f3e0-4d22-a11c-f9378f0a7ff0}",
+          "claveCatastral": "1702520510024",
+          "areaTotal": 8717.89,
+          "sectorComunidad": "ÑAVIPOGYO",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-23T09:28:30.267Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "CHIMARRO LINCANGO JUAN JOSE",
+      "cedula": "",
+      "apellidos": "CHIMARRO LINCANGO",
+      "nombres": "JUAN JOSE",
+      "criterio": "nombre",
+      "fichaMadre": {
+        "id": "{0bcf9767-843e-4882-984e-8528b62ef6db}",
+        "claveCatastral": "1702520980077",
+        "areaTotal": 8489.73,
+        "sectorComunidad": "LOS ANDES",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-24T08:17:06.691Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{eab58e23-a90a-4b58-a59f-8427fbf557b2}",
+          "claveCatastral": "1702520980077",
+          "areaTotal": 2243.73,
+          "sectorComunidad": "LOS ANDES",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-24T08:00:43.546Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{ec8e9548-354b-4bb2-9298-6080260f02c6}",
+          "claveCatastral": "1702520980077",
+          "areaTotal": 1856.62,
+          "sectorComunidad": "LOS ANDES",
+          "creadoPor": "Pablo Barrionuevo",
+          "fechaCreacion": "2026-05-24T08:10:46.763Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    }
+  ]
+}

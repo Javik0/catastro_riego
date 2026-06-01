@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   FileDown, FileSpreadsheet, FileText, Calendar,
   Users, MapPin, Filter, Loader2, BarChart3, Download,
@@ -16,7 +16,7 @@ interface Props {
   animalesData: { especie: string; ficha_id: string; cantidad: number }[];
   loading: boolean;
 }
-type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha';
+type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'auditoria';
 
 export default function ReportesPage({ fichas, cultivosData, animalesData }: Props) {
   const [reportType, setReportType] = useState<ReportType>('general');
@@ -28,6 +28,28 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
   const [fechaHasta, setFechaHasta] = useState('');
   const [generating, setGenerating] = useState<'pdf' | 'excel' | null>(null);
   const [lastGenerated, setLastGenerated] = useState<string | null>(null);
+
+  // Estados para reporte de auditoría
+  const [auditoria, setAuditoria] = useState<any>(null);
+  const [loadingAuditoria, setLoadingAuditoria] = useState(false);
+  const [busquedaAuditoria, setBusquedaAuditoria] = useState('');
+  const [expandedRegante, setExpandedRegante] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (reportType === 'auditoria' && !auditoria && !loadingAuditoria) {
+      setLoadingAuditoria(true);
+      fetch('/geo/auditoria.json')
+        .then((res) => res.json())
+        .then((data) => {
+          setAuditoria(data);
+          setLoadingAuditoria(false);
+        })
+        .catch((err) => {
+          console.error('Error al cargar auditoria.json:', err);
+          setLoadingAuditoria(false);
+        });
+    }
+  }, [reportType, auditoria, loadingAuditoria]);
 
   // Lista dinámica de comunidades obtenida de las fichas reales
   const comunidadesList = useMemo(() => {
@@ -101,6 +123,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
         tecnico: `REPORTE POR TÉCNICO: ${filterTecnico ? getNombreTecnico(filterTecnico) : 'TODOS'}`,
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
+        auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
       };
       doc.setFontSize(8); doc.setFont('helvetica', 'bold');
       doc.text(subtitles[reportType], pageWidth / 2, 26, { align: 'center' });
@@ -213,13 +236,25 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
   const reportTypes = [
     { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
     { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Guanguilqui / Guang-Porotog', color: '#06b6d4' },
-    { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#10b981' },
+    { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#ec4899' },
     { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${comunidadesList.length} comunidades`, color: '#ec4899' },
     { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
     { id: 'fecha' as const, label: 'Por Fecha', icon: Calendar, desc: 'Rango de fechas personalizado', color: '#8b5cf6' },
+    { id: 'auditoria' as const, label: 'Auditoría y Calidad', icon: CheckCircle2, desc: 'Control de duplicados y optimización', color: '#10b981' },
   ];
 
-  const activeType = reportTypes.find((r) => r.id === reportType)!;
+  const regantesFiltrados = useMemo(() => {
+    if (!auditoria || !auditoria.regantesUnificados) return [];
+    if (!busquedaAuditoria.trim()) return auditoria.regantesUnificados;
+    const q = busquedaAuditoria.toLowerCase();
+    return auditoria.regantesUnificados.filter((r: any) => 
+      r.apellidos.toLowerCase().includes(q) ||
+      r.nombres.toLowerCase().includes(q) ||
+      (r.cedula || '').includes(q)
+    );
+  }, [auditoria, busquedaAuditoria]);
+
+  const activeType = reportTypes.find((r) => r.id === reportType) || reportTypes[0];
 
   const selectStyle = {
     background: 'var(--bg-input)',
@@ -272,161 +307,330 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
         ))}
       </div>
 
-      {/* Filters + Stats */}
-      <div
-        className="rounded-xl border p-5"
-        style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
-      >
-        <div className="flex flex-wrap items-center gap-4">
-          {/* Icon del tipo seleccionado */}
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-            style={{ background: `${activeType.color}15` }}>
-            <Filter className="w-4 h-4" style={{ color: activeType.color }} />
+      {reportType !== 'auditoria' ? (
+        <>
+          {/* Filters + Stats */}
+          <div
+            className="rounded-xl border p-5"
+            style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+          >
+            <div className="flex flex-wrap items-center gap-4">
+              {/* Icon del tipo seleccionado */}
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
+                style={{ background: `${activeType.color}15` }}>
+                <Filter className="w-4 h-4" style={{ color: activeType.color }} />
+              </div>
+
+              {/* Filtros dinámicos */}
+              {reportType === 'sector' && (
+                <select value={filterSector} onChange={(e) => setFilterSector(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
+                  <option value="">Todos los sectores</option>
+                  {SECTORES.map((s) => <option key={s} value={s}>{s}</option>)}
+                </select>
+              )}
+              {reportType === 'parroquia' && (
+                <select value={filterParroquia} onChange={(e) => setFilterParroquia(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
+                  <option value="">Todas las parroquias</option>
+                  {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
+                </select>
+              )}
+              {reportType === 'comunidad' && (
+                <select value={filterComunidad} onChange={(e) => setFilterComunidad(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
+                  <option value="">Todas las comunidades ({comunidadesList.length})</option>
+                  {comunidadesList.map((c) => <option key={c} value={c}>{c}</option>)}
+                </select>
+              )}
+              {reportType === 'tecnico' && (
+                <select value={filterTecnico} onChange={(e) => setFilterTecnico(e.target.value)}
+                  className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
+                  <option value="">Todos los técnicos</option>
+                  {Object.entries(TECNICOS).map(([key, { nombre }]) => (
+                    <option key={key} value={key}>{nombre}</option>
+                  ))}
+                </select>
+              )}
+              {reportType === 'fecha' && (
+                <>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Desde:</span>
+                    <input type="date" value={fechaDesde} onChange={(e) => setFechaDesde(e.target.value)}
+                      className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hasta:</span>
+                    <input type="date" value={fechaHasta} onChange={(e) => setFechaHasta(e.target.value)}
+                      className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+                  </div>
+                </>
+              )}
+              {reportType === 'general' && (
+                <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  Se exportarán todas las fichas investigadas sin filtros
+                </span>
+              )}
+
+              {/* Stats */}
+              <div className="ml-auto flex items-center gap-4">
+                <div className="text-right">
+                  <p className="text-2xl font-bold" style={{ color: activeType.color }}>{filteredCount}</p>
+                  <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Fichas</p>
+                </div>
+                <div className="w-px h-10" style={{ background: 'var(--border-color)' }} />
+                <div className="text-right">
+                  <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {(areaTotal / 10000).toFixed(1)}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Hectáreas</p>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Filtros dinámicos */}
-          {reportType === 'sector' && (
-            <select value={filterSector} onChange={(e) => setFilterSector(e.target.value)}
-              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
-              <option value="">Todos los sectores</option>
-              {SECTORES.map((s) => <option key={s} value={s}>{s}</option>)}
-            </select>
-          )}
-          {reportType === 'parroquia' && (
-            <select value={filterParroquia} onChange={(e) => setFilterParroquia(e.target.value)}
-              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
-              <option value="">Todas las parroquias</option>
-              {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
-            </select>
-          )}
-          {reportType === 'comunidad' && (
-            <select value={filterComunidad} onChange={(e) => setFilterComunidad(e.target.value)}
-              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
-              <option value="">Todas las comunidades ({comunidadesList.length})</option>
-              {comunidadesList.map((c) => <option key={c} value={c}>{c}</option>)}
-            </select>
-          )}
-          {reportType === 'tecnico' && (
-            <select value={filterTecnico} onChange={(e) => setFilterTecnico(e.target.value)}
-              className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
-              <option value="">Todos los técnicos</option>
-              {Object.entries(TECNICOS).map(([key, { nombre }]) => (
-                <option key={key} value={key}>{nombre}</option>
-              ))}
-            </select>
-          )}
-          {reportType === 'fecha' && (
-            <>
-              <div className="flex items-center gap-2">
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Desde:</span>
-                <input type="date" value={fechaDesde} onChange={(e) => setFechaDesde(e.target.value)}
-                  className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+          {/* Download buttons */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* PDF */}
+            <button
+              onClick={generatePDF}
+              disabled={generating !== null || filteredCount === 0}
+              className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
+              style={{
+                background: 'var(--bg-card)',
+                borderColor: generating === 'pdf' ? '#ef444480' : 'var(--border-color)',
+              }}
+            >
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.04), transparent)' }} />
+              <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(239,68,68,0.1)' }}>
+                {generating === 'pdf' ? (
+                  <Loader2 className="w-6 h-6 text-red-400 animate-spin" />
+                ) : (
+                  <FileDown className="w-6 h-6 text-red-400" />
+                )}
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Hasta:</span>
-                <input type="date" value={fechaHasta} onChange={(e) => setFechaHasta(e.target.value)}
-                  className="px-3 py-2 rounded-lg text-sm cursor-pointer" style={selectStyle} />
+              <div className="relative flex-1 min-w-0">
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {generating === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                  Reporte con logos institucionales y encabezado oficial
+                </p>
+              </div>
+              <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
+            </button>
+
+            {/* Excel */}
+            <button
+              onClick={generateExcel}
+              disabled={generating !== null || filteredCount === 0}
+              className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
+              style={{
+                background: 'var(--bg-card)',
+                borderColor: generating === 'excel' ? '#22c55e80' : 'var(--border-color)',
+              }}
+            >
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ background: 'linear-gradient(135deg, rgba(34,197,94,0.04), transparent)' }} />
+              <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(34,197,94,0.1)' }}>
+                {generating === 'excel' ? (
+                  <Loader2 className="w-6 h-6 text-emerald-400 animate-spin" />
+                ) : (
+                  <FileSpreadsheet className="w-6 h-6 text-emerald-400" />
+                )}
+              </div>
+              <div className="relative flex-1 min-w-0">
+                <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {generating === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
+                </p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                  4 hojas: Fichas, Cultivos, Animales y Resumen estadístico
+                </p>
+              </div>
+              <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
+            </button>
+          </div>
+
+          {/* Last generated status */}
+          {lastGenerated && (
+            <div
+              className="flex items-center gap-2 px-4 py-3 rounded-lg border"
+              style={{ background: 'rgba(34,197,94,0.05)', borderColor: 'rgba(34,197,94,0.2)' }}
+            >
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span className="text-xs text-emerald-400">Último reporte generado: {lastGenerated}</span>
+              <Clock className="w-3 h-3 text-emerald-400/50 ml-1" />
+              <span className="text-[10px] text-emerald-400/50">{new Date().toLocaleTimeString('es-EC')}</span>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className="space-y-6">
+          {loadingAuditoria ? (
+            <div className="flex items-center justify-center p-12 rounded-xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+              <div className="flex flex-col items-center gap-3">
+                <Loader2 className="w-8 h-8 text-emerald-400 animate-spin" />
+                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Cargando datos de auditoría...</p>
+              </div>
+            </div>
+          ) : auditoria ? (
+            <>
+              {/* Tarjetas de Métricas de Auditoría */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 rounded-xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <p className="text-2xl font-bold text-blue-400">{auditoria.resumen.totalFichasOriginales}</p>
+                  <p className="text-[10px] uppercase font-semibold tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>Fichas Originales</p>
+                </div>
+                <div className="p-4 rounded-xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <p className="text-2xl font-bold text-amber-400">{auditoria.resumen.totalRegantesUnicosDuplicados}</p>
+                  <p className="text-[10px] uppercase font-semibold tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>Regantes Duplicados</p>
+                </div>
+                <div className="p-4 rounded-xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <p className="text-2xl font-bold text-emerald-400">-{auditoria.resumen.fichasRedundantesReducidas}</p>
+                  <p className="text-[10px] uppercase font-semibold tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>Fichas Reducidas</p>
+                </div>
+                <div className="p-4 rounded-xl border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <p className="text-2xl font-bold text-purple-400">{auditoria.resumen.porcentajeReduccion}%</p>
+                  <p className="text-[10px] uppercase font-semibold tracking-wider mt-1" style={{ color: 'var(--text-muted)' }}>Optimización de Carga</p>
+                </div>
+              </div>
+
+              {/* Caja de búsqueda de regantes */}
+              <div className="p-4 rounded-xl border flex items-center gap-3" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                <Filter className="w-5 h-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Buscar regante unificado por cédula, nombre o apellido..."
+                  value={busquedaAuditoria}
+                  onChange={(e) => setBusquedaAuditoria(e.target.value)}
+                  className="bg-transparent text-sm border-0 focus:ring-0 focus:outline-none w-full"
+                  style={{ color: 'var(--text-primary)' }}
+                />
+              </div>
+
+              {/* Listado de regantes unificados */}
+              <div className="space-y-3">
+                <h3 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  Lista de Regantes Unificados ({regantesFiltrados.length})
+                </h3>
+                {regantesFiltrados.length === 0 ? (
+                  <p className="text-xs p-8 border rounded-xl text-center" style={{ color: 'var(--text-muted)', background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                    No se encontraron regantes que coincidan con la búsqueda.
+                  </p>
+                ) : (
+                  <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
+                    {regantesFiltrados.map((r: any) => {
+                      const isExpanded = expandedRegante === r.id;
+                      const totalFichas = r.fichasSecundarias.length + 1;
+                      return (
+                        <div
+                          key={r.id}
+                          className="border rounded-xl transition-all"
+                          style={{
+                            background: 'var(--bg-card)',
+                            borderColor: isExpanded ? 'rgba(16,185,129,0.4)' : 'var(--border-color)',
+                          }}
+                        >
+                          {/* Cabecera del item */}
+                          <button
+                            onClick={() => setExpandedRegante(isExpanded ? null : r.id)}
+                            className="w-full p-4 flex items-center justify-between text-left cursor-pointer focus:outline-none"
+                          >
+                            <div>
+                              <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                                {r.apellidos} {r.nombres}
+                              </p>
+                              <p className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                                {r.cedula ? `Cédula: ${r.cedula}` : 'Unificado por coincidencia fonética de nombre'} | {r.fichaMadre.sectorComunidad || 'Sin sector'}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="text-[11px] px-2.5 py-1 rounded-full font-medium" style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981' }}>
+                                {totalFichas} fichas unificadas
+                              </span>
+                              <span className="text-xs transition-transform" style={{ color: 'var(--text-secondary)' }}>
+                                {isExpanded ? '▲' : '▼'}
+                              </span>
+                            </div>
+                          </button>
+
+                          {/* Contenido desplegado */}
+                          {isExpanded && (
+                            <div className="p-4 pt-0 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                              <div className="space-y-4 mt-4">
+                                {/* Ficha Madre */}
+                                <div className="p-3.5 rounded-lg border" style={{ background: 'var(--bg-primary)', borderColor: 'rgba(59,130,246,0.2)' }}>
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded" style={{ background: '#3b82f620', color: '#3b82f6' }}>Ficha Madre (Mayor Área)</span>
+                                    <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>ID: {r.fichaMadre.id}</span>
+                                  </div>
+                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+                                    <div>
+                                      <p style={{ color: 'var(--text-muted)' }}>Clave Catastral</p>
+                                      <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{r.fichaMadre.claveCatastral}</p>
+                                    </div>
+                                    <div>
+                                      <p style={{ color: 'var(--text-muted)' }}>Área Total</p>
+                                      <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{r.fichaMadre.areaTotal.toLocaleString('es-EC')} m²</p>
+                                    </div>
+                                    <div>
+                                      <p style={{ color: 'var(--text-muted)' }}>Técnico</p>
+                                      <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{r.fichaMadre.creadoPor}</p>
+                                    </div>
+                                    <div>
+                                      <p style={{ color: 'var(--text-muted)' }}>Fecha</p>
+                                      <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{new Date(r.fichaMadre.fechaCreacion).toLocaleDateString('es-EC')}</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Fichas Secundarias */}
+                                <div className="space-y-2">
+                                  <p className="text-xs font-semibold" style={{ color: 'var(--text-secondary)' }}>Predios Secundarios Unificados (Agregados a la sección "Otros Predios"):</p>
+                                  <div className="space-y-2">
+                                    {r.fichasSecundarias.map((fs: any) => (
+                                      <div key={fs.id} className="p-3 rounded-lg border text-[11px] grid grid-cols-1 md:grid-cols-5 gap-3 items-center" style={{ background: 'var(--bg-primary)', borderColor: 'var(--border-color)' }}>
+                                        <div className="md:col-span-2">
+                                          <p style={{ color: 'var(--text-muted)' }}>Predio Secundario (Clave)</p>
+                                          <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{fs.claveCatastral}</p>
+                                          <p className="text-[9px] mt-0.5 overflow-hidden text-ellipsis whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>ID: {fs.id}</p>
+                                        </div>
+                                        <div>
+                                          <p style={{ color: 'var(--text-muted)' }}>Área</p>
+                                          <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{fs.areaTotal.toLocaleString('es-EC')} m²</p>
+                                        </div>
+                                        <div>
+                                          <p style={{ color: 'var(--text-muted)' }}>Técnico / Fecha</p>
+                                          <p className="font-semibold mt-0.5" style={{ color: 'var(--text-primary)' }}>{fs.creadoPor}</p>
+                                          <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{new Date(fs.fechaCreacion).toLocaleDateString('es-EC')}</p>
+                                        </div>
+                                        <div className="text-right">
+                                          <span className="inline-block text-[10px] px-2 py-0.5 rounded font-medium" style={{ background: 'var(--bg-card)', color: 'var(--text-secondary)', border: '1px solid var(--border-color)' }}>
+                                            {fs.cantCultivos} cult. / {fs.cantAnimales} anim. reasociados
+                                          </span>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </>
+          ) : (
+            <p className="text-xs p-4 border rounded-xl text-center" style={{ color: 'var(--text-muted)', background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+              No se pudo cargar la información de auditoría. Asegúrate de haber ejecutado el script de exportación.
+            </p>
           )}
-          {reportType === 'general' && (
-            <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-              Se exportarán todas las fichas investigadas sin filtros
-            </span>
-          )}
-
-          {/* Stats */}
-          <div className="ml-auto flex items-center gap-4">
-            <div className="text-right">
-              <p className="text-2xl font-bold" style={{ color: activeType.color }}>{filteredCount}</p>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Fichas</p>
-            </div>
-            <div className="w-px h-10" style={{ background: 'var(--border-color)' }} />
-            <div className="text-right">
-              <p className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                {(areaTotal / 10000).toFixed(1)}
-              </p>
-              <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Hectáreas</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Download buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* PDF */}
-        <button
-          onClick={generatePDF}
-          disabled={generating !== null || filteredCount === 0}
-          className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
-          style={{
-            background: 'var(--bg-card)',
-            borderColor: generating === 'pdf' ? '#ef444480' : 'var(--border-color)',
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.04), transparent)' }} />
-          <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(239,68,68,0.1)' }}>
-            {generating === 'pdf' ? (
-              <Loader2 className="w-6 h-6 text-red-400 animate-spin" />
-            ) : (
-              <FileDown className="w-6 h-6 text-red-400" />
-            )}
-          </div>
-          <div className="relative flex-1 min-w-0">
-            <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-              {generating === 'pdf' ? 'Generando PDF...' : 'Descargar PDF'}
-            </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              Reporte con logos institucionales y encabezado oficial
-            </p>
-          </div>
-          <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
-        </button>
-
-        {/* Excel */}
-        <button
-          onClick={generateExcel}
-          disabled={generating !== null || filteredCount === 0}
-          className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
-          style={{
-            background: 'var(--bg-card)',
-            borderColor: generating === 'excel' ? '#22c55e80' : 'var(--border-color)',
-          }}
-        >
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            style={{ background: 'linear-gradient(135deg, rgba(34,197,94,0.04), transparent)' }} />
-          <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: 'rgba(34,197,94,0.1)' }}>
-            {generating === 'excel' ? (
-              <Loader2 className="w-6 h-6 text-emerald-400 animate-spin" />
-            ) : (
-              <FileSpreadsheet className="w-6 h-6 text-emerald-400" />
-            )}
-          </div>
-          <div className="relative flex-1 min-w-0">
-            <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
-              {generating === 'excel' ? 'Generando Excel...' : 'Descargar Excel'}
-            </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              4 hojas: Fichas, Cultivos, Animales y Resumen estadístico
-            </p>
-          </div>
-          <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
-        </button>
-      </div>
-
-      {/* Last generated status */}
-      {lastGenerated && (
-        <div
-          className="flex items-center gap-2 px-4 py-3 rounded-lg border"
-          style={{ background: 'rgba(34,197,94,0.05)', borderColor: 'rgba(34,197,94,0.2)' }}
-        >
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span className="text-xs text-emerald-400">Último reporte generado: {lastGenerated}</span>
-          <Clock className="w-3 h-3 text-emerald-400/50 ml-1" />
-          <span className="text-[10px] text-emerald-400/50">{new Date().toLocaleTimeString('es-EC')}</span>
         </div>
       )}
     </div>

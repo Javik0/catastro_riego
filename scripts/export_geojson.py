@@ -73,6 +73,8 @@ def preparar_unificacion():
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     all_tables = [t[0] for t in cursor.fetchall()]
     fichas_table = next((t for t in all_tables if 'Fichas_Predios' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    cultivos_table = next((t for t in all_tables if 'Cultivos_Agricolas' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    animales_table = next((t for t in all_tables if 'Animales_Especies' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
     
     if not fichas_table:
         print("  ❌ No se encontró la tabla de Fichas_Predios")
@@ -80,7 +82,7 @@ def preparar_unificacion():
         return
 
     cursor.execute(f'''
-        SELECT id, cedula, apellidos, nombres, area_total, area_riego, area_sin_riego, creado_por, fecha_creacion, clave_catastral, observaciones
+        SELECT id, cedula, apellidos, nombres, area_total, area_riego, area_sin_riego, creado_por, fecha_creacion, clave_catastral, observaciones, sector_comunidad, parroquia, comunidad
         FROM "{fichas_table}"
     ''')
     fichas_raw = cursor.fetchall()
@@ -88,7 +90,7 @@ def preparar_unificacion():
 
     fichas = []
     for f in fichas_raw:
-        fid, ced, ape, nom, area, ar, asr, creador, fecha, clave, obs = f
+        fid, ced, ape, nom, area, ar, asr, creador, fecha, clave, obs, sector, parr, com = f
         ced_norm = (ced or "").strip()
         es_ced_valida = len(ced_norm) == 10 and ced_norm.isdigit()
         
@@ -109,7 +111,10 @@ def preparar_unificacion():
             'creado_por': (creador or "").strip(),
             'fecha_creacion': fecha,
             'clave_catastral': clave,
-            'observaciones': obs or ""
+            'observaciones': obs or "",
+            'sector_comunidad': sector or "",
+            'parroquia': parr or "",
+            'comunidad': com or ""
         })
 
     regantes_por_cedula = {}
@@ -184,8 +189,108 @@ def preparar_unificacion():
                 'observaciones_otro': obs_unificacion
             })
 
+    # Generar y guardar JSON de auditoría para el frontend
+    auditoria_data = {
+        "resumen": {
+            "totalFichasOriginales": len(fichas),
+            "totalRegantesUnicosDuplicados": len(duplicados_cedula) + len(duplicados_nombre),
+            "totalFichasDuplicadas": sum(len(l) for l in duplicados_cedula.values()) + sum(len(l) for l in duplicados_nombre.values()),
+            "fichasRedundantesReducidas": len(FICHA_REDIRECT_MAP),
+            "totalFichasUnificadas": len(fichas) - len(FICHA_REDIRECT_MAP),
+            "porcentajeReduccion": round((len(FICHA_REDIRECT_MAP) / len(fichas) * 100), 2) if fichas else 0
+        },
+        "regantesUnificados": []
+    }
+
+    # Cargar cultivos y animales en diccionarios para contar rápido la carga de datos por ficha secundaria
+    cursor_info = sqlite3.connect(DATA_GPKG).cursor()
+    cant_cultivos = {}
+    cant_animales = {}
+    if cultivos_table:
+        cursor_info.execute(f'SELECT ficha_id, COUNT(*) FROM "{cultivos_table}" GROUP BY ficha_id')
+        cant_cultivos = dict(cursor_info.fetchall())
+    if animales_table:
+        cursor_info.execute(f'SELECT ficha_id, COUNT(*) FROM "{animales_table}" GROUP BY ficha_id')
+        cant_animales = dict(cursor_info.fetchall())
+    cursor_info.close()
+
+    for ced, lista in duplicados_cedula.items():
+        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
+        ficha_madre = lista_ordenada[0]
+        fichas_secundarias = lista_ordenada[1:]
+        
+        reg_item = {
+            "id": ced,
+            "cedula": ced,
+            "apellidos": ficha_madre['apellidos'],
+            "nombres": ficha_madre['nombres'],
+            "criterio": "cedula",
+            "fichaMadre": {
+                "id": ficha_madre['id'],
+                "claveCatastral": ficha_madre['clave_catastral'],
+                "areaTotal": ficha_madre['area_total'],
+                "sectorComunidad": ficha_madre['sector_comunidad'],
+                "parroquia": ficha_madre['parroquia'],
+                "creadoPor": MAPEO_TECNICOS.get(ficha_madre['creado_por'], ficha_madre['creado_por']),
+                "fechaCreacion": ficha_madre['fecha_creacion']
+            },
+            "fichasSecundarias": []
+        }
+        for fs in fichas_secundarias:
+            reg_item["fichasSecundarias"].append({
+                "id": fs['id'],
+                "claveCatastral": fs['clave_catastral'],
+                "areaTotal": fs['area_total'],
+                "sectorComunidad": fs['sector_comunidad'],
+                "creadoPor": MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por']),
+                "fechaCreacion": fs['fecha_creacion'],
+                "cantCultivos": cant_cultivos.get(fs['id'], 0),
+                "cantAnimales": cant_animales.get(fs['id'], 0)
+            })
+        auditoria_data["regantesUnificados"].append(reg_item)
+
+    for name, lista in duplicados_nombre.items():
+        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
+        ficha_madre = lista_ordenada[0]
+        fichas_secundarias = lista_ordenada[1:]
+        
+        reg_item = {
+            "id": name,
+            "cedula": "",
+            "apellidos": ficha_madre['apellidos'],
+            "nombres": ficha_madre['nombres'],
+            "criterio": "nombre",
+            "fichaMadre": {
+                "id": ficha_madre['id'],
+                "claveCatastral": ficha_madre['clave_catastral'],
+                "areaTotal": ficha_madre['area_total'],
+                "sectorComunidad": ficha_madre['sector_comunidad'],
+                "parroquia": ficha_madre['parroquia'],
+                "creadoPor": MAPEO_TECNICOS.get(ficha_madre['creado_por'], ficha_madre['creado_por']),
+                "fechaCreacion": ficha_madre['fecha_creacion']
+            },
+            "fichasSecundarias": []
+        }
+        for fs in fichas_secundarias:
+            reg_item["fichasSecundarias"].append({
+                "id": fs['id'],
+                "claveCatastral": fs['clave_catastral'],
+                "areaTotal": fs['area_total'],
+                "sectorComunidad": fs['sector_comunidad'],
+                "creadoPor": MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por']),
+                "fechaCreacion": fs['fecha_creacion'],
+                "cantCultivos": cant_cultivos.get(fs['id'], 0),
+                "cantAnimales": cant_animales.get(fs['id'], 0)
+            })
+        auditoria_data["regantesUnificados"].append(reg_item)
+
+    path_auditoria_json = os.path.join(OUTPUT_DIR, 'auditoria.json')
+    with open(path_auditoria_json, 'w', encoding='utf-8') as f:
+        json.dump(auditoria_data, f, ensure_ascii=False, indent=2)
+
     print(f"  ✓ {len(FICHA_REDIRECT_MAP)} fichas duplicadas secundarias redirigidas a sus fichas madre.")
     print(f"  ✓ {len(VIRTUAL_PREDIOS_ADICIONALES)} predios adicionales virtuales creados.")
+    print(f"  💾 auditoria.json guardado en public/geo/")
 
 # ══════════════════════════════════════════════════════════════
 # Parseo de geometría GeoPackage (WKB + GPKG header)

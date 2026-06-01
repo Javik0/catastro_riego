@@ -12024,6 +12024,54 @@
     "observaciones_otro": "Pasto sin mejorar"
   },
   {
+    "fid": 1126,
+    "id_adicional": "{66ed1170-5fe2-42e3-b91f-dca189eaf610}",
+    "ficha_id": "{e89a9ed6-2642-4afd-8a20-78886f2f37dd}",
+    "clave_catastral_otro": "1702520730112",
+    "area_total_otro": 6448.99,
+    "area_riego_otro": 6448.99,
+    "area_sin_riego_otro": -6448.99,
+    "area_lote_asignado_otro": 6448.99,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Es riego a gravedad cultivar cebada"
+  },
+  {
+    "fid": 1127,
+    "id_adicional": "{3c038b43-9eb3-44ac-9261-54b6f9317636}",
+    "ficha_id": "{b817ea31-bed9-4cfa-8247-f228717b282b}",
+    "clave_catastral_otro": "1702521730027",
+    "area_total_otro": 86273.64,
+    "area_riego_otro": 86273.64,
+    "area_sin_riego_otro": -86273.64,
+    "area_lote_asignado_otro": 86273.64,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Cultiva pasto mejorado , riega todo el terreno,tiene vacas de producción 10 "
+  },
+  {
+    "fid": 1128,
+    "id_adicional": "{7aee2678-9d4c-4f30-b4ee-433a29e767f7}",
+    "ficha_id": "{b817ea31-bed9-4cfa-8247-f228717b282b}",
+    "clave_catastral_otro": "1702521730026",
+    "area_total_otro": 88667.95,
+    "area_riego_otro": 88667.95,
+    "area_sin_riego_otro": -88667.95,
+    "area_lote_asignado_otro": 88667.95,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Cultiva cebolla "
+  },
+  {
+    "fid": 1129,
+    "id_adicional": "{1f15cb33-a162-456a-898f-1a2ca7f4edb9}",
+    "ficha_id": "{b817ea31-bed9-4cfa-8247-f228717b282b}",
+    "clave_catastral_otro": "1702520920040",
+    "area_total_otro": 176075.42,
+    "area_riego_otro": 176075.42,
+    "area_sin_riego_otro": -176075.42,
+    "area_lote_asignado_otro": 176075.42,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Cultiva pasto mejorado y no mejorado tiene construcción no tiene energía eléctrica "
+  },
+  {
     "id_adicional": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
     "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
     "clave_catastral_otro": "1702521050020",

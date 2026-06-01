@@ -23584,5 +23584,41 @@
     "cantidad": 4,
     "es_autoconsumo": 1,
     "es_mercado": 1
+  },
+  {
+    "id_animal": "{a3b191d1-4aa6-469a-b0d4-22ec662ccb45}",
+    "ficha_id": "{e89a9ed6-2642-4afd-8a20-78886f2f37dd}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 120,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{887ce7b2-946a-4cc2-b26c-085c98a5ce07}",
+    "ficha_id": "{e89a9ed6-2642-4afd-8a20-78886f2f37dd}",
+    "especie": "Gallinas ponedoras",
+    "cantidad": 60,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{2d199912-2aee-47c1-ba1d-870e5f4a2eeb}",
+    "ficha_id": "{e89a9ed6-2642-4afd-8a20-78886f2f37dd}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 25,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{59830028-59b0-40d5-9eb6-cd291ae0c6bb}",
+    "ficha_id": "{e89a9ed6-2642-4afd-8a20-78886f2f37dd}",
+    "especie": "Otros",
+    "cantidad": 1,
+    "es_autoconsumo": 1,
+    "especie_otro": "Llamingo"
+  },
+  {
+    "id_animal": "{afce7e5d-0aa1-4b85-b85a-c188297a6679}",
+    "ficha_id": "{c477e59f-7bea-4357-b4dd-9ee05d7ead5e}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 250,
+    "es_mercado": 1
   }
 ]
