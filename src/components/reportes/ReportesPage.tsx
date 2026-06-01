@@ -37,7 +37,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
   const [expandedRegante, setExpandedRegante] = useState<string | null>(null);
 
   useEffect(() => {
-    if (reportType === 'auditoria' && !auditoria && !loadingAuditoria) {
+    if (!auditoria && !loadingAuditoria) {
       setLoadingAuditoria(true);
       fetch('/geo/auditoria.json')
         .then((res) => res.json())
@@ -50,7 +50,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
           setLoadingAuditoria(false);
         });
     }
-  }, [reportType, auditoria, loadingAuditoria]);
+  }, []);
 
   // Lista dinámica de comunidades obtenida de las fichas reales
   const comunidadesList = useMemo(() => {
@@ -131,6 +131,48 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
+      if (reportType === 'general' && auditoria) {
+        // Título del bloque de auditoría
+        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(16, 185, 129); // Verde esmeralda para calidad
+        doc.text("📊 CONSOLIDADO DE CALIDAD DE DATOS (AUDITORÍA DE DUPLICADOS Y OPTIMIZACIÓN)", 10, 35);
+        doc.setTextColor(0, 0, 0); // Reset color
+        
+        const auditoriaHeaders = [
+          'Fichas en Campo (Originales)', 
+          'Regantes Duplicados', 
+          'Fichas Duplicadas', 
+          'Fichas Redundantes Reducidas', 
+          'Fichas Finales (Padrón)', 
+          'Reducción (%)'
+        ];
+        const auditoriaRows = [[
+          auditoria.resumen.totalFichasOriginales,
+          auditoria.resumen.totalRegantesUnicosDuplicados,
+          auditoria.resumen.totalFichasDuplicadas,
+          auditoria.resumen.fichasRedundantesReducidas,
+          auditoria.resumen.totalFichasUnificadas,
+          `${auditoria.resumen.porcentajeReduccion}%`
+        ]];
+
+        autoTable(doc, {
+          head: [auditoriaHeaders],
+          body: auditoriaRows,
+          startY: 37,
+          styles: { fontSize: 6, cellPadding: 1, halign: 'center' },
+          headStyles: { fillColor: [16, 185, 129], textColor: 255, fontStyle: 'bold' },
+          margin: { left: 10, right: 10 }
+        });
+      }
+
+      const tableStartY = (reportType === 'general' && auditoria)
+        ? (doc as any).lastAutoTable.finalY + 8
+        : 33;
+
+      if (reportType === 'general' && auditoria) {
+        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold');
+        doc.text("📋 PADRÓN DE USUARIOS (DATOS UNIFICADOS Y DEPURADOS)", 10, tableStartY - 2);
+      }
+
       const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
       
       const rows: any[] = [];
@@ -200,7 +242,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       });
 
       autoTable(doc, {
-        head: [headers], body: rows, startY: 33,
+        head: [headers], body: rows, startY: tableStartY,
         styles: { 
           fontSize: 6, 
           cellPadding: 1.5,
@@ -318,12 +360,24 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       const animalesF = animalesData.filter((a) => fichaIds.has(a.ficha_id));
       if (animalesF.length > 0) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(animalesF), 'Animales');
 
-      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet([
-        { Métrica: 'Total Fichas', Valor: data.length },
-        { Métrica: 'Área Total (m²)', Valor: data.reduce((s, f) => s + (f.area_total || 0), 0) },
-        { Métrica: 'Cultivos Registrados', Valor: cultivosF.length },
-        { Métrica: 'Animales Registrados', Valor: animalesF.length },
-      ]), 'Resumen');
+      const resumenRows: { Métrica: string; Valor: string | number }[] = [
+        { 'Métrica': 'Total Fichas (Unificadas en Padrón)', 'Valor': data.length },
+        { 'Métrica': 'Área Total Investigada (m²)', 'Valor': data.reduce((s, f) => s + (f.area_total || 0), 0) },
+        { 'Métrica': 'Cultivos Registrados', 'Valor': cultivosF.length },
+        { 'Métrica': 'Animales Registrados', 'Valor': animalesF.length },
+      ];
+
+      if (auditoria) {
+        resumenRows.push(
+          { 'Métrica': 'Fichas Originales Registradas en Campo (QField)', 'Valor': auditoria.resumen.totalFichasOriginales },
+          { 'Métrica': 'Regantes Únicos con Fichas Duplicadas', 'Valor': auditoria.resumen.totalRegantesUnicosDuplicados },
+          { 'Métrica': 'Total de Fichas Involucradas en Duplicidad', 'Valor': auditoria.resumen.totalFichasDuplicadas },
+          { 'Métrica': 'Fichas Redundantes que se Reducirán', 'Valor': auditoria.resumen.fichasRedundantesReducidas },
+          { 'Métrica': 'Porcentaje de Optimización de Base de Datos', 'Valor': `${auditoria.resumen.porcentajeReduccion}%` }
+        );
+      }
+
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(resumenRows), 'Resumen');
 
       XLSX.writeFile(wb, `reporte_${reportType}_${new Date().toISOString().split('T')[0]}.xlsx`);
       setLastGenerated(`Excel (${data.length} fichas, 4 hojas)`);
