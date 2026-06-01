@@ -153,13 +153,17 @@ def preparar_unificacion():
             if fs['observaciones']:
                 obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
                 
+            ar_val = fs['area_riego']
+            if not ar_val or ar_val == 0:
+                ar_val = fs['area_total'] or 0.0
+
             VIRTUAL_PREDIOS_ADICIONALES.append({
                 'id_adicional': fs['id'],
                 'ficha_id': ficha_madre['id'],
                 'clave_catastral_otro': fs['clave_catastral'],
                 'area_total_otro': fs['area_total'],
-                'area_riego_otro': fs['area_riego'],
-                'area_sin_riego_otro': fs['area_sin_riego'],
+                'area_riego_otro': ar_val,
+                'area_sin_riego_otro': 0.0,
                 'area_lote_asignado_otro': fs['area_total'],
                 'tiene_observaciones': 1,
                 'observaciones_otro': obs_unificacion
@@ -177,13 +181,17 @@ def preparar_unificacion():
             if fs['observaciones']:
                 obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
                 
+            ar_val = fs['area_riego']
+            if not ar_val or ar_val == 0:
+                ar_val = fs['area_total'] or 0.0
+
             VIRTUAL_PREDIOS_ADICIONALES.append({
                 'id_adicional': fs['id'],
                 'ficha_id': ficha_madre['id'],
                 'clave_catastral_otro': fs['clave_catastral'],
                 'area_total_otro': fs['area_total'],
-                'area_riego_otro': fs['area_riego'],
-                'area_sin_riego_otro': fs['area_sin_riego'],
+                'area_riego_otro': ar_val,
+                'area_sin_riego_otro': 0.0,
                 'area_lote_asignado_otro': fs['area_total'],
                 'tiene_observaciones': 1,
                 'observaciones_otro': obs_unificacion
@@ -696,6 +704,12 @@ def export_fichas():
             props['comunidad'] = 'LARCACHACA'
             cambio = True
         
+        # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego
+        if not props.get('area_riego') or props['area_riego'] == 0:
+            props['area_riego'] = props.get('area_total') or 0.0
+            props['area_sin_riego'] = 0.0
+            cambio = True
+        
         if cambio:
             imputadas_count += 1
 
@@ -981,6 +995,15 @@ def export_tablas_hijas():
                 f_id = item.get('ficha_id')
                 if f_id in FICHA_REDIRECT_MAP:
                     item['ficha_id'] = FICHA_REDIRECT_MAP[f_id]
+                
+                # Regla de área con riego por defecto si está en 0
+                if output_name == 'predios_adicionales':
+                    ar = item.get('area_riego_otro')
+                    if not ar or ar == 0:
+                        at = item.get('area_total_otro') or item.get('area_lote_asignado_otro') or 0.0
+                        item['area_riego_otro'] = at
+                        item['area_sin_riego_otro'] = 0.0
+
                 data.append(item)
         
         # Si estamos exportando predios adicionales, inyectar los predios unificados virtuales

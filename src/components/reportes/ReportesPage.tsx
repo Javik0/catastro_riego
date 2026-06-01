@@ -142,7 +142,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
           f.propietario || `${f.apellidos} ${f.nombres}`,
           [
             f.cedula ? `C.I. ${f.cedula}` : '', 
-            f.clave_catastral ? `Ref. ${f.clave_catastral}` : ''
+            f.clave_catastral ? `ClvP ${f.clave_catastral}` : ''
           ].filter(Boolean).join('\n'),
           [
             f.parroquia || '', 
@@ -170,12 +170,12 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
           rows.push([
             { content: '', styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } }, // #
             { 
-              content: '  ↳ Predio Adicional', 
+              content: '   - Predio Adicional', 
               colSpan: 2, 
               styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] } 
             }, // Código + Propietario
             { 
-              content: pa.clave_catastral_otro ? `Ref. ${pa.clave_catastral_otro}` : '', 
+              content: pa.clave_catastral_otro ? `ClvP ${pa.clave_catastral_otro}` : '', 
               styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
             }, // Identificación (Clave)
             { 
