@@ -21,6 +21,7 @@ import json
 import struct
 import os
 import math
+import re
 
 # ── Directorios ───────────────────────────────────────────────
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'public', 'geo')
@@ -42,6 +43,153 @@ except ImportError:
     HAS_PYPROJ = False
     print("⚠ pyproj no instalado. Instalar con: pip install pyproj")
     print("  Los polígonos UTM no se convertirán correctamente sin pyproj.")
+
+# ─── Variables y Funciones para Unificación en Caliente ───
+FICHA_REDIRECT_MAP = {}
+VIRTUAL_PREDIOS_ADICIONALES = []
+
+def normalizar_texto(texto):
+    if not texto:
+        return ""
+    texto = texto.upper().strip()
+    replacements = (
+        ("Á", "A"), ("É", "E"), ("Í", "I"), ("Ó", "O"), ("Ú", "U"),
+        ("Ñ", "N"), ("Ü", "U")
+    )
+    for a, b in replacements:
+        texto = texto.replace(a, b)
+    texto = re.sub(r'\s+', ' ', texto)
+    return texto
+
+def preparar_unificacion():
+    global FICHA_REDIRECT_MAP, VIRTUAL_PREDIOS_ADICIONALES
+    FICHA_REDIRECT_MAP = {}
+    VIRTUAL_PREDIOS_ADICIONALES = []
+
+    print("\n🔍 Analizando duplicados para unificación virtual en la exportación...")
+    conn = sqlite3.connect(DATA_GPKG)
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    all_tables = [t[0] for t in cursor.fetchall()]
+    fichas_table = next((t for t in all_tables if 'Fichas_Predios' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    
+    if not fichas_table:
+        print("  ❌ No se encontró la tabla de Fichas_Predios")
+        conn.close()
+        return
+
+    cursor.execute(f'''
+        SELECT id, cedula, apellidos, nombres, area_total, area_riego, area_sin_riego, creado_por, fecha_creacion, clave_catastral, observaciones
+        FROM "{fichas_table}"
+    ''')
+    fichas_raw = cursor.fetchall()
+    conn.close()
+
+    fichas = []
+    for f in fichas_raw:
+        fid, ced, ape, nom, area, ar, asr, creador, fecha, clave, obs = f
+        ced_norm = (ced or "").strip()
+        es_ced_valida = len(ced_norm) == 10 and ced_norm.isdigit()
+        
+        ape_norm = normalizar_texto(ape)
+        nom_norm = normalizar_texto(nom)
+        nombre_completo = f"{ape_norm} {nom_norm}".strip()
+        
+        fichas.append({
+            'id': fid,
+            'cedula': ced_norm,
+            'es_ced_valida': es_ced_valida,
+            'apellidos': (ape or "").strip(),
+            'nombres': (nom or "").strip(),
+            'nombre_completo_normalizado': nombre_completo,
+            'area_total': area or 0.0,
+            'area_riego': ar or 0.0,
+            'area_sin_riego': asr or 0.0,
+            'creado_por': (creador or "").strip(),
+            'fecha_creacion': fecha,
+            'clave_catastral': clave,
+            'observaciones': obs or ""
+        })
+
+    regantes_por_cedula = {}
+    fichas_sin_cedula_valida = []
+
+    for f in fichas:
+        if f['es_ced_valida']:
+            ced = f['cedula']
+            if ced not in regantes_por_cedula:
+                regantes_por_cedula[ced] = []
+            regantes_por_cedula[ced].append(f)
+        else:
+            fichas_sin_cedula_valida.append(f)
+
+    regantes_por_nombre = {}
+    for f in fichas_sin_cedula_valida:
+        name = f['nombre_completo_normalizado']
+        if not name:
+            name = "SIN_NOMBRE_REGISTRADO"
+        if name not in regantes_por_nombre:
+            regantes_por_nombre[name] = []
+        regantes_por_nombre[name].append(f)
+
+    duplicados_cedula = {ced: lista for ced, lista in regantes_por_cedula.items() if len(lista) > 1}
+    duplicados_nombre = {name: lista for name, lista in regantes_por_nombre.items() if len(lista) > 1 and name != "SIN_NOMBRE_REGISTRADO"}
+
+    for ced, lista in duplicados_cedula.items():
+        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
+        ficha_madre = lista_ordenada[0]
+        fichas_secundarias = lista_ordenada[1:]
+        
+        for fs in fichas_secundarias:
+            FICHA_REDIRECT_MAP[fs['id']] = ficha_madre['id']
+            tecnico_nombre = MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por'])
+            obs_unificacion = f"Unificación automática. Ficha original: {fs['id']}. Técnico: {tecnico_nombre} en {fs['fecha_creacion']}."
+            if fs['observaciones']:
+                obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
+                
+            VIRTUAL_PREDIOS_ADICIONALES.append({
+                'id_adicional': fs['id'],
+                'ficha_id': ficha_madre['id'],
+                'clave_catastral_otro': fs['clave_catastral'],
+                'area_total_otro': fs['area_total'],
+                'area_riego_otro': fs['area_riego'],
+                'area_sin_riego_otro': fs['area_sin_riego'],
+                'area_lote_asignado_otro': fs['area_total'],
+                'tiene_observaciones': 1,
+                'observaciones_otro': obs_unificacion
+            })
+
+    for name, lista in duplicados_nombre.items():
+        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
+        ficha_madre = lista_ordenada[0]
+        fichas_secundarias = lista_ordenada[1:]
+        
+        for fs in fichas_secundarias:
+            FICHA_REDIRECT_MAP[fs['id']] = ficha_madre['id']
+            tecnico_nombre = MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por'])
+            obs_unificacion = f"Unificación automática (coincidencia de Nombre). Ficha original: {fs['id']}. Técnico: {tecnico_nombre} en {fs['fecha_creacion']}."
+            if fs['observaciones']:
+                obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
+                
+            VIRTUAL_PREDIOS_ADICIONALES.append({
+                'id_adicional': fs['id'],
+                'ficha_id': ficha_madre['id'],
+                'clave_catastral_otro': fs['clave_catastral'],
+                'area_total_otro': fs['area_total'],
+                'area_riego_otro': fs['area_riego'],
+                'area_sin_riego_otro': fs['area_sin_riego'],
+                'area_lote_asignado_otro': fs['area_total'],
+                'tiene_observaciones': 1,
+                'observaciones_otro': obs_unificacion
+            })
+
+    print(f"  ✓ {len(FICHA_REDIRECT_MAP)} fichas duplicadas secundarias redirigidas a sus fichas madre.")
+    print(f"  ✓ {len(VIRTUAL_PREDIOS_ADICIONALES)} predios adicionales virtuales creados.")
+
+# ══════════════════════════════════════════════════════════════
+# Parseo de geometría GeoPackage (WKB + GPKG header)
+# ══════════════════════════════════════════════════════════════
 
 # ══════════════════════════════════════════════════════════════
 # Parseo de geometría GeoPackage (WKB + GPKG header)
@@ -325,6 +473,10 @@ def export_fichas():
             elif col == 'fid_1': continue
             elif row[i] is not None: props[col] = row[i]
 
+        # Filtro de unificación virtual: omitir fichas secundarias duplicadas
+        if props.get('id') in FICHA_REDIRECT_MAP:
+            continue
+
         # Si 'comunidad' no existe o está vacío, derivar del 'sector_comunidad'
         if not props.get('comunidad'):
             com_derivada = derivar_comunidad(props.get('sector_comunidad'))
@@ -581,7 +733,7 @@ def export_ramales():
 # ══════════════════════════════════════════════════════════════
 
 def export_tablas_hijas():
-    print("\n📋 Exportando tablas hijas...")
+    print("\n📋 Exportando tablas hijas con unificación virtual...")
     conn = sqlite3.connect(DATA_GPKG)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
@@ -597,11 +749,21 @@ def export_tablas_hijas():
         data = []
         for row in cursor.fetchall():
             item = {all_cols[i]: row[i] for i in range(len(all_cols)) if all_cols[i] not in ('geom','fid_1') and row[i] is not None}
-            if item: data.append(item)
+            if item:
+                # Unificación virtual: reasociar ficha_id a la Ficha Madre
+                f_id = item.get('ficha_id')
+                if f_id in FICHA_REDIRECT_MAP:
+                    item['ficha_id'] = FICHA_REDIRECT_MAP[f_id]
+                data.append(item)
+        
+        # Si estamos exportando predios adicionales, inyectar los predios unificados virtuales
+        if output_name == 'predios_adicionales':
+            data.extend(VIRTUAL_PREDIOS_ADICIONALES)
+            
         path = os.path.join(OUTPUT_DIR, f'{output_name}.json')
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"  ✓ {len(data)} {output_name}")
+        print(f"  ✓ {len(data)} {output_name} (incluyendo unificados virtuales: {output_name == 'predios_adicionales'})")
     conn.close()
 
 # ══════════════════════════════════════════════════════════════
@@ -676,6 +838,7 @@ if __name__ == '__main__':
         print("  Asegúrate de que QFieldCloud esté sincronizado y la ruta sea correcta.")
         exit(1)
 
+    preparar_unificacion()
     fichas = export_fichas()
     export_catastro(fichas)
     export_catastro_busqueda()
