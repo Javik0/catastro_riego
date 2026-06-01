@@ -19,6 +19,7 @@ function useLocalData() {
   const [fichas, setFichas] = useState<FichaPredio[]>([]);
   const [cultivosData, setCultivosData] = useState<any[]>([]);
   const [animalesData, setAnimalesData] = useState<any[]>([]);
+  const [prediosAdicionalesData, setPrediosAdicionalesData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -59,6 +60,9 @@ function useLocalData() {
 
         const animRes = await fetch('/geo/animales.json');
         setAnimalesData(await animRes.json());
+
+        const predRes = await fetch('/geo/predios_adicionales.json');
+        setPrediosAdicionalesData(await predRes.json());
       } catch (err) {
         console.error('Error loading data:', err);
       } finally {
@@ -68,7 +72,7 @@ function useLocalData() {
     load();
   }, []);
 
-  return { fichas, cultivosData, animalesData, loading };
+  return { fichas, cultivosData, animalesData, prediosAdicionalesData, loading };
 }
 
 // ── Wrapper que aplica filtros globales ──
@@ -77,9 +81,10 @@ function FilteredDataProvider({ children }: { children: (props: {
   allFichas: FichaPredio[];
   cultivosData: any[];
   animalesData: any[];
+  prediosAdicionalesData: any[];
   loading: boolean;
 }) => React.ReactNode }) {
-  const { fichas: allFichas, cultivosData, animalesData, loading } = useLocalData();
+  const { fichas: allFichas, cultivosData, animalesData, prediosAdicionalesData, loading } = useLocalData();
   const { filtros } = useFiltros();
 
   const filtered = allFichas.filter((f) => {
@@ -102,7 +107,7 @@ function FilteredDataProvider({ children }: { children: (props: {
     return true;
   });
 
-  return <>{children({ fichas: filtered, allFichas, cultivosData, animalesData, loading })}</>;
+  return <>{children({ fichas: filtered, allFichas, cultivosData, animalesData, prediosAdicionalesData, loading })}</>;
 }
 
 // ── App Principal ──
@@ -168,8 +173,14 @@ export default function App() {
                   path="reportes"
                   element={
                     <FilteredDataProvider>
-                      {({ fichas, cultivosData, animalesData, loading }) => (
-                        <ReportesPage fichas={fichas} cultivosData={cultivosData} animalesData={animalesData} loading={loading} />
+                      {({ fichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
+                        <ReportesPage
+                          fichas={fichas}
+                          cultivosData={cultivosData}
+                          animalesData={animalesData}
+                          prediosAdicionalesData={prediosAdicionalesData}
+                          loading={loading}
+                        />
                       )}
                     </FilteredDataProvider>
                   }

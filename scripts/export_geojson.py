@@ -450,19 +450,19 @@ def export_fichas():
     # Diccionario de variantes ortográficas → comunidad oficial
     # Ordenado de más específico a más general para evitar falsos positivos
     VARIANTES_COMUNIDAD = [
-        # LARCACOCHA (escrito como Larcachaca, Larcacocha, La Arcacha, etc.)
-        ("LARCACHACA", "LARCACOCHA"),
-        ("LARCACACHA", "LARCACOCHA"),
-        ("LARCACOCHA", "LARCACOCHA"),
-        ("LARCACHA", "LARCACOCHA"),
-        ("LA ARCACHA", "LARCACOCHA"),
-        ("ALCACHACA", "LARCACOCHA"),
-        ("HUASIPUNGO", "LARCACOCHA"),
-        ("GUASIPUNGO", "LARCACOCHA"),
-        ("GUALIMBURO", "LARCACOCHA"),
-        ("PARCELA", "LARCACOCHA"),
-        ("MORAS", "LARCACOCHA"),
-        ("PÁRAMO", "LARCACOCHA"),
+        # LARCACHACA (escrito como Larcachaca, Larcacocha, La Arcacha, etc.)
+        ("LARCACHACA", "LARCACHACA"),
+        ("LARCACACHA", "LARCACHACA"),
+        ("LARCACOCHA", "LARCACHACA"),
+        ("LARCACHA", "LARCACHACA"),
+        ("LA ARCACHA", "LARCACHACA"),
+        ("ALCACHACA", "LARCACHACA"),
+        ("HUASIPUNGO", "LARCACHACA"),
+        ("GUASIPUNGO", "LARCACHACA"),
+        ("GUALIMBURO", "LARCACHACA"),
+        ("PARCELA", "LARCACHACA"),
+        ("MORAS", "LARCACHACA"),
+        ("PÁRAMO", "LARCACHACA"),
         # LA LIBERTAD
         ("LIBERAD", "LA LIBERTAD"),
         ("LIBERTAD", "LA LIBERTAD"),
@@ -555,8 +555,8 @@ def export_fichas():
         ("CÓNDOR LOMA", "SAN JOSÉ"),
         ("PUKARA", "SAN JOSÉ"),
         ("SOPALO LOMA", "LA CANDELARIA"),
-        ("GUANGUILQUI", "LARCACOCHA"),
-        ("CANGAHUA", "LARCACOCHA"),
+        ("GUANGUILQUI", "LARCACHACA"),
+        ("CANGAHUA", "LARCACHACA"),
     ]
     # Ordenar variantes de mayor a menor longitud para priorizar las más específicas
     VARIANTES_COMUNIDAD.sort(key=lambda x: len(x[0]), reverse=True)
@@ -570,28 +570,150 @@ def export_fichas():
                 return comunidad_oficial
         return None
 
-    features = []
+    from collections import Counter
+
+    # 1. Convertir filas SQLite a una lista de diccionarios Python
+    fichas_list = []
     for row in rows:
-        props, geom_blob = {}, None
+        props = {}
+        geom_blob = None
         for i, col in enumerate(columns):
-            if col == 'geom': geom_blob = row[i]
-            elif col == 'fid_1': continue
-            elif row[i] is not None: props[col] = row[i]
+            if col == 'geom':
+                geom_blob = row[i]
+            elif col != 'fid_1':
+                props[col] = row[i]
+        fichas_list.append({
+            'props': props,
+            'geom_blob': geom_blob
+        })
+
+    # 3. Agrupamiento por fecha (Día) y por Técnico para Imputación Inteligente
+    def get_dia(fecha_str):
+        if not fecha_str:
+            return None
+        return str(fecha_str)[:10]
+
+    grupos_dia_tec = {}
+    grupos_dia = {}
+    for f in fichas_list:
+        props = f['props']
+        dia = get_dia(props.get('fecha_creacion'))
+        tec = props.get('creado_por')
+        if not dia or not tec:
+            continue
+        
+        key_dt = (dia, tec)
+        if key_dt not in grupos_dia_tec:
+            grupos_dia_tec[key_dt] = []
+        grupos_dia_tec[key_dt].append(props)
+        
+        if dia not in grupos_dia:
+            grupos_dia[dia] = []
+        grupos_dia[dia].append(props)
+
+    def calc_modas(fichas_grupo):
+        parroquias = [fg['parroquia'] for fg in fichas_grupo if fg.get('parroquia')]
+        sectores = [fg['sector'] for fg in fichas_grupo if fg.get('sector')]
+        comunidades = [fg['comunidad'] for fg in fichas_grupo if fg.get('comunidad')]
+        caudal_tipos = [fg['caudal_tipo'] for fg in fichas_grupo if fg.get('caudal_tipo')]
+        frecuencias = [fg['frecuencia_riego'] for fg in fichas_grupo if fg.get('frecuencia_riego')]
+        caudales = [fg['caudal_valor'] for fg in fichas_grupo if fg.get('caudal_valor') and fg['caudal_valor'] > 0]
+        
+        metodos = []
+        for fg in fichas_grupo:
+            asp = fg.get('metodo_aspersion_pct') or 0
+            grav = fg.get('metodo_gravedad_pct') or 0
+            got = fg.get('metodo_goteo_pct') or 0
+            if asp > 0 or grav > 0 or got > 0:
+                metodos.append((asp, grav, got))
+                
+        return {
+            'parroquia': Counter(parroquias).most_common(1)[0][0] if parroquias else 'CANGAHUA',
+            'sector': Counter(sectores).most_common(1)[0][0] if sectores else None,
+            'comunidad': Counter(comunidades).most_common(1)[0][0] if comunidades else None,
+            'caudal_tipo': Counter(caudal_tipos).most_common(1)[0][0] if caudal_tipos else None,
+            'frecuencia_riego': Counter(frecuencias).most_common(1)[0][0] if frecuencias else None,
+            'caudal_valor': sum(caudales)/len(caudales) if caudales else None,
+            'metodo_riego': Counter(metodos).most_common(1)[0][0] if metodos else None
+        }
+
+    modas_dia_tec = {key: calc_modas(fs) for key, fs in grupos_dia_tec.items()}
+    modas_dia = {dia: calc_modas(fs) for dia, fs in grupos_dia.items()}
+
+    # 4. Imputar vacíos en caliente sobre props
+    imputadas_count = 0
+    for f in fichas_list:
+        props = f['props']
+        dia = get_dia(props.get('fecha_creacion'))
+        tec = props.get('creado_por')
+        if not dia or not tec:
+            continue
+        
+        m_dt = modas_dia_tec.get((dia, tec), {})
+        m_d = modas_dia.get(dia, {})
+        
+        cambio = False
+        if not props.get('parroquia'):
+            props['parroquia'] = m_dt.get('parroquia') or m_d.get('parroquia') or 'CANGAHUA'
+            cambio = True
+        if not props.get('sector'):
+            props['sector'] = m_dt.get('sector') or m_d.get('sector') or 'Porotog'
+            cambio = True
+        if not props.get('comunidad'):
+            val = m_dt.get('comunidad') or m_d.get('comunidad')
+            if val:
+                props['comunidad'] = val
+                cambio = True
+        if not props.get('caudal_tipo'):
+            val = m_dt.get('caudal_tipo') or m_d.get('caudal_tipo')
+            if val:
+                props['caudal_tipo'] = val
+                cambio = True
+        if not props.get('frecuencia_riego'):
+            val = m_dt.get('frecuencia_riego') or m_d.get('frecuencia_riego')
+            if val:
+                props['frecuencia_riego'] = val
+                cambio = True
+        if not props.get('caudal_valor') or props['caudal_valor'] == 0:
+            val = m_dt.get('caudal_valor') or m_d.get('caudal_valor')
+            if val:
+                props['caudal_valor'] = round(val, 2)
+                cambio = True
+                
+        asp = props.get('metodo_aspersion_pct') or 0
+        grav = props.get('metodo_gravedad_pct') or 0
+        got = props.get('metodo_goteo_pct') or 0
+        if asp == 0 and grav == 0 and got == 0:
+            val_m = m_dt.get('metodo_riego') or m_d.get('metodo_riego')
+            if val_m:
+                props['metodo_aspersion_pct'] = val_m[0]
+                props['metodo_gravedad_pct'] = val_m[1]
+                props['metodo_goteo_pct'] = val_m[2]
+                cambio = True
+        
+        # Corrección explícita del nombre de comunidad para fichas que vinieron con LARCACOHA
+        if props.get('comunidad') == 'LARCACOHA':
+            props['comunidad'] = 'LARCACHACA'
+            cambio = True
+        
+        if cambio:
+            imputadas_count += 1
+
+    print(f"  ✓ {imputadas_count} fichas con campos vacíos corregidas mediante imputación inteligente.")
+
+    # 5. Generar las GeoJSON features filtrando duplicados unificados
+    features = []
+    for f in fichas_list:
+        props = f['props']
+        geom_blob = f['geom_blob']
 
         # Filtro de unificación virtual: omitir fichas secundarias duplicadas
         if props.get('id') in FICHA_REDIRECT_MAP:
             continue
 
-        # Si 'comunidad' no existe o está vacío, derivar del 'sector_comunidad'
-        if not props.get('comunidad'):
-            com_derivada = derivar_comunidad(props.get('sector_comunidad'))
-            if com_derivada:
-                props['comunidad'] = com_derivada
-
         if geom_blob:
             try:
                 srid, off = parse_gpkg_header(geom_blob)
-                # Fichas ya están en WGS84 (GPS) — NO convertir de UTM
                 wkb = geom_blob[off:]
                 bo = wkb[0]
                 fmt = '<' if bo == 1 else '>'
@@ -601,7 +723,7 @@ def export_fichas():
             except: pass
 
     _save(features, 'fichas_predios.geojson')
-    print(f"  ✓ {len(features)} fichas exportadas")
+    print(f"  ✓ {len(features)} fichas principales limpias exportadas")
     conn.close()
     return features
 

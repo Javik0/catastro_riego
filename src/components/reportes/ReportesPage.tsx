@@ -4,7 +4,7 @@ import {
   Users, MapPin, Filter, Loader2, BarChart3, Download,
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
-import { type FichaPredio, safeToDate } from '../../lib/types';
+import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
 import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -14,11 +14,12 @@ interface Props {
   fichas: FichaPredio[];
   cultivosData: { tipo_cultivo: string; ficha_id: string; superficie_m2?: number; es_principal?: boolean }[];
   animalesData: { especie: string; ficha_id: string; cantidad: number }[];
+  prediosAdicionalesData: PredioAdicional[];
   loading: boolean;
 }
 type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'auditoria';
 
-export default function ReportesPage({ fichas, cultivosData, animalesData }: Props) {
+export default function ReportesPage({ fichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
   const [reportType, setReportType] = useState<ReportType>('general');
   const [filterSector, setFilterSector] = useState('');
   const [filterParroquia, setFilterParroquia] = useState('');
@@ -130,22 +131,48 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
-      const headers = ['#', 'Código', 'Propietario', 'Cédula', 'Parroquia', 'Sector', 'Comunidad', 'Área Total', 'Método Riego', 'Caudal', 'Técnico', 'Fecha'];
-      const rows = data.map((f, i) => [
-        i + 1, f.codigo_final,
-        f.propietario || `${f.apellidos} ${f.nombres}`,
-        f.cedula || '', f.parroquia, f.sector,
-        (f.comunidad || '').trim(),
-        f.area_total?.toLocaleString('es-EC') || '',
-        [
-          f.metodo_aspersion_pct ? `Asp:${f.metodo_aspersion_pct}%` : '',
-          f.metodo_gravedad_pct ? `Grav:${f.metodo_gravedad_pct}%` : '',
-          f.metodo_goteo_pct ? `Got:${f.metodo_goteo_pct}%` : '',
-        ].filter(Boolean).join(' '),
-        f.caudal_valor ? `${f.caudal_valor} l/s` : '',
-        getNombreTecnico(f.creado_por),
-        safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
-      ]);
+      const headers = ['#', 'Código', 'Propietario', 'Cédula / Clave Catastral', 'Parroquia', 'Sector', 'Comunidad', 'Área Total', 'Área Riego', 'Caudal', 'Técnico', 'Fecha'];
+      
+      const rows: any[] = [];
+      data.forEach((f, i) => {
+        // Ficha Principal
+        rows.push([
+          i + 1,
+          f.codigo_final,
+          f.propietario || `${f.apellidos} ${f.nombres}`,
+          [f.cedula || '', f.clave_catastral || ''].filter(Boolean).join('\n'),
+          f.parroquia || '',
+          f.sector || '',
+          (f.comunidad || '').trim(),
+          f.area_total ? `${f.area_total.toLocaleString('es-EC')} m²` : '0 m²',
+          f.area_riego ? `${f.area_riego.toLocaleString('es-EC')} m²` : '0 m²',
+          f.caudal_valor ? `${f.caudal_valor} l/s` : '',
+          getNombreTecnico(f.creado_por),
+          safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
+        ]);
+
+        // Desglose de predios adicionales (tanto físicos como unificados virtuales)
+        const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
+        adicionales.forEach((pa) => {
+          // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
+          const fichaAdicionalFisica = fichas.find((x) => x.id === pa.id_adicional);
+
+          rows.push([
+            '', // Celda ordinal vacía
+            '  ↳ Predio Adic.', // Indentado
+            '', // Propietario vacío
+            pa.clave_catastral_otro || '', // Clave catastral del predio adicional
+            fichaAdicionalFisica?.parroquia || '',
+            fichaAdicionalFisica?.sector || '',
+            (fichaAdicionalFisica?.comunidad || '').trim(),
+            pa.area_total_otro ? `${pa.area_total_otro.toLocaleString('es-EC')} m²` : (pa.area_lote_asignado_otro ? `${pa.area_lote_asignado_otro.toLocaleString('es-EC')} m²` : '0 m²'),
+            pa.area_riego_otro ? `${pa.area_riego_otro.toLocaleString('es-EC')} m²` : '0 m²',
+            '', // Caudal vacío
+            '', // Técnico vacío
+            '', // Fecha vacía
+          ]);
+        });
+      });
 
       autoTable(doc, {
         head: [headers], body: rows, startY: 33,
@@ -178,33 +205,71 @@ export default function ReportesPage({ fichas, cultivosData, animalesData }: Pro
       const data = getFilteredFichas();
       const wb = XLSX.utils.book_new();
 
-      const fichasRows = data.map((f) => ({
-        'Código': f.codigo_final,
-        'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
-        'Cédula': f.cedula,
-        'Parroquia': f.parroquia,
-        'Sector': f.sector,
-        'Comunidad': f.comunidad,
-        'Sector Comunidad': f.sector_comunidad,
-        'Clave Catastral': f.clave_catastral,
-        'Área Total (m²)': f.area_total,
-        'Área Riego (m²)': f.area_riego,
-        'Área Sin Riego (m²)': f.area_sin_riego,
-        'Caudal (l/s)': f.caudal_valor,
-        'Tipo Caudal': f.caudal_tipo,
-        'Frecuencia Riego': f.frecuencia_riego,
-        'Gravedad (%)': f.metodo_gravedad_pct,
-        'Aspersión (%)': f.metodo_aspersion_pct,
-        'Goteo (%)': f.metodo_goteo_pct,
-        'COTA (msnm)': f.cota_msnm,
-        'X (UTM)': f.coord_x_utm,
-        'Y (UTM)': f.coord_y_utm,
-        'Técnico': getNombreTecnico(f.creado_por),
-        'Fecha': safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
-        'Tenencia': f.tenencia_predio,
-        'Material Construcción': f.material_construccion,
-        'Observaciones': f.observaciones,
-      }));
+      const fichasRows: any[] = [];
+      data.forEach((f) => {
+        // Ficha Principal
+        fichasRows.push({
+          'Código': f.codigo_final,
+          'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
+          'Cédula': f.cedula,
+          'Parroquia': f.parroquia,
+          'Sector': f.sector,
+          'Comunidad': f.comunidad,
+          'Sector Comunidad': f.sector_comunidad,
+          'Clave Catastral': f.clave_catastral,
+          'Área Total (m²)': f.area_total,
+          'Área Riego (m²)': f.area_riego,
+          'Área Sin Riego (m²)': f.area_sin_riego,
+          'Caudal (l/s)': f.caudal_valor,
+          'Tipo Caudal': f.caudal_tipo,
+          'Frecuencia Riego': f.frecuencia_riego,
+          'Gravedad (%)': f.metodo_gravedad_pct,
+          'Aspersión (%)': f.metodo_aspersion_pct,
+          'Goteo (%)': f.metodo_goteo_pct,
+          'COTA (msnm)': f.cota_msnm,
+          'X (UTM)': f.coord_x_utm,
+          'Y (UTM)': f.coord_y_utm,
+          'Técnico': getNombreTecnico(f.creado_por),
+          'Fecha': safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
+          'Tenencia': f.tenencia_predio,
+          'Material Construcción': f.material_construccion,
+          'Observaciones': f.observaciones,
+        });
+
+        // Predios Adicionales
+        const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
+        adicionales.forEach((pa) => {
+          const fichaAdicionalFisica = fichas.find((x) => x.id === pa.id_adicional);
+
+          fichasRows.push({
+            'Código': '  ↳ Predio Adic.',
+            'Propietario': '',
+            'Cédula': '',
+            'Parroquia': fichaAdicionalFisica?.parroquia || '',
+            'Sector': fichaAdicionalFisica?.sector || '',
+            'Comunidad': (fichaAdicionalFisica?.comunidad || '').trim(),
+            'Sector Comunidad': '',
+            'Clave Catastral': pa.clave_catastral_otro || '',
+            'Área Total (m²)': pa.area_total_otro || pa.area_lote_asignado_otro || 0,
+            'Área Riego (m²)': pa.area_riego_otro || 0,
+            'Área Sin Riego (m²)': pa.area_sin_riego_otro || 0,
+            'Caudal (l/s)': '',
+            'Tipo Caudal': '',
+            'Frecuencia Riego': '',
+            'Gravedad (%)': '',
+            'Aspersión (%)': '',
+            'Goteo (%)': '',
+            'COTA (msnm)': '',
+            'X (UTM)': '',
+            'Y (UTM)': '',
+            'Técnico': '',
+            'Fecha': '',
+            'Tenencia': '',
+            'Material Construcción': '',
+            'Observaciones': pa.observaciones_otro || '',
+          });
+        });
+      });
       XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(fichasRows), 'Fichas');
 
       const fichaIds = new Set(data.map((f) => f.id));
