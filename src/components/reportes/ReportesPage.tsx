@@ -131,7 +131,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
-      const headers = ['#', 'Código', 'Propietario', 'Cédula / Clave Catastral', 'Parroquia', 'Sector', 'Comunidad', 'Área Total', 'Área Riego', 'Caudal', 'Técnico', 'Fecha'];
+      const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
       
       const rows: any[] = [];
       data.forEach((f, i) => {
@@ -140,13 +140,17 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
           i + 1,
           f.codigo_final,
           f.propietario || `${f.apellidos} ${f.nombres}`,
-          [f.cedula || '', f.clave_catastral || ''].filter(Boolean).join('\n'),
-          f.parroquia || '',
-          f.sector || '',
-          (f.comunidad || '').trim(),
+          [
+            f.cedula ? `C.I. ${f.cedula}` : '', 
+            f.clave_catastral ? `Ref. ${f.clave_catastral}` : ''
+          ].filter(Boolean).join('\n'),
+          [
+            f.parroquia || '', 
+            f.sector || '', 
+            (f.comunidad || '').trim()
+          ].filter(Boolean).join('\n'),
           f.area_total ? `${f.area_total.toLocaleString('es-EC')} m²` : '0 m²',
           f.area_riego ? `${f.area_riego.toLocaleString('es-EC')} m²` : '0 m²',
-          f.caudal_valor ? `${f.caudal_valor} l/s` : '',
           getNombreTecnico(f.creado_por),
           safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
         ]);
@@ -156,29 +160,64 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         adicionales.forEach((pa) => {
           // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
           const fichaAdicionalFisica = fichas.find((x) => x.id === pa.id_adicional);
+          
+          const ubicacionAdicional = [
+            fichaAdicionalFisica?.parroquia,
+            fichaAdicionalFisica?.sector,
+            fichaAdicionalFisica?.comunidad
+          ].filter(Boolean).join(' / ');
 
           rows.push([
-            '', // Celda ordinal vacía
-            '  ↳ Predio Adic.', // Indentado
-            '', // Propietario vacío
-            pa.clave_catastral_otro || '', // Clave catastral del predio adicional
-            fichaAdicionalFisica?.parroquia || '',
-            fichaAdicionalFisica?.sector || '',
-            (fichaAdicionalFisica?.comunidad || '').trim(),
-            pa.area_total_otro ? `${pa.area_total_otro.toLocaleString('es-EC')} m²` : (pa.area_lote_asignado_otro ? `${pa.area_lote_asignado_otro.toLocaleString('es-EC')} m²` : '0 m²'),
-            pa.area_riego_otro ? `${pa.area_riego_otro.toLocaleString('es-EC')} m²` : '0 m²',
-            '', // Caudal vacío
-            '', // Técnico vacío
-            '', // Fecha vacía
+            { content: '', styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } }, // #
+            { 
+              content: '  ↳ Predio Adicional', 
+              colSpan: 2, 
+              styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] } 
+            }, // Código + Propietario
+            { 
+              content: pa.clave_catastral_otro ? `Ref. ${pa.clave_catastral_otro}` : '', 
+              styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
+            }, // Identificación (Clave)
+            { 
+              content: ubicacionAdicional ? `Ubic: ${ubicacionAdicional}` : '', 
+              styles: { textColor: [100, 116, 139], fillColor: [248, 250, 252], fontSize: 5, lineColor: [241, 245, 249] } 
+            }, // Ubicación
+            { 
+              content: pa.area_total_otro ? `${pa.area_total_otro.toLocaleString('es-EC')} m²` : (pa.area_lote_asignado_otro ? `${pa.area_lote_asignado_otro.toLocaleString('es-EC')} m²` : '0 m²'), 
+              styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
+            }, // Área Total
+            { 
+              content: pa.area_riego_otro ? `${pa.area_riego_otro.toLocaleString('es-EC')} m²` : '0 m²', 
+              styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
+            }, // Área Riego
+            { 
+              content: '', 
+              colSpan: 2, 
+              styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } 
+            } // Técnico + Fecha vacíos
           ]);
         });
       });
 
       autoTable(doc, {
         head: [headers], body: rows, startY: 33,
-        styles: { fontSize: 6, cellPadding: 1.5 },
-        headStyles: { fillColor: [30, 41, 59], textColor: 255, fontStyle: 'bold', fontSize: 6 },
-        alternateRowStyles: { fillColor: [241, 245, 249] },
+        styles: { 
+          fontSize: 6, 
+          cellPadding: 1.5,
+          valign: 'middle',
+          lineColor: [226, 232, 240], // Bordes muy finos de color Slate-200
+          lineWidth: 0.1,
+        },
+        headStyles: { 
+          fillColor: [15, 23, 42], // Slate-900 muy moderno
+          textColor: 255, 
+          fontStyle: 'bold', 
+          fontSize: 6,
+          halign: 'left',
+        },
+        alternateRowStyles: { 
+          fillColor: [255, 255, 255] 
+        },
         margin: { left: 10, right: 10 },
         didDrawPage: (d) => {
           const pc = doc.getNumberOfPages();
