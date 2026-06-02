@@ -9,6 +9,8 @@ import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJEC
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 interface Props {
   fichas: FichaPredio[];
@@ -83,12 +85,9 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
     return result;
   };
 
-  const generatePDF = async () => {
-    setGenerating('pdf');
-    try {
-      const data = getFilteredFichas();
-      const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
-      const pageWidth = doc.internal.pageSize.getWidth();
+  const buildPdfDoc = async (dataToRender: FichaPredio[], subtitleText: string, showAuditoria: boolean = false) => {
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const pageWidth = doc.internal.pageSize.getWidth();
 
       // Logos — proporción real
       try {
@@ -111,21 +110,12 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
       doc.text(PROJECT_LOCATION, pageWidth / 2, 21, { align: 'center' });
 
-      const subtitles: Record<ReportType, string> = {
-        general: 'REPORTE GENERAL DE FICHAS INVESTIGADAS',
-        sector: `REPORTE POR SECTOR: ${filterSector || 'TODOS'}`,
-        parroquia: `REPORTE POR PARROQUIA: ${filterParroquia || 'TODAS'}`,
-        comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
-        tecnico: `REPORTE POR TÉCNICO: ${filterTecnico || 'TODOS'}`,
-        fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
-        auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
-      };
       doc.setFontSize(8); doc.setFont('helvetica', 'bold');
-      doc.text(subtitles[reportType], pageWidth / 2, 26, { align: 'center' });
+      doc.text(subtitleText, pageWidth / 2, 26, { align: 'center' });
       doc.setFont('helvetica', 'normal');
-      doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
+      doc.text(`Total de registros: ${dataToRender.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
-      if (reportType === 'general' && auditoria) {
+      if (showAuditoria && auditoria) {
         // Título del bloque de auditoría sin emojis para evitar problemas de caracteres
         doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(15, 23, 42); // Slate-900
         doc.text("CONSOLIDADO DE CALIDAD DE DATOS (AUDITORÍA DE DUPLICADOS Y OPTIMIZACIÓN)", 10, 35);
@@ -175,11 +165,11 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         doc.setTextColor(0, 0, 0); // Reset color
       }
 
-      const tableStartY = (reportType === 'general' && auditoria)
+      const tableStartY = (showAuditoria && auditoria)
         ? 62
         : 35;
 
-      if (reportType === 'general' && auditoria) {
+      if (showAuditoria && auditoria) {
         doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(15, 23, 42);
         doc.text("PADRÓN DE USUARIOS (DATOS UNIFICADOS Y DEPURADOS)", 10, tableStartY - 3);
         doc.setTextColor(0, 0, 0); // Reset color
@@ -188,7 +178,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
       
       const rows: any[] = [];
-      data.forEach((f, i) => {
+      dataToRender.forEach((f, i) => {
         // Ficha Principal
         rows.push([
           i + 1,
@@ -285,10 +275,54 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         },
       });
 
-      doc.save(`reporte_${reportType}_${new Date().toISOString().split('T')[0]}.pdf`);
-      setLastGenerated(`PDF (${data.length} fichas)`);
-    } catch (err) {
-      console.error('Error generating PDF:', err);
+    return doc;
+  };
+
+  const generatePDF = async () => {
+    setGenerating('pdf');
+    try {
+      const data = getFilteredFichas();
+      const subtitles: Record<ReportType, string> = {
+        general: 'REPORTE GENERAL DE FICHAS INVESTIGADAS',
+        sector: `REPORTE POR SECTOR: ${filterSector || 'TODOS'}`,
+        parroquia: `REPORTE POR PARROQUIA: ${filterParroquia || 'TODAS'}`,
+        comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
+        tecnico: `REPORTE POR TÉCNICO: ${filterTecnico || 'TODOS'}`,
+        fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
+        auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
+      };
+      
+      const doc = await buildPdfDoc(data, subtitles[reportType], reportType === 'general');
+      doc.save(`catastro_${reportType}_${Date.now()}.pdf`);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Hubo un error al generar el PDF.');
+    } finally {
+      setGenerating(null);
+    }
+  };
+
+  const generateAllComunidadesZIP = async () => {
+    setGenerating('pdf');
+    try {
+      const zip = new JSZip();
+      
+      for (const com of COMUNIDADES) {
+        const dataComunidad = fichas.filter((f) => (f.comunidad || '').trim() === com);
+        
+        if (dataComunidad.length > 0) {
+          const doc = await buildPdfDoc(dataComunidad, `REPORTE POR COMUNIDAD: ${com}`, false);
+          const pdfBlob = doc.output('blob');
+          const fileName = `Reporte_${com.replace(/\s+/g, '_')}.pdf`;
+          zip.file(fileName, pdfBlob);
+        }
+      }
+      
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      saveAs(zipBlob, `Reportes_Todas_Las_Comunidades_${Date.now()}.zip`);
+    } catch (error) {
+      console.error('Error generating ZIP:', error);
+      alert('Hubo un error al generar los reportes en lote.');
     } finally {
       setGenerating(null);
     }
@@ -562,7 +596,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
           </div>
 
           {/* Download buttons */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className={`grid grid-cols-1 sm:grid-cols-${reportType === 'comunidad' ? '3' : '2'} gap-4`}>
             {/* PDF */}
             <button
               onClick={generatePDF}
@@ -593,6 +627,39 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
               </div>
               <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
             </button>
+
+            {/* ZIP Masivo (Solo Comunidad) */}
+            {reportType === 'comunidad' && (
+              <button
+                onClick={generateAllComunidadesZIP}
+                disabled={generating !== null}
+                className="group relative flex items-center gap-4 p-5 rounded-xl border-2 text-left transition-all disabled:opacity-40 cursor-pointer disabled:cursor-not-allowed overflow-hidden"
+                style={{
+                  background: 'var(--bg-card)',
+                  borderColor: generating === 'pdf' ? '#ec489980' : 'var(--border-color)',
+                }}
+              >
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ background: 'linear-gradient(135deg, rgba(236,72,153,0.04), transparent)' }} />
+                <div className="relative w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: 'rgba(236,72,153,0.1)' }}>
+                  {generating === 'pdf' ? (
+                    <Loader2 className="w-6 h-6 text-pink-400 animate-spin" />
+                  ) : (
+                    <Building2 className="w-6 h-6 text-pink-400" />
+                  )}
+                </div>
+                <div className="relative flex-1 min-w-0">
+                  <p className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Lote ZIP (Todas)
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    Exportar 22 PDFs en un ZIP
+                  </p>
+                </div>
+                <Download className="w-5 h-5 shrink-0 opacity-30 group-hover:opacity-60 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
+              </button>
+            )}
 
             {/* Excel */}
             <button

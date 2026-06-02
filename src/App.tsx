@@ -41,7 +41,7 @@ function useLocalData() {
           area_sin_riego: f.properties.area_sin_riego || 0,
           creado_por: f.properties.creado_por || '',
           parroquia: f.properties.parroquia || '',
-          comunidad: f.properties.comunidad || '',
+          comunidad: (f.properties.comunidad || '').replace(/LARCACOCHA/ig, 'LARCACHACA').trim(),
           sector: f.properties.sector || '',
           cedula: f.properties.cedula || '',
           codigo_final: f.properties.codigo_final || '',
