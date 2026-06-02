@@ -132,45 +132,103 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
       doc.text(`Total de registros: ${data.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
       if (reportType === 'general' && auditoria) {
-        // Título del bloque de auditoría
-        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(16, 185, 129); // Verde esmeralda para calidad
-        doc.text("📊 CONSOLIDADO DE CALIDAD DE DATOS (AUDITORÍA DE DUPLICADOS Y OPTIMIZACIÓN)", 10, 35);
+        // Título del bloque de auditoría sin emojis para evitar problemas de caracteres
+        doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(15, 23, 42); // Slate-900
+        doc.text("CONSOLIDADO DE CALIDAD DE DATOS (AUDITORÍA DE DUPLICADOS Y OPTIMIZACIÓN)", 10, 35);
         doc.setTextColor(0, 0, 0); // Reset color
         
-        const auditoriaHeaders = [
-          'Fichas en Campo (Originales)', 
-          'Regantes Duplicados', 
-          'Fichas Duplicadas', 
-          'Fichas Redundantes Reducidas', 
-          'Fichas Finales (Padrón)', 
-          'Reducción (%)'
+        const cardY = 38;
+        const cardHeight = 17;
+        const cardWidth = 43;
+        const cardGap = 3.8;
+        
+        const cards = [
+          {
+            titleL1: 'Fichas en Campo',
+            titleL2: '(Originales)',
+            val: auditoria.resumen.totalFichasOriginales,
+            valColor: [37, 99, 235], // Azul
+            borderColor: [191, 219, 254],
+            fillColor: [240, 246, 255]
+          },
+          {
+            titleL1: 'Regantes Duplicados',
+            titleL2: '(Detectados)',
+            val: auditoria.resumen.totalRegantesUnicosDuplicados,
+            valColor: [217, 119, 6], // Ámbar
+            borderColor: [253, 230, 138],
+            fillColor: [254, 251, 232]
+          },
+          {
+            titleL1: 'Fichas Duplicadas',
+            titleL2: '(Encontradas)',
+            val: auditoria.resumen.totalFichasDuplicadas,
+            valColor: [71, 85, 105], // Slate
+            borderColor: [226, 232, 240],
+            fillColor: [248, 250, 252]
+          },
+          {
+            titleL1: 'Fichas Redundantes',
+            titleL2: '(Reducidas)',
+            val: auditoria.resumen.fichasRedundantesReducidas,
+            valColor: [220, 38, 38], // Rojo
+            borderColor: [254, 202, 202],
+            fillColor: [254, 242, 242]
+          },
+          {
+            titleL1: 'Fichas Finales',
+            titleL2: '(Padrón Depurado)',
+            val: auditoria.resumen.totalFichasUnificadas,
+            valColor: [5, 150, 105], // Esmeralda
+            borderColor: [167, 243, 208],
+            fillColor: [236, 253, 245]
+          },
+          {
+            titleL1: 'Reducción en BD',
+            titleL2: '(Optimización)',
+            val: `${auditoria.resumen.porcentajeReduccion}%`,
+            valColor: [124, 58, 237], // Violeta
+            borderColor: [233, 213, 255],
+            fillColor: [245, 243, 255]
+          }
         ];
-        const auditoriaRows = [[
-          auditoria.resumen.totalFichasOriginales,
-          auditoria.resumen.totalRegantesUnicosDuplicados,
-          auditoria.resumen.totalFichasDuplicadas,
-          auditoria.resumen.fichasRedundantesReducidas,
-          auditoria.resumen.totalFichasUnificadas,
-          `${auditoria.resumen.porcentajeReduccion}%`
-        ]];
 
-        autoTable(doc, {
-          head: [auditoriaHeaders],
-          body: auditoriaRows,
-          startY: 37,
-          styles: { fontSize: 6, cellPadding: 1, halign: 'center' },
-          headStyles: { fillColor: [16, 185, 129], textColor: 255, fontStyle: 'bold' },
-          margin: { left: 10, right: 10 }
+        cards.forEach((c, idx) => {
+          const cardX = 10 + idx * (cardWidth + cardGap);
+          // Dibujar fondo de tarjeta
+          doc.setFillColor(c.fillColor[0], c.fillColor[1], c.fillColor[2]);
+          doc.setDrawColor(c.borderColor[0], c.borderColor[1], c.borderColor[2]);
+          doc.setLineWidth(0.25);
+          doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 1.5, 1.5, 'FD');
+
+          // Dibujar textos
+          doc.setFontSize(6); 
+          doc.setFont('helvetica', 'bold'); 
+          doc.setTextColor(71, 85, 105); // Slate-600
+          doc.text(c.titleL1, cardX + cardWidth / 2, cardY + 4.5, { align: 'center' });
+          
+          doc.setFontSize(5.5); 
+          doc.setFont('helvetica', 'normal'); 
+          doc.setTextColor(100, 116, 139); // Slate-500
+          doc.text(c.titleL2, cardX + cardWidth / 2, cardY + 7.5, { align: 'center' });
+          
+          doc.setFontSize(10.5); 
+          doc.setFont('helvetica', 'bold'); 
+          doc.setTextColor(c.valColor[0], c.valColor[1], c.valColor[2]);
+          doc.text(String(c.val), cardX + cardWidth / 2, cardY + 13.5, { align: 'center' });
         });
+        
+        doc.setTextColor(0, 0, 0); // Reset color
       }
 
       const tableStartY = (reportType === 'general' && auditoria)
-        ? (doc as any).lastAutoTable.finalY + 8
-        : 33;
+        ? 64
+        : 35;
 
       if (reportType === 'general' && auditoria) {
-        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold');
-        doc.text("📋 PADRÓN DE USUARIOS (DATOS UNIFICADOS Y DEPURADOS)", 10, tableStartY - 2);
+        doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setTextColor(15, 23, 42);
+        doc.text("PADRÓN DE USUARIOS (DATOS UNIFICADOS Y DEPURADOS)", 10, tableStartY - 3);
+        doc.setTextColor(0, 0, 0); // Reset color
       }
 
       const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
