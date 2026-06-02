@@ -138,91 +138,51 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         doc.setTextColor(0, 0, 0); // Reset color
         
         const cardY = 38;
-        const cardHeight = 17;
-        const cardWidth = 43;
-        const cardGap = 3.8;
+        const cardHeight = 15;
+        const cardWidth = 135.5;
+        const cardGap = 6;
         
-        const cards = [
-          {
-            titleL1: 'Fichas en Campo',
-            titleL2: '(Originales)',
-            val: auditoria.resumen.totalFichasOriginales,
-            valColor: [37, 99, 235], // Azul
-            borderColor: [191, 219, 254],
-            fillColor: [240, 246, 255]
-          },
-          {
-            titleL1: 'Regantes Duplicados',
-            titleL2: '(Detectados)',
-            val: auditoria.resumen.totalRegantesUnicosDuplicados,
-            valColor: [217, 119, 6], // Ámbar
-            borderColor: [253, 230, 138],
-            fillColor: [254, 251, 232]
-          },
-          {
-            titleL1: 'Fichas Duplicadas',
-            titleL2: '(Encontradas)',
-            val: auditoria.resumen.totalFichasDuplicadas,
-            valColor: [71, 85, 105], // Slate
-            borderColor: [226, 232, 240],
-            fillColor: [248, 250, 252]
-          },
-          {
-            titleL1: 'Fichas Redundantes',
-            titleL2: '(Reducidas)',
-            val: auditoria.resumen.fichasRedundantesReducidas,
-            valColor: [220, 38, 38], // Rojo
-            borderColor: [254, 202, 202],
-            fillColor: [254, 242, 242]
-          },
-          {
-            titleL1: 'Fichas Finales',
-            titleL2: '(Padrón Depurado)',
-            val: auditoria.resumen.totalFichasUnificadas,
-            valColor: [5, 150, 105], // Esmeralda
-            borderColor: [167, 243, 208],
-            fillColor: [236, 253, 245]
-          },
-          {
-            titleL1: 'Reducción en BD',
-            titleL2: '(Optimización)',
-            val: `${auditoria.resumen.porcentajeReduccion}%`,
-            valColor: [124, 58, 237], // Violeta
-            borderColor: [233, 213, 255],
-            fillColor: [245, 243, 255]
-          }
-        ];
+        // Tarjeta 1: Fichas Totales
+        const card1X = 10;
+        doc.setFillColor(255, 255, 255); // Fondo blanco sólido para mejor impresión
+        doc.setDrawColor(30, 41, 59); // Borde Slate-800 oscuro sólido
+        doc.setLineWidth(0.4);
+        doc.roundedRect(card1X, cardY, cardWidth, cardHeight, 1.5, 1.5, 'FD');
 
-        cards.forEach((c, idx) => {
-          const cardX = 10 + idx * (cardWidth + cardGap);
-          // Dibujar fondo de tarjeta
-          doc.setFillColor(c.fillColor[0], c.fillColor[1], c.fillColor[2]);
-          doc.setDrawColor(c.borderColor[0], c.borderColor[1], c.borderColor[2]);
-          doc.setLineWidth(0.25);
-          doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 1.5, 1.5, 'FD');
+        // Textos Tarjeta 1
+        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 41, 59);
+        doc.text("FICHAS TOTALES INVESTIGADAS EN CAMPO", card1X + cardWidth / 2, cardY + 4.5, { align: 'center' });
+        
+        const totalOriginalesStr = Number(auditoria.resumen.totalFichasOriginales).toLocaleString('es-EC');
+        doc.setFontSize(13); doc.setFont('helvetica', 'bold'); doc.setTextColor(29, 78, 216); // Azul sólido
+        doc.text(totalOriginalesStr, card1X + cardWidth / 2, cardY + 9.5, { align: 'center' });
+        
+        doc.setFontSize(6.5); doc.setFont('helvetica', 'normal'); doc.setTextColor(71, 85, 105);
+        doc.text("Total de registros levantados originalmente mediante QField Cloud", card1X + cardWidth / 2, cardY + 13, { align: 'center' });
 
-          // Dibujar textos
-          doc.setFontSize(6); 
-          doc.setFont('helvetica', 'bold'); 
-          doc.setTextColor(71, 85, 105); // Slate-600
-          doc.text(c.titleL1, cardX + cardWidth / 2, cardY + 4.5, { align: 'center' });
-          
-          doc.setFontSize(5.5); 
-          doc.setFont('helvetica', 'normal'); 
-          doc.setTextColor(100, 116, 139); // Slate-500
-          doc.text(c.titleL2, cardX + cardWidth / 2, cardY + 7.5, { align: 'center' });
-          
-          doc.setFontSize(10.5); 
-          doc.setFont('helvetica', 'bold'); 
-          doc.setTextColor(c.valColor[0], c.valColor[1], c.valColor[2]);
-          doc.text(String(c.val), cardX + cardWidth / 2, cardY + 13.5, { align: 'center' });
-        });
+        // Tarjeta 2: Fichas Unificadas
+        const card2X = 10 + cardWidth + cardGap;
+        doc.setFillColor(255, 255, 255); // Fondo blanco sólido
+        doc.setDrawColor(30, 41, 59); // Borde Slate-800 oscuro sólido
+        doc.setLineWidth(0.4);
+        doc.roundedRect(card2X, cardY, cardWidth, cardHeight, 1.5, 1.5, 'FD');
+
+        // Textos Tarjeta 2
+        doc.setFontSize(7.5); doc.setFont('helvetica', 'bold'); doc.setTextColor(30, 41, 59);
+        doc.text("FICHAS UNIFICADAS POR REGANTE (PADRÓN CATASTRAL)", card2X + cardWidth / 2, cardY + 4.5, { align: 'center' });
+        
+        const totalUnificadasStr = Number(auditoria.resumen.totalFichasUnificadas).toLocaleString('es-EC');
+        doc.setFontSize(13); doc.setFont('helvetica', 'bold'); doc.setTextColor(4, 120, 87); // Verde sólido
+        doc.text(totalUnificadasStr, card2X + cardWidth / 2, cardY + 9.5, { align: 'center' });
+        
+        doc.setFontSize(6.5); doc.setFont('helvetica', 'italic'); doc.setTextColor(71, 85, 105);
+        doc.text("(Cada una contiene los terrenos adicionales de cada regante unificado)", card2X + cardWidth / 2, cardY + 13, { align: 'center' });
         
         doc.setTextColor(0, 0, 0); // Reset color
       }
 
       const tableStartY = (reportType === 'general' && auditoria)
-        ? 64
+        ? 62
         : 35;
 
       if (reportType === 'general' && auditoria) {
