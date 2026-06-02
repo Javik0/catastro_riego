@@ -5,7 +5,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -52,15 +52,9 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
     }
   }, []);
 
-  // Lista dinámica de comunidades obtenida de las fichas reales
-  const comunidadesList = useMemo(() => {
-    const set = new Set<string>();
-    fichas.forEach((f) => {
-      const c = (f.comunidad || '').trim();
-      if (c) set.add(c);
-    });
-    return Array.from(set).sort();
-  }, [fichas]);
+  const tecnicosUnicos = useMemo(() => {
+    return Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre))).sort();
+  }, []);
 
   const getFilteredFichas = (): FichaPredio[] => {
     let result = [...fichas];
@@ -75,7 +69,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         if (filterComunidad) result = result.filter((f) => (f.comunidad || '').trim() === filterComunidad);
         break;
       case 'tecnico':
-        if (filterTecnico) result = result.filter((f) => f.creado_por === filterTecnico);
+        if (filterTecnico) result = result.filter((f) => getNombreTecnico(f.creado_por) === filterTecnico);
         break;
       case 'fecha':
         if (fechaDesde) result = result.filter((f) => safeToDate(f.fecha_creacion) >= new Date(fechaDesde));
@@ -122,7 +116,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         sector: `REPORTE POR SECTOR: ${filterSector || 'TODOS'}`,
         parroquia: `REPORTE POR PARROQUIA: ${filterParroquia || 'TODAS'}`,
         comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
-        tecnico: `REPORTE POR TÉCNICO: ${filterTecnico ? getNombreTecnico(filterTecnico) : 'TODOS'}`,
+        tecnico: `REPORTE POR TÉCNICO: ${filterTecnico || 'TODOS'}`,
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
         auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
       };
@@ -210,7 +204,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
             (f.comunidad || '').trim()
           ].filter(Boolean).join('\n'),
           f.area_total ? `${f.area_total.toLocaleString('es-EC')} m²` : '0 m²',
-          f.area_riego ? `${f.area_riego.toLocaleString('es-EC')} m²` : '0 m²',
+          (f.area_riego && f.area_riego > 0) ? `${f.area_riego.toLocaleString('es-EC')} m²` : (f.area_total ? `${f.area_total.toLocaleString('es-EC')} m²` : '0 m²'),
           getNombreTecnico(f.creado_por),
           safeToDate(f.fecha_creacion).toLocaleDateString('es-EC'),
         ]);
@@ -226,6 +220,8 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
             fichaAdicionalFisica?.sector,
             fichaAdicionalFisica?.comunidad
           ].filter(Boolean).join(' / ');
+
+          const areaTotalAdicional = pa.area_total_otro || pa.area_lote_asignado_otro || 0;
 
           rows.push([
             { content: '', styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } }, // #
@@ -243,11 +239,11 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
               styles: { textColor: [100, 116, 139], fillColor: [248, 250, 252], fontSize: 5, lineColor: [241, 245, 249] } 
             }, // Ubicación
             { 
-              content: pa.area_total_otro ? `${pa.area_total_otro.toLocaleString('es-EC')} m²` : (pa.area_lote_asignado_otro ? `${pa.area_lote_asignado_otro.toLocaleString('es-EC')} m²` : '0 m²'), 
+              content: areaTotalAdicional > 0 ? `${areaTotalAdicional.toLocaleString('es-EC')} m²` : '0 m²', 
               styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
             }, // Área Total
             { 
-              content: pa.area_riego_otro ? `${pa.area_riego_otro.toLocaleString('es-EC')} m²` : '0 m²', 
+              content: (pa.area_riego_otro && pa.area_riego_otro > 0) ? `${pa.area_riego_otro.toLocaleString('es-EC')} m²` : (areaTotalAdicional > 0 ? `${areaTotalAdicional.toLocaleString('es-EC')} m²` : '0 m²'), 
               styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
             }, // Área Riego
             { 
@@ -413,7 +409,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
     { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
     { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Guanguilqui / Guang-Porotog', color: '#06b6d4' },
     { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#ec4899' },
-    { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${comunidadesList.length} comunidades`, color: '#ec4899' },
+    { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${COMUNIDADES.length} comunidades`, color: '#ec4899' },
     { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
     { id: 'fecha' as const, label: 'Por Fecha', icon: Calendar, desc: 'Rango de fechas personalizado', color: '#8b5cf6' },
     { id: 'auditoria' as const, label: 'Auditoría y Calidad', icon: CheckCircle2, desc: 'Control de duplicados y optimización', color: '#10b981' },
@@ -515,16 +511,16 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
               {reportType === 'comunidad' && (
                 <select value={filterComunidad} onChange={(e) => setFilterComunidad(e.target.value)}
                   className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
-                  <option value="">Todas las comunidades ({comunidadesList.length})</option>
-                  {comunidadesList.map((c) => <option key={c} value={c}>{c}</option>)}
+                  <option value="">Todas las comunidades ({COMUNIDADES.length})</option>
+                  {COMUNIDADES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               )}
               {reportType === 'tecnico' && (
                 <select value={filterTecnico} onChange={(e) => setFilterTecnico(e.target.value)}
                   className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
                   <option value="">Todos los técnicos</option>
-                  {Object.entries(TECNICOS).map(([key, { nombre }]) => (
-                    <option key={key} value={key}>{nombre}</option>
+                  {tecnicosUnicos.map((nombre) => (
+                    <option key={nombre} value={nombre}>{nombre}</option>
                   ))}
                 </select>
               )}

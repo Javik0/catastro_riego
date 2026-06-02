@@ -178,3 +178,30 @@ export const PROJECT_LOCATION = 'Provincia Pichincha — Cantón Cayambe';
 
 export const LOGO_PICHINCHA = '/logo-izq.png';
 export const LOGO_CONSORCIO = '/logo-der.png';
+
+// ── Comunidades Unificadas Oficiales (Depuradas de QField) ──
+export const COMUNIDADES = [
+  'ASOCIACIÓN 17 DE JUNIO',
+  'ASOCIACIÓN POROTOG',
+  'AVELLANEDA',
+  'CARRERA',
+  'CHAMBITOLA',
+  'COCHAPAMBA',
+  'COMUNA INSACATA',
+  'COMUNA POROTOG',
+  'CORDILLERAS DE LOS ANDES',
+  'INSACATA GRANDE',
+  'JESÚS GRAN PODER',
+  'LA CANDELARIA',
+  'LA LIBERTAD',
+  'LARCACHACA',
+  'LOMA GORDA',
+  'LOS ANDES INSACATA',
+  'MATÍAS IMBAGO',
+  'MILAGRO',
+  'SAN ANTONIO',
+  'SAN JACINTO',
+  'SAN JOSÉ',
+  'SANTA BÁRBARA',
+] as const;
+

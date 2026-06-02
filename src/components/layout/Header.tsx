@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES } from '../../lib/constants';
+import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
@@ -16,22 +15,6 @@ export default function Header({ onMobileMenuOpen }: Props) {
   const { toggleTheme, isDark } = useTheme();
   const { logout } = useAuth();
   const location = useLocation();
-
-  const [comunidades, setComunidades] = useState<string[]>([]);
-
-  useEffect(() => {
-    fetch('/geo/fichas_predios.geojson')
-      .then((res) => res.json())
-      .then((data) => {
-        const set = new Set<string>();
-        data.features.forEach((f: any) => {
-          const c = (f.properties?.comunidad || f.properties?.sector_comunidad || '').trim();
-          if (c) set.add(c);
-        });
-        setComunidades(Array.from(set).sort());
-      })
-      .catch((err) => console.error('Error fetching communities for header:', err));
-  }, []);
 
   const inputClass = "px-2 py-1.5 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-blue-500/40 cursor-pointer transition-colors";
   const inputStyle = {
@@ -135,7 +118,7 @@ export default function Header({ onMobileMenuOpen }: Props) {
         <select value={filtros.comunidad} onChange={(e) => setFiltro('comunidad', e.target.value)}
           className={`${inputClass} min-w-[130px] hidden md:block`} style={inputStyle}>
           <option value="">Comunidad</option>
-          {comunidades.map((c) => <option key={c} value={c}>{c}</option>)}
+          {COMUNIDADES.map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
 
         <select value={filtros.tecnico} onChange={(e) => setFiltro('tecnico', e.target.value)}
