@@ -173,9 +173,10 @@ export default function App() {
                   path="reportes"
                   element={
                     <FilteredDataProvider>
-                      {({ fichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
+                      {({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
                         <ReportesPage
                           fichas={fichas}
+                          allFichas={allFichas}
                           cultivosData={cultivosData}
                           animalesData={animalesData}
                           prediosAdicionalesData={prediosAdicionalesData}

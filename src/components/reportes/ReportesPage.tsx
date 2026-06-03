@@ -14,6 +14,7 @@ import { saveAs } from 'file-saver';
 
 interface Props {
   fichas: FichaPredio[];
+  allFichas: FichaPredio[];
   cultivosData: { tipo_cultivo: string; ficha_id: string; superficie_m2?: number; es_principal?: boolean }[];
   animalesData: { especie: string; ficha_id: string; cantidad: number }[];
   prediosAdicionalesData: PredioAdicional[];
@@ -21,7 +22,7 @@ interface Props {
 }
 type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'auditoria';
 
-export default function ReportesPage({ fichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
+export default function ReportesPage({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
   const [reportType, setReportType] = useState<ReportType>('general');
   const [filterSector, setFilterSector] = useState('');
   const [filterParroquia, setFilterParroquia] = useState('');
@@ -203,7 +204,7 @@ export default function ReportesPage({ fichas, cultivosData, animalesData, predi
         const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
         adicionales.forEach((pa) => {
           // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
-          const fichaAdicionalFisica = fichas.find((x) => x.id === pa.id_adicional);
+          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
           
           const ubicacionAdicional = [
             fichaAdicionalFisica?.parroquia,
