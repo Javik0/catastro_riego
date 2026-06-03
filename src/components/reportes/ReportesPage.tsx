@@ -369,7 +369,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // Predios Adicionales
         const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
         adicionales.forEach((pa) => {
-          const fichaAdicionalFisica = fichas.find((x) => x.id === pa.id_adicional);
+          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
 
           fichasRows.push({
             'Código': '  ↳ Predio Adic.',
