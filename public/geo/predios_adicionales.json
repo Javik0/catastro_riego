@@ -1903,7 +1903,7 @@
   {
     "fid": 210,
     "id_adicional": "{5b8c81f2-a9a8-435c-89e0-663a6d4c025d}",
-    "ficha_id": "{4d7a8893-4726-42c9-a90b-1de3eef56e11}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
     "clave_catastral_otro": "1702521510124",
     "area_total_otro": 2899.24,
     "area_riego_otro": 2899.24,
@@ -2319,16 +2319,6 @@
     "area_lote_asignado_otro": 10144.06,
     "tiene_observaciones": 1,
     "observaciones_otro": "Siembra de pasto mejorado"
-  },
-  {
-    "fid": 251,
-    "id_adicional": "{4d9f8a68-e082-4f9e-9d6d-0b006a448483}",
-    "ficha_id": "{38fdd668-10af-4363-bd4a-a70bc4e1d08b}",
-    "clave_catastral_otro": "1702521470014",
-    "area_total_otro": 4919.55,
-    "area_riego_otro": 4919.55,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 4919.55
   },
   {
     "fid": 252,
@@ -17531,6 +17521,128 @@
     "observaciones_otro": "Pasto mejorado "
   },
   {
+    "fid": 1617,
+    "id_adicional": "{1c861d12-f2e7-4d2e-9a2c-5943f62010e0}",
+    "ficha_id": "{f1ee1143-4d9d-45ad-a868-f941a18b2453}",
+    "clave_catastral_otro": "1702521560065",
+    "area_total_otro": 6515.09,
+    "area_riego_otro": 6515.09,
+    "area_sin_riego_otro": -6515.09,
+    "area_lote_asignado_otro": 6515.09,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1618,
+    "id_adicional": "{7790a753-d98e-4eba-94d4-5ed1679816c9}",
+    "ficha_id": "{f1ee1143-4d9d-45ad-a868-f941a18b2453}",
+    "clave_catastral_otro": "1702521560081",
+    "area_total_otro": 13232.94,
+    "area_riego_otro": 13232.94,
+    "area_sin_riego_otro": -13232.94,
+    "area_lote_asignado_otro": 13232.94,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1619,
+    "id_adicional": "{e6362e62-31c2-4e9c-8814-fc6ed02a3ed3}",
+    "ficha_id": "{ef305ca8-c585-4787-b052-4d52a86ab407}",
+    "clave_catastral_otro": "1702521150022",
+    "area_total_otro": 1905.34,
+    "area_riego_otro": 1905.34,
+    "area_sin_riego_otro": -1905.34,
+    "area_lote_asignado_otro": 1905.34,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1620,
+    "id_adicional": "{949b3d79-f6fb-40b1-9a44-279e07c8a27b}",
+    "ficha_id": "{ef305ca8-c585-4787-b052-4d52a86ab407}",
+    "clave_catastral_otro": "1702521560072",
+    "area_total_otro": 6784.83,
+    "area_riego_otro": 6784.83,
+    "area_sin_riego_otro": -6784.83,
+    "area_lote_asignado_otro": 6784.83,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1621,
+    "id_adicional": "{583ac39b-2994-495b-85bb-31682db1c49e}",
+    "ficha_id": "{d2753303-9ebb-4262-bd20-06519b3709d7}",
+    "clave_catastral_otro": "1702521430156",
+    "area_total_otro": 13827.11,
+    "area_riego_otro": 13827.11,
+    "area_sin_riego_otro": -13827.11,
+    "area_lote_asignado_otro": 13827.11,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1622,
+    "id_adicional": "{3caa2f9b-f127-4c75-9497-187651d6337a}",
+    "ficha_id": "{d2753303-9ebb-4262-bd20-06519b3709d7}",
+    "clave_catastral_otro": "1702521450091",
+    "area_total_otro": 5481.9,
+    "area_riego_otro": 5481.9,
+    "area_sin_riego_otro": -5481.9,
+    "area_lote_asignado_otro": 5481.9,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE OTRO PROPIETARIO. "
+  },
+  {
+    "fid": 1623,
+    "id_adicional": "{a4c12aa4-9ebe-43f3-a0c4-890a737a1962}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702521510094",
+    "area_total_otro": 14089.69,
+    "area_riego_otro": 14089.69,
+    "area_sin_riego_otro": -14089.69,
+    "area_lote_asignado_otro": 14089.69
+  },
+  {
+    "fid": 1624,
+    "id_adicional": "{2488480d-ac95-479c-b250-f7ec0c4ab097}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702521510124",
+    "area_total_otro": 2899.24,
+    "area_riego_otro": 2899.24,
+    "area_sin_riego_otro": -2899.24,
+    "area_lote_asignado_otro": 2899.24
+  },
+  {
+    "fid": 1625,
+    "id_adicional": "{ba441c45-deb5-4559-a621-4e4a31c7365a}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702521510099",
+    "area_total_otro": 8940.73,
+    "area_riego_otro": 8940.73,
+    "area_sin_riego_otro": -8940.73,
+    "area_lote_asignado_otro": 8940.73
+  },
+  {
+    "fid": 1626,
+    "id_adicional": "{68ad15b5-4aa8-48d7-aa50-0963a3d02ffb}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702521510142",
+    "area_total_otro": 1765.36,
+    "area_riego_otro": 1765.36,
+    "area_sin_riego_otro": -1765.36,
+    "area_lote_asignado_otro": 1765.36
+  },
+  {
+    "fid": 1627,
+    "id_adicional": "{90729885-7ff7-4b80-8d62-82010ef6a74d}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702521510143",
+    "area_total_otro": 8282.42,
+    "area_riego_otro": 8282.42,
+    "area_sin_riego_otro": -8282.42,
+    "area_lote_asignado_otro": 8282.42
+  },
+  {
     "id_adicional": "{b7986ba6-deb9-4730-b890-1dd7c1600f37}",
     "ficha_id": "{05df2916-b6ed-440e-8ffa-02db4e6d1f50}",
     "clave_catastral_otro": "1702521050020",
@@ -19366,6 +19478,17 @@
     "area_lote_asignado_otro": 18566.48,
     "tiene_observaciones": 1,
     "observaciones_otro": "Unificación automática. Ficha original: {ed9cfba3-edf7-4cd7-a574-4c1a769dcded}. Técnico: Dylan Chavez en 2026-05-25T15:53:38.522Z."
+  },
+  {
+    "id_adicional": "{4d7a8893-4726-42c9-a90b-1de3eef56e11}",
+    "ficha_id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+    "clave_catastral_otro": "1702520660082",
+    "area_total_otro": 12603.8,
+    "area_riego_otro": 12603.8,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 12603.8,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Unificación automática. Ficha original: {4d7a8893-4726-42c9-a90b-1de3eef56e11}. Técnico: Dylan Chavez en 2026-05-25T16:08:54.396Z."
   },
   {
     "id_adicional": "{bcc2e647-6e50-4309-8224-a81f878b4c7a}",

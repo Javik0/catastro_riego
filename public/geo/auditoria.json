@@ -1,11 +1,11 @@
 {
   "resumen": {
-    "totalFichasOriginales": 1803,
-    "totalRegantesUnicosDuplicados": 134,
-    "totalFichasDuplicadas": 347,
-    "fichasRedundantesReducidas": 213,
-    "totalFichasUnificadas": 1590,
-    "porcentajeReduccion": 11.81
+    "totalFichasOriginales": 1807,
+    "totalRegantesUnicosDuplicados": 135,
+    "totalFichasDuplicadas": 349,
+    "fichasRedundantesReducidas": 214,
+    "totalFichasUnificadas": 1593,
+    "porcentajeReduccion": 11.84
   },
   "regantesUnificados": [
     {
@@ -3403,6 +3403,34 @@
           "fechaCreacion": "2026-05-25T15:53:38.522Z",
           "cantCultivos": 2,
           "cantAnimales": 8
+        }
+      ]
+    },
+    {
+      "id": "1710123967",
+      "cedula": "1710123967",
+      "apellidos": "COYAGO QUISHPE",
+      "nombres": "ORFELINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f21d3466-015c-4f36-85a8-cda43d91f9f1}",
+        "claveCatastral": "1702521510095",
+        "areaTotal": 20359.07,
+        "sectorComunidad": "POROTOG ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-05T16:01:02.187Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{4d7a8893-4726-42c9-a90b-1de3eef56e11}",
+          "claveCatastral": "1702520660082",
+          "areaTotal": 12603.8,
+          "sectorComunidad": "ASOCIACIÓN 17 DE JUNIO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-25T16:08:54.396Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
         }
       ]
     },
