@@ -388,7 +388,7 @@ export default function EncuestaPublicaPage() {
                 <div className="border-t border-slate-800/60 pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[11px] text-slate-400 font-medium mb-1">¿Tiene Escrituras o Título del Terreno?</label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {['Escritura', 'Sin Escritura'].map((opt) => (
                         <button
                           key={opt}
@@ -417,35 +417,35 @@ export default function EncuestaPublicaPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="border-t border-slate-800/60 pt-4 space-y-5">
                   <div>
-                    <label className="block text-[11px] text-slate-400 font-medium mb-1">Hijos que viven con usted</label>
-                    <div className="flex gap-4">
-                      <div className="flex-1 flex items-center justify-between bg-slate-950 border border-slate-800 rounded-xl p-1 px-3">
-                        <span className="text-xs text-slate-400">Hombres</span>
+                    <label className="block text-[11px] text-slate-400 font-medium mb-1.5">Hijos que viven con usted</label>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <div className="flex-1 flex items-center justify-between bg-slate-950 border border-slate-800 rounded-xl p-2 px-3.5">
+                        <span className="text-xs text-slate-400">Hijos Varones</span>
                         <div className="flex items-center gap-2">
-                          <button type="button" onClick={() => setHijosHombres(Math.max(0, hijosHombres - 1))} className="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer">-</button>
-                          <span className="text-xs font-bold w-4 text-center">{hijosHombres}</span>
-                          <button type="button" onClick={() => setHijosHombres(hijosHombres + 1)} className="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer">+</button>
+                          <button type="button" onClick={() => setHijosHombres(Math.max(0, hijosHombres - 1))} className="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer select-none">-</button>
+                          <span className="text-xs font-bold w-5 text-center">{hijosHombres}</span>
+                          <button type="button" onClick={() => setHijosHombres(hijosHombres + 1)} className="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer select-none">+</button>
                         </div>
                       </div>
-                      <div className="flex-1 flex items-center justify-between bg-slate-950 border border-slate-800 rounded-xl p-1 px-3">
-                        <span className="text-xs text-slate-400">Mujeres</span>
+                      <div className="flex-1 flex items-center justify-between bg-slate-950 border border-slate-800 rounded-xl p-2 px-3.5">
+                        <span className="text-xs text-slate-400">Hijas Mujeres</span>
                         <div className="flex items-center gap-2">
-                          <button type="button" onClick={() => setHijosMujeres(Math.max(0, hijosMujeres - 1))} className="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer">-</button>
-                          <span className="text-xs font-bold w-4 text-center">{hijosMujeres}</span>
-                          <button type="button" onClick={() => setHijosMujeres(hijosMujeres + 1)} className="w-6 h-6 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer">+</button>
+                          <button type="button" onClick={() => setHijosMujeres(Math.max(0, hijosMujeres - 1))} className="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer select-none">-</button>
+                          <span className="text-xs font-bold w-5 text-center">{hijosMujeres}</span>
+                          <button type="button" onClick={() => setHijosMujeres(hijosMujeres + 1)} className="w-7 h-7 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center font-bold text-slate-200 cursor-pointer select-none">+</button>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div>
                     <label className="block text-[11px] text-slate-400 font-medium mb-2">¿Tiene alguna casa o construcción en su terreno?</label>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                       <button
                         type="button"
                         onClick={() => setTieneConstruccion(true)}
-                        className={`flex-1 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                        className={`flex-1 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                           tieneConstruccion 
                             ? 'bg-blue-600/20 text-blue-300 border-blue-500' 
                             : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900'
@@ -462,7 +462,7 @@ export default function EncuestaPublicaPage() {
                           setMaterialConstruccion('');
                           setMaterialOtro('');
                         }}
-                        className={`flex-1 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                        className={`flex-1 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                           !tieneConstruccion 
                             ? 'bg-blue-600/20 text-blue-300 border-blue-500' 
                             : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900'
@@ -498,7 +498,7 @@ export default function EncuestaPublicaPage() {
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
                         <div>
                           <p className="text-xs font-semibold text-white">Agua de Consumo Humano</p>
@@ -569,7 +569,7 @@ export default function EncuestaPublicaPage() {
                 <div className="bg-slate-950/40 border border-slate-800 rounded-2xl p-4 space-y-4">
                   <p className="text-xs font-bold text-white border-b border-slate-800/80 pb-2">🌾 Mis Cultivos</p>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-[10px] text-slate-400 mb-0.5">Tipo de Cultivo</label>
                       <select 
@@ -591,24 +591,25 @@ export default function EncuestaPublicaPage() {
                         className="w-full bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none"
                       />
                     </div>
-                    <div className="flex gap-2 items-center">
-                      <label className="flex items-center gap-1.5 text-[10px] text-slate-400 cursor-pointer select-none py-2">
-                        <input
-                          type="checkbox"
-                          checked={tempCultivoPrincipal}
-                          onChange={(e) => setTempCultivoPrincipal(e.target.checked)}
-                          className="w-4 h-4 rounded text-blue-600 focus:ring-0"
-                        />
-                        <span>¿Es el principal?</span>
-                      </label>
-                      <button 
-                        type="button" 
-                        onClick={addCultivo}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Agregar
-                      </button>
-                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-1">
+                    <label className="flex items-center gap-1.5 text-[10px] text-slate-400 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={tempCultivoPrincipal}
+                        onChange={(e) => setTempCultivoPrincipal(e.target.checked)}
+                        className="w-4 h-4 rounded text-blue-600 focus:ring-0"
+                      />
+                      <span>¿Es el principal?</span>
+                    </label>
+                    <button 
+                      type="button" 
+                      onClick={addCultivo}
+                      className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap"
+                    >
+                      <Plus className="w-3.5 h-3.5" /> Agregar cultivo
+                    </button>
                   </div>
 
                   {tempCultivo === 'Otros' && (
@@ -669,7 +670,7 @@ export default function EncuestaPublicaPage() {
                 <div className="bg-slate-950/40 border border-slate-800 rounded-2xl p-4 space-y-4">
                   <p className="text-xs font-bold text-white border-b border-slate-800/80 pb-2">🐄 Mis Animales (Crianza)</p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-[10px] text-slate-400 mb-0.5">Especie</label>
                       <select 
@@ -691,15 +692,16 @@ export default function EncuestaPublicaPage() {
                         className="w-full bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none"
                       />
                     </div>
-                    <div>
-                      <button 
-                        type="button" 
-                        onClick={addAnimal}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Agregar
-                      </button>
-                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-1">
+                    <button 
+                      type="button" 
+                      onClick={addAnimal}
+                      className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer whitespace-nowrap"
+                    >
+                      <Plus className="w-3.5 h-3.5" /> Agregar animal
+                    </button>
                   </div>
 
                   {tempAnimal === 'Otros' && (
@@ -748,51 +750,76 @@ export default function EncuestaPublicaPage() {
                   )}
                 </div>
 
-                {/* Water usage and activities */}
-                <div className="bg-slate-950/40 border border-slate-800 rounded-2xl p-4 space-y-4">
-                  <p className="text-xs font-bold text-white border-b border-slate-800/80 pb-2">💧 Uso del Agua y Destino de Producción</p>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-slate-400">Consumo Familiar (Autoconsumo)</span>
-                      <span className="font-bold text-emerald-400">{soberaniaPct}%</span>
-                    </div>
-                    <div className="flex justify-between items-center text-xs">
-                      <span className="text-slate-400">Negocio / Venta comercial</span>
-                      <span className="font-bold text-blue-400">{100 - soberaniaPct}%</span>
-                    </div>
-                    <input 
-                      type="range"
-                      min={0}
-                      max={100}
-                      step={5}
-                      value={soberaniaPct}
-                      onChange={(e) => setSoberaniaPct(parseInt(e.target.value))}
-                      className="w-full h-2 bg-slate-850 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                    />
-                    <p className="text-[10px] text-slate-500 leading-normal">
-                      Deslice para indicar qué porcentaje de lo que cosecha/produce se consume en su hogar, y qué porcentaje se vende.
+                {/* Simplificación del uso del agua y destino de la producción */}
+                <div className="bg-slate-950/40 border border-slate-800 rounded-2xl p-5 space-y-4">
+                  <div>
+                    <p className="text-xs font-bold text-white border-b border-slate-800/80 pb-2 flex items-center gap-1.5">
+                      <span>💧</span> ¿Qué hace principalmente con lo que siembra o produce?
+                    </p>
+                    <p className="text-[10px] text-slate-500 mt-1 leading-normal">
+                      Seleccione la opción que mejor describa el uso de sus cultivos y animales en su lote.
                     </p>
                   </div>
 
-                  <div className="border-t border-slate-900/60 pt-3">
-                    <label className="block text-[11px] text-slate-400 font-medium mb-1">Destino Principal de su Producción</label>
-                    <div className="flex gap-2">
-                      {['Particular', 'Empresarial'].map((act) => (
+                  <div className="space-y-2.5 pt-1">
+                    {[
+                      {
+                        id: 'consumo',
+                        label: 'Todo es para comer en casa (Autoconsumo)',
+                        desc: 'Toda nuestra producción sirve para alimentar a mi familia.',
+                        icon: '🏠',
+                        sobVal: 100,
+                        actVal: 'Particular'
+                      },
+                      {
+                        id: 'mixto',
+                        label: 'Una parte para comer y otra parte para vender',
+                        desc: 'Consumimos en el hogar y vendemos los excedentes en ferias locales.',
+                        icon: '⚖️',
+                        sobVal: 50,
+                        actVal: 'Particular'
+                      },
+                      {
+                        id: 'comercial',
+                        label: 'La gran mayoría es para la venta comercial',
+                        desc: 'Producimos principalmente para vender a mercados, ferias grandes o empresas.',
+                        icon: '💰',
+                        sobVal: 10,
+                        actVal: 'Empresarial'
+                      }
+                    ].map((opt) => {
+                      // Determinamos si está seleccionada esta opción
+                      const isSelected = 
+                        opt.id === 'consumo' ? soberaniaPct === 100 :
+                        opt.id === 'mixto' ? soberaniaPct === 50 :
+                        opt.id === 'comercial' ? soberaniaPct === 10 : false;
+                      
+                      return (
                         <button
-                          key={act}
+                          key={opt.id}
                           type="button"
-                          onClick={() => setActividadProductiva(act)}
-                          className={`flex-1 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
-                            actividadProductiva === act 
-                              ? 'bg-blue-600/20 text-blue-300 border-blue-500' 
-                              : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900'
+                          onClick={() => {
+                            setSoberaniaPct(opt.sobVal);
+                            setActividadProductiva(opt.actVal);
+                          }}
+                          className={`w-full p-3.5 rounded-xl border text-left transition-all flex items-start gap-3.5 cursor-pointer ${
+                            isSelected
+                              ? 'bg-blue-600/10 border-blue-500 ring-2 ring-blue-500/20'
+                              : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900/60 hover:text-slate-200'
                           }`}
                         >
-                          {act === 'Particular' ? 'Consumo Familiar / Local' : 'Venta a Empresas / Agroindustria'}
+                          <span className="text-2xl pt-0.5 select-none">{opt.icon}</span>
+                          <div className="min-w-0 flex-1">
+                            <p className={`text-xs font-bold ${isSelected ? 'text-blue-300' : 'text-slate-300'}`}>
+                              {opt.label}
+                            </p>
+                            <p className="text-[10px] text-slate-500 mt-0.5 leading-normal">
+                              {opt.desc}
+                            </p>
+                          </div>
                         </button>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -809,12 +836,12 @@ export default function EncuestaPublicaPage() {
                   <p className="text-[11px] text-slate-400 mt-1">¿Tiene otros terrenos bajo su nombre en esta junta de riego?</p>
                 </div>
 
-                <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+                <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <p className="text-xs font-semibold text-white">¿Tiene predios o terrenos adicionales?</p>
                     <p className="text-[10px] text-slate-500">Registre otros terrenos que le pertenecen.</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 w-full sm:w-auto">
                     <button
                       type="button"
                       onClick={() => setTieneOtrosPredios(true)}
@@ -845,7 +872,7 @@ export default function EncuestaPublicaPage() {
 
                 {tieneOtrosPredios && (
                   <div className="bg-slate-950/40 border border-slate-800 rounded-2xl p-4 space-y-4 animate-fadeIn">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 items-end">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[10px] text-slate-400 mb-0.5">Clave Catastral de la otra parcela</label>
                         <input 
@@ -866,15 +893,16 @@ export default function EncuestaPublicaPage() {
                           className="w-full bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none"
                         />
                       </div>
-                      <div>
-                        <button 
-                          type="button" 
-                          onClick={addPredioAdicional}
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                        >
-                          <Plus className="w-3.5 h-3.5" /> Agregar
-                        </button>
-                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-1">
+                      <button 
+                        type="button" 
+                        onClick={addPredioAdicional}
+                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                      >
+                        <Plus className="w-3.5 h-3.5" /> Agregar terreno
+                      </button>
                     </div>
 
                     {prediosAdicionales.length === 0 ? (
