@@ -39,6 +39,7 @@ export interface FichaPredio {
   clave_catastral: string;
   parroquia: string;
   comunidad?: string;
+  sector_investigacion?: string;
   sector: string;
   telefono_celular?: string;
   telefono_casa?: string;
@@ -184,6 +185,7 @@ export interface UserProfile {
 export interface FiltrosState {
   parroquia: string;
   sector: string;
+  sectorInv: string;
   tecnico: string;
   comunidad: string;
   fechaDesde: string;

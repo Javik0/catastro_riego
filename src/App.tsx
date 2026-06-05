@@ -53,6 +53,7 @@ function useLocalData() {
             creado_por: f.properties.creado_por || '',
             parroquia: f.properties.parroquia || '',
             comunidad: com,
+            sector_investigacion: f.properties.sector_investigacion || 'Sector 1',
             sector: f.properties.sector || '',
             cedula: f.properties.cedula || '',
             codigo_final: f.properties.codigo_final || '',
@@ -101,6 +102,7 @@ function FilteredDataProvider({ children }: { children: (props: {
 
   const filtered = allFichas.filter((f) => {
     if (filtros.parroquia && f.parroquia !== filtros.parroquia) return false;
+    if (filtros.sectorInv && f.sector_investigacion !== filtros.sectorInv) return false;
     if (filtros.sector && f.sector !== filtros.sector) return false;
     if (filtros.tecnico && getNombreTecnico(f.creado_por) !== filtros.tecnico) return false;
     if (filtros.comunidad && (f.comunidad || f.sector_comunidad || '').trim() !== filtros.comunidad) return false;
@@ -167,8 +169,8 @@ export default function App() {
                   path="mapa"
                   element={
                     <FilteredDataProvider>
-                      {({ fichas, loading }) => (
-                        <MapPage fichas={fichas} loading={loading} />
+                      {({ fichas, prediosAdicionalesData, loading }) => (
+                        <MapPage fichas={fichas} prediosAdicionalesData={prediosAdicionalesData} loading={loading} />
                       )}
                     </FilteredDataProvider>
                   }

@@ -15,6 +15,7 @@ import 'leaflet/dist/leaflet.css';
 
 interface Props {
   fichas: FichaPredio[];
+  prediosAdicionalesData?: any[];
   loading: boolean;
 }
 
@@ -542,16 +543,39 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
 // Componente Principal del Mapa
 // ══════════════════════════════════════════════════════════════
 
-export default function MapPage({ fichas, loading }: Props) {
+export default function MapPage({ fichas, prediosAdicionalesData, loading }: Props) {
   const { selectedFichaMap, clearMapSelection } = useMapNav();
   const [catastroData, setCatastroData] = useState<FeatureCollection | null>(null);
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
+  const [catastroBusqueda, setCatastroBusqueda] = useState<CatastroBusqueda[]>([]);
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
   const [poligonosLoaded, setPoligonosLoaded] = useState(false);
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
+
+  useEffect(() => {
+    fetch('/geo/catastro_busqueda.json')
+      .then(r => r.json())
+      .then(d => setCatastroBusqueda(d))
+      .catch(() => {});
+  }, []);
+
+  const prediosAdicionalesMarkers = useMemo(() => {
+    if (!prediosAdicionalesData || !catastroBusqueda.length) return [];
+    const markers: any[] = [];
+    prediosAdicionalesData.forEach(pa => {
+      const cat = catastroBusqueda.find(c => c.clave_cata === pa.clave_catastral_otro);
+      if (cat && cat.lat && cat.lng) {
+        const mainFicha = fichas.find(f => f.id === pa.ficha_id);
+        if (mainFicha) {
+          markers.push({ ...pa, lat: cat.lat, lng: cat.lng, mainFicha });
+        }
+      }
+    });
+    return markers;
+  }, [prediosAdicionalesData, catastroBusqueda, fichas]);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
   const allCatastroFC = useMemo<FeatureCollection | null>(() => {
@@ -658,6 +682,12 @@ export default function MapPage({ fichas, loading }: Props) {
             {layerInfo.catastro} polígonos
           </div>
         )}
+        {prediosAdicionalesMarkers.length > 0 && (
+          <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
+            <div className="w-2 h-2 rounded-full border border-orange-600 bg-orange-500" />
+            {prediosAdicionalesMarkers.length} otros predios
+          </div>
+        )}
         {selectedFichaMap && (
           <div className="mt-1.5 pt-1.5 border-t flex items-center gap-1" style={{ borderColor: 'var(--border-color)' }}>
             <MapPin className="w-3 h-3 text-emerald-400" />
@@ -742,6 +772,30 @@ export default function MapPage({ fichas, loading }: Props) {
 
         {fichasConGeo.map((ficha) => (
           <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />
+        ))}
+
+        {/* ── Marcadores Naranjas: Otros Predios ── */}
+        {prediosAdicionalesMarkers.map((pa, i) => (
+          <CircleMarker
+            key={`pa-${pa.id_adicional}-${i}`}
+            center={[pa.lat, pa.lng]}
+            radius={5}
+            pathOptions={{
+              color: '#ea580c', // naranja oscuro
+              fillColor: '#f97316', // naranja brillante
+              fillOpacity: 0.8,
+              weight: 2
+            }}
+          >
+            <Tooltip sticky>
+              <div className="text-xs">
+                <b>Predio Adicional</b><br/>
+                <b>De:</b> {pa.mainFicha?.apellidos} {pa.mainFicha?.nombres}<br/>
+                <b>Clave:</b> {pa.clave_catastral_otro}<br/>
+                <b>Área Total:</b> {pa.area_total_otro} m²
+              </div>
+            </Tooltip>
+          </CircleMarker>
         ))}
 
         {/* ── Polígono resaltado del resultado de búsqueda ── */}

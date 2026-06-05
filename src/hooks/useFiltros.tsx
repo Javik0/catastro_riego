@@ -8,6 +8,7 @@ import type { FiltrosState } from '../lib/types';
 const INITIAL_FILTROS: FiltrosState = {
   parroquia: '',
   sector: '',
+  sectorInv: '',
   tecnico: '',
   comunidad: '',
   fechaDesde: '',

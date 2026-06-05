@@ -109,9 +109,17 @@ export default function Header({ onMobileMenuOpen }: Props) {
           {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
         </select>
 
+        <select value={filtros.sectorInv} onChange={(e) => setFiltro('sectorInv', e.target.value)}
+          className={`${inputClass} min-w-[130px]`} style={inputStyle}>
+          <option value="">Sector Inv.</option>
+          <option value="Sector 1">Sector 1</option>
+          <option value="Sector 2">Sector 2</option>
+          <option value="Sector 3">Sector 3</option>
+        </select>
+
         <select value={filtros.sector} onChange={(e) => setFiltro('sector', e.target.value)}
-          className={`${inputClass} min-w-[110px] hidden md:block`} style={inputStyle}>
-          <option value="">Sector</option>
+          className={`${inputClass} min-w-[130px] hidden md:block`} style={inputStyle}>
+          <option value="">Sector de Riego</option>
           {SECTORES.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
 
