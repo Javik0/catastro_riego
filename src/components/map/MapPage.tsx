@@ -761,7 +761,11 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
           </div>
         )}
         {prediosAdicionalesUnicos > 0 && (
-          <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
+          <div
+            className="flex items-center gap-1.5 text-[10px] mt-1 cursor-help"
+            style={{ color: 'var(--text-muted)' }}
+            title={`${prediosAdicionalesUnicos} predios catastrales únicos (Sección 7)\nRegistrados por 862 fichas con otros predios a su nombre\nTotal de referencias en BD: 1.832`}
+          >
             <div className="w-2 h-2 rounded-sm border border-blue-400" style={{ background: 'rgba(59,130,246,0.3)' }} />
             {prediosAdicionalesUnicos} otros predios
           </div>
