@@ -655,6 +655,17 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
     return claves.size;
   }, [prediosAdicionalesData]);
 
+  // Número de fichas únicas que tienen al menos 1 predio adicional (se actualiza dinámicamente)
+  const fichasConOtrosPredios = useMemo(() => {
+    if (!prediosAdicionalesData) return 0;
+    const ids = new Set(
+      prediosAdicionalesData
+        .map(pa => pa.ficha_id)
+        .filter(Boolean)
+    );
+    return ids.size;
+  }, [prediosAdicionalesData]);
+
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
   const allCatastroFC = useMemo<FeatureCollection | null>(() => {
     if (!poligonosRef.current) return null;
@@ -747,9 +758,14 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
     <div className="relative rounded-xl overflow-hidden border"
       style={{ height: 'calc(100vh - 180px)', borderColor: 'var(--border-color)' }}>
 
-      {/* Stats overlay */}
+      {/* Stats overlay — dos bloques visuales separados para evitar confusión */}
       <div className="absolute top-16 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm"
         style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
+
+        {/* ── Bloque 1: Catastro investigado ── */}
+        <p className="text-[9px] font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>
+          Catastro investigado
+        </p>
         <div className="flex items-center gap-2 text-xs">
           <MapPin className="w-4 h-4 text-blue-400" />
           <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{fichasConGeo.length} fichas</span>
@@ -757,19 +773,29 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
         {layerInfo.catastro > 0 && (
           <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
             <div className="w-2 h-2 rounded-sm border border-orange-400" style={{ background: 'rgba(249,115,22,0.2)' }} />
-            {layerInfo.catastro} polígonos
+            {layerInfo.catastro} polígonos en mapa
           </div>
         )}
+
+        {/* ── Bloque 2: Predios Adicionales (Sección 7) — separado visualmente ── */}
         {prediosAdicionalesUnicos > 0 && (
-          <div
-            className="flex items-center gap-1.5 text-[10px] mt-1 cursor-help"
-            style={{ color: 'var(--text-muted)' }}
-            title={`${prediosAdicionalesUnicos} predios catastrales únicos (Sección 7)\nRegistrados por 862 fichas con otros predios a su nombre\nTotal de referencias en BD: 1.832`}
-          >
-            <div className="w-2 h-2 rounded-sm border border-blue-400" style={{ background: 'rgba(59,130,246,0.3)' }} />
-            {prediosAdicionalesUnicos} otros predios
-          </div>
+          <>
+            <div className="my-2 border-t" style={{ borderColor: 'var(--border-color)' }} />
+            <p className="text-[9px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#3b82f6' }}>
+              Predios adicionales · Sec. 7
+            </p>
+            <div className="flex items-center gap-1.5 text-[10px]" style={{ color: 'var(--text-muted)' }}>
+              <div className="w-2 h-2 rounded-full border border-blue-400" style={{ background: 'rgba(59,130,246,0.3)' }} />
+              <span>{fichasConOtrosPredios} fichas con otro predio</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              <div className="w-2 h-2 rounded-sm border border-blue-400" style={{ background: 'rgba(59,130,246,0.15)' }} />
+              <span>{prediosAdicionalesUnicos} predios distintos</span>
+            </div>
+          </>
         )}
+
+        {/* ── Ficha seleccionada actualmente ── */}
         {selectedFichaMap && (
           <div className="mt-1.5 pt-1.5 border-t flex items-center gap-1" style={{ borderColor: 'var(--border-color)' }}>
             <MapPin className="w-3 h-3 text-emerald-400" />
