@@ -17,65 +17,68 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
+# Nuevo dominio a crear (usamos guion medio para cumplir con la sintaxis de correo de Firebase)
+nuevo_dominio = "proyectos-apcatastros.ec"
+
 # Lista de técnicos a crear
 tecnicos = [
     {
         "nombre": "Melany Jara",
-        "email": "melany.jara@consorcio-cayambe.ec",
+        "username": "melany.jara",
         "password": "MelanyJara2026!",
         "qfield_users": ["u0_a314", "u0_a319", "jvk-editor"]
     },
     {
         "nombre": "Adriana Cuascota",
-        "email": "adriana.cuascota@consorcio-cayambe.ec",
+        "username": "adriana.cuascota",
         "password": "AdrianaCuascota2026!",
         "qfield_users": ["u0_a504", "jvk-editor6"]
     },
     {
         "nombre": "Huguito Ipial",
-        "email": "hugo.ipial@consorcio-cayambe.ec",
+        "username": "hugo.ipial",
         "password": "HuguitoIpial2026!",
         "qfield_users": ["u0_a279", "jvk-editor2"]
     },
     {
         "nombre": "Pablo Barrionuevo",
-        "email": "pablo.barrionuevo@consorcio-cayambe.ec",
+        "username": "pablo.barrionuevo",
         "password": "PabloBarrionuevo2026!",
         "qfield_users": ["u0_a70", "jvk-editor5"]
     },
     {
         "nombre": "Mayra Benavides",
-        "email": "mayra.benavides@consorcio-cayambe.ec",
+        "username": "mayra.benavides",
         "password": "MayraBenavides2026!",
         "qfield_users": ["u0_a330", "mayralisseth201"]
     },
     {
         "nombre": "Martha Simbana",
-        "email": "martha.simbana@consorcio-cayambe.ec",
+        "username": "martha.simbana",
         "password": "MarthaSimbana2026!",
         "qfield_users": ["u0_a362", "u0_a335", "jvk-editor4"]
     },
     {
         "nombre": "Dylan Chavez",
-        "email": "dylan.chavez@consorcio-cayambe.ec",
+        "username": "dylan.chavez",
         "password": "DylanChavez2026!",
         "qfield_users": ["u0_a302", "jvk-editor3"]
     },
     {
         "nombre": "Melanie2",
-        "email": "melanie2@consorcio-cayambe.ec",
+        "username": "melanie2",
         "password": "Melanie2026!",
         "qfield_users": ["u0_a200"]
     }
 ]
 
-print("=== PROCESANDO CREACION DE TECNICOS EN FIREBASE ===")
+print("=== CREANDO CUENTAS CON EL DOMINIO CORREGIDO (proyectos-apcatastros.ec) ===")
 print("-" * 60)
 
 reporte = []
 
 for t in tecnicos:
-    email = t["email"]
+    email_nuevo = f"{t['username']}@{nuevo_dominio}"
     password = t["password"]
     nombre = t["nombre"]
     uid = None
@@ -84,18 +87,18 @@ for t in tecnicos:
     # 1. Crear o recuperar el usuario en Auth
     try:
         user = auth.create_user(
-            email=email,
+            email=email_nuevo,
             password=password,
             display_name=nombre
         )
         uid = user.uid
         status = "CREADO (Auth)"
     except auth.EmailAlreadyExistsError:
-        user = auth.get_user_by_email(email)
+        user = auth.get_user_by_email(email_nuevo)
         uid = user.uid
         status = "YA EXISTIA (Auth)"
     except Exception as e:
-        print(f"Error al procesar en Auth a {nombre} ({email}): {e}")
+        print(f"Error al procesar en Auth a {nombre} ({email_nuevo}): {e}")
         continue
 
     # 2. Registrar/Actualizar en la coleccion 'usuarios' de Firestore
@@ -103,26 +106,26 @@ for t in tecnicos:
         user_ref = db.collection('usuarios').document(uid)
         user_ref.set({
             "uid": uid,
-            "email": email,
+            "email": email_nuevo,
             "nombre": nombre,
             "rol": "tecnico"
         }, merge=True)
-        print(f"OK: {nombre} | {email} | {status} | Registrado en Firestore con rol 'tecnico'")
+        print(f"OK: {nombre} | {email_nuevo} | {status} | Registrado en Firestore con rol 'tecnico'")
         
         reporte.append({
             "nombre": nombre,
-            "email": email,
+            "email": email_nuevo,
             "password": password,
             "qfield_users": ", ".join(t["qfield_users"])
         })
     except Exception as e:
-        print(f"Error al registrar en Firestore a {nombre} ({email}): {e}")
+        print(f"Error al registrar en Firestore a {nombre} ({email_nuevo}): {e}")
 
 print("-" * 60)
-print("=== DEPURACION DE CREDENCIALES COMPLETADA ===")
+print("=== PROCESAMIENTO COMPLETADO ===")
 
 # Imprimir reporte formateado en texto plano
-print("\n=== CREDENCIALES DE ACCESO PARA LOS TECNICOS ===")
+print("\n=== CREDENCIALES ACTUALIZADAS CON DOMINIO: " + nuevo_dominio + " ===")
 print("Comparte estas credenciales con cada tecnico investigador:\n")
 for idx, r in enumerate(reporte, 1):
     print(f"{idx}. Tecnico: {r['nombre']} (Mapeo QField: {r['qfield_users']})")

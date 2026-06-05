@@ -49,7 +49,12 @@ export function useAuth() {
               };
           
           // Asegurar rol de administrador para los correos principales del proyecto
-          if (firebaseUser.email === 'javier@consorcio-cayambe.ec' || firebaseUser.email === 'jvkdigitalizacion@gmail.com') {
+          if (
+            firebaseUser.email === 'javier@proyectos-apcatastros.ec' ||
+            firebaseUser.email === 'javier@proyectos_apcatastros.ec' ||
+            firebaseUser.email === 'javier@consorcio-cayambe.ec' ||
+            firebaseUser.email === 'jvkdigitalizacion@gmail.com'
+          ) {
             profile.rol = 'admin';
           }
           
@@ -60,7 +65,12 @@ export function useAuth() {
             uid: firebaseUser.uid,
             email: firebaseUser.email ?? '',
             nombre: firebaseUser.email?.split('@')[0] ?? 'Usuario',
-            rol: (firebaseUser.email === 'javier@consorcio-cayambe.ec' || firebaseUser.email === 'jvkdigitalizacion@gmail.com') ? 'admin' : 'cliente',
+            rol: (
+              firebaseUser.email === 'javier@proyectos-apcatastros.ec' ||
+              firebaseUser.email === 'javier@proyectos_apcatastros.ec' ||
+              firebaseUser.email === 'javier@consorcio-cayambe.ec' ||
+              firebaseUser.email === 'jvkdigitalizacion@gmail.com'
+            ) ? 'admin' : 'cliente',
           };
           setState({
             user: firebaseUser,
