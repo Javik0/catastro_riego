@@ -46,6 +46,10 @@ function useLocalData() {
                 if (dia === 22) com = 'LA LIBERTAD';
                 else if (dia === 26) com = 'CHAMBITOLA';
               }
+              // Corrección para el 24 de mayo (registros del técnico u0_a279 mal etiquetados como Asoc. 17 de Junio pertenecen a San José)
+              if (dia === 24 && (com === 'ASOCIACIÓN 17 DE JUNIO' || com === 'ASOCIACION 17 DE JUNIO')) {
+                com = 'SAN JOSÉ';
+              }
               // Corrección para el lunes 25 de mayo (se reasignan según la hora local de campo)
               if (dia === 25) {
                 const hour = d.getUTCHours();
