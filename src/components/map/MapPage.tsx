@@ -44,10 +44,12 @@ const pulseIcon = L.divIcon({
 });
 
 // ── Leyenda ──────────────────────────────────────────────────────────
-function MapLegend({ showAll, onToggleAll, allLoaded }: {
+function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros }: {
   showAll: boolean;
   onToggleAll: () => void;
   allLoaded: boolean;
+  showOtros: boolean;
+  onToggleOtros: () => void;
 }) {
   const [show, setShow] = useState(true);
   return (
@@ -87,7 +89,25 @@ function MapLegend({ showAll, onToggleAll, allLoaded }: {
               <div className="w-5 h-0.5 rounded" style={{ background: '#38bdf8' }} />
               <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Canales de riego</span>
             </div>
+            {/* Toggle: Otros Predios */}
             <label className="flex items-center gap-2 cursor-pointer mt-1 pt-1 border-t" style={{ borderColor: 'var(--border-color)' }}>
+              <input
+                type="checkbox"
+                checked={showOtros}
+                onChange={onToggleOtros}
+                className="w-3 h-3 rounded accent-blue-400 cursor-pointer"
+              />
+              <div>
+                <span className="text-[10px] font-medium" style={{ color: showOtros ? '#3b82f6' : 'var(--text-secondary)' }}>
+                  Otros predios
+                </span>
+                <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
+                  Polígonos azules (Sección 7)
+                </span>
+              </div>
+            </label>
+            {/* Toggle: Todos los predios */}
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={showAll}
@@ -570,6 +590,7 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
   const [poligonosLoaded, setPoligonosLoaded] = useState(false);
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
+  const [showOtrosPredios, setShowOtrosPredios] = useState(true); // Visible por defecto
   const [currentZoom, setCurrentZoom] = useState(13);
 
   // FeatureCollection memoizado de las geometrías de los predios adicionales (Polígonos Azules)
@@ -622,6 +643,17 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
     });
     return markers;
   }, [prediosAdicionalesData, catastroBusqueda, fichas]);
+
+  // Número de predios catastrales únicos referenciados como "otros predios" (sin duplicados)
+  const prediosAdicionalesUnicos = useMemo(() => {
+    if (!prediosAdicionalesData) return 0;
+    const claves = new Set(
+      prediosAdicionalesData
+        .map(pa => pa.clave_catastral_otro)
+        .filter(Boolean)
+    );
+    return claves.size;
+  }, [prediosAdicionalesData]);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
   const allCatastroFC = useMemo<FeatureCollection | null>(() => {
@@ -728,10 +760,10 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
             {layerInfo.catastro} polígonos
           </div>
         )}
-        {prediosAdicionalesMarkers.length > 0 && (
+        {prediosAdicionalesUnicos > 0 && (
           <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
-            <div className="w-2 h-2 rounded-full border border-orange-600 bg-orange-500" />
-            {prediosAdicionalesMarkers.length} otros predios
+            <div className="w-2 h-2 rounded-sm border border-blue-400" style={{ background: 'rgba(59,130,246,0.3)' }} />
+            {prediosAdicionalesUnicos} otros predios
           </div>
         )}
         {selectedFichaMap && (
@@ -824,14 +856,15 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
         })}
 
         {/* ── Marcadores Naranjas: Otros Predios (se ocultan en zoom amplio) ── */}
-        {currentZoom >= 14 && prediosAdicionalesMarkers.map((pa, i) => (
+        {/* ── Markers y Polígonos: Otros Predios (controlados por toggle) ── */}
+        {showOtrosPredios && currentZoom >= 14 && prediosAdicionalesMarkers.map((pa, i) => (
           <CircleMarker
             key={`pa-${pa.id_adicional}-${i}`}
             center={[pa.lat, pa.lng]}
             radius={5}
             pathOptions={{
-              color: '#ea580c', // naranja oscuro
-              fillColor: '#f97316', // naranja brillante
+              color: '#ea580c',
+              fillColor: '#f97316',
               fillOpacity: 0.8,
               weight: 2
             }}
@@ -847,15 +880,14 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
           </CircleMarker>
         ))}
 
-        {/* ── Polígonos Azules: Otros Predios (se dibujan siempre para impacto territorial) ── */}
-        {prediosAdicionalesFC && prediosAdicionalesFC.features.length > 0 && (
+        {showOtrosPredios && prediosAdicionalesFC && prediosAdicionalesFC.features.length > 0 && (
           <GeoJSON
-            key={`adicionales-poly-${poligonosLoaded ? 'loaded' : 'loading'}`}
+            key={`adicionales-poly-${poligonosLoaded ? 'loaded' : 'loading'}-${showOtrosPredios}`}
             data={prediosAdicionalesFC}
             style={{
-              color: '#2563eb', // Azul fuerte (royal blue)
+              color: '#2563eb',
               weight: 2,
-              fillColor: '#3b82f6', // Azul claro
+              fillColor: '#3b82f6',
               fillOpacity: 0.15,
               opacity: 0.85,
             }}
@@ -935,6 +967,8 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
           showAll={showAllCatastro}
           onToggleAll={() => setShowAllCatastro(!showAllCatastro)}
           allLoaded={poligonosLoaded}
+          showOtros={showOtrosPredios}
+          onToggleOtros={() => setShowOtrosPredios(!showOtrosPredios)}
         />
         <MouseCoordinates />
       </MapContainer>
