@@ -539,6 +539,22 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
   );
 }
 
+// ── ZoomTracker: escucha y actualiza el nivel de zoom del mapa ──
+function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
+  const map = useMap();
+  useEffect(() => {
+    const handler = () => {
+      onChange(map.getZoom());
+    };
+    map.on('zoomend', handler);
+    handler(); // Inicializar
+    return () => {
+      map.off('zoomend', handler);
+    };
+  }, [map, onChange]);
+  return null;
+}
+
 // ══════════════════════════════════════════════════════════════
 // Componente Principal del Mapa
 // ══════════════════════════════════════════════════════════════
@@ -554,6 +570,36 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
   const [poligonosLoaded, setPoligonosLoaded] = useState(false);
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
+  const [currentZoom, setCurrentZoom] = useState(13);
+
+  // FeatureCollection memoizado de las geometrías de los predios adicionales (Polígonos Azules)
+  const prediosAdicionalesFC = useMemo<FeatureCollection | null>(() => {
+    if (!prediosAdicionalesData || !catastroBusqueda.length || !poligonosRef.current) return null;
+    
+    const polRef = poligonosRef.current; // Capturar la referencia antes del forEach para TS
+    const features: any[] = [];
+    prediosAdicionalesData.forEach(pa => {
+      const cat = catastroBusqueda.find(c => c.clave_cata === pa.clave_catastral_otro);
+      if (cat) {
+        const geom = polRef[String(cat.fid)];
+        if (geom) {
+          const mainFicha = fichas.find(f => f.id === pa.ficha_id);
+          features.push({
+            type: 'Feature' as const,
+            properties: {
+              ...pa,
+              fid: cat.fid,
+              propietario_principal: mainFicha ? (mainFicha.propietario || `${mainFicha.apellidos} ${mainFicha.nombres}`) : '—',
+              comunidad: cat.comunidad || '—',
+              area_predi: cat.area_predi || 0,
+            },
+            geometry: geom,
+          });
+        }
+      }
+    });
+    return { type: 'FeatureCollection', features } as FeatureCollection;
+  }, [prediosAdicionalesData, catastroBusqueda, poligonosLoaded, fichas]);
 
   useEffect(() => {
     fetch('/geo/catastro_busqueda.json')
@@ -766,16 +812,19 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
         </LayersControl>
 
         {/* ── Fichas: NO dentro de LayersControl para evitar checkboxes ── */}
+        <ZoomTracker onChange={setCurrentZoom} />
         <FitBounds fichas={fichasConGeo} skip={!!selectedFichaMap || !!searchTarget} />
         <FlyToFicha ficha={selectedFichaMap} />
         <FlyToSearch searchTarget={searchTarget} polygonData={searchPolygonGeo} />
 
-        {fichasConGeo.map((ficha) => (
-          <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />
-        ))}
+        {/* ── Fichas: Se ocultan en zoom amplio (< 14) para evitar contaminación visual, excepto la seleccionada ── */}
+        {(currentZoom >= 14 || selectedFichaMap) && fichasConGeo.map((ficha) => {
+          if (currentZoom < 14 && selectedFichaMap?.id !== ficha.id) return null;
+          return <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />;
+        })}
 
-        {/* ── Marcadores Naranjas: Otros Predios ── */}
-        {prediosAdicionalesMarkers.map((pa, i) => (
+        {/* ── Marcadores Naranjas: Otros Predios (se ocultan en zoom amplio) ── */}
+        {currentZoom >= 14 && prediosAdicionalesMarkers.map((pa, i) => (
           <CircleMarker
             key={`pa-${pa.id_adicional}-${i}`}
             center={[pa.lat, pa.lng]}
@@ -797,6 +846,34 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
             </Tooltip>
           </CircleMarker>
         ))}
+
+        {/* ── Polígonos Azules: Otros Predios (se dibujan siempre para impacto territorial) ── */}
+        {prediosAdicionalesFC && prediosAdicionalesFC.features.length > 0 && (
+          <GeoJSON
+            key={`adicionales-poly-${poligonosLoaded ? 'loaded' : 'loading'}`}
+            data={prediosAdicionalesFC}
+            style={{
+              color: '#2563eb', // Azul fuerte (royal blue)
+              weight: 2,
+              fillColor: '#3b82f6', // Azul claro
+              fillOpacity: 0.15,
+              opacity: 0.85,
+            }}
+            onEachFeature={(feature, layer) => {
+              const p = feature.properties;
+              if (p) {
+                layer.bindTooltip(
+                  `<b>Predio Adicional (Polígono Azul)</b><br/>
+                   <b>Propietario Principal:</b> ${p.propietario_principal || '—'}<br/>
+                   <b>Clave Catastral:</b> ${p.clave_catastral_otro || '—'}<br/>
+                   <b>Comunidad:</b> ${p.comunidad || '—'}<br/>
+                   <b>Área del Lote:</b> ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}`,
+                  { sticky: true, opacity: 0.95 }
+                );
+              }
+            }}
+          />
+        )}
 
         {/* ── Polígono resaltado del resultado de búsqueda ── */}
         {searchPolygonGeo && (
