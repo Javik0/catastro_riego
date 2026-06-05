@@ -1,11 +1,11 @@
 {
   "resumen": {
-    "totalFichasOriginales": 1459,
-    "totalRegantesUnicosDuplicados": 114,
-    "totalFichasDuplicadas": 306,
-    "fichasRedundantesReducidas": 192,
-    "totalFichasUnificadas": 1267,
-    "porcentajeReduccion": 13.16
+    "totalFichasOriginales": 1803,
+    "totalRegantesUnicosDuplicados": 134,
+    "totalFichasDuplicadas": 347,
+    "fichasRedundantesReducidas": 213,
+    "totalFichasUnificadas": 1590,
+    "porcentajeReduccion": 11.81
   },
   "regantesUnificados": [
     {
@@ -3001,6 +3001,34 @@
       ]
     },
     {
+      "id": "1712626819",
+      "cedula": "1712626819",
+      "apellidos": "HEREDEROS DE LANCHIMBA",
+      "nombres": "JOSE CECILIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{4667986d-9fa0-43e3-b324-5f437dad6a88}",
+        "claveCatastral": "1702520530044",
+        "areaTotal": 21972.97,
+        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-05-22T09:40:25.257Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{dac0ad01-fb0d-41c3-b271-0aa0ab0f4eda}",
+          "claveCatastral": "1702520710013",
+          "areaTotal": 10753.11,
+          "sectorComunidad": "IZACATA GRANDE",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-04T08:21:46.381Z",
+          "cantCultivos": 4,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
       "id": "1719737403",
       "cedula": "1719737403",
       "apellidos": "ANDRANGO TUGULINAGO",
@@ -3351,6 +3379,62 @@
       ]
     },
     {
+      "id": "1713800686",
+      "cedula": "1713800686",
+      "apellidos": "IMBAQUINGO SOPALO",
+      "nombres": "JULIA NARCISA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d91b250c-c933-4b65-8f63-10b5a448ab9b}",
+        "claveCatastral": "1702521510127",
+        "areaTotal": 26472.59,
+        "sectorComunidad": "PORTADA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-02T12:36:02.738Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ed9cfba3-edf7-4cd7-a574-4c1a769dcded}",
+          "claveCatastral": "1702521400017",
+          "areaTotal": 18566.48,
+          "sectorComunidad": "ASOSIACION 17 DE JUNIO ",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-25T15:53:38.522Z",
+          "cantCultivos": 2,
+          "cantAnimales": 8
+        }
+      ]
+    },
+    {
+      "id": "1702841055",
+      "cedula": "1702841055",
+      "apellidos": "COYAGO CHIMARRO",
+      "nombres": "MANUEL MARIA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{52287a95-20f9-4ba3-a02a-5ce0c664e3b1}",
+        "claveCatastral": "1702521400009",
+        "areaTotal": 64143.31,
+        "sectorComunidad": "ASOCIACIÓN 17 DE JUNIO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-05-25T15:34:54.126Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{bcc2e647-6e50-4309-8224-a81f878b4c7a}",
+          "claveCatastral": "1702521560001",
+          "areaTotal": 35987.6,
+          "sectorComunidad": "LARCAJUCHO",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-02T11:21:08.056Z",
+          "cantCultivos": 2,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
       "id": "1712768678",
       "cedula": "1712768678",
       "apellidos": "COYAGO IMBAQUINGO",
@@ -3360,7 +3444,7 @@
         "id": "{0eaf5d7f-70c0-4738-a2b6-daec6da7dfa5}",
         "claveCatastral": "1702521400074",
         "areaTotal": 26488.13,
-        "sectorComunidad": "BANDURRIA",
+        "sectorComunidad": "ASOCIACIÓN 17 DE JUNIO ",
         "parroquia": "CANGAHUA",
         "creadoPor": "Pablo Barrionuevo",
         "fechaCreacion": "2026-05-25T15:07:32.404Z"
@@ -3388,7 +3472,7 @@
         "id": "{36ee1cce-5160-4e16-b47e-677ec6f7ceb3}",
         "claveCatastral": "1702520660079",
         "areaTotal": 55046.95,
-        "sectorComunidad": "POCARALOMA",
+        "sectorComunidad": "ASOCIACIÓN 17 DE JUNIO ",
         "parroquia": "CANGAHUA",
         "creadoPor": "Mayra Benavides",
         "fechaCreacion": "2026-05-25T15:07:40.037Z"
@@ -3641,6 +3725,34 @@
       ]
     },
     {
+      "id": "1714388822",
+      "cedula": "1714388822",
+      "apellidos": "FARINANGO UMAQUINGA",
+      "nombres": "SEGUNDO MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b4de60e6-b061-4435-aa4c-5945c8ea9e70}",
+        "claveCatastral": "1702521070004",
+        "areaTotal": 8082.71,
+        "sectorComunidad": "CATEQUILLA CARRERA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-05-28T14:24:23.345Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{58a2eb60-4a56-4349-99e9-e26907f96aa3}",
+          "claveCatastral": "1702520980024",
+          "areaTotal": 2516.13,
+          "sectorComunidad": "COMITÉ PRO MEJORAS LOS ANDES ",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-03T10:48:20.088Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
       "id": "1705312591",
       "cedula": "1705312591",
       "apellidos": "LANCHIMBA ACERO",
@@ -3693,6 +3805,258 @@
           "fechaCreacion": "2026-05-29T13:06:01.229Z",
           "cantCultivos": 2,
           "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1713504676",
+      "cedula": "1713504676",
+      "apellidos": "VALVERDE FARINANGO",
+      "nombres": "Galo",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{74187426-d442-43e1-af8c-b09380e12dba}",
+        "claveCatastral": "1702520980024",
+        "areaTotal": 4064.21,
+        "sectorComunidad": "COMITÉ PRO MEJORAS LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-03T09:24:13.406Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{cdc66151-a25c-4b5e-ab1f-397ac04bade1}",
+          "claveCatastral": "1702521730052",
+          "areaTotal": 3948.33,
+          "sectorComunidad": "CENTRAL",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-30T09:09:48.486Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1721779419",
+      "cedula": "1721779419",
+      "apellidos": "ACERO Farinango",
+      "nombres": "Miguel Angel",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b06a03e5-cda6-44be-aed9-29081080d7a0}",
+        "claveCatastral": "1702520980022",
+        "areaTotal": 19992.79,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T11:57:02.397Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c7b44ab0-9fa1-4be7-8bf5-2651ac2a6411}",
+          "claveCatastral": "1702521440050",
+          "areaTotal": 2531.4,
+          "sectorComunidad": "CENTRAL ",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-05-30T09:27:25.675Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1703989150",
+      "cedula": "1703989150",
+      "apellidos": "ACERO TIPANLUISA",
+      "nombres": "MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8b396d13-596e-4065-9652-0e727bf08b14}",
+        "claveCatastral": "1702520980001",
+        "areaTotal": 4064.21,
+        "sectorComunidad": "COMITÉ PRO MEJORAS LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-03T09:06:25.055Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{9d86ba12-1a92-4b39-ad81-45c3955cbad7}",
+          "claveCatastral": "1702520720031",
+          "areaTotal": 2146.12,
+          "sectorComunidad": "LA ALEGRIA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-30T08:20:46.414Z",
+          "cantCultivos": 4,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1711433258",
+      "cedula": "1711433258",
+      "apellidos": "ULCUANGO LANCHIMBA",
+      "nombres": "CESAR ALFONSO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{01b785cb-a637-4874-a3dd-c7082ab1ea2c}",
+        "claveCatastral": "1702521540004",
+        "areaTotal": 68783.6,
+        "sectorComunidad": "TABERO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-05-30T09:07:24.729Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ae665ace-6787-4b17-8df4-6d32feb9b7b8}",
+          "claveCatastral": "1702520970029",
+          "areaTotal": 6078.64,
+          "sectorComunidad": "COMUNA IZACATA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-03T14:43:39.744Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1703989416",
+      "cedula": "1703989416",
+      "apellidos": "TUTILLO AULES",
+      "nombres": "PEDRO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{9edced9e-1f20-479d-a8ea-4a469718c901}",
+        "claveCatastral": "1702520980028",
+        "areaTotal": 4064.21,
+        "sectorComunidad": "COMITÉ PRO MEJORAS LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-03T08:43:05.772Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{bbc5da51-46dd-4ab8-ab4c-41159f8df7f4}",
+          "claveCatastral": "1702521440124",
+          "areaTotal": 1273.93,
+          "sectorComunidad": "COCHAPAMBA ",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-31T08:14:29.764Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1709590119",
+      "cedula": "1709590119",
+      "apellidos": "Aules Farinango",
+      "nombres": "Rosa Emilia",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{cd532a25-48cf-4724-bbff-c25fbb37ee40}",
+        "claveCatastral": "1702520980013",
+        "areaTotal": 16371.12,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T09:13:32.283Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{aa2aa705-3fe4-4643-94b9-211c5a7cfa4a}",
+          "claveCatastral": "1702521730003",
+          "areaTotal": 10828.94,
+          "sectorComunidad": "COCHAPAMBA  ESPIGA DE ORO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-31T09:26:37.345Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1705622494",
+      "cedula": "1705622494",
+      "apellidos": "ACERO TIPANLUISA",
+      "nombres": "SEGUNDO ANDRES",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{e088236c-9b17-4029-9ae6-4e8ef1405f1d}",
+        "claveCatastral": "1702520980022",
+        "areaTotal": 19992.79,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T08:59:51.026Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{644f5a16-ce4e-41d2-91d2-c8cc7851f3a1}",
+          "claveCatastral": "1702520720165",
+          "areaTotal": 13989.19,
+          "sectorComunidad": "COCHAPAMBA LA ALEGRIA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-05-31T14:15:07.338Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1717937898",
+      "cedula": "1717937898",
+      "apellidos": "ASERO Ulcuango",
+      "nombres": "Aida Lucila",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{d8e77b54-0f87-4b88-a478-02320edde191}",
+        "claveCatastral": "1702520980009",
+        "areaTotal": 16964.48,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T08:51:37.422Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{75a8f286-9dad-4beb-a6ad-587c1d9ccac9}",
+          "claveCatastral": "1702520720162",
+          "areaTotal": 7098.68,
+          "sectorComunidad": "LA ALEGRIA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-31T12:27:34.819Z",
+          "cantCultivos": 4,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1721283602",
+      "cedula": "1721283602",
+      "apellidos": "ACERO Aules",
+      "nombres": "Clever Edison",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{bc8cf4b7-6b19-4937-907a-ffd0962731ad}",
+        "claveCatastral": "1702520980013",
+        "areaTotal": 16371.12,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T09:43:10.248Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2a500179-2474-4ba4-a4e4-80276237b0ba}",
+          "claveCatastral": "1702520720188",
+          "areaTotal": 4440.07,
+          "sectorComunidad": "LA ALEGRIA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-31T12:54:32.802Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
         }
       ]
     },
@@ -3805,6 +4169,212 @@
           "fechaCreacion": "2026-05-31T16:33:21.787Z",
           "cantCultivos": 1,
           "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1709487662",
+      "cedula": "1709487662",
+      "apellidos": "COYAGO QUISHPE",
+      "nombres": "LUIS ALBERTO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{88ee23f6-6152-41d7-9e22-97d8c8bdc63f}",
+        "claveCatastral": "1702520590068",
+        "areaTotal": 52999.74,
+        "sectorComunidad": "MALUNCOCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-02T09:48:31.695Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{0c8f8a76-e47d-4714-bc1a-12c7402bfa45}",
+          "claveCatastral": "1702521510116",
+          "areaTotal": 24777.0,
+          "sectorComunidad": "PORTADA",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-02T11:48:42.236Z",
+          "cantCultivos": 2,
+          "cantAnimales": 13
+        },
+        {
+          "id": "{4aee82bb-6c3e-4bde-a7ad-b68e90e9eec0}",
+          "claveCatastral": "1702520600081",
+          "areaTotal": 12093.31,
+          "sectorComunidad": "CHIRICUNGA",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-02T10:10:43.912Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1705559837",
+      "cedula": "1705559837",
+      "apellidos": "QUISHPE FARINANGO",
+      "nombres": "MANUEL MARIA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{043bfb4b-402f-4561-b17d-acd19437069f}",
+        "claveCatastral": "1702520600041",
+        "areaTotal": 55932.42,
+        "sectorComunidad": "CANTARILLA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-02T08:22:41.480Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ba910fa0-b8f9-46c8-ad92-57b58dfc39c0}",
+          "claveCatastral": "1702520590112",
+          "areaTotal": 22500.6,
+          "sectorComunidad": "SAN VICENTE DE POROTOG",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-02T09:14:52.508Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1720694957",
+      "cedula": "1720694957",
+      "apellidos": "IMBAQUINGO QUISHPE",
+      "nombres": "SEGUNDO XAVIER",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2c56f700-75d6-40d2-b223-672f798e4228}",
+        "claveCatastral": "1702520590088",
+        "areaTotal": 16118.46,
+        "sectorComunidad": "SAN VICENTE DE POROTOG",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-02T08:38:46.781Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7bd628a3-82e8-48c9-876c-2566fd9d5572}",
+          "claveCatastral": "1702520590091",
+          "areaTotal": 5743.56,
+          "sectorComunidad": "MALOCOCHA",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-02T10:22:20.837Z",
+          "cantCultivos": 5,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1710979798",
+      "cedula": "1710979798",
+      "apellidos": "LANCHIMBA QUINATOA",
+      "nombres": "SEGUNDO FRANCISCO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6de8536e-f202-4f5e-b084-7401418d0744}",
+        "claveCatastral": "1702521560037",
+        "areaTotal": 29190.09,
+        "sectorComunidad": "POROTOG TNI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-02T10:10:42.094Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{8383f9cd-e0f5-4722-a18a-032d078e3824}",
+          "claveCatastral": "1702521560010",
+          "areaTotal": 10450.11,
+          "sectorComunidad": "POROTOG ALTO",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-02T12:58:21Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1712562568",
+      "cedula": "1712562568",
+      "apellidos": "ACERO COYAGO",
+      "nombres": "JOSE MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2881e0e1-1de6-47b8-bd08-ca9f09153b38}",
+        "claveCatastral": "1702520980005",
+        "areaTotal": 4064.21,
+        "sectorComunidad": "COMITÉ PRO MEJORAS LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-03T09:00:48.944Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b02f52d6-22f6-4488-af9e-6ecebfeac90f}",
+          "claveCatastral": "1702520980005",
+          "areaTotal": 3375.46,
+          "sectorComunidad": "IZACATA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-03T14:40:52.229Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1709156986",
+      "cedula": "1709156986",
+      "apellidos": "CHOLANGO SALAZAR",
+      "nombres": "MARIA ISABEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{02809de2-588d-4642-bc9c-cd4b04fad170}",
+        "claveCatastral": "1702521580093",
+        "areaTotal": 12142.47,
+        "sectorComunidad": "IZACATA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-03T14:44:50.868Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{9ea04e88-6c45-46d7-9dcf-b7ec3b051228}",
+          "claveCatastral": "1702521580160",
+          "areaTotal": 10214.05,
+          "sectorComunidad": "LOS ANDES IZACATA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-04T12:44:34.416Z",
+          "cantCultivos": 1,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1003386388",
+      "cedula": "1003386388",
+      "apellidos": "Alulema Tandayamo",
+      "nombres": "Rosa Vicenta",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b5c7fb29-b9dc-4790-ac0f-8b6d021390fb}",
+        "claveCatastral": "1702520980032",
+        "areaTotal": 5562.55,
+        "sectorComunidad": "RODILLERA DE LOS ANDES ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-03T10:20:17.860Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b7addaf5-c6cc-4347-96f6-312a279b8b51}",
+          "claveCatastral": "1702520980030",
+          "areaTotal": 583.01,
+          "sectorComunidad": "ISACATA ",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-06-03T10:27:49.721Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
         }
       ]
     },
