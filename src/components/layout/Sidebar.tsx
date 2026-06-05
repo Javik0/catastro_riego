@@ -25,7 +25,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
   const filteredNavItems = NAV_ITEMS.filter((item) => {
     if (isTecnico) {
-      return item.path === '/encuestas';
+      return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas';
     }
     // El admin puede ver todo (incluyendo encuestas), el cliente no puede ver encuestas
     if (item.path === '/encuestas') {

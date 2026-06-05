@@ -182,7 +182,7 @@ export default function App() {
                 <Route
                   index
                   element={
-                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente', 'tecnico']}>
                       <FilteredDataProvider>
                         {({ fichas, cultivosData, loading }) => (
                           <DashboardHome fichas={fichas} cultivosData={cultivosData} loading={loading} />
@@ -194,7 +194,7 @@ export default function App() {
                 <Route
                   path="mapa"
                   element={
-                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente', 'tecnico']}>
                       <FilteredDataProvider>
                         {({ fichas, prediosAdicionalesData, loading }) => (
                           <MapPage fichas={fichas} prediosAdicionalesData={prediosAdicionalesData} loading={loading} />
