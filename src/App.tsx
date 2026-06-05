@@ -28,13 +28,30 @@ function useLocalData() {
         const fichasRes = await fetch('/geo/fichas_predios.geojson');
         const fichasGeo = await fichasRes.json();
         const fichasData: FichaPredio[] = fichasGeo.features.map((f: any) => {
-          let com = (f.properties.comunidad || '').replace(/LARCACOCHA/ig, 'LARCACHACA').replace(/INSACATA/ig, 'IZACATA').trim();
+          let com = (f.properties.comunidad || '')
+            .replace(/LARCACOCHA/ig, 'LARCACHACA')
+            .replace(/INSACATA/ig, 'IZACATA')
+            .replace(/^None$/i, '')
+            .trim();
           
-          if (!com && f.properties.fecha_creacion) {
+          if (f.properties.fecha_creacion) {
             const d = safeToDate(f.properties.fecha_creacion);
-            if (d.getFullYear() === 2026 && d.getMonth() === 4) { // Mayo es mes 4
-              if (d.getDate() === 21) com = 'LA LIBERTAD';
-              else if (d.getDate() === 26) com = 'CHAMBITOLA';
+            // Usamos UTC para evitar discrepancias por la zona horaria del navegador del cliente
+            if (d.getUTCFullYear() === 2026 && d.getUTCMonth() === 4) { // Mayo es mes 4
+              const dia = d.getUTCDate();
+              if (!com || com === '') {
+                if (dia === 22) com = 'LA LIBERTAD';
+                else if (dia === 26) com = 'CHAMBITOLA';
+              }
+              // Corrección para el lunes 25 de mayo (se reasignan según la hora local de campo)
+              if (dia === 25) {
+                const hour = d.getUTCHours();
+                if (hour >= 8 && hour < 15) {
+                  com = 'MILAGRO';
+                } else if (hour >= 15) {
+                  com = 'ASOCIACIÓN 17 DE JUNIO';
+                }
+              }
             }
           }
 
