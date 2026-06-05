@@ -5,7 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { 
   ClipboardList, Search, Eye, CheckCircle2, XCircle, Clock, 
   Copy, Check, FileText, Calendar, User, MapPin, Loader2, RefreshCw,
-  Home, Sprout
+  Home, Sprout, Link, ExternalLink
 } from 'lucide-react';
 
 export default function AdminEncuestasPage() {
@@ -24,6 +24,18 @@ export default function AdminEncuestasPage() {
   const [copySuccess, setCopySuccess] = useState<Record<string, boolean>>({});
   const [observacionesInput, setObservacionesInput] = useState('');
   const [savingAction, setSavingAction] = useState(false);
+  const [copiedRegantesLink, setCopiedRegantesLink] = useState(false);
+
+  const handleCopyRegantesLink = async () => {
+    const url = `${window.location.origin}/encuesta`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedRegantesLink(true);
+      setTimeout(() => setCopiedRegantesLink(false), 2000);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Load surveys
   const fetchEncuestas = async (silent = false) => {
@@ -120,7 +132,7 @@ export default function AdminEncuestasPage() {
   return (
     <div className="space-y-6 text-slate-200">
       {/* Title & Top Action bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 border-b border-slate-800 pb-4">
         <div>
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
             <ClipboardList className="w-6 h-6 text-amber-500" />
@@ -130,14 +142,49 @@ export default function AdminEncuestasPage() {
             Gestión y revisión de fichas enviadas en línea por los comuneros para digitar en QField.
           </p>
         </div>
-        <button 
-          onClick={() => fetchEncuestas(true)}
-          disabled={refreshing}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs font-semibold cursor-pointer disabled:opacity-50 transition-colors"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
-          {refreshing ? 'Actualizando...' : 'Refrescar'}
-        </button>
+        
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full xl:w-auto">
+          {/* Botón para copiar enlace público de regantes */}
+          <button
+            onClick={handleCopyRegantesLink}
+            className={`flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-lg border text-xs font-bold transition-all cursor-pointer ${
+              copiedRegantesLink
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                : 'bg-amber-500/10 border-amber-500/20 hover:border-amber-500/40 text-amber-300 hover:bg-amber-500/15'
+            }`}
+          >
+            {copiedRegantesLink ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                ¡Enlace Copiado!
+              </>
+            ) : (
+              <>
+                <Link className="w-3.5 h-3.5 text-amber-400" />
+                Copiar Enlace Regantes
+              </>
+            )}
+          </button>
+
+          <a
+            href="/encuesta"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 px-3 py-1.5 bg-slate-800 border border-slate-700 hover:bg-slate-750 text-slate-300 text-xs font-semibold transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            Abrir Encuesta
+          </a>
+
+          <button 
+            onClick={() => fetchEncuestas(true)}
+            disabled={refreshing}
+            className="flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs font-semibold cursor-pointer disabled:opacity-50 transition-colors shrink-0"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+            {refreshing ? 'Actualizando...' : 'Refrescar'}
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards */}

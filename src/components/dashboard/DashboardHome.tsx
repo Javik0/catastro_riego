@@ -5,11 +5,67 @@ import {
 } from 'recharts';
 import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
-  Users, Droplets, TrendingUp, Loader2,
+  Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink,
 } from 'lucide-react';
 import { type FichaPredio, type EstadisticasResumen } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
 import { getColorTecnico, TECNICOS } from '../../lib/constants';
+import { useAuth } from '../../hooks/useAuth';
+
+// ── Link Card para Enlaces Rápidos ──
+function LinkCard({ title, url, badgeText, badgeColor }: { title: string; url: string; badgeText: string; badgeColor: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Error al copiar el enlace', err);
+    }
+  };
+
+  return (
+    <div className="flex-1 min-w-[260px] p-3 rounded-xl border flex flex-col justify-between gap-2.5 transition-all hover:bg-white/[0.02]"
+      style={{
+        background: 'rgba(30,41,59,0.3)',
+        borderColor: 'rgba(148,163,184,0.1)'
+      }}
+    >
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-xs font-semibold text-slate-200 truncate">{title}</span>
+        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}`}>
+          {badgeText}
+        </span>
+      </div>
+      
+      <div className="flex items-center gap-2 bg-slate-950/40 p-1.5 rounded-lg border border-slate-800">
+        <span className="text-[10px] text-slate-400 truncate flex-1 select-all font-mono">
+          {url}
+        </span>
+        <div className="flex items-center gap-1 shrink-0">
+          <button
+            onClick={handleCopy}
+            className="p-1 rounded-md transition-colors cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800"
+            title="Copiar enlace"
+          >
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+          </button>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1 rounded-md transition-colors text-slate-400 hover:text-white hover:bg-slate-850"
+            title="Abrir enlace"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── KPI Card ──
 function KPICard({ icon: Icon, label, value, color, sub }: {
@@ -52,6 +108,7 @@ interface Props {
 
 export default function DashboardHome({ fichas, loading, cultivosData }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     if (fichas.length > 0) {
@@ -107,6 +164,50 @@ export default function DashboardHome({ fichas, loading, cultivosData }: Props) 
 
   return (
     <div className="space-y-6">
+      {/* Enlaces Rápidos de Compartición */}
+      {isAdmin && (
+        <div
+          className="p-5 rounded-2xl border relative overflow-hidden transition-all duration-300 hover:border-slate-700/50"
+          style={{
+            background: 'linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.8) 100%)',
+            borderColor: 'var(--border-color)',
+            boxShadow: 'var(--shadow-card)',
+            backdropFilter: 'blur(12px)',
+          }}
+        >
+          {/* Decoración de fondo */}
+          <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full opacity-10 bg-blue-500 blur-3xl pointer-events-none" />
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-10 bg-emerald-500 blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+            <div>
+              <h2 className="text-sm font-bold text-white flex items-center gap-2">
+                <Link className="w-4.5 h-4.5 text-amber-400" />
+                Enlaces Rápidos de Compartición
+              </h2>
+              <p className="text-xs text-slate-400 mt-1 max-w-xl leading-relaxed">
+                Utiliza estos enlaces para que los comuneros regantes registren sus datos (formulario público) o para que los técnicos ingresen directamente a auditar y procesar las respuestas.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 w-full xl:w-auto shrink-0">
+              <LinkCard
+                title="Formulario para Regantes (Público)"
+                url={`${window.location.origin}/encuesta`}
+                badgeText="Comuneros"
+                badgeColor="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+              />
+              <LinkCard
+                title="Módulo de Revisión (Técnicos)"
+                url={`${window.location.origin}/encuestas`}
+                badgeText="Técnicos"
+                badgeColor="bg-blue-500/20 text-blue-300 border border-blue-500/30"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
         <KPICard icon={ClipboardList} label="Fichas Investigadas" value={stats.totalFichas} color="#3b82f6" />
