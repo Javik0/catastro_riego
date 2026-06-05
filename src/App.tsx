@@ -27,32 +27,44 @@ function useLocalData() {
       try {
         const fichasRes = await fetch('/geo/fichas_predios.geojson');
         const fichasGeo = await fichasRes.json();
-        const fichasData: FichaPredio[] = fichasGeo.features.map((f: any) => ({
-          ...f.properties,
-          id: f.properties.id?.toString() || f.properties.fid?.toString() || String(Math.random()),
-          geo: f.geometry ? {
-            lat: f.geometry.coordinates[1],
-            lng: f.geometry.coordinates[0],
-          } : undefined,
-          _geojson: f.geometry,
-          propietario: f.properties.propietario || `${f.properties.apellidos || ''} ${f.properties.nombres || ''}`.trim(),
-          area_total: f.properties.area_total || 0,
-          area_riego: f.properties.area_riego || 0,
-          area_sin_riego: f.properties.area_sin_riego || 0,
-          creado_por: f.properties.creado_por || '',
-          parroquia: f.properties.parroquia || '',
-          comunidad: (f.properties.comunidad || '').replace(/LARCACOCHA/ig, 'LARCACHACA').trim(),
-          sector: f.properties.sector || '',
-          cedula: f.properties.cedula || '',
-          codigo_final: f.properties.codigo_final || '',
-          cod_poligono: f.properties.cod_poligono || '',
+        const fichasData: FichaPredio[] = fichasGeo.features.map((f: any) => {
+          let com = (f.properties.comunidad || '').replace(/LARCACOCHA/ig, 'LARCACHACA').replace(/INSACATA/ig, 'IZACATA').trim();
+          
+          if (!com && f.properties.fecha_creacion) {
+            const d = safeToDate(f.properties.fecha_creacion);
+            if (d.getFullYear() === 2026 && d.getMonth() === 4) { // Mayo es mes 4
+              if (d.getDate() === 21) com = 'LA LIBERTAD';
+              else if (d.getDate() === 26) com = 'CHAMBITOLA';
+            }
+          }
+
+          return {
+            ...f.properties,
+            id: f.properties.id?.toString() || f.properties.fid?.toString() || String(Math.random()),
+            geo: f.geometry ? {
+              lat: f.geometry.coordinates[1],
+              lng: f.geometry.coordinates[0],
+            } : undefined,
+            _geojson: f.geometry,
+            propietario: f.properties.propietario || `${f.properties.apellidos || ''} ${f.properties.nombres || ''}`.trim(),
+            area_total: f.properties.area_total || 0,
+            area_riego: f.properties.area_riego || 0,
+            area_sin_riego: f.properties.area_sin_riego || 0,
+            creado_por: f.properties.creado_por || '',
+            parroquia: f.properties.parroquia || '',
+            comunidad: com,
+            sector: f.properties.sector || '',
+            cedula: f.properties.cedula || '',
+            codigo_final: f.properties.codigo_final || '',
+            cod_poligono: f.properties.cod_poligono || '',
           num_predio: f.properties.num_predio || 0,
           apellidos: f.properties.apellidos || '',
           nombres: f.properties.nombres || '',
           clave_catastral: f.properties.clave_catastral || '',
           tenencia_predio: f.properties.tenencia_predio || '',
           nivel_instruccion: f.properties.nivel_instruccion || '',
-        }));
+          };
+        });
         setFichas(fichasData);
 
         const cultRes = await fetch('/geo/cultivos.json');
