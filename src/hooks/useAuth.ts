@@ -39,7 +39,7 @@ export function useAuth() {
       if (firebaseUser) {
         try {
           const profileDoc = await getDoc(doc(db, 'usuarios', firebaseUser.uid));
-          const profile: UserProfile = profileDoc.exists()
+          let profile: UserProfile = profileDoc.exists()
             ? (profileDoc.data() as UserProfile)
             : {
                 uid: firebaseUser.uid,
@@ -47,17 +47,24 @@ export function useAuth() {
                 nombre: firebaseUser.email?.split('@')[0] ?? 'Usuario',
                 rol: 'cliente' as UserRole,
               };
+          
+          // Asegurar rol de administrador para el correo principal de javier@consorcio-cayambe.ec
+          if (firebaseUser.email === 'javier@consorcio-cayambe.ec') {
+            profile.rol = 'admin';
+          }
+          
           setState({ user: firebaseUser, userProfile: profile, loading: false, error: null });
           setSessionExpired(false);
         } catch {
+          const fallbackProfile: UserProfile = {
+            uid: firebaseUser.uid,
+            email: firebaseUser.email ?? '',
+            nombre: firebaseUser.email?.split('@')[0] ?? 'Usuario',
+            rol: firebaseUser.email === 'javier@consorcio-cayambe.ec' ? 'admin' : 'cliente',
+          };
           setState({
             user: firebaseUser,
-            userProfile: {
-              uid: firebaseUser.uid,
-              email: firebaseUser.email ?? '',
-              nombre: firebaseUser.email?.split('@')[0] ?? 'Usuario',
-              rol: 'cliente',
-            },
+            userProfile: fallbackProfile,
             loading: false,
             error: null,
           });
