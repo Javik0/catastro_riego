@@ -70,7 +70,7 @@ function useLocalData() {
               lng: f.geometry.coordinates[0],
             } : undefined,
             _geojson: f.geometry,
-            propietario: f.properties.propietario || `${f.properties.apellidos || ''} ${f.properties.nombres || ''}`.trim(),
+            propietario: `${f.properties.apellidos || ''} ${f.properties.nombres || ''}`.trim() || f.properties.propietario || '',
             area_total: f.properties.area_total || 0,
             area_riego: f.properties.area_riego || 0,
             area_sin_riego: f.properties.area_sin_riego || 0,
