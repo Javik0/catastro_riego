@@ -8,11 +8,14 @@ import { type FichaPredio, safeToDate } from './lib/types';
 import { getNombreTecnico } from './lib/constants';
 import LoginPage from './components/auth/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import RoleProtectedRoute from './components/auth/RoleProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
 import DashboardHome from './components/dashboard/DashboardHome';
 import MapPage from './components/map/MapPage';
 import FichasPage from './components/fichas/FichasPage';
 import ReportesPage from './components/reportes/ReportesPage';
+import EncuestaPublicaPage from './components/encuestas/EncuestaPublicaPage';
+import AdminEncuestasPage from './components/encuestas/AdminEncuestasPage';
 
 // ── Data Loader: lee los GeoJSON exportados ──
 function useLocalData() {
@@ -175,49 +178,68 @@ export default function App() {
                 <Route
                   index
                   element={
-                    <FilteredDataProvider>
-                      {({ fichas, cultivosData, loading }) => (
-                        <DashboardHome fichas={fichas} cultivosData={cultivosData} loading={loading} />
-                      )}
-                    </FilteredDataProvider>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                      <FilteredDataProvider>
+                        {({ fichas, cultivosData, loading }) => (
+                          <DashboardHome fichas={fichas} cultivosData={cultivosData} loading={loading} />
+                        )}
+                      </FilteredDataProvider>
+                    </RoleProtectedRoute>
                   }
                 />
                 <Route
                   path="mapa"
                   element={
-                    <FilteredDataProvider>
-                      {({ fichas, prediosAdicionalesData, loading }) => (
-                        <MapPage fichas={fichas} prediosAdicionalesData={prediosAdicionalesData} loading={loading} />
-                      )}
-                    </FilteredDataProvider>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                      <FilteredDataProvider>
+                        {({ fichas, prediosAdicionalesData, loading }) => (
+                          <MapPage fichas={fichas} prediosAdicionalesData={prediosAdicionalesData} loading={loading} />
+                        )}
+                      </FilteredDataProvider>
+                    </RoleProtectedRoute>
                   }
                 />
                 <Route
                   path="fichas"
                   element={
-                    <FilteredDataProvider>
-                      {({ fichas, loading }) => <FichasPage fichas={fichas} loading={loading} />}
-                    </FilteredDataProvider>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                      <FilteredDataProvider>
+                        {({ fichas, loading }) => <FichasPage fichas={fichas} loading={loading} />}
+                      </FilteredDataProvider>
+                    </RoleProtectedRoute>
                   }
                 />
                 <Route
                   path="reportes"
                   element={
-                    <FilteredDataProvider>
-                      {({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
-                        <ReportesPage
-                          fichas={fichas}
-                          allFichas={allFichas}
-                          cultivosData={cultivosData}
-                          animalesData={animalesData}
-                          prediosAdicionalesData={prediosAdicionalesData}
-                          loading={loading}
-                        />
-                      )}
-                    </FilteredDataProvider>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                      <FilteredDataProvider>
+                        {({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
+                          <ReportesPage
+                            fichas={fichas}
+                            allFichas={allFichas}
+                            cultivosData={cultivosData}
+                            animalesData={animalesData}
+                            prediosAdicionalesData={prediosAdicionalesData}
+                            loading={loading}
+                          />
+                        )}
+                      </FilteredDataProvider>
+                    </RoleProtectedRoute>
+                  }
+                />
+                <Route
+                  path="encuestas"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
+                      <AdminEncuestasPage />
+                    </RoleProtectedRoute>
                   }
                 />
               </Route>
+
+              {/* Encuesta pública abierta para los comuneros/regantes */}
+              <Route path="/encuesta" element={<EncuestaPublicaPage />} />
 
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

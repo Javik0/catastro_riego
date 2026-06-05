@@ -10,10 +10,12 @@ import {
   query,
   where,
   orderBy,
+  addDoc,
+  updateDoc,
   type DocumentData,
 } from 'firebase/firestore';
 import { db } from './firebaseConfig';
-import { safeToDate, type FichaPredio, type CultivoAgricola, type AnimalEspecie, type PredioAdicional, type FiltrosState, type EstadisticasResumen } from './types';
+import { safeToDate, type FichaPredio, type CultivoAgricola, type AnimalEspecie, type PredioAdicional, type FiltrosState, type EstadisticasResumen, type EncuestaPublica } from './types';
 import { getNombreTecnico, TECNICOS } from './constants';
 
 // ── Colecciones ──
@@ -188,3 +190,45 @@ export function calcularEstadisticas(fichas: FichaPredio[]): EstadisticasResumen
     tenenciaPredioCounts,
   };
 }
+
+// ── Guardar una nueva encuesta pública ──
+export async function submitEncuestaPublica(
+  encuesta: Omit<EncuestaPublica, 'id' | 'fecha_envio' | 'estado'>
+): Promise<string> {
+  const colRef = collection(db, 'encuestas_publicas');
+  const docRef = await addDoc(colRef, {
+    ...encuesta,
+    fecha_envio: new Date().toISOString(),
+    estado: 'pendiente'
+  });
+  return docRef.id;
+}
+
+// ── Obtener todas las encuestas públicas ──
+export async function getEncuestasPublicas(): Promise<EncuestaPublica[]> {
+  const colRef = collection(db, 'encuestas_publicas');
+  const q = query(colRef, orderBy('fecha_envio', 'desc'));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map(d => ({
+    ...d.data(),
+    id: d.id,
+  } as EncuestaPublica));
+}
+
+// ── Actualizar estado de una encuesta ──
+export async function updateEstadoEncuesta(
+  id: string,
+  estado: 'pendiente' | 'procesada' | 'rechazada',
+  observaciones?: string,
+  tecnicoEmail?: string
+): Promise<void> {
+  const docRef = doc(db, 'encuestas_publicas', id);
+  const data: any = { estado };
+  if (observaciones !== undefined) data.observaciones = observaciones;
+  if (tecnicoEmail !== undefined) {
+    data.procesado_por = tecnicoEmail;
+    data.fecha_procesado = new Date().toISOString();
+  }
+  await updateDoc(docRef, data);
+}
+

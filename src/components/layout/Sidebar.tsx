@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import {
-  LayoutDashboard, Map, ClipboardList, FileText,
+  LayoutDashboard, Map, ClipboardList, FileText, ClipboardCheck,
   LogOut, ChevronLeft, ChevronRight, Menu, X,
 } from 'lucide-react';
 
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { path: '/mapa', icon: Map, label: 'Mapa', end: false },
   { path: '/fichas', icon: ClipboardList, label: 'Fichas', end: false },
   { path: '/reportes', icon: FileText, label: 'Reportes', end: false },
+  { path: '/encuestas', icon: ClipboardCheck, label: 'Encuestas', end: false },
 ];
 
 interface Props {
@@ -20,7 +21,18 @@ interface Props {
 }
 
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: Props) {
-  const { userProfile, logout, isAdmin } = useAuth();
+  const { userProfile, logout, isAdmin, isTecnico } = useAuth();
+
+  const filteredNavItems = NAV_ITEMS.filter((item) => {
+    if (isTecnico) {
+      return item.path === '/encuestas';
+    }
+    // El admin puede ver todo (incluyendo encuestas), el cliente no puede ver encuestas
+    if (item.path === '/encuestas') {
+      return isAdmin;
+    }
+    return true;
+  });
 
   const sidebarContent = (
     <div
@@ -58,7 +70,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
       {/* Navigation */}
       <nav className="flex-1 py-3 px-2 space-y-1">
-        {NAV_ITEMS.map(({ path, icon: Icon, label, end }) => (
+        {filteredNavItems.map(({ path, icon: Icon, label, end }) => (
           <NavLink
             key={path}
             to={path}
@@ -93,9 +105,13 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
               {userProfile?.email}
             </p>
             <span className={`inline-block mt-1 px-2 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-wider ${
-              isAdmin ? 'bg-amber-500/20 text-amber-400' : 'bg-blue-500/20 text-blue-400'
+              isAdmin 
+                ? 'bg-amber-500/20 text-amber-400' 
+                : isTecnico 
+                  ? 'bg-blue-500/20 text-blue-300' 
+                  : 'bg-emerald-500/20 text-emerald-400'
             }`}>
-              {isAdmin ? 'Administrador' : 'Cliente'}
+              {isAdmin ? 'Administrador' : isTecnico ? 'Técnico' : 'Cliente'}
             </span>
           </div>
         )}

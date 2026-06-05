@@ -125,6 +125,8 @@ export function useAuth() {
   }, []);
 
   const isAdmin = state.userProfile?.rol === 'admin';
+  const isTecnico = state.userProfile?.rol === 'tecnico';
+  const isCliente = state.userProfile?.rol === 'cliente';
 
-  return { ...state, login, logout, isAdmin, sessionExpired };
+  return { ...state, login, logout, isAdmin, isTecnico, isCliente, sessionExpired };
 }

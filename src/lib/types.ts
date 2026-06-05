@@ -172,13 +172,51 @@ export interface Parroquia {
 }
 
 // ── Autenticación ──
-export type UserRole = 'admin' | 'cliente';
+export type UserRole = 'admin' | 'cliente' | 'tecnico';
 
 export interface UserProfile {
   uid: string;
   email: string;
   nombre: string;
   rol: UserRole;
+}
+
+export interface EncuestaPublica {
+  id: string;
+  fecha_envio: string; // ISO string
+  estado: 'pendiente' | 'procesada' | 'rechazada';
+  observaciones?: string;
+  procesado_por?: string; // Técnico/Admin que la procesó
+  fecha_procesado?: string; // ISO string
+  
+  // Respuestas Pestaña 1
+  clave_catastral: string;
+  cedula: string;
+  apellidos: string;
+  nombres: string;
+  comunidad: string;
+  telefono_celular: string;
+  hijos_hombres: number;
+  hijos_mujeres: number;
+  tenencia_predio: string;
+  nivel_instruccion: string;
+  tiene_construccion: boolean;
+  
+  // Respuestas Pestaña 3
+  agua_consumo: boolean;
+  energia_electrica: boolean;
+  material_construccion: string;
+  material_constr_otro?: string;
+  
+  // Respuestas Pestaña 4
+  cultivos: { tipo_cultivo: string; tipo_cultivo_otro?: string; superficie_m2: number; es_principal: boolean }[];
+  animales: { especie: string; especie_otro?: string; cantidad: number }[];
+  soberania_aliment_pct: number;
+  act_productivas_pct: number;
+  actividad_productiva: string;
+  
+  // Respuestas Pestaña 7 (Otros predios)
+  predios_adicionales: { clave_catastral_otro: string; area_riego_otro: number }[];
 }
 
 // ── Filtros del Dashboard ──
