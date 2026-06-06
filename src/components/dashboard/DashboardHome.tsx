@@ -251,10 +251,10 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         />
         <KPICard 
           icon={MapPin} 
-          label="Otros Predios (Secc. 7)" 
-          value={filteredPrediosAdicionales.length} 
+          label="Otros Predios (Sin Ficha)" 
+          value={filteredPrediosAdicionales.length - prediosUnificados.length} 
           color="#06b6d4" 
-          sub={`${prediosUnificados.length} unificados + ${(filteredPrediosAdicionales.length - prediosUnificados.length).toLocaleString('es-EC')} declarados`}
+          sub={`${(filteredPrediosAdicionales.length - prediosUnificados.length).toLocaleString('es-EC')} declaraciones verbales (Secc. 7)`}
         />
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
