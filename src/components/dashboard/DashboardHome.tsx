@@ -104,6 +104,7 @@ interface Props {
   fichas: FichaPredio[];
   loading: boolean;
   cultivosData: { tipo_cultivo: string }[];
+  prediosAdicionalesData?: any[];
 }
 
 export default function DashboardHome({ fichas, loading, cultivosData }: Props) {
@@ -135,10 +136,29 @@ export default function DashboardHome({ fichas, loading, cultivosData }: Props) 
     );
   }
 
-  // Datos para gráficos
+  // Procesar predios unificados para asociar las fichas secundarias al técnico correspondiente
+  const unificadosPorTecnico: Record<string, number> = {};
+  const prediosUnificados = prediosAdicionalesData
+    ? prediosAdicionalesData.filter((pa) => pa.observaciones_otro?.includes('Unificación automática'))
+    : [];
+
+  prediosUnificados.forEach((pa) => {
+    const match = pa.observaciones_otro?.match(/Técnico:\s*(.*?)\s*en/);
+    const tec = match ? match[1].trim() : 'Sin técnico';
+    unificadosPorTecnico[tec] = (unificadosPorTecnico[tec] || 0) + 1;
+  });
+
   const fichasPorTecnico = Object.entries(stats.fichasPorTecnico)
-    .map(([nombre, count]) => ({ nombre, count }))
-    .sort((a, b) => b.count - a.count);
+    .map(([nombre, principales]) => {
+      const unificadas = unificadosPorTecnico[nombre] || 0;
+      return {
+        nombre,
+        principales,
+        unificadas,
+        total: principales + unificadas,
+      };
+    })
+    .sort((a, b) => b.total - a.total);
 
   const metodoRiego = [
     { name: 'Aspersión', value: stats.metodoRiego.aspersion, color: '#3b82f6' },
@@ -210,7 +230,13 @@ export default function DashboardHome({ fichas, loading, cultivosData }: Props) 
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
-        <KPICard icon={ClipboardList} label="Fichas Investigadas" value={stats.totalFichas} color="#3b82f6" />
+        <KPICard 
+          icon={ClipboardList} 
+          label="Fichas Levantadas" 
+          value={stats.totalFichas + prediosUnificados.length} 
+          color="#3b82f6" 
+          sub={`${stats.totalFichas.toLocaleString('es-EC')} principales + ${prediosUnificados.length} unificadas`}
+        />
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
@@ -238,10 +264,17 @@ export default function DashboardHome({ fichas, loading, cultivosData }: Props) 
                 contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
                 labelStyle={{ color: '#e2e8f0' }}
               />
-              <Bar dataKey="count" name="Fichas" radius={[0, 4, 4, 0]}>
+              <Bar dataKey="principales" name="Fichas Principales" stackId="a">
                 {fichasPorTecnico.map((entry, index) => {
                   const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
                   return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
+                })}
+              </Bar>
+              <Bar dataKey="unificadas" name="Fichas Unificadas (Predios Adic.)" stackId="a" radius={[0, 4, 4, 0]}>
+                {fichasPorTecnico.map((entry, index) => {
+                  const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
+                  const color = tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length];
+                  return <Cell key={index} fill={`${color}80`} />; // Color con 50% de opacidad para diferenciar las fichas unificadas
                 })}
               </Bar>
             </BarChart>
