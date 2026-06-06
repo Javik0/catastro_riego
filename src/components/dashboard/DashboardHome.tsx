@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
-  Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink,
+  Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin
 } from 'lucide-react';
 import { type FichaPredio, type EstadisticasResumen } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
@@ -27,36 +27,38 @@ function LinkCard({ title, url, badgeText, badgeColor }: { title: string; url: s
   };
 
   return (
-    <div className="flex-1 min-w-[260px] p-3 rounded-xl border flex flex-col justify-between gap-2.5 transition-all hover:bg-white/[0.02]"
+    <div className="flex-1 min-w-[260px] p-3 rounded-xl border flex flex-col justify-between gap-2.5 transition-all hover:bg-black/5 dark:hover:bg-white/5"
       style={{
-        background: 'rgba(30,41,59,0.3)',
-        borderColor: 'rgba(148,163,184,0.1)'
+        background: 'var(--bg-input)',
+        borderColor: 'var(--border-color)'
       }}
     >
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-slate-200 truncate">{title}</span>
+        <span className="text-xs font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{title}</span>
         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}`}>
           {badgeText}
         </span>
       </div>
       
-      <div className="flex items-center gap-2 bg-slate-950/40 p-1.5 rounded-lg border border-slate-800">
-        <span className="text-[10px] text-slate-400 truncate flex-1 select-all font-mono">
+      <div className="flex items-center gap-2 p-1.5 rounded-lg border" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+        <span className="text-[10px] truncate flex-1 select-all font-mono" style={{ color: 'var(--text-secondary)' }}>
           {url}
         </span>
         <div className="flex items-center gap-1 shrink-0">
           <button
             onClick={handleCopy}
-            className="p-1 rounded-md transition-colors cursor-pointer text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded-md transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+            style={{ color: 'var(--text-secondary)' }}
             title="Copiar enlace"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
           </button>
           <a
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-1 rounded-md transition-colors text-slate-400 hover:text-white hover:bg-slate-850"
+            className="p-1 rounded-md transition-colors hover:bg-black/5 dark:hover:bg-white/10"
+            style={{ color: 'var(--text-secondary)' }}
             title="Abrir enlace"
           >
             <ExternalLink className="w-3.5 h-3.5" />
@@ -103,11 +105,12 @@ const PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4
 interface Props {
   fichas: FichaPredio[];
   loading: boolean;
-  cultivosData: { tipo_cultivo: string }[];
+  cultivosData: any[];
+  animalesData?: any[];
   prediosAdicionalesData?: any[];
 }
 
-export default function DashboardHome({ fichas, loading, cultivosData, prediosAdicionalesData }: Props) {
+export default function DashboardHome({ fichas, loading, cultivosData, animalesData = [], prediosAdicionalesData = [] }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
   const { isAdmin } = useAuth();
 
@@ -115,14 +118,17 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
     if (fichas.length > 0) {
       const s = calcularEstadisticas(fichas);
 
-      // Calcular cultivos frecuentes desde datos exportados
+      // Calcular cultivos frecuentes desde datos filtrados
       const cultivoCount: Record<string, number> = {};
-      for (const c of cultivosData) {
+      const fIds = new Set(fichas.map(f => f.id));
+      const fCultivos = cultivosData.filter((c: any) => fIds.has(c.ficha_id));
+
+      for (const c of fCultivos) {
         const tipo = c.tipo_cultivo || 'Sin dato';
         cultivoCount[tipo] = (cultivoCount[tipo] || 0) + 1;
       }
       s.cultivosFrecuentes = cultivoCount;
-      s.totalCultivos = cultivosData.length;
+      s.totalCultivos = fCultivos.length;
 
       setStats(s);
     }
@@ -136,11 +142,17 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
     );
   }
 
+  // Filtrar subtablas por las fichas actualmente filtradas
+  const filteredFichaIds = new Set(fichas.map(f => f.id));
+  const filteredAnimales = animalesData.filter((a: any) => filteredFichaIds.has(a.ficha_id));
+  const filteredPrediosAdicionales = prediosAdicionalesData.filter((pa: any) => filteredFichaIds.has(pa.ficha_id));
+  const totalAnimales = filteredAnimales.reduce((acc: number, a: any) => acc + (Number(a.cantidad) || 0), 0);
+
   // Procesar predios unificados para asociar las fichas secundarias al técnico correspondiente
   const unificadosPorTecnico: Record<string, number> = {};
-  const prediosUnificados = prediosAdicionalesData
-    ? prediosAdicionalesData.filter((pa: any) => pa.observaciones_otro?.includes('Unificación automática'))
-    : [];
+  const prediosUnificados = filteredPrediosAdicionales.filter((pa: any) => 
+    pa.observaciones_otro?.includes('Unificación automática')
+  );
 
   prediosUnificados.forEach((pa: any) => {
     const match = pa.observaciones_otro?.match(/Técnico:\s*(.*?)\s*en/);
@@ -187,25 +199,25 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
       {/* Enlaces Rápidos de Compartición */}
       {isAdmin && (
         <div
-          className="p-5 rounded-2xl border relative overflow-hidden transition-all duration-300 hover:border-slate-700/50"
+          className="p-5 rounded-2xl border relative overflow-hidden transition-all duration-300"
           style={{
-            background: 'linear-gradient(135deg, rgba(30,41,59,0.7) 0%, rgba(15,23,42,0.8) 100%)',
+            background: 'var(--bg-card)',
             borderColor: 'var(--border-color)',
             boxShadow: 'var(--shadow-card)',
             backdropFilter: 'blur(12px)',
           }}
         >
           {/* Decoración de fondo */}
-          <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full opacity-10 bg-blue-500 blur-3xl pointer-events-none" />
-          <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-10 bg-emerald-500 blur-3xl pointer-events-none" />
+          <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full opacity-10 dark:opacity-20 bg-blue-500 blur-3xl pointer-events-none" />
+          <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-10 dark:opacity-20 bg-emerald-500 blur-3xl pointer-events-none" />
 
           <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6">
             <div>
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <Link className="w-4.5 h-4.5 text-amber-400" />
+              <h2 className="text-sm font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <Link className="w-4.5 h-4.5 text-amber-500" />
                 Enlaces Rápidos de Compartición
               </h2>
-              <p className="text-xs text-slate-400 mt-1 max-w-xl leading-relaxed">
+              <p className="text-xs mt-1 max-w-xl leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                 Utiliza estos enlaces para que los comuneros regantes registren sus datos (formulario público) o para que los técnicos ingresen directamente a auditar y procesar las respuestas.
               </p>
             </div>
@@ -215,13 +227,13 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
                 title="Formulario para Regantes (Público)"
                 url={`${window.location.origin}/encuesta`}
                 badgeText="Comuneros"
-                badgeColor="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                badgeColor="bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20 dark:border-emerald-500/30"
               />
               <LinkCard
                 title="Módulo de Revisión (Técnicos)"
                 url={`${window.location.origin}/encuestas`}
                 badgeText="Técnicos"
-                badgeColor="bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                badgeColor="bg-blue-500/10 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 border border-blue-500/20 dark:border-blue-500/30"
               />
             </div>
           </div>
@@ -229,7 +241,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
       )}
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3">
         <KPICard 
           icon={ClipboardList} 
           label="Fichas Levantadas" 
@@ -237,11 +249,18 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           color="#3b82f6" 
           sub={`${stats.totalFichas.toLocaleString('es-EC')} principales + ${prediosUnificados.length} unificadas`}
         />
+        <KPICard 
+          icon={MapPin} 
+          label="Otros Predios (Secc. 7)" 
+          value={filteredPrediosAdicionales.length} 
+          color="#06b6d4" 
+          sub={`${prediosUnificados.length} unificados + ${(filteredPrediosAdicionales.length - prediosUnificados.length).toLocaleString('es-EC')} declarados`}
+        />
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
         <KPICard icon={Sprout} label="Cultivos Registrados" value={stats.totalCultivos} color="#22c55e" />
-        <KPICard icon={PawPrint} label="Animales Registrados" value={713} color="#ec4899" />
+        <KPICard icon={PawPrint} label="Animales Registrados" value={totalAnimales} color="#ec4899" sub={`${filteredAnimales.length} registros`} />
       </div>
 
       {/* Charts Row 1 */}
@@ -251,18 +270,19 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           className="rounded-xl border p-4"
           style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
         >
-          <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Users className="w-4 h-4 text-blue-400" />
             Fichas por Técnico
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={fichasPorTecnico} layout="vertical" margin={{ left: 80, right: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis type="number" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis type="category" dataKey="nombre" tick={{ fill: '#94a3b8', fontSize: 11 }} width={80} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+              <YAxis type="category" dataKey="nombre" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} width={80} />
               <Tooltip
-                contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
-                labelStyle={{ color: '#e2e8f0' }}
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
+                labelStyle={{ color: 'var(--text-primary)' }}
               />
               <Bar dataKey="principales" name="Fichas Principales" stackId="a">
                 {fichasPorTecnico.map((entry, index) => {
@@ -286,7 +306,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           className="rounded-xl border p-4"
           style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
         >
-          <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Droplets className="w-4 h-4 text-cyan-400" />
             Método de Riego (promedio %)
           </h3>
@@ -307,7 +327,8 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
                 ))}
               </Pie>
               <Tooltip
-                contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
               />
             </PieChart>
           </ResponsiveContainer>
@@ -321,18 +342,19 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           className="rounded-xl border p-4"
           style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
         >
-          <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <TrendingUp className="w-4 h-4 text-green-400" />
             Fichas Investigadas por Día
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={fichasPorFecha} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="fecha" tick={{ fill: '#94a3b8', fontSize: 10 }} />
-              <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis dataKey="fecha" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+              <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
               <Tooltip
-                contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
-                labelStyle={{ color: '#e2e8f0' }}
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
+                labelStyle={{ color: 'var(--text-primary)' }}
               />
               <Line type="monotone" dataKey="count" stroke="#10b981" strokeWidth={2} dot={{ r: 4, fill: '#10b981' }} name="Fichas" />
             </LineChart>
@@ -344,17 +366,18 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           className="rounded-xl border p-4"
           style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
         >
-          <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
+          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Sprout className="w-4 h-4 text-emerald-400" />
             Cultivos Más Frecuentes
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={cultivosTop} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 9 }} angle={-45} textAnchor="end" height={60} />
-              <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} angle={-45} textAnchor="end" height={60} />
+              <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
               <Tooltip
-                contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }}
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
               />
               <Bar dataKey="value" name="Registros" fill="#22c55e" radius={[4, 4, 0, 0]}>
                 {cultivosTop.map((_, index) => (
@@ -373,7 +396,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
           className="rounded-xl border p-4"
           style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
         >
-          <h3 className="text-sm font-semibold text-white mb-4">
+          <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
             Tenencia del Predio
           </h3>
           <ResponsiveContainer width="100%" height={200}>
@@ -384,22 +407,31 @@ export default function DashboardHome({ fichas, loading, cultivosData, prediosAd
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }} />
+              <Tooltip
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
 
         {/* Por parroquia */}
-        <div className="bg-slate-800/40 rounded-xl border border-slate-700/30 p-4">
-          <h3 className="text-sm font-semibold text-white mb-4">
+        <div
+          className="rounded-xl border p-4"
+          style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
+        >
+          <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>
             Fichas por Parroquia
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={fichasPorParroquia} margin={{ left: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-              <XAxis dataKey="name" tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} />
-              <Tooltip contentStyle={{ background: '#1e293b', border: '1px solid #334155', borderRadius: 8 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+              <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+              <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+              <Tooltip
+                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                itemStyle={{ color: 'var(--text-primary)' }}
+              />
               <Bar dataKey="value" name="Fichas" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
