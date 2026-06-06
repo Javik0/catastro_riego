@@ -272,7 +272,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         />
         <KPICard 
           icon={MapPin} 
-          label="Otros Predios (Sin Ficha)" 
+          label="Otros Predios del Regante" 
           value={totalDeclaradosPuros} 
           color="#06b6d4" 
           sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
