@@ -99,10 +99,10 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros }
               />
               <div>
                 <span className="text-[10px] font-medium" style={{ color: showOtros ? '#3b82f6' : 'var(--text-secondary)' }}>
-                  Otros predios
+                  Fichas unificadas
                 </span>
                 <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
-                  Polígonos azules (Sección 7)
+                  Polígonos azules (Duplicados)
                 </span>
               </div>
             </label>
@@ -593,13 +593,21 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
   const [showOtrosPredios, setShowOtrosPredios] = useState(true); // Visible por defecto
   const [currentZoom, setCurrentZoom] = useState(13);
 
-  // FeatureCollection memoizado de las geometrías de los predios adicionales (Polígonos Azules)
+  // Filtrar predios adicionales para considerar únicamente los predios unificados virtualmente (fichas secundarias unificadas en campo)
+  const prediosUnificadosData = useMemo(() => {
+    if (!prediosAdicionalesData) return [];
+    return prediosAdicionalesData.filter(
+      (pa) => pa.id_adicional || pa.observaciones_otro?.includes('Unificación automática')
+    );
+  }, [prediosAdicionalesData]);
+
+  // FeatureCollection memoizado de las geometrías de los predios unificados (Polígonos Azules)
   const prediosAdicionalesFC = useMemo<FeatureCollection | null>(() => {
-    if (!prediosAdicionalesData || !catastroBusqueda.length || !poligonosRef.current) return null;
+    if (!prediosUnificadosData || !catastroBusqueda.length || !poligonosRef.current) return null;
     
     const polRef = poligonosRef.current; // Capturar la referencia antes del forEach para TS
     const features: any[] = [];
-    prediosAdicionalesData.forEach(pa => {
+    prediosUnificadosData.forEach(pa => {
       const cat = catastroBusqueda.find(c => c.clave_cata === pa.clave_catastral_otro);
       if (cat) {
         const geom = polRef[String(cat.fid)];
@@ -620,7 +628,7 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
       }
     });
     return { type: 'FeatureCollection', features } as FeatureCollection;
-  }, [prediosAdicionalesData, catastroBusqueda, poligonosLoaded, fichas]);
+  }, [prediosUnificadosData, catastroBusqueda, poligonosLoaded, fichas]);
 
   useEffect(() => {
     fetch('/geo/catastro_busqueda.json')
@@ -630,9 +638,9 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
   }, []);
 
   const prediosAdicionalesMarkers = useMemo(() => {
-    if (!prediosAdicionalesData || !catastroBusqueda.length) return [];
+    if (!prediosUnificadosData || !catastroBusqueda.length) return [];
     const markers: any[] = [];
-    prediosAdicionalesData.forEach(pa => {
+    prediosUnificadosData.forEach(pa => {
       const cat = catastroBusqueda.find(c => c.clave_cata === pa.clave_catastral_otro);
       if (cat && cat.lat && cat.lng) {
         const mainFicha = fichas.find(f => f.id === pa.ficha_id);
@@ -642,29 +650,7 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
       }
     });
     return markers;
-  }, [prediosAdicionalesData, catastroBusqueda, fichas]);
-
-  // Número de predios catastrales únicos referenciados como "otros predios" (sin duplicados)
-  const prediosAdicionalesUnicos = useMemo(() => {
-    if (!prediosAdicionalesData) return 0;
-    const claves = new Set(
-      prediosAdicionalesData
-        .map(pa => pa.clave_catastral_otro)
-        .filter(Boolean)
-    );
-    return claves.size;
-  }, [prediosAdicionalesData]);
-
-  // Número de fichas únicas que tienen al menos 1 predio adicional (se actualiza dinámicamente)
-  const fichasConOtrosPredios = useMemo(() => {
-    if (!prediosAdicionalesData) return 0;
-    const ids = new Set(
-      prediosAdicionalesData
-        .map(pa => pa.ficha_id)
-        .filter(Boolean)
-    );
-    return ids.size;
-  }, [prediosAdicionalesData]);
+  }, [prediosUnificadosData, catastroBusqueda, fichas]);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
   const allCatastroFC = useMemo<FeatureCollection | null>(() => {
@@ -777,20 +763,21 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
           </div>
         )}
 
-        {/* ── Bloque 2: Predios Adicionales (Sección 7) — separado visualmente ── */}
-        {prediosAdicionalesUnicos > 0 && (
+        {/* ── Bloque 2: Fichas Unificadas (Duplicados de campo) ── */}
+        {prediosUnificadosData.length > 0 && (
           <>
             <div className="my-2 border-t" style={{ borderColor: 'var(--border-color)' }} />
             <p className="text-[9px] font-semibold uppercase tracking-wider mb-1" style={{ color: '#3b82f6' }}>
-              Predios adicionales · Sec. 7
+              Fichas unificadas
             </p>
             <div className="flex items-center gap-1.5 text-[10px]" style={{ color: 'var(--text-muted)' }}>
               <div className="w-2 h-2 rounded-full border border-blue-400" style={{ background: 'rgba(59,130,246,0.3)' }} />
-              <span>{fichasConOtrosPredios} fichas con otro predio</span>
+              <span>{prediosUnificadosData.length} fichas secundarias</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              <div className="w-2 h-2 rounded-sm border border-blue-400" style={{ background: 'rgba(59,130,246,0.15)' }} />
-              <span>{prediosAdicionalesUnicos} predios distintos</span>
+            <div className="my-1.5 border-t border-dashed" style={{ borderColor: 'var(--border-color)' }} />
+            <div className="flex items-center gap-1.5 text-[10px] font-semibold" style={{ color: 'var(--text-primary)' }}>
+              <div className="w-2 h-2 rounded-sm border border-emerald-400" style={{ background: 'rgba(52,211,153,0.2)' }} />
+              <span>Total: {fichasConGeo.length + prediosUnificadosData.length} fichas de campo</span>
             </div>
           </>
         )}
@@ -925,7 +912,7 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
               const p = feature.properties;
               if (p) {
                 layer.bindTooltip(
-                  `<b>Predio Adicional (Polígono Azul)</b><br/>
+                  `<b>Ficha Unificada (Secundaria)</b><br/>
                    <b>Propietario Principal:</b> ${p.propietario_principal || '—'}<br/>
                    <b>Clave Catastral:</b> ${p.clave_catastral_otro || '—'}<br/>
                    <b>Comunidad:</b> ${p.comunidad || '—'}<br/>
