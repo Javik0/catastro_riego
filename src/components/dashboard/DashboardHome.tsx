@@ -107,7 +107,7 @@ interface Props {
   prediosAdicionalesData?: any[];
 }
 
-export default function DashboardHome({ fichas, loading, cultivosData }: Props) {
+export default function DashboardHome({ fichas, loading, cultivosData, prediosAdicionalesData }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
   const { isAdmin } = useAuth();
 
@@ -139,10 +139,10 @@ export default function DashboardHome({ fichas, loading, cultivosData }: Props) 
   // Procesar predios unificados para asociar las fichas secundarias al técnico correspondiente
   const unificadosPorTecnico: Record<string, number> = {};
   const prediosUnificados = prediosAdicionalesData
-    ? prediosAdicionalesData.filter((pa) => pa.observaciones_otro?.includes('Unificación automática'))
+    ? prediosAdicionalesData.filter((pa: any) => pa.observaciones_otro?.includes('Unificación automática'))
     : [];
 
-  prediosUnificados.forEach((pa) => {
+  prediosUnificados.forEach((pa: any) => {
     const match = pa.observaciones_otro?.match(/Técnico:\s*(.*?)\s*en/);
     const tec = match ? match[1].trim() : 'Sin técnico';
     unificadosPorTecnico[tec] = (unificadosPorTecnico[tec] || 0) + 1;
