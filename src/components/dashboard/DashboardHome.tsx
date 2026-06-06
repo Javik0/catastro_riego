@@ -86,7 +86,7 @@ function KPICard({ icon: Icon, label, value, color, sub }: {
         <div>
           <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
           <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>{typeof value === 'number' ? value.toLocaleString('es-EC') : value}</p>
-          {sub && <p className="text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>{sub}</p>}
+          {sub && <p className="text-[11px] font-medium mt-1" style={{ color: 'var(--text-secondary)' }}>{sub}</p>}
         </div>
         <div className="w-10 h-10 rounded-lg flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity"
           style={{ background: `${color}15`, border: `1px solid ${color}30` }}
