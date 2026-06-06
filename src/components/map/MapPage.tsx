@@ -597,7 +597,7 @@ export default function MapPage({ fichas, prediosAdicionalesData, loading }: Pro
   const prediosUnificadosData = useMemo(() => {
     if (!prediosAdicionalesData) return [];
     return prediosAdicionalesData.filter(
-      (pa) => pa.id_adicional || pa.observaciones_otro?.includes('Unificación automática')
+      (pa) => pa.observaciones_otro?.includes('Unificación automática')
     );
   }, [prediosAdicionalesData]);
 
