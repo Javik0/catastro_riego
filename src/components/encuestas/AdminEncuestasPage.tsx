@@ -130,15 +130,15 @@ export default function AdminEncuestasPage() {
   const uniqueComunidades = Array.from(new Set(encuestas.map(e => e.comunidad))).filter(Boolean).sort();
 
   return (
-    <div className="space-y-6 text-slate-200">
+    <div className="space-y-6" style={{ color: 'var(--text-primary)' }}>
       {/* Title & Top Action bar */}
-      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 border-b pb-4" style={{ borderBottomColor: 'var(--border-color)' }}>
         <div>
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
+          <h2 className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <ClipboardList className="w-6 h-6 text-amber-500" />
             Control de Encuestas Públicas
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs mt-1" style={{ color: 'var(--text-secondary)' }}>
             Gestión y revisión de fichas enviadas en línea por los comuneros para digitar en QField.
           </p>
         </div>
@@ -170,7 +170,8 @@ export default function AdminEncuestasPage() {
             href="/encuesta"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 px-3 py-1.5 bg-slate-800 border border-slate-700 hover:bg-slate-750 text-slate-300 text-xs font-semibold transition-colors"
+            className="flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold hover:opacity-90 transition-colors shadow-sm"
+            style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Abrir Encuesta
@@ -179,7 +180,8 @@ export default function AdminEncuestasPage() {
           <button 
             onClick={() => fetchEncuestas(true)}
             disabled={refreshing}
-            className="flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:bg-slate-700 text-xs font-semibold cursor-pointer disabled:opacity-50 transition-colors shrink-0"
+            className="flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-semibold cursor-pointer disabled:opacity-50 hover:opacity-90 transition-colors shrink-0 shadow-sm"
+            style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin' : ''}`} />
             {refreshing ? 'Actualizando...' : 'Refrescar'}
@@ -189,44 +191,45 @@ export default function AdminEncuestasPage() {
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4">
-          <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Total Recibidas</p>
-          <p className="text-2xl font-bold text-white mt-1">{total}</p>
+        <div className="rounded-xl border p-4 shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+          <p className="text-[10px] uppercase font-bold tracking-wider" style={{ color: 'var(--text-secondary)' }}>Total Recibidas</p>
+          <p className="text-2xl font-bold mt-1" style={{ color: 'var(--text-primary)' }}>{total}</p>
         </div>
-        <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4 flex justify-between items-start">
+        <div className="rounded-xl border p-4 flex justify-between items-start shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Pendientes</p>
-            <p className="text-2xl font-bold text-amber-400 mt-1">{pendientes}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider" style={{ color: 'var(--text-secondary)' }}>Pendientes</p>
+            <p className="text-2xl font-bold text-amber-550 mt-1">{pendientes}</p>
           </div>
-          <Clock className="w-5 h-5 text-amber-500/50" />
+          <Clock className="w-5 h-5 text-amber-500/55" />
         </div>
-        <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4 flex justify-between items-start">
+        <div className="rounded-xl border p-4 flex justify-between items-start shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Procesadas</p>
-            <p className="text-2xl font-bold text-emerald-400 mt-1">{procesadas}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider" style={{ color: 'var(--text-secondary)' }}>Procesadas</p>
+            <p className="text-2xl font-bold text-emerald-550 mt-1">{procesadas}</p>
           </div>
-          <CheckCircle2 className="w-5 h-5 text-emerald-500/50" />
+          <CheckCircle2 className="w-5 h-5 text-emerald-500/55" />
         </div>
-        <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4 flex justify-between items-start">
+        <div className="rounded-xl border p-4 flex justify-between items-start shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div>
-            <p className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Rechazadas</p>
-            <p className="text-2xl font-bold text-red-400 mt-1">{rechazadas}</p>
+            <p className="text-[10px] uppercase font-bold tracking-wider" style={{ color: 'var(--text-secondary)' }}>Rechazadas</p>
+            <p className="text-2xl font-bold text-red-550 mt-1">{rechazadas}</p>
           </div>
-          <XCircle className="w-5 h-5 text-red-500/50" />
+          <XCircle className="w-5 h-5 text-red-500/55" />
         </div>
       </div>
 
       {/* Filter panel */}
-      <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row gap-3 items-center">
+      <div className="rounded-xl border p-4 flex flex-col md:flex-row gap-3 items-center shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
         {/* Search */}
         <div className="relative flex-1 w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
           <input 
             type="text" 
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
             placeholder="Buscar por regante, cédula o clave..."
-            className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none transition-colors"
+            className="w-full border rounded-lg pl-9 pr-3 py-2 text-xs focus:outline-none transition-colors"
+            style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
           />
         </div>
 
@@ -235,7 +238,8 @@ export default function AdminEncuestasPage() {
           <select 
             value={estadoFiltro}
             onChange={(e) => setEstadoFiltro(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs focus:outline-none cursor-pointer"
+            className="w-full border rounded-lg px-3 py-2 text-xs focus:outline-none cursor-pointer"
+            style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
           >
             <option value="">Todos los Estados</option>
             <option value="pendiente">⏳ Pendientes</option>
@@ -249,7 +253,8 @@ export default function AdminEncuestasPage() {
           <select 
             value={comunidadFiltro}
             onChange={(e) => setComunidadFiltro(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs focus:outline-none cursor-pointer"
+            className="w-full border rounded-lg px-3 py-2 text-xs focus:outline-none cursor-pointer"
+            style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
           >
             <option value="">Todas las Comunidades</option>
             {uniqueComunidades.map(com => <option key={com} value={com}>{com}</option>)}
@@ -261,18 +266,18 @@ export default function AdminEncuestasPage() {
       {loading ? (
         <div className="py-20 text-center flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
-          <p className="text-sm text-slate-400">Cargando encuestas...</p>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Cargando encuestas...</p>
         </div>
       ) : listadoFiltrado.length === 0 ? (
-        <div className="py-20 text-center bg-slate-900/20 border border-slate-800 border-dashed rounded-xl">
-          <p className="text-slate-400 text-sm">No se encontraron encuestas con los filtros seleccionados.</p>
+        <div className="py-20 text-center border border-dashed rounded-xl" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
+          <p className="text-sm">No se encontraron encuestas con los filtros seleccionados.</p>
         </div>
       ) : (
-        <div className="bg-slate-900/40 border border-slate-800 rounded-xl overflow-hidden shadow-lg">
+        <div className="rounded-xl overflow-hidden shadow-lg border animate-fadeIn" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
               <thead>
-                <tr className="bg-slate-950/60 border-b border-slate-850 text-slate-300 font-semibold uppercase tracking-wider text-[10px]">
+                <tr className="border-b font-semibold uppercase tracking-wider text-[10px]" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
                   <th className="p-4">Regante</th>
                   <th className="p-4">Cédula</th>
                   <th className="p-4">Comunidad</th>
@@ -282,27 +287,27 @@ export default function AdminEncuestasPage() {
                   <th className="p-4 text-right">Ver</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-850">
+              <tbody className="divide-y" style={{ borderColor: 'var(--border-color)' }}>
                 {listadoFiltrado.map((enc) => {
                   const dateStr = enc.fecha_envio ? new Date(enc.fecha_envio).toLocaleDateString('es-EC', {
                     day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
                   }) : 'Sin fecha';
                   return (
-                    <tr key={enc.id} className="hover:bg-slate-900/30 transition-colors">
-                      <td className="p-4 font-semibold text-white">
+                    <tr key={enc.id} className="transition-colors hover:bg-slate-400/5" style={{ backgroundColor: 'var(--row-alt)' }}>
+                      <td className="p-4 font-semibold" style={{ color: 'var(--text-primary)' }}>
                         {enc.apellidos} {enc.nombres}
                       </td>
                       <td className="p-4 font-mono">{enc.cedula}</td>
                       <td className="p-4">{enc.comunidad}</td>
                       <td className="p-4 font-mono">{enc.telefono_celular}</td>
-                      <td className="p-4 text-slate-400">{dateStr}</td>
+                      <td className="p-4" style={{ color: 'var(--text-secondary)' }}>{dateStr}</td>
                       <td className="p-4">
                         <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                           enc.estado === 'procesada' 
-                            ? 'bg-emerald-500/20 text-emerald-300' 
+                            ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-300' 
                             : enc.estado === 'rechazada' 
-                              ? 'bg-red-500/20 text-red-300' 
-                              : 'bg-amber-500/20 text-amber-300'
+                              ? 'bg-red-500/20 text-red-600 dark:text-red-300' 
+                              : 'bg-amber-500/20 text-amber-600 dark:text-amber-300'
                         }`}>
                           {enc.estado === 'procesada' ? 'Procesada' : enc.estado === 'rechazada' ? 'Rechazada' : 'Pendiente'}
                         </span>
@@ -313,7 +318,7 @@ export default function AdminEncuestasPage() {
                             setSelectedEncuesta(enc);
                             setObservacionesInput(enc.observaciones || '');
                           }}
-                          className="p-1 px-2.5 bg-blue-600/20 hover:bg-blue-600/35 border border-blue-500/20 hover:border-blue-500/30 text-blue-300 rounded-md transition-all inline-flex items-center gap-1 font-semibold cursor-pointer"
+                          className="p-1 px-2.5 bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500/30 text-blue-600 dark:text-blue-300 rounded-md transition-all inline-flex items-center gap-1 font-semibold cursor-pointer"
                         >
                           <Eye className="w-3.5 h-3.5" /> Detalle
                         </button>
@@ -324,7 +329,7 @@ export default function AdminEncuestasPage() {
               </tbody>
             </table>
           </div>
-          <div className="p-4 bg-slate-950/20 border-t border-slate-850 flex justify-between items-center text-[10px] text-slate-400">
+          <div className="p-4 border-t flex justify-between items-center text-[10px]" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
             <span>Mostrando {listadoFiltrado.length} de {total} encuestas</span>
           </div>
         </div>
@@ -332,16 +337,16 @@ export default function AdminEncuestasPage() {
 
       {/* Detail Modal */}
       {selectedEncuesta && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col justify-between shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="border rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col justify-between shadow-2xl animate-scaleIn" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>
             {/* Modal Header */}
-            <div className="p-5 border-b border-slate-800 bg-slate-950/40 flex justify-between items-center">
+            <div className="p-5 border-b flex justify-between items-center" style={{ background: 'var(--bg-primary)', borderBottomColor: 'var(--border-color)' }}>
               <div>
-                <h3 className="text-md font-bold text-white flex items-center gap-2">
+                <h3 className="text-md font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <FileText className="w-5 h-5 text-amber-500" />
                   Detalle de Entrevista: {selectedEncuesta.apellidos} {selectedEncuesta.nombres}
                 </h3>
-                <p className="text-[10px] text-slate-400 mt-1 flex items-center gap-4">
+                <p className="text-[10px] mt-1 flex items-center gap-4" style={{ color: 'var(--text-secondary)' }}>
                   <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> Recibido: {new Date(selectedEncuesta.fecha_envio).toLocaleString('es-EC')}</span>
                   <span className="flex items-center gap-1"><User className="w-3.5 h-3.5" /> ID: {selectedEncuesta.id}</span>
                 </p>
@@ -351,7 +356,8 @@ export default function AdminEncuestasPage() {
                   setSelectedEncuesta(null);
                   setObservacionesInput('');
                 }}
-                className="text-slate-400 hover:text-white p-1 hover:bg-white/10 rounded-md transition-colors cursor-pointer"
+                className="p-1 rounded-md transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                style={{ color: 'var(--text-secondary)' }}
               >
                 ✕
               </button>
@@ -362,123 +368,129 @@ export default function AdminEncuestasPage() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {/* PESTAÑA 1: DATOS DEL PROPIETARIO */}
-                <div className="bg-slate-950/30 border border-slate-850 rounded-xl p-4 space-y-3">
-                  <h4 className="font-bold text-white text-xs border-b border-slate-800 pb-1.5 flex items-center gap-1.5">
-                    <User className="w-4 h-4 text-blue-400" />
+                <div className="rounded-xl p-4 space-y-3 border shadow-sm animate-scaleIn" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <h4 className="font-bold text-xs pb-1.5 flex items-center gap-1.5 border-b" style={{ color: 'var(--text-primary)', borderBottomColor: 'var(--border-color)' }}>
+                    <User className="w-4 h-4 text-blue-500" />
                     1. DATOS DEL PROPIETARIO
                   </h4>
                   
                   <div className="space-y-2.5">
                     {/* Clave catastral */}
-                    <div className="flex justify-between items-center bg-slate-950/50 p-2 rounded-lg border border-slate-900">
+                    <div className="flex justify-between items-center p-2 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                       <div>
-                        <span className="text-[10px] text-slate-500 block">Clave Catastral (Impuesto)</span>
-                        <span className="font-mono text-white text-xs font-semibold">{selectedEncuesta.clave_catastral || 'Sin especificar'}</span>
+                        <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Clave Catastral (Impuesto)</span>
+                        <span className="font-mono text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.clave_catastral || 'Sin especificar'}</span>
                       </div>
                       {selectedEncuesta.clave_catastral && (
                         <button 
                           onClick={() => handleCopy(selectedEncuesta.clave_catastral, 'cc')}
-                          className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                          className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
-                          {copySuccess['cc'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copySuccess['cc'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       )}
                     </div>
 
                     {/* Cédula */}
-                    <div className="flex justify-between items-center bg-slate-950/50 p-2 rounded-lg border border-slate-900">
+                    <div className="flex justify-between items-center p-2 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                       <div>
-                        <span className="text-[10px] text-slate-500 block">Cédula de Identidad</span>
-                        <span className="font-mono text-white text-xs font-semibold">{selectedEncuesta.cedula}</span>
+                        <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Cédula de Identidad</span>
+                        <span className="font-mono text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.cedula}</span>
                       </div>
                       <button 
                         onClick={() => handleCopy(selectedEncuesta.cedula, 'ced')}
-                        className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                        className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                        style={{ color: 'var(--text-secondary)' }}
                       >
-                        {copySuccess['ced'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                        {copySuccess['ced'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                       </button>
                     </div>
 
                     {/* Nombres y Apellidos */}
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="bg-slate-950/50 p-2 rounded-lg border border-slate-900 flex justify-between items-center">
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
-                          <span className="text-[10px] text-slate-500 block">Apellidos</span>
-                          <span className="font-semibold text-white truncate block">{selectedEncuesta.apellidos}</span>
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Apellidos</span>
+                          <span className="font-semibold truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.apellidos}</span>
                         </div>
                         <button 
                           onClick={() => handleCopy(selectedEncuesta.apellidos, 'ap')}
-                          className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                          className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
-                          {copySuccess['ap'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copySuccess['ap'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       </div>
-                      <div className="bg-slate-950/50 p-2 rounded-lg border border-slate-900 flex justify-between items-center">
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
-                          <span className="text-[10px] text-slate-500 block">Nombres</span>
-                          <span className="font-semibold text-white truncate block">{selectedEncuesta.nombres}</span>
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Nombres</span>
+                          <span className="font-semibold truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.nombres}</span>
                         </div>
                         <button 
                           onClick={() => handleCopy(selectedEncuesta.nombres, 'nom')}
-                          className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                          className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
-                          {copySuccess['nom'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copySuccess['nom'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       </div>
                     </div>
 
                     {/* Comunidad y Celular */}
                     <div className="grid grid-cols-2 gap-2">
-                      <div className="bg-slate-950/50 p-2 rounded-lg border border-slate-900 flex justify-between items-center">
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
-                          <span className="text-[10px] text-slate-500 block">Comunidad</span>
-                          <span className="font-semibold text-white truncate block">{selectedEncuesta.comunidad}</span>
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Comunidad</span>
+                          <span className="font-semibold truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.comunidad}</span>
                         </div>
                         <button 
                           onClick={() => handleCopy(selectedEncuesta.comunidad, 'com')}
-                          className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                          className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
-                          {copySuccess['com'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copySuccess['com'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       </div>
-                      <div className="bg-slate-950/50 p-2 rounded-lg border border-slate-900 flex justify-between items-center">
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
-                          <span className="text-[10px] text-slate-500 block">Celular</span>
-                          <span className="font-mono text-white truncate block">{selectedEncuesta.telefono_celular}</span>
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Celular</span>
+                          <span className="font-mono truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.telefono_celular}</span>
                         </div>
                         <button 
                           onClick={() => handleCopy(selectedEncuesta.telefono_celular, 'tel')}
-                          className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                          className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                          style={{ color: 'var(--text-secondary)' }}
                         >
-                          {copySuccess['tel'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                          {copySuccess['tel'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       </div>
                     </div>
 
                     {/* Demographics */}
-                    <div className="grid grid-cols-3 gap-2 bg-slate-950/50 p-2.5 rounded-lg border border-slate-900 text-center">
+                    <div className="grid grid-cols-3 gap-2 p-2.5 rounded-lg border text-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                       <div>
-                        <span className="text-[9px] text-slate-500 block">Hijos Varones</span>
-                        <span className="font-bold text-white text-xs">{selectedEncuesta.hijos_hombres}</span>
+                        <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Hijos Varones</span>
+                        <span className="font-bold text-xs" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.hijos_hombres}</span>
                       </div>
-                      <div className="border-x border-slate-850">
-                        <span className="text-[9px] text-slate-500 block">Hijos Mujeres</span>
-                        <span className="font-bold text-white text-xs">{selectedEncuesta.hijos_mujeres}</span>
+                      <div className="border-x" style={{ borderColor: 'var(--border-color)' }}>
+                        <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Hijos Mujeres</span>
+                        <span className="font-bold text-xs" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.hijos_mujeres}</span>
                       </div>
                       <div>
-                        <span className="text-[9px] text-slate-500 block">Tenencia Terreno</span>
-                        <span className="font-bold text-blue-300 text-[10px]">{selectedEncuesta.tenencia_predio}</span>
+                        <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Tenencia Terreno</span>
+                        <span className="font-bold text-blue-500 dark:text-blue-300 text-[10px]">{selectedEncuesta.tenencia_predio}</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 bg-slate-950/50 p-2.5 rounded-lg border border-slate-900">
+                    <div className="grid grid-cols-2 gap-2 p-2.5 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                       <div>
-                        <span className="text-[9px] text-slate-500 block">Instrucción</span>
-                        <span className="font-semibold text-white">{selectedEncuesta.nivel_instruccion}</span>
+                        <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Instrucción</span>
+                        <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.nivel_instruccion}</span>
                       </div>
                       <div>
-                        <span className="text-[9px] text-slate-500 block">¿Tiene Vivienda?</span>
-                        <span className={`font-bold text-[10px] ${selectedEncuesta.tiene_construccion ? 'text-emerald-400' : 'text-slate-500'}`}>
+                        <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>¿Tiene Vivienda?</span>
+                        <span className={`font-bold text-[10px] ${selectedEncuesta.tiene_construccion ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-500'}`}>
                           {selectedEncuesta.tiene_construccion ? 'SÍ, TIENE CASA' : 'NO TIENE CASA'}
                         </span>
                       </div>
@@ -488,33 +500,33 @@ export default function AdminEncuestasPage() {
                 </div>
 
                 {/* PESTAÑA 3: SERVICIOS BÁSICOS */}
-                <div className="bg-slate-950/30 border border-slate-850 rounded-xl p-4 space-y-3">
-                  <h4 className="font-bold text-white text-xs border-b border-slate-800 pb-1.5 flex items-center gap-1.5">
-                    <Home className="w-4 h-4 text-emerald-400" />
+                <div className="rounded-xl p-4 space-y-3 border shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <h4 className="font-bold text-xs pb-1.5 flex items-center gap-1.5 border-b" style={{ color: 'var(--text-primary)', borderBottomColor: 'var(--border-color)' }}>
+                    <Home className="w-4 h-4 text-emerald-500" />
                     3. SERVICIOS Y CONSTRUCCIÓN
                   </h4>
 
                   {!selectedEncuesta.tiene_construccion ? (
-                    <p className="text-slate-500 italic py-8 text-center bg-slate-950/45 rounded-lg border border-slate-900">
+                    <p className="italic py-8 text-center rounded-lg border" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
                       Sin construcción en el lote. No aplican servicios.
                     </p>
                   ) : (
                     <div className="space-y-3">
                       <div className="grid grid-cols-2 gap-2 text-center">
-                        <div className={`p-2.5 rounded-lg border ${selectedEncuesta.agua_consumo ? 'bg-blue-500/10 border-blue-500/30 text-blue-300' : 'bg-slate-950/40 border-slate-900 text-slate-500'}`}>
+                        <div className={`p-2.5 rounded-lg border ${selectedEncuesta.agua_consumo ? 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-300 font-semibold' : 'text-slate-500'}`} style={!selectedEncuesta.agua_consumo ? { background: 'var(--bg-input)', borderColor: 'var(--border-color)' } : undefined}>
                           <span className="block text-[9px] uppercase tracking-wider font-bold">Agua Potable</span>
                           <span className="font-bold text-xs">{selectedEncuesta.agua_consumo ? 'CON SERVICIO' : 'SIN SERVICIO'}</span>
                         </div>
-                        <div className={`p-2.5 rounded-lg border ${selectedEncuesta.energia_electrica ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' : 'bg-slate-950/40 border-slate-900 text-slate-500'}`}>
+                        <div className={`p-2.5 rounded-lg border ${selectedEncuesta.energia_electrica ? 'bg-amber-500/10 border-amber-500/30 text-amber-600 dark:text-amber-300 font-semibold' : 'text-slate-500'}`} style={!selectedEncuesta.energia_electrica ? { background: 'var(--bg-input)', borderColor: 'var(--border-color)' } : undefined}>
                           <span className="block text-[9px] uppercase tracking-wider font-bold">Luz Eléctrica</span>
                           <span className="font-bold text-xs">{selectedEncuesta.energia_electrica ? 'CON SERVICIO' : 'SIN SERVICIO'}</span>
                         </div>
                       </div>
 
-                      <div className="bg-slate-950/50 p-2.5 rounded-lg border border-slate-900 flex justify-between items-center">
+                      <div className="p-2.5 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div>
-                          <span className="text-[9px] text-slate-500 block">Material predominante</span>
-                          <span className="font-semibold text-white uppercase text-xs">
+                          <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Material predominante</span>
+                          <span className="font-semibold uppercase text-xs" style={{ color: 'var(--text-primary)' }}>
                             {selectedEncuesta.material_construccion === 'Otros' 
                               ? `Otros (${selectedEncuesta.material_constr_otro})` 
                               : selectedEncuesta.material_construccion || 'Sin especificar'}
@@ -523,9 +535,10 @@ export default function AdminEncuestasPage() {
                         {selectedEncuesta.material_construccion && (
                           <button 
                             onClick={() => handleCopy(selectedEncuesta.material_construccion === 'Otros' ? selectedEncuesta.material_constr_otro || '' : selectedEncuesta.material_construccion, 'mat')}
-                            className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                            className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                            style={{ color: 'var(--text-secondary)' }}
                           >
-                            {copySuccess['mat'] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                            {copySuccess['mat'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                           </button>
                         )}
                       </div>
@@ -535,37 +548,38 @@ export default function AdminEncuestasPage() {
 
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-scaleIn">
                 {/* PESTAÑA 4: PRODUCCIÓN (CULTIVOS Y ANIMALES) */}
-                <div className="bg-slate-950/30 border border-slate-850 rounded-xl p-4 space-y-4">
-                  <h4 className="font-bold text-white text-xs border-b border-slate-800 pb-1.5 flex items-center gap-1.5">
-                    <Sprout className="w-4 h-4 text-amber-400" />
+                <div className="rounded-xl p-4 space-y-4 border shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <h4 className="font-bold text-xs pb-1.5 flex items-center gap-1.5 border-b" style={{ color: 'var(--text-primary)', borderBottomColor: 'var(--border-color)' }}>
+                    <Sprout className="w-4 h-4 text-amber-500" />
                     4. PRODUCCIÓN AGRÍCOLA Y PECUARIA
                   </h4>
 
                   {/* Cultivos list */}
                   <div className="space-y-2">
-                    <span className="text-[10px] text-slate-400 font-bold block">🌾 Cultivos Reportados</span>
+                    <span className="text-[10px] font-bold block" style={{ color: 'var(--text-secondary)' }}>🌾 Cultivos Reportados</span>
                     {!selectedEncuesta.cultivos || selectedEncuesta.cultivos.length === 0 ? (
-                      <p className="text-[10px] text-slate-500 italic bg-slate-950/30 p-2 rounded-lg text-center">No reportó cultivos.</p>
+                      <p className="text-[10px] italic p-2 rounded-lg text-center border" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-muted)' }}>No reportó cultivos.</p>
                     ) : (
                       <div className="space-y-1.5">
                         {selectedEncuesta.cultivos.map((c, i) => (
-                          <div key={i} className="flex justify-between items-center bg-slate-950/50 p-2 rounded-lg border border-slate-900">
+                          <div key={i} className="flex justify-between items-center p-2 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                             <div>
-                              <span className="font-semibold text-white">
+                              <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
                                 {c.tipo_cultivo === 'Otros' ? `Otros (${c.tipo_cultivo_otro})` : c.tipo_cultivo}
                               </span>
-                              {c.es_principal && <span className="ml-2 bg-emerald-500/20 text-emerald-300 text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase">Principal</span>}
+                              {c.es_principal && <span className="ml-2 bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 text-[8px] font-bold px-1.5 py-0.5 rounded-full uppercase">Principal</span>}
                             </div>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono text-slate-300 font-semibold">{c.superficie_m2} m²</span>
+                              <span className="font-mono font-semibold" style={{ color: 'var(--text-primary)' }}>{c.superficie_m2} m²</span>
                               <button 
                                 onClick={() => handleCopy(String(c.superficie_m2), `c_sup_${i}`)}
-                                className="p-0.5 hover:bg-white/10 rounded text-slate-500 hover:text-white transition-colors cursor-pointer"
+                                className="p-0.5 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                                style={{ color: 'var(--text-secondary)' }}
                                 title="Copiar área del cultivo"
                               >
-                                {copySuccess[`c_sup_${i}`] ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                                {copySuccess[`c_sup_${i}`] ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                               </button>
                             </div>
                           </div>
@@ -576,23 +590,24 @@ export default function AdminEncuestasPage() {
 
                   {/* Animales list */}
                   <div className="space-y-2">
-                    <span className="text-[10px] text-slate-400 font-bold block">🐄 Animales / Especies</span>
+                    <span className="text-[10px] font-bold block" style={{ color: 'var(--text-secondary)' }}>🐄 Animales / Especies</span>
                     {!selectedEncuesta.animales || selectedEncuesta.animales.length === 0 ? (
-                      <p className="text-[10px] text-slate-500 italic bg-slate-950/30 p-2 rounded-lg text-center">No reportó animales.</p>
+                      <p className="text-[10px] italic p-2 rounded-lg text-center border" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-muted)' }}>No reportó animales.</p>
                     ) : (
                       <div className="space-y-1.5">
                         {selectedEncuesta.animales.map((a, i) => (
-                          <div key={i} className="flex justify-between items-center bg-slate-950/50 p-2 rounded-lg border border-slate-900">
-                            <span className="font-semibold text-white">
+                          <div key={i} className="flex justify-between items-center p-2 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
+                            <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
                               {a.especie === 'Otros' ? `Otros (${a.especie_otro})` : a.especie}
                             </span>
                             <div className="flex items-center gap-2">
-                              <span className="font-mono text-slate-300 font-bold bg-slate-900 px-2 py-0.5 rounded border border-slate-800">{a.cantidad} cabezas</span>
+                              <span className="font-mono font-bold px-2 py-0.5 rounded border shadow-sm" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}>{a.cantidad} cabezas</span>
                               <button 
                                 onClick={() => handleCopy(String(a.cantidad), `a_cant_${i}`)}
-                                className="p-0.5 hover:bg-white/10 rounded text-slate-500 hover:text-white transition-colors cursor-pointer"
+                                className="p-0.5 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                                style={{ color: 'var(--text-secondary)' }}
                               >
-                                {copySuccess[`a_cant_${i}`] ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                                {copySuccess[`a_cant_${i}`] ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
                               </button>
                             </div>
                           </div>
@@ -602,55 +617,57 @@ export default function AdminEncuestasPage() {
                   </div>
 
                   {/* Water usage */}
-                  <div className="grid grid-cols-2 gap-2 bg-slate-950/50 p-2.5 rounded-lg border border-slate-900">
+                  <div className="grid grid-cols-2 gap-2 p-2.5 rounded-lg border shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                     <div>
-                      <span className="text-[9px] text-slate-500 block">Consumo Familiar</span>
-                      <span className="font-mono text-emerald-400 font-bold text-xs">{selectedEncuesta.soberania_aliment_pct}%</span>
+                      <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Consumo Familiar</span>
+                      <span className="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-xs">{selectedEncuesta.soberania_aliment_pct}%</span>
                     </div>
                     <div>
-                      <span className="text-[9px] text-slate-500 block">Actividad Productiva</span>
-                      <span className="font-semibold text-white text-xs">{selectedEncuesta.actividad_productiva}</span>
+                      <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Actividad Productiva</span>
+                      <span className="font-semibold text-xs" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.actividad_productiva}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* PESTAÑA 7: OTROS PREDIOS (OPCIONAL) */}
-                <div className="bg-slate-950/30 border border-slate-850 rounded-xl p-4 space-y-3">
-                  <h4 className="font-bold text-white text-xs border-b border-slate-800 pb-1.5 flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 text-blue-400" />
+                <div className="rounded-xl p-4 space-y-3 border shadow-sm" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                  <h4 className="font-bold text-xs pb-1.5 flex items-center gap-1.5 border-b" style={{ color: 'var(--text-primary)', borderBottomColor: 'var(--border-color)' }}>
+                    <MapPin className="w-4 h-4 text-blue-500" />
                     7. OTROS PREDIOS DEL REGANTE
                   </h4>
 
                   {!selectedEncuesta.predios_adicionales || selectedEncuesta.predios_adicionales.length === 0 ? (
-                    <p className="text-slate-500 italic py-12 text-center bg-slate-950/45 rounded-lg border border-slate-900">
+                    <p className="italic py-12 text-center rounded-lg border" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}>
                       No reportó otros predios adicionales.
                     </p>
                   ) : (
                     <div className="space-y-2">
                       {selectedEncuesta.predios_adicionales.map((p, i) => (
-                        <div key={i} className="bg-slate-950/50 p-2.5 rounded-lg border border-slate-900 space-y-2">
+                        <div key={i} className="p-2.5 rounded-lg border space-y-2 shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                           <div className="flex justify-between items-center">
                             <div>
-                              <span className="text-[9px] text-slate-500 block">Clave Catastral Adicional</span>
-                              <span className="font-mono text-white text-xs font-semibold">{p.clave_catastral_otro}</span>
+                              <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Clave Catastral Adicional</span>
+                              <span className="font-mono text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>{p.clave_catastral_otro}</span>
                             </div>
                             <button 
                               onClick={() => handleCopy(p.clave_catastral_otro, `pa_cc_${i}`)}
-                              className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                              className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                              style={{ color: 'var(--text-secondary)' }}
                             >
-                              {copySuccess[`pa_cc_${i}`] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                              {copySuccess[`pa_cc_${i}`] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                             </button>
                           </div>
-                          <div className="flex justify-between items-center border-t border-slate-900/60 pt-1.5">
+                          <div className="flex justify-between items-center border-t pt-1.5" style={{ borderTopColor: 'var(--border-color)' }}>
                             <div>
-                              <span className="text-[9px] text-slate-500 block">Área de Riego Adicional</span>
-                              <span className="font-mono text-white text-xs">{p.area_riego_otro} m²</span>
+                              <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Área de Riego Adicional</span>
+                              <span className="font-mono text-xs" style={{ color: 'var(--text-primary)' }}>{p.area_riego_otro} m²</span>
                             </div>
                             <button 
                               onClick={() => handleCopy(String(p.area_riego_otro), `pa_area_${i}`)}
-                              className="p-1 hover:bg-white/10 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                              className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                              style={{ color: 'var(--text-secondary)' }}
                             >
-                              {copySuccess[`pa_area_${i}`] ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                              {copySuccess[`pa_area_${i}`] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                             </button>
                           </div>
                         </div>
@@ -662,17 +679,17 @@ export default function AdminEncuestasPage() {
 
               {/* Status and auditing log */}
               {selectedEncuesta.estado !== 'pendiente' && (
-                <div className="bg-slate-950/20 border border-slate-805 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                <div className="border rounded-xl p-4 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                   <div>
-                    <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Bitácora de Auditoría</span>
-                    <p className="text-xs mt-1">
-                      Encuesta marcada como <span className={selectedEncuesta.estado === 'procesada' ? 'text-emerald-400 font-bold' : 'text-red-400 font-bold'}>{selectedEncuesta.estado.toUpperCase()}</span> por <span className="font-semibold text-slate-200">{selectedEncuesta.procesado_por}</span> en <span className="text-slate-400">{selectedEncuesta.fecha_procesado ? new Date(selectedEncuesta.fecha_procesado).toLocaleString('es-EC') : 'sin fecha'}.</span>
+                    <span className="text-[10px] uppercase font-bold tracking-wider block" style={{ color: 'var(--text-secondary)' }}>Bitácora de Auditoría</span>
+                    <p className="text-xs mt-1" style={{ color: 'var(--text-primary)' }}>
+                      Encuesta marcada como <span className={selectedEncuesta.estado === 'procesada' ? 'text-emerald-600 dark:text-emerald-400 font-bold' : 'text-red-600 dark:text-red-400 font-bold'}>{selectedEncuesta.estado.toUpperCase()}</span> por <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.procesado_por}</span> en <span style={{ color: 'var(--text-secondary)' }}>{selectedEncuesta.fecha_procesado ? new Date(selectedEncuesta.fecha_procesado).toLocaleString('es-EC') : 'sin fecha'}.</span>
                     </p>
                   </div>
                   {selectedEncuesta.observaciones && (
-                    <div className="bg-slate-950/60 p-2.5 rounded-lg border border-slate-900 flex-1 max-w-md w-full">
-                      <span className="text-[9px] text-slate-500 block">Observaciones / Notas:</span>
-                      <p className="text-slate-300 text-xs mt-0.5 italic">"{selectedEncuesta.observaciones}"</p>
+                    <div className="p-2.5 rounded-lg border flex-1 max-w-md w-full" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+                      <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Observaciones / Notas:</span>
+                      <p className="text-xs mt-0.5 italic" style={{ color: 'var(--text-primary)' }}>"{selectedEncuesta.observaciones}"</p>
                     </div>
                   )}
                 </div>
@@ -680,16 +697,17 @@ export default function AdminEncuestasPage() {
             </div>
 
             {/* Modal Actions Panel */}
-            <div className="p-5 border-t border-slate-800 bg-slate-950/40 space-y-4">
+            <div className="p-5 border-t space-y-4" style={{ borderTopColor: 'var(--border-color)', background: 'var(--bg-card)' }}>
               {/* Observaciones input */}
               <div>
-                <label className="block text-[10px] text-slate-400 font-semibold mb-1">Notas de Revisión / Observaciones para digitar en QField</label>
+                <label className="block text-[10px] font-semibold mb-1" style={{ color: 'var(--text-secondary)' }}>Notas de Revisión / Observaciones para digitar en QField</label>
                 <textarea 
                   value={observacionesInput}
                   onChange={(e) => setObservacionesInput(e.target.value)}
                   placeholder="Escriba comentarios, errores encontrados o indicaciones para el ingreso del polígono en QGIS..."
                   rows={2}
-                  className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-lg px-3 py-2 text-xs focus:outline-none transition-colors resize-none"
+                  className="w-full rounded-lg px-3 py-2 text-xs focus:outline-none transition-colors resize-none border focus:border-blue-500"
+                  style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                 />
               </div>
 
@@ -700,7 +718,8 @@ export default function AdminEncuestasPage() {
                     setSelectedEncuesta(null);
                     setObservacionesInput('');
                   }}
-                  className="px-4 py-2 border border-slate-800 hover:bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold transition-colors cursor-pointer"
+                  className="px-4 py-2 border rounded-lg text-xs font-semibold transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/5"
+                  style={{ borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
                 >
                   Cerrar Ventana
                 </button>
@@ -710,7 +729,7 @@ export default function AdminEncuestasPage() {
                   <button
                     onClick={() => handleUpdateStatus(selectedEncuesta.id, 'rechazada')}
                     disabled={savingAction}
-                    className="px-4 py-2 bg-red-600/20 hover:bg-red-600/35 border border-red-500/20 hover:border-red-500/30 text-red-300 rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                    className="px-4 py-2 bg-red-500/10 dark:bg-red-500/20 hover:bg-red-500/20 dark:hover:bg-red-500/30 border border-red-500/30 dark:border-red-500/40 text-red-600 dark:text-red-400 rounded-lg text-xs font-semibold transition-all inline-flex items-center gap-1 cursor-pointer disabled:opacity-50"
                   >
                     <XCircle className="w-4 h-4" />
                     Marcar como Rechazada
@@ -720,7 +739,7 @@ export default function AdminEncuestasPage() {
                   <button
                     onClick={() => handleUpdateStatus(selectedEncuesta.id, 'procesada')}
                     disabled={savingAction}
-                    className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-800 text-white rounded-lg text-xs font-bold transition-all inline-flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 min-w-[150px]"
+                    className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all inline-flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50 min-w-[150px]"
                   >
                     {savingAction ? (
                       <>
