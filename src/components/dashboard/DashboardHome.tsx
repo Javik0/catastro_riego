@@ -160,6 +160,27 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
     unificadosPorTecnico[tec] = (unificadosPorTecnico[tec] || 0) + 1;
   });
 
+  // Claves catastrales principales activas
+  const clavesPrincipales = new Set(fichas.map(f => (f.clave_catastral || '').trim()).filter(Boolean));
+
+  // Claves catastrales unificadas (físicas) activas
+  const clavesUnificadas = new Set(prediosUnificados.map((p: any) => (p.clave_catastral_otro || '').trim()).filter(Boolean));
+
+  // Claves declaradas verbalmente únicas (sin duplicación de clave catastral)
+  const clavesDeclaradasUnicas = new Set(
+    filteredPrediosAdicionales
+      .filter((pa: any) => !pa.observaciones_otro?.includes('Unificación automática'))
+      .map((pa: any) => (pa.clave_catastral_otro || '').trim())
+      .filter(Boolean)
+  );
+
+  // Filtrar para obtener solo las "Adicionales Puras" (claves únicas sin encuesta de ningún tipo)
+  const clavesDeclaradasPuras = Array.from(clavesDeclaradasUnicas).filter(k => 
+    !clavesPrincipales.has(k) && !clavesUnificadas.has(k)
+  );
+
+  const totalDeclaradosPuros = clavesDeclaradasPuras.length;
+
   const fichasPorTecnico = Object.entries(stats.fichasPorTecnico)
     .map(([nombre, principales]) => {
       const unificadas = unificadosPorTecnico[nombre] || 0;
@@ -252,9 +273,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         <KPICard 
           icon={MapPin} 
           label="Otros Predios (Sin Ficha)" 
-          value={filteredPrediosAdicionales.length - prediosUnificados.length} 
+          value={totalDeclaradosPuros} 
           color="#06b6d4" 
-          sub={`${(filteredPrediosAdicionales.length - prediosUnificados.length).toLocaleString('es-EC')} declaraciones verbales (Secc. 7)`}
+          sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
         />
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
