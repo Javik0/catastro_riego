@@ -22,6 +22,7 @@ const COLUMNS: { key: keyof FichaPredio; label: string; width?: string }[] = [
   { key: 'cedula', label: 'Cédula', width: '100px' },
   { key: 'parroquia', label: 'Parroquia', width: '110px' },
   { key: 'sector', label: 'Sector', width: '110px' },
+  { key: 'comunidad', label: 'Comunidad', width: '110px' },
   { key: 'area_total', label: 'Área Total (m²)', width: '110px' },
   { key: 'frecuencia_riego', label: 'Frec. Riego', width: '100px' },
   { key: 'creado_por', label: 'Técnico', width: '130px' },
