@@ -527,8 +527,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <p className="detail-label">Sector</p>
           <p className="detail-value">{ficha.sector}</p>
         </div>
-        <div className="detail-item col-2">
+        <div className="detail-item">
           <p className="detail-label">Comunidad</p>
+          <p className="detail-value">{ficha.comunidad || '—'}</p>
+        </div>
+        <div className="detail-item">
+          <p className="detail-label">Sector Comunidad</p>
           <p className="detail-value">{ficha.sector_comunidad || '—'}</p>
         </div>
         <div className="detail-item">

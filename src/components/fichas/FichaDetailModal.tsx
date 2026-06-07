@@ -126,6 +126,7 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
             <Field label="Cédula" value={ficha.cedula} icon={CreditCard} />
             <Field label="Parroquia" value={ficha.parroquia} icon={MapPin} />
             <Field label="Sector" value={ficha.sector} icon={MapPin} />
+            <Field label="Comunidad" value={ficha.comunidad} icon={MapPin} />
             <Field label="Sector Comunidad" value={ficha.sector_comunidad} icon={MapPin} />
             <Field label="Teléfono Celular" value={ficha.telefono_celular} icon={Phone} />
             <Field label="Teléfono Casa" value={ficha.telefono_casa} icon={Phone} />
