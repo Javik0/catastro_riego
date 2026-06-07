@@ -50,8 +50,8 @@ function useLocalData() {
               if (dia === 24 && (com === 'ASOCIACIÓN 17 DE JUNIO' || com === 'ASOCIACION 17 DE JUNIO')) {
                 com = 'SAN JOSÉ';
               }
-              // Corrección para el lunes 25 de mayo (se reasignan según la hora local de campo)
-              if (dia === 25) {
+              // Corrección para el lunes 25 de mayo (se reasignan según la hora local de campo SOLO si estaba vacío en QField)
+              if (dia === 25 && (!com || com === '')) {
                 const hour = d.getUTCHours();
                 if (hour >= 8 && hour < 15) {
                   com = 'MILAGRO';
