@@ -62,6 +62,22 @@ function useLocalData() {
             }
           }
 
+          // Cambio de comunidad solicitado por técnicos (de Milagro a San José) para regantes específicos
+          const ced = (f.properties.cedula || '').trim();
+          const clav = (f.properties.clave_catastral || '').trim();
+          const cidsToSanJose = [
+            '1711308682', '1717858011', '1716464753', '1715022719', 
+            '1722217930', '1707701726', '1714912233', '1712437407', '1707701700'
+          ];
+          const clavesToSanJose = [
+            '1702520560029', '1702520560018', '1702520560013', '1702520560004',
+            '1702520560048', '1702520550007', '1702520980102', '1702520560039', '1702520980069'
+          ];
+
+          if (cidsToSanJose.includes(ced) || clavesToSanJose.includes(clav)) {
+            com = 'SAN JOSÉ';
+          }
+
           return {
             ...f.properties,
             id: f.properties.id?.toString() || f.properties.fid?.toString() || String(Math.random()),
