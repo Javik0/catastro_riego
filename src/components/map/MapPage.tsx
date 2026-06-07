@@ -512,6 +512,7 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
               ['Cédula', ficha.cedula],
               ['Parroquia', ficha.parroquia],
               ['Sector', ficha.sector],
+              ['Comunidad', ficha.comunidad],
               ['Área', ficha.area_total ? `${ficha.area_total.toLocaleString('es-EC')} m²` : null],
               ['Caudal', ficha.caudal_valor ? `${ficha.caudal_valor} l/s` : null],
               ['Cota', ficha.cota_msnm ? `${ficha.cota_msnm} msnm` : null],
