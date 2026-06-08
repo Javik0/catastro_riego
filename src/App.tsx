@@ -67,22 +67,31 @@ function useLocalData() {
           const clav = (f.properties.clave_catastral || '').trim();
           const cidsToSanJose = [
             '1711308682', '1717858011', '1716464753', '1715022719', 
-            '1722217930', '1707701726', '1714912233', '1712437407', '1707701700'
+            '1722217930', '1707701726', '1714912233', '1712437407', '1707701700',
+            '1708098619', '1715377154'
           ];
           const clavesToSanJose = [
             '1702520560029', '1702520560018', '1702520560013', '1702520560004',
-            '1702520560048', '1702520550007', '1702520980102', '1702520560039', '1702520980069'
+            '1702520560048', '1702520550007', '1702520980102', '1702520560039', '1702520980069',
+            '1702520560058', '1702521400047', '170251400047'
           ];
 
           if (cidsToSanJose.includes(ced) || clavesToSanJose.includes(clav)) {
             com = 'SAN JOSÉ';
           }
 
-          const cidsToLaLibertad = ['1715033013'];
-          const clavesToLaLibertad = ['1702520540066'];
+          const cidsToLaLibertad = ['1715033013', '1708546179', '1711492486', '1718241027', '1721253639', '1711492148', '1711589687'];
+          const clavesToLaLibertad = ['1702520540066', '1702520530014', '1702521020084', '1702520690010', '1702521100076', '1702520540014', '1702521020030'];
 
           if (cidsToLaLibertad.includes(ced) || clavesToLaLibertad.includes(clav)) {
             com = 'LA LIBERTAD';
+          }
+
+          const cidsToSanAntonio = ['1709870602'];
+          const clavesToSanAntonio = ['1702520680118'];
+
+          if (cidsToSanAntonio.includes(ced) || clavesToSanAntonio.includes(clav)) {
+            com = 'SAN ANTONIO';
           }
 
           return {
