@@ -19326,17 +19326,6 @@
     "observaciones_otro": "Unificación automática. Ficha original: {6104f134-92e5-4598-8533-bf58c224232c}. Técnico: Pablo Barrionuevo en 2026-05-22T09:08:00.771Z."
   },
   {
-    "id_adicional": "{13bf2509-4dac-4812-ae3f-5cb764c939ae}",
-    "ficha_id": "{ce312110-225c-46f2-9fa3-1a1a64efaad2}",
-    "clave_catastral_otro": "1702521580174",
-    "area_total_otro": 10214.27,
-    "area_riego_otro": 10214.27,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 10214.27,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación automática. Ficha original: {13bf2509-4dac-4812-ae3f-5cb764c939ae}. Técnico: Pablo Barrionuevo en 2026-05-22T10:19:30.626Z."
-  },
-  {
     "id_adicional": "{893cb8f5-5362-4892-af34-5aee823242a5}",
     "ficha_id": "{ce312110-225c-46f2-9fa3-1a1a64efaad2}",
     "clave_catastral_otro": "1702520510130",

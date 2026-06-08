@@ -1,11 +1,11 @@
 {
   "resumen": {
-    "totalFichasOriginales": 1807,
+    "totalFichasOriginales": 1806,
     "totalRegantesUnicosDuplicados": 135,
-    "totalFichasDuplicadas": 349,
-    "fichasRedundantesReducidas": 214,
+    "totalFichasDuplicadas": 348,
+    "fichasRedundantesReducidas": 213,
     "totalFichasUnificadas": 1593,
-    "porcentajeReduccion": 11.84
+    "porcentajeReduccion": 11.79
   },
   "regantesUnificados": [
     {
@@ -3010,7 +3010,7 @@
         "id": "{4667986d-9fa0-43e3-b324-5f437dad6a88}",
         "claveCatastral": "1702520530044",
         "areaTotal": 21972.97,
-        "sectorComunidad": "LARCACHACA GUASIPUNGO",
+        "sectorComunidad": "LA LIBERTAD ",
         "parroquia": "CANGAHUA",
         "creadoPor": "Mayra Benavides",
         "fechaCreacion": "2026-05-22T09:40:25.257Z"
@@ -3148,7 +3148,7 @@
       "criterio": "cedula",
       "fichaMadre": {
         "id": "{ce312110-225c-46f2-9fa3-1a1a64efaad2}",
-        "claveCatastral": "1702520510130",
+        "claveCatastral": "1702521580174",
         "areaTotal": 10214.27,
         "sectorComunidad": "IZACATA ",
         "parroquia": "CANGAHUA",
@@ -3156,16 +3156,6 @@
         "fechaCreacion": "2026-05-22T09:51:26.579Z"
       },
       "fichasSecundarias": [
-        {
-          "id": "{13bf2509-4dac-4812-ae3f-5cb764c939ae}",
-          "claveCatastral": "1702521580174",
-          "areaTotal": 10214.27,
-          "sectorComunidad": "",
-          "creadoPor": "Pablo Barrionuevo",
-          "fechaCreacion": "2026-05-22T10:19:30.626Z",
-          "cantCultivos": 0,
-          "cantAnimales": 0
-        },
         {
           "id": "{893cb8f5-5362-4892-af34-5aee823242a5}",
           "claveCatastral": "1702520510130",
@@ -3234,7 +3224,7 @@
       "criterio": "cedula",
       "fichaMadre": {
         "id": "{592f6fd0-ecf0-4e6b-908e-b29ef5e99aa5}",
-        "claveCatastral": "1702520540020",
+        "claveCatastral": "1702520540031",
         "areaTotal": 10921.16,
         "sectorComunidad": "CRUZ LOMA",
         "parroquia": "CANGAHUA",
