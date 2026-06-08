@@ -151,7 +151,8 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   // Procesar predios unificados para asociar las fichas secundarias al técnico correspondiente
   const unificadosPorTecnico: Record<string, number> = {};
   const prediosUnificados = filteredPrediosAdicionales.filter((pa: any) => 
-    pa.observaciones_otro?.includes('Unificación automática')
+    pa.observaciones_otro?.includes('Unificación automática') ||
+    pa.observaciones_otro?.includes('Unificación física')
   );
 
   prediosUnificados.forEach((pa: any) => {
@@ -169,7 +170,10 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   // Claves declaradas verbalmente únicas (sin duplicación de clave catastral)
   const clavesDeclaradasUnicas = new Set(
     filteredPrediosAdicionales
-      .filter((pa: any) => !pa.observaciones_otro?.includes('Unificación automática'))
+      .filter((pa: any) => 
+        !pa.observaciones_otro?.includes('Unificación automática') &&
+        !pa.observaciones_otro?.includes('Unificación física')
+      )
       .map((pa: any) => (pa.clave_catastral_otro || '').trim())
       .filter(Boolean)
   );
