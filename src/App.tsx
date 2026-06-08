@@ -78,6 +78,13 @@ function useLocalData() {
             com = 'SAN JOSÉ';
           }
 
+          const cidsToLaLibertad = ['1715033013'];
+          const clavesToLaLibertad = ['1702520540066'];
+
+          if (cidsToLaLibertad.includes(ced) || clavesToLaLibertad.includes(clav)) {
+            com = 'LA LIBERTAD';
+          }
+
           return {
             ...f.properties,
             id: f.properties.id?.toString() || f.properties.fid?.toString() || String(Math.random()),
