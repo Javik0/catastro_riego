@@ -34,6 +34,8 @@ function useLocalData() {
           let com = (f.properties.comunidad || '')
             .replace(/LARCACOCHA/ig, 'LARCACHACA')
             .replace(/INSACATA/ig, 'IZACATA')
+            .replace(/CARRERA-\s*ACEROLOMA/ig, 'CARRERA')
+            .replace(/CACHICUNGA/ig, 'CARRERA')
             .replace(/^None$/i, '')
             .trim();
           
