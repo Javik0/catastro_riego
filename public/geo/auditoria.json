@@ -1,11 +1,414 @@
 {
   "resumen": {
-    "totalFichasOriginales": 1631,
-    "totalRegantesUnicosDuplicados": 0,
-    "totalFichasDuplicadas": 0,
-    "fichasRedundantesReducidas": 0,
-    "totalFichasUnificadas": 1631,
-    "porcentajeReduccion": 0.0
+    "totalFichasOriginales": 1932,
+    "totalRegantesUnicosDuplicados": 14,
+    "totalFichasDuplicadas": 29,
+    "fichasRedundantesReducidas": 15,
+    "totalFichasUnificadas": 1917,
+    "porcentajeReduccion": 0.78
   },
-  "regantesUnificados": []
+  "regantesUnificados": [
+    {
+      "id": "1716452162",
+      "cedula": "1716452162",
+      "apellidos": "FARINANGO QUILUMBAQUIN",
+      "nombres": "MARIA BEATRIZ",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{962cf196-61c7-455e-9b6b-1a784178f15b}",
+        "claveCatastral": "1702520900100",
+        "areaTotal": 17686.5,
+        "sectorComunidad": "SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-10T11:39:08.694Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c62567f9-bfb5-437a-a1a6-d634ee102b82}",
+          "claveCatastral": "1702520730160",
+          "areaTotal": 13846.77,
+          "sectorComunidad": "JESÚS GRAN PODER",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-05-31T16:11:28.639Z",
+          "cantCultivos": 2,
+          "cantAnimales": 6
+        }
+      ]
+    },
+    {
+      "id": "1711272235",
+      "cedula": "1711272235",
+      "apellidos": "PILCA AULES",
+      "nombres": "MARIA ELOISA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{a0e11db3-6d9a-4de2-b62f-082bbb93194e}",
+        "claveCatastral": "1702520900049",
+        "areaTotal": 25138.18,
+        "sectorComunidad": "ASOCIACIÓN SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-06-10T11:32:44.767Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b06f775b-01f8-4b53-b311-11aa8f93dea5}",
+          "claveCatastral": "1702520910138",
+          "areaTotal": 21378.11,
+          "sectorComunidad": "CUARTO LOTE",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-06-10T08:31:50.693Z",
+          "cantCultivos": 2,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1704333481",
+      "cedula": "1704333481",
+      "apellidos": "FARINANGO PILCA",
+      "nombres": "JOSE MIGUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c19bb4ea-30f5-4b36-806d-fcfe1c1c9b8c}",
+        "claveCatastral": "1702520900027",
+        "areaTotal": 40535.8,
+        "sectorComunidad": "CUARTO LOTE",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-10T09:33:51.076Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{94d81ec7-fff6-4839-879e-1f4b69ca14ff}",
+          "claveCatastral": "1702521190072",
+          "areaTotal": 30643.16,
+          "sectorComunidad": "CUARTO LOTE",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-10T09:22:36.097Z",
+          "cantCultivos": 4,
+          "cantAnimales": 4
+        },
+        {
+          "id": "{65d9e9bc-56c1-4d7f-94e1-5df5c0a0b9ee}",
+          "claveCatastral": "1702520910049",
+          "areaTotal": 4393.21,
+          "sectorComunidad": "CUARTO LOTE",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-10T09:22:32.663Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1711238293",
+      "cedula": "1711238293",
+      "apellidos": "QUILUMBAQUIN IMBAQUINGO",
+      "nombres": "MARIA MAGDALENA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f83ce86d-0420-4cbb-996b-9dc1d860bc8b}",
+        "claveCatastral": "1702520740149",
+        "areaTotal": 4304.57,
+        "sectorComunidad": "SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-10T10:54:56.583Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{3b71a569-f5db-479d-a7ec-d573720bbaed}",
+          "claveCatastral": "1702520740149",
+          "areaTotal": 4304.57,
+          "sectorComunidad": "SAN VICENTE BAJO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-10T11:27:12.229Z",
+          "cantCultivos": 4,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1714034236",
+      "cedula": "1714034236",
+      "apellidos": "QUILUMBAQUIN ASCANTA",
+      "nombres": "JOSE ANDRES",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0ca0a430-a657-44ea-b1d4-1142cb970972}",
+        "claveCatastral": "1702520900128",
+        "areaTotal": 13813.29,
+        "sectorComunidad": "SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-10T11:03:22.771Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{e53e2c6e-62a3-4319-b586-d4cceb70500c}",
+          "claveCatastral": "1702520900083",
+          "areaTotal": 13313.09,
+          "sectorComunidad": "SAN VICENTE BAJO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-10T11:09:32.309Z",
+          "cantCultivos": 6,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1714456322",
+      "cedula": "1714456322",
+      "apellidos": "ALCASIGA CAIZA",
+      "nombres": "JUAN MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{adaf2e14-cb32-4590-b30f-c22ae49e2362}",
+        "claveCatastral": "1702520900077",
+        "areaTotal": 8052.75,
+        "sectorComunidad": "SAN VICENTE ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-10T12:12:18.683Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b73b776e-2519-4052-993c-f098b5efcc3d}",
+          "claveCatastral": "1702520900077",
+          "areaTotal": 8052.75,
+          "sectorComunidad": "SAN VICENTE BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T11:46:10.122Z",
+          "cantCultivos": 4,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1725317141",
+      "cedula": "1725317141",
+      "apellidos": "TUTILLO ACERO",
+      "nombres": "WILSON BENJAMIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{bc046d13-6d88-48ad-acd4-3a6a01591948}",
+        "claveCatastral": "1702520890035",
+        "areaTotal": 3874.16,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-10T15:31:52.986Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f468a93f-8435-4701-b007-a0c13c979850}",
+          "claveCatastral": "1702520890035",
+          "areaTotal": 3874.16,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-06-10T15:29:05.393Z",
+          "cantCultivos": 1,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1711923910",
+      "cedula": "1711923910",
+      "apellidos": "QUILUMBAQUIN QUILUMBAQUIN",
+      "nombres": "CLARA TERESA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f2591596-7432-4ad9-8325-8e38e173ea98}",
+        "claveCatastral": "1702520740013",
+        "areaTotal": 33049.16,
+        "sectorComunidad": "SAN VICENTE BAJO ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-10T11:01:52.564Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b4b7cc69-f80b-44cf-9ffa-74ba59aff6c4}",
+          "claveCatastral": "1702520740006",
+          "areaTotal": 7504.85,
+          "sectorComunidad": "SAN VICENTE BAJO ",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-10T10:54:04.485Z",
+          "cantCultivos": 6,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1722014642",
+      "cedula": "1722014642",
+      "apellidos": "QUIMBIULCO LANCHIMBA",
+      "nombres": "SEGUNDO MANUEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{fff95bb5-42fe-4748-8c6d-ef14bbc434d8}",
+        "claveCatastral": "1702520830081",
+        "areaTotal": 8052.75,
+        "sectorComunidad": "SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T13:22:13.685Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{dcd1d368-7400-42e0-821d-3ce9670649fd}",
+          "claveCatastral": "1702521530008",
+          "areaTotal": 3610.41,
+          "sectorComunidad": "SAN VICENTE ALTO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-10T13:42:26.794Z",
+          "cantCultivos": 1,
+          "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1717652463",
+      "cedula": "1717652463",
+      "apellidos": "FARINANGO PILCA",
+      "nombres": "JOSE RAUL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{44bd914b-7913-434a-b8aa-aefbf1e22c35}",
+        "claveCatastral": "1702521500014",
+        "areaTotal": 3402.47,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T16:26:45.908Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{44bd914b-7913-434a-b8aa-aefbf1e22c35}",
+          "claveCatastral": "1702521500014",
+          "areaTotal": 3402.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T16:26:45.908Z",
+          "cantCultivos": 4,
+          "cantAnimales": 10
+        }
+      ]
+    },
+    {
+      "id": "1002393153",
+      "cedula": "1002393153",
+      "apellidos": "ACERO QUILUMBAQUIN",
+      "nombres": "RAFAEL RICARDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{2ce1c697-df94-4d0c-a3f5-31d606b2f711}",
+        "claveCatastral": "1702521500001",
+        "areaTotal": 3402.47,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T16:32:33.487Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2ce1c697-df94-4d0c-a3f5-31d606b2f711}",
+          "claveCatastral": "1702521500001",
+          "areaTotal": 3402.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T16:32:33.487Z",
+          "cantCultivos": 6,
+          "cantAnimales": 10
+        }
+      ]
+    },
+    {
+      "id": "1709823346",
+      "cedula": "1709823346",
+      "apellidos": "ACERO QUILUMBAQUIN",
+      "nombres": "JAIME RAMIRO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{60d4ec53-b333-4eb7-85da-9644da23c072}",
+        "claveCatastral": "1702521500002",
+        "areaTotal": 3402.47,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T16:36:44.533Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{60d4ec53-b333-4eb7-85da-9644da23c072}",
+          "claveCatastral": "1702521500002",
+          "areaTotal": 3402.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T16:36:44.533Z",
+          "cantCultivos": 8,
+          "cantAnimales": 6
+        }
+      ]
+    },
+    {
+      "id": "1713360954",
+      "cedula": "1713360954",
+      "apellidos": "ANDRANGO GALLO",
+      "nombres": "MARIA ZOILA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{eb511a82-a6d0-4498-a394-c81ab732069a}",
+        "claveCatastral": "1702520890031",
+        "areaTotal": 3402.47,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T16:40:35.260Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{eb511a82-a6d0-4498-a394-c81ab732069a}",
+          "claveCatastral": "1702520890031",
+          "areaTotal": 3402.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T16:40:35.260Z",
+          "cantCultivos": 2,
+          "cantAnimales": 8
+        }
+      ]
+    },
+    {
+      "id": "1919505701",
+      "cedula": "1919505701",
+      "apellidos": "IGUAMBA PILCA",
+      "nombres": "IVAN RODRIGO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{922235bc-69c1-4fb1-8022-8f593a163709}",
+        "claveCatastral": "1702520890105",
+        "areaTotal": 3402.47,
+        "sectorComunidad": "SANTA ROSA DE PACCHA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T16:45:01.916Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{922235bc-69c1-4fb1-8022-8f593a163709}",
+          "claveCatastral": "1702520890105",
+          "areaTotal": 3402.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-10T16:45:01.916Z",
+          "cantCultivos": 2,
+          "cantAnimales": 10
+        }
+      ]
+    }
+  ]
 }
