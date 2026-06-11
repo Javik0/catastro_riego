@@ -47,6 +47,8 @@ except ImportError:
 # ─── Variables y Funciones para Unificación en Caliente ───
 FICHA_REDIRECT_MAP = {}
 VIRTUAL_PREDIOS_ADICIONALES = []
+AUDITORIA_DATA_CACHE = None
+IMPUTACIONES_LOG = []
 
 def normalizar_texto(texto):
     if not texto:
@@ -62,7 +64,7 @@ def normalizar_texto(texto):
     return texto
 
 def preparar_unificacion():
-    global FICHA_REDIRECT_MAP, VIRTUAL_PREDIOS_ADICIONALES
+    global FICHA_REDIRECT_MAP, VIRTUAL_PREDIOS_ADICIONALES, AUDITORIA_DATA_CACHE
     FICHA_REDIRECT_MAP = {}
     VIRTUAL_PREDIOS_ADICIONALES = []
 
@@ -291,6 +293,9 @@ def preparar_unificacion():
                 "cantAnimales": cant_animales.get(fs['id'], 0)
             })
         auditoria_data["regantesUnificados"].append(reg_item)
+
+    global AUDITORIA_DATA_CACHE
+    AUDITORIA_DATA_CACHE = auditoria_data
 
     path_auditoria_json = os.path.join(OUTPUT_DIR, 'auditoria.json')
     with open(path_auditoria_json, 'w', encoding='utf-8') as f:
@@ -650,6 +655,8 @@ def export_fichas():
 
     # 4. Imputar vacíos en caliente sobre props
     imputadas_count = 0
+    global IMPUTACIONES_LOG
+    IMPUTACIONES_LOG = []
     for f in fichas_list:
         props = f['props']
         dia = get_dia(props.get('fecha_creacion'))
@@ -661,31 +668,38 @@ def export_fichas():
         m_d = modas_dia.get(dia, {})
         
         cambio = False
+        cambios_detalles = []
         if not props.get('parroquia'):
             props['parroquia'] = m_dt.get('parroquia') or m_d.get('parroquia') or 'CANGAHUA'
+            cambios_detalles.append(f"parroquia -> {props['parroquia']}")
             cambio = True
         if not props.get('sector'):
             props['sector'] = m_dt.get('sector') or m_d.get('sector') or 'Porotog'
+            cambios_detalles.append(f"sector -> {props['sector']}")
             cambio = True
         if not props.get('comunidad'):
             val = m_dt.get('comunidad') or m_d.get('comunidad')
             if val:
                 props['comunidad'] = val
+                cambios_detalles.append(f"comunidad -> {props['comunidad']}")
                 cambio = True
         if not props.get('caudal_tipo'):
             val = m_dt.get('caudal_tipo') or m_d.get('caudal_tipo')
             if val:
                 props['caudal_tipo'] = val
+                cambios_detalles.append(f"caudal_tipo -> {props['caudal_tipo']}")
                 cambio = True
         if not props.get('frecuencia_riego'):
             val = m_dt.get('frecuencia_riego') or m_d.get('frecuencia_riego')
             if val:
                 props['frecuencia_riego'] = val
+                cambios_detalles.append(f"frecuencia_riego -> {props['frecuencia_riego']}")
                 cambio = True
         if not props.get('caudal_valor') or props['caudal_valor'] == 0:
             val = m_dt.get('caudal_valor') or m_d.get('caudal_valor')
             if val:
                 props['caudal_valor'] = round(val, 2)
+                cambios_detalles.append(f"caudal_valor -> {props['caudal_valor']}")
                 cambio = True
                 
         asp = props.get('metodo_aspersion_pct') or 0
@@ -697,21 +711,32 @@ def export_fichas():
                 props['metodo_aspersion_pct'] = val_m[0]
                 props['metodo_gravedad_pct'] = val_m[1]
                 props['metodo_goteo_pct'] = val_m[2]
+                cambios_detalles.append(f"método riego -> asp:{val_m[0]}% grav:{val_m[1]}% got:{val_m[2]}%")
                 cambio = True
         
         # Corrección explícita del nombre de comunidad para fichas que vinieron con LARCACOHA
         if props.get('comunidad') == 'LARCACOHA':
             props['comunidad'] = 'LARCACHACA'
+            cambios_detalles.append("comunidad: LARCACOHA -> LARCACHACA")
             cambio = True
         
         # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego
         if not props.get('area_riego') or props['area_riego'] == 0:
             props['area_riego'] = props.get('area_total') or 0.0
             props['area_sin_riego'] = 0.0
+            cambios_detalles.append(f"area_riego -> {props['area_riego']}")
             cambio = True
         
         if cambio:
             imputadas_count += 1
+            IMPUTACIONES_LOG.append({
+                "id": props.get('id') or f.get('id', 'N/A'),
+                "nombres": f"{props.get('nombres', '')} {props.get('apellidos', '')}".strip(),
+                "cedula": props.get('cedula', ''),
+                "tecnico": MAPEO_TECNICOS.get(props.get('creado_por', ''), props.get('creado_por', '')),
+                "fecha": props.get('fecha_creacion', ''),
+                "cambios": cambios_detalles
+            })
 
     print(f"  ✓ {imputadas_count} fichas con campos vacíos corregidas mediante imputación inteligente.")
 
@@ -1097,9 +1122,92 @@ if __name__ == '__main__':
     export_tablas_hijas()
     export_stats(fichas)
 
+    # Escribir reporte histórico de depuración en logs_depuracion/
+    try:
+        print("\n📝 Guardando bitácora de depuración histórica...")
+        from datetime import datetime
+        parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        logs_dir = os.path.join(parent_dir, 'logs_depuracion')
+        if not os.path.exists(logs_dir):
+            os.makedirs(logs_dir)
+            
+        now = datetime.now()
+        timestamp_file = now.strftime('%Y-%m-%d_%H-%M')
+        timestamp_log = now.strftime('%Y-%m-%d %H:%M:%S')
+        
+        sectores_involucrados = set()
+        if AUDITORIA_DATA_CACHE:
+            for reg in AUDITORIA_DATA_CACHE.get("regantesUnificados", []):
+                fm = reg.get("fichaMadre", {})
+                if fm.get("sectorComunidad"):
+                    sectores_involucrados.add(fm["sectorComunidad"])
+                for fs in reg.get("fichasSecundarias", []):
+                    if fs.get("sectorComunidad"):
+                        sectores_involucrados.add(fs["sectorComunidad"])
+        
+        sectores_str = ", ".join(sorted(list(sectores_involucrados))) if sectores_involucrados else "Sin especificar"
+        
+        filename = f"depuracion_{timestamp_file}.md"
+        filepath = os.path.join(logs_dir, filename)
+        
+        with open(filepath, 'w', encoding='utf-8') as f_out:
+            f_out.write(f"# Reporte de Depuración y Unificación de Catastro - {timestamp_log}\n\n")
+            f_out.write(f"Este reporte registra de forma auditada los cambios, imputaciones y unificaciones virtuales aplicados durante el procesamiento del GeoPackage local.\n\n")
+            
+            f_out.write("## Resumen Ejecutivo\n")
+            f_out.write(f"- **Fecha de Ejecución:** {timestamp_log}\n")
+            f_out.write(f"- **Sectores Afectados:** {sectores_str}\n")
+            if AUDITORIA_DATA_CACHE:
+                res = AUDITORIA_DATA_CACHE.get("resumen", {})
+                f_out.write(f"- **Total de Fichas Originales:** {res.get('totalFichasOriginales', 0)}\n")
+                f_out.write(f"- **Fichas Redundantes Reducidas:** {res.get('fichasRedundantesReducidas', 0)} ({res.get('porcentajeReduccion', 0)}% de reducción)\n")
+                f_out.write(f"- **Regantes Duplicados Unificados:** {res.get('totalRegantesUnicosDuplicados', 0)}\n")
+                f_out.write(f"- **Total Fichas Finales para la Web:** {res.get('totalFichasUnificadas', 0)}\n")
+            f_out.write(f"- **Fichas Corregidas por Imputación:** {len(IMPUTACIONES_LOG)}\n\n")
+            
+            f_out.write("## Unificaciones de Regantes Duplicados\n")
+            f_out.write("A continuación se listan los regantes con múltiples fichas asociadas que fueron unificados en una Ficha Madre. Las parcelas de las fichas secundarias fueron migradas a la subcapa 'Otros Predios' y sus cultivos/animales reasociados automáticamente para conservar la integridad del padrón.\n\n")
+            
+            f_out.write("| Cédula/Nombre | Ficha Madre (ID - Clave - Técnico) | Fichas Secundarias Unificadas (ID - Clave - Técnico - Fecha) | Razón de Unificación |\n")
+            f_out.write("| --- | --- | --- | --- |\n")
+            
+            if AUDITORIA_DATA_CACHE and AUDITORIA_DATA_CACHE.get("regantesUnificados"):
+                for reg in AUDITORIA_DATA_CACHE["regantesUnificados"]:
+                    ced = reg.get("cedula") or "S/C"
+                    nom = reg.get("nombres") or "Sin Nombre"
+                    fm = reg.get("fichaMadre", {})
+                    fm_str = f"**Ficha {fm.get('id')}**<br>Clave: {fm.get('claveCatastral')}<br>Téc: {fm.get('creadoPor')}"
+                    
+                    fs_items = []
+                    for fs in reg.get("fichasSecundarias", []):
+                        fs_items.append(f"• **Ficha {fs.get('id')}** (Clave: {fs.get('claveCatastral')}, Téc: {fs.get('creadoPor')}, Fecha: {fs.get('fechaCreacion')})")
+                    fs_str = "<br>".join(fs_items)
+                    razon = reg.get("razon", "Coincidencia")
+                    f_out.write(f"| {nom}<br>({ced}) | {fm_str} | {fs_str} | {razon} |\n")
+            else:
+                f_out.write("| *No se unificaron regantes en esta sesión* | - | - | - |\n")
+                
+            f_out.write("\n## Fichas Corregidas (Imputación Inteligente)\n")
+            f_out.write("Detalle de las fichas que contenían campos vacíos u omisiones y fueron corregidas en caliente según las modas estadísticas del día/técnico:\n\n")
+            
+            if IMPUTACIONES_LOG:
+                for idx, imp in enumerate(IMPUTACIONES_LOG, 1):
+                    f_out.write(f"{idx}. **Ficha {imp['id']}** - {imp['nombres']} (C.I. {imp['cedula'] or 'S/C'})\n")
+                    f_out.write(f"   - **Técnico:** {imp['tecnico']} | **Fecha Registro:** {imp['fecha']}\n")
+                    f_out.write("   - **Correcciones aplicadas:**\n")
+                    for cambio in imp['cambios']:
+                        f_out.write(f"     * [x] {cambio}\n")
+                    f_out.write("\n")
+            else:
+                f_out.write("*No se requirieron correcciones por campos vacíos en esta sesión.*\n")
+                
+        print(f"  ✓ Bitácora histórica guardada con éxito en: logs_depuracion/{filename}")
+    except Exception as e:
+         print(f"  ❌ Error al guardar bitácora histórica: {e}")
+
     print("\n" + "═" * 60)
     print("  ✅ EXPORTACIÓN COMPLETADA")
     print(f"  📁 Archivos en: {os.path.abspath(OUTPUT_DIR)}")
     print("═" * 60)
     print("\n⚡ Siguiente paso: sube los cambios a GitHub:")
-    print("   git add public/geo/; git commit -m 'data: sync desde QFieldCloud'; git push")
+    print("   git add public/geo/ logs_depuracion/; git commit -m 'data: sync desde QFieldCloud'; git push")
