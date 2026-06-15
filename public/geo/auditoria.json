@@ -1,11 +1,11 @@
 {
   "resumen": {
-    "totalFichasOriginales": 1932,
-    "totalRegantesUnicosDuplicados": 14,
-    "totalFichasDuplicadas": 29,
-    "fichasRedundantesReducidas": 15,
-    "totalFichasUnificadas": 1917,
-    "porcentajeReduccion": 0.78
+    "totalFichasOriginales": 2634,
+    "totalRegantesUnicosDuplicados": 47,
+    "totalFichasDuplicadas": 110,
+    "fichasRedundantesReducidas": 63,
+    "totalFichasUnificadas": 2571,
+    "porcentajeReduccion": 2.39
   },
   "regantesUnificados": [
     {
@@ -37,6 +37,44 @@
       ]
     },
     {
+      "id": "1705082087",
+      "cedula": "1705082087",
+      "apellidos": "SAAVEDRA AVELLANEDA",
+      "nombres": "DONATO ANIBAL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{93bb7533-f5b7-4ee4-bbf2-d50f06466362}",
+        "claveCatastral": "1702520730012",
+        "areaTotal": 94088.23,
+        "sectorComunidad": "JESÚS DEL GRAN PODER ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Pablo Barrionuevo",
+        "fechaCreacion": "2026-05-31T15:17:35.538Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{7e4894e3-3f90-4788-9c61-2ba69e9a9c0f}",
+          "claveCatastral": "1702520730012",
+          "areaTotal": 94088.23,
+          "sectorComunidad": "",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T08:00:06.870Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{4d917334-15e9-4065-bda8-768e3ff944a3}",
+          "claveCatastral": "1702520730012",
+          "areaTotal": 94088.23,
+          "sectorComunidad": "",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T08:00:16.340Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
       "id": "1711272235",
       "cedula": "1711272235",
       "apellidos": "PILCA AULES",
@@ -61,6 +99,44 @@
           "fechaCreacion": "2026-06-10T08:31:50.693Z",
           "cantCultivos": 2,
           "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1718361957",
+      "cedula": "1718361957",
+      "apellidos": "PINANJOTA GUALAVISI",
+      "nombres": "JORGE EDUARDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{492406b5-1e62-4aa8-80b1-ecd2b7c84749}",
+        "claveCatastral": "1702520900088",
+        "areaTotal": 5000.0,
+        "sectorComunidad": "ASOCIACIÓN SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Melany Jara",
+        "fechaCreacion": "2026-06-10T10:20:54.155Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{5881effe-c88c-4fa7-8c42-765d3e5e6bcf}",
+          "claveCatastral": "1702520270056",
+          "areaTotal": 3091.97,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-13T12:38:59.455Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{3123f154-b14b-47cb-bf84-dfdb00ca2d24}",
+          "claveCatastral": "1702520270056",
+          "areaTotal": 3091.97,
+          "sectorComunidad": "PROMEJORAS PITANA BAJO ",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-13T12:05:46.798Z",
+          "cantCultivos": 2,
+          "cantAnimales": 0
         }
       ]
     },
@@ -187,6 +263,34 @@
       ]
     },
     {
+      "id": "1710964956",
+      "cedula": "1710964956",
+      "apellidos": "CHIMARRO PACHECO",
+      "nombres": "LUIS ENRIQUE",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7a6511b4-dacb-4567-9a97-79d0a2b2e563}",
+        "claveCatastral": "1702520280044",
+        "areaTotal": 86353.26,
+        "sectorComunidad": "PROMEJORAS PITANA BAJO ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-13T12:14:45.939Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c7bdb528-62ca-495c-bf66-4dd34c10d467}",
+          "claveCatastral": "1702520890061",
+          "areaTotal": 5682.47,
+          "sectorComunidad": "SANTA ROSA DE PACCHA",
+          "creadoPor": "Martha Simbaña",
+          "fechaCreacion": "2026-06-10T14:31:51.248Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
       "id": "1725317141",
       "cedula": "1725317141",
       "apellidos": "TUTILLO ACERO",
@@ -267,6 +371,62 @@
           "fechaCreacion": "2026-06-10T13:42:26.794Z",
           "cantCultivos": 1,
           "cantAnimales": 5
+        }
+      ]
+    },
+    {
+      "id": "1713750873",
+      "cedula": "1713750873",
+      "apellidos": "TUTILLO CHIQUIMBA",
+      "nombres": "SEGUNDO JUAQUIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ca12192d-69ff-4ebc-b44e-56bd1e53bbbb}",
+        "claveCatastral": "1702520890014",
+        "areaTotal": 7962.75,
+        "sectorComunidad": "SAN VICENTE BAJO ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T10:36:32.845Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{110c26c2-881d-4bb8-b027-5d7c10618028}",
+          "claveCatastral": "1702520870077",
+          "areaTotal": 6121.14,
+          "sectorComunidad": "",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-11T11:58:05.898Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1718373077",
+      "cedula": "1718373077",
+      "apellidos": "TUGULINAGO USHIÑA",
+      "nombres": "JUAN ROGELIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{cde4d671-b0fd-4679-a4bf-5335449d5e80}",
+        "claveCatastral": "1702520890093",
+        "areaTotal": 8052.75,
+        "sectorComunidad": "SAN VICENTE BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-10T12:17:19.945Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{21e7f04e-567d-473a-84a2-615198a16906}",
+          "claveCatastral": "1702520850007",
+          "areaTotal": 1125.74,
+          "sectorComunidad": "PUCARA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-11T09:00:47.575Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
         }
       ]
     },
@@ -407,6 +567,920 @@
           "fechaCreacion": "2026-06-10T16:45:01.916Z",
           "cantCultivos": 2,
           "cantAnimales": 10
+        }
+      ]
+    },
+    {
+      "id": "1710810688",
+      "cedula": "1710810688",
+      "apellidos": "PILCA LOPEZ",
+      "nombres": "SEGUNDO MATIAS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8c00bb43-75a4-464d-a762-28da7cf1a836}",
+        "claveCatastral": "1702520840063",
+        "areaTotal": 786.62,
+        "sectorComunidad": "PUCARA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-11T11:24:28.628Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{8be7a4e4-7881-456c-9ff3-38c7c3367ab2}",
+          "claveCatastral": "1702520840064",
+          "areaTotal": 419.81,
+          "sectorComunidad": "PUCARA",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-11T11:19:48.612Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1705697116",
+      "cedula": "1705697116",
+      "apellidos": "TALLANA",
+      "nombres": "LUCINDA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0963998e-95a6-4115-a2b0-e543d74816db}",
+        "claveCatastral": "1702520850133",
+        "areaTotal": 7195.12,
+        "sectorComunidad": "COMUNA PUCARA ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-11T10:43:36.925Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{9319b632-1986-47f6-ad16-d0a93a0940d2}",
+          "claveCatastral": "1702520840050",
+          "areaTotal": 751.4,
+          "sectorComunidad": "COMUNA PUCARA ",
+          "creadoPor": "Huguito Ipial",
+          "fechaCreacion": "2026-06-11T10:46:02.149Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1709496036",
+      "cedula": "1709496036",
+      "apellidos": "QUISHPE IMBAQUINGO",
+      "nombres": "SEGUNDO FERMIN",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6c4d87be-c9ef-4feb-a8af-f44c3af67e24}",
+        "claveCatastral": "1702521670007",
+        "areaTotal": 15156.21,
+        "sectorComunidad": "PITANA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-12T10:15:44.211Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{42717e7d-254c-486d-a453-3021d678865a}",
+          "claveCatastral": "1702521670007",
+          "areaTotal": 15156.21,
+          "sectorComunidad": "PITANA ALTO",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-12T10:32:21.276Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1713914230",
+      "cedula": "1713914230",
+      "apellidos": "QUISHPE GUALAVISI",
+      "nombres": "MARIA LAURA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{7ab64b27-fbba-40c8-87da-c1a5f86b419c}",
+        "claveCatastral": "1702520300001",
+        "areaTotal": 13417.98,
+        "sectorComunidad": "PITANA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-12T11:44:44.152Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{83635141-9714-4a8e-b6e3-64330c257087}",
+          "claveCatastral": "1702520300001",
+          "areaTotal": 110.0,
+          "sectorComunidad": "PITANA ALTO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-12T10:49:15.657Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1707062418",
+      "cedula": "1707062418",
+      "apellidos": "CHOLANGO QUISHPE",
+      "nombres": "ENCARNACION",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{a8351fb3-070f-4228-b091-a1c707e080bc}",
+        "claveCatastral": "1702521630048",
+        "areaTotal": 15886.08,
+        "sectorComunidad": "PITANA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-12T11:13:01.946Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{74b658c1-e03b-4595-8f66-7cb3e42ae7ed}",
+          "claveCatastral": "1702521630048",
+          "areaTotal": 700.0,
+          "sectorComunidad": "PITANA ALTO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-12T11:24:20.284Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1705300653",
+      "cedula": "1705300653",
+      "apellidos": "COYAGO PACHECO",
+      "nombres": "ROSA CARMELINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{f09038f1-527e-4b1e-9e41-02ad208f2c17}",
+        "claveCatastral": "1702520270137",
+        "areaTotal": 38360.76,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-12T17:42:41.957Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{929aa585-8a2e-46c5-a680-355cddc1c847}",
+          "claveCatastral": "1702520270137",
+          "areaTotal": 38360.76,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-12T17:46:07.938Z",
+          "cantCultivos": 4,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1708058670",
+      "cedula": "1708058670",
+      "apellidos": "IGUAMBA CHIMARRO",
+      "nombres": "MARÍA LUCILA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8b45bd1c-4dfb-41d8-bc70-70e3051bcf82}",
+        "claveCatastral": "1702520300128",
+        "areaTotal": 27583.97,
+        "sectorComunidad": "PITANA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-12T11:48:27.538Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{189d68af-5c03-4d66-92a1-302758ff0093}",
+          "claveCatastral": "1702520300004",
+          "areaTotal": 2603.88,
+          "sectorComunidad": "PITANA ALTO",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-06-12T10:55:48.636Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        }
+      ]
+    },
+    {
+      "id": "1721234993",
+      "cedula": "1721234993",
+      "apellidos": "GUALAVISI ASERO",
+      "nombres": "SEGUNDO PABLO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ed293bc3-22c0-4c7c-a6fb-c5c6333cb571}",
+        "claveCatastral": "1702520780011",
+        "areaTotal": 14261.68,
+        "sectorComunidad": "PITANA ALTO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Martha Simbaña",
+        "fechaCreacion": "2026-06-12T12:05:00.772Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{3a7f7ae4-267a-4e03-9f3e-d3a35681909b}",
+          "claveCatastral": "1702520780011",
+          "areaTotal": 4753.893,
+          "sectorComunidad": "PITANA ALTO",
+          "creadoPor": "Melany Jara",
+          "fechaCreacion": "2026-06-12T09:01:05.369Z",
+          "cantCultivos": 6,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1726572702",
+      "cedula": "1726572702",
+      "apellidos": "GUALAVISI QUISHPE",
+      "nombres": "Juan isauro",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{4ceedf29-501a-47ff-829b-6ab5c10cc11b}",
+        "claveCatastral": "1702520280040",
+        "areaTotal": 4192.77,
+        "sectorComunidad": "PROMEJORAS PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Dylan Chavez",
+        "fechaCreacion": "2026-06-13T08:48:53.212Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{6f4d8171-b979-467a-9567-360add40211b}",
+          "claveCatastral": "1702520280040",
+          "areaTotal": 4192.77,
+          "sectorComunidad": "PROMEJORAS PITANA BAJO",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-13T08:58:28.765Z",
+          "cantCultivos": 3,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1712356201",
+      "cedula": "1712356201",
+      "apellidos": "RON TAMAYO",
+      "nombres": "CRISTOBAL VINICIO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{eb8f3485-e973-4cc4-9f1c-29ada6e13117}",
+        "claveCatastral": "1702520240018",
+        "areaTotal": 9015.32,
+        "sectorComunidad": "PITANA BAJO ",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-13T10:44:55.403Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b1241691-50ad-4a2b-9eb7-45f95f48a327}",
+          "claveCatastral": "1702520280100",
+          "areaTotal": 3018.4,
+          "sectorComunidad": "PITANA BAJO ",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-13T10:15:02.118Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1710979376",
+      "cedula": "1710979376",
+      "apellidos": "TUTILLO COYAGO",
+      "nombres": "JOSE ELIAS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{3a764489-c11a-452b-9d0d-2857f75b898a}",
+        "claveCatastral": "1702520280016",
+        "areaTotal": 48600.1,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-13T11:19:43.831Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{cf087a97-da56-41f0-adf4-dac64ae4d19f}",
+          "claveCatastral": "1702520280010",
+          "areaTotal": 1322.22,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:01:38.894Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{da8a73a7-12a1-47cf-985f-5e5d1c98629e}",
+          "claveCatastral": "1702520280010",
+          "areaTotal": 1322.22,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:06:51.456Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{f929ab76-aa8b-41d8-8139-db1b25acf9fc}",
+          "claveCatastral": "1702520280010",
+          "areaTotal": 1322.22,
+          "sectorComunidad": "",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:01:08.401Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1710052539",
+      "cedula": "1710052539",
+      "apellidos": "PACHECO PACHECO",
+      "nombres": "SEGUNDO DANIEL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{03eb8bd6-4578-4993-8983-8997665a5437}",
+        "claveCatastral": "1702520270122",
+        "areaTotal": 5219.77,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-13T11:53:28.708Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{417f698a-bc06-43f5-950a-c4af420ac7a4}",
+          "claveCatastral": "1702520270122",
+          "areaTotal": 5219.77,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T11:00:58.937Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1710587666",
+      "cedula": "1710587666",
+      "apellidos": "PACHECO CHIMARRO",
+      "nombres": "SEGUNDO OCTAVIANO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{e563ee5b-3d89-485e-b7f2-0293ca34f3ed}",
+        "claveCatastral": "1702520290020",
+        "areaTotal": 46984.67,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T09:11:28.232Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b7691a52-eb69-4ae8-8c4c-26fcabe90b2d}",
+          "claveCatastral": "1702520290020",
+          "areaTotal": 46984.67,
+          "sectorComunidad": "PITANA BAJA",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:17:02.649Z",
+          "cantCultivos": 3,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{50903921-1f99-49f0-a57f-4e839174257c}",
+          "claveCatastral": "1702520290020",
+          "areaTotal": 46984.67,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:20:47.163Z",
+          "cantCultivos": 2,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{f8cffaf5-be76-4c82-bacf-74ab8c390185}",
+          "claveCatastral": "1702520290020",
+          "areaTotal": 46984.67,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:26:31.924Z",
+          "cantCultivos": 3,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1707270912",
+      "cedula": "1707270912",
+      "apellidos": "COYAGO FARINANGO",
+      "nombres": "SEGUNDO ALFONSO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{fc791409-a0e9-4540-84a6-3b1f26b0a333}",
+        "claveCatastral": "1702520270095",
+        "areaTotal": 9196.86,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T09:32:17.983Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{f711009f-4560-4a06-81e5-531b6c1eda70}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:38:47.876Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{812bb0e0-a274-4e7d-b244-ebe1ca9d8e30}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:41:21.865Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        },
+        {
+          "id": "{30ac739b-5c44-43d7-817b-b541ed5e0674}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:47:10.740Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{837fdf30-91d3-4287-8918-4054d9a584e9}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:53:19.017Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{17cb4d0b-2fc0-41e3-9a1b-51d25be7b7a2}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:55:32.545Z",
+          "cantCultivos": 3,
+          "cantAnimales": 3
+        },
+        {
+          "id": "{a6d93da8-838e-4207-bd73-b320689c5475}",
+          "claveCatastral": "1702520270095",
+          "areaTotal": 9196.86,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T09:59:04.897Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1711420859",
+      "cedula": "1711420859",
+      "apellidos": "FARINANGO IMBAQUINGO",
+      "nombres": "LUIS ALBERTO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{9d424c27-6405-4128-b1f2-91a5e43c35a5}",
+        "claveCatastral": "1702520290017",
+        "areaTotal": 11137.82,
+        "sectorComunidad": "PITANABAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T08:47:45.264Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{0c53828f-83c7-469e-b7d1-2853901ea432}",
+          "claveCatastral": "1702520290017",
+          "areaTotal": 11137.82,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T08:55:15.643Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1703139566",
+      "cedula": "1703139566",
+      "apellidos": "IMBAQUINGO IMBAQUINGO",
+      "nombres": "BLANCA MARINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c380f130-d287-4553-9931-905b87753e03}",
+        "claveCatastral": "1702520220075",
+        "areaTotal": 14359.14,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T10:47:23.302Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{d47c2b75-0e09-45ea-86ac-a37a990432fe}",
+          "claveCatastral": "1702520220075",
+          "areaTotal": 14359.14,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T10:51:50.316Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1709565608",
+      "cedula": "1709565608",
+      "apellidos": "COYAGO PACHECO",
+      "nombres": "LUIS ALFREDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ef7521d9-044e-4179-ad40-db5709bf2e79}",
+        "claveCatastral": "1702520270103",
+        "areaTotal": 5790.25,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T11:10:49.890Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{ea65592b-6cf9-4d08-91eb-bdfab41f19d5}",
+          "claveCatastral": "1702520270103",
+          "areaTotal": 5790.25,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T11:17:20.629Z",
+          "cantCultivos": 1,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1704307113",
+      "cedula": "1704307113",
+      "apellidos": "PACHECO IMBAQUINGO",
+      "nombres": "MARTINA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{91f89f1b-115c-44a9-9e01-57f203becd66}",
+        "claveCatastral": "1702520280055",
+        "areaTotal": 9718.02,
+        "sectorComunidad": "PITANA BAJO",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T11:32:30.799Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{031a8240-1cdd-4dc1-9fa7-0c33c6e8411c}",
+          "claveCatastral": "1702520280055",
+          "areaTotal": 9718.02,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T11:44:48.505Z",
+          "cantCultivos": 2,
+          "cantAnimales": 4
+        },
+        {
+          "id": "{26bc2aa1-460b-482f-8476-be613e7e3dd6}",
+          "claveCatastral": "1702520280055",
+          "areaTotal": 9718.02,
+          "sectorComunidad": "PITANA BAJO",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T11:48:21.979Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1709566549",
+      "cedula": "1709566549",
+      "apellidos": "COYAGO Alquinga",
+      "nombres": "Marco Rafael",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{ea758413-0b90-4a5c-9660-e97cde33eaaf}",
+        "claveCatastral": "1702521720011",
+        "areaTotal": 15729.56,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T15:08:48.845Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{c7fa8ab2-78be-47f6-9b98-c07c5222faf9}",
+          "claveCatastral": "1702520200009",
+          "areaTotal": 2828.64,
+          "sectorComunidad": "SANTA MARIANITA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-13T15:23:21.462Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{f06e1d27-3c64-4cdf-9f5f-79c10efd1a4a}",
+          "claveCatastral": "1702520200008",
+          "areaTotal": 558.07,
+          "sectorComunidad": "SANTA MARIANITA",
+          "creadoPor": "Mayra Benavides",
+          "fechaCreacion": "2026-06-13T15:32:10.416Z",
+          "cantCultivos": 1,
+          "cantAnimales": 4
+        }
+      ]
+    },
+    {
+      "id": "1706549639",
+      "cedula": "1706549639",
+      "apellidos": "TOAPANTA CALUGULLIN",
+      "nombres": "PEDRO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0a84d8e4-7c29-454f-97ca-e61ff0b8194f}",
+        "claveCatastral": "1702521720040",
+        "areaTotal": 17080.53,
+        "sectorComunidad": "SANTA MARIANITA",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Mayra Benavides",
+        "fechaCreacion": "2026-06-13T16:08:28.031Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{53976bc5-0576-4351-a153-ac94ae50ca74}",
+          "claveCatastral": "1702521720052",
+          "areaTotal": 8867.16,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Dylan Chavez",
+          "fechaCreacion": "2026-06-13T16:05:54.210Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1721713335",
+      "cedula": "1721713335",
+      "apellidos": "USHIÑA TOAPANTA",
+      "nombres": "MARIA SOLEDAD",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{acb3a2d2-70f6-44d6-98dd-a2b2ba601348}",
+        "claveCatastral": "1702521390045",
+        "areaTotal": 16108.03,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-13T16:27:31.411Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{562b2e56-65cc-47e8-916c-6dbc1494c1bb}",
+          "claveCatastral": "1702520230088",
+          "areaTotal": 2171.71,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T17:16:21.146Z",
+          "cantCultivos": 2,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1711752194",
+      "cedula": "1711752194",
+      "apellidos": "CALUGUILLIN CALUGUILLIN",
+      "nombres": "SEGUNDO LUIS",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{4caabc63-7263-4437-ab9f-6a2a0f327952}",
+        "claveCatastral": "1702521690026",
+        "areaTotal": 11333.79,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Huguito Ipial",
+        "fechaCreacion": "2026-06-13T17:49:36.638Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{853f6e33-8abc-470f-a7b4-26fdd7ec277f}",
+          "claveCatastral": "1702520200020",
+          "areaTotal": 6133.97,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T15:31:54.960Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1708508716",
+      "cedula": "1708508716",
+      "apellidos": "Coyago Caluguillin",
+      "nombres": "Danny Xavier",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8378b76d-a040-41c7-a6e1-e86d6ffda601}",
+        "claveCatastral": "1702520190029",
+        "areaTotal": 4781.14,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T14:59:52.910Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{2a6ad1e1-5dad-4f6f-b02d-e2824cabba1d}",
+          "claveCatastral": "1702520190029",
+          "areaTotal": 4781.14,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T17:57:38.308Z",
+          "cantCultivos": 0,
+          "cantAnimales": 2
+        },
+        {
+          "id": "{b1aed259-69d8-43ef-80a5-c2cdf0111d07}",
+          "claveCatastral": "1702520190029",
+          "areaTotal": 4781.14,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T18:25:21.434Z",
+          "cantCultivos": 0,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1712474632",
+      "cedula": "1712474632",
+      "apellidos": "LIMAICO TOAPANTA",
+      "nombres": "MARIA ASUNCION",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{b616819e-a6ba-4979-bd55-367eaee2541c}",
+        "claveCatastral": "1702520230006",
+        "areaTotal": 11773.89,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T16:04:55.958Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{9bdd5cfe-59df-465e-b7d8-89eb746c5a91}",
+          "claveCatastral": "1702520230006",
+          "areaTotal": 11773.89,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T16:09:33.909Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1704546801",
+      "cedula": "1704546801",
+      "apellidos": "USHIÑA TOAPANTA",
+      "nombres": "MARIA ANA LUISA",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{6065066e-3935-4b7b-b8a5-6c6d3ad260ff}",
+        "claveCatastral": "1702520230036",
+        "areaTotal": 2231.06,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T16:16:07.718Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{bb86fd10-176d-4ee0-a17b-3d6e41b6dbc5}",
+          "claveCatastral": "1702520230036",
+          "areaTotal": 2231.06,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T16:21:13.139Z",
+          "cantCultivos": 2,
+          "cantAnimales": 2
+        }
+      ]
+    },
+    {
+      "id": "1703512143",
+      "cedula": "1703512143",
+      "apellidos": "QUISHPE TUTILLO",
+      "nombres": "SEGUNDO ANIBAL",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{0dce8038-2fd8-4655-8629-ff6ff71449a1}",
+        "claveCatastral": "1702520180001",
+        "areaTotal": 9459.14,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T16:26:15.413Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{b95b1be3-1feb-43c1-bc16-faf03524c43c}",
+          "claveCatastral": "1702520180001",
+          "areaTotal": 9459.14,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T16:31:52.338Z",
+          "cantCultivos": 1,
+          "cantAnimales": 0
+        },
+        {
+          "id": "{87633345-3b41-4406-97a3-4e5e53ddaf61}",
+          "claveCatastral": "1702520180001",
+          "areaTotal": 9459.14,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T16:34:53.308Z",
+          "cantCultivos": 0,
+          "cantAnimales": 0
+        }
+      ]
+    },
+    {
+      "id": "1712743648",
+      "cedula": "1712743648",
+      "apellidos": "FARINANGO QUISHPE",
+      "nombres": "LUIS OSWALDO",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{c92c3706-b1d7-41b3-91dd-8e41e4c2d24d}",
+        "claveCatastral": "1702520180002",
+        "areaTotal": 7880.11,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T16:39:59.906Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{57f9ae33-80dd-4267-960b-b7ee09bf9f78}",
+          "claveCatastral": "1702520180002",
+          "areaTotal": 7880.11,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T16:43:07.139Z",
+          "cantCultivos": 1,
+          "cantAnimales": 1
+        }
+      ]
+    },
+    {
+      "id": "1707398341",
+      "cedula": "1707398341",
+      "apellidos": "Tutillo Quishpe",
+      "nombres": "Ana Luisa",
+      "criterio": "cedula",
+      "fichaMadre": {
+        "id": "{8881ae3a-d809-42e6-88ad-af5d27ad4001}",
+        "claveCatastral": "1702520190047",
+        "areaTotal": 6121.95,
+        "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+        "parroquia": "CANGAHUA",
+        "creadoPor": "Adriana Cuascota",
+        "fechaCreacion": "2026-06-13T17:02:17.526Z"
+      },
+      "fichasSecundarias": [
+        {
+          "id": "{d72f9480-ea48-47d1-bcc4-c3dd0f18bcd5}",
+          "claveCatastral": "1702520190047",
+          "areaTotal": 6121.95,
+          "sectorComunidad": "SANTA MARIANITA DE PINGULMI",
+          "creadoPor": "Adriana Cuascota",
+          "fechaCreacion": "2026-06-13T17:05:58.384Z",
+          "cantCultivos": 1,
+          "cantAnimales": 3
         }
       ]
     }
