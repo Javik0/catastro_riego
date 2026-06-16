@@ -236,8 +236,8 @@ export default function App() {
                   element={
                     <RoleProtectedRoute allowedRoles={['admin', 'cliente', 'tecnico']}>
                       <FilteredDataProvider>
-                        {({ fichas, prediosAdicionalesData, loading }) => (
-                          <MapPage fichas={fichas} prediosAdicionalesData={prediosAdicionalesData} loading={loading} />
+                        {({ fichas, loading }) => (
+                          <MapPage fichas={fichas} loading={loading} />
                         )}
                       </FilteredDataProvider>
                     </RoleProtectedRoute>

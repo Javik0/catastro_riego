@@ -64,11 +64,18 @@ def normalizar_texto(texto):
     return texto
 
 def preparar_unificacion():
+    """
+    UNIFICACIÓN VIRTUAL DESACTIVADA (2026-06-16).
+    Por decisión del cliente, la web debe reflejar EXACTAMENTE los mismos
+    registros que existen en QField/data.gpkg sin ninguna deduplicación en caliente.
+    FICHA_REDIRECT_MAP y VIRTUAL_PREDIOS_ADICIONALES se mantienen vacíos.
+    Solo se registra el conteo real de fichas para el auditoria.json.
+    """
     global FICHA_REDIRECT_MAP, VIRTUAL_PREDIOS_ADICIONALES, AUDITORIA_DATA_CACHE
     FICHA_REDIRECT_MAP = {}
     VIRTUAL_PREDIOS_ADICIONALES = []
 
-    print("\n🔍 Analizando duplicados para unificación virtual en la exportación...")
+    print("\n📋 Registrando conteo total de fichas (sin unificación virtual)...")
     conn = sqlite3.connect(DATA_GPKG)
     cursor = conn.cursor()
     
@@ -90,209 +97,21 @@ def preparar_unificacion():
     fichas_raw = cursor.fetchall()
     conn.close()
 
-    fichas = []
-    for f in fichas_raw:
-        fid, ced, ape, nom, area, ar, asr, creador, fecha, clave, obs, sector, parr, com = f
-        ced_norm = (ced or "").strip()
-        es_ced_valida = len(ced_norm) == 10 and ced_norm.isdigit()
-        
-        ape_norm = normalizar_texto(ape)
-        nom_norm = normalizar_texto(nom)
-        nombre_completo = f"{ape_norm} {nom_norm}".strip()
-        
-        fichas.append({
-            'id': fid,
-            'cedula': ced_norm,
-            'es_ced_valida': es_ced_valida,
-            'apellidos': (ape or "").strip(),
-            'nombres': (nom or "").strip(),
-            'nombre_completo_normalizado': nombre_completo,
-            'area_total': area or 0.0,
-            'area_riego': ar or 0.0,
-            'area_sin_riego': asr or 0.0,
-            'creado_por': (creador or "").strip(),
-            'fecha_creacion': fecha,
-            'clave_catastral': clave,
-            'observaciones': obs or "",
-            'sector_comunidad': sector or "",
-            'parroquia': parr or "",
-            'comunidad': com or ""
-        })
+    total_fichas = len(fichas_raw)
 
-    regantes_por_cedula = {}
-    fichas_sin_cedula_valida = []
-
-    for f in fichas:
-        if f['es_ced_valida']:
-            ced = f['cedula']
-            if ced not in regantes_por_cedula:
-                regantes_por_cedula[ced] = []
-            regantes_por_cedula[ced].append(f)
-        else:
-            fichas_sin_cedula_valida.append(f)
-
-    regantes_por_nombre = {}
-    for f in fichas_sin_cedula_valida:
-        name = f['nombre_completo_normalizado']
-        if not name:
-            name = "SIN_NOMBRE_REGISTRADO"
-        if name not in regantes_por_nombre:
-            regantes_por_nombre[name] = []
-        regantes_por_nombre[name].append(f)
-
-    duplicados_cedula = {ced: lista for ced, lista in regantes_por_cedula.items() if len(lista) > 1}
-    duplicados_nombre = {name: lista for name, lista in regantes_por_nombre.items() if len(lista) > 1 and name != "SIN_NOMBRE_REGISTRADO"}
-
-    for ced, lista in duplicados_cedula.items():
-        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
-        ficha_madre = lista_ordenada[0]
-        fichas_secundarias = lista_ordenada[1:]
-        
-        for fs in fichas_secundarias:
-            FICHA_REDIRECT_MAP[fs['id']] = ficha_madre['id']
-            tecnico_nombre = MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por'])
-            obs_unificacion = f"Unificación automática. Ficha original: {fs['id']}. Técnico: {tecnico_nombre} en {fs['fecha_creacion']}."
-            if fs['observaciones']:
-                obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
-                
-            ar_val = fs['area_riego']
-            if not ar_val or ar_val == 0:
-                ar_val = fs['area_total'] or 0.0
-
-            VIRTUAL_PREDIOS_ADICIONALES.append({
-                'id_adicional': fs['id'],
-                'ficha_id': ficha_madre['id'],
-                'clave_catastral_otro': fs['clave_catastral'],
-                'area_total_otro': fs['area_total'],
-                'area_riego_otro': ar_val,
-                'area_sin_riego_otro': 0.0,
-                'area_lote_asignado_otro': fs['area_total'],
-                'tiene_observaciones': 1,
-                'observaciones_otro': obs_unificacion
-            })
-
-    for name, lista in duplicados_nombre.items():
-        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
-        ficha_madre = lista_ordenada[0]
-        fichas_secundarias = lista_ordenada[1:]
-        
-        for fs in fichas_secundarias:
-            FICHA_REDIRECT_MAP[fs['id']] = ficha_madre['id']
-            tecnico_nombre = MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por'])
-            obs_unificacion = f"Unificación automática (coincidencia de Nombre). Ficha original: {fs['id']}. Técnico: {tecnico_nombre} en {fs['fecha_creacion']}."
-            if fs['observaciones']:
-                obs_unificacion += f" Obs. Orig: {fs['observaciones']}"
-                
-            ar_val = fs['area_riego']
-            if not ar_val or ar_val == 0:
-                ar_val = fs['area_total'] or 0.0
-
-            VIRTUAL_PREDIOS_ADICIONALES.append({
-                'id_adicional': fs['id'],
-                'ficha_id': ficha_madre['id'],
-                'clave_catastral_otro': fs['clave_catastral'],
-                'area_total_otro': fs['area_total'],
-                'area_riego_otro': ar_val,
-                'area_sin_riego_otro': 0.0,
-                'area_lote_asignado_otro': fs['area_total'],
-                'tiene_observaciones': 1,
-                'observaciones_otro': obs_unificacion
-            })
-
-    # Generar y guardar JSON de auditoría para el frontend
+    # UNIFICACIÓN DESACTIVADA: FICHA_REDIRECT_MAP y VIRTUAL_PREDIOS_ADICIONALES permanecen vacíos.
+    # auditoria.json se escribe con 0 unificaciones para reflejar la base de datos limpia.
     auditoria_data = {
         "resumen": {
-            "totalFichasOriginales": len(fichas),
-            "totalRegantesUnicosDuplicados": len(duplicados_cedula) + len(duplicados_nombre),
-            "totalFichasDuplicadas": sum(len(l) for l in duplicados_cedula.values()) + sum(len(l) for l in duplicados_nombre.values()),
-            "fichasRedundantesReducidas": len(FICHA_REDIRECT_MAP),
-            "totalFichasUnificadas": len(fichas) - len(FICHA_REDIRECT_MAP),
-            "porcentajeReduccion": round((len(FICHA_REDIRECT_MAP) / len(fichas) * 100), 2) if fichas else 0
+            "totalFichasOriginales": total_fichas,
+            "totalRegantesUnicosDuplicados": 0,
+            "totalFichasDuplicadas": 0,
+            "fichasRedundantesReducidas": 0,
+            "totalFichasUnificadas": total_fichas,
+            "porcentajeReduccion": 0
         },
         "regantesUnificados": []
     }
-
-    # Cargar cultivos y animales en diccionarios para contar rápido la carga de datos por ficha secundaria
-    cursor_info = sqlite3.connect(DATA_GPKG).cursor()
-    cant_cultivos = {}
-    cant_animales = {}
-    if cultivos_table:
-        cursor_info.execute(f'SELECT ficha_id, COUNT(*) FROM "{cultivos_table}" GROUP BY ficha_id')
-        cant_cultivos = dict(cursor_info.fetchall())
-    if animales_table:
-        cursor_info.execute(f'SELECT ficha_id, COUNT(*) FROM "{animales_table}" GROUP BY ficha_id')
-        cant_animales = dict(cursor_info.fetchall())
-    cursor_info.close()
-
-    for ced, lista in duplicados_cedula.items():
-        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
-        ficha_madre = lista_ordenada[0]
-        fichas_secundarias = lista_ordenada[1:]
-        
-        reg_item = {
-            "id": ced,
-            "cedula": ced,
-            "apellidos": ficha_madre['apellidos'],
-            "nombres": ficha_madre['nombres'],
-            "criterio": "cedula",
-            "fichaMadre": {
-                "id": ficha_madre['id'],
-                "claveCatastral": ficha_madre['clave_catastral'],
-                "areaTotal": ficha_madre['area_total'],
-                "sectorComunidad": ficha_madre['sector_comunidad'],
-                "parroquia": ficha_madre['parroquia'],
-                "creadoPor": MAPEO_TECNICOS.get(ficha_madre['creado_por'], ficha_madre['creado_por']),
-                "fechaCreacion": ficha_madre['fecha_creacion']
-            },
-            "fichasSecundarias": []
-        }
-        for fs in fichas_secundarias:
-            reg_item["fichasSecundarias"].append({
-                "id": fs['id'],
-                "claveCatastral": fs['clave_catastral'],
-                "areaTotal": fs['area_total'],
-                "sectorComunidad": fs['sector_comunidad'],
-                "creadoPor": MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por']),
-                "fechaCreacion": fs['fecha_creacion'],
-                "cantCultivos": cant_cultivos.get(fs['id'], 0),
-                "cantAnimales": cant_animales.get(fs['id'], 0)
-            })
-        auditoria_data["regantesUnificados"].append(reg_item)
-
-    for name, lista in duplicados_nombre.items():
-        lista_ordenada = sorted(lista, key=lambda x: x['area_total'], reverse=True)
-        ficha_madre = lista_ordenada[0]
-        fichas_secundarias = lista_ordenada[1:]
-        
-        reg_item = {
-            "id": name,
-            "cedula": "",
-            "apellidos": ficha_madre['apellidos'],
-            "nombres": ficha_madre['nombres'],
-            "criterio": "nombre",
-            "fichaMadre": {
-                "id": ficha_madre['id'],
-                "claveCatastral": ficha_madre['clave_catastral'],
-                "areaTotal": ficha_madre['area_total'],
-                "sectorComunidad": ficha_madre['sector_comunidad'],
-                "parroquia": ficha_madre['parroquia'],
-                "creadoPor": MAPEO_TECNICOS.get(ficha_madre['creado_por'], ficha_madre['creado_por']),
-                "fechaCreacion": ficha_madre['fecha_creacion']
-            },
-            "fichasSecundarias": []
-        }
-        for fs in fichas_secundarias:
-            reg_item["fichasSecundarias"].append({
-                "id": fs['id'],
-                "claveCatastral": fs['clave_catastral'],
-                "areaTotal": fs['area_total'],
-                "sectorComunidad": fs['sector_comunidad'],
-                "creadoPor": MAPEO_TECNICOS.get(fs['creado_por'], fs['creado_por']),
-                "fechaCreacion": fs['fecha_creacion'],
-                "cantCultivos": cant_cultivos.get(fs['id'], 0),
-                "cantAnimales": cant_animales.get(fs['id'], 0)
-            })
-        auditoria_data["regantesUnificados"].append(reg_item)
 
     global AUDITORIA_DATA_CACHE
     AUDITORIA_DATA_CACHE = auditoria_data
@@ -301,9 +120,10 @@ def preparar_unificacion():
     with open(path_auditoria_json, 'w', encoding='utf-8') as f:
         json.dump(auditoria_data, f, ensure_ascii=False, indent=2)
 
-    print(f"  ✓ {len(FICHA_REDIRECT_MAP)} fichas duplicadas secundarias redirigidas a sus fichas madre.")
-    print(f"  ✓ {len(VIRTUAL_PREDIOS_ADICIONALES)} predios adicionales virtuales creados.")
-    print(f"  💾 auditoria.json guardado en public/geo/")
+    print(f"  ✓ Unificación virtual DESACTIVADA. Todas las {total_fichas} fichas se exportarán tal como están en QField.")
+    print(f"  ✓ FICHA_REDIRECT_MAP vacío: {len(FICHA_REDIRECT_MAP)} entradas.")
+    print(f"  ✓ VIRTUAL_PREDIOS_ADICIONALES vacío: {len(VIRTUAL_PREDIOS_ADICIONALES)} entradas.")
+    print(f"  💾 auditoria.json guardado en public/geo/ con 0 unificaciones.")
 
 # ══════════════════════════════════════════════════════════════
 # Parseo de geometría GeoPackage (WKB + GPKG header)
@@ -740,16 +560,16 @@ def export_fichas():
 
     print(f"  ✓ {imputadas_count} fichas con campos vacíos corregidas mediante imputación inteligente.")
 
-    # 5. Generar las GeoJSON features filtrando duplicados unificados
+    # 5. Generar las GeoJSON features — TODAS las fichas, incluyendo las que no tienen GPS
+    # Las fichas sin geometría válida se exportan con geometry: null para que sumen
+    # al conteo total y cuadren 1:1 con los datos locales de QField.
     features = []
+    sin_geom = 0
     for f in fichas_list:
         props = f['props']
         geom_blob = f['geom_blob']
 
-        # Filtro de unificación virtual: omitir fichas secundarias duplicadas
-        if props.get('id') in FICHA_REDIRECT_MAP:
-            continue
-
+        geom = None
         if geom_blob:
             try:
                 srid, off = parse_gpkg_header(geom_blob)
@@ -757,12 +577,22 @@ def export_fichas():
                 bo = wkb[0]
                 fmt = '<' if bo == 1 else '>'
                 x, y = struct.unpack(f'{fmt}dd', wkb[5:21])
-                coords = [round(x, 7), round(y, 7)]
-                features.append({'type':'Feature','properties':props,'geometry':{'type':'Point','coordinates':coords}})
-            except: pass
+                # Validar que las coordenadas sean geográficas razonables (WGS84)
+                if -180 <= x <= 180 and -90 <= y <= 90:
+                    geom = {'type': 'Point', 'coordinates': [round(x, 7), round(y, 7)]}
+                else:
+                    # Coordenadas fuera de rango (posiblemente UTM sin convertir)
+                    geom = None
+            except:
+                geom = None
+
+        if geom is None:
+            sin_geom += 1
+
+        features.append({'type': 'Feature', 'properties': props, 'geometry': geom})
 
     _save(features, 'fichas_predios.geojson')
-    print(f"  ✓ {len(features)} fichas principales limpias exportadas")
+    print(f"  ✓ {len(features)} fichas exportadas ({sin_geom} sin coordenadas GPS — geometry: null)")
     conn.close()
     return features
 
@@ -999,7 +829,7 @@ def export_ramales():
 # ══════════════════════════════════════════════════════════════
 
 def export_tablas_hijas():
-    print("\n📋 Exportando tablas hijas con unificación virtual...")
+    print("\n📋 Exportando tablas hijas (sin inyección de unificaciones virtuales)...")
     conn = sqlite3.connect(DATA_GPKG)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
@@ -1016,12 +846,7 @@ def export_tablas_hijas():
         for row in cursor.fetchall():
             item = {all_cols[i]: row[i] for i in range(len(all_cols)) if all_cols[i] not in ('geom','fid_1') and row[i] is not None}
             if item:
-                # Unificación virtual: reasociar ficha_id a la Ficha Madre
-                f_id = item.get('ficha_id')
-                if f_id in FICHA_REDIRECT_MAP:
-                    item['ficha_id'] = FICHA_REDIRECT_MAP[f_id]
-                
-                # Regla de área con riego por defecto si está en 0
+                # Regla de área con riego por defecto si está en 0 (normalización de datos)
                 if output_name == 'predios_adicionales':
                     ar = item.get('area_riego_otro')
                     if not ar or ar == 0:
@@ -1030,15 +855,13 @@ def export_tablas_hijas():
                         item['area_sin_riego_otro'] = 0.0
 
                 data.append(item)
-        
-        # Si estamos exportando predios adicionales, inyectar los predios unificados virtuales
-        if output_name == 'predios_adicionales':
-            data.extend(VIRTUAL_PREDIOS_ADICIONALES)
-            
+
+        # NOTA: VIRTUAL_PREDIOS_ADICIONALES está vacío (unificación desactivada),
+        # por lo que no se inyectan registros adicionales.
         path = os.path.join(OUTPUT_DIR, f'{output_name}.json')
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"  ✓ {len(data)} {output_name} (incluyendo unificados virtuales: {output_name == 'predios_adicionales'})")
+        print(f"  ✓ {len(data)} {output_name} exportados desde QField (datos crudos)")
     conn.close()
 
 # ══════════════════════════════════════════════════════════════

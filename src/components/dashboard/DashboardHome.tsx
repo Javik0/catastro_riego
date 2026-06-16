@@ -148,54 +148,29 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   const filteredPrediosAdicionales = prediosAdicionalesData.filter((pa: any) => filteredFichaIds.has(pa.ficha_id));
   const totalAnimales = filteredAnimales.reduce((acc: number, a: any) => acc + (Number(a.cantidad) || 0), 0);
 
-  // Procesar predios unificados para asociar las fichas secundarias al técnico correspondiente
-  const unificadosPorTecnico: Record<string, number> = {};
-  const prediosUnificados = filteredPrediosAdicionales.filter((pa: any) => 
-    pa.observaciones_otro?.includes('Unificación automática') ||
-    pa.observaciones_otro?.includes('Unificación física')
-  );
-
-  prediosUnificados.forEach((pa: any) => {
-    const match = pa.observaciones_otro?.match(/Técnico:\s*(.*?)\s*en/);
-    const tec = match ? match[1].trim() : 'Sin técnico';
-    unificadosPorTecnico[tec] = (unificadosPorTecnico[tec] || 0) + 1;
-  });
-
   // Claves catastrales principales activas
   const clavesPrincipales = new Set(fichas.map(f => (f.clave_catastral || '').trim()).filter(Boolean));
 
-  // Claves catastrales unificadas (físicas) activas
-  const clavesUnificadas = new Set(prediosUnificados.map((p: any) => (p.clave_catastral_otro || '').trim()).filter(Boolean));
-
-  // Claves declaradas verbalmente únicas (sin duplicación de clave catastral)
+  // Claves declaradas verbalmente únicas (otros predios del regante sin encuesta propia)
   const clavesDeclaradasUnicas = new Set(
     filteredPrediosAdicionales
-      .filter((pa: any) => 
-        !pa.observaciones_otro?.includes('Unificación automática') &&
-        !pa.observaciones_otro?.includes('Unificación física')
-      )
       .map((pa: any) => (pa.clave_catastral_otro || '').trim())
       .filter(Boolean)
   );
 
   // Filtrar para obtener solo las "Adicionales Puras" (claves únicas sin encuesta de ningún tipo)
-  const clavesDeclaradasPuras = Array.from(clavesDeclaradasUnicas).filter(k => 
-    !clavesPrincipales.has(k) && !clavesUnificadas.has(k)
+  const clavesDeclaradasPuras = Array.from(clavesDeclaradasUnicas).filter(k =>
+    !clavesPrincipales.has(k)
   );
 
   const totalDeclaradosPuros = clavesDeclaradasPuras.length;
 
   const fichasPorTecnico = Object.entries(stats.fichasPorTecnico)
-    .map(([nombre, principales]) => {
-      const unificadas = unificadosPorTecnico[nombre] || 0;
-      return {
-        nombre,
-        principales,
-        unificadas,
-        total: principales + unificadas,
-      };
-    })
-    .sort((a, b) => b.total - a.total);
+    .map(([nombre, principales]) => ({
+      nombre,
+      principales,
+    }))
+    .sort((a, b) => b.principales - a.principales);
 
   const metodoRiego = [
     { name: 'Aspersión', value: stats.metodoRiego.aspersion, color: '#3b82f6' },
@@ -270,9 +245,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         <KPICard 
           icon={ClipboardList} 
           label="Fichas Levantadas" 
-          value={stats.totalFichas + prediosUnificados.length} 
+          value={stats.totalFichas} 
           color="#3b82f6" 
-          sub={`${stats.totalFichas.toLocaleString('es-EC')} principales + ${prediosUnificados.length} unificadas`}
+          sub={`Total de fichas registradas en el catastro`}
         />
         <KPICard 
           icon={MapPin} 
@@ -309,17 +284,10 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 itemStyle={{ color: 'var(--text-primary)' }}
                 labelStyle={{ color: 'var(--text-primary)' }}
               />
-              <Bar dataKey="principales" name="Fichas Principales" stackId="a">
+              <Bar dataKey="principales" name="Fichas Investigadas" radius={[0, 4, 4, 0]}>
                 {fichasPorTecnico.map((entry, index) => {
                   const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
                   return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
-                })}
-              </Bar>
-              <Bar dataKey="unificadas" name="Fichas Unificadas (Predios Adic.)" stackId="a" radius={[0, 4, 4, 0]}>
-                {fichasPorTecnico.map((entry, index) => {
-                  const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
-                  const color = tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length];
-                  return <Cell key={index} fill={`${color}80`} />; // Color con 50% de opacidad para diferenciar las fichas unificadas
                 })}
               </Bar>
             </BarChart>
