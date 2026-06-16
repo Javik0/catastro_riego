@@ -392,7 +392,7 @@ def main():
         dia = get_dia(fecha_creacion)
         
         # 1. Determinar comunidad inicial limpia
-        com_orig = (f.get('comunidad') or '').replace('LARCACOHA', 'LARCACHACA').replace('None', '').strip()
+        com_orig = (f.get('comunidad') or '').replace('LARCACOHA', 'LARCACHACA').replace('LARCACOCHA', 'LARCACHACA').replace('None', '').strip()
         if not com_orig:
             com_orig = derivar_comunidad(f.get('sector_comunidad'))
             

@@ -534,10 +534,11 @@ def export_fichas():
                 cambios_detalles.append(f"método riego -> asp:{val_m[0]}% grav:{val_m[1]}% got:{val_m[2]}%")
                 cambio = True
         
-        # Corrección explícita del nombre de comunidad para fichas que vinieron con LARCACOHA
-        if props.get('comunidad') == 'LARCACOHA':
+        # Corrección explícita del nombre de comunidad para fichas que vinieron con LARCACOHA o LARCACOCHA
+        if props.get('comunidad') in ('LARCACOHA', 'LARCACOCHA'):
+            old_val = props.get('comunidad')
             props['comunidad'] = 'LARCACHACA'
-            cambios_detalles.append("comunidad: LARCACOHA -> LARCACHACA")
+            cambios_detalles.append(f"comunidad: {old_val} -> LARCACHACA")
             cambio = True
         
         # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego
