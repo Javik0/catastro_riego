@@ -1,10 +1,10 @@
 {
   "resumen": {
-    "totalFichasOriginales": 2634,
+    "totalFichasOriginales": 3007,
     "totalRegantesUnicosDuplicados": 0,
     "totalFichasDuplicadas": 0,
     "fichasRedundantesReducidas": 0,
-    "totalFichasUnificadas": 2634,
+    "totalFichasUnificadas": 3007,
     "porcentajeReduccion": 0
   },
   "regantesUnificados": []

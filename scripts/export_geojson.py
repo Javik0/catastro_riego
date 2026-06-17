@@ -30,6 +30,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 QFIELD_DIR = r'C:\Users\HP\QField\cloud\porotog_levantamiento_offline'
 DATA_GPKG      = os.path.join(QFIELD_DIR, 'data.gpkg')
 CATASTRO_GPKG  = os.path.join(QFIELD_DIR, 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO.gpkg')
+CATASTRO_URBANO_GPKG = os.path.join(QFIELD_DIR, 'CATASTROURBANOUNIDO.gpkg')
 PARROQUIAS_GPKG = os.path.join(QFIELD_DIR, 'PARROQUIAS.gpkg')
 RAMALES_GPKG   = os.path.join(QFIELD_DIR, 'RamalesGuanguiquiPorotog.gpkg')
 
@@ -610,46 +611,88 @@ def export_catastro(fichas_features):
             if c: claves.add(c)
     print(f"  Claves con fichas: {len(claves)}")
 
-    conn = sqlite3.connect(CATASTRO_GPKG)
-    cursor = conn.cursor()
-    table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
-
-    cursor.execute(f'PRAGMA table_info("{table}")')
-    cols = [c[1] for c in cursor.fetchall()]
-    geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
-    if not geom_col:
-        print("  ❌ No se encontró columna de geometría"); conn.close(); return
-
-    if claves:
-        placeholders = ','.join('?' * len(claves))
-        cursor.execute(
-            f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
-            f'FROM "{table}" WHERE clave_cata IN ({placeholders})',
-            list(claves)
-        )
-    else:
-        cursor.execute(
-            f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
-            f'FROM "{table}" LIMIT 600'
-        )
-    rows = cursor.fetchall()
     features = []
     ok, skip = 0, 0
-    for row in rows:
-        fid, clave, area, ape, nom, ced, com, blob = row
-        geom = parse_geometry(blob)
-        if geom:
-            ok += 1
-        else:
-            skip += 1
-        features.append({'type':'Feature','properties':{
-            'fid': fid, 'clave_cata': clave, 'area_predi': area,
-            'apellidos': ape, 'nombres': nom, 'cedula': ced, 'comunidad': com
-        },'geometry': geom})
+
+    # --- 1. CATASTRO RURAL ---
+    if os.path.exists(CATASTRO_GPKG):
+        conn = sqlite3.connect(CATASTRO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            if claves:
+                placeholders = ','.join('?' * len(claves))
+                cursor.execute(
+                    f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
+                    f'FROM "{table}" WHERE clave_cata IN ({placeholders})',
+                    list(claves)
+                )
+            else:
+                cursor.execute(
+                    f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
+                    f'FROM "{table}" LIMIT 600'
+                )
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, clave, area, ape, nom, ced, com, blob = row
+                geom = parse_geometry(blob)
+                if geom:
+                    ok += 1
+                else:
+                    skip += 1
+                features.append({'type':'Feature','properties':{
+                    'fid': fid, 'clave_cata': clave, 'area_predi': area,
+                    'apellidos': ape, 'nombres': nom, 'cedula': ced, 'comunidad': com
+                },'geometry': geom})
+        conn.close()
+
+    # --- 2. CATASTRO URBANO ---
+    if os.path.exists(CATASTRO_URBANO_GPKG):
+        conn = sqlite3.connect(CATASTRO_URBANO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROURBANOUNIDO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            if claves:
+                placeholders = ','.join('?' * len(claves))
+                cursor.execute(
+                    f'SELECT fid, pre_codigo, pre_area_t, REPORTE_UN, "{geom_col}" '
+                    f'FROM "{table}" WHERE pre_codigo IN ({placeholders})',
+                    list(claves)
+                )
+            else:
+                cursor.execute(
+                    f'SELECT fid, pre_codigo, pre_area_t, REPORTE_UN, "{geom_col}" '
+                    f'FROM "{table}" LIMIT 200'
+                )
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, clave, area, name_full, blob = row
+                geom = parse_geometry(blob)
+                if geom:
+                    ok += 1
+                else:
+                    skip += 1
+                features.append({'type':'Feature','properties':{
+                    'fid': fid + 1000000, 
+                    'clave_cata': clave, 
+                    'area_predi': area,
+                    'apellidos': name_full, 
+                    'nombres': '', 
+                    'cedula': '', 
+                    'comunidad': ''
+                },'geometry': geom})
+        conn.close()
 
     _save(features, 'catastro_geo.geojson')
-    print(f"  ✓ {ok} polígonos con geometría, {skip} sin geometría → catastro_geo.geojson")
-    conn.close()
+    print(f"  ✓ {ok} polígonos unificados con geometría, {skip} sin geometría → catastro_geo.geojson")
 
 
 # ══════════════════════════════════════════════════════════════
@@ -682,42 +725,81 @@ def _calc_centroid(geom):
 def export_catastro_busqueda():
     """Exporta TODOS los predios catastrales como índice de búsqueda ligero (sin geometría, solo centroide)."""
     print("\n🔍 Exportando índice de búsqueda catastral (TODOS los predios)...")
-    conn = sqlite3.connect(CATASTRO_GPKG)
-    cursor = conn.cursor()
-    table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
-
-    cursor.execute(f'PRAGMA table_info("{table}")')
-    cols = [c[1] for c in cursor.fetchall()]
-    geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
-    if not geom_col:
-        print("  ❌ No se encontró columna de geometría"); conn.close(); return
-
-    cursor.execute(
-        f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
-        f'FROM "{table}"'
-    )
-    rows = cursor.fetchall()
+    
     registros = []
     ok, skip = 0, 0
-    for row in rows:
-        fid, clave, area, ape, nom, ced, com, blob = row
-        geom = parse_geometry(blob)
-        lat, lng = _calc_centroid(geom)
-        if lat is not None:
-            ok += 1
-        else:
-            skip += 1
-        registros.append({
-            'fid': fid,
-            'clave_cata': clave or '',
-            'area_predi': round(area, 2) if area else 0,
-            'apellidos': ape or '',
-            'nombres': nom or '',
-            'cedula': ced or '',
-            'comunidad': com or '',
-            'lat': lat,
-            'lng': lng,
-        })
+
+    # --- 1. RURAL ---
+    if os.path.exists(CATASTRO_GPKG):
+        conn = sqlite3.connect(CATASTRO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            cursor.execute(
+                f'SELECT fid, clave_cata, area_predi, CATASTRO_U, CATASTRO_1, CATASTRO_2, CATASTRO_4, "{geom_col}" '
+                f'FROM "{table}"'
+            )
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, clave, area, ape, nom, ced, com, blob = row
+                geom = parse_geometry(blob)
+                lat, lng = _calc_centroid(geom)
+                if lat is not None:
+                    ok += 1
+                else:
+                    skip += 1
+                registros.append({
+                    'fid': fid,
+                    'clave_cata': clave or '',
+                    'area_predi': round(area, 2) if area else 0,
+                    'apellidos': ape or '',
+                    'nombres': nom or '',
+                    'cedula': ced or '',
+                    'comunidad': com or '',
+                    'lat': lat,
+                    'lng': lng,
+                })
+        conn.close()
+
+    # --- 2. URBANO ---
+    if os.path.exists(CATASTRO_URBANO_GPKG):
+        conn = sqlite3.connect(CATASTRO_URBANO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROURBANOUNIDO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            cursor.execute(
+                f'SELECT fid, pre_codigo, pre_area_t, REPORTE_UN, "{geom_col}" '
+                f'FROM "{table}"'
+            )
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, clave, area, name_full, blob = row
+                geom = parse_geometry(blob)
+                lat, lng = _calc_centroid(geom)
+                if lat is not None:
+                    ok += 1
+                else:
+                    skip += 1
+                registros.append({
+                    'fid': fid + 1000000,
+                    'clave_cata': clave or '',
+                    'area_predi': round(area, 2) if area else 0,
+                    'apellidos': name_full or '',
+                    'nombres': '',
+                    'cedula': '',
+                    'comunidad': '',
+                    'lat': lat,
+                    'lng': lng,
+                })
+        conn.close()
 
     path = os.path.join(OUTPUT_DIR, 'catastro_busqueda.json')
     with open(path, 'w', encoding='utf-8') as f:
@@ -725,7 +807,6 @@ def export_catastro_busqueda():
     size_kb = os.path.getsize(path) / 1024
     print(f"  💾 catastro_busqueda.json ({size_kb:.0f} KB)")
     print(f"  ✓ {ok} predios con centroide, {skip} sin coordenadas → catastro_busqueda.json")
-    conn.close()
 
 
 # ══════════════════════════════════════════════════════════════
@@ -747,29 +828,54 @@ def export_catastro_poligonos():
     Coordenadas redondeadas a 5 decimales (~1.1m precisión) para reducir tamaño.
     """
     print("\n🗺️  Exportando polígonos catastrales (TODOS, para búsqueda visual)...")
-    conn = sqlite3.connect(CATASTRO_GPKG)
-    cursor = conn.cursor()
-    table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
-
-    cursor.execute(f'PRAGMA table_info("{table}")')
-    cols = [c[1] for c in cursor.fetchall()]
-    geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
-    if not geom_col:
-        print("  ❌ No se encontró columna de geometría"); conn.close(); return
-
-    cursor.execute(f'SELECT fid, "{geom_col}" FROM "{table}"')
-    rows = cursor.fetchall()
     poligonos = {}
     ok, skip = 0, 0
-    for row in rows:
-        fid, blob = row
-        geom = parse_geometry(blob)
-        if geom and geom.get('coordinates'):
-            geom['coordinates'] = _round_coords(geom['coordinates'])
-            poligonos[str(fid)] = geom
-            ok += 1
-        else:
-            skip += 1
+
+    # --- 1. RURAL ---
+    if os.path.exists(CATASTRO_GPKG):
+        conn = sqlite3.connect(CATASTRO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            cursor.execute(f'SELECT fid, "{geom_col}" FROM "{table}"')
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, blob = row
+                geom = parse_geometry(blob)
+                if geom and geom.get('coordinates'):
+                    geom['coordinates'] = _round_coords(geom['coordinates'])
+                    poligonos[str(fid)] = geom
+                    ok += 1
+                else:
+                    skip += 1
+        conn.close()
+
+    # --- 2. URBANO ---
+    if os.path.exists(CATASTRO_URBANO_GPKG):
+        conn = sqlite3.connect(CATASTRO_URBANO_GPKG)
+        cursor = conn.cursor()
+        table = 'CATASTROURBANOUNIDO'
+        
+        cursor.execute(f'PRAGMA table_info("{table}")')
+        cols = [c[1] for c in cursor.fetchall()]
+        geom_col = next((c for c in cols if c.lower() in ('geom','geometry','shape')), None)
+        if geom_col:
+            cursor.execute(f'SELECT fid, "{geom_col}" FROM "{table}"')
+            rows = cursor.fetchall()
+            for row in rows:
+                fid, blob = row
+                geom = parse_geometry(blob)
+                if geom and geom.get('coordinates'):
+                    geom['coordinates'] = _round_coords(geom['coordinates'])
+                    poligonos[str(fid + 1000000)] = geom
+                    ok += 1
+                else:
+                    skip += 1
+        conn.close()
 
     path = os.path.join(OUTPUT_DIR, 'catastro_poligonos.json')
     with open(path, 'w', encoding='utf-8') as f:
@@ -779,7 +885,6 @@ def export_catastro_poligonos():
     print(f"  💾 catastro_poligonos.json ({size_mb:.1f} MB)")
     print(f"  ✓ {ok} polígonos exportados, {skip} sin geometría")
     print(f"  ℹ  Firebase Hosting sirve gzip (~{size_mb*0.15:.1f} MB transferido)")
-    conn.close()
 
 # ══════════════════════════════════════════════════════════════
 # 3. Ramales de Riego (líneas)
