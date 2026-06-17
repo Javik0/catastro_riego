@@ -360,14 +360,17 @@ def export_fichas():
         ("COMUNA POROTOG", "COMUNA POROTOG"),
         # CORDILLERAS DE LOS ANDES
         ("CORDILLERAS", "CORDILLERAS DE LOS ANDES"),
-        # COMUNA INSACATA
-        ("COMUNA INSACATA", "COMUNA INSACATA"),
-        ("IZACATA", "COMUNA INSACATA"),
-        ("INSACATA", "COMUNA INSACATA"),
-        # INSACATA GRANDE
-        ("INSACATA GRANDE", "INSACATA GRANDE"),
-        # LOS ANDES INSACATA
-        ("LOS ANDES INSACATA", "LOS ANDES INSACATA"),
+        # COMUNA IZACATA
+        ("COMUNA IZACATA", "COMUNA IZACATA"),
+        ("COMUNA INSACATA", "COMUNA IZACATA"),
+        ("IZACATA", "COMUNA IZACATA"),
+        ("INSACATA", "COMUNA IZACATA"),
+        # IZACATA GRANDE
+        ("IZACATA GRANDE", "IZACATA GRANDE"),
+        ("INSACATA GRANDE", "IZACATA GRANDE"),
+        # LOS ANDES IZACATA
+        ("LOS ANDES IZACATA", "LOS ANDES IZACATA"),
+        ("LOS ANDES INSACATA", "LOS ANDES IZACATA"),
         # LOMA GORDA
         ("LOMA GORDA", "LOMA GORDA"),
         # SAN JACINTO
@@ -540,6 +543,20 @@ def export_fichas():
             old_val = props.get('comunidad')
             props['comunidad'] = 'LARCACHACA'
             cambios_detalles.append(f"comunidad: {old_val} -> LARCACHACA")
+            cambio = True
+
+        # Corrección explícita del nombre de comunidad para fichas que vinieron con INSACATA (se pasa a IZACATA con Z)
+        if props.get('comunidad') == 'COMUNA INSACATA':
+            props['comunidad'] = 'COMUNA IZACATA'
+            cambios_detalles.append("comunidad: COMUNA INSACATA -> COMUNA IZACATA")
+            cambio = True
+        elif props.get('comunidad') == 'INSACATA GRANDE':
+            props['comunidad'] = 'IZACATA GRANDE'
+            cambios_detalles.append("comunidad: INSACATA GRANDE -> IZACATA GRANDE")
+            cambio = True
+        elif props.get('comunidad') == 'LOS ANDES INSACATA':
+            props['comunidad'] = 'LOS ANDES IZACATA'
+            cambios_detalles.append("comunidad: LOS ANDES INSACATA -> LOS ANDES IZACATA")
             cambio = True
         
         # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego

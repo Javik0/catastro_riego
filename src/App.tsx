@@ -28,7 +28,8 @@ function useLocalData() {
   useEffect(() => {
     async function load() {
       try {
-        const fichasRes = await fetch('/geo/fichas_predios.geojson');
+        const timestamp = Date.now();
+        const fichasRes = await fetch(`/geo/fichas_predios.geojson?t=${timestamp}`);
         const fichasGeo = await fichasRes.json();
         const fichasData: FichaPredio[] = fichasGeo.features.map((f: any) => {
           let com = (f.properties.comunidad || '')
@@ -116,23 +117,23 @@ function useLocalData() {
             cedula: f.properties.cedula || '',
             codigo_final: f.properties.codigo_final || '',
             cod_poligono: f.properties.cod_poligono || '',
-          num_predio: f.properties.num_predio || 0,
-          apellidos: f.properties.apellidos || '',
-          nombres: f.properties.nombres || '',
-          clave_catastral: f.properties.clave_catastral || '',
-          tenencia_predio: f.properties.tenencia_predio || '',
-          nivel_instruccion: f.properties.nivel_instruccion || '',
+            num_predio: f.properties.num_predio || 0,
+            apellidos: f.properties.apellidos || '',
+            nombres: f.properties.nombres || '',
+            clave_catastral: f.properties.clave_catastral || '',
+            tenencia_predio: f.properties.tenencia_predio || '',
+            nivel_instruccion: f.properties.nivel_instruccion || '',
           };
         });
         setFichas(fichasData);
 
-        const cultRes = await fetch('/geo/cultivos.json');
+        const cultRes = await fetch(`/geo/cultivos.json?t=${timestamp}`);
         setCultivosData(await cultRes.json());
 
-        const animRes = await fetch('/geo/animales.json');
+        const animRes = await fetch(`/geo/animales.json?t=${timestamp}`);
         setAnimalesData(await animRes.json());
 
-        const predRes = await fetch('/geo/predios_adicionales.json');
+        const predRes = await fetch(`/geo/predios_adicionales.json?t=${timestamp}`);
         setPrediosAdicionalesData(await predRes.json());
       } catch (err) {
         console.error('Error loading data:', err);
