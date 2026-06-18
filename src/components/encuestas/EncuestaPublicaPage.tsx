@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { submitEncuestaPublica } from '../../lib/firestoreService';
-import { COMUNIDADES, NIVELES_INSTRUCCION, TIPOS_CULTIVO, ESPECIES_ANIMALES, MATERIALES_CONSTRUCCION, PROJECT_SUBTITLE, LOGO_PICHINCHA, LOGO_CONSORCIO } from '../../lib/constants';
+import { NIVELES_INSTRUCCION, TIPOS_CULTIVO, ESPECIES_ANIMALES, MATERIALES_CONSTRUCCION, PROJECT_SUBTITLE, LOGO_PICHINCHA, LOGO_CONSORCIO, PARROQUIAS, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
 import { 
   User, Home, Sprout, Map, 
   ArrowRight, ArrowLeft, Plus, Trash2, CheckCircle2, AlertCircle, Loader2
@@ -18,6 +18,13 @@ export default function EncuestaPublicaPage() {
   const [cedula, setCedula] = useState('');
   const [telefono, setTelefono] = useState('');
   const [comunidad, setComunidad] = useState('');
+  const [parroquia, setParroquia] = useState('');
+  const [sectorInv, setSectorInv] = useState('');
+  const [areaRiego, setAreaRiego] = useState<number | ''>('');
+  const [tieneReservorio, setTieneReservorio] = useState('No');
+  const [metodoGravedad, setMetodoGravedad] = useState(0);
+  const [metodoAspersion, setMetodoAspersion] = useState(0);
+  const [metodoGoteo, setMetodoGoteo] = useState(0);
   const [hijosHombres, setHijosHombres] = useState(0);
   const [hijosMujeres, setHijosMujeres] = useState(0);
   const [tenencia, setTenencia] = useState('Escritura');
@@ -129,8 +136,20 @@ export default function EncuestaPublicaPage() {
     if (!nombres.trim()) return 'Por favor escriba sus Nombres';
     if (!apellidos.trim()) return 'Por favor escriba sus Apellidos';
     if (!cedula.trim() || cedula.length !== 10) return 'La Cédula de Identidad debe tener 10 números';
+    if (!sectorInv) return 'Por favor seleccione su Sector de Investigación';
     if (!comunidad) return 'Por favor seleccione su Comunidad';
+    if (!parroquia) return 'Por favor seleccione su Parroquia';
     if (!telefono.trim() || telefono.length < 9) return 'Por favor ingrese un número de teléfono celular válido';
+    
+    // Validación de Riego y sus porcentajes
+    const totalMetodos = (metodoGravedad || 0) + (metodoAspersion || 0) + (metodoGoteo || 0);
+    const hasRiego = areaRiego !== '' && parseFloat(String(areaRiego)) > 0;
+    if (hasRiego && totalMetodos !== 100) {
+      return 'Los porcentajes de Métodos de Riego (Gravedad, Aspersión y Goteo) deben sumar exactamente 100% si ingresó un Área con Riego.';
+    }
+    if (!hasRiego && totalMetodos > 0) {
+      return 'Si ingresó porcentajes de métodos de riego, debe ingresar un Área con Riego mayor a 0 m².';
+    }
     return null;
   };
 
@@ -161,12 +180,20 @@ export default function EncuestaPublicaPage() {
         cedula: cedula.trim(),
         telefono_celular: telefono.trim(),
         comunidad,
+        parroquia,
+        sector_investigacion: sectorInv,
         hijos_hombres: hijosHombres,
         hijos_mujeres: hijosMujeres,
         tenencia_predio: tenencia,
         nivel_instruccion: nivelInstruccion,
         tiene_construccion: tieneConstruccion,
         clave_catastral: claveCatastral.trim(),
+        
+        area_riego: areaRiego !== '' ? parseFloat(String(areaRiego)) : 0,
+        tiene_reservorio: tieneReservorio,
+        metodo_gravedad_pct: metodoGravedad || 0,
+        metodo_aspersion_pct: metodoAspersion || 0,
+        metodo_goteo_pct: metodoGoteo || 0,
         
         // Pestaña 3 (solo si tiene construcción)
         agua_consumo: tieneConstruccion ? aguaConsumo : false,
@@ -220,6 +247,13 @@ export default function EncuestaPublicaPage() {
               setCedula('');
               setTelefono('');
               setComunidad('');
+              setParroquia('');
+              setSectorInv('');
+              setAreaRiego('');
+              setTieneReservorio('No');
+              setMetodoGravedad(0);
+              setMetodoAspersion(0);
+              setMetodoGoteo(0);
               setHijosHombres(0);
               setHijosMujeres(0);
               setTenencia('Escritura');
@@ -361,28 +395,64 @@ export default function EncuestaPublicaPage() {
                   </div>
                 </div>
 
+                <div>
+                  <label className="block text-[11px] text-slate-400 font-medium mb-1.5">Sector de Investigación *</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {['Sector 1', 'Sector 2', 'Sector 3'].map((sec) => (
+                      <button
+                        key={sec}
+                        type="button"
+                        onClick={() => {
+                          setSectorInv(sec);
+                          setComunidad(''); // Limpiar comunidad al cambiar de sector
+                        }}
+                        className={`py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                          sectorInv === sec 
+                            ? 'bg-blue-600/20 text-blue-300 border-blue-500 shadow-md ring-2 ring-blue-500/20' 
+                            : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900'
+                        }`}
+                      >
+                        {sec}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-[11px] text-slate-400 font-medium mb-1">Comunidad a la que pertenece *</label>
                     <select 
                       value={comunidad}
                       onChange={(e) => setComunidad(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors cursor-pointer"
+                      disabled={!sectorInv}
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <option value="">Seleccione su comunidad</option>
-                      {COMUNIDADES.map(c => <option key={c} value={c}>{c}</option>)}
+                      <option value="">{sectorInv ? 'Seleccione su comunidad' : 'Seleccione primero su sector'}</option>
+                      {sectorInv && (COMUNIDADES_POR_SECTOR[sectorInv] || []).map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[11px] text-slate-400 font-medium mb-1">Teléfono Celular *</label>
-                    <input 
-                      type="text" 
-                      value={telefono}
-                      onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ''))}
-                      placeholder="Ej: 0991234567"
-                      className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors"
-                    />
+                    <label className="block text-[11px] text-slate-400 font-medium mb-1">Parroquia *</label>
+                    <select 
+                      value={parroquia}
+                      onChange={(e) => setParroquia(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors cursor-pointer"
+                    >
+                      <option value="">Seleccione su parroquia</option>
+                      {PARROQUIAS.map(p => <option key={p} value={p}>{p}</option>)}
+                    </select>
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] text-slate-400 font-medium mb-1">Teléfono Celular *</label>
+                  <input 
+                    type="text" 
+                    value={telefono}
+                    onChange={(e) => setTelefono(e.target.value.replace(/\D/g, ''))}
+                    placeholder="Ej: 0991234567"
+                    className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors"
+                  />
                 </div>
 
                 <div className="border-t border-slate-800/60 pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -406,6 +476,47 @@ export default function EncuestaPublicaPage() {
                     </div>
                   </div>
                   <div>
+                    <label className="block text-[11px] text-slate-400 font-medium mb-1">Área con Riego (m²)</label>
+                    <input 
+                      type="number" 
+                      min={0}
+                      value={areaRiego}
+                      onChange={(e) => {
+                        const val = e.target.value === '' ? '' : parseFloat(e.target.value);
+                        setAreaRiego(val);
+                        if (val === '' || val <= 0) {
+                          setMetodoGravedad(0);
+                          setMetodoAspersion(0);
+                          setMetodoGoteo(0);
+                        }
+                      }}
+                      placeholder="Ej: 1500"
+                      className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] text-slate-400 font-medium mb-1">¿Tiene Reservorio?</label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['No', 'Privado', 'Comunitario'].map((opt) => (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => setTieneReservorio(opt)}
+                          className={`py-2 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                            tieneReservorio === opt 
+                              ? 'bg-blue-600/20 text-blue-300 border-blue-500' 
+                              : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-900'
+                          }`}
+                        >
+                          {opt === 'No' ? 'NO' : opt === 'Privado' ? 'Privado' : 'Comunidad'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
                     <label className="block text-[11px] text-slate-400 font-medium mb-1">Nivel de Instrucción Escolar</label>
                     <select 
                       value={nivelInstruccion}
@@ -416,6 +527,47 @@ export default function EncuestaPublicaPage() {
                     </select>
                   </div>
                 </div>
+
+                {areaRiego !== '' && parseFloat(String(areaRiego)) > 0 && (
+                  <div className="border-t border-slate-800/60 pt-4 animate-fadeIn">
+                    <label className="block text-[11px] text-slate-400 font-medium mb-2">Método de Riego (%) — Debe sumar 100%</label>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div>
+                        <span className="text-[10px] text-slate-500 block mb-1">Gravedad %</span>
+                        <input 
+                          type="number" 
+                          min={0}
+                          max={100}
+                          value={metodoGravedad}
+                          onChange={(e) => setMetodoGravedad(Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-center focus:outline-none transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-500 block mb-1">Aspersión %</span>
+                        <input 
+                          type="number" 
+                          min={0}
+                          max={100}
+                          value={metodoAspersion}
+                          onChange={(e) => setMetodoAspersion(Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-center focus:outline-none transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-500 block mb-1">Goteo %</span>
+                        <input 
+                          type="number" 
+                          min={0}
+                          max={100}
+                          value={metodoGoteo}
+                          onChange={(e) => setMetodoGoteo(Math.min(100, Math.max(0, parseInt(e.target.value) || 0)))}
+                          className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-1.5 text-xs text-center focus:outline-none transition-colors"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="border-t border-slate-800/60 pt-4 space-y-5">
                   <div>

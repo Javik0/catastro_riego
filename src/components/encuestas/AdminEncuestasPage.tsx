@@ -437,8 +437,8 @@ export default function AdminEncuestasPage() {
                       </div>
                     </div>
 
-                    {/* Comunidad y Celular */}
-                    <div className="grid grid-cols-2 gap-2">
+                    {/* Comunidad, Sector Inv y Parroquia */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                       <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
                           <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Comunidad</span>
@@ -452,6 +452,42 @@ export default function AdminEncuestasPage() {
                           {copySuccess['com'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
                       </div>
+
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
+                        <div className="min-w-0">
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Sector Inv.</span>
+                          <span className="font-semibold truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.sector_investigacion || 'Sin especificar'}</span>
+                        </div>
+                        {selectedEncuesta.sector_investigacion && (
+                          <button 
+                            onClick={() => handleCopy(selectedEncuesta.sector_investigacion, 'sec_inv')}
+                            className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
+                            {copySuccess['sec_inv'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
+                      </div>
+
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
+                        <div className="min-w-0">
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Parroquia</span>
+                          <span className="font-semibold truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.parroquia || 'Sin especificar'}</span>
+                        </div>
+                        {selectedEncuesta.parroquia && (
+                          <button 
+                            onClick={() => handleCopy(selectedEncuesta.parroquia, 'parr')}
+                            className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
+                            {copySuccess['parr'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Celular y Área de Riego */}
+                    <div className="grid grid-cols-2 gap-2">
                       <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
                         <div className="min-w-0">
                           <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Celular</span>
@@ -464,6 +500,35 @@ export default function AdminEncuestasPage() {
                         >
                           {copySuccess['tel'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                         </button>
+                      </div>
+
+                      <div className="p-2 rounded-lg border flex justify-between items-center shadow-sm" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
+                        <div className="min-w-0">
+                          <span className="text-[10px] block" style={{ color: 'var(--text-secondary)' }}>Área con Riego</span>
+                          <span className="font-mono truncate block" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.area_riego !== undefined ? `${selectedEncuesta.area_riego} m²` : '0 m²'}</span>
+                        </div>
+                        {selectedEncuesta.area_riego !== undefined && (
+                          <button 
+                            onClick={() => handleCopy(String(selectedEncuesta.area_riego), 'area_riego')}
+                            className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
+                            style={{ color: 'var(--text-secondary)' }}
+                          >
+                            {copySuccess['area_riego'] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Reservorio y Métodos de Riego */}
+                    <div className="p-2.5 rounded-lg border shadow-sm space-y-1.5" style={{ background: 'var(--bg-input)', borderColor: 'var(--border-color)' }}>
+                      <div className="flex justify-between border-b pb-1" style={{ borderColor: 'var(--border-color)' }}>
+                        <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Reservorio: <span className="font-bold" style={{ color: 'var(--text-primary)' }}>{selectedEncuesta.tiene_reservorio || 'No'}</span></span>
+                        <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Método de Riego:</span>
+                      </div>
+                      <div className="grid grid-cols-3 text-center text-[10px] font-semibold">
+                        <span style={{ color: selectedEncuesta.metodo_gravedad_pct ? 'var(--text-primary)' : 'var(--text-muted)' }}>Gravedad: {selectedEncuesta.metodo_gravedad_pct || 0}%</span>
+                        <span className="border-x" style={{ borderColor: 'var(--border-color)', color: selectedEncuesta.metodo_aspersion_pct ? 'var(--text-primary)' : 'var(--text-muted)' }}>Aspersión: {selectedEncuesta.metodo_aspersion_pct || 0}%</span>
+                        <span style={{ color: selectedEncuesta.metodo_goteo_pct ? 'var(--text-primary)' : 'var(--text-muted)' }}>Goteo: {selectedEncuesta.metodo_goteo_pct || 0}%</span>
                       </div>
                     </div>
 

@@ -1,4 +1,4 @@
-import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES } from '../../lib/constants';
+import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
@@ -109,8 +109,21 @@ export default function Header({ onMobileMenuOpen }: Props) {
           {PARROQUIAS.map((p) => <option key={p} value={p}>{p}</option>)}
         </select>
 
-        <select value={filtros.sectorInv} onChange={(e) => setFiltro('sectorInv', e.target.value)}
-          className={`${inputClass} min-w-[130px]`} style={inputStyle}>
+        <select 
+          value={filtros.sectorInv} 
+          onChange={(e) => {
+            const nuevoSec = e.target.value;
+            setFiltro('sectorInv', nuevoSec);
+            if (nuevoSec && filtros.comunidad) {
+              const pertenecientes = COMUNIDADES_POR_SECTOR[nuevoSec] || [];
+              if (!pertenecientes.includes(filtros.comunidad)) {
+                setFiltro('comunidad', '');
+              }
+            }
+          }}
+          className={`${inputClass} min-w-[130px]`} 
+          style={inputStyle}
+        >
           <option value="">Sector Inv.</option>
           <option value="Sector 1">Sector 1</option>
           <option value="Sector 2">Sector 2</option>
@@ -126,7 +139,10 @@ export default function Header({ onMobileMenuOpen }: Props) {
         <select value={filtros.comunidad} onChange={(e) => setFiltro('comunidad', e.target.value)}
           className={`${inputClass} min-w-[130px] hidden md:block`} style={inputStyle}>
           <option value="">Comunidad</option>
-          {COMUNIDADES.map((c) => <option key={c} value={c}>{c}</option>)}
+          {(filtros.sectorInv 
+            ? (COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []) 
+            : COMUNIDADES
+          ).map((c) => <option key={c} value={c}>{c}</option>)}
         </select>
 
         <select value={filtros.tecnico} onChange={(e) => setFiltro('tecnico', e.target.value)}

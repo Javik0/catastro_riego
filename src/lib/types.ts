@@ -195,12 +195,21 @@ export interface EncuestaPublica {
   apellidos: string;
   nombres: string;
   comunidad: string;
+  parroquia: string;
+  sector_investigacion: string;
   telefono_celular: string;
   hijos_hombres: number;
   hijos_mujeres: number;
   tenencia_predio: string;
   nivel_instruccion: string;
   tiene_construccion: boolean;
+  
+  // Riego y reservorio
+  area_riego?: number;
+  tiene_reservorio?: string;
+  metodo_gravedad_pct?: number;
+  metodo_aspersion_pct?: number;
+  metodo_goteo_pct?: number;
   
   // Respuestas Pestaña 3
   agua_consumo: boolean;

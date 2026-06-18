@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useFiltros } from '../../hooks/useFiltros';
 import {
   FileDown, FileSpreadsheet, FileText, Calendar,
   Users, MapPin, Filter, Loader2, BarChart3, Download,
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -23,10 +24,20 @@ interface Props {
 type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'auditoria';
 
 export default function ReportesPage({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
+  const { filtros } = useFiltros();
   const [reportType, setReportType] = useState<ReportType>('general');
   const [filterSector, setFilterSector] = useState('');
   const [filterParroquia, setFilterParroquia] = useState('');
   const [filterComunidad, setFilterComunidad] = useState('');
+
+  useEffect(() => {
+    if (filtros.sectorInv && filterComunidad) {
+      const pertenecientes = COMUNIDADES_POR_SECTOR[filtros.sectorInv] || [];
+      if (!pertenecientes.includes(filterComunidad)) {
+        setFilterComunidad('');
+      }
+    }
+  }, [filtros.sectorInv, filterComunidad]);
   const [filterTecnico, setFilterTecnico] = useState('');
   const [fechaDesde, setFechaDesde] = useState('');
   const [fechaHasta, setFechaHasta] = useState('');
@@ -546,8 +557,16 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               {reportType === 'comunidad' && (
                 <select value={filterComunidad} onChange={(e) => setFilterComunidad(e.target.value)}
                   className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
-                  <option value="">Todas las comunidades ({COMUNIDADES.length})</option>
-                  {COMUNIDADES.map((c) => <option key={c} value={c}>{c}</option>)}
+                  <option value="">
+                    {filtros.sectorInv 
+                      ? `Comunidades del ${filtros.sectorInv} (${(COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []).length})`
+                      : `Todas las comunidades (${COMUNIDADES.length})`
+                    }
+                  </option>
+                  {(filtros.sectorInv 
+                    ? (COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []) 
+                    : COMUNIDADES
+                  ).map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               )}
               {reportType === 'tecnico' && (
