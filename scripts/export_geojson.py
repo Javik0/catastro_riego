@@ -549,14 +549,25 @@ def export_fichas():
         if props.get('comunidad') == 'COMUNA INSACATA':
             props['comunidad'] = 'COMUNA IZACATA'
             cambios_detalles.append("comunidad: COMUNA INSACATA -> COMUNA IZACATA")
-            cambio = True
+            change_made = True
         elif props.get('comunidad') == 'INSACATA GRANDE':
             props['comunidad'] = 'IZACATA GRANDE'
             cambios_detalles.append("comunidad: INSACATA GRANDE -> IZACATA GRANDE")
-            cambio = True
+            change_made = True
         elif props.get('comunidad') == 'LOS ANDES INSACATA':
             props['comunidad'] = 'LOS ANDES IZACATA'
             cambios_detalles.append("comunidad: LOS ANDES INSACATA -> LOS ANDES IZACATA")
+            change_made = True
+
+        # Corrección explícita del nombre de comunidad para PANBAMAQUITO o PAMBAMAQUITO (se pasa a PAMBAMARQUITO)
+        if props.get('comunidad') in ('PANBAMAQUITO', 'PAMBAMAQUITO', 'PANBAMARQUITO'):
+            old_val = props.get('comunidad')
+            props['comunidad'] = 'PAMBAMARQUITO'
+            if old_val != 'PAMBAMARQUITO':
+                cambios_detalles.append(f"comunidad: {old_val} -> PAMBAMARQUITO")
+                cambio = True
+
+        if 'change_made' in locals() and change_made:
             cambio = True
         
         # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego

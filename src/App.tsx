@@ -37,6 +37,8 @@ function useLocalData() {
             .replace(/INSACATA/ig, 'IZACATA')
             .replace(/CARRERA-\s*ACEROLOMA/ig, 'CARRERA')
             .replace(/CACHICUNGA/ig, 'CARRERA')
+            .replace(/PANBAMAQUITO/ig, 'PAMBAMARQUITO')
+            .replace(/PAMBAMAQUITO/ig, 'PAMBAMARQUITO')
             .replace(/^None$/i, '')
             .trim();
           
