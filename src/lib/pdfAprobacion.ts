@@ -154,7 +154,7 @@ async function buildPDF() {
     ['Sector dentro la Comunidad', '', 'N° Predio', ''],
     ['Canal (Nombre)', '', 'Caudal (litros/segundo)', `_______ l/s   ${cb('Recibe la Comunidad')}   ${cb('Recibe individual')}`],
     ['Área Total (m2/Ha)', '', 'Área con Riego (m2/Ha)', ''],
-    ['Área sin Riego (m2/Ha)', '', 'Frecuencia de Riego', `${cb('Perm.')}   ${cb('Mens.')}   ${cb('Quin.')}   ${cb('Sem.')}`],
+    ['Área sin Riego (m2/Ha)', '', 'Frecuencia de Riego', `${cb('Perm.')}   ${cb('Mens.')}   ${cb('Quin.')}   ${cb('Sem.')}   ${cb('No tiene')}`],
     ['Método de Riego %', 'Gravedad:_______%    Asp:_______%    Goteo:_______%', 'N° Días / Horas Turno', 'Días: _______    Horas Turno: _______'],
     ['Valor Tarifa ($)', `$_________     ${cb('turno')}   ${cb('fijo mes')}   ${cb('fijo anual')}   ${cb('x Ha.')}`, '¿Tiene reservorio?', `${cb('Privado')}   ${cb('Comunitario')}   ${cb('No')}`],
   ], 120);

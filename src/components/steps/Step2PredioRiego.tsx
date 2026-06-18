@@ -161,6 +161,7 @@ export function Step2PredioRiego() {
               <option value="mensual">Mensual</option>
               <option value="quincenal">Quincenal</option>
               <option value="semanal">Semanal</option>
+              <option value="no tiene riego">No tiene riego</option>
             </select>
           </div>
           <div>

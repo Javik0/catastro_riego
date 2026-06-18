@@ -78,7 +78,7 @@ export const ESPECIES_ANIMALES = [
 
 // ── Frecuencia de riego ──
 export const FRECUENCIAS_RIEGO = [
-  'Permanente', 'Mensual', 'Quincenal', 'Semanal',
+  'Permanente', 'Mensual', 'Quincenal', 'Semanal', 'No tiene riego',
 ] as const;
 
 // ── Tipos de tarifa ──
