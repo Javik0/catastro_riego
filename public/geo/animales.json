@@ -59554,5 +59554,33 @@
     "cantidad": 20,
     "es_autoconsumo": 1,
     "es_mercado": 0
+  },
+  {
+    "id_animal": "{2f146470-a4c7-4200-9605-38ae2bcb1208}",
+    "ficha_id": "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c0ef7aee-5ad4-4d0d-9cfb-38bccbcb72a8}",
+    "ficha_id": "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}",
+    "especie": "Vacas secas",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{b32f0490-4c4c-4028-b736-b7e72a010036}",
+    "ficha_id": "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{878ce790-2a9f-41bc-8821-0fd77aee4cce}",
+    "ficha_id": "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}",
+    "especie": "Gallinas de campo",
+    "cantidad": 15,
+    "es_autoconsumo": 1
   }
 ]

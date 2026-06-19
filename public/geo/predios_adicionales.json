@@ -27152,11 +27152,11 @@
     "ficha_id": "{1ef62e4a-f736-4978-917d-2549d3384cee}",
     "clave_catastral_otro": "1702540100096",
     "area_total_otro": 834.91,
-    "area_riego_otro": 834.91,
-    "area_sin_riego_otro": -834.91,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 834.91,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Otón"
+    "observaciones_otro": "Sector: Otón",
+    "area_riego_otro": 834.91
   },
   {
     "fid": 2470,
@@ -29093,5 +29093,15 @@
     "area_riego_otro": 4008.99,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4008.99
+  },
+  {
+    "fid": 2645,
+    "id_adicional": "{1df5adef-280a-4d80-a95d-74246c71f997}",
+    "ficha_id": "{c715427c-4f57-4420-b415-c8e3d87b6981}",
+    "clave_catastral_otro": "1702510060069",
+    "area_total_otro": 1355.01,
+    "area_riego_otro": 1355.01,
+    "area_sin_riego_otro": -1355.01,
+    "area_lote_asignado_otro": 1355.01
   }
 ]

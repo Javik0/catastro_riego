@@ -61104,15 +61104,15 @@
   {
     "id_cultivo": "{e76d0001-2b24-4766-8a02-2cc77cae087d}",
     "ficha_id": "{fc99d95a-9aec-48fc-abce-81501cd5037d}",
-    "tipo_cultivo": "Monte",
-    "superficie_m2": 298.3,
+    "tipo_cultivo": "MONTE",
+    "superficie_m2": 100.0,
     "es_autoconsumo": 1,
     "ref_area_predio": 298.3
   },
   {
     "id_cultivo": "{ac2a2c8a-003b-41de-8346-0ebe971a88ef}",
     "ficha_id": "{febaf02c-3db8-4d9f-a57c-e5dd947cfa02}",
-    "tipo_cultivo": "Maíz",
+    "tipo_cultivo": "MAÍZ",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
     "ref_area_predio": 820.4
@@ -61930,5 +61930,48 @@
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
     "ref_area_predio": 1653.33
+  },
+  {
+    "id_cultivo": "{31eb4cb0-3773-4af5-bb6a-c8d8d2adfe77}",
+    "ficha_id": "{975dbaa6-2bfc-495d-9649-ee3b310b7e1e}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2017.07
+  },
+  {
+    "id_cultivo": "{46990e7e-e260-4aa0-8db2-f8dfd02f289c}",
+    "ficha_id": "{975dbaa6-2bfc-495d-9649-ee3b310b7e1e}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2017.07
+  },
+  {
+    "id_cultivo": "{29852503-a8bf-4152-9a6b-f5f4ff1b4e6f}",
+    "ficha_id": "{975dbaa6-2bfc-495d-9649-ee3b310b7e1e}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 150.0,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "ARVERJA",
+    "ref_area_predio": 2017.07
+  },
+  {
+    "id_cultivo": "{be6b984c-5bb8-4d84-98b3-34b7288712c3}",
+    "ficha_id": "{975dbaa6-2bfc-495d-9649-ee3b310b7e1e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1467.07,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2017.07
+  },
+  {
+    "id_cultivo": "{823f8183-eb6d-49b1-8d82-1ef0bc3d552a}",
+    "ficha_id": "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1702.86,
+    "ref_area_predio": 1702.86
   }
 ]
