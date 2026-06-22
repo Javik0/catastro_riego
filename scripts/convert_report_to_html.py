@@ -487,8 +487,15 @@ def main():
 
     with open(HTML_PATH, "w", encoding="utf-8") as f:
         f.write(html_template)
-    
     print(f"[OK] Convertido exitosamente a HTML autocontenido en: {HTML_PATH}")
+
+    # Guardar una copia en el directorio public/ de la app web para su despliegue
+    public_html_dir = os.path.join(BASE_DIR, "padron-app", "public")
+    if os.path.exists(public_html_dir):
+        public_html_path = os.path.join(public_html_dir, "informe_reunion_tecnica.html")
+        with open(public_html_path, "w", encoding="utf-8") as f:
+            f.write(html_template)
+        print(f"[OK] Copia para la web guardada en: {public_html_path}")
 
 if __name__ == "__main__":
     main()

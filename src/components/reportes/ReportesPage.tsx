@@ -21,7 +21,7 @@ interface Props {
   prediosAdicionalesData: PredioAdicional[];
   loading: boolean;
 }
-type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'auditoria';
+type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'ejecutivo' | 'auditoria';
 
 export default function ReportesPage({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
   const { filtros } = useFiltros();
@@ -301,6 +301,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         comunidad: `REPORTE POR COMUNIDAD: ${filterComunidad || 'TODAS'}`,
         tecnico: `REPORTE POR TÉCNICO: ${filterTecnico || 'TODOS'}`,
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
+        ejecutivo: 'INFORME TÉCNICO EJECUTIVO',
         auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
       };
       
@@ -458,6 +459,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
     { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${COMUNIDADES.length} comunidades`, color: '#ec4899' },
     { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
     { id: 'fecha' as const, label: 'Por Fecha', icon: Calendar, desc: 'Rango de fechas personalizado', color: '#8b5cf6' },
+    { id: 'ejecutivo' as const, label: 'Informe Ejecutivo', icon: FileText, desc: 'Informe técnico de avance y métricas', color: '#6366f1' },
     { id: 'auditoria' as const, label: 'Auditoría y Calidad', icon: CheckCircle2, desc: 'Control de duplicados y optimización', color: '#10b981' },
   ];
 
@@ -525,7 +527,45 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         ))}
       </div>
 
-      {reportType !== 'auditoria' ? (
+      {reportType === 'ejecutivo' ? (
+        <div className="space-y-6">
+          <div
+            className="rounded-xl border p-6 text-center max-w-2xl mx-auto"
+            style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}
+          >
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+              style={{ background: 'rgba(99,102,241,0.1)' }}>
+              <FileText className="w-7 h-7 text-indigo-400" />
+            </div>
+            
+            <h3 className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>
+              Informe Técnico Ejecutivo
+            </h3>
+            <p className="text-xs mt-2 max-w-md mx-auto" style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+              Este reporte consolida el estado actual del levantamiento catastral, la infraestructura de reservorios y métodos de riego, la fragmentación de tierras (minifundio) y la caracterización socio-productiva de las familias del SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG.
+            </p>
+
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={() => window.open('/informe_reunion_tecnica.html', '_blank')}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-semibold text-xs text-white bg-indigo-500 hover:bg-indigo-600 shadow-md hover:shadow-lg transition-all cursor-pointer"
+              >
+                <FileDown className="w-4 h-4" />
+                Visualizar e Imprimir Informe
+              </button>
+              
+              <a
+                href="/informe_reunion_tecnica.html"
+                download="informe_reunion_tecnica.html"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-lg font-semibold text-xs border hover:bg-slate-50 transition-all cursor-pointer"
+                style={{ color: 'var(--text-secondary)', borderColor: 'var(--border-color)' }}
+              >
+                Descargar Archivo HTML
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : reportType !== 'auditoria' ? (
         <>
           {/* Filters + Stats */}
           <div
