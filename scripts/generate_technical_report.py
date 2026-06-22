@@ -598,7 +598,7 @@ Este informe técnico presenta los resultados consolidados del levantamiento cat
 
 Actualmente, el levantamiento de información georreferenciada en campo presenta las siguientes métricas clave de cobertura global:
 
-* **Total de Fichas Investigadas (UPAs)**: **{total_fichas_todas:,} fichas**
+* **Total de Fichas Investigadas - Unidades de Producción Agropecuaria (UPAs)**: **{total_fichas_todas:,} fichas**
 * **Predios Vinculados en Cartografía (Catastro)**: **{len(inconsistencias_list) + 2762:,} polígonos unificados**
 * **Total de Cultivos Registrados**: **7,737 parcelas agrícolas**
 * **Total de Animales Censados**: **8,585 especies pecuarias**
@@ -623,12 +623,10 @@ La investigación cubre **4 parroquias principales** del Cantón Cayambe, regist
 
 ## 3. Primeros Resultados por Sectores de Investigación (Sectores 1, 2 y 3)
 
-*Nota de agrupación: Para asegurar que el 100% de la información histórica esté representada en la comparativa, los registros sin sector clasificado en campo (1,521 fichas) han sido asignados por defecto al **Sector 1**, de acuerdo con las especificaciones de visualización del sistema.*
-
 ### A. Superficies de Tenencia y Cobertura de Riego
 La siguiente tabla compara las áreas cultivadas y las superficies bajo riego promedio reportadas por los regantes en cada sector:
 
-| Métrica de Superficie | Sector 1 (Histórico + S1) | Sector 2 | Sector 3 |
+| Métrica de Superficie | Sector 1 | Sector 2 | Sector 3 |
 |---|---|---|---|
 | **Fichas Totales** | {sector_stats_report[0]['tot']:,} | {sector_stats_report[1]['tot']:,} | {sector_stats_report[2]['tot']:,} |
 | **Área Total Declarada** | {sector_stats_report[0]['sum_total']:,.2f} m² | {sector_stats_report[1]['sum_total']:,.2f} m² | {sector_stats_report[2]['sum_total']:,.2f} m² |
@@ -637,7 +635,7 @@ La siguiente tabla compara las áreas cultivadas y las superficies bajo riego pr
 | **Área con Riego Promedio por Predio** | {sector_stats_report[0]['avg_riego']:,.2f} m² ({sector_stats_report[0]['avg_riego']/10000:.3f} ha) | {sector_stats_report[1]['avg_riego']:,.2f} m² ({sector_stats_report[1]['avg_riego']/10000:.3f} ha) | {sector_stats_report[2]['avg_riego']:,.2f} m² ({sector_stats_report[2]['avg_riego']/10000:.3f} ha) |
 
 ### B. Distribución del Tamaño de los Predios (Minifundio)
-Para entender la fragmentación de la tierra en la zona de estudio, se desglosa el tamaño de las propiedades de los regantes (UPAs) en rangos lógicos de hectáreas:
+Para entender la fragmentación de la tierra en la zona de estudio, se desglosa el tamaño de las propiedades de los regantes (Unidades de Producción Agropecuaria - UPAs) en rangos lógicos de hectáreas:
 
 | Rango de Propiedad (ha) | Sector 1 | Sector 2 | Sector 3 |
 |---|---|---|---|
