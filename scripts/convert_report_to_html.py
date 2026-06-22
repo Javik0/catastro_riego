@@ -481,6 +481,18 @@ def main():
     <div class="report-wrapper">
         {body_html}
     </div>
+
+    <script>
+        // Auto-impresión si se solicita por parámetro en la URL (?print=true)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('print') === 'true') {{
+            window.addEventListener('load', () => {{
+                setTimeout(() => {{
+                    window.print();
+                }}, 800);
+            }});
+        }}
+    </script>
 </body>
 </html>
 """
