@@ -717,17 +717,6 @@ Analizando detalladamente la información del catastro y el censo socio-agrícol
 
 ---
 
-## 6. Proceso Interno de Control de Calidad y Depuración de Datos (ap&catastro)
-
-### A. Saneamiento de Inconsistencias de Áreas de Riego (Virtual Web)
-Se detectaron **{len(inconsistencias_list)} fichas** donde el área con riego superaba el área total declarada (lo que generaba áreas sin riego negativas en la web). 
-* **Acción Tomada**: Se implementó una corrección automática en caliente en el exportador de datos para forzar que `area_riego = area_total` y `area_sin_riego = 0.0` para estas fichas específicas. El dashboard web y este reporte presentan los datos depurados, eliminando los valores negativos del visualizador.
-* **Saneamiento Físico Programado**: Se ha estructurado el proceso de actualización física mediante el script [corregir_gpkg_fisico.py](file:///c:/Users/HP/OneDrive/Escritorio/CAYAMBE%20CATASTRO%20RIEGO/padron-app/scripts/corregir_gpkg_fisico.py) para limpiar físicamente el GeoPackage local en horas de la noche, una vez concluida la jornada diaria de campo, garantizando la consistencia total de la base de datos local y QFieldCloud.
-
-### B. Plan de Acción: Corrección de Fichas sin Comunidad
-Se identificaron **{len(fichas_sin_com)} fichas** donde el campo comunidad fue omitido por el equipo de campo. 
-* **Acción Tomada**: Se ha generado el listado de control interno de estas fichas con sus respectivos digitadores/técnicos de campo. El equipo técnico de **ap&catastro** se encuentra coordinando la compleción de estos registros directamente en campo para su posterior sincronización.
-
 ---
 **Elaborado por:** Equipo Técnico de ap&catastro
 """)
