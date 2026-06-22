@@ -263,7 +263,7 @@ def generate_reservorios_svg(data_sectores, output_path):
             svg.append(f'<rect x="{x_curr}" y="{y}" width="{w}" height="{bar_height}" fill="{cat_colors[c_idx]}" opacity="0.95"/>')
             
             # Texto porcentaje interno
-            if pct > 0.06: # Solo si cabe
+            if pct >= 0.10: # Solo si cabe de forma legible (minimo 10%)
                 svg.append(f'<text x="{x_curr + w/2}" y="{y + bar_height/2 + 3.5}" text-anchor="middle" class="pct-label">{pct*100:.0f}%</text>')
                 
             x_curr += w
@@ -587,10 +587,10 @@ def main():
     total_fichas_todas = len(raw_all_fichas)
     
     with open(REPORT_MD_PATH, 'w', encoding='utf-8') as f:
-        f.write(f"""# Informe Técnico: Estado de la Investigación de Riego en Campo
-*Generado automáticamente tras la última sincronización con QField.*
+        f.write(f"""# Informe Técnico: Estado del Catastro y Levantamiento de Información
+*Elaborado por el Equipo Técnico de ap&catastro*
 
-Este informe técnico presenta los resultados consolidados de la investigación y catastro de regantes para el **Sistema de Riego Comunitario Guanguilqui Porotog** al día de hoy. El documento sirve como soporte formal para la presentación y reunión técnica con el cliente.
+Este informe técnico presenta los resultados consolidados del levantamiento catastral, de infraestructura y socio-productivo para el **SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG** al día de hoy. El documento sirve como soporte formal para la presentación y revisión del estado de avance de la consultoría.
 
 ---
 
@@ -623,7 +623,7 @@ La investigación cubre **4 parroquias principales** del Cantón Cayambe, regist
 
 ## 3. Primeros Resultados por Sectores de Investigación (Sectores 1, 2 y 3)
 
-*Nota de agrupación: Para asegurar que el 100% de la información histórica esté representada en la comparativa, los registros sin sector clasificado en campo (1,521 fichas) han sido asignados por defecto al **Sector 1**, de acuerdo con las especificaciones de visualización de la web.*
+*Nota de agrupación: Para asegurar que el 100% de la información histórica esté representada en la comparativa, los registros sin sector clasificado en campo (1,521 fichas) han sido asignados por defecto al **Sector 1**, de acuerdo con las especificaciones de visualización del sistema.*
 
 ### A. Superficies de Tenencia y Cobertura de Riego
 La siguiente tabla compara las áreas cultivadas y las superficies bajo riego promedio reportadas por los regantes en cada sector:
@@ -706,27 +706,30 @@ Desglose del porcentaje de uso promedio para cada método de riego reportado en 
 
 ---
 
-## 5. Hallazgos Clave de Alto Impacto para el Cliente
+## 5. Hallazgos Clave de Alto Impacto para la Planificación
 
-Analizando detalladamente la información del catastro y el censo socio-agrícola, destacamos **4 hallazgos clave** de alto impacto para la planificación del proyecto:
+Analizando detalladamente la información del catastro y el censo socio-agrícola, destacamos cuatro hallazgos clave de alto impacto para la planificación del proyecto:
 
-1. 📢 **La Realidad del Minifundio y su Impacto Productivo**: En los Sectores 2 y 3, **más del 65% de los predios investigados miden menos de 0.5 Hectáreas** (5,000 m²). Esto evidencia una fragmentación de tierra sumamente alta. Cualquier proyecto de riego e inversión del cliente debe estructurarse asumiendo que los regantes operan UPAs de subsistencia a muy pequeña escala, lo que dificulta la tecnificación individual y hace imprescindible las soluciones de manejo asociativo.
-2. 📢 **Fuerte Dependencia de Gestión Comunitaria**: En promedio, **más del 85% de los regantes se abastecen de reservorios de tipo Comunitario**. La infraestructura privada o familiar es muy baja (menor al 8% en el mejor de los casos). Esto demuestra que el tejido social y organizativo local es la base fundamental del éxito del sistema. Las juntas de agua locales deben ser aliadas centrales del cliente en el desarrollo de la presa y canales.
-3. 📢 **Aspersión como Tecnología Dominante con Oportunidad de Optimización**: El riego por aspersión abarca más del **95% de la aplicación** en los lotes con riego de todos los sectores, mientras que el riego por goteo (tecnología altamente eficiente) tiene una cobertura casi inexistente (menor al 5% en predios activos). Existe una oportunidad enorme de optimización y ahorro de recursos hídricos en el proyecto del cliente incentivando la transición de aspersión a goteo.
-4. 📢 **Seguridad Alimentaria Familiar Crítica**: En el área del proyecto, **más del 20% de los hogares reportan familias con 5 o más hijos** (con un promedio general superior a 3.1 hijos por familia). Estos hogares de 5 a 6 personas dependen de la producción de parcelas menores a 0.5 ha. Garantizar un flujo constante de agua para riego no solo es un tema de desarrollo económico, sino de seguridad alimentaria directa para estas familias numerosas.
+1. **La Realidad del Minifundio y su Impacto Productivo**: En los Sectores 2 y 3, **más del 65% de los predios investigados miden menos de 0.5 Hectáreas** (5,000 m²). Esto evidencia una fragmentación de tierra sumamente alta. Cualquier planificación de inversión y tecnificación debe estructurarse asumiendo que los regantes operan UPAs de subsistencia a muy pequeña escala, lo que dificulta la tecnificación individual y hace imprescindible las soluciones de manejo asociativo.
+2. **Fuerte Dependencia de Gestión Comunitaria**: En promedio, **más del 85% de los regantes se abastecen de reservorios de tipo Comunitario**. La infraestructura privada o familiar es muy baja (menor al 8% en el mejor de los casos). Esto demuestra que el tejido social y organizativo local es la base fundamental del éxito del sistema. Las juntas de agua locales son las aliadas centrales en el desarrollo de la presa y canales.
+3. **Aspersión como Tecnología Dominante con Oportunidad de Optimización**: El riego por aspersión abarca más del **95% de la aplicación** en los lotes con riego de todos los sectores, mientras que el riego por goteo (tecnología altamente eficiente) tiene una cobertura casi inexistente (menor al 5% en predios activos). Existe una oportunidad enorme de optimización y ahorro de recursos hídricos incentivando la transición de aspersión a goteo.
+4. **Seguridad Alimentaria Familiar Crítica**: En el área del proyecto, **más del 20% de los hogares reportan familias con 5 o más hijos** (con un promedio general superior a 3.1 hijos por familia). Estos hogares de 5 a 6 personas dependen de la producción de parcelas menores a 0.5 ha. Garantizar un flujo constante de agua para riego no solo es un tema de desarrollo económico, sino de seguridad alimentaria directa para estas familias numerosas.
 
 ---
 
-## 6. Aseguramiento de Calidad y Limpieza de Datos
+## 6. Proceso Interno de Control de Calidad y Depuración de Datos (ap&catastro)
 
 ### A. Saneamiento de Inconsistencias de Áreas de Riego (Virtual Web)
 Se detectaron **{len(inconsistencias_list)} fichas** donde el área con riego superaba el área total declarada (lo que generaba áreas sin riego negativas en la web). 
-* **Acción Tomada**: Se implementó una corrección en caliente en el exportador de datos para forzar en memoria que `area_riego = area_total` y `area_sin_riego = 0.0` para estas fichas específicas. El dashboard web y este reporte presentan los datos corregidos al 100%, eliminando los valores negativos del visualizador del cliente.
-* **Saneamiento Físico Programado**: Se ha dejado listo el script local `scripts/corregir_gpkg_fisico.py` para limpiar físicamente el GeoPackage de QField esta noche, de modo que la información del servidor QFieldCloud y la web queden completamente unificadas sin alterar el trabajo actual de los técnicos.
+* **Acción Tomada**: Se implementó una corrección automática en caliente en el exportador de datos para forzar que `area_riego = area_total` y `area_sin_riego = 0.0` para estas fichas específicas. El dashboard web y este reporte presentan los datos depurados, eliminando los valores negativos del visualizador.
+* **Saneamiento Físico Programado**: Se ha estructurado el proceso de actualización física mediante el script [corregir_gpkg_fisico.py](file:///c:/Users/HP/OneDrive/Escritorio/CAYAMBE%20CATASTRO%20RIEGO/padron-app/scripts/corregir_gpkg_fisico.py) para limpiar físicamente el GeoPackage local en horas de la noche, una vez concluida la jornada diaria de campo, garantizando la consistencia total de la base de datos local y QFieldCloud.
 
 ### B. Plan de Acción: Corrección de Fichas sin Comunidad
 Se identificaron **{len(fichas_sin_com)} fichas** donde el campo comunidad fue omitido por el equipo de campo. 
-* **Acción Tomada**: Hemos extraído el listado detallado de estas fichas con sus respectivos técnicos creadores (mayralisseth201, jvk-editor4, jvk-editor2, jvk-editor, jvk-editor6). Se recomienda enviar esta lista de control al equipo de campo para que completen la información de comunidad y sincronicen QField en sus celulares.
+* **Acción Tomada**: Se ha generado el listado de control interno de estas fichas con sus respectivos digitadores/técnicos de campo. El equipo técnico de **ap&catastro** se encuentra coordinando la compleción de estos registros directamente en campo para su posterior sincronización.
+
+---
+**Elaborado por:** Equipo Técnico de ap&catastro
 """)
         
     print(f"  [OK] {REPORT_MD_PATH} e informe_graficos/ generados exitosamente.")
