@@ -12546,25 +12546,13 @@
     "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA HIJA."
   },
   {
-    "fid": 1176,
-    "id_adicional": "{4e787add-e6c5-4f75-8349-5664ade7928c}",
-    "ficha_id": "{cb026ba2-bdf5-4df7-974b-613fcb724423}",
-    "clave_catastral_otro": "1702520590060",
-    "area_total_otro": 45824.5,
-    "area_riego_otro": 45824.5,
-    "area_sin_riego_otro": -45824.5,
-    "area_lote_asignado_otro": 45824.5,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DEL ESPOSO FALLECIDO"
-  },
-  {
     "fid": 1177,
     "id_adicional": "{d1fb5246-0a6e-49a5-be70-c9f4518e68ea}",
     "ficha_id": "{cb026ba2-bdf5-4df7-974b-613fcb724423}",
     "clave_catastral_otro": "1702520600033",
     "area_total_otro": 10819.72,
     "area_riego_otro": 10819.72,
-    "area_sin_riego_otro": -10819.72,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10819.72,
     "tiene_observaciones": 1,
     "observaciones_otro": "LA COMUNERA REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DEL ESPOSO FALLECIDO"
@@ -13678,8 +13666,10 @@
     "clave_catastral_otro": "1702521510024",
     "area_total_otro": 11212.67,
     "area_riego_otro": 11212.67,
-    "area_sin_riego_otro": -11212.67,
-    "area_lote_asignado_otro": 11212.67
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 11212.67,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Comuna Porotog"
   },
   {
     "fid": 1275,
@@ -29895,5 +29885,125 @@
     "area_riego_otro": 5036.7,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5036.7
+  },
+  {
+    "fid": 2721,
+    "id_adicional": "{592ae033-2841-4d2b-9108-a811a877afdd}",
+    "ficha_id": "{84fe5fe8-ff31-4560-98c7-17cf1664b89e}",
+    "clave_catastral_otro": "1702520840006",
+    "area_total_otro": 1157.33,
+    "area_riego_otro": 1157.33,
+    "area_sin_riego_otro": -1157.33,
+    "area_lote_asignado_otro": 1157.33,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA ESPOSA "
+  },
+  {
+    "fid": 2722,
+    "id_adicional": "{acb696fe-9ce8-4e8c-8485-f18acfba2b8e}",
+    "ficha_id": "{b3a7ebf3-e3b0-4976-b1d3-adae73a51bf5}",
+    "clave_catastral_otro": "1702520830019",
+    "area_total_otro": 3529.06,
+    "area_riego_otro": 3529.06,
+    "area_sin_riego_otro": -3529.06,
+    "area_lote_asignado_otro": 3529.06,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE EXPRESA QUE POSEE UN CULTIVO EN ESTE PREDIO DE 500 MTS CUADRADOS DE FLORES."
+  },
+  {
+    "fid": 2723,
+    "id_adicional": "{a7cb0d7e-81bf-4e22-9178-47dfc39ef3a2}",
+    "ficha_id": "{43159d71-d202-4a11-9396-9194366b6491}",
+    "clave_catastral_otro": "1702520720059",
+    "area_total_otro": 15030.15,
+    "area_riego_otro": 15030.15,
+    "area_sin_riego_otro": -15030.15,
+    "area_lote_asignado_otro": 15030.15,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2724,
+    "id_adicional": "{0529d988-1df2-4913-89d4-22a59be1de42}",
+    "ficha_id": "{43159d71-d202-4a11-9396-9194366b6491}",
+    "clave_catastral_otro": "1702520720266",
+    "area_total_otro": 299.99,
+    "area_riego_otro": 299.99,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 299.99,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2725,
+    "id_adicional": "{b1afe33b-3415-4f4a-8dec-cbeaf2a48401}",
+    "ficha_id": "{43159d71-d202-4a11-9396-9194366b6491}",
+    "clave_catastral_otro": "1702520960045",
+    "area_total_otro": 1881.87,
+    "area_riego_otro": 1881.87,
+    "area_sin_riego_otro": -1881.87,
+    "area_lote_asignado_otro": 1881.87,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2726,
+    "id_adicional": "{2bdfefa4-7b46-4a0a-b1b3-edf79ce88b0d}",
+    "ficha_id": "{ef836377-2188-4662-a8d3-4ddf6407a487}",
+    "clave_catastral_otro": "1702521440104",
+    "area_total_otro": 2439.22,
+    "area_riego_otro": 2439.22,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2439.22,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2727,
+    "id_adicional": "{97180f4d-91b3-4b52-a629-3bc18b27ff0a}",
+    "ficha_id": "{cb026ba2-bdf5-4df7-974b-613fcb724423}",
+    "clave_catastral_otro": "1702520590059",
+    "area_total_otro": 55736.08,
+    "area_riego_otro": 55736.08,
+    "area_sin_riego_otro": -55736.08,
+    "area_lote_asignado_otro": 55736.08,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Asociación Porotog"
+  },
+  {
+    "fid": 2728,
+    "id_adicional": "{2543800d-80aa-46f3-9ebc-c3c5b04eb1cc}",
+    "ficha_id": "{0f77bab5-65cf-493c-824c-f42fe70db866}",
+    "clave_catastral_otro": "1702520720228",
+    "area_total_otro": 286.27,
+    "area_riego_otro": 286.27,
+    "area_sin_riego_otro": -286.27,
+    "area_lote_asignado_otro": 286.27,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2729,
+    "id_adicional": "{6e979dee-a93b-408f-8f97-b952b06c8d42}",
+    "ficha_id": "{0f77bab5-65cf-493c-824c-f42fe70db866}",
+    "clave_catastral_otro": "1702520720158",
+    "area_total_otro": 13588.25,
+    "area_riego_otro": 13588.25,
+    "area_sin_riego_otro": -13588.25,
+    "area_lote_asignado_otro": 13588.25,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
+  },
+  {
+    "fid": 2730,
+    "id_adicional": "{f10dcb5d-f374-402e-ab1b-6a0d8204f5c5}",
+    "ficha_id": "{27c7d5ac-d49b-42e8-9186-82276a2ef816}",
+    "clave_catastral_otro": "1702521120006",
+    "area_total_otro": 28156.66,
+    "area_riego_otro": 28156.66,
+    "area_sin_riego_otro": -28156.66,
+    "area_lote_asignado_otro": 28156.66,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Cochapamba"
   }
 ]

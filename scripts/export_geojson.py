@@ -574,7 +574,14 @@ def export_fichas():
         if not props.get('area_riego') or props['area_riego'] == 0:
             props['area_riego'] = props.get('area_total') or 0.0
             props['area_sin_riego'] = 0.0
-            cambios_detalles.append(f"area_riego -> {props['area_riego']}")
+            cambios_detalles.append(f"area_riego -> {props['area_riego']} (vacío/cero)")
+            cambio = True
+        # CORRECCIÓN VIRTUAL: Si el área con riego excede el área total o el área sin riego es negativa
+        elif (props.get('area_riego') or 0.0) > (props.get('area_total') or 0.0) or (props.get('area_sin_riego') or 0.0) < 0:
+            old_riego = props.get('area_riego')
+            props['area_riego'] = props.get('area_total') or 0.0
+            props['area_sin_riego'] = 0.0
+            cambios_detalles.append(f"area_riego: {old_riego} -> {props['area_riego']} (excedía area_total)")
             cambio = True
         
         if cambio:
@@ -1166,5 +1173,20 @@ if __name__ == '__main__':
     print("  ✅ EXPORTACIÓN COMPLETADA")
     print(f"  📁 Archivos en: {os.path.abspath(OUTPUT_DIR)}")
     print("═" * 60)
+    
+    # --- EJECUCIÓN AUTOMÁTICA DEL INFORME TÉCNICO PREMIUM ---
+    print("\n📊 Generando Informe Técnico Premium...")
+    try:
+        import subprocess
+        report_script = os.path.join(os.path.dirname(__file__), 'generate_technical_report.py')
+        res = subprocess.run(['python', report_script], capture_output=True, text=True, encoding='utf-8')
+        if res.returncode == 0:
+            print("  ✓ Informe técnico y gráficos SVG generados exitosamente.")
+            print(res.stdout)
+        else:
+            print(f"  ⚠️ Error al generar informe técnico (código {res.returncode}): {res.stderr}")
+    except Exception as e:
+        print(f"  ❌ Excepción al ejecutar generador de informe: {e}")
+
     print("\n⚡ Siguiente paso: sube los cambios a GitHub:")
     print("   git add public/geo/ logs_depuracion/; git commit -m 'data: sync desde QFieldCloud'; git push")
