@@ -64055,5 +64055,54 @@
     "especie": "Ovejas / Cabras",
     "cantidad": 6,
     "es_mercado": 1
+  },
+  {
+    "id_animal": "{912427af-d714-485a-a192-6d17cb9da44d}",
+    "ficha_id": "{cb73baf4-7591-47c9-a519-8cd75084c043}",
+    "cantidad": 2,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
+  },
+  {
+    "id_animal": "{9a60303a-1b8d-4d46-95c2-5cb7b18cd795}",
+    "ficha_id": "{cb73baf4-7591-47c9-a519-8cd75084c043}",
+    "especie": "Terneras",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{a58d71e1-2a3e-4607-9319-b61ed13ff7dd}",
+    "ficha_id": "{cb73baf4-7591-47c9-a519-8cd75084c043}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3
+  },
+  {
+    "id_animal": "{2ee75777-10ee-40ba-9a82-5f984361b746}",
+    "ficha_id": "{ac84faf2-6efa-4c65-aed7-c2abd7ab1c56}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 20,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{e014ee47-8360-4f67-b9ed-155fdb7c9858}",
+    "ficha_id": "{ac84faf2-6efa-4c65-aed7-c2abd7ab1c56}",
+    "especie": "Porcino (Chanchos)",
+    "cantidad": 6,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{4393757c-6488-4f59-8193-dabff0712be5}",
+    "ficha_id": "{ac84faf2-6efa-4c65-aed7-c2abd7ab1c56}",
+    "especie": "Gallinas de campo",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{979b9dfc-016c-477b-a4bd-b8edbf560117}",
+    "ficha_id": "{255e20c1-76f0-4e05-8636-87b43a22a6a6}",
+    "especie": "Vacas en producción",
+    "cantidad": 4,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
   }
 ]

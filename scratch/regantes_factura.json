@@ -1,0 +1,710 @@
+[
+  {
+    "idx": 1,
+    "nombre_completo": "Almeida Esthela",
+    "cedula": "171186517-8",
+    "raw_line": "1 Almeida Esthela 171186517-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 2,
+    "nombre_completo": "Almeida Tomasa",
+    "cedula": "",
+    "raw_line": "2 Almeida Tomasa $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 3,
+    "nombre_completo": "Amaguaña Luis",
+    "cedula": "171883631-3",
+    "raw_line": "3 Amaguaña Luis 171883631-3 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 4,
+    "nombre_completo": "Ascanta Camilo",
+    "cedula": "170317166-8",
+    "raw_line": "4 Ascanta Camilo 170317166-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 5,
+    "nombre_completo": "Ayala Ramon",
+    "cedula": "",
+    "raw_line": "5 Ayala Ramon $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 6,
+    "nombre_completo": "Bastidas Carlos",
+    "cedula": "100207658-4",
+    "raw_line": "6 Bastidas Carlos 100207658-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 7,
+    "nombre_completo": "Bermejo Alberto",
+    "cedula": "171044548-5",
+    "raw_line": "7 Bermejo Alberto 171044548-5 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 8,
+    "nombre_completo": "Bermejo Esteban",
+    "cedula": "170263178-7",
+    "raw_line": "8 Bermejo Esteban 170263178-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 9,
+    "nombre_completo": "Bermejo José Luís",
+    "cedula": "171211216-6",
+    "raw_line": "9 Bermejo José Luís 171211216-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 10,
+    "nombre_completo": "Bermejo L Santiago",
+    "cedula": "171244095-5",
+    "raw_line": "10 Bermejo L Santiago 171244095-5 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 11,
+    "nombre_completo": "Bermejo Pedro",
+    "cedula": "171177630-0",
+    "raw_line": "11 Bermejo Pedro 171177630-0 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 12,
+    "nombre_completo": "Bermejo Teresa",
+    "cedula": "171247178-6",
+    "raw_line": "12 Bermejo Teresa 171247178-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 13,
+    "nombre_completo": "Cardenas Jose",
+    "cedula": "",
+    "raw_line": "13 Cardenas Jose $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 14,
+    "nombre_completo": "Casaliglla Alex",
+    "cedula": "171953766-2",
+    "raw_line": "14 Casaliglla Alex 171953766-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 15,
+    "nombre_completo": "Casaliglla Amparo",
+    "cedula": "",
+    "raw_line": "15 Casaliglla Amparo $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 16,
+    "nombre_completo": "Casaliglla Carlos",
+    "cedula": "",
+    "raw_line": "16 Casaliglla Carlos $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 17,
+    "nombre_completo": "Casaliglla Cristina",
+    "cedula": "",
+    "raw_line": "17 Casaliglla Cristina $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 18,
+    "nombre_completo": "Casaliglla Jose Elias",
+    "cedula": "171791815-3",
+    "raw_line": "18 Casaliglla Jose Elias 171791815-3 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 19,
+    "nombre_completo": "Casaliglla Juan M.",
+    "cedula": "170701503-6",
+    "raw_line": "19 Casaliglla Juan M. 170701503-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 20,
+    "nombre_completo": "Casaliglla Pablo",
+    "cedula": "170400489-2",
+    "raw_line": "20 Casaliglla Pablo 170400489-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 21,
+    "nombre_completo": "Casaliglla Quishpe Juan",
+    "cedula": "",
+    "raw_line": "21 Casaliglla Quishpe Juan $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 22,
+    "nombre_completo": "Casaliglla Veronica",
+    "cedula": "171918467-1",
+    "raw_line": "22 Casaliglla Veronica 171918467-1 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 23,
+    "nombre_completo": "Castro Jorge",
+    "cedula": "",
+    "raw_line": "23 Castro Jorge $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 24,
+    "nombre_completo": "Chicaiza Alejandro",
+    "cedula": "170260112-9",
+    "raw_line": "24 Chicaiza Alejandro 170260112-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 25,
+    "nombre_completo": "Chicaiza Ana",
+    "cedula": "171123911-9",
+    "raw_line": "25 Chicaiza Ana 171123911-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 26,
+    "nombre_completo": "Chicaiza Carmelina",
+    "cedula": "171246201-7",
+    "raw_line": "26 Chicaiza Carmelina 171246201-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 27,
+    "nombre_completo": "Chicaiza Efraín",
+    "cedula": "171433009-7",
+    "raw_line": "27 Chicaiza Efraín 171433009-7 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 28,
+    "nombre_completo": "Chicaiza María",
+    "cedula": "171324174-1",
+    "raw_line": "28 Chicaiza María 171324174-1 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 29,
+    "nombre_completo": "Chicaiza Segundo",
+    "cedula": "170363833-6",
+    "raw_line": "29 Chicaiza Segundo 170363833-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 30,
+    "nombre_completo": "Chiluiza Hernán",
+    "cedula": "170302715-9",
+    "raw_line": "30 Chiluiza Hernán 170302715-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 31,
+    "nombre_completo": "Conde Alfredo",
+    "cedula": "",
+    "raw_line": "31 Conde Alfredo $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 32,
+    "nombre_completo": "Conlago Mariela",
+    "cedula": "172273048-6",
+    "raw_line": "32 Conlago Mariela 172273048-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 33,
+    "nombre_completo": "Coro Segundo",
+    "cedula": "171080934-2",
+    "raw_line": "33 Coro Segundo 171080934-2 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 34,
+    "nombre_completo": "Cuascota Cabascango Pablo",
+    "cedula": "175043732-7",
+    "raw_line": "34 Cuascota Cabascango Pablo 175043732-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 35,
+    "nombre_completo": "Cuascota José",
+    "cedula": "171854495-8",
+    "raw_line": "35 Cuascota José 171854495-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 36,
+    "nombre_completo": "Cuascota Lorenzo",
+    "cedula": "170982292-6",
+    "raw_line": "36 Cuascota Lorenzo 170982292-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 37,
+    "nombre_completo": "Cuascota Nicolás",
+    "cedula": "171109503-2",
+    "raw_line": "37 Cuascota Nicolás 171109503-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 38,
+    "nombre_completo": "Cuascota Pablo",
+    "cedula": "170401874-4",
+    "raw_line": "38 Cuascota Pablo 170401874-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 39,
+    "nombre_completo": "Dioquilima Hiladio",
+    "cedula": "170301809-1",
+    "raw_line": "39 Dioquilima Hiladio 170301809-1 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 40,
+    "nombre_completo": "Dioquilima Monica",
+    "cedula": "171567922-9",
+    "raw_line": "40 Dioquilima Monica 171567922-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 41,
+    "nombre_completo": "Farinango Juan",
+    "cedula": "170559976-7",
+    "raw_line": "41 Farinango Juan 170559976-7 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 42,
+    "nombre_completo": "Farinango Maribel",
+    "cedula": "172231312-7",
+    "raw_line": "42 Farinango Maribel 172231312-7 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 43,
+    "nombre_completo": "Farinango Marisol",
+    "cedula": "171585417-8",
+    "raw_line": "43 Farinango Marisol 171585417-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 44,
+    "nombre_completo": "Farinango Patricio",
+    "cedula": "171626286-8",
+    "raw_line": "44 Farinango Patricio 171626286-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 45,
+    "nombre_completo": "Farinango Salvador",
+    "cedula": "170349826-9",
+    "raw_line": "45 Farinango Salvador 170349826-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 46,
+    "nombre_completo": "Guaman Ulises",
+    "cedula": "171115944-0",
+    "raw_line": "46 Guaman Ulises 171115944-0 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 47,
+    "nombre_completo": "Jauregui Francisco",
+    "cedula": "",
+    "raw_line": "47 Jauregui Francisco $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 48,
+    "nombre_completo": "Jauregui Melchor",
+    "cedula": "",
+    "raw_line": "48 Jauregui Melchor $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 49,
+    "nombre_completo": "Jauregui Rocio",
+    "cedula": "",
+    "raw_line": "49 Jauregui Rocio $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 50,
+    "nombre_completo": "Jaurequi B. José",
+    "cedula": "170949549-1",
+    "raw_line": "50 Jaurequi B. José 170949549-1 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 51,
+    "nombre_completo": "Jaurequi Genoveva",
+    "cedula": "171398880-4",
+    "raw_line": "51 Jaurequi Genoveva 171398880-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 52,
+    "nombre_completo": "Lanchimba Blanca",
+    "cedula": "",
+    "raw_line": "52 Lanchimba Blanca $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 53,
+    "nombre_completo": "Lanchimba Milton",
+    "cedula": "171785640-3",
+    "raw_line": "53 Lanchimba Milton 171785640-3 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 54,
+    "nombre_completo": "Leon Abel",
+    "cedula": "",
+    "raw_line": "54 Leon Abel $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 55,
+    "nombre_completo": "León Alegría",
+    "cedula": "170516496-8",
+    "raw_line": "55 León Alegría 170516496-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 56,
+    "nombre_completo": "León Benjamín",
+    "cedula": "170944568-6",
+    "raw_line": "56 León Benjamín 170944568-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 57,
+    "nombre_completo": "León Carlos",
+    "cedula": "170403024-4",
+    "raw_line": "57 León Carlos 170403024-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 31,
+    "nombre_completo": "DE MAYO DEL 202658 León Cleofé",
+    "cedula": "171977438-0",
+    "raw_line": "31 DE MAYO DEL 202658 León Cleofé 171977438-0 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 59,
+    "nombre_completo": "Leon David",
+    "cedula": "172294323-8",
+    "raw_line": "59 Leon David 172294323-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 60,
+    "nombre_completo": "León Francisco",
+    "cedula": "170415110-7",
+    "raw_line": "60 León Francisco 170415110-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 61,
+    "nombre_completo": "León Gloria",
+    "cedula": "171430340-9",
+    "raw_line": "61 León Gloria 171430340-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 62,
+    "nombre_completo": "León Guillermo",
+    "cedula": "170354190-2",
+    "raw_line": "62 León Guillermo 170354190-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 63,
+    "nombre_completo": "Leon Jose Leonardo",
+    "cedula": "172044390-0",
+    "raw_line": "63 Leon Jose Leonardo 172044390-0 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 64,
+    "nombre_completo": "León José M.",
+    "cedula": "170403003-8",
+    "raw_line": "64 León José M. 170403003-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 65,
+    "nombre_completo": "León Juan Carlos",
+    "cedula": "171531764-8",
+    "raw_line": "65 León Juan Carlos 171531764-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 66,
+    "nombre_completo": "Leon L Martha",
+    "cedula": "",
+    "raw_line": "66 Leon L Martha $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 67,
+    "nombre_completo": "León Laura",
+    "cedula": "171466684-7",
+    "raw_line": "67 León Laura 171466684-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 68,
+    "nombre_completo": "Leon Lida",
+    "cedula": "",
+    "raw_line": "68 Leon Lida $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 69,
+    "nombre_completo": "Leon Liliana",
+    "cedula": "",
+    "raw_line": "69 Leon Liliana $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 70,
+    "nombre_completo": "León Lorenzo",
+    "cedula": "171222034-0",
+    "raw_line": "70 León Lorenzo 171222034-0 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 71,
+    "nombre_completo": "León Marcos",
+    "cedula": "171598900-8",
+    "raw_line": "71 León Marcos 171598900-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 72,
+    "nombre_completo": "Leon Margarita",
+    "cedula": "",
+    "raw_line": "72 Leon Margarita $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 73,
+    "nombre_completo": "León Mariana",
+    "cedula": "170834192-8",
+    "raw_line": "73 León Mariana 170834192-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 74,
+    "nombre_completo": "Leon Mauricio",
+    "cedula": "",
+    "raw_line": "74 Leon Mauricio $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 75,
+    "nombre_completo": "León Olga",
+    "cedula": "171699596-2",
+    "raw_line": "75 León Olga 171699596-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 76,
+    "nombre_completo": "Leon Onofre",
+    "cedula": "",
+    "raw_line": "76 Leon Onofre $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 77,
+    "nombre_completo": "León Oswaldo",
+    "cedula": "171127755-6",
+    "raw_line": "77 León Oswaldo 171127755-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 78,
+    "nombre_completo": "León Pablo Andres",
+    "cedula": "172453222-9",
+    "raw_line": "78 León Pablo Andres 172453222-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 79,
+    "nombre_completo": "Leon Rita",
+    "cedula": "175510801-4",
+    "raw_line": "79 Leon Rita 175510801-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 80,
+    "nombre_completo": "León Segundo",
+    "cedula": "171016839-2",
+    "raw_line": "80 León Segundo 171016839-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 81,
+    "nombre_completo": "León Vicente",
+    "cedula": "170133961-4",
+    "raw_line": "81 León Vicente 170133961-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 82,
+    "nombre_completo": "Leon Victor",
+    "cedula": "",
+    "raw_line": "82 Leon Victor $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 83,
+    "nombre_completo": "León Walter",
+    "cedula": "",
+    "raw_line": "83 León Walter $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 84,
+    "nombre_completo": "Lincango Angelita",
+    "cedula": "",
+    "raw_line": "84 Lincango Angelita $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 85,
+    "nombre_completo": "Lincango Delia",
+    "cedula": "",
+    "raw_line": "85 Lincango Delia $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 86,
+    "nombre_completo": "Lincango Elena",
+    "cedula": "170927097-7",
+    "raw_line": "86 Lincango Elena 170927097-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 87,
+    "nombre_completo": "Lincango Gustavo",
+    "cedula": "171334666-4",
+    "raw_line": "87 Lincango Gustavo 171334666-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 88,
+    "nombre_completo": "Lincango José M",
+    "cedula": "170239946-8",
+    "raw_line": "88 Lincango José M 170239946-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 89,
+    "nombre_completo": "Lincango Juan",
+    "cedula": "171030404-7",
+    "raw_line": "89 Lincango Juan   171030404-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 90,
+    "nombre_completo": "Lincango Laura",
+    "cedula": "",
+    "raw_line": "90 Lincango Laura $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 91,
+    "nombre_completo": "Lincango Miriam",
+    "cedula": "171858258-6",
+    "raw_line": "91 Lincango Miriam 171858258-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 92,
+    "nombre_completo": "Lincango Susana",
+    "cedula": "",
+    "raw_line": "92 Lincango Susana $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 93,
+    "nombre_completo": "Morales Ivon",
+    "cedula": "171854270-5",
+    "raw_line": "93 Morales Ivon 171854270-5 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 94,
+    "nombre_completo": "Quishpe Armando",
+    "cedula": "",
+    "raw_line": "94 Quishpe Armando $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 95,
+    "nombre_completo": "Quishpe Aurelio",
+    "cedula": "171217987-6",
+    "raw_line": "95 Quishpe Aurelio 171217987-6 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 96,
+    "nombre_completo": "Quishpe C. José Luis",
+    "cedula": "171727873-1",
+    "raw_line": "96 Quishpe C. José Luis 171727873-1 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 97,
+    "nombre_completo": "Quishpe C. Rafael",
+    "cedula": "170409760-2",
+    "raw_line": "97 Quishpe C. Rafael 170409760-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 98,
+    "nombre_completo": "Quishpe C. Rosa",
+    "cedula": "170226892-9",
+    "raw_line": "98 Quishpe C. Rosa 170226892-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 99,
+    "nombre_completo": "Quishpe Carmen",
+    "cedula": "170956717-4",
+    "raw_line": "99 Quishpe Carmen 170956717-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 100,
+    "nombre_completo": "Quishpe Cesar",
+    "cedula": "",
+    "raw_line": "100 Quishpe Cesar $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 101,
+    "nombre_completo": "Quishpe Cristian",
+    "cedula": "",
+    "raw_line": "101 Quishpe Cristian $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 102,
+    "nombre_completo": "Quishpe Gonzalo",
+    "cedula": "171030812-1",
+    "raw_line": "102 Quishpe Gonzalo 171030812-1 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 103,
+    "nombre_completo": "Quishpe L .Carlos",
+    "cedula": "170856166-5",
+    "raw_line": "103 Quishpe L .Carlos 170856166-5 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 104,
+    "nombre_completo": "Quishpe L. Rafael",
+    "cedula": "170476013-9",
+    "raw_line": "104 Quishpe L. Rafael 170476013-9 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 105,
+    "nombre_completo": "Quishpe María E.",
+    "cedula": "170482262-4",
+    "raw_line": "105 Quishpe María E. 170482262-4 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 106,
+    "nombre_completo": "Quishpe Mariana",
+    "cedula": "171331588-3",
+    "raw_line": "106 Quishpe Mariana 171331588-3 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 107,
+    "nombre_completo": "Quishpe Norma",
+    "cedula": "",
+    "raw_line": "107 Quishpe Norma $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 108,
+    "nombre_completo": "Quishpe Yolanda",
+    "cedula": "171205785-8",
+    "raw_line": "108 Quishpe Yolanda 171205785-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 109,
+    "nombre_completo": "Rosero T. Miguel",
+    "cedula": "171301026-0",
+    "raw_line": "109 Rosero T. Miguel 171301026-0 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 110,
+    "nombre_completo": "Salcedo Alegria",
+    "cedula": "",
+    "raw_line": "110 Salcedo Alegria $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 111,
+    "nombre_completo": "Serrano Eduardo",
+    "cedula": "171662500-7",
+    "raw_line": "111 Serrano Eduardo 171662500-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 112,
+    "nombre_completo": "Toapanta Cristóbal",
+    "cedula": "171286785-0",
+    "raw_line": "112 Toapanta Cristóbal 171286785-0 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 113,
+    "nombre_completo": "Toapanta Marcelo",
+    "cedula": "171246313-0",
+    "raw_line": "113 Toapanta Marcelo 171246313-0 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 114,
+    "nombre_completo": "Tontag America",
+    "cedula": "171759059-8",
+    "raw_line": "114 Tontag America 171759059-8 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 115,
+    "nombre_completo": "Tontag Antonio",
+    "cedula": "170217327-7",
+    "raw_line": "115 Tontag Antonio 170217327-7 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 116,
+    "nombre_completo": "Tontag Paco",
+    "cedula": "171650651-2",
+    "raw_line": "116 Tontag Paco 171650651-2 $ 2.00 $ 2.00"
+  },
+  {
+    "idx": 117,
+    "nombre_completo": "Vite  Javier",
+    "cedula": "172276846-0",
+    "raw_line": "117 Vite  Javier 172276846-0 $ 8.00 $ 8.00"
+  },
+  {
+    "idx": 118,
+    "nombre_completo": "Vizcaino Anita",
+    "cedula": "171491291-0",
+    "raw_line": "118 Vizcaino Anita 171491291-0 $ 8.00 $ 8.00"
+  }
+]

@@ -1,0 +1,122 @@
+Nº NOMBRES NºCEDULA CANTIDAD FALTAS MINGAS FALTAS SESIONES OTROS TOTAL
+1 Almeida Esthela 171186517-8 $ 2.00 $ 2.00
+2 Almeida Tomasa $ 2.00 $ 2.00
+3 Amaguaña Luis 171883631-3 $ 8.00 $ 8.00
+4 Ascanta Camilo 170317166-8 $ 2.00 $ 2.00
+5 Ayala Ramon $ 8.00 $ 8.00
+6 Bastidas Carlos 100207658-4 $ 2.00 $ 2.00
+7 Bermejo Alberto 171044548-5 $ 2.00 $ 2.00
+8 Bermejo Esteban 170263178-7 $ 2.00 $ 2.00
+9 Bermejo José Luís 171211216-6 $ 2.00 $ 2.00
+10 Bermejo L Santiago 171244095-5 $ 2.00 $ 2.00
+11 Bermejo Pedro 171177630-0 $ 2.00 $ 2.00
+12 Bermejo Teresa 171247178-6 $ 2.00 $ 2.00
+13 Cardenas Jose $ 2.00 $ 2.00
+14 Casaliglla Alex 171953766-2 $ 2.00 $ 2.00
+15 Casaliglla Amparo $ 2.00 $ 2.00
+16 Casaliglla Carlos $ 2.00 $ 2.00
+17 Casaliglla Cristina $ 8.00 $ 8.00
+18 Casaliglla Jose Elias 171791815-3 $ 2.00 $ 2.00
+19 Casaliglla Juan M. 170701503-6 $ 2.00 $ 2.00
+20 Casaliglla Pablo 170400489-2 $ 2.00 $ 2.00
+21 Casaliglla Quishpe Juan $ 2.00 $ 2.00
+22 Casaliglla Veronica 171918467-1 $ 8.00 $ 8.00
+23 Castro Jorge $ 2.00 $ 2.00
+24 Chicaiza Alejandro 170260112-9 $ 2.00 $ 2.00
+25 Chicaiza Ana 171123911-9 $ 2.00 $ 2.00
+26 Chicaiza Carmelina 171246201-7 $ 2.00 $ 2.00
+27 Chicaiza Efraín 171433009-7 $ 8.00 $ 8.00
+28 Chicaiza María 171324174-1 $ 2.00 $ 2.00
+29 Chicaiza Segundo 170363833-6 $ 2.00 $ 2.00
+30 Chiluiza Hernán 170302715-9 $ 2.00 $ 2.00
+31 Conde Alfredo $ 2.00 $ 2.00
+32 Conlago Mariela 172273048-6 $ 2.00 $ 2.00
+33 Coro Segundo 171080934-2 $ 8.00 $ 8.00
+34 Cuascota Cabascango Pablo 175043732-7 $ 2.00 $ 2.00
+35 Cuascota José 171854495-8 $ 2.00 $ 2.00
+36 Cuascota Lorenzo 170982292-6 $ 2.00 $ 2.00
+37 Cuascota Nicolás 171109503-2 $ 2.00 $ 2.00
+38 Cuascota Pablo 170401874-4 $ 2.00 $ 2.00
+39 Dioquilima Hiladio 170301809-1 $ 2.00 $ 2.00
+40 Dioquilima Monica 171567922-9 $ 2.00 $ 2.00
+41 Farinango Juan 170559976-7 $ 8.00 $ 8.00
+42 Farinango Maribel 172231312-7 $ 8.00 $ 8.00
+43 Farinango Marisol 171585417-8 $ 2.00 $ 2.00
+44 Farinango Patricio 171626286-8 $ 2.00 $ 2.00
+45 Farinango Salvador 170349826-9 $ 2.00 $ 2.00
+46 Guaman Ulises 171115944-0 $ 8.00 $ 8.00
+47 Jauregui Francisco $ 2.00 $ 2.00
+48 Jauregui Melchor $ 2.00 $ 2.00
+49 Jauregui Rocio $ 2.00 $ 2.00
+50 Jaurequi B. José 170949549-1 $ 2.00 $ 2.00
+51 Jaurequi Genoveva 171398880-4 $ 2.00 $ 2.00
+52 Lanchimba Blanca $ 2.00 $ 2.00
+53 Lanchimba Milton 171785640-3 $ 2.00 $ 2.00
+54 Leon Abel $ 2.00 $ 2.00
+55 León Alegría 170516496-8 $ 2.00 $ 2.00
+56 León Benjamín 170944568-6 $ 2.00 $ 2.00
+57 León Carlos 170403024-4 $ 2.00 $ 2.00
+MAYO
+AGUA DE RIEGO MONTESERIN BAJO
+31 DE MAYO DEL 202658 León Cleofé 171977438-0 $ 2.00 $ 2.00
+59 Leon David 172294323-8 $ 2.00 $ 2.00
+60 León Francisco 170415110-7 $ 2.00 $ 2.00
+61 León Gloria 171430340-9 $ 2.00 $ 2.00
+62 León Guillermo 170354190-2 $ 2.00 $ 2.00
+63 Leon Jose Leonardo 172044390-0 $ 2.00 $ 2.00
+64 León José M. 170403003-8 $ 2.00 $ 2.00
+65 León Juan Carlos 171531764-8 $ 2.00 $ 2.00
+66 Leon L Martha $ 2.00 $ 2.00
+67 León Laura 171466684-7 $ 2.00 $ 2.00
+68 Leon Lida $ 2.00 $ 2.00
+69 Leon Liliana $ 2.00 $ 2.00
+70 León Lorenzo 171222034-0 $ 8.00 $ 8.00
+71 León Marcos 171598900-8 $ 2.00 $ 2.00
+72 Leon Margarita $ 2.00 $ 2.00
+73 León Mariana 170834192-8 $ 2.00 $ 2.00
+74 Leon Mauricio $ 2.00 $ 2.00
+75 León Olga 171699596-2 $ 2.00 $ 2.00
+76 Leon Onofre $ 2.00 $ 2.00
+77 León Oswaldo 171127755-6 $ 2.00 $ 2.00
+78 León Pablo Andres 172453222-9 $ 2.00 $ 2.00
+79 Leon Rita 175510801-4 $ 2.00 $ 2.00
+80 León Segundo 171016839-2 $ 2.00 $ 2.00
+81 León Vicente 170133961-4 $ 2.00 $ 2.00
+82 Leon Victor $ 2.00 $ 2.00
+83 León Walter $ 2.00 $ 2.00
+84 Lincango Angelita $ 2.00 $ 2.00
+85 Lincango Delia $ 2.00 $ 2.00
+86 Lincango Elena 170927097-7 $ 2.00 $ 2.00
+87 Lincango Gustavo 171334666-4 $ 2.00 $ 2.00
+88 Lincango José M 170239946-8 $ 2.00 $ 2.00
+89 Lincango Juan   171030404-7 $ 2.00 $ 2.00
+90 Lincango Laura $ 2.00 $ 2.00
+91 Lincango Miriam 171858258-6 $ 2.00 $ 2.00
+92 Lincango Susana $ 2.00 $ 2.00
+93 Morales Ivon 171854270-5 $ 2.00 $ 2.00
+94 Quishpe Armando $ 2.00 $ 2.00
+95 Quishpe Aurelio 171217987-6 $ 2.00 $ 2.00
+96 Quishpe C. José Luis 171727873-1 $ 2.00 $ 2.00
+97 Quishpe C. Rafael 170409760-2 $ 2.00 $ 2.00
+98 Quishpe C. Rosa 170226892-9 $ 2.00 $ 2.00
+99 Quishpe Carmen 170956717-4 $ 2.00 $ 2.00
+100 Quishpe Cesar $ 8.00 $ 8.00
+101 Quishpe Cristian $ 2.00 $ 2.00
+102 Quishpe Gonzalo 171030812-1 $ 2.00 $ 2.00
+103 Quishpe L .Carlos 170856166-5 $ 2.00 $ 2.00
+104 Quishpe L. Rafael 170476013-9 $ 2.00 $ 2.00
+105 Quishpe María E. 170482262-4 $ 2.00 $ 2.00
+106 Quishpe Mariana 171331588-3 $ 2.00 $ 2.00
+107 Quishpe Norma $ 2.00 $ 2.00
+108 Quishpe Yolanda 171205785-8 $ 2.00 $ 2.00
+109 Rosero T. Miguel 171301026-0 $ 8.00 $ 8.00
+110 Salcedo Alegria $ 2.00 $ 2.00
+111 Serrano Eduardo 171662500-7 $ 2.00 $ 2.00
+112 Toapanta Cristóbal 171286785-0 $ 8.00 $ 8.00
+113 Toapanta Marcelo 171246313-0 $ 2.00 $ 2.00
+114 Tontag America 171759059-8 $ 2.00 $ 2.00
+115 Tontag Antonio 170217327-7 $ 2.00 $ 2.00
+116 Tontag Paco 171650651-2 $ 2.00 $ 2.00
+117 Vite  Javier 172276846-0 $ 8.00 $ 8.00
+118 Vizcaino Anita 171491291-0 $ 8.00 $ 8.00
+TOTAL $ 326.00

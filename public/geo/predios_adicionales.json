@@ -1471,8 +1471,9 @@
     "ficha_id": "{d5d25769-22bb-428f-96b0-8a4cb5092b6e}",
     "clave_catastral_otro": "1702520980074",
     "area_total_otro": 9393.29,
-    "area_riego_otro": 9393.29,
-    "area_sin_riego_otro": 0.0
+    "area_riego_otro": 4200.0,
+    "area_sin_riego_otro": 5193.29,
+    "area_lote_asignado_otro": 9393.29
   },
   {
     "fid": 165,
@@ -29753,7 +29754,7 @@
     "clave_catastral_otro": "1702520190029",
     "area_total_otro": 4781.14,
     "area_riego_otro": 1458.75,
-    "area_sin_riego_otro": -1458.75,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1458.75
   },
   {
@@ -31043,5 +31044,39 @@
     "area_riego_otro": 4384.94,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4384.94
+  },
+  {
+    "fid": 2830,
+    "id_adicional": "{6923867b-8985-48bd-b1fd-738a605e0b05}",
+    "ficha_id": "{ac84faf2-6efa-4c65-aed7-c2abd7ab1c56}",
+    "clave_catastral_otro": "1702510080054",
+    "area_total_otro": 4084.57,
+    "area_riego_otro": 4084.57,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4084.57,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA COMUNERA REGANTE INFORMA QUE TIENE LA MITAD DE SEMBRIO DE FRUTALES Y LA OTRA MITAD DEL PREDIO DE CULTIVO DE CEBADA."
+  },
+  {
+    "fid": 2831,
+    "id_adicional": "{6f61249e-195b-4b5c-b308-5b61766f9a68}",
+    "ficha_id": "{255e20c1-76f0-4e05-8636-87b43a22a6a6}",
+    "area_total_otro": 1458.75,
+    "area_riego_otro": 1292.2509,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1292.2509,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA CLAVE CATASTRAL ES: 17025101000400300030000 Y TIENE UN CULTIVO DE MAIZ TODA EL AREA."
+  },
+  {
+    "fid": 2832,
+    "id_adicional": "{872082b0-4973-4b0b-8344-203e127b9e25}",
+    "ficha_id": "{255e20c1-76f0-4e05-8636-87b43a22a6a6}",
+    "area_total_otro": 1458.75,
+    "area_riego_otro": 724.96,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 724.96,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "LA CLAVE CATASTRAL ES: 17025101000400300020000 Y TIENE UN CULTIVO DE MAIZ TODA EL AREA."
   }
 ]
