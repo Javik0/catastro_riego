@@ -31156,5 +31156,37 @@
     "area_lote_asignado_otro": 9015.0,
     "tiene_observaciones": 1,
     "observaciones_otro": "Invernadero de rosas"
+  },
+  {
+    "fid": 2840,
+    "id_adicional": "{035b3bb2-e476-441c-a93a-adb1ef5dad36}",
+    "ficha_id": "{53976bc5-0576-4351-a153-ac94ae50ca74}",
+    "clave_catastral_otro": "1702521720040",
+    "area_total_otro": 17080.53,
+    "area_riego_otro": 8500.0,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 8500.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Santa Marianita de Pingulmi"
+  },
+  {
+    "fid": 2841,
+    "id_adicional": "{0e30fdf5-652b-4927-9317-98d17a728e72}",
+    "ficha_id": "{fb117630-697c-4c07-b32e-d4ca76a7940c}",
+    "clave_catastral_otro": "1702521470022",
+    "area_total_otro": 13168.17,
+    "area_riego_otro": 13168.17,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 13168.17
+  },
+  {
+    "fid": 2842,
+    "id_adicional": "{c99ec456-86ac-4d55-ab31-c7fe023d73ad}",
+    "ficha_id": "{50903921-1f99-49f0-a57f-4e839174257c}",
+    "clave_catastral_otro": "1702520280037",
+    "area_total_otro": 18450.39,
+    "area_riego_otro": 18450.39,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 18450.39
   }
 ]
