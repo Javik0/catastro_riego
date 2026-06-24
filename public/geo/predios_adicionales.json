@@ -21964,7 +21964,7 @@
     "clave_catastral_otro": "1702521530007",
     "area_total_otro": 4498.71,
     "area_riego_otro": 4498.71,
-    "area_sin_riego_otro": -4498.71,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4498.71
   },
   {
@@ -25784,7 +25784,7 @@
     "clave_catastral_otro": "1702520200008",
     "area_total_otro": 558.07,
     "area_riego_otro": 558.07,
-    "area_sin_riego_otro": -558.07,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 558.07
   },
   {
@@ -25793,9 +25793,9 @@
     "ficha_id": "{ea758413-0b90-4a5c-9660-e97cde33eaaf}",
     "clave_catastral_otro": "1702520200009",
     "area_total_otro": 2828.64,
-    "area_riego_otro": 2828.64,
-    "area_sin_riego_otro": -2828.64,
-    "area_lote_asignado_otro": 2828.64
+    "area_riego_otro": 707.16,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 707.16
   },
   {
     "fid": 2343,
@@ -31078,5 +31078,83 @@
     "area_lote_asignado_otro": 724.96,
     "tiene_observaciones": 1,
     "observaciones_otro": "LA CLAVE CATASTRAL ES: 17025101000400300020000 Y TIENE UN CULTIVO DE MAIZ TODA EL AREA."
+  },
+  {
+    "fid": 2833,
+    "id_adicional": "{561e2376-c658-44e6-b865-7099bff51e1e}",
+    "ficha_id": "{fff95bb5-42fe-4748-8c6d-ef14bbc434d8}",
+    "clave_catastral_otro": "1702521530008",
+    "area_total_otro": 3610.41,
+    "area_riego_otro": 3610.41,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 3610.41,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Asociación San Vicente Alto"
+  },
+  {
+    "fid": 2834,
+    "id_adicional": "{ff8dccea-dbf4-4d80-924f-9a7530d16d30}",
+    "ficha_id": "{e53e2c6e-62a3-4319-b586-d4cceb70500c}",
+    "clave_catastral_otro": "1702520900128",
+    "area_total_otro": 13813.29,
+    "area_riego_otro": 13813.29,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 13813.29
+  },
+  {
+    "fid": 2835,
+    "id_adicional": "{19ec03c9-38e1-4f89-bbee-8f44084eebbc}",
+    "ficha_id": "{f7ed8ceb-db33-404c-9326-be6a250e370e}",
+    "clave_catastral_otro": "1702520300024",
+    "area_total_otro": 2436.59,
+    "area_riego_otro": 1458.75,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2836,
+    "id_adicional": "{69628de9-eeb3-4849-8019-29950111edd8}",
+    "ficha_id": "{4caabc63-7263-4437-ab9f-6a2a0f327952}",
+    "clave_catastral_otro": "1702520200020",
+    "area_total_otro": 6133.97,
+    "area_riego_otro": 6133.97,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 6133.97,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Santa Marianita de Pingulmi"
+  },
+  {
+    "fid": 2837,
+    "id_adicional": "{77ef8233-5c15-4f4d-8132-bf94098c2b81}",
+    "ficha_id": "{4caabc63-7263-4437-ab9f-6a2a0f327952}",
+    "clave_catastral_otro": "1702520220109",
+    "area_total_otro": 5002.99,
+    "area_riego_otro": 5002.99,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 5002.99,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Sector: Santa Marianita de Pingulmi"
+  },
+  {
+    "fid": 2838,
+    "id_adicional": "{f50ae7bb-98d3-4d3b-b25d-2b8629deaed6}",
+    "ficha_id": "{562b2e56-65cc-47e8-916c-6dbc1494c1bb}",
+    "clave_catastral_otro": "1702521390045",
+    "area_total_otro": 16108.03,
+    "area_riego_otro": 2000.0,
+    "area_sin_riego_otro": 14108.03,
+    "area_lote_asignado_otro": 16108.03
+  },
+  {
+    "fid": 2839,
+    "id_adicional": "{3f31c5bd-0c96-4337-a8de-1c5753197777}",
+    "ficha_id": "{b1241691-50ad-4a2b-9eb7-45f95f48a327}",
+    "clave_catastral_otro": "1702520240018",
+    "area_total_otro": 9015.32,
+    "area_riego_otro": 9015.0,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 9015.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Invernadero de rosas"
   }
 ]
