@@ -18934,18 +18934,6 @@
     "observaciones_otro": "Unificación física. Ficha original: {5dea5cef-2cbb-4248-a524-464b15d6b873}. Técnico: Martha Simbaña en 2026-05-21T15:39:38.561Z."
   },
   {
-    "fid": 1736,
-    "id_adicional": "{5eefe708-e55f-4cc4-be94-2a9f618d2600}",
-    "ficha_id": "{4a7321dc-edbd-42c6-809d-794fa8505eaa}",
-    "clave_catastral_otro": "1702521010143",
-    "area_total_otro": 2503.51,
-    "area_riego_otro": 2503.51,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 2503.51,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {5eefe708-e55f-4cc4-be94-2a9f618d2600}. Técnico: Martha Simbaña en 2026-05-21T08:56:33.246Z."
-  },
-  {
     "fid": 1737,
     "id_adicional": "{e62f71bb-ae36-4109-a103-6c70e397c27e}",
     "ficha_id": "{63478567-b7f6-4c8c-b7ba-62f33266031e}",
@@ -20012,18 +20000,6 @@
     "area_lote_asignado_otro": 5743.56,
     "tiene_observaciones": 1,
     "observaciones_otro": "Unificación física. Ficha original: {7bd628a3-82e8-48c9-876c-2566fd9d5572}. Técnico: Huguito Ipial en 2026-06-02T10:22:20.837Z. Obs. Orig: EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DEL PAPA. "
-  },
-  {
-    "fid": 1827,
-    "id_adicional": "{8383f9cd-e0f5-4722-a18a-032d078e3824}",
-    "ficha_id": "{6de8536e-f202-4f5e-b084-7401418d0744}",
-    "clave_catastral_otro": "1702521560010",
-    "area_total_otro": 10450.11,
-    "area_riego_otro": 10450.11,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 10450.11,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {8383f9cd-e0f5-4722-a18a-032d078e3824}. Técnico: Huguito Ipial en 2026-06-02T12:58:21Z. Obs. Orig: ESTE PREDIO PERTENECE A LA COMUNA DE POROTOG Y QUEDA COMO COMUNERO REGANTE SU SEÑOR PRESIDENTE."
   },
   {
     "fid": 1828,
@@ -31188,5 +31164,116 @@
     "area_riego_otro": 18450.39,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 18450.39
+  },
+  {
+    "fid": 2843,
+    "id_adicional": "{f36cd4d5-b3cf-46d4-8195-b1224d4ce85f}",
+    "ficha_id": "{db061ed8-4831-4d42-a021-6ba45c50635f}",
+    "clave_catastral_otro": "1702521450071",
+    "area_total_otro": 1975.33,
+    "area_riego_otro": 1975.33,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1975.33
+  },
+  {
+    "fid": 2844,
+    "id_adicional": "{88f0ad2e-f3fe-49cf-8928-273ed635817f}",
+    "ficha_id": "{4a7321dc-edbd-42c6-809d-794fa8505eaa}",
+    "clave_catastral_otro": "1702521450002",
+    "area_total_otro": 10650.76,
+    "area_riego_otro": 10650.76,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 10650.76
+  },
+  {
+    "fid": 2845,
+    "id_adicional": "{c996c124-987c-4804-a33b-413e6115c5d4}",
+    "ficha_id": "{688080ae-7765-47c5-a62d-b9f85d5ce947}",
+    "clave_catastral_otro": "1702521440132",
+    "area_total_otro": 499.99,
+    "area_riego_otro": 499.99,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 499.99
+  },
+  {
+    "fid": 2846,
+    "id_adicional": "{bbc21d7c-ff02-4f2a-a39e-94d9eda8c505}",
+    "ficha_id": "{688080ae-7765-47c5-a62d-b9f85d5ce947}",
+    "clave_catastral_otro": "1702521440135",
+    "area_total_otro": 1567.83,
+    "area_riego_otro": 1567.83,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1567.83
+  },
+  {
+    "fid": 2847,
+    "id_adicional": "{d3b4efb9-197b-4123-9c29-55250ae8a4d1}",
+    "ficha_id": "{688080ae-7765-47c5-a62d-b9f85d5ce947}",
+    "clave_catastral_otro": "1702521730051",
+    "area_total_otro": 4058.45,
+    "area_riego_otro": 4058.45,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4058.45
+  },
+  {
+    "fid": 2848,
+    "id_adicional": "{4c2a121e-ac6d-4613-94d5-1eae5c14974c}",
+    "ficha_id": "{a8bd58a0-cbdc-460f-887f-f54e4827865d}",
+    "clave_catastral_otro": "1702521440021",
+    "area_total_otro": 1879.56,
+    "area_riego_otro": 1879.56,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1879.56
+  },
+  {
+    "fid": 2849,
+    "id_adicional": "{e7cd49f3-b9fb-430a-a18b-8c5c68e1ab00}",
+    "ficha_id": "{23579302-d84a-460b-a89c-c90e98c74583}",
+    "clave_catastral_otro": "1702520590068",
+    "area_total_otro": 52999.74,
+    "area_riego_otro": 52999.74,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 52999.74
+  },
+  {
+    "fid": 2850,
+    "id_adicional": "{9f35b052-a4c5-4a23-8109-98a2c9b48b90}",
+    "ficha_id": "{23579302-d84a-460b-a89c-c90e98c74583}",
+    "clave_catastral_otro": "1702520590011",
+    "area_total_otro": 21001.53,
+    "area_riego_otro": 21001.53,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 21001.53
+  },
+  {
+    "fid": 2851,
+    "id_adicional": "{6481958e-5c88-43b5-b776-c97255af5087}",
+    "ficha_id": "{23579302-d84a-460b-a89c-c90e98c74583}",
+    "clave_catastral_otro": "1702520600081",
+    "area_total_otro": 12093.31,
+    "area_riego_otro": 12093.31,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 12093.31
+  },
+  {
+    "fid": 2852,
+    "id_adicional": "{f01f69b9-8f1d-4e9f-995c-ae306a868f16}",
+    "ficha_id": "{26423085-392d-4a41-b641-cb9e9462cfae}",
+    "clave_catastral_otro": "1702520720162",
+    "area_total_otro": 7098.68,
+    "area_riego_otro": 7098.68,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 7098.68
+  },
+  {
+    "fid": 2853,
+    "id_adicional": "{a832123d-f6db-4420-bf6b-fa97f81083d0}",
+    "ficha_id": "{bfb01670-14f6-4977-b1ca-93d0d03d5bda}",
+    "area_total_otro": 1458.75,
+    "area_riego_otro": 820.4,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 820.4,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE TIENE OTRO PREDIO CON CLAVE CATASTRAL 1702510100040100049000"
   }
 ]
