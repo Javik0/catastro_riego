@@ -3465,17 +3465,6 @@
     "observaciones_otro": "EL REGANTE NO POSEE ESCRITURAS ESTA ENNPROCESO DE OBTENCION Y ESTA UBICADO EN EL SECTOR DE MORAS"
   },
   {
-    "fid": 359,
-    "id_adicional": "{8705420e-6e43-4651-bf4b-c154911608bc}",
-    "ficha_id": "{b37dafb7-14e9-4f21-bb1d-5f9a7b4ab5ec}",
-    "area_total_otro": 0.0,
-    "area_riego_otro": 0.0,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 0.0,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "EL REGANTE NO RECUERDA LA CLAVE CATASTRAL Y NO POSEE ESCRITURAS ESTA EN PROCESO Y QUEDA EN EL SECTOR DE MORAS."
-  },
-  {
     "fid": 360,
     "id_adicional": "{bef56100-5d66-4682-9ada-8ee68f678610}",
     "ficha_id": "{14ae6273-bc52-40a3-a137-5fd5103db5f8}",
@@ -6902,9 +6891,9 @@
     "ficha_id": "{c3c9bc9b-2772-49e4-8c9e-06ef3c5c4b35}",
     "clave_catastral_otro": "1702520520010",
     "area_total_otro": 6367.46,
-    "area_riego_otro": 6367.0,
-    "area_sin_riego_otro": -6367.0,
-    "area_lote_asignado_otro": 6367.0,
+    "area_riego_otro": 6367.46,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 6367.46,
     "tiene_observaciones": 1,
     "observaciones_otro": "Esta en el sector San Jose tiene cultivo de pasto mejorado"
   },
@@ -6914,9 +6903,9 @@
     "ficha_id": "{c3c9bc9b-2772-49e4-8c9e-06ef3c5c4b35}",
     "clave_catastral_otro": "1702520470008",
     "area_total_otro": 4399.79,
-    "area_riego_otro": 4399.0,
-    "area_sin_riego_otro": -4399.0,
-    "area_lote_asignado_otro": 4399.0,
+    "area_riego_otro": 4399.79,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4399.79,
     "tiene_observaciones": 1,
     "observaciones_otro": "Esta ubicado en el sector Sarachupa. Tiene un invernadero de 3000 m."
   },
@@ -6926,9 +6915,9 @@
     "ficha_id": "{c3c9bc9b-2772-49e4-8c9e-06ef3c5c4b35}",
     "clave_catastral_otro": "1702521490065",
     "area_total_otro": 14781.96,
-    "area_riego_otro": 14781.0,
-    "area_sin_riego_otro": -14781.0,
-    "area_lote_asignado_otro": 14781.0,
+    "area_riego_otro": 14781.96,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 14781.96,
     "tiene_observaciones": 1,
     "observaciones_otro": "Esta ubicado en el sector Moras. 5000 m de saboya. El resto de pasto natural y mejorado"
   },
@@ -6938,9 +6927,9 @@
     "ficha_id": "{c3c9bc9b-2772-49e4-8c9e-06ef3c5c4b35}",
     "clave_catastral_otro": "1702521490011",
     "area_total_otro": 2594.81,
-    "area_riego_otro": 2594.0,
-    "area_sin_riego_otro": -2594.0,
-    "area_lote_asignado_otro": 2594.0,
+    "area_riego_otro": 2594.81,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2594.81,
     "tiene_observaciones": 1,
     "observaciones_otro": "Sector Paramo de Moras. Pasto mejorado "
   },
@@ -31275,5 +31264,25 @@
     "area_lote_asignado_otro": 820.4,
     "tiene_observaciones": 1,
     "observaciones_otro": "EL COMUNERO REGANTE TIENE OTRO PREDIO CON CLAVE CATASTRAL 1702510100040100049000"
+  },
+  {
+    "fid": 2854,
+    "id_adicional": "{77f0256c-56f4-48b2-9997-8f2303498ba8}",
+    "ficha_id": "{035d3559-5e42-4fb5-b719-b39d5d1efb03}",
+    "clave_catastral_otro": "1702520510024",
+    "area_total_otro": 9643.1,
+    "area_riego_otro": 1458.75,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2855,
+    "id_adicional": "{6042cfda-6451-4b50-8bc1-b0a555c3b0e9}",
+    "ficha_id": "{53d0f56f-2a38-4657-937c-6272579bdd08}",
+    "clave_catastral_otro": "1702521030059",
+    "area_total_otro": 448.71,
+    "area_riego_otro": 448.71,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 448.71
   }
 ]
