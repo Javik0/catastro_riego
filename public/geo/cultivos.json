@@ -67861,5 +67861,14 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "ref_area_predio": 52999.74
+  },
+  {
+    "id_cultivo": "{2580fff1-d13e-402f-85d5-2d5041caa336}",
+    "ficha_id": "{d3c77bcf-b7ea-4290-8c29-35b9f6368812}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 785611.57,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 785611.57
   }
 ]
