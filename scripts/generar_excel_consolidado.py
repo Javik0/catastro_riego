@@ -1,20 +1,24 @@
 # -*- coding: utf-8 -*-
 """
 Generar reporte Excel catastral premium ejecutivo de entrega para el cliente.
-Extrae el 100% de los registros catastrales de data.gpkg y estructura las pestañas
-con hipervínculos cruzados bidireccionales, formatos corporativos y fórmulas.
-Incluye columnas corregidas y campos de estructura social y riego.
+Lee del GeoJSON depurado de la web para garantizar consistencia del 100% con el Dashboard.
+Estructura las pestañas con hipervínculos cruzados bidireccionales, formatos corporativos y fórmulas.
 """
 
 import os
-import sqlite3
+import json
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
-# Rutas de base de datos y entregable
-QFIELD_DIR = r'C:\Users\HP\QField\cloud\porotog_levantamiento_offline'
-DATA_GPKG  = os.path.join(QFIELD_DIR, 'data.gpkg')
+# Directorio del proyecto web y archivos JSON depurados
+PROJECT_DIR = r"C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO\padron-app"
+GEO_DIR = os.path.join(PROJECT_DIR, "public", "geo")
+
+FICHAS_GEOJSON = os.path.join(GEO_DIR, "fichas_predios.geojson")
+CULTIVOS_JSON = os.path.join(GEO_DIR, "cultivos.json")
+ANIMALES_JSON = os.path.join(GEO_DIR, "animales.json")
+ADICIONALES_JSON = os.path.join(GEO_DIR, "predios_adicionales.json")
 
 # Guardar en Escritorio y Descargas
 OUTPUT_XLSX_DESKTOP = r"C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO\padron_usuarios_riego_consolidado.xlsx"
@@ -127,60 +131,49 @@ def get_tecnico_name(usr):
     return MAPEO_TECNICOS.get(usr, str(usr))
 
 def main():
-    if not os.path.exists(DATA_GPKG):
-        print(f"[ERROR] Base de datos no encontrada en: {DATA_GPKG}")
+    if not os.path.exists(FICHAS_GEOJSON):
+        print(f"[ERROR] Archivo GeoJSON de fichas no encontrado en: {FICHAS_GEOJSON}")
         return
 
     print("=" * 85)
-    print(" INICIANDO EXPORTACIÓN CATASTRAL PREMIUM A EXCEL (AJUSTES DE COLUMNAS)")
+    print(" GENERANDO EXCEL CATASTRAL CONSISTENTE CON LA WEB (LEENDO DE GEOJSON)")
     print("=" * 85)
 
-    conn = sqlite3.connect(DATA_GPKG)
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tables = [t[0] for t in cursor.fetchall()]
-    
-    fichas_table = next((t for t in tables if t.startswith('Fichas_Predios')), None)
-    cultivos_table = next((t for t in tables if t.startswith('Cultivos_Agricolas')), None)
-    animales_table = next((t for t in tables if t.startswith('Animales_Especies')), None)
-    predios_table = next((t for t in tables if t.startswith('Predios_Adicionales')), None)
-
-    # 1. Cargar todas las fichas (Padrón) incluyendo los campos sociales y técnicos
-    query_fichas = f"""
-        SELECT fid_1, id, codigo_final, propietario, apellidos, nombres, cedula, clave_catastral, parroquia, comunidad, 
-               sector_comunidad, canal, area_total, area_riego, area_sin_riego, frecuencia_riego, 
-               metodo_gravedad_pct, metodo_aspersion_pct, metodo_goteo_pct, valor_tarifa, tipo_tarifa, 
-               creado_por, fecha_creacion, sector_investigacion, sector,
-               hijos_hombres, hijos_mujeres, nivel_instruccion, tenencia_predio, tiene_reservorio,
-               dias_riego, horas_turno, agua_consumo, energia_electrica
-        FROM {fichas_table}
-        ORDER BY fid_1 ASC
-    """
-    df_fichas = pd.read_sql_query(query_fichas, conn)
-    print(f"Cargados {len(df_fichas)} predios de {fichas_table}")
+    # 1. Cargar fichas del GeoJSON depurado
+    with open(FICHAS_GEOJSON, 'r', encoding='utf-8') as f:
+        geojson_data = json.load(f)
+    properties_list = [feat['properties'] for feat in geojson_data['features']]
+    df_fichas = pd.DataFrame(properties_list)
+    print(f"Cargados {len(df_fichas)} predios depurados de {FICHAS_GEOJSON}")
 
     # 2. Cargar cultivos
-    query_cultivos = f"SELECT ficha_id, tipo_cultivo, superficie_m2, es_principal FROM {cultivos_table}"
-    df_cultivos = pd.read_sql_query(query_cultivos, conn)
-    print(f"Cargados {len(df_cultivos)} cultivos de {cultivos_table}")
+    df_cultivos = pd.read_json(CULTIVOS_JSON)
+    print(f"Cargados {len(df_cultivos)} cultivos depurados de {CULTIVOS_JSON}")
 
     # 3. Cargar animales
-    query_animales = f"SELECT ficha_id, especie, cantidad FROM {animales_table}"
-    df_animales = pd.read_sql_query(query_animales, conn)
-    print(f"Cargados {len(df_animales)} animales de {animales_table}")
+    df_animales = pd.read_json(ANIMALES_JSON)
+    print(f"Cargados {len(df_animales)} animales depurados de {ANIMALES_JSON}")
 
     # 4. Cargar predios adicionales
-    query_adicionales = f"SELECT ficha_id, clave_catastral_otro, area_total_otro FROM {predios_table}"
-    df_adicionales = pd.read_sql_query(query_adicionales, conn)
-    print(f"Cargados {len(df_adicionales)} predios adicionales de {predios_table}")
-
-    conn.close()
+    df_adicionales = pd.read_json(ADICIONALES_JSON)
+    print(f"Cargados {len(df_adicionales)} predios adicionales depurados de {ADICIONALES_JSON}")
 
     # ─────────────────────────────────────────────────────────────────────────
     # PRE-PROCESAMIENTO Y DEPURACIÓN DE DATOS (CLIENTE)
     # ─────────────────────────────────────────────────────────────────────────
-    # Normalizar Propietario
+    # Asegurar que todas las columnas clave existan en el DataFrame (evita errores si vienen vacías)
+    columnas_requeridas = [
+        'id', 'codigo_final', 'propietario', 'apellidos', 'nombres', 'cedula', 'clave_catastral',
+        'parroquia', 'comunidad', 'sector_comunidad', 'canal', 'sector', 'area_total', 'area_riego',
+        'area_sin_riego', 'tiene_reservorio', 'dias_riego', 'horas_turno', 'agua_consumo',
+        'energia_electrica', 'frecuencia_riego', 'metodo_gravedad_pct', 'metodo_aspersion_pct',
+        'metodo_goteo_pct', 'valor_tarifa', 'tipo_tarifa', 'creado_por', 'fecha_creacion',
+        'sector_investigacion', 'hijos_hombres', 'hijos_mujeres', 'nivel_instruccion', 'tenencia_predio'
+    ]
+    for col in columnas_requeridas:
+        if col not in df_fichas.columns:
+            df_fichas[col] = None
+
     df_fichas['propietario'] = df_fichas.apply(
         lambda r: f"{r['apellidos'] or ''} {r['nombres'] or ''}".strip().upper() or str(r['propietario'] or '').strip().upper(),
         axis=1
@@ -197,11 +190,11 @@ def main():
 
     df_fichas['comunidad_norm'] = df_fichas['comunidad'].apply(normalize_com)
     
-    # Derivar sector_investigacion priorizando la comunidad
+    # Derivar sector_investigacion priorizando la comunidad (idéntico al frontend)
     def derivar_sector(row):
         c_norm = normalize_com(row['comunidad'])
         
-        # Para Asociación Rosalía respetamos el sector ingresado en SQLite si existe
+        # Para Asociación Rosalía respetamos el sector ingresado en SQLite/GeoJSON si existe
         if c_norm == 'ASOCIACION ROSALIA':
             val = row['sector_investigacion']
             if isinstance(val, str) and val.strip() != '':
@@ -239,7 +232,6 @@ def main():
     
     align_center = Alignment(horizontal='center', vertical='center')
     align_left = Alignment(horizontal='left', vertical='center')
-    align_right = Alignment(horizontal='right', vertical='center')
     
     border_thin = Side(style='thin', color='CBD5E1')
     border_double = Side(style='double', color='0F5132')
@@ -312,7 +304,7 @@ def main():
         cell.border = total_border
 
     # ─────────────────────────────────────────────────────────────────────────
-    # PESTAÑA 2: PADRÓN GENERAL (CATASTRO) - INCLUYENDO NUEVOS CAMPOS Y CORRECCIONES
+    # PESTAÑA 2: PADRÓN GENERAL (CATASTRO)
     # ─────────────────────────────────────────────────────────────────────────
     ws_padron = wb.create_sheet(title="Padrón General")
     ws_padron.views.sheetView[0].showGridLines = True
@@ -369,10 +361,10 @@ def main():
         ws_padron.cell(row=r_num, column=10, value=row['comunidad']).alignment = align_left
         ws_padron.cell(row=r_num, column=11, value=row['canal'] or row['sector'] or '').alignment = align_left
         
-        # Áreas (Formatos corregidos a CON y SIN riego)
-        ws_padron.cell(row=r_num, column=12, value=row['area_total']).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=13, value=row['area_riego']).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=14, value=row['area_sin_riego']).number_format = '#,##0.00'
+        # Áreas
+        ws_padron.cell(row=r_num, column=12, value=row['area_total'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=13, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=14, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
         
         # Reservorio y turnos de riego
         ws_padron.cell(row=r_num, column=15, value=row['tiene_reservorio'] or '').alignment = align_center
