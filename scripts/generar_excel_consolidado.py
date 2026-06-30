@@ -50,23 +50,65 @@ COMUNIDADES_POR_SECTOR = {
 
 # Metas de regantes planificadas de constants.ts
 META_COMUNEROS = {
-    "CARRERA": 280, "LA CANDELARIA": 170, "COCHAPAMBA": 244, "LARCACHACA": 103,
-    "CHAMBITOLA": 120, "LA LIBERTAD": 125, "SAN ANTONIO": 96, "SAN JOSÉ": 140,
-    "SANTA BÁRBARA": 73, "ASOCIACIÓN POROTOG": 21, "COMUNA POROTOG": 67,
-    "MILAGRO": 33, "ASOCIACIÓN 17 DE JUNIO": 45, "JESÚS GRAN PODER": 20,
-    "MATÍAS IMBAGO": 45, "CORDILLERAS DE LOS ANDES": 48, "COMUNA IZACATA": 19,
-    "IZACATA GRANDE": 65, "LOS ANDES IZACATA": 18, "LOMA GORDA": 23,
-    "SAN JACINTO": 25, "AVELLANEDA": 10,
-    "PUCARÁ": 100, "CUARTO LOTE": 43, "PAMBAMARCA": 170, "ALPAKA": 490,
-    "ASOCIACIÓN SAN PEDRO": 50, "ASOC. SAN VICENTE ALTO": 115, "ASOC. SAN VICENTE BAJO": 100,
-    "PITANA ALTO": 76, "ASOC. PITANA BAJO": 45, "PROMEJ. PITANA BAJO": 40,
-    "SANTA ROSA DE PACCHA": 70, "SANTA ROSA DE PINGULMI": 45, "SANTA MARIANITA DE PINGULMI": 45,
-    "ASOCIACIÓN ROSALÍA": 30,
-    "OTONCITO": 60, "PAMBAMARQUITO": 285, "MONTESERRÍN ALTO": 85, "MONTESERÍN BAJO": 118,
-    "HDA. GUANGUILQUI": 2, "HDA. SAN FRANSISCO": 2, "SR. HERNÁN TIMPE": 1,
-    "SR. COLOMA": 2, "PUEBLO DE OTÓN": 150, "CHAUPIESTANCIA": 60, "CANGAHUA PUNGO": 105,
-    "CHINCHINLOMA": 60, "EL MANZANO": 80, "JUNTA SAN LUIS": 120, "PUEBLO DE ASCÁZUBI": 190,
-    "SAN VICENTE DE GUAYLLABAMBA": 102, "ASOCIACIÓN ROSALÍA": 30
+    # Sector 1
+    "LARCACHACA": 103,
+    "LA LIBERTAD": 125,
+    "SAN ANTONIO": 95,
+    "SAN JOSÉ": 120,
+    "MILAGRO": 38,
+    "ASOCIACIÓN 17 DE JUNIO": 32,
+    "CHAMBITOLA": 120,
+    "LA CANDELARIA": 170,
+    "CARRERA": 280,
+    "MATÍAS IMBAGO": 1,
+    "COCHAPAMBA": 244,
+    "JESÚS GRAN PODER": 56,
+    "SANTA BÁRBARA": 6,
+    "ASOCIACIÓN POROTOG": 48,
+    "COMUNA POROTOG": 80,
+    "CORDILLERAS DE LOS ANDES": 43,
+    "COMUNA IZACATA": 65,
+    "IZACATA GRANDE": 43,
+    "LOS ANDES IZACATA": 48,
+    "LOMA GORDA": 45,
+    "SAN JACINTO": 6,
+    
+    # Sector 2
+    "CUARTO LOTE": 46,
+    "ASOC. SAN VICENTE BAJO": 80,
+    "SANTA ROSA DE PACCHA": 46,
+    "ASOC. SAN VICENTE ALTO": 59,
+    "PUCARÁ": 231,
+    "ASOCIACIÓN SAN PEDRO": 24,
+    "PITANA ALTO": 99,
+    "ALPAKA": 15,
+    "ASOC. PITANA BAJO": 42,
+    "PROMEJ. PITANA BAJO": 180,
+    "SANTA ROSA DE PINGULMI": 117,
+    "SANTA MARIANITA DE PINGULMI": 189,
+    "PAMBAMARCA": 61,
+    
+    # Sector 3
+    "OTONCITO": 66,
+    "PAMBAMARQUITO": 100,
+    "MONTESERRÍN ALTO": 27,
+    "CHAUPIESTANCIA": 150,
+    "PUEBLO DE OTÓN": 152,
+    "CANGAHUA PUNGO": 147,
+    "CHINCHINLOMA": 80,
+    "ASOCIACIÓN ROSALÍA": 41,
+    "SR. COLOMA": 16,
+    "MONTESERÍN BAJO": 118,
+    "HDA. GUANGUILQUI": 15,
+    "PUEBLO DE ASCÁZUBI": 16,
+    "EL MANZANO": 19,
+    "JUNTA SAN LUIS": 33,
+    "SAN VICENTE DE GUAYLLABAMBA": 453,
+    
+    # Comunidades sin datos meta pero existentes
+    "AVELLANEDA": 0,
+    "HDA. SAN FRANSISCO": 0,
+    "SR. HERNÁN TIMPE": 0
 }
 
 MAPEO_TECNICOS = {
@@ -146,16 +188,37 @@ def main():
     df_fichas['cedula'] = df_fichas['cedula'].astype(str).str.strip()
     df_fichas['comunidad'] = df_fichas['comunidad'].fillna('').str.strip()
     
-    # Derivar sector_investigacion si está vacío
+    def normalize_com(c):
+        if not c: return ""
+        c = str(c).upper().strip()
+        for a, b in [('Á','A'), ('É','E'), ('Í','I'), ('Ó','O'), ('Ú','U'), ('Ñ','N')]:
+            c = c.replace(a, b)
+        return c
+
+    df_fichas['comunidad_norm'] = df_fichas['comunidad'].apply(normalize_com)
+    
+    # Derivar sector_investigacion priorizando la comunidad
     def derivar_sector(row):
+        c_norm = normalize_com(row['comunidad'])
+        
+        # Para Asociación Rosalía respetamos el sector ingresado en SQLite si existe
+        if c_norm == 'ASOCIACION ROSALIA':
+            val = row['sector_investigacion']
+            if isinstance(val, str) and val.strip() != '':
+                return val.strip()
+            return 'Sector 3'
+            
+        # Para las demás, la comunidad manda sobre el sector de investigación
+        for sec, coms in COMUNIDADES_POR_SECTOR.items():
+            if any(normalize_com(c) == c_norm for c in coms):
+                return sec
+                
+        # Fallback al valor físico o por defecto
         val = row['sector_investigacion']
         if isinstance(val, str) and val.strip() != '':
             return val.strip()
-        c_norm = str(row['comunidad']).upper().strip()
-        for sec, coms in COMUNIDADES_POR_SECTOR.items():
-            if any(c.upper().strip() == c_norm for c in coms):
-                return sec
         return 'Sector 1'
+        
     df_fichas['sector_investigacion'] = df_fichas.apply(derivar_sector, axis=1)
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -208,7 +271,10 @@ def main():
     for sectorName in ['Sector 1', 'Sector 2', 'Sector 3']:
         coms = COMUNIDADES_POR_SECTOR[sectorName]
         planificado = sum(META_COMUNEROS.get(c, 0) for c in coms)
-        levantado = len(df_fichas[(df_fichas['comunidad'].str.upper().isin([c.upper() for c in coms])) & (df_fichas['sector_investigacion'] == sectorName)])
+        
+        # Conteo robusto de fichas levantadas insensible a tildes
+        coms_norm = [normalize_com(c) for c in coms]
+        levantado = len(df_fichas[(df_fichas['comunidad_norm'].isin(coms_norm)) & (df_fichas['sector_investigacion'] == sectorName)])
         
         ws_dashboard.cell(row=r_idx, column=2, value=sectorName.upper()).font = font_bold
         ws_dashboard.cell(row=r_idx, column=3, value=f"{len(coms)} comunidades").alignment = align_center
@@ -563,14 +629,40 @@ def main():
     ws_dashboard.column_dimensions['E'].width = 25
     ws_dashboard.column_dimensions['F'].width = 20
 
-    # Guardar en Escritorio
-    wb.save(OUTPUT_XLSX_DESKTOP)
-    # Guardar en Descargas
-    wb.save(OUTPUT_XLSX_DOWNLOADS)
+    # Guardar los archivos de forma segura
+    saved_desktop = False
+    saved_downloads = False
     
-    print(f"\n[OK] Excel catastral premium guardado exitosamente en:")
-    print(f"  - {OUTPUT_XLSX_DESKTOP}")
-    print(f"  - {OUTPUT_XLSX_DOWNLOADS}")
+    try:
+        wb.save(OUTPUT_XLSX_DESKTOP)
+        print(f"  ✓ Guardado en Escritorio: {OUTPUT_XLSX_DESKTOP}")
+        saved_desktop = True
+    except PermissionError:
+        alt_path = OUTPUT_XLSX_DESKTOP.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
+        try:
+            wb.save(alt_path)
+            print(f"  ⚠️ Escritorio bloqueado (Excel abierto). Guardado alternativo en:\n    -> {alt_path}")
+            saved_desktop = True
+        except Exception as e:
+            print(f"  ❌ Error al guardar archivo alternativo en Escritorio: {e}")
+            
+    try:
+        wb.save(OUTPUT_XLSX_DOWNLOADS)
+        print(f"  ✓ Guardado en Descargas: {OUTPUT_XLSX_DOWNLOADS}")
+        saved_downloads = True
+    except PermissionError:
+        alt_path = OUTPUT_XLSX_DOWNLOADS.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
+        try:
+            wb.save(alt_path)
+            print(f"  ⚠️ Descargas bloqueado (Excel abierto). Guardado alternativo en:\n    -> {alt_path}")
+            saved_downloads = True
+        except Exception as e:
+            print(f"  ❌ Error al guardar archivo alternativo en Descargas: {e}")
+
+    if saved_desktop or saved_downloads:
+        print(f"\n[OK] Excel catastral premium generado con éxito.")
+    else:
+        print(f"\n[ERROR] No se pudo guardar el archivo de Excel en ninguna ruta.")
     print("=" * 85)
 
 if __name__ == "__main__":

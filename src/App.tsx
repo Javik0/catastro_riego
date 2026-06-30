@@ -116,15 +116,29 @@ function useLocalData() {
             comunidad: com,
             comunidad_original: f.properties.comunidad || '',
             sector_investigacion: (() => {
-              const val = f.properties.sector_investigacion;
-              if (val && val.trim() !== '') return val;
-              const cNorm = com.toUpperCase().trim();
+              const cleanText = (t: string) => {
+                return t.toUpperCase().trim()
+                  .replace(/Á/g, 'A').replace(/É/g, 'E').replace(/Í/g, 'I')
+                  .replace(/Ó/g, 'O').replace(/Ú/g, 'U').replace(/Ñ/g, 'N');
+              };
+              const cNorm = cleanText(com);
+              
+              // Para Asociación Rosalía respetamos el sector ingresado en SQLite si existe
+              if (cNorm === 'ASOCIACION ROSALIA') {
+                const val = f.properties.sector_investigacion;
+                if (val && val.trim() !== '') return val.trim();
+                return 'Sector 3';
+              }
+              
+              // Para las demás, la comunidad manda sobre el sector de investigación
               for (const [sec, coms] of Object.entries(COMUNIDADES_POR_SECTOR)) {
-                if (coms.some(c => c.toUpperCase().trim() === cNorm)) {
+                if (coms.some(c => cleanText(c) === cNorm)) {
                   return sec;
                 }
               }
-              return 'Sector 1';
+              
+              // Fallback al valor físico o por defecto
+              return f.properties.sector_investigacion?.trim() || 'Sector 1';
             })(),
             sector: f.properties.sector || '',
             cedula: f.properties.cedula || '',
