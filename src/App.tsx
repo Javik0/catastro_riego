@@ -114,6 +114,7 @@ function useLocalData() {
             creado_por: f.properties.creado_por || '',
             parroquia: f.properties.parroquia || '',
             comunidad: com,
+            comunidad_original: f.properties.comunidad || '',
             sector_investigacion: f.properties.sector_investigacion || 'Sector 1',
             sector: f.properties.sector || '',
             cedula: f.properties.cedula || '',

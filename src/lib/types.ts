@@ -39,6 +39,7 @@ export interface FichaPredio {
   clave_catastral: string;
   parroquia: string;
   comunidad?: string;
+  comunidad_original?: string;
   sector_investigacion?: string;
   sector: string;
   telefono_celular?: string;

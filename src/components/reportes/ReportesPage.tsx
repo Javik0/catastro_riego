@@ -294,6 +294,127 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   const generatePDF = async () => {
     setGenerating('pdf');
     try {
+      if (reportType === 'resumen_sectores') {
+        const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        
+        // Helper para cabecera de página
+        const drawHeader = async (title: string) => {
+          try {
+            const logoIzq = await loadImageWithSize('/logo-izq.png');
+            const hIzq = 14;
+            const wIzq = (logoIzq.width / logoIzq.height) * hIzq;
+            doc.addImage(logoIzq.data, 'PNG', 8, 6, wIzq, hIzq);
+          } catch {}
+          try {
+            const logoDer = await loadImageWithSize('/logo-der.png');
+            const hDer = 12;
+            const wDer = (logoDer.width / logoDer.height) * hDer;
+            doc.addImage(logoDer.data, 'PNG', pageWidth - wDer - 8, 7, wDer, hDer);
+          } catch {}
+
+          doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+          doc.text(PROJECT_TITLE, pageWidth / 2, 12, { align: 'center' });
+          doc.setFontSize(8);
+          doc.text(PROJECT_SUBTITLE, pageWidth / 2, 17, { align: 'center' });
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
+          doc.text(PROJECT_LOCATION, pageWidth / 2, 21, { align: 'center' });
+          doc.setFontSize(8); doc.setFont('helvetica', 'bold');
+          doc.text(title, pageWidth / 2, 26, { align: 'center' });
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Generado: ${new Date().toLocaleDateString('es-EC')} | Catastro de Riego`, pageWidth / 2, 30, { align: 'center' });
+        };
+
+        // Generar 1 página para cada Sector
+        for (let i = 0; i < 3; i++) {
+          const sectorName = `Sector ${i + 1}`;
+          if (i > 0) doc.addPage();
+          await drawHeader(`CUADRO COMPARATIVO DE AVANCE - ${sectorName.toUpperCase()}`);
+          
+          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          let totalMeta = 0;
+          let totalLevantado = 0;
+          
+          const rows = comunidadesSector.map((comunidad) => {
+            const meta = META_COMUNEROS[comunidad] || 0;
+            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+            totalMeta += meta;
+            totalLevantado += fichasCount;
+            const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
+            return [
+              comunidad,
+              meta > 0 ? meta.toLocaleString('es-EC') : '-',
+              fichasCount.toLocaleString('es-EC'),
+              `${pct.toFixed(0)}%`
+            ];
+          });
+
+          const pctTotal = totalMeta > 0 ? (totalLevantado / totalMeta) * 100 : 0;
+          rows.push([
+            'TOTAL SECTOR',
+            totalMeta.toLocaleString('es-EC'),
+            totalLevantado.toLocaleString('es-EC'),
+            `${pctTotal.toFixed(1)}%`
+          ]);
+
+          autoTable(doc, {
+            startY: 35,
+            head: [['COMUNIDAD', 'CATASTRO BASE (# PLANIFICADO)', 'ENCUESTAS REALIZADAS (LEVANTADO)', 'PORCENTAJE AVANCE']],
+            body: rows,
+            theme: 'striped',
+            headStyles: { fillColor: [30, 41, 59], fontSize: 8, fontStyle: 'bold', halign: 'center' },
+            bodyStyles: { fontSize: 7.5, valign: 'middle' },
+            columnStyles: {
+              0: { cellWidth: 100, fontStyle: 'bold' },
+              1: { cellWidth: 50, halign: 'center' },
+              2: { cellWidth: 50, halign: 'center' },
+              3: { cellWidth: 40, halign: 'center', fontStyle: 'bold' }
+            },
+            didParseCell: (dataCell) => {
+              if (dataCell.row.index === rows.length - 1) {
+                dataCell.cell.styles.fillColor = [226, 232, 240];
+                dataCell.cell.styles.fontStyle = 'bold';
+              }
+            }
+          });
+        }
+
+        // Página 4: Fichas Huérfanas
+        doc.addPage();
+        await drawHeader('AUDITORÍA DE FICHAS CON COMUNIDAD EN BLANCO (CÓDIGOS FID_1 PARA CORRECCIÓN)');
+        
+        const vacias = allFichas.filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None');
+        
+        const vaciasRows = vacias.map((f, i) => [
+          i + 1,
+          f.id,
+          f.codigo_final || 'S/C',
+          f.propietario,
+          getNombreTecnico(f.creado_por),
+          safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')
+        ]);
+
+        autoTable(doc, {
+          startY: 35,
+          head: [['#', 'ID FÍSICO (fid_1)', 'CÓDIGO PREDIO', 'PROPIETARIO / REGANTE', 'TÉCNICO', 'FECHA REGISTRO']],
+          body: vaciasRows,
+          theme: 'grid',
+          headStyles: { fillColor: [185, 28, 28], fontSize: 8, fontStyle: 'bold', halign: 'center' },
+          bodyStyles: { fontSize: 7.5, valign: 'middle' },
+          columnStyles: {
+            0: { cellWidth: 15, halign: 'center' },
+            1: { cellWidth: 35, halign: 'center', fontStyle: 'bold' },
+            2: { cellWidth: 45, halign: 'center' },
+            3: { cellWidth: 90 },
+            4: { cellWidth: 50 },
+            5: { cellWidth: 40, halign: 'center' }
+          }
+        });
+
+        doc.save(`catastro_avance_sectores_${Date.now()}.pdf`);
+        return;
+      }
+
       const data = getFilteredFichas();
       const subtitles: Record<ReportType, string> = {
         general: 'REPORTE GENERAL DE FICHAS INVESTIGADAS',
@@ -346,6 +467,57 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   const generateExcel = () => {
     setGenerating('excel');
     try {
+      if (reportType === 'resumen_sectores') {
+        const wb = XLSX.utils.book_new();
+        
+        ['Sector 1', 'Sector 2', 'Sector 3'].forEach((sectorName) => {
+          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          let totalMeta = 0;
+          let totalLevantado = 0;
+          
+          const rows = comunidadesSector.map((comunidad) => {
+            const meta = META_COMUNEROS[comunidad] || 0;
+            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+            totalMeta += meta;
+            totalLevantado += fichasCount;
+            const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
+            return {
+              'Comunidad': comunidad,
+              'Catastro Base (Planificado)': meta,
+              'Encuestas Realizadas (Levantado)': fichasCount,
+              'Avance (%)': `${pct.toFixed(0)}%`
+            };
+          });
+
+          const pctTotal = totalMeta > 0 ? (totalLevantado / totalMeta) * 100 : 0;
+          rows.push({
+            'Comunidad': 'TOTAL SECTOR',
+            'Catastro Base (Planificado)': totalMeta,
+            'Encuestas Realizadas (Levantado)': totalLevantado,
+            'Avance (%)': `${pctTotal.toFixed(1)}%`
+          });
+
+          const ws = XLSX.utils.json_to_sheet(rows);
+          XLSX.utils.book_append_sheet(wb, ws, sectorName);
+        });
+
+        const vacias = allFichas.filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None');
+        const vaciasRows = vacias.map((f, i) => ({
+          '#': i + 1,
+          'ID Físico (fid_1)': f.id,
+          'Código Predio': f.codigo_final || 'S/C',
+          'Propietario / Regante': f.propietario,
+          'Técnico': getNombreTecnico(f.creado_por),
+          'Fecha Registro': safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')
+        }));
+        
+        const wsVacias = XLSX.utils.json_to_sheet(vaciasRows);
+        XLSX.utils.book_append_sheet(wb, wsVacias, 'Fichas en Blanco');
+
+        XLSX.writeFile(wb, `reporte_avance_sectores_${new Date().toISOString().split('T')[0]}.xlsx`);
+        return;
+      }
+
       const data = getFilteredFichas();
       const wb = XLSX.utils.book_new();
 
@@ -564,6 +736,25 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         </div>
       ) : reportType === 'resumen_sectores' ? (
         <div className="space-y-6">
+          <div className="flex justify-end gap-3 rounded-xl border p-4" style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+            <button
+              onClick={generatePDF}
+              disabled={generating !== null}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs text-white bg-indigo-500 hover:bg-indigo-600 shadow-md hover:shadow-lg transition-all cursor-pointer disabled:opacity-50"
+            >
+              <FileDown className="w-4 h-4" />
+              {generating === 'pdf' ? 'Generando PDF...' : 'Descargar PDF (Avance)'}
+            </button>
+            <button
+              onClick={generateExcel}
+              disabled={generating !== null}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-xs text-white bg-emerald-500 hover:bg-emerald-600 shadow-md hover:shadow-lg transition-all cursor-pointer disabled:opacity-50"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              {generating === 'excel' ? 'Generando Excel...' : 'Descargar Excel (Avance)'}
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 gap-6">
             {['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
               const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
@@ -698,7 +889,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                 </thead>
                 <tbody>
                   {allFichas
-                    .filter((f) => !f.comunidad || (f.comunidad || '').trim() === '')
+                    .filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None')
                     .map((f) => (
                       <tr 
                         key={f.id} 
