@@ -31319,5 +31319,17 @@
     "area_riego_otro": 8489.73,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8489.73
+  },
+  {
+    "fid": 2860,
+    "id_adicional": "{d1fca41a-9e54-4b32-8f66-4ff1f6659694}",
+    "ficha_id": "{3b76b470-510a-41e0-995c-ceca51ccc01f}",
+    "clave_catastral_otro": "1702550100043",
+    "area_total_otro": 679.21,
+    "area_riego_otro": 679.21,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 679.21,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "TIENE CULTIVO DE FRUTALES TODA EL ÁREA. "
   }
 ]

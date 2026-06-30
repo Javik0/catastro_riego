@@ -1188,5 +1188,19 @@ if __name__ == '__main__':
     except Exception as e:
         print(f"  ❌ Excepción al ejecutar generador de informe: {e}")
 
+    # --- EJECUCIÓN AUTOMÁTICA DEL EXCEL CATASTRAL PREMIUM ---
+    print("\n📊 Generando Excel Catastral Premium para el Cliente...")
+    try:
+        import subprocess
+        excel_script = os.path.join(os.path.dirname(__file__), 'generar_excel_consolidado.py')
+        res = subprocess.run(['python', excel_script], capture_output=True, text=True, encoding='utf-8')
+        if res.returncode == 0:
+            print("  ✓ Excel catastral premium generado en Escritorio y Descargas.")
+            print(res.stdout)
+        else:
+            print(f"  ⚠️ Error al generar Excel catastral (código {res.returncode}): {res.stderr}")
+    except Exception as e:
+        print(f"  ❌ Excepción al ejecutar generador de Excel: {e}")
+
     print("\n⚡ Siguiente paso: sube los cambios a GitHub:")
     print("   git add public/geo/ logs_depuracion/; git commit -m 'data: sync desde QFieldCloud'; git push")
