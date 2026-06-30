@@ -5,7 +5,7 @@ import { FiltrosProvider, useFiltros } from './hooks/useFiltros';
 import { ThemeProvider } from './hooks/useTheme';
 import { MapNavProvider } from './hooks/useMapNav';
 import { type FichaPredio, safeToDate } from './lib/types';
-import { getNombreTecnico } from './lib/constants';
+import { getNombreTecnico, COMUNIDADES_POR_SECTOR } from './lib/constants';
 import LoginPage from './components/auth/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import RoleProtectedRoute from './components/auth/RoleProtectedRoute';
@@ -115,7 +115,17 @@ function useLocalData() {
             parroquia: f.properties.parroquia || '',
             comunidad: com,
             comunidad_original: f.properties.comunidad || '',
-            sector_investigacion: f.properties.sector_investigacion || 'Sector 1',
+            sector_investigacion: (() => {
+              const val = f.properties.sector_investigacion;
+              if (val && val.trim() !== '') return val;
+              const cNorm = com.toUpperCase().trim();
+              for (const [sec, coms] of Object.entries(COMUNIDADES_POR_SECTOR)) {
+                if (coms.some(c => c.toUpperCase().trim() === cNorm)) {
+                  return sec;
+                }
+              }
+              return 'Sector 1';
+            })(),
             sector: f.properties.sector || '',
             cedula: f.properties.cedula || '',
             codigo_final: f.properties.codigo_final || '',
