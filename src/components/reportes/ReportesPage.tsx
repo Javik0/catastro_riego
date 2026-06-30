@@ -6,7 +6,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, META_COMUNEROS } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, META_COMUNEROS } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -75,7 +75,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
     let result = [...fichas];
     switch (reportType) {
       case 'sector':
-        if (filterSector) result = result.filter((f) => f.sector === filterSector);
+        if (filterSector) result = result.filter((f) => f.sector_investigacion === filterSector);
         break;
       case 'parroquia':
         if (filterParroquia) result = result.filter((f) => f.parroquia === filterParroquia);
@@ -629,7 +629,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   const reportTypes = [
     { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
     { id: 'resumen_sectores' as const, label: 'Avance de Sectores', icon: Layers, desc: 'Comparativo catastro vs levantamiento', color: '#10b981' },
-    { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Guanguilqui / Guang-Porotog', color: '#06b6d4' },
+    { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Sectores de Investigación 1, 2 o 3', color: '#06b6d4' },
     { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#ec4899' },
     { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${COMUNIDADES.length} comunidades`, color: '#ec4899' },
     { id: 'tecnico' as const, label: 'Por Técnico', icon: Users, desc: 'Producción por investigador', color: '#f59e0b' },
@@ -926,7 +926,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                 <select value={filterSector} onChange={(e) => setFilterSector(e.target.value)}
                   className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[180px]" style={selectStyle}>
                   <option value="">Todos los sectores</option>
-                  {SECTORES.map((s) => <option key={s} value={s}>{s}</option>)}
+                  {['Sector 1', 'Sector 2', 'Sector 3'].map((s) => <option key={s} value={s}>{s}</option>)}
                 </select>
               )}
               {reportType === 'parroquia' && (
