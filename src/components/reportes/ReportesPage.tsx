@@ -325,10 +325,70 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           doc.text(`Generado: ${new Date().toLocaleDateString('es-EC')} | Catastro de Riego`, pageWidth / 2, 30, { align: 'center' });
         };
 
-        // Generar 1 página para cada Sector
+        // Página 1: Resumen Consolidado Global
+        await drawHeader("RESUMEN CONSOLIDADO GLOBAL DE AVANCE POR SECTORES");
+        
+        let grandTotalMeta = 0;
+        let grandTotalLevantado = 0;
+        let grandTotalComunidades = 0;
+        
+        const generalRows = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
+          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          let totalMeta = 0;
+          let totalLevantado = 0;
+          comunidadesSector.forEach((com) => {
+            totalMeta += META_COMUNEROS[com] || 0;
+            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+          });
+          grandTotalMeta += totalMeta;
+          grandTotalLevantado += totalLevantado;
+          grandTotalComunidades += comunidadesSector.length;
+          const pct = totalMeta > 0 ? (totalLevantado / totalMeta) * 100 : 0;
+          
+          return [
+            sectorName.toUpperCase(),
+            `${comunidadesSector.length} comunidades`,
+            totalMeta.toLocaleString('es-EC'),
+            totalLevantado.toLocaleString('es-EC'),
+            `${pct.toFixed(1)}%`
+          ];
+        });
+        
+        const grandPct = grandTotalMeta > 0 ? (grandTotalLevantado / grandTotalMeta) * 100 : 0;
+        generalRows.push([
+          'TOTAL GLOBAL',
+          `${grandTotalComunidades} comunidades`,
+          grandTotalMeta.toLocaleString('es-EC'),
+          grandTotalLevantado.toLocaleString('es-EC'),
+          `${grandPct.toFixed(1)}%`
+        ]);
+
+        autoTable(doc, {
+          startY: 35,
+          head: [['SECTOR', 'CANTIDAD COMUNIDADES', 'CATASTRO BASE (# PLANIFICADO)', 'ENCUESTAS REALIZADAS (LEVANTADO)', 'PORCENTAJE COBERTURA']],
+          body: generalRows,
+          theme: 'striped',
+          headStyles: { fillColor: [16, 185, 129], fontSize: 8, fontStyle: 'bold', halign: 'center' },
+          bodyStyles: { fontSize: 8, valign: 'middle' },
+          columnStyles: {
+            0: { cellWidth: 50, fontStyle: 'bold' },
+            1: { cellWidth: 50, halign: 'center' },
+            2: { cellWidth: 60, halign: 'center' },
+            3: { cellWidth: 60, halign: 'center' },
+            4: { cellWidth: 40, halign: 'center', fontStyle: 'bold' }
+          },
+          didParseCell: (dataCell) => {
+            if (dataCell.row.index === generalRows.length - 1) {
+              dataCell.cell.styles.fillColor = [209, 250, 229];
+              dataCell.cell.styles.fontStyle = 'bold';
+            }
+          }
+        });
+
+        // Generar 1 página para cada Sector (ahora siempre agregando página primero)
         for (let i = 0; i < 3; i++) {
           const sectorName = `Sector ${i + 1}`;
-          if (i > 0) doc.addPage();
+          doc.addPage();
           await drawHeader(`CUADRO COMPARATIVO DE AVANCE - ${sectorName.toUpperCase()}`);
           
           const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
@@ -469,6 +529,45 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
     try {
       if (reportType === 'resumen_sectores') {
         const wb = XLSX.utils.book_new();
+        
+        // Pestaña 1: Consolidado Global
+        let grandTotalMeta = 0;
+        let grandTotalLevantado = 0;
+        let grandTotalComunidades = 0;
+        
+        const generalRows = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
+          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          let totalMeta = 0;
+          let totalLevantado = 0;
+          comunidadesSector.forEach((com) => {
+            totalMeta += META_COMUNEROS[com] || 0;
+            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+          });
+          grandTotalMeta += totalMeta;
+          grandTotalLevantado += totalLevantado;
+          grandTotalComunidades += comunidadesSector.length;
+          const pct = totalMeta > 0 ? (totalLevantado / totalMeta) * 100 : 0;
+          
+          return {
+            'Sector': sectorName.toUpperCase(),
+            'Comunidades': `${comunidadesSector.length} comunidades`,
+            'Catastro Base (Planificado)': totalMeta,
+            'Encuestas Levantadas (Levantado)': totalLevantado,
+            'Cobertura (%)': `${pct.toFixed(1)}%`
+          };
+        });
+        
+        const grandPct = grandTotalMeta > 0 ? (grandTotalLevantado / grandTotalMeta) * 100 : 0;
+        generalRows.push({
+          'Sector': 'TOTAL GLOBAL',
+          'Comunidades': `${grandTotalComunidades} comunidades`,
+          'Catastro Base (Planificado)': grandTotalMeta,
+          'Encuestas Levantadas (Levantado)': grandTotalLevantado,
+          'Cobertura (%)': `${grandPct.toFixed(1)}%`
+        });
+        
+        const wsGeneral = XLSX.utils.json_to_sheet(generalRows);
+        XLSX.utils.book_append_sheet(wb, wsGeneral, 'Consolidado Global');
         
         ['Sector 1', 'Sector 2', 'Sector 3'].forEach((sectorName) => {
           const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
@@ -754,6 +853,85 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               {generating === 'excel' ? 'Generando Excel...' : 'Descargar Excel (Avance)'}
             </button>
           </div>
+
+          {/* Cuadro Resumen General de Avance Consolidado */}
+          {(() => {
+            const sectoresInfo = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
+              const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+              let planificado = 0;
+              let levantado = 0;
+              comunidadesSector.forEach((com) => {
+                planificado += META_COMUNEROS[com] || 0;
+                levantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+              });
+              return {
+                name: sectorName,
+                comunidadesCount: comunidadesSector.length,
+                planificado,
+                levantado,
+                pct: planificado > 0 ? (levantado / planificado) * 100 : 0
+              };
+            });
+
+            const totalComunidades = sectoresInfo.reduce((s, x) => s + x.comunidadesCount, 0);
+            const totalPlanificado = sectoresInfo.reduce((s, x) => s + x.planificado, 0);
+            const totalLevantado = sectoresInfo.reduce((s, x) => s + x.levantado, 0);
+            const totalPct = totalPlanificado > 0 ? (totalLevantado / totalPlanificado) * 100 : 0;
+
+            return (
+              <div 
+                className="rounded-xl border p-5 space-y-4"
+                style={{ background: 'var(--bg-card)', borderColor: 'rgba(16,185,129,0.3)', boxShadow: 'var(--shadow-card)' }}
+              >
+                <div>
+                  <h3 className="text-base font-bold text-emerald-400">
+                    CATASTRO GLOBAL: RESUMEN CONSOLIDADO POR SECTORES
+                  </h3>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    Monitoreo general de cobertura del catastro de riego y encuestas socio-productivas
+                  </p>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs text-left border-collapse">
+                    <thead>
+                      <tr className="border-b" style={{ borderColor: 'var(--border-color)' }}>
+                        <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>SECTOR</th>
+                        <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>COMUNIDADES</th>
+                        <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>CATASTRO BASE (# PLANIFICADO)</th>
+                        <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>ENCUESTAS LEVANTADAS</th>
+                        <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>COBERTURA GLOBAL</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sectoresInfo.map((s) => (
+                        <tr 
+                          key={s.name}
+                          className="border-b transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                          style={{ borderColor: 'var(--border-color)' }}
+                        >
+                          <td className="py-3 font-bold" style={{ color: 'var(--text-primary)' }}>{s.name.toUpperCase()}</td>
+                          <td className="py-3 text-center font-medium" style={{ color: 'var(--text-secondary)' }}>{s.comunidadesCount} comunidades</td>
+                          <td className="py-3 text-center font-semibold" style={{ color: 'var(--text-secondary)' }}>{s.planificado.toLocaleString('es-EC')}</td>
+                          <td className="py-3 text-center font-bold text-blue-400">{s.levantado.toLocaleString('es-EC')}</td>
+                          <td className="py-3 text-center font-bold" style={{ color: s.pct >= 90 ? '#10b981' : '#3b82f6' }}>
+                            {s.pct.toFixed(1)}%
+                          </td>
+                        </tr>
+                      ))}
+                      <tr className="bg-emerald-500/5 font-bold">
+                        <td className="py-3 px-2 text-emerald-400">TOTAL GLOBAL</td>
+                        <td className="py-3 text-center text-emerald-400">{totalComunidades} comunidades</td>
+                        <td className="py-3 text-center" style={{ color: 'var(--text-primary)' }}>{totalPlanificado.toLocaleString('es-EC')}</td>
+                        <td className="py-3 text-center text-blue-400">{totalLevantado.toLocaleString('es-EC')}</td>
+                        <td className="py-3 text-center text-emerald-400 text-sm font-black">{totalPct.toFixed(1)}%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })()}
 
           <div className="grid grid-cols-1 gap-6">
             {['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
