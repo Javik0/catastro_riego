@@ -263,4 +263,68 @@ export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
   ]
 };
 
+// ── Meta de comuneros planificados por comunidad (Catastro Oficial) ──
+export const META_COMUNEROS: Record<string, number> = {
+  // Sector 1
+  "LARCACHACA": 103,
+  "LA LIBERTAD": 125,
+  "SAN ANTONIO": 95,
+  "SAN JOSÉ": 120,
+  "MILAGRO": 38,
+  "ASOCIACIÓN 17 DE JUNIO": 32,
+  "CHAMBITOLA": 120,
+  "LA CANDELARIA": 170,
+  "CARRERA": 280,
+  "MATÍAS IMBAGO": 1,
+  "COCHAPAMBA": 244,
+  "JESÚS GRAN PODER": 56,
+  "SANTA BÁRBARA": 6,
+  "ASOCIACIÓN POROTOG": 48,
+  "COMUNA POROTOG": 80,
+  "CORDILLERAS DE LOS ANDES": 43,
+  "COMUNA IZACATA": 65,
+  "IZACATA GRANDE": 43,
+  "LOS ANDES IZACATA": 48,
+  "LOMA GORDA": 45,
+  "SAN JACINTO": 6,
+  
+  // Sector 2
+  "CUARTO LOTE": 46,
+  "ASOC. SAN VICENTE BAJO": 80,
+  "SANTA ROSA DE PACCHA": 46,
+  "ASOC. SAN VICENTE ALTO": 59,
+  "PUCARÁ": 231,
+  "ASOCIACIÓN SAN PEDRO": 24,
+  "PITANA ALTO": 99,
+  "ALPAKA": 15,
+  "ASOC. PITANA BAJO": 42,
+  "PROMEJ. PITANA BAJO": 180,
+  "SANTA ROSA DE PINGULMI": 117,
+  "SANTA MARIANITA DE PINGULMI": 189,
+  "PAMBAMARCA": 61,
+  
+  // Sector 3
+  "OTONCITO": 66,
+  "PAMBAMARQUITO": 100,
+  "MONTESERRÍN ALTO": 27,
+  "CHAUPIESTANCIA": 150,
+  "PUEBLO DE OTÓN": 152,
+  "CANGAHUA PUNGO": 147,
+  "CHINCHINLOMA": 80,
+  "ASOCIACIÓN ROSALÍA": 41,
+  "SR. COLOMA": 16,
+  "MONTESERÍN BAJO": 118,
+  "HDA. GUANGUILQUI": 15,
+  "PUEBLO DE ASCÁZUBI": 16,
+  "EL MANZANO": 19,
+  "JUNTA SAN LUIS": 33,
+  "SAN VICENTE DE GUAYLLABAMBA": 453,
+  
+  // Comunidades sin datos meta pero existentes
+  "AVELLANEDA": 0,
+  "HDA. SAN FRANSISCO": 0,
+  "SR. HERNÁN TIMPE": 0
+};
+
+
 

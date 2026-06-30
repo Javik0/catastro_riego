@@ -6,7 +6,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, SECTORES, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, META_COMUNEROS } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -21,7 +21,8 @@ interface Props {
   prediosAdicionalesData: PredioAdicional[];
   loading: boolean;
 }
-type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'ejecutivo' | 'auditoria';
+type ReportType = 'general' | 'sector' | 'parroquia' | 'comunidad' | 'tecnico' | 'fecha' | 'ejecutivo' | 'auditoria' | 'resumen_sectores';
+
 
 export default function ReportesPage({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData }: Props) {
   const { filtros } = useFiltros();
@@ -303,6 +304,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         fecha: `REPORTE POR FECHA: ${fechaDesde || '...'} al ${fechaHasta || '...'}`,
         ejecutivo: 'INFORME TÉCNICO EJECUTIVO',
         auditoria: 'REPORTE DE AUDITORÍA Y CONTROL DE CALIDAD',
+        resumen_sectores: 'REPORTE DE COBERTURA Y AVANCE DE SECTORES',
       };
       
       const doc = await buildPdfDoc(data, subtitles[reportType], reportType === 'general');
@@ -454,6 +456,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
 
   const reportTypes = [
     { id: 'general' as const, label: 'General', icon: FileText, desc: 'Todas las fichas investigadas', color: '#3b82f6' },
+    { id: 'resumen_sectores' as const, label: 'Avance de Sectores', icon: Layers, desc: 'Comparativo catastro vs levantamiento', color: '#10b981' },
     { id: 'sector' as const, label: 'Por Sector', icon: Layers, desc: 'Guanguilqui / Guang-Porotog', color: '#06b6d4' },
     { id: 'parroquia' as const, label: 'Por Parroquia', icon: MapPin, desc: 'Filtrar por parroquia', color: '#ec4899' },
     { id: 'comunidad' as const, label: 'Por Comunidad', icon: Building2, desc: `${COMUNIDADES.length} comunidades`, color: '#ec4899' },
@@ -556,6 +559,160 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               <p className="text-[10px] mt-2 max-w-sm text-center" style={{ color: 'var(--text-muted)' }}>
                 Nota: Al abrirse la nueva pestaña, aparecerá de forma automática la ventana de guardado. Elige <strong>"Guardar como PDF"</strong> para descargarlo con máxima calidad vectorial.
               </p>
+            </div>
+          </div>
+        </div>
+      ) : reportType === 'resumen_sectores' ? (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 gap-6">
+            {['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
+              const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+              
+              let totalMetaSector = 0;
+              let totalFichasSector = 0;
+              
+              const tableRows = comunidadesSector.map((comunidad) => {
+                const meta = META_COMUNEROS[comunidad] || 0;
+                const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+                
+                totalMetaSector += meta;
+                totalFichasSector += fichasCount;
+                
+                const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
+                
+                return {
+                  comunidad,
+                  meta,
+                  fichasCount,
+                  pct
+                };
+              }).sort((a, b) => b.fichasCount - a.fichasCount);
+              
+              const pctSector = totalMetaSector > 0 ? (totalFichasSector / totalMetaSector) * 100 : 0;
+              
+              return (
+                <div 
+                  key={sectorName}
+                  className="rounded-xl border p-5 space-y-4"
+                  style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
+                >
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-base font-bold" style={{ color: 'var(--text-heading)' }}>
+                        CUADRO RESUMEN {sectorName.toUpperCase()}
+                      </h3>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                        Comunidades pertenecientes al área de investigación del {sectorName}
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center gap-6 text-xs text-right self-end md:self-auto">
+                      <div>
+                        <p style={{ color: 'var(--text-muted)' }}>PLANIFICADO</p>
+                        <p className="text-base font-bold" style={{ color: 'var(--text-primary)' }}>{totalMetaSector.toLocaleString('es-EC')}</p>
+                      </div>
+                      <div className="w-px h-8 bg-gray-700" />
+                      <div>
+                        <p style={{ color: 'var(--text-muted)' }}>LEVANTADO</p>
+                        <p className="text-base font-bold text-blue-400">{totalFichasSector.toLocaleString('es-EC')}</p>
+                      </div>
+                      <div className="w-px h-8 bg-gray-700" />
+                      <div>
+                        <p style={{ color: 'var(--text-muted)' }}>COBERTURA</p>
+                        <p className={`text-base font-bold ${pctSector >= 90 ? 'text-emerald-400' : 'text-blue-400'}`}>
+                          {pctSector.toFixed(1)}%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs text-left border-collapse">
+                      <thead>
+                        <tr className="border-b" style={{ borderColor: 'var(--border-color)' }}>
+                          <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>COMUNIDAD</th>
+                          <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>CATASTRO BASE (#)</th>
+                          <th className="py-2.5 font-bold text-center" style={{ color: 'var(--text-muted)' }}>ENCUESTAS REALIZADAS</th>
+                          <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>PORCENTAJE AVANCE</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {tableRows.map((r) => (
+                          <tr 
+                            key={r.comunidad} 
+                            className="border-b transition-colors hover:bg-black/5 dark:hover:bg-white/5"
+                            style={{ borderColor: 'var(--border-color)' }}
+                          >
+                            <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{r.comunidad}</td>
+                            <td className="py-2.5 text-center font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                              {r.meta > 0 ? r.meta.toLocaleString('es-EC') : '-'}
+                            </td>
+                            <td className="py-2.5 text-center font-bold text-blue-400">{r.fichasCount.toLocaleString('es-EC')}</td>
+                            <td className="py-2.5">
+                              <div className="flex items-center gap-2">
+                                <div className="flex-1 bg-gray-800 rounded-full h-2 overflow-hidden">
+                                  <div 
+                                    className={`h-full rounded-full ${r.pct >= 90 ? 'bg-emerald-500' : 'bg-blue-500'}`}
+                                    style={{ width: `${Math.min(r.pct, 100)}%` }}
+                                  />
+                                </div>
+                                <span className="font-semibold w-10 text-right shrink-0" style={{ color: r.pct >= 90 ? '#10b981' : 'var(--text-secondary)' }}>
+                                  {r.pct.toFixed(0)}%
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Fichas con Comunidad Vacía */}
+          <div 
+            className="rounded-xl border border-red-500/30 p-5 space-y-4"
+            style={{ background: 'rgba(239, 68, 68, 0.02)', boxShadow: 'var(--shadow-card)' }}
+          >
+            <div>
+              <h3 className="text-base font-bold text-red-400 flex items-center gap-2">
+                ⚠️ FICHAS CON COMUNIDAD EN BLANCO (CÓDIGOS FID_1 PARA CORRECCIÓN)
+              </h3>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                Los técnicos de campo deben buscar estas 7 fichas en sus dispositivos o en QGIS por su ID físico (fid_1) para corregir y asignarles comunidad.
+              </p>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-red-500/10">
+                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>ID FÍSICO (`fid_1`)</th>
+                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>CÓDIGO PREDIO</th>
+                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>PROPIETARIO / REGANTE</th>
+                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>TÉCNICO</th>
+                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>FECHA REGISTRO</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allFichas
+                    .filter((f) => !f.comunidad || (f.comunidad || '').trim() === '')
+                    .map((f) => (
+                      <tr 
+                        key={f.id} 
+                        className="border-b border-red-500/5 transition-colors hover:bg-red-500/5"
+                      >
+                        <td className="py-2.5 font-bold text-red-400">#{f.id}</td>
+                        <td className="py-2.5 font-semibold" style={{ color: 'var(--text-primary)' }}>{f.codigo_final || 'S/C'}</td>
+                        <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{f.propietario}</td>
+                        <td className="py-2.5" style={{ color: 'var(--text-secondary)' }}>{getNombreTecnico(f.creado_por)}</td>
+                        <td className="py-2.5 text-gray-500">{safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
