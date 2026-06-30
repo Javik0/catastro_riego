@@ -15,7 +15,6 @@ import { saveAs } from 'file-saver';
 
 const FICHAS_VACIAS_SQLITE = [
   { id: '533', codigo: 'S-C-P001', propietario: 'PILCA LANCHIMBA JAIME PATRICIO', tecnico: 'Melany Jara', fecha: '21/05/2026' },
-  { id: '813', codigo: 'S-C-P001', propietario: 'TANDAYAMO IMBAQUINGO JOSE LORENZO', tecnico: 'Huguito Ipial', fecha: '21/05/2026' },
   { id: '1036', codigo: 'S-C-P001', propietario: 'TIPANLUISA TIPANLUISA LUIS PATRICIO', tecnico: 'Dylan Chavez', fecha: '21/05/2026' },
   { id: '1128', codigo: 'S-C-P001', propietario: 'LANCHIMBA TIPANLUISA ROSA MATILDE', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
   { id: '1263', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
