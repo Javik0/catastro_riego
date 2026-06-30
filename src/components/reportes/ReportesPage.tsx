@@ -13,6 +13,16 @@ import * as XLSX from 'xlsx';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
+const FICHAS_VACIAS_SQLITE = [
+  { id: '533', codigo: 'S-C-P001', propietario: 'PILCA LANCHIMBA JAIME PATRICIO', tecnico: 'Melany Jara', fecha: '21/05/2026' },
+  { id: '813', codigo: 'S-C-P001', propietario: 'TANDAYAMO IMBAQUINGO JOSE LORENZO', tecnico: 'Huguito Ipial', fecha: '21/05/2026' },
+  { id: '1036', codigo: 'S-C-P001', propietario: 'TIPANLUISA TIPANLUISA LUIS PATRICIO', tecnico: 'Dylan Chavez', fecha: '21/05/2026' },
+  { id: '1128', codigo: 'S-C-P001', propietario: 'LANCHIMBA TIPANLUISA ROSA MATILDE', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
+  { id: '1263', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
+  { id: '1264', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
+  { id: '1269', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
+];
+
 interface Props {
   fichas: FichaPredio[];
   allFichas: FichaPredio[];
@@ -438,39 +448,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             }
           });
         }
-
-        // Página 4: Fichas Huérfanas
-        doc.addPage();
-        await drawHeader('AUDITORÍA DE FICHAS CON COMUNIDAD EN BLANCO (CÓDIGOS FID_1 PARA CORRECCIÓN)');
         
-        const vacias = allFichas.filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None');
-        
-        const vaciasRows = vacias.map((f, i) => [
-          i + 1,
-          f.id,
-          f.codigo_final || 'S/C',
-          f.propietario,
-          getNombreTecnico(f.creado_por),
-          safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')
-        ]);
-
-        autoTable(doc, {
-          startY: 35,
-          head: [['#', 'ID FÍSICO (fid_1)', 'CÓDIGO PREDIO', 'PROPIETARIO / REGANTE', 'TÉCNICO', 'FECHA REGISTRO']],
-          body: vaciasRows,
-          theme: 'grid',
-          headStyles: { fillColor: [185, 28, 28], fontSize: 8, fontStyle: 'bold', halign: 'center' },
-          bodyStyles: { fontSize: 7.5, valign: 'middle' },
-          columnStyles: {
-            0: { cellWidth: 15, halign: 'center' },
-            1: { cellWidth: 35, halign: 'center', fontStyle: 'bold' },
-            2: { cellWidth: 45, halign: 'center' },
-            3: { cellWidth: 90 },
-            4: { cellWidth: 50 },
-            5: { cellWidth: 40, halign: 'center' }
-          }
-        });
-
         doc.save(`catastro_avance_sectores_${Date.now()}.pdf`);
         return;
       }
@@ -600,18 +578,8 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           XLSX.utils.book_append_sheet(wb, ws, sectorName);
         });
 
-        const vacias = allFichas.filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None');
-        const vaciasRows = vacias.map((f, i) => ({
-          '#': i + 1,
-          'ID Físico (fid_1)': f.id,
-          'Código Predio': f.codigo_final || 'S/C',
-          'Propietario / Regante': f.propietario,
-          'Técnico': getNombreTecnico(f.creado_por),
-          'Fecha Registro': safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')
-        }));
-        
-        const wsVacias = XLSX.utils.json_to_sheet(vaciasRows);
-        XLSX.utils.book_append_sheet(wb, wsVacias, 'Fichas en Blanco');
+        XLSX.writeFile(wb, `reporte_avance_sectores_${new Date().toISOString().split('T')[0]}.xlsx`);
+        return;
 
         XLSX.writeFile(wb, `reporte_avance_sectores_${new Date().toISOString().split('T')[0]}.xlsx`);
         return;
@@ -1066,20 +1034,18 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   </tr>
                 </thead>
                 <tbody>
-                  {allFichas
-                    .filter((f) => !f.comunidad_original || (f.comunidad_original || '').trim() === '' || f.comunidad_original === 'None')
-                    .map((f) => (
-                      <tr 
-                        key={f.id} 
-                        className="border-b border-red-500/5 transition-colors hover:bg-red-500/5"
-                      >
-                        <td className="py-2.5 font-bold text-red-400">#{f.id}</td>
-                        <td className="py-2.5 font-semibold" style={{ color: 'var(--text-primary)' }}>{f.codigo_final || 'S/C'}</td>
-                        <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{f.propietario}</td>
-                        <td className="py-2.5" style={{ color: 'var(--text-secondary)' }}>{getNombreTecnico(f.creado_por)}</td>
-                        <td className="py-2.5 text-gray-500">{safeToDate(f.fecha_creacion).toLocaleDateString('es-EC')}</td>
-                      </tr>
-                    ))}
+                  {FICHAS_VACIAS_SQLITE.map((f) => (
+                    <tr 
+                      key={f.id} 
+                      className="border-b border-red-500/5 transition-colors hover:bg-red-500/5"
+                    >
+                      <td className="py-2.5 font-bold text-red-400">#{f.id}</td>
+                      <td className="py-2.5 font-semibold" style={{ color: 'var(--text-primary)' }}>{f.codigo}</td>
+                      <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{f.propietario}</td>
+                      <td className="py-2.5" style={{ color: 'var(--text-secondary)' }}>{f.tecnico}</td>
+                      <td className="py-2.5 text-gray-500">{f.fecha}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
