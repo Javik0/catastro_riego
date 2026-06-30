@@ -13,15 +13,6 @@ import * as XLSX from 'xlsx';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-const FICHAS_VACIAS_SQLITE = [
-  { id: '533', codigo: 'S-C-P001', propietario: 'PILCA LANCHIMBA JAIME PATRICIO', tecnico: 'Melany Jara', fecha: '21/05/2026' },
-  { id: '1036', codigo: 'S-C-P001', propietario: 'TIPANLUISA TIPANLUISA LUIS PATRICIO', tecnico: 'Dylan Chavez', fecha: '21/05/2026' },
-  { id: '1128', codigo: 'S-C-P001', propietario: 'LANCHIMBA TIPANLUISA ROSA MATILDE', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
-  { id: '1263', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
-  { id: '1264', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
-  { id: '1269', codigo: 'S-C-P001', propietario: 'LANCHIMBA FARINANGO MARIA VALVINA', tecnico: 'Adriana Cuascota', fecha: '21/05/2026' },
-];
-
 interface Props {
   fichas: FichaPredio[];
   allFichas: FichaPredio[];
@@ -1005,49 +996,6 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                 </div>
               );
             })}
-          </div>
-          
-          {/* Fichas con Comunidad Vacía */}
-          <div 
-            className="rounded-xl border border-red-500/30 p-5 space-y-4"
-            style={{ background: 'rgba(239, 68, 68, 0.02)', boxShadow: 'var(--shadow-card)' }}
-          >
-            <div>
-              <h3 className="text-base font-bold text-red-400 flex items-center gap-2">
-                ⚠️ FICHAS CON COMUNIDAD EN BLANCO (CÓDIGOS FID_1 PARA CORRECCIÓN)
-              </h3>
-              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                Los técnicos de campo deben buscar estas 7 fichas en sus dispositivos o en QGIS por su ID físico (fid_1) para corregir y asignarles comunidad.
-              </p>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left border-collapse">
-                <thead>
-                  <tr className="border-b border-red-500/10">
-                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>ID FÍSICO (`fid_1`)</th>
-                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>CÓDIGO PREDIO</th>
-                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>PROPIETARIO / REGANTE</th>
-                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>TÉCNICO</th>
-                    <th className="py-2.5 font-bold" style={{ color: 'var(--text-muted)' }}>FECHA REGISTRO</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {FICHAS_VACIAS_SQLITE.map((f) => (
-                    <tr 
-                      key={f.id} 
-                      className="border-b border-red-500/5 transition-colors hover:bg-red-500/5"
-                    >
-                      <td className="py-2.5 font-bold text-red-400">#{f.id}</td>
-                      <td className="py-2.5 font-semibold" style={{ color: 'var(--text-primary)' }}>{f.codigo}</td>
-                      <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{f.propietario}</td>
-                      <td className="py-2.5" style={{ color: 'var(--text-secondary)' }}>{f.tecnico}</td>
-                      <td className="py-2.5 text-gray-500">{f.fecha}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
           </div>
         </div>
       ) : reportType !== 'auditoria' ? (
