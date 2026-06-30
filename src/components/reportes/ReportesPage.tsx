@@ -348,7 +348,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           let totalLevantado = 0;
           comunidadesSector.forEach((com) => {
             totalMeta += META_COMUNEROS[com] || 0;
-            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
           });
           grandTotalMeta += totalMeta;
           grandTotalLevantado += totalLevantado;
@@ -407,7 +407,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           
           const rows = comunidadesSector.map((comunidad) => {
             const meta = META_COMUNEROS[comunidad] || 0;
-            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad && f.sector_investigacion === sectorName).length;
             totalMeta += meta;
             totalLevantado += fichasCount;
             const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
@@ -519,7 +519,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           let totalLevantado = 0;
           comunidadesSector.forEach((com) => {
             totalMeta += META_COMUNEROS[com] || 0;
-            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+            totalLevantado += allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
           });
           grandTotalMeta += totalMeta;
           grandTotalLevantado += totalLevantado;
@@ -554,7 +554,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           
           const rows = comunidadesSector.map((comunidad) => {
             const meta = META_COMUNEROS[comunidad] || 0;
-            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+            const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad && f.sector_investigacion === sectorName).length;
             totalMeta += meta;
             totalLevantado += fichasCount;
             const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
@@ -830,7 +830,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               let levantado = 0;
               comunidadesSector.forEach((com) => {
                 planificado += META_COMUNEROS[com] || 0;
-                levantado += allFichas.filter(f => (f.comunidad || '').trim() === com).length;
+                levantado += allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
               });
               return {
                 name: sectorName,
@@ -910,7 +910,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               
               const tableRows = comunidadesSector.map((comunidad) => {
                 const meta = META_COMUNEROS[comunidad] || 0;
-                const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad).length;
+                const fichasCount = allFichas.filter(f => (f.comunidad || '').trim() === comunidad && f.sector_investigacion === sectorName).length;
                 
                 totalMetaSector += meta;
                 totalFichasSector += fichasCount;
