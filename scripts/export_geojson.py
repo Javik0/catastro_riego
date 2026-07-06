@@ -728,6 +728,7 @@ def export_catastro(fichas_features):
 
     _save(features, 'catastro_geo.geojson')
     print(f"  ✓ {ok} polígonos unificados con geometría, {skip} sin geometría → catastro_geo.geojson")
+    return ok
 
 
 # ══════════════════════════════════════════════════════════════
@@ -1079,7 +1080,7 @@ if __name__ == '__main__':
 
     preparar_unificacion()
     fichas = export_fichas()
-    export_catastro(fichas)
+    predios_vinculados_count = export_catastro(fichas)
     export_catastro_busqueda()
     export_catastro_poligonos()
     export_ramales()
@@ -1179,7 +1180,7 @@ if __name__ == '__main__':
     try:
         import subprocess
         report_script = os.path.join(os.path.dirname(__file__), 'generate_technical_report.py')
-        res = subprocess.run(['python', report_script], capture_output=True, text=True, encoding='utf-8')
+        res = subprocess.run(['python', report_script, '--predios-vinculados', str(predios_vinculados_count)], capture_output=True, text=True, encoding='utf-8')
         if res.returncode == 0:
             print("  ✓ Informe técnico y gráficos SVG generados exitosamente.")
             print(res.stdout)

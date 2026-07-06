@@ -364,6 +364,12 @@ def generate_metodos_svg(data_sectores, output_path):
 
 # ── MAIN PIPELINE ─────────────────────────────────────────────
 def main():
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--predios-vinculados', type=int, default=3442)
+    args, unknown = parser.parse_known_args()
+    predios_vinculados = args.predios_vinculados
+
     if not os.path.exists(DATA_GPKG):
         print(f"[ERROR] No se encuentra el archivo de datos SQLite: {DATA_GPKG}")
         return
@@ -613,7 +619,7 @@ Este informe técnico presenta los resultados consolidados del levantamiento cat
 Actualmente, el levantamiento de información georreferenciada en campo presenta las siguientes métricas clave de cobertura global:
 
 * **Total de Fichas Investigadas - Unidades de Producción Agropecuaria (UPAs)**: **{total_fichas_todas:,} fichas**
-* **Predios Vinculados en Cartografía (Catastro)**: **{len(inconsistencias_list) + 2762:,} polígonos unificados**
+* **Predios Vinculados en Cartografía (Catastro)**: **{predios_vinculados:,} polígonos unificados**
 * **Total de Cultivos Registrados**: **{total_cultivos:,} parcelas agrícolas**
 * **Total de Animales Censados**: **{total_animales:,} especies pecuarias**
 
