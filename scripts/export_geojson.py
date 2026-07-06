@@ -1183,6 +1183,16 @@ if __name__ == '__main__':
         if res.returncode == 0:
             print("  ✓ Informe técnico y gráficos SVG generados exitosamente.")
             print(res.stdout)
+            
+            # --- CONVERTIR DE FORMA INMEDIATA A HTML CATASTRAL PREMIUM ---
+            print("📊 Convirtiendo Informe Técnico a HTML Premium Autocontenido...")
+            convert_script = os.path.join(os.path.dirname(__file__), 'convert_report_to_html.py')
+            res_html = subprocess.run(['python', convert_script], capture_output=True, text=True, encoding='utf-8')
+            if res_html.returncode == 0:
+                print("  ✓ Informe técnico convertido a HTML y copiado a public/ con éxito.")
+                print(res_html.stdout)
+            else:
+                print(f"  ⚠️ Error al convertir informe a HTML (código {res_html.returncode}): {res_html.stderr}")
         else:
             print(f"  ⚠️ Error al generar informe técnico (código {res.returncode}): {res.stderr}")
     except Exception as e:

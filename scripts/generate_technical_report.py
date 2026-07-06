@@ -381,6 +381,20 @@ def main():
         conn.close()
         return
 
+    # Contar cultivos y animales dinámicamente
+    cultivos_table = next((t for t in all_tables if 'Cultivos_Agricolas' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    animales_table = next((t for t in all_tables if 'Animales_Especies' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    
+    total_cultivos = 0
+    if cultivos_table:
+        cursor.execute(f'SELECT COUNT(*) FROM "{cultivos_table}"')
+        total_cultivos = cursor.fetchone()[0]
+        
+    total_animales = 0
+    if animales_table:
+        cursor.execute(f'SELECT COUNT(*) FROM "{animales_table}"')
+        total_animales = cursor.fetchone()[0]
+
     # ─────────────────────────────────────────────────────────
     # 1. Extracción de Fichas sin Comunidad
     # ─────────────────────────────────────────────────────────
@@ -600,8 +614,8 @@ Actualmente, el levantamiento de información georreferenciada en campo presenta
 
 * **Total de Fichas Investigadas - Unidades de Producción Agropecuaria (UPAs)**: **{total_fichas_todas:,} fichas**
 * **Predios Vinculados en Cartografía (Catastro)**: **{len(inconsistencias_list) + 2762:,} polígonos unificados**
-* **Total de Cultivos Registrados**: **7,737 parcelas agrícolas**
-* **Total de Animales Censados**: **8,585 especies pecuarias**
+* **Total de Cultivos Registrados**: **{total_cultivos:,} parcelas agrícolas**
+* **Total de Animales Censados**: **{total_animales:,} especies pecuarias**
 
 ---
 
