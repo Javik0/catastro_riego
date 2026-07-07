@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { MobileMenuButton } from './Sidebar';
 import { useLocation } from 'react-router-dom';
 import { Filter, X, Search, Sun, Moon, LogOut } from 'lucide-react';
+import { useData } from '../../App';
 
 interface Props {
   onMobileMenuOpen: () => void;
@@ -15,6 +16,12 @@ export default function Header({ onMobileMenuOpen }: Props) {
   const { toggleTheme, isDark } = useTheme();
   const { logout } = useAuth();
   const location = useLocation();
+  const { fichas: allFichas } = useData();
+
+  // Conjunto de comunidades reales que tienen al menos 1 ficha levantada
+  const comunidadesConFichas = new Set(
+    allFichas.map((f) => (f.comunidad || '').trim().toUpperCase()).filter(Boolean)
+  );
 
   const inputClass = "px-2 py-1.5 rounded-md text-xs focus:outline-none focus:ring-1 focus:ring-blue-500/40 cursor-pointer transition-colors";
   const inputStyle = {
@@ -142,7 +149,11 @@ export default function Header({ onMobileMenuOpen }: Props) {
           {(filtros.sectorInv 
             ? (COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []) 
             : COMUNIDADES
-          ).map((c) => <option key={c} value={c}>{c}</option>)}
+          ).map((c) => {
+            const hasFichas = comunidadesConFichas.has(c.trim().toUpperCase());
+            const label = hasFichas ? c : `${c} (Sin investigar)`;
+            return <option key={c} value={c}>{label}</option>;
+          })}
         </select>
 
         <select value={filtros.tecnico} onChange={(e) => setFiltro('tecnico', e.target.value)}

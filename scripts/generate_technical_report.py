@@ -104,6 +104,214 @@ def generate_parroquias_svg(data, output_path):
         f.write("\n".join(svg))
 
 
+# ── Helper para generar SVG de Cobertura de Riego vs Secano (ha) ──
+def generate_riego_secano_svg(data_sectores, output_path):
+    width, height = 650, 260
+    margin = {'top': 60, 'right': 140, 'bottom': 50, 'left': 100}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    categories = ['Riego', 'Secano']
+    cat_colors = ['#3b82f6', '#f59e0b']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: 500; }
+        .bar-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .pct-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #ffffff; font-weight: bold; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Cobertura de Suelo: Riego vs Secano por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Distribución porcentual de la superficie total (Horizontal 100%)</text>')
+    
+    for i in range(5):
+        val = 25 * i
+        x = margin['left'] + (val / 100) * chart_width
+        svg.append(f'<line x1="{x}" y1="{margin["top"] - 5}" x2="{x}" y2="{height - margin["bottom"]}" stroke="#e2e8f0" stroke-dasharray="2 2"/>')
+        svg.append(f'<text x="{x}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="axis-label">{val}%</text>')
+        
+    bar_height = 24
+    bar_gap = 18
+    
+    for idx, sec in enumerate(sectors):
+        y = margin['top'] + idx * (bar_height + bar_gap)
+        sec_data = data_sectores.get(sec, {'Riego': 0.0, 'Secano': 0.0})
+        val_riego = sec_data.get('Riego', 0.0)
+        val_secano = sec_data.get('Secano', 0.0)
+        total = val_riego + val_secano
+        
+        pct_riego = (val_riego / total * 100) if total > 0 else 0
+        pct_secano = (val_secano / total * 100) if total > 0 else 0
+        
+        svg.append(f'<text x="{margin["left"] - 12}" y="{y + bar_height/2 + 4}" text-anchor="end" class="bar-label">{sec}</text>')
+        
+        w_riego = (pct_riego / 100) * chart_width
+        if w_riego > 0:
+            svg.append(f'<rect x="{margin["left"]}" y="{y}" width="{w_riego}" height="{bar_height}" rx="2" fill="{cat_colors[0]}" opacity="0.9"/>')
+            if pct_riego > 8:
+                svg.append(f'<text x="{margin["left"] + w_riego/2}" y="{y + bar_height/2 + 3.5}" text-anchor="middle" class="pct-label">{pct_riego:.1f}%</text>')
+                
+        w_secano = (pct_secano / 100) * chart_width
+        if w_secano > 0:
+            x_secano = margin['left'] + w_riego
+            svg.append(f'<rect x="{x_secano}" y="{y}" width="{w_secano}" height="{bar_height}" rx="2" fill="{cat_colors[1]}" opacity="0.9"/>')
+            if pct_secano > 8:
+                svg.append(f'<text x="{x_secano + w_secano/2}" y="{y + bar_height/2 + 3.5}" text-anchor="middle" class="pct-label">{pct_secano:.1f}%</text>')
+                
+    leg_x = width - margin['right'] + 20
+    for idx, cat in enumerate(categories):
+        leg_y = margin['top'] + idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="16" height="16" rx="4" fill="{cat_colors[idx]}"/>')
+        svg.append(f'<text x="{leg_x + 24}" y="{leg_y + 12}" class="legend-text">{cat}</text>')
+        
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Especies Pecuarias Principales (Barras Verticales) ──
+def generate_especies_pecuarias_svg(data_animales, output_path):
+    width, height = 650, 260
+    margin = {'top': 60, 'right': 40, 'bottom': 50, 'left': 80}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
+        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #1e293b; font-weight: bold; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Especies Pecuarias Principales del Censo</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Total global de cabezas de ganado registradas en el catastro</text>')
+    
+    if not data_animales:
+        svg.append(f'<text x="{width/2}" y="{height/2}" text-anchor="middle" class="subtitle">Sin datos pecuarios</text>')
+        svg.append('</svg>')
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write("\n".join(svg))
+        return
+        
+    max_val = max([x[1] for x in data_animales]) or 1
+    import math
+    scale_max = math.ceil(max_val / 10000.0) * 10000
+    if scale_max < 10: scale_max = max_val + 5
+    
+    grid_ticks = 4
+    for i in range(grid_ticks + 1):
+        val = (scale_max / grid_ticks) * i
+        y = margin['top'] + chart_height - (val / scale_max) * chart_height
+        svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
+        svg.append(f'<text x="{margin["left"] - 8}" y="{y + 4}" text-anchor="end" class="axis-label">{int(val):,}</text>')
+        
+    bar_width = (chart_width * 0.6) / len(data_animales)
+    group_width = chart_width / len(data_animales)
+    colors = ['#ec4899', '#f43f5e', '#a855f7', '#8b5cf6', '#6366f1']
+    
+    for idx, (especie, val) in enumerate(data_animales):
+        bar_h = (val / scale_max) * chart_height
+        x = margin['left'] + idx * group_width + (group_width - bar_width)/2
+        y = margin['top'] + chart_height - bar_h
+        
+        svg.append(f'<rect x="{x}" y="{y}" width="{bar_width}" height="{bar_h}" rx="4" fill="{colors[idx % len(colors)]}" opacity="0.9"/>')
+        svg.append(f'<text x="{x + bar_width/2}" y="{y - 6}" text-anchor="middle" class="bar-val">{val:,}</text>')
+        label_esp = especie.title()
+        if len(label_esp) > 12: label_esp = label_esp[:10] + '...'
+        svg.append(f'<text x="{x + bar_width/2}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="axis-label">{label_esp}</text>')
+        
+    svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Destino de Cultivos (Barras Agrupadas) ──
+def generate_destino_cultivos_svg(data_sectores, output_path):
+    width, height = 650, 260
+    margin = {'top': 60, 'right': 140, 'bottom': 50, 'left': 80}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    categories = ['Autoconsumo', 'Mercado / Venta', 'Agroindustria', 'Exportación']
+    cat_keys = ['Autoconsumo', 'Mercado', 'Agroindustria', 'Exportación']
+    cat_colors = ['#10b981', '#3b82f6', '#8b5cf6', '#ec4899']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Destino de la Producción Agrícola por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Cantidad de parcelas agrícolas según su propósito comercial</text>')
+    
+    max_val = 0
+    for sec in sectors:
+        for cat in cat_keys:
+            max_val = max(max_val, data_sectores.get(sec, {}).get(cat, 0))
+            
+    import math
+    scale_max = math.ceil((max_val or 1) / 500.0) * 500
+    
+    grid_ticks = 4
+    for i in range(grid_ticks + 1):
+        val = (scale_max / grid_ticks) * i
+        y = margin['top'] + chart_height - (val / scale_max) * chart_height
+        svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
+        svg.append(f'<text x="{margin["left"] - 8}" y="{y + 4}" text-anchor="end" class="axis-label">{int(val):,}</text>')
+        
+    group_width = chart_width / len(sectors)
+    bar_width = (group_width * 0.7) / len(categories)
+    bar_gap = 1.0
+    
+    for s_idx, sec in enumerate(sectors):
+        group_x = margin['left'] + s_idx * group_width
+        svg.append(f'<text x="{group_x + group_width/2}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="axis-label" style="font-weight: 600; fill: #1e293b;">{sec}</text>')
+        
+        for c_idx, cat in enumerate(cat_keys):
+            val = data_sectores.get(sec, {}).get(cat, 0)
+            bar_h = (val / scale_max) * chart_height
+            bar_x = group_x + (group_width * 0.15) + c_idx * (bar_width + bar_gap)
+            bar_y = margin['top'] + chart_height - bar_h
+            
+            svg.append(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_width}" height="{bar_h}" rx="1.5" fill="{cat_colors[c_idx]}" opacity="0.9"/>')
+            
+    svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"] + 10}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    
+    leg_x = width - margin['right'] + 20
+    for c_idx, cat in enumerate(categories):
+        leg_y = margin['top'] + 15 + c_idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{cat_colors[c_idx]}"/>')
+        svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text" style="font-size: 10px;">{cat}</text>')
+        
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
 # ── Helper para generar SVG de Tamaño de Predios (Barras Agrupadas) ──
 def generate_predios_svg(data_sectores, output_path):
     # data_sectores es dict {'Sector 1': [counts...], 'Sector 2': [...], 'Sector 3': [...]}
@@ -554,6 +762,7 @@ def main():
     chart_predios_data = {}
     chart_reservorios_data = {}
     chart_metodos_data = {}
+    chart_riego_secano_data = {}
     
     sector_stats_report = []
 
@@ -624,6 +833,11 @@ def main():
             'Aspersión': aspr_avg,
             'Goteo': gote_avg
         }
+        
+        chart_riego_secano_data[sector] = {
+            'Riego': sum_riego / 10000.0,
+            'Secano': (sum_total - sum_riego) / 10000.0
+        }
 
         sector_stats_report.append({
             'name': sector,
@@ -641,10 +855,47 @@ def main():
             'metodos_counts': {'Gravedad': len(grav_pcts), 'Aspersión': len(aspr_pcts), 'Goteo': len(gote_pcts)}
         })
 
+    # ── Consultas SQL para los nuevos gráficos sectoriales ──
+    chart_destino_cultivos_data = {'Sector 1': {'Autoconsumo': 0, 'Mercado': 0, 'Agroindustria': 0, 'Exportación': 0},
+                                   'Sector 2': {'Autoconsumo': 0, 'Mercado': 0, 'Agroindustria': 0, 'Exportación': 0},
+                                   'Sector 3': {'Autoconsumo': 0, 'Mercado': 0, 'Agroindustria': 0, 'Exportación': 0}}
+    if cultivos_table:
+        cursor.execute(f"""
+            SELECT COALESCE(NULLIF(f.sector_investigacion, ''), 'None') as sec,
+                   SUM(CASE WHEN c.es_autoconsumo THEN 1 ELSE 0 END) as aut,
+                   SUM(CASE WHEN c.es_mercado THEN 1 ELSE 0 END) as mer,
+                   SUM(CASE WHEN c.es_agroindustria THEN 1 ELSE 0 END) as agr,
+                   SUM(CASE WHEN c.es_exportacion THEN 1 ELSE 0 END) as exp
+            FROM "{cultivos_table}" c
+            JOIN "{fichas_table}" f ON c.ficha_id = f.id
+            GROUP BY sec
+        """)
+        for sec, aut, mer, agr, exp in cursor.fetchall():
+            s_name = 'Sector 1' if sec == 'None' else sec
+            if s_name in chart_destino_cultivos_data:
+                chart_destino_cultivos_data[s_name]['Autoconsumo'] = aut or 0
+                chart_destino_cultivos_data[s_name]['Mercado'] = mer or 0
+                chart_destino_cultivos_data[s_name]['Agroindustria'] = agr or 0
+                chart_destino_cultivos_data[s_name]['Exportación'] = exp or 0
+
+    chart_especies_pecuarias_data = []
+    if animales_table:
+        cursor.execute(f"""
+            SELECT TRIM(UPPER(especie)) as esp, SUM(COALESCE(cantidad, 0)) as tot
+            FROM "{animales_table}"
+            GROUP BY esp
+            ORDER BY tot DESC
+            LIMIT 5
+        """)
+        chart_especies_pecuarias_data = cursor.fetchall()
+
     # Generar gráficos SVG Sectoriales
     generate_predios_svg(chart_predios_data, os.path.join(GRAFICOS_DIR, 'chart_predios_sectores.svg'))
     generate_reservorios_svg(chart_reservorios_data, os.path.join(GRAFICOS_DIR, 'chart_reservorios.svg'))
     generate_metodos_svg(chart_metodos_data, os.path.join(GRAFICOS_DIR, 'chart_metodos_riego.svg'))
+    generate_riego_secano_svg(chart_riego_secano_data, os.path.join(GRAFICOS_DIR, 'chart_riego_secano.svg'))
+    generate_especies_pecuarias_svg(chart_especies_pecuarias_data, os.path.join(GRAFICOS_DIR, 'chart_especies_pecuarias.svg'))
+    generate_destino_cultivos_svg(chart_destino_cultivos_data, os.path.join(GRAFICOS_DIR, 'chart_destino_cultivos.svg'))
 
     # ── Conteos Reales y Normalizados por Parroquia ──
     def normalizar_parroquia(p):
@@ -694,14 +945,14 @@ Actualmente, el levantamiento de información georreferenciada en campo presenta
 
 ## 2. Cobertura por Parroquias y Comunidades
 
-La investigación cubre **4 parroquias principales** del Cantón Cayambe, registrando un total neto de comunidades únicas donde residen los regantes:
+La investigación cubre **4 parroquias principales** del Cantón Cayambe, registrando la siguiente distribución de fichas asociadas:
 
-| Parroquia | Comunidades Únicas | N° Fichas Asociadas |
-|---|---|---|
-| **CANGAHUA** | {len(comunidades_por_parroquia['CANGAHUA'])} comunidades | {fichas_por_parroquia['CANGAHUA']:,} |
-| **OTÓN** | {len(comunidades_por_parroquia['OTÓN'])} comunidades | {fichas_por_parroquia['OTÓN']:,} |
-| **ASCÁZUBI** | {len(comunidades_por_parroquia['ASCÁZUBI'])} comunidades | {fichas_por_parroquia['ASCÁZUBI']:,} |
-| **CUSUBAMBA** | {len(comunidades_por_parroquia['CUSUBAMBA'])} comunidades | {fichas_por_parroquia['CUSUBAMBA']:,} |
+| Parroquia | N° Fichas Asociadas |
+|---|---|
+| **CANGAHUA** | {fichas_por_parroquia['CANGAHUA']:,} |
+| **OTÓN** | {fichas_por_parroquia['OTÓN']:,} |
+| **ASCÁZUBI** | {fichas_por_parroquia['ASCÁZUBI']:,} |
+| **CUSUBAMBA** | {fichas_por_parroquia['CUSUBAMBA']:,} |
 
 ### Gráfico de Comunidades por Parroquia:
 ![N° Comunidades](informe_graficos/chart_parroquias.svg)
@@ -730,6 +981,11 @@ El análisis de superficies revela una distribución productiva y de acceso al r
 * **Sector 2:** Representa una zona de producción intermedia estable, concentrando el **{cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%** de los cultivos y el **{animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%** del ganado. Este sector mantiene una superficie de secano de **{sin_riego_por_sector['Sector 2']/10000:.2f} ha**, sustentada principalmente en minifundios de explotación familiar.
 * **Sector 3:** Al ubicarse en las zonas de mayor dispersión y altitud desfavorable, presenta la mayor superficie de secano declarada del sistema con **{sin_riego_por_sector['Sector 3']/10000:.2f} ha** (el **{sin_riego_por_sector['Sector 3']/max(sum(sin_riego_por_sector.values()), 1)*100:.1f}%** del secano total). Esta carencia crítica de cobertura de riego restringe su producción agrícola al **{cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%** del total, reflejando la necesidad prioritaria de implementar reservorios comunitarios y extensiones de ramales de riego en este sector.
 
+### Gráfico de Cobertura de Riego vs Secano por Sector (ha):
+![Cobertura de Riego](informe_graficos/chart_riego_secano.svg)
+
+---
+
 ### B. Distribución del Tamaño de los Predios (Minifundio)
 Para entender la fragmentación de la tierra en la zona de estudio, se desglosa el tamaño de las propiedades de los regantes (Unidades de Producción Agropecuaria - UPAs) en rangos lógicos de hectáreas:
 
@@ -745,13 +1001,15 @@ Para entender la fragmentación de la tierra en la zona de estudio, se desglosa 
 ### Gráfico de Distribución de Predios:
 ![Distribución Predios](informe_graficos/chart_predios_sectores.svg)
 
+---
+
 ### C. Características de las Familias de Regantes
 Evaluamos la carga demográfica que soportan las UPAs familiares a través del número de hijos reportados por hogar:
 
 * **Promedio de Hijos por Hogar**: 
-  * Sector 1: **{sector_stats_report[0]['avg_kids']:.1f} hijos** (Hogar promedio de ~5.3 personas).
-  * Sector 2: **{sector_stats_report[1]['avg_kids']:.1f} hijos** (Hogar promedio de ~5.1 personas).
-  * Sector 3: **{sector_stats_report[2]['avg_kids']:.1f} hijos** (Hogar promedio de ~5.4 personas).
+  * Sector 1: **{sector_stats_report[0]['avg_kids']:.1f} hijos** (Hogar promedio de ~{sector_stats_report[0]['avg_kids'] + 2:.1f} personas).
+  * Sector 2: **{sector_stats_report[1]['avg_kids']:.1f} hijos** (Hogar promedio de ~{sector_stats_report[1]['avg_kids'] + 2:.1f} personas).
+  * Sector 3: **{sector_stats_report[2]['avg_kids']:.1f} hijos** (Hogar promedio de ~{sector_stats_report[2]['avg_kids'] + 2:.1f} personas).
 
 | Carga Familiar (N° Hijos) | Sector 1 | Sector 2 | Sector 3 |
 |---|---|---|---|
@@ -759,6 +1017,18 @@ Evaluamos la carga demográfica que soportan las UPAs familiares a través del n
 | **Hogares con 1 a 2 hijos** | {sector_stats_report[0]['kids_dist'][1]} ({sector_stats_report[0]['kids_dist'][1]/sector_stats_report[0]['tot']*100:.1f}%) | {sector_stats_report[1]['kids_dist'][1]} ({sector_stats_report[1]['kids_dist'][1]/sector_stats_report[1]['tot']*100:.1f}%) | {sector_stats_report[2]['kids_dist'][1]} ({sector_stats_report[2]['kids_dist'][1]/sector_stats_report[2]['tot']*100:.1f}%) |
 | **Hogares con 3 a 4 hijos** | {sector_stats_report[0]['kids_dist'][2]} ({sector_stats_report[0]['kids_dist'][2]/sector_stats_report[0]['tot']*100:.1f}%) | {sector_stats_report[1]['kids_dist'][2]} ({sector_stats_report[1]['kids_dist'][2]/sector_stats_report[1]['tot']*100:.1f}%) | {sector_stats_report[2]['kids_dist'][2]} ({sector_stats_report[2]['kids_dist'][2]/sector_stats_report[2]['tot']*100:.1f}%) |
 | **Hogares con 5 o más hijos** | {sector_stats_report[0]['kids_dist'][3]} ({sector_stats_report[0]['kids_dist'][3]/sector_stats_report[0]['tot']*100:.1f}%) | {sector_stats_report[1]['kids_dist'][3]} ({sector_stats_report[1]['kids_dist'][3]/sector_stats_report[1]['tot']*100:.1f}%) | {sector_stats_report[2]['kids_dist'][3]} ({sector_stats_report[2]['kids_dist'][3]/sector_stats_report[2]['tot']*100:.1f}%) |
+
+---
+
+### D. Actividad y Producción Agropecuaria por Sector
+
+El desarrollo productivo de las Unidades de Producción Agropecuaria (UPAs) se sustenta en la actividad pecuaria y en el destino de los cultivos agrícolas cultivados en el territorio:
+
+#### Especies Pecuarias Principales (Cabezas de Ganado):
+![Especies Pecuarias](informe_graficos/chart_especies_pecuarias.svg)
+
+#### Destino de la Producción Agrícola por Sector:
+![Destino de la Producción](informe_graficos/chart_destino_cultivos.svg)
 
 ---
 

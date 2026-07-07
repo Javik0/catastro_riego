@@ -174,6 +174,25 @@ function useLocalData() {
   return { fichas, cultivosData, animalesData, prediosAdicionalesData, loading };
 }
 
+// ── Contexto de Datos Global ──
+import { createContext, useContext } from 'react';
+
+interface DataContextType {
+  fichas: FichaPredio[];
+  cultivosData: any[];
+  animalesData: any[];
+  prediosAdicionalesData: any[];
+  loading: boolean;
+}
+
+export const DataContext = createContext<DataContextType | null>(null);
+
+export function useData() {
+  const ctx = useContext(DataContext);
+  if (!ctx) throw new Error('useData debe usarse dentro de DataProvider');
+  return ctx;
+}
+
 // ── Wrapper que aplica filtros globales ──
 function FilteredDataProvider({ children }: { children: (props: {
   fichas: FichaPredio[];
@@ -183,7 +202,7 @@ function FilteredDataProvider({ children }: { children: (props: {
   prediosAdicionalesData: any[];
   loading: boolean;
 }) => React.ReactNode }) {
-  const { fichas: allFichas, cultivosData, animalesData, prediosAdicionalesData, loading } = useLocalData();
+  const { fichas: allFichas, cultivosData, animalesData, prediosAdicionalesData, loading } = useData();
   const { filtros } = useFiltros();
 
   const filtered = allFichas.filter((f) => {
@@ -213,6 +232,7 @@ function FilteredDataProvider({ children }: { children: (props: {
 // ── App Principal ──
 export default function App() {
   const { user, loading: authLoading } = useAuth();
+  const localData = useLocalData();
 
   if (authLoading) {
     return (
@@ -230,7 +250,8 @@ export default function App() {
       <MapNavProvider>
         <BrowserRouter>
           <FiltrosProvider>
-            <Routes>
+            <DataContext.Provider value={localData}>
+              <Routes>
               <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
 
               <Route
@@ -312,12 +333,12 @@ export default function App() {
 
               {/* Encuesta pública abierta para los comuneros/regantes */}
               <Route path="/encuesta" element={<EncuestaPublicaPage />} />
-
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-          </FiltrosProvider>
-        </BrowserRouter>
-      </MapNavProvider>
-    </ThemeProvider>
+          </DataContext.Provider>
+        </FiltrosProvider>
+      </BrowserRouter>
+    </MapNavProvider>
+  </ThemeProvider>
   );
 }

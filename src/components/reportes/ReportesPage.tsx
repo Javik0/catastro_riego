@@ -333,7 +333,10 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         let grandTotalComunidades = 0;
         
         const generalRows = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
-          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          const comunidadesSector = (COMUNIDADES_POR_SECTOR[sectorName] || []).filter((com) => {
+            const count = allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
+            return count > 0;
+          });
           let totalMeta = 0;
           let totalLevantado = 0;
           comunidadesSector.forEach((com) => {
@@ -391,7 +394,10 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           doc.addPage();
           await drawHeader(`CUADRO COMPARATIVO DE AVANCE - ${sectorName.toUpperCase()}`);
           
-          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          const comunidadesSector = (COMUNIDADES_POR_SECTOR[sectorName] || []).filter((com) => {
+            const count = allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
+            return count > 0;
+          });
           let totalMeta = 0;
           let totalLevantado = 0;
           
