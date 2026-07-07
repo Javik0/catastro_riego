@@ -97,6 +97,9 @@ def parse_markdown(md_text):
         elif stripped.startswith("### "):
             title = parse_inline(stripped[4:])
             html_lines.append(f"<h3>{title}</h3>")
+        elif stripped.startswith("#### "):
+            title = parse_inline(stripped[5:])
+            html_lines.append(f"<h4>{title}</h4>")
         # Listas con viñetas
         elif stripped.startswith("* "):
             if not in_list:

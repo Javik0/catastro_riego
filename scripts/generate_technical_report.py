@@ -398,8 +398,8 @@ def main():
         
     total_animales = 0
     if animales_table:
-        cursor.execute(f'SELECT COUNT(*) FROM "{animales_table}"')
-        total_animales = cursor.fetchone()[0]
+        cursor.execute(f'SELECT SUM(COALESCE(cantidad, 0)) FROM "{animales_table}"')
+        total_animales = cursor.fetchone()[0] or 0
 
     # ── Métricas adicionales por sector ──────────────────
     # 1. Cultivos por Sector
@@ -702,7 +702,7 @@ La siguiente tabla compara las áreas cultivadas y las superficies bajo riego pr
 | **Cultivos en el Sector (% del total)** | {cultivos_por_sector['Sector 1']:,} ({cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 2']:,} ({cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 3']:,} ({cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%) |
 | **Animales en el Sector (% del total)** | {animales_por_sector['Sector 1']:,} ({animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 2']:,} ({animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 3']:,} ({animales_por_sector['Sector 3']/max(total_animales, 1)*100:.1f}%) |
 
-#### Análisis de Cobertura y Uso Sectorial:
+### Análisis de Cobertura y Uso Sectorial:
 El análisis de superficies revela una distribución productiva y de acceso al recurso hídrico altamente contrastante entre los tres sectores de investigación:
 * **Sector 1:** Concentra el **{cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%** de la producción agrícola y el **{animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%** de las especies pecuarias del sistema. A pesar de ser el motor agropecuario principal del proyecto, registra **{sin_riego_por_sector['Sector 1']/10000:.2f} ha** de tierras en condiciones de secano (sin riego), lo que limita su capacidad de diversificación.
 * **Sector 2:** Representa una zona de producción intermedia estable, concentrando el **{cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%** de los cultivos y el **{animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%** del ganado. Este sector mantiene una superficie de secano de **{sin_riego_por_sector['Sector 2']/10000:.2f} ha**, sustentada principalmente en minifundios de explotación familiar.
