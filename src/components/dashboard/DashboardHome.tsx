@@ -194,6 +194,51 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
 
+  // ── Cálculos dinámicos sectoriales para los gráficos Recharts ──
+  // 1. Cobertura de Riego (Riego vs Secano en ha)
+  const areaRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_riego) || 0), 0);
+  const areaSinRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0);
+  const areaRiegoHa = areaRiegoTotalM2 / 10000;
+  const areaSinRiegoHa = areaSinRiegoTotalM2 / 10000;
+
+  const coberturaRiegoData = [
+    { name: 'Con Riego', value: Number(areaRiegoHa.toFixed(2)), color: '#3b82f6' },
+    { name: 'Secano (Sin Riego)', value: Number(areaSinRiegoHa.toFixed(2)), color: '#f59e0b' }
+  ].filter(item => item.value > 0);
+
+  // 2. Distribución de Especies Pecuarias (Animales)
+  const animalesPorEspecieMap: Record<string, number> = {};
+  for (const a of filteredAnimales) {
+    const esp = a.especie || 'Sin clasificar';
+    animalesPorEspecieMap[esp] = (animalesPorEspecieMap[esp] || 0) + (Number(a.cantidad) || 0);
+  }
+  const animalesPorEspecieData = Object.entries(animalesPorEspecieMap)
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 5);
+
+  // 3. Propósito de Cultivos (Autoconsumo vs Venta)
+  let autoconsumoCount = 0;
+  let mercadoCount = 0;
+  let agroindustriaCount = 0;
+  let exportacionCount = 0;
+
+  const fIds = new Set(fichas.map(f => f.id));
+  const fCultivos = cultivosData.filter((c: any) => fIds.has(c.ficha_id));
+  for (const c of fCultivos) {
+    if (c.es_autoconsumo) autoconsumoCount++;
+    if (c.es_mercado) mercadoCount++;
+    if (c.es_agroindustria) agroindustriaCount++;
+    if (c.es_exportacion) exportacionCount++;
+  }
+
+  const destinoCultivosData = [
+    { name: 'Autoconsumo', value: autoconsumoCount, color: '#10b981' },
+    { name: 'Mercado / Venta', value: mercadoCount, color: '#3b82f6' },
+    { name: 'Agroindustria', value: agroindustriaCount, color: '#8b5cf6' },
+    { name: 'Exportación', value: exportacionCount, color: '#ec4899' }
+  ].filter(item => item.value > 0);
+
   return (
     <div className="space-y-6">
       {/* Enlaces Rápidos de Compartición */}
@@ -331,6 +376,112 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             <div className="text-[10px] mt-4 font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
               <span>Hectáreas de secano registradas en fichas</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sección Gráficos Sectoriales Dinámicos */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+        {/* Cobertura de Riego */}
+        <div className="rounded-xl border p-4 flex flex-col justify-between"
+             style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+          <h4 className="text-xs font-bold uppercase tracking-wider text-blue-500 mb-4 flex items-center gap-2">
+            <Droplets className="w-4 h-4 text-blue-500" />
+            Uso del Suelo: Riego vs Secano (ha)
+          </h4>
+          <div className="h-[180px] flex items-center justify-center">
+            {coberturaRiegoData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={coberturaRiegoData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={45}
+                    outerRadius={70}
+                    paddingAngle={3}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value} ha`}
+                  >
+                    {coberturaRiegoData.map((entry, index) => (
+                      <Cell key={index} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin datos de área</span>
+            )}
+          </div>
+        </div>
+
+        {/* Especies Pecuarias */}
+        <div className="rounded-xl border p-4 flex flex-col justify-between"
+             style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+          <h4 className="text-xs font-bold uppercase tracking-wider text-pink-500 mb-4 flex items-center gap-2">
+            <PawPrint className="w-4 h-4 text-pink-500" />
+            Especies Pecuarias Principales (Cabezas)
+          </h4>
+          <div className="h-[180px]">
+            {animalesPorEspecieData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={animalesPorEspecieData} layout="vertical" margin={{ left: 10, right: 10, top: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                  <YAxis type="category" dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} width={70} />
+                  <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                  />
+                  <Bar dataKey="value" fill="#ec4899" radius={[0, 4, 4, 0]} name="Animales">
+                    {animalesPorEspecieData.map((_, index) => (
+                      <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin registros pecuarios</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Propósito de Cultivos */}
+        <div className="rounded-xl border p-4 flex flex-col justify-between"
+             style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+          <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-500 mb-4 flex items-center gap-2">
+            <Sprout className="w-4 h-4 text-emerald-500" />
+            Destino de la Producción Agrícola
+          </h4>
+          <div className="h-[180px]">
+            {destinoCultivosData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={destinoCultivosData} margin={{ left: 10, right: 10, top: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} />
+                  <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                  <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                  />
+                  <Bar dataKey="value" radius={[4, 4, 0, 0]} name="Cultivos">
+                    {destinoCultivosData.map((entry, index) => (
+                      <Cell key={index} fill={entry.color} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin registros agrícolas</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
