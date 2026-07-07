@@ -325,6 +325,120 @@ def generate_destino_cultivos_svg(data_sectores, output_path):
         f.write("\n".join(svg))
 
 
+# ── Helper para generar SVG de Cultivos por Sector Individual (Barras Verticales con % y Cantidades) ──
+def generate_sector_cultivos_svg(data, output_path, sector_name, color_theme):
+    # data es lista de tuples [(cultivo, cantidad), ...]
+    width, height = 550, 240
+    margin = {'top': 50, 'right': 40, 'bottom': 40, 'left': 60}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    total_cultivos_sector = sum([d[1] for d in data]) or 1
+    max_val = max([d[1] for d in data]) if data else 1
+    import math
+    scale_max = math.ceil(max_val / 100.0) * 100
+    if scale_max < 10: scale_max = max_val + 2
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append(f"""
+    <style>
+        .title {{ font-family: 'Inter', system-ui, sans-serif; font-size: 13px; font-weight: bold; fill: #1e293b; }}
+        .axis-label {{ font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #64748b; font-weight: 500; }}
+        .bar-val {{ font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #1e293b; font-weight: bold; }}
+        .grid-line {{ stroke: #f1f5f9; stroke-width: 1.5; }}
+        .axis-line {{ stroke: #cbd5e1; stroke-width: 1.5; }}
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="18" y="24" class="title">{sector_name}: Cultivos Más Frecuentes</text>')
+    
+    grid_ticks = 4
+    for i in range(grid_ticks + 1):
+        val = (scale_max / grid_ticks) * i
+        y = margin['top'] + chart_height - (val / scale_max) * chart_height
+        svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
+        svg.append(f'<text x="{margin["left"] - 8}" y="{y + 3}" text-anchor="end" class="axis-label">{int(val)}</text>')
+        
+    bar_width = (chart_width * 0.6) / len(data) if data else 20
+    group_width = chart_width / len(data) if data else 30
+    
+    for idx, (cultivo, val) in enumerate(data):
+        bar_h = (val / scale_max) * chart_height
+        x = margin['left'] + idx * group_width + (group_width - bar_width)/2
+        y = margin['top'] + chart_height - bar_h
+        
+        pct = (val / total_cultivos_sector * 100)
+        
+        svg.append(f'<rect x="{x}" y="{y}" width="{bar_width}" height="{bar_h}" rx="3" fill="{color_theme}" opacity="0.85"/>')
+        svg.append(f'<text x="{x + bar_width/2}" y="{y - 5}" text-anchor="middle" class="bar-val">{val} ({pct:.0f}%)</text>')
+        
+        label = cultivo.title()
+        if len(label) > 12: label = label[:10] + '...'
+        svg.append(f'<text x="{x + bar_width/2}" y="{height - margin["bottom"] + 14}" text-anchor="middle" class="axis-label">{label}</text>')
+        
+    svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Especies Pecuarias por Sector Individual (Barras Horizontales con Cantidades) ──
+def generate_sector_animales_svg(data, output_path, sector_name, color_theme):
+    # data es lista de tuples [(especie, cabezas), ...]
+    width, height = 550, 240
+    margin = {'top': 50, 'right': 80, 'bottom': 40, 'left': 100}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    max_val = max([d[1] for d in data]) if data else 1
+    import math
+    scale_max = math.ceil(max_val / 1000.0) * 1000
+    if scale_max < 10: scale_max = max_val + 2
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append(f"""
+    <style>
+        .title {{ font-family: 'Inter', system-ui, sans-serif; font-size: 13px; font-weight: bold; fill: #1e293b; }}
+        .axis-label {{ font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #64748b; font-weight: 500; }}
+        .bar-label {{ font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #1e293b; font-weight: 600; }}
+        .val-label {{ font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #1e293b; font-weight: bold; }}
+        .grid-line {{ stroke: #f1f5f9; stroke-width: 1.5; }}
+        .axis-line {{ stroke: #cbd5e1; stroke-width: 1.5; }}
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="18" y="24" class="title">{sector_name}: Especies Pecuarias Principales</text>')
+    
+    for i in range(5):
+        pct = 25 * i
+        x = margin['left'] + (pct / 100) * chart_width
+        svg.append(f'<line x1="{x}" y1="{margin["top"] - 5}" x2="{x}" y2="{height - margin["bottom"]}" stroke="#e2e8f0" stroke-dasharray="2 2"/>')
+        svg.append(f'<text x="{x}" y="{height - margin["bottom"] + 12}" text-anchor="middle" class="axis-label">{int((pct/100)*scale_max):,}</text>')
+        
+    bar_height = 20
+    bar_gap = 12
+    
+    for idx, (especie, val) in enumerate(data):
+        y = margin['top'] + idx * (bar_height + bar_gap)
+        
+        label = especie.title()
+        if len(label) > 16: label = label[:14] + '...'
+        svg.append(f'<text x="{margin["left"] - 10}" y="{y + bar_height/2 + 3}" text-anchor="end" class="bar-label">{label}</text>')
+        
+        w = (val / scale_max) * chart_width if scale_max > 0 else 0
+        if w > 0:
+            svg.append(f'<rect x="{margin["left"]}" y="{y}" width="{w}" height="{bar_height}" rx="3" fill="{color_theme}" opacity="0.85"/>')
+            
+        svg.append(f'<text x="{margin["left"] + w + 6}" y="{y + bar_height/2 + 3}" class="val-label">{val:,} cab.</text>')
+        
+    svg.append(f'<line x1="{margin["left"]}" y1="{margin["top"] - 10}" x2="{margin["left"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
 # ── Helper para generar SVG de Porcentaje de Cultivos por Sector (Barras Horizontales) ──
 def generate_cultivos_por_sector_svg(data, output_path):
     width, height = 650, 240
@@ -983,6 +1097,58 @@ def main():
     generate_destino_cultivos_svg(chart_destino_cultivos_data, os.path.join(GRAFICOS_DIR, 'chart_destino_cultivos.svg'))
     generate_cultivos_por_sector_svg(cultivos_por_sector, os.path.join(GRAFICOS_DIR, 'chart_cultivos_sectores.svg'))
 
+    # ── Generar Gráficos SVG Detallados por Sector ──
+    for sec_num in [1, 2, 3]:
+        sec_name = f"Sector {sec_num}"
+        sec_val = 'None' if sec_name == 'Sector 1' else sec_name
+        
+        # 1. Cultivos más frecuentes en el sector
+        cultivos_sec = []
+        if cultivos_table:
+            cursor.execute(f"""
+                SELECT TRIM(UPPER(c.tipo_cultivo)) as name, COUNT(*) as cnt
+                FROM "{cultivos_table}" c
+                JOIN "{fichas_table}" f ON c.ficha_id = f.id
+                WHERE COALESCE(NULLIF(f.sector_investigacion, ''), 'None') = ?
+                  AND c.tipo_cultivo IS NOT NULL AND c.tipo_cultivo != '' AND c.tipo_cultivo != 'None'
+                GROUP BY name
+                ORDER BY cnt DESC
+                LIMIT 5
+            """, (sec_val,))
+            cultivos_sec = cursor.fetchall()
+            
+        # 2. Animales más frecuentes en el sector
+        animales_sec = []
+        if animales_table:
+            cursor.execute(f"""
+                SELECT TRIM(UPPER(a.especie)) as name, SUM(COALESCE(a.cantidad, 0)) as cnt
+                FROM "{animales_table}" a
+                JOIN "{fichas_table}" f ON a.ficha_id = f.id
+                WHERE COALESCE(NULLIF(f.sector_investigacion, ''), 'None') = ?
+                  AND a.especie IS NOT NULL AND a.especie != '' AND a.especie != 'None'
+                GROUP BY name
+                ORDER BY cnt DESC
+                LIMIT 5
+            """, (sec_val,))
+            animales_sec = cursor.fetchall()
+            
+        # Renderizar SVGs
+        color_theme = COLORS['S1'] if sec_num == 1 else (COLORS['S2'] if sec_num == 2 else COLORS['S3'])
+        
+        generate_sector_cultivos_svg(
+            cultivos_sec, 
+            os.path.join(GRAFICOS_DIR, f'chart_cultivos_sector{sec_num}.svg'), 
+            sec_name, 
+            color_theme
+        )
+        
+        generate_sector_animales_svg(
+            animales_sec, 
+            os.path.join(GRAFICOS_DIR, f'chart_animales_sector{sec_num}.svg'), 
+            sec_name, 
+            color_theme
+        )
+
     # ── Conteos Reales y Normalizados por Parroquia ──
     def normalizar_parroquia(p):
         if not p: return ''
@@ -1115,6 +1281,33 @@ El desarrollo productivo de las Unidades de Producción Agropecuaria (UPAs) se s
 
 #### Destino de la Producción Agrícola por Sector:
 ![Destino de la Producción](informe_graficos/chart_destino_cultivos.svg)
+
+---
+
+### E. Detalle de Producción Agropecuaria por Sectores Individuales
+
+A continuación, se presenta de forma desagregada para cada sector los cultivos más frecuentes (con su cantidad de parcelas y proporción porcentual) y las especies pecuarias dominantes (número de cabezas de ganado censadas):
+
+#### Sector 1:
+La producción en el Sector 1 está fuertemente consolidada en cultivos hortícolas y ganadería menor de aves y cobayos.
+
+| Cultivos Frecuentes | Especies Pecuarias Principales |
+|---|---|
+| ![Cultivos Sector 1](informe_graficos/chart_cultivos_sector1.svg) | ![Animales Sector 1](informe_graficos/chart_animales_sector1.svg) |
+
+#### Sector 2:
+El Sector 2 muestra un perfil diversificado con fuerte ganadería de vacunos productores de leche y cultivos de ciclo corto.
+
+| Cultivos Frecuentes | Especies Pecuarias Principales |
+|---|---|
+| ![Cultivos Sector 2](informe_graficos/chart_cultivos_sector2.svg) | ![Animales Sector 2](informe_graficos/chart_animales_sector2.svg) |
+
+#### Sector 3:
+El Sector 3, debido a su altitud y menor cobertura de canales secundarios, reporta especies pecuarias rústicas y cultivos andinos adaptados.
+
+| Cultivos Frecuentes | Especies Pecuarias Principales |
+|---|---|
+| ![Cultivos Sector 3](informe_graficos/chart_cultivos_sector3.svg) | ![Animales Sector 3](informe_graficos/chart_animales_sector3.svg) |
 
 ---
 
