@@ -719,7 +719,7 @@ export default function MapPage({ fichas, loading }: Props) {
       {/* Buscador de predios catastrales */}
       <MapSearchBar onSelect={handleSearchSelect} />
 
-      <MapContainer center={[0.04, -78.15]} zoom={13} className="h-full w-full">
+      <MapContainer center={[0.04, -78.15]} zoom={14} className="h-full w-full">
         {/* ── Basemaps ── */}
         <LayersControl position="topright">
           <LayersControl.BaseLayer checked name="ESRI Satélite">
@@ -789,9 +789,9 @@ export default function MapPage({ fichas, loading }: Props) {
         <FlyToFicha ficha={selectedFichaMap} />
         <FlyToSearch searchTarget={searchTarget} polygonData={searchPolygonGeo} />
 
-        {/* ── Fichas: Se ocultan en zoom amplio (< 14) para evitar contaminación visual, excepto la seleccionada ── */}
-        {(currentZoom >= 14 || selectedFichaMap) && fichasConGeo.map((ficha) => {
-          if (currentZoom < 14 && selectedFichaMap?.id !== ficha.id) return null;
+        {/* ── Fichas: Se ocultan en zoom amplio (< 13) para evitar contaminación visual, excepto la seleccionada ── */}
+        {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
+          if (currentZoom < 13 && selectedFichaMap?.id !== ficha.id) return null;
           return <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />;
         })}
 

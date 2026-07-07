@@ -401,6 +401,51 @@ def main():
         cursor.execute(f'SELECT COUNT(*) FROM "{animales_table}"')
         total_animales = cursor.fetchone()[0]
 
+    # ── Métricas adicionales por sector ──────────────────
+    # 1. Cultivos por Sector
+    cultivos_por_sector = {'Sector 1': 0, 'Sector 2': 0, 'Sector 3': 0}
+    if cultivos_table:
+        cursor.execute(f"""
+            SELECT COALESCE(NULLIF(f.sector_investigacion, ''), 'None') as sec, COUNT(c.id_cultivo)
+            FROM "{cultivos_table}" c
+            JOIN "{fichas_table}" f ON c.ficha_id = f.id
+            GROUP BY sec
+        """)
+        for sec, count in cursor.fetchall():
+            s_name = 'Sector 1' if sec == 'None' else sec
+            if s_name in cultivos_por_sector:
+                cultivos_por_sector[s_name] += count
+
+    # 2. Animales por Sector
+    animales_por_sector = {'Sector 1': 0, 'Sector 2': 0, 'Sector 3': 0}
+    if animales_table:
+        cursor.execute(f"""
+            SELECT COALESCE(NULLIF(f.sector_investigacion, ''), 'None') as sec, SUM(COALESCE(a.cantidad, 0))
+            FROM "{animales_table}" a
+            JOIN "{fichas_table}" f ON a.ficha_id = f.id
+            GROUP BY sec
+        """)
+        for sec, count in cursor.fetchall():
+            s_name = 'Sector 1' if sec == 'None' else sec
+            if s_name in animales_por_sector:
+                animales_por_sector[s_name] += count
+
+    # 3. Área sin Riego por Sector (con corrección en caliente)
+    sin_riego_por_sector = {'Sector 1': 0.0, 'Sector 2': 0.0, 'Sector 3': 0.0}
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec, area_total, area_riego, area_sin_riego
+        FROM "{fichas_table}"
+    """)
+    for sec, area_tot, area_rieg, area_sin in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        a_tot = area_tot or 0.0
+        a_rieg = area_rieg or 0.0
+        a_sin = area_sin or 0.0
+        if a_rieg > a_tot or a_sin < 0:
+            a_sin = 0.0
+        if s_name in sin_riego_por_sector:
+            sin_riego_por_sector[s_name] += a_sin
+
     # ─────────────────────────────────────────────────────────
     # 1. Extracción de Fichas sin Comunidad
     # ─────────────────────────────────────────────────────────
@@ -653,6 +698,9 @@ La siguiente tabla compara las áreas cultivadas y las superficies bajo riego pr
 | **Área Total Promedio por Predio** | {sector_stats_report[0]['avg_total']:,.2f} m² ({sector_stats_report[0]['avg_total']/10000:.3f} ha) | {sector_stats_report[1]['avg_total']:,.2f} m² ({sector_stats_report[1]['avg_total']/10000:.3f} ha) | {sector_stats_report[2]['avg_total']:,.2f} m² ({sector_stats_report[2]['avg_total']/10000:.3f} ha) |
 | **Área con Riego Declarada** | {sector_stats_report[0]['sum_riego']:,.2f} m² | {sector_stats_report[1]['sum_riego']:,.2f} m² | {sector_stats_report[2]['sum_riego']:,.2f} m² |
 | **Área con Riego Promedio por Predio** | {sector_stats_report[0]['avg_riego']:,.2f} m² ({sector_stats_report[0]['avg_riego']/10000:.3f} ha) | {sector_stats_report[1]['avg_riego']:,.2f} m² ({sector_stats_report[1]['avg_riego']/10000:.3f} ha) | {sector_stats_report[2]['avg_riego']:,.2f} m² ({sector_stats_report[2]['avg_riego']/10000:.3f} ha) |
+| **Área sin Riego Declarada (Secano)** | {sin_riego_por_sector['Sector 1']:,.2f} m² ({sin_riego_por_sector['Sector 1']/10000:.2f} ha) | {sin_riego_por_sector['Sector 2']:,.2f} m² ({sin_riego_por_sector['Sector 2']/10000:.2f} ha) | {sin_riego_por_sector['Sector 3']:,.2f} m² ({sin_riego_por_sector['Sector 3']/10000:.2f} ha) |
+| **Cultivos en el Sector (% del total)** | {cultivos_por_sector['Sector 1']:,} ({cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 2']:,} ({cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 3']:,} ({cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%) |
+| **Animales en el Sector (% del total)** | {animales_por_sector['Sector 1']:,} ({animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 2']:,} ({animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 3']:,} ({animales_por_sector['Sector 3']/max(total_animales, 1)*100:.1f}%) |
 
 ### B. Distribución del Tamaño de los Predios (Minifundio)
 Para entender la fragmentación de la tierra en la zona de estudio, se desglosa el tamaño de las propiedades de los regantes (Unidades de Producción Agropecuaria - UPAs) en rangos lógicos de hectáreas:

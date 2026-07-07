@@ -263,6 +263,78 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         <KPICard icon={PawPrint} label="Animales Registrados" value={totalAnimales} color="#ec4899" sub={`${filteredAnimales.length} registros`} />
       </div>
 
+      {/* Sección Análisis Sectorial */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold tracking-wide uppercase text-blue-500 flex items-center gap-2">
+          <TrendingUp className="w-4 h-4" />
+          Análisis del Sector Seleccionado
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Tarjeta % Cultivos */}
+          <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-emerald-500/30"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Cultivos en el Sector</p>
+                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>{((stats.totalCultivos / (cultivosData.length || 1)) * 100).toFixed(1)}%</h4>
+                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  {stats.totalCultivos.toLocaleString('es-EC')} de {(cultivosData.length).toLocaleString('es-EC')} parcelas agrícolas del sistema
+                </p>
+              </div>
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 shrink-0">
+                <Sprout className="w-5 h-5" />
+              </div>
+            </div>
+            {/* Barra de progreso */}
+            <div className="w-full bg-black/5 dark:bg-white/10 h-2 rounded-full mt-4 overflow-hidden">
+              <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${Math.min((stats.totalCultivos / (cultivosData.length || 1)) * 100, 100)}%` }} />
+            </div>
+          </div>
+
+          {/* Tarjeta % Animales */}
+          <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-pink-500/30"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Animales en el Sector</p>
+                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>{((totalAnimales / (animalesData.reduce((acc: number, a: any) => acc + (Number(a.cantidad) || 0), 0) || 1)) * 100).toFixed(1)}%</h4>
+                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  {totalAnimales.toLocaleString('es-EC')} de {(animalesData.reduce((acc: number, a: any) => acc + (Number(a.cantidad) || 0), 0)).toLocaleString('es-EC')} cabezas registradas
+                </p>
+              </div>
+              <div className="p-3 rounded-xl bg-pink-500/10 border border-pink-500/20 text-pink-500 shrink-0">
+                <PawPrint className="w-5 h-5" />
+              </div>
+            </div>
+            {/* Barra de progreso */}
+            <div className="w-full bg-black/5 dark:bg-white/10 h-2 rounded-full mt-4 overflow-hidden">
+              <div className="bg-pink-500 h-full rounded-full transition-all duration-500" style={{ width: `${Math.min((totalAnimales / (animalesData.reduce((acc: number, a: any) => acc + (Number(a.cantidad) || 0), 0) || 1)) * 100, 100)}%` }} />
+            </div>
+          </div>
+
+          {/* Tarjeta ha Sin Riego */}
+          <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-amber-500/30"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie Sin Riego</p>
+                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>{(fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0) / 10000).toFixed(2)} ha</h4>
+                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  Equivalente a {(fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0)).toLocaleString('es-EC')} m² de secano en este sector
+                </p>
+              </div>
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 shrink-0">
+                <Droplets className="w-5 h-5" />
+              </div>
+            </div>
+            {/* Mensaje informativo */}
+            <div className="text-[10px] mt-4 font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+              <span>Hectáreas de secano registradas en fichas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Fichas por Técnico */}
