@@ -177,12 +177,27 @@ def generate_riego_secano_svg(data_sectores, output_path):
         f.write("\n".join(svg))
 
 
-# ── Helper para generar SVG de Especies Pecuarias Principales (Barras Verticales) ──
-def generate_especies_pecuarias_svg(data_animales, output_path):
-    width, height = 650, 260
-    margin = {'top': 60, 'right': 40, 'bottom': 50, 'left': 80}
+# ── Helper para generar SVG de Especies Pecuarias Principales (Barras Agrupadas por Sector) ──
+def generate_especies_pecuarias_svg(data_sectores, output_path):
+    # data_sectores es dict { especie: {'Sector 1': val, 'Sector 2': val, 'Sector 3': val}, ... }
+    width, height = 750, 320
+    margin = {'top': 60, 'right': 150, 'bottom': 50, 'left': 60}
     chart_width = width - margin['left'] - margin['right']
     chart_height = height - margin['top'] - margin['bottom']
+    
+    categories = list(data_sectores.keys())
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    colors = [COLORS['S1'], COLORS['S2'], COLORS['S3']]
+    
+    # Encontrar valor máximo para escala Y
+    max_val = 0
+    for esp, sec_vals in data_sectores.items():
+        for sec in sectors:
+            max_val = max(max_val, sec_vals.get(sec, 0))
+            
+    import math
+    scale_max = math.ceil((max_val or 1) / 1000.0) * 1000
+    if scale_max < 10: scale_max = max_val + 5
     
     svg = []
     svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
@@ -191,26 +206,14 @@ def generate_especies_pecuarias_svg(data_animales, output_path):
         .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
         .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
         .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
-        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #1e293b; font-weight: bold; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
         .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
         .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
     </style>
     """)
     svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
-    svg.append(f'<text x="24" y="32" class="title">Especies Pecuarias Principales del Censo</text>')
-    svg.append(f'<text x="24" y="48" class="subtitle">Total global de cabezas de ganado registradas en el catastro</text>')
-    
-    if not data_animales:
-        svg.append(f'<text x="{width/2}" y="{height/2}" text-anchor="middle" class="subtitle">Sin datos pecuarios</text>')
-        svg.append('</svg>')
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write("\n".join(svg))
-        return
-        
-    max_val = max([x[1] for x in data_animales]) or 1
-    import math
-    scale_max = math.ceil(max_val / 10000.0) * 10000
-    if scale_max < 10: scale_max = max_val + 5
+    svg.append(f'<text x="24" y="32" class="title">Especies Pecuarias Principales por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Cabezas de ganado por tipo y sector de investigación (Censo)</text>')
     
     grid_ticks = 4
     for i in range(grid_ticks + 1):
@@ -219,22 +222,32 @@ def generate_especies_pecuarias_svg(data_animales, output_path):
         svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
         svg.append(f'<text x="{margin["left"] - 8}" y="{y + 4}" text-anchor="end" class="axis-label">{int(val):,}</text>')
         
-    bar_width = (chart_width * 0.6) / len(data_animales)
-    group_width = chart_width / len(data_animales)
-    colors = ['#ec4899', '#f43f5e', '#a855f7', '#8b5cf6', '#6366f1']
+    group_width = chart_width / len(categories)
+    bar_width = (group_width * 0.7) / len(sectors)
+    bar_gap = 1.0
     
-    for idx, (especie, val) in enumerate(data_animales):
-        bar_h = (val / scale_max) * chart_height
-        x = margin['left'] + idx * group_width + (group_width - bar_width)/2
-        y = margin['top'] + chart_height - bar_h
+    for c_idx, cat in enumerate(categories):
+        group_x = margin['left'] + c_idx * group_width
+        label_cat = cat.title()
+        if len(label_cat) > 15: label_cat = label_cat[:13] + '...'
+        svg.append(f'<text x="{group_x + group_width/2}" y="{height - margin["bottom"] + 18}" text-anchor="middle" class="axis-label">{label_cat}</text>')
         
-        svg.append(f'<rect x="{x}" y="{y}" width="{bar_width}" height="{bar_h}" rx="4" fill="{colors[idx % len(colors)]}" opacity="0.9"/>')
-        svg.append(f'<text x="{x + bar_width/2}" y="{y - 6}" text-anchor="middle" class="bar-val">{val:,}</text>')
-        label_esp = especie.title()
-        if len(label_esp) > 12: label_esp = label_esp[:10] + '...'
-        svg.append(f'<text x="{x + bar_width/2}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="axis-label">{label_esp}</text>')
-        
+        for s_idx, sec in enumerate(sectors):
+            val = data_sectores[cat].get(sec, 0)
+            bar_h = (val / scale_max) * chart_height
+            bar_x = group_x + (group_width * 0.15) + s_idx * (bar_width + bar_gap)
+            bar_y = margin['top'] + chart_height - bar_h
+            
+            svg.append(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_width}" height="{bar_h}" rx="2" fill="{colors[s_idx]}" opacity="0.95"/>')
+            
     svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    
+    leg_x = width - margin['right'] + 20
+    for s_idx, sec in enumerate(sectors):
+        leg_y = margin['top'] + 20 + s_idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{colors[s_idx]}"/>')
+        svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text">{sec}</text>')
+        
     svg.append('</svg>')
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(svg))
@@ -307,6 +320,62 @@ def generate_destino_cultivos_svg(data_sectores, output_path):
         svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{cat_colors[c_idx]}"/>')
         svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text" style="font-size: 10px;">{cat}</text>')
         
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Porcentaje de Cultivos por Sector (Barras Horizontales) ──
+def generate_cultivos_por_sector_svg(data, output_path):
+    width, height = 650, 240
+    margin = {'top': 60, 'right': 140, 'bottom': 40, 'left': 100}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    colors = [COLORS['S1'], COLORS['S2'], COLORS['S3']]
+    total = sum(data.values()) or 1
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: 500; }
+        .bar-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .val-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: bold; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    """)
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Distribución de Cultivos por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Porcentaje y número de parcelas agrícolas registradas por sector</text>')
+    
+    for i in range(5):
+        pct = 25 * i
+        x = margin['left'] + (pct / 100) * chart_width
+        svg.append(f'<line x1="{x}" y1="{margin["top"] - 5}" x2="{x}" y2="{height - margin["bottom"]}" stroke="#e2e8f0" stroke-dasharray="2 2"/>')
+        svg.append(f'<text x="{x}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="axis-label">{pct}%</text>')
+        
+    bar_height = 24
+    bar_gap = 18
+    
+    for idx, sec in enumerate(sectors):
+        y = margin['top'] + idx * (bar_height + bar_gap)
+        val = data.get(sec, 0)
+        pct = (val / total * 100) if total > 0 else 0
+        
+        svg.append(f'<text x="{margin["left"] - 12}" y="{y + bar_height/2 + 4}" text-anchor="end" class="bar-label">{sec}</text>')
+        
+        w = (pct / 100) * chart_width
+        if w > 0:
+            svg.append(f'<rect x="{margin["left"]}" y="{y}" width="{w}" height="{bar_height}" rx="3" fill="{colors[idx]}" opacity="0.9"/>')
+            
+        svg.append(f'<text x="{margin["left"] + w + 8}" y="{y + bar_height/2 + 4}" class="val-label">{pct:.1f}% ({val:,} cultivos)</text>')
+        
+    svg.append(f'<line x1="{margin["left"]}" y1="{margin["top"] - 10}" x2="{margin["left"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
     svg.append('</svg>')
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(svg))
@@ -878,8 +947,9 @@ def main():
                 chart_destino_cultivos_data[s_name]['Agroindustria'] = agr or 0
                 chart_destino_cultivos_data[s_name]['Exportación'] = exp or 0
 
-    chart_especies_pecuarias_data = []
+    chart_especies_pecuarias_data = {}
     if animales_table:
+        # 1. Encontrar el top 5 de especies globales
         cursor.execute(f"""
             SELECT TRIM(UPPER(especie)) as esp, SUM(COALESCE(cantidad, 0)) as tot
             FROM "{animales_table}"
@@ -887,7 +957,22 @@ def main():
             ORDER BY tot DESC
             LIMIT 5
         """)
-        chart_especies_pecuarias_data = cursor.fetchall()
+        top_especies = [x[0] for x in cursor.fetchall()]
+        
+        # 2. Para cada una, acumular cantidades por sector
+        for esp in top_especies:
+            chart_especies_pecuarias_data[esp] = {'Sector 1': 0, 'Sector 2': 0, 'Sector 3': 0}
+            cursor.execute(f"""
+                SELECT COALESCE(NULLIF(f.sector_investigacion, ''), 'None') as sec, SUM(COALESCE(a.cantidad, 0))
+                FROM "{animales_table}" a
+                JOIN "{fichas_table}" f ON a.ficha_id = f.id
+                WHERE TRIM(UPPER(a.especie)) = ?
+                GROUP BY sec
+            """, (esp,))
+            for sec, cant in cursor.fetchall():
+                s_name = 'Sector 1' if sec == 'None' else sec
+                if s_name in chart_especies_pecuarias_data[esp]:
+                    chart_especies_pecuarias_data[esp][s_name] = cant or 0
 
     # Generar gráficos SVG Sectoriales
     generate_predios_svg(chart_predios_data, os.path.join(GRAFICOS_DIR, 'chart_predios_sectores.svg'))
@@ -896,6 +981,7 @@ def main():
     generate_riego_secano_svg(chart_riego_secano_data, os.path.join(GRAFICOS_DIR, 'chart_riego_secano.svg'))
     generate_especies_pecuarias_svg(chart_especies_pecuarias_data, os.path.join(GRAFICOS_DIR, 'chart_especies_pecuarias.svg'))
     generate_destino_cultivos_svg(chart_destino_cultivos_data, os.path.join(GRAFICOS_DIR, 'chart_destino_cultivos.svg'))
+    generate_cultivos_por_sector_svg(cultivos_por_sector, os.path.join(GRAFICOS_DIR, 'chart_cultivos_sectores.svg'))
 
     # ── Conteos Reales y Normalizados por Parroquia ──
     def normalizar_parroquia(p):
@@ -953,9 +1039,6 @@ La investigación cubre **4 parroquias principales** del Cantón Cayambe, regist
 | **OTÓN** | {fichas_por_parroquia['OTÓN']:,} |
 | **ASCÁZUBI** | {fichas_por_parroquia['ASCÁZUBI']:,} |
 | **CUSUBAMBA** | {fichas_por_parroquia['CUSUBAMBA']:,} |
-
-### Gráfico de Comunidades por Parroquia:
-![N° Comunidades](informe_graficos/chart_parroquias.svg)
 
 ---
 
@@ -1024,7 +1107,10 @@ Evaluamos la carga demográfica que soportan las UPAs familiares a través del n
 
 El desarrollo productivo de las Unidades de Producción Agropecuaria (UPAs) se sustenta en la actividad pecuaria y en el destino de los cultivos agrícolas cultivados en el territorio:
 
-#### Especies Pecuarias Principales (Cabezas de Ganado):
+#### Distribución del Total de Cultivos por Sector:
+![Distribución de Cultivos](informe_graficos/chart_cultivos_sectores.svg)
+
+#### Especies Pecuarias Principales por Sector (Cabezas de Ganado):
 ![Especies Pecuarias](informe_graficos/chart_especies_pecuarias.svg)
 
 #### Destino de la Producción Agrícola por Sector:

@@ -363,52 +363,6 @@
 </table>
 </div>
 
-<h3>Gráfico de Comunidades por Parroquia:</h3>
-<div class="chart-box">
-<div class="chart-title">N° Comunidades</div>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="100%" height="100%">
-
-    <style>
-        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
-        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: 500; }
-        .bar-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
-        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: bold; }
-        .grid-line { stroke: #e2e8f0; stroke-width: 1; stroke-dasharray: 2 2; }
-        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
-        .bar { transition: fill 0.3s; }
-        .bar:hover { fill: #059669 !important; }
-    </style>
-    
-<rect width="600" height="320" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-<text x="24" y="32" class="title">N° de Comunidades Únicas por Parroquia</text>
-<line x1="120.0" y1="50" x2="120.0" y2="270" class="grid-line"/>
-<text x="120.0" y="288" text-anchor="middle" class="axis-label">0</text>
-<line x1="208.0" y1="50" x2="208.0" y2="270" class="grid-line"/>
-<text x="208.0" y="288" text-anchor="middle" class="axis-label">8</text>
-<line x1="296.0" y1="50" x2="296.0" y2="270" class="grid-line"/>
-<text x="296.0" y="288" text-anchor="middle" class="axis-label">16</text>
-<line x1="384.0" y1="50" x2="384.0" y2="270" class="grid-line"/>
-<text x="384.0" y="288" text-anchor="middle" class="axis-label">24</text>
-<line x1="472.0" y1="50" x2="472.0" y2="270" class="grid-line"/>
-<text x="472.0" y="288" text-anchor="middle" class="axis-label">32</text>
-<line x1="560.0" y1="50" x2="560.0" y2="270" class="grid-line"/>
-<text x="560.0" y="288" text-anchor="middle" class="axis-label">40</text>
-<rect x="120" y="50.0" width="396.0" height="44.5" rx="4" fill="#10b981" class="bar"/>
-<text x="108" y="76.25" text-anchor="end" class="bar-label">CANGAHUA</text>
-<text x="524.0" y="76.25" class="bar-val">36</text>
-<rect x="120" y="108.5" width="66.0" height="44.5" rx="4" fill="#3b82f6" class="bar"/>
-<text x="108" y="134.75" text-anchor="end" class="bar-label">OTÓN</text>
-<text x="194.0" y="134.75" class="bar-val">6</text>
-<rect x="120" y="167.0" width="55.0" height="44.5" rx="4" fill="#8b5cf6" class="bar"/>
-<text x="108" y="193.25" text-anchor="end" class="bar-label">CUSUBAMBA</text>
-<text x="183.0" y="193.25" class="bar-val">5</text>
-<rect x="120" y="225.5" width="55.0" height="44.5" rx="4" fill="#f59e0b" class="bar"/>
-<text x="108" y="251.75" text-anchor="end" class="bar-label">ASCÁZUBI</text>
-<text x="183.0" y="251.75" class="bar-val">5</text>
-<line x1="120" y1="40" x2="120" y2="270" class="axis-line"/>
-</svg>
-</div>
-
 <hr />
 
 <h2>3. Primeros Resultados por Sectores de Investigación (Sectores 1, 2 y 3)</h2>
@@ -707,49 +661,101 @@
 
 <p>El desarrollo productivo de las Unidades de Producción Agropecuaria (UPAs) se sustenta en la actividad pecuaria y en el destino de los cultivos agrícolas cultivados en el territorio:</p>
 
-<h4>Especies Pecuarias Principales (Cabezas de Ganado):</h4>
+<h4>Distribución del Total de Cultivos por Sector:</h4>
+<div class="chart-box">
+<div class="chart-title">Distribución de Cultivos</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 240" width="100%" height="100%">
+
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; font-weight: 500; }
+        .bar-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .val-label { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: bold; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    
+<rect width="650" height="240" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="24" y="32" class="title">Distribución de Cultivos por Sector</text>
+<text x="24" y="48" class="subtitle">Porcentaje y número de parcelas agrícolas registradas por sector</text>
+<line x1="100.0" y1="55" x2="100.0" y2="200" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text x="100.0" y="216" text-anchor="middle" class="axis-label">0%</text>
+<line x1="202.5" y1="55" x2="202.5" y2="200" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text x="202.5" y="216" text-anchor="middle" class="axis-label">25%</text>
+<line x1="305.0" y1="55" x2="305.0" y2="200" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text x="305.0" y="216" text-anchor="middle" class="axis-label">50%</text>
+<line x1="407.5" y1="55" x2="407.5" y2="200" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text x="407.5" y="216" text-anchor="middle" class="axis-label">75%</text>
+<line x1="510.0" y1="55" x2="510.0" y2="200" stroke="#e2e8f0" stroke-dasharray="2 2"/>
+<text x="510.0" y="216" text-anchor="middle" class="axis-label">100%</text>
+<text x="88" y="76.0" text-anchor="end" class="bar-label">Sector 1</text>
+<rect x="100" y="60" width="208.3022244950141" height="24" rx="3" fill="#10b981" opacity="0.9"/>
+<text x="316.3022244950141" y="76.0" class="val-label">50.8% (3,974 cultivos)</text>
+<text x="88" y="118.0" text-anchor="end" class="bar-label">Sector 2</text>
+<rect x="100" y="102" width="125.22244950140629" height="24" rx="3" fill="#3b82f6" opacity="0.9"/>
+<text x="233.2224495014063" y="118.0" class="val-label">30.5% (2,389 cultivos)</text>
+<text x="88" y="160.0" text-anchor="end" class="bar-label">Sector 3</text>
+<rect x="100" y="144" width="76.47532600357965" height="24" rx="3" fill="#f59e0b" opacity="0.9"/>
+<text x="184.47532600357965" y="160.0" class="val-label">18.7% (1,459 cultivos)</text>
+<line x1="100" y1="50" x2="100" y2="200" class="axis-line"/>
+</svg>
+</div>
+
+<h4>Especies Pecuarias Principales por Sector (Cabezas de Ganado):</h4>
 <div class="chart-box">
 <div class="chart-title">Especies Pecuarias</div>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 260" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 320" width="100%" height="100%">
 
     <style>
         .title { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; font-weight: bold; fill: #1e293b; }
         .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
         .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
-        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #1e293b; font-weight: bold; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
         .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
         .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
     </style>
     
-<rect width="650" height="260" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-<text x="24" y="32" class="title">Especies Pecuarias Principales del Censo</text>
-<text x="24" y="48" class="subtitle">Total global de cabezas de ganado registradas en el catastro</text>
-<line x1="80" y1="210.0" x2="610" y2="210.0" class="grid-line"/>
-<text x="72" y="214.0" text-anchor="end" class="axis-label">0</text>
-<line x1="80" y1="172.5" x2="610" y2="172.5" class="grid-line"/>
-<text x="72" y="176.5" text-anchor="end" class="axis-label">20,000</text>
-<line x1="80" y1="135.0" x2="610" y2="135.0" class="grid-line"/>
-<text x="72" y="139.0" text-anchor="end" class="axis-label">40,000</text>
-<line x1="80" y1="97.5" x2="610" y2="97.5" class="grid-line"/>
-<text x="72" y="101.5" text-anchor="end" class="axis-label">60,000</text>
-<line x1="80" y1="60.0" x2="610" y2="60.0" class="grid-line"/>
-<text x="72" y="64.0" text-anchor="end" class="axis-label">80,000</text>
-<rect x="101.2" y="72.25687500000001" width="63.6" height="137.743125" rx="4" fill="#ec4899" opacity="0.9"/>
-<text x="133.0" y="66.25687500000001" text-anchor="middle" class="bar-val">73,463</text>
-<text x="133.0" y="226" text-anchor="middle" class="axis-label">Gallinas D...</text>
-<rect x="207.2" y="122.6475" width="63.6" height="87.3525" rx="4" fill="#f43f5e" opacity="0.9"/>
-<text x="239.0" y="116.6475" text-anchor="middle" class="bar-val">46,588</text>
-<text x="239.0" y="226" text-anchor="middle" class="axis-label">Cuyes / Co...</text>
-<rect x="313.2" y="188.536875" width="63.6" height="21.463125" rx="4" fill="#a855f7" opacity="0.9"/>
-<text x="345.0" y="182.536875" text-anchor="middle" class="bar-val">11,447</text>
-<text x="345.0" y="226" text-anchor="middle" class="axis-label">Otros</text>
-<rect x="419.2" y="190.48125" width="63.6" height="19.518749999999997" rx="4" fill="#8b5cf6" opacity="0.9"/>
-<text x="451.0" y="184.48125" text-anchor="middle" class="bar-val">10,410</text>
-<text x="451.0" y="226" text-anchor="middle" class="axis-label">Ovejas / C...</text>
-<rect x="525.2" y="201.159375" width="63.6" height="8.840625" rx="4" fill="#6366f1" opacity="0.9"/>
-<text x="557.0" y="195.159375" text-anchor="middle" class="bar-val">4,715</text>
-<text x="557.0" y="226" text-anchor="middle" class="axis-label">Pollos De ...</text>
-<line x1="80" y1="210" x2="610" y2="210" class="axis-line"/>
+<rect width="750" height="320" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+<text x="24" y="32" class="title">Especies Pecuarias Principales por Sector</text>
+<text x="24" y="48" class="subtitle">Cabezas de ganado por tipo y sector de investigación (Censo)</text>
+<line x1="60" y1="270.0" x2="600" y2="270.0" class="grid-line"/>
+<text x="52" y="274.0" text-anchor="end" class="axis-label">0</text>
+<line x1="60" y1="217.5" x2="600" y2="217.5" class="grid-line"/>
+<text x="52" y="221.5" text-anchor="end" class="axis-label">16,000</text>
+<line x1="60" y1="165.0" x2="600" y2="165.0" class="grid-line"/>
+<text x="52" y="169.0" text-anchor="end" class="axis-label">32,000</text>
+<line x1="60" y1="112.5" x2="600" y2="112.5" class="grid-line"/>
+<text x="52" y="116.5" text-anchor="end" class="axis-label">48,000</text>
+<line x1="60" y1="60.0" x2="600" y2="60.0" class="grid-line"/>
+<text x="52" y="64.0" text-anchor="end" class="axis-label">64,000</text>
+<text x="114.0" y="288" text-anchor="middle" class="axis-label">Gallinas De C...</text>
+<rect x="76.2" y="260.76984375" width="25.2" height="9.23015625" rx="2" fill="#10b981" opacity="0.95"/>
+<rect x="102.4" y="251.9071875" width="25.2" height="18.0928125" rx="2" fill="#3b82f6" opacity="0.95"/>
+<rect x="128.6" y="61.70625000000001" width="25.2" height="208.29375" rx="2" fill="#f59e0b" opacity="0.95"/>
+<text x="222.0" y="288" text-anchor="middle" class="axis-label">Cuyes / Conejos</text>
+<rect x="184.2" y="227.52421875" width="25.2" height="42.475781250000004" rx="2" fill="#10b981" opacity="0.95"/>
+<rect x="210.39999999999998" y="222.211875" width="25.2" height="47.788125" rx="2" fill="#3b82f6" opacity="0.95"/>
+<rect x="236.6" y="235.6978125" width="25.2" height="34.3021875" rx="2" fill="#f59e0b" opacity="0.95"/>
+<text x="330.0" y="288" text-anchor="middle" class="axis-label">Otros</text>
+<rect x="292.2" y="249.87609375" width="25.2" height="20.12390625" rx="2" fill="#10b981" opacity="0.95"/>
+<rect x="318.4" y="253.633125" width="25.2" height="16.366875" rx="2" fill="#3b82f6" opacity="0.95"/>
+<rect x="344.59999999999997" y="269.70796875" width="25.2" height="0.29203124999999996" rx="2" fill="#f59e0b" opacity="0.95"/>
+<text x="438.0" y="288" text-anchor="middle" class="axis-label">Ovejas / Cabras</text>
+<rect x="400.2" y="261.64265625" width="25.2" height="8.35734375" rx="2" fill="#10b981" opacity="0.95"/>
+<rect x="426.4" y="255.11625" width="25.2" height="14.88375" rx="2" fill="#3b82f6" opacity="0.95"/>
+<rect x="452.59999999999997" y="265.32421875" width="25.2" height="4.67578125" rx="2" fill="#f59e0b" opacity="0.95"/>
+<text x="546.0" y="288" text-anchor="middle" class="axis-label">Pollos De Eng...</text>
+<rect x="508.2" y="268.1821875" width="25.2" height="1.8178125" rx="2" fill="#10b981" opacity="0.95"/>
+<rect x="534.4" y="265.891875" width="25.2" height="4.108125" rx="2" fill="#3b82f6" opacity="0.95"/>
+<rect x="560.6" y="267.2175" width="25.2" height="2.7824999999999998" rx="2" fill="#f59e0b" opacity="0.95"/>
+<line x1="60" y1="270" x2="600" y2="270" class="axis-line"/>
+<rect x="620" y="80" width="14" height="14" rx="4" fill="#10b981"/>
+<text x="640" y="91" class="legend-text">Sector 1</text>
+<rect x="620" y="110" width="14" height="14" rx="4" fill="#3b82f6"/>
+<text x="640" y="121" class="legend-text">Sector 2</text>
+<rect x="620" y="140" width="14" height="14" rx="4" fill="#f59e0b"/>
+<text x="640" y="151" class="legend-text">Sector 3</text>
 </svg>
 </div>
 
