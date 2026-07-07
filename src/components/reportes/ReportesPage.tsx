@@ -783,18 +783,25 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               Este reporte consolida el estado actual del levantamiento catastral, la infraestructura de reservorios y métodos de riego, la fragmentación de tierras (minifundio) y la caracterización socio-productiva de las familias del SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG.
             </p>
 
-            <div className="mt-6 flex flex-col items-center justify-center gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto">
               <button
                 onClick={() => window.open('/informe_reunion_tecnica.html?print=true', '_blank')}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-xs text-white bg-indigo-500 hover:bg-indigo-600 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                className="w-full sm:w-1/2 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs text-white bg-indigo-500 hover:bg-indigo-600 shadow-md hover:shadow-lg transition-all cursor-pointer"
               >
                 <FileDown className="w-4 h-4" />
-                Generar e Imprimir / Descargar PDF
+                Descargar PDF
               </button>
-              <p className="text-[10px] mt-2 max-w-sm text-center" style={{ color: 'var(--text-muted)' }}>
-                Nota: Al abrirse la nueva pestaña, aparecerá de forma automática la ventana de guardado. Elige <strong>"Guardar como PDF"</strong> para descargarlo con máxima calidad vectorial.
-              </p>
+              <button
+                onClick={() => window.open('/informe_reunion_tecnica.docx', '_blank')}
+                className="w-full sm:w-1/2 flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs text-indigo-500 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 hover:border-indigo-300 shadow-sm hover:shadow-md transition-all cursor-pointer"
+              >
+                <FileText className="w-4 h-4" />
+                Descargar Word (.docx)
+              </button>
             </div>
+            <p className="text-[10px] mt-4 max-w-sm text-center mx-auto" style={{ color: 'var(--text-muted)' }}>
+              Nota: Al abrirse la nueva pestaña para el PDF, aparecerá de forma automática la ventana de guardado. Elige <strong>"Guardar como PDF"</strong> para descargarlo con máxima calidad vectorial.
+            </p>
           </div>
         </div>
       ) : reportType === 'resumen_sectores' ? (

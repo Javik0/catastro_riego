@@ -1367,5 +1367,26 @@ Analizando detalladamente la información del catastro y el censo socio-agrícol
     print(f"  [OK] {REPORT_MD_PATH} e informe_graficos/ generados exitosamente.")
     conn.close()
 
+    # ── Convertir el HTML generado a un archivo DOCX nativo de Microsoft Word usando COM (solo en Windows con Word instalado) ──
+    try:
+        import win32com.client
+        html_out_path = os.path.abspath(os.path.join(BASE_DIR, '..', 'public', 'informe_reunion_tecnica.html'))
+        docx_out_path = os.path.abspath(os.path.join(BASE_DIR, '..', 'public', 'informe_reunion_tecnica.docx'))
+        
+        if os.path.exists(html_out_path):
+            print("\n📄 Automatizando MS Word para generar el archivo DOCX...")
+            word = win32com.client.Dispatch('Word.Application')
+            word.Visible = False
+            doc = word.Documents.Open(html_out_path)
+            # wdFormatDocumentDefault = 16 (natively .docx)
+            doc.SaveAs2(docx_out_path, FileFormat=16)
+            doc.Close()
+            word.Quit()
+            print(f"  ✓ Archivo Word nativo generado exitosamente: {docx_out_path}")
+        else:
+            print(f"  ⚠️ No se encontró el HTML de origen en {html_out_path} para la conversión a DOCX.")
+    except Exception as e:
+        print(f"  ⚠️ No se pudo autogenerar el archivo DOCX debido a: {e}")
+
 if __name__ == "__main__":
     main()
