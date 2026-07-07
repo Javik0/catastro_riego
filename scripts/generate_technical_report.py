@@ -646,9 +646,31 @@ def main():
     generate_reservorios_svg(chart_reservorios_data, os.path.join(GRAFICOS_DIR, 'chart_reservorios.svg'))
     generate_metodos_svg(chart_metodos_data, os.path.join(GRAFICOS_DIR, 'chart_metodos_riego.svg'))
 
-    # ─────────────────────────────────────────────────────────
-    # 5. Generar informe técnico Markdown
-    # ─────────────────────────────────────────────────────────
+    # ── Conteos Reales y Normalizados por Parroquia ──
+    def normalizar_parroquia(p):
+        if not p: return ''
+        p = p.upper().strip()
+        p = p.replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U')
+        if 'CANGAHUA' in p: return 'CANGAHUA'
+        if 'OTON' in p: return 'OTÓN'
+        if 'ASCAZUBI' in p: return 'ASCÁZUBI'
+        if 'CUSUBAMBA' in p: return 'CUSUBAMBA'
+        return p
+
+    cursor.execute(f"""
+        SELECT COALESCE(parroquia, '') as par, COALESCE(comunidad, '') as com
+        FROM "{fichas_table}"
+    """)
+    comunidades_por_parroquia = {'CANGAHUA': set(), 'OTÓN': set(), 'ASCÁZUBI': set(), 'CUSUBAMBA': set()}
+    fichas_por_parroquia = {'CANGAHUA': 0, 'OTÓN': 0, 'ASCÁZUBI': 0, 'CUSUBAMBA': 0}
+    
+    for par_raw, com_raw in cursor.fetchall():
+        par = normalizar_parroquia(par_raw)
+        if par in fichas_por_parroquia:
+            fichas_por_parroquia[par] += 1
+            if com_raw and com_raw.strip():
+                comunidades_por_parroquia[par].add(com_raw.strip().upper())
+
     total_fichas_todas = len(raw_all_fichas)
     
     with open(REPORT_MD_PATH, 'w', encoding='utf-8') as f:
@@ -676,10 +698,10 @@ La investigación cubre **4 parroquias principales** del Cantón Cayambe, regist
 
 | Parroquia | Comunidades Únicas | N° Fichas Asociadas |
 |---|---|---|
-| **CANGAHUA** | 36 comunidades | {sum(1 for r in raw_all_fichas if r[1] == 'Sector 2' or r[1] == 'Sector 1' or r[1] == 'Sector 3'):,} (Sectores 1, 2 y 3) |
-| **OTÓN** | 7 comunidades | {sum(1 for r in raw_all_fichas if r[1] == 'Sector 3'):,} (Sector 3) |
-| **ASCÁZUBI** | 5 comunidades | {sum(1 for r in raw_all_fichas if r[1] == 'Sector 3'):,} (Sector 3) |
-| **CUSUBAMBA** | 3 comunidades | {sum(1 for r in raw_all_fichas if r[1] == 'Sector 2'):,} (Sector 2) |
+| **CANGAHUA** | {len(comunidades_por_parroquia['CANGAHUA'])} comunidades | {fichas_por_parroquia['CANGAHUA']:,} |
+| **OTÓN** | {len(comunidades_por_parroquia['OTÓN'])} comunidades | {fichas_por_parroquia['OTÓN']:,} |
+| **ASCÁZUBI** | {len(comunidades_por_parroquia['ASCÁZUBI'])} comunidades | {fichas_por_parroquia['ASCÁZUBI']:,} |
+| **CUSUBAMBA** | {len(comunidades_por_parroquia['CUSUBAMBA'])} comunidades | {fichas_por_parroquia['CUSUBAMBA']:,} |
 
 ### Gráfico de Comunidades por Parroquia:
 ![N° Comunidades](informe_graficos/chart_parroquias.svg)
