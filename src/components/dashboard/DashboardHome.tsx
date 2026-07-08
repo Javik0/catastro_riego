@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line,
+  PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, LabelList,
 } from 'recharts';
 import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
@@ -441,6 +441,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                     {animalesPorEspecieData.map((_, index) => (
                       <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                     ))}
+                    <LabelList dataKey="value" position="right" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -474,6 +475,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                     {destinoCultivosData.map((entry, index) => (
                       <Cell key={index} fill={entry.color} />
                     ))}
+                    <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -512,6 +514,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                   const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
                   return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
                 })}
+                <LabelList dataKey="principales" position="right" fill="var(--text-primary)" fontSize={11} fontWeight="bold" />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -599,6 +602,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 {cultivosTop.map((_, index) => (
                   <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                 ))}
+                <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -648,7 +652,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
                 itemStyle={{ color: 'var(--text-primary)' }}
               />
-              <Bar dataKey="value" name="Fichas" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" name="Fichas" fill="#8b5cf6" radius={[4, 4, 0, 0]}>
+                <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
