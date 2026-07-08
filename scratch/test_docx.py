@@ -1,22 +1,18 @@
-import win32com.client
-import os
-import traceback
+import sqlite3
 
-try:
-    html_path = r'C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO\informe_reunion_tecnica.html'
-    docx_path = r'C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO\padron-app\public\informe_reunion_tecnica.docx'
+conn = sqlite3.connect(r'C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg')
+cursor = conn.cursor()
+
+# Buscar tablas de fichas
+cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'Fichas_Predios%'")
+tables = cursor.fetchall()
+
+if tables:
+    fichas_table = tables[0][0]
+    cursor.execute(f"SELECT COUNT(*) FROM \"{fichas_table}\"")
+    print("Fichas en el data.gpkg local actual:", cursor.fetchone()[0])
     
-    print(f"Abriendo {html_path}...")
-    word = win32com.client.Dispatch('Word.Application')
-    word.Visible = False
-    
-    doc = word.Documents.Open(os.path.abspath(html_path))
-    print(f"Guardando como {docx_path}...")
-    # 16 = wdFormatDocumentDefault (natively docx in newer Word)
-    doc.SaveAs2(os.path.abspath(docx_path), FileFormat=16)
-    doc.Close()
-    word.Quit()
-    print("Éxito total al generar el archivo .docx nativo!")
-except Exception as e:
-    print("Error:", str(e))
-    traceback.print_exc()
+    # Contar cuántas fichas tienen clave de Monteserín Bajo
+    cursor.execute(f"SELECT COUNT(*) FROM \"{fichas_table}\" WHERE clave_catastral = '1702510040121'")
+    print("Fichas de Monteserín Bajo (1702510040121) actuales:", cursor.fetchone()[0])
+conn.close()

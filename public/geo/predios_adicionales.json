@@ -31331,5 +31331,75 @@
     "area_lote_asignado_otro": 679.21,
     "tiene_observaciones": 1,
     "observaciones_otro": "TIENE CULTIVO DE FRUTALES TODA EL ÁREA. "
+  },
+  {
+    "fid": 2861,
+    "id_adicional": "{a93f29b2-b2c7-46e0-8ce8-61cf401d98ab}",
+    "ficha_id": "{d033e40b-02b5-49ff-8f36-75eee1c2dd07}",
+    "clave_catastral_otro": "1702521060069",
+    "area_total_otro": 6257.32,
+    "area_riego_otro": 6257.32,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 6257.32,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA ESPOSA. "
+  },
+  {
+    "fid": 2862,
+    "id_adicional": "{3152503e-061d-40db-ae08-d631530375bf}",
+    "ficha_id": "{d033e40b-02b5-49ff-8f36-75eee1c2dd07}",
+    "clave_catastral_otro": "1702521060071",
+    "area_total_otro": 6170.39,
+    "area_riego_otro": 6170.39,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 6170.39,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA ESPOSA. "
+  },
+  {
+    "fid": 2863,
+    "id_adicional": "{936f90bb-a1b9-469e-8b44-2568b55497e7}",
+    "ficha_id": "{1638e190-0a12-45c2-952f-46aa33bbf7a1}",
+    "clave_catastral_otro": "1702520580102",
+    "area_total_otro": 5056.76,
+    "area_riego_otro": 5056.76,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 5056.76
+  },
+  {
+    "fid": 2864,
+    "id_adicional": "{ac204d38-2dab-4ee4-856b-eff60fa0fdd3}",
+    "ficha_id": "{7403966b-c3ed-4d05-8f60-2420c4b561a1}",
+    "clave_catastral_otro": "1702520730232",
+    "area_total_otro": 1672.94,
+    "area_riego_otro": 1672.94,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1672.94,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "TIENE LA MITAD DEL PREDIO CULTIVO DE PASTO MEJORADO Y LA OTRA MITAD ES BOSQUE. "
+  },
+  {
+    "fid": 2865,
+    "id_adicional": "{865cad5c-ad29-426a-b559-6f0b42caae45}",
+    "ficha_id": "{1e6a2930-838f-4dda-9824-ae4bce5f8b3e}",
+    "clave_catastral_otro": "1702520730192",
+    "area_total_otro": 3073.66,
+    "area_riego_otro": 3073.66,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 3073.66,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra cebolla "
+  },
+  {
+    "fid": 2866,
+    "id_adicional": "{1e289259-6050-47a8-a7fe-f1a79ac92351}",
+    "ficha_id": "{1e6a2930-838f-4dda-9824-ae4bce5f8b3e}",
+    "clave_catastral_otro": "1702520730085",
+    "area_total_otro": 9648.01,
+    "area_riego_otro": 9648.01,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 9648.01,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra cebolla "
   }
 ]

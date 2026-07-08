@@ -1064,6 +1064,40 @@ def export_stats(fichas):
         json.dump(stats, f, ensure_ascii=False, indent=2)
     print(f"  ✓ {stats['fichas']} fichas, {stats['predios']} predios, {stats['tecnicos']} técnicos → stats.json")
 
+def verificar_y_reinyectar_monteserin():
+    print("\n🔍 Validando consistencia de fichas locales inyectadas (Monteserín Bajo)...")
+    try:
+        conn = sqlite3.connect(DATA_GPKG)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        all_tables = [t[0] for t in cursor.fetchall()]
+        fichas_table = next((t for t in all_tables if 'Fichas_Predios' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+        
+        if not fichas_table:
+            print("  ⚠️ No se encontró la tabla de Fichas en data.gpkg para validación.")
+            conn.close()
+            return
+            
+        cursor.execute(f"SELECT COUNT(*) FROM \"{fichas_table}\" WHERE clave_catastral = '1702510040121'")
+        count = cursor.fetchone()[0]
+        conn.close()
+        
+        # Deben haber mínimo 118 fichas inyectadas. Si hay solo las 2 originales (conteo < 10)
+        if count < 10:
+            print(f"  ⚠️ Alerta: Se detectó la pérdida de las 118 fichas locales inyectadas de Monteserín Bajo (Fichas actuales: {count}).")
+            print("  🔄 Re-inyectando fichas locales automáticamente a la base de datos...")
+            import subprocess
+            inject_script = os.path.join(os.path.dirname(__file__), 'generar_regantes_monteserin.py')
+            res = subprocess.run(['python', inject_script], capture_output=True, text=True, encoding='utf-8')
+            if res.returncode == 0:
+                print("  ✓ Fichas re-inyectadas exitosamente en la base de datos.")
+            else:
+                print(f"  ❌ Error al re-inyectar fichas (código {res.returncode}): {res.stderr}")
+        else:
+            print(f"  ✓ Fichas de Monteserín Bajo detectadas y consistentes ({count} registros).")
+    except Exception as e:
+        print(f"  ⚠️ Error en validación de consistencia de Monteserín: {e}")
+
 # ══════════════════════════════════════════════════════════════
 # MAIN
 # ══════════════════════════════════════════════════════════════
@@ -1078,6 +1112,7 @@ if __name__ == '__main__':
         print("  Asegúrate de que QFieldCloud esté sincronizado y la ruta sea correcta.")
         exit(1)
 
+    verificar_y_reinyectar_monteserin()
     preparar_unificacion()
     fichas = export_fichas()
     predios_vinculados_count = export_catastro(fichas)

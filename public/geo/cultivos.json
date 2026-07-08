@@ -68309,5 +68309,87 @@
     "superficie_m2": 725.46,
     "es_autoconsumo": 1,
     "ref_area_predio": 1725.46
+  },
+  {
+    "id_cultivo": "{2ce66bec-588c-4b27-b994-a044d4f4dbae}",
+    "ficha_id": "{cf14c767-4a1b-4517-99c8-e647b7def4e9}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1252.99
+  },
+  {
+    "id_cultivo": "{d4abe3d8-28f7-4447-8bfe-ef3e94698543}",
+    "ficha_id": "{cf14c767-4a1b-4517-99c8-e647b7def4e9}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 252.99,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1252.99
+  },
+  {
+    "id_cultivo": "{f8fa52d5-af0f-4bf1-8bd6-4fd8c9dd0d65}",
+    "ficha_id": "{1638e190-0a12-45c2-952f-46aa33bbf7a1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4576.45,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4576.45
+  },
+  {
+    "id_cultivo": "{0ebfdcfa-3484-47e2-8f85-efc2d81d8c96}",
+    "ficha_id": "{7403966b-c3ed-4d05-8f60-2420c4b561a1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 10000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 28554.51
+  },
+  {
+    "id_cultivo": "{6637ca5a-15e5-4836-8a21-2dfe7866faf9}",
+    "ficha_id": "{7403966b-c3ed-4d05-8f60-2420c4b561a1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 18554.51,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28554.51
+  },
+  {
+    "id_cultivo": "{ca0a308a-9257-4005-b360-116510d1dfa4}",
+    "ficha_id": "{1e6a2930-838f-4dda-9824-ae4bce5f8b3e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3413.75,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3413.75
+  },
+  {
+    "id_cultivo": "{83c4a1d7-781a-4794-9ca0-3cd156375747}",
+    "ficha_id": "{585fc9c9-fafe-4725-9f6a-4ee6641ea435}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 3000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "AVENA",
+    "ref_area_predio": 17371.46
+  },
+  {
+    "id_cultivo": "{da752949-c0d3-4239-a7ac-5ae98c8070c5}",
+    "ficha_id": "{585fc9c9-fafe-4725-9f6a-4ee6641ea435}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 17371.46
+  },
+  {
+    "id_cultivo": "{c51735cc-5c5e-4ed0-bc36-71bc6b502846}",
+    "ficha_id": "{585fc9c9-fafe-4725-9f6a-4ee6641ea435}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 12371.46,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 17371.46
   }
 ]
