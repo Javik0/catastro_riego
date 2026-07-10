@@ -69207,5 +69207,22 @@
     "superficie_m2": 375.96,
     "es_autoconsumo": 1,
     "ref_area_predio": 575.96
+  },
+  {
+    "id_cultivo": "{44de8154-e51b-4684-88bc-d4c512913462}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 5000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 11335.57
+  },
+  {
+    "id_cultivo": "{8166e7b0-948a-4415-97c1-6d4449b592ce}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6335.57,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11335.57
   }
 ]

@@ -65705,5 +65705,26 @@
     "cantidad": 200,
     "es_autoconsumo": 1,
     "es_mercado": 1
+  },
+  {
+    "id_animal": "{a0450a6d-1265-4501-b793-64194ab40979}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "especie": "Vacas en producción",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{6c000251-9c82-440e-8583-c28e98b2489a}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "especie": "Toros",
+    "cantidad": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{65661c45-ad71-4492-a47b-9e5a514d5a6c}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "especie": "Terneros",
+    "cantidad": 2,
+    "es_autoconsumo": 1
   }
 ]

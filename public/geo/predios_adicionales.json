@@ -31659,5 +31659,39 @@
     "area_lote_asignado_otro": 3758.3,
     "tiene_observaciones": 1,
     "observaciones_otro": "EL PREDIO POSEE UN CULTIVO DE PASTO MEJORADO TODA EL AREA."
+  },
+  {
+    "fid": 2894,
+    "id_adicional": "{df95a154-00ce-4621-a261-5ac5f8bd0372}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "clave_catastral_otro": "1702520720191",
+    "area_total_otro": 5776.28,
+    "area_riego_otro": 5776.28,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 5776.28,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra papas"
+  },
+  {
+    "fid": 2895,
+    "id_adicional": "{5be94026-ff09-4123-986a-2915a6eb66b1}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "clave_catastral_otro": "1702520720249",
+    "area_total_otro": 299.99,
+    "area_riego_otro": 299.99,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 299.99
+  },
+  {
+    "fid": 2896,
+    "id_adicional": "{7fc4658e-f594-4f7c-b750-91e7767cf802}",
+    "ficha_id": "{c74a59d2-47cb-4bab-8ca6-13d72605f11a}",
+    "clave_catastral_otro": "1702521120049",
+    "area_total_otro": 9749.14,
+    "area_riego_otro": 9749.14,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 9749.14,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra papas y cebolla "
   }
 ]
