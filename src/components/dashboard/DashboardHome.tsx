@@ -441,7 +441,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                     {animalesPorEspecieData.map((_, index) => (
                       <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                     ))}
-                    <LabelList dataKey="value" position="right" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
+                    <LabelList dataKey="value" position="insideRight" fill="#ffffff" fontSize={10} fontWeight="bold" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -463,7 +463,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           <div className="h-[180px]">
             {destinoCultivosData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={destinoCultivosData} margin={{ left: 10, right: 10, top: 0, bottom: 5 }}>
+                <BarChart data={destinoCultivosData} margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
                   <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} />
                   <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
@@ -475,7 +475,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                     {destinoCultivosData.map((entry, index) => (
                       <Cell key={index} fill={entry.color} />
                     ))}
-                    <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
+                    <LabelList dataKey="value" position="insideTop" fill="#ffffff" fontSize={10} fontWeight="bold" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -500,7 +500,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             Fichas por Técnico
           </h3>
           <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={fichasPorTecnico} layout="vertical" margin={{ left: 80, right: 20 }}>
+            <BarChart data={fichasPorTecnico} layout="vertical" margin={{ left: 80, right: 10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
               <YAxis type="category" dataKey="nombre" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} width={80} />
@@ -514,7 +514,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                   const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
                   return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
                 })}
-                <LabelList dataKey="principales" position="right" fill="var(--text-primary)" fontSize={11} fontWeight="bold" />
+                <LabelList dataKey="principales" position="insideRight" fill="#ffffff" fontSize={11} fontWeight="bold" />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -590,7 +590,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             Cultivos Más Frecuentes
           </h3>
           <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={cultivosTop} margin={{ left: 10, right: 10 }}>
+            <BarChart data={cultivosTop} margin={{ left: 10, right: 10, top: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} angle={-45} textAnchor="end" height={60} />
               <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
@@ -602,7 +602,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 {cultivosTop.map((_, index) => (
                   <Cell key={index} fill={PIE_COLORS[index % PIE_COLORS.length]} />
                 ))}
-                <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
+                <LabelList dataKey="value" position="insideTop" fill="#ffffff" fontSize={10} fontWeight="bold" />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -644,7 +644,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             Fichas por Parroquia
           </h3>
           <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={fichasPorParroquia} margin={{ left: 10 }}>
+            <BarChart data={fichasPorParroquia} margin={{ left: 10, right: 10, top: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
               <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
               <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
@@ -653,7 +653,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 itemStyle={{ color: 'var(--text-primary)' }}
               />
               <Bar dataKey="value" name="Fichas" fill="#8b5cf6" radius={[4, 4, 0, 0]}>
-                <LabelList dataKey="value" position="top" fill="var(--text-primary)" fontSize={10} fontWeight="bold" />
+                <LabelList dataKey="value" position="insideTop" fill="#ffffff" fontSize={10} fontWeight="bold" />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
