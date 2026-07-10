@@ -1175,6 +1175,176 @@ def main():
                 comunidades_por_parroquia[par].add(com_raw.strip().upper())
 
     total_fichas_todas = len(raw_all_fichas)
+
+    # ── Indicadores Clave para la Planificación (Sección 6) ──
+    # Predios Adicionales
+    pred_add_table = next((t for t in all_tables if 'Predios_Adicionales' in t and not any(x in t for x in ('rtree_','log_','gpkg_'))), None)
+    total_predios_adicionales = 0
+    if pred_add_table:
+        cursor.execute(f'SELECT COUNT(*) FROM "{pred_add_table}"')
+        total_predios_adicionales = cursor.fetchone()[0]
+
+    # Predios catastrados únicos por sector
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               COUNT(DISTINCT clave_catastral) as predios
+        FROM "{fichas_table}"
+        GROUP BY sec
+    """)
+    predios_catastrados_sec = {'Sector 1': 0, 'Sector 2': 0, 'Sector 3': 0}
+    for sec, predios in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in predios_catastrados_sec:
+            predios_catastrados_sec[s_name] += predios
+    total_predios_catastrados = sum(predios_catastrados_sec.values())
+
+    # Conoce Proyecto Porotog (conoce_presa)
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               conoce_presa, COUNT(*) as total
+        FROM "{fichas_table}"
+        GROUP BY sec, conoce_presa
+    """)
+    conoce_presa_sec = {'Sector 1': {'Sí': 0, 'No': 0, 'SD': 0},
+                        'Sector 2': {'Sí': 0, 'No': 0, 'SD': 0},
+                        'Sector 3': {'Sí': 0, 'No': 0, 'SD': 0}}
+    for sec, resp, total in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in conoce_presa_sec:
+            if resp == 'Sí':
+                conoce_presa_sec[s_name]['Sí'] += total
+            elif resp == 'No':
+                conoce_presa_sec[s_name]['No'] += total
+            else:
+                conoce_presa_sec[s_name]['SD'] += total
+    total_si_presa = sum(d['Sí'] for d in conoce_presa_sec.values())
+    total_no_presa = sum(d['No'] for d in conoce_presa_sec.values())
+    total_sd_presa = sum(d['SD'] for d in conoce_presa_sec.values())
+    pct_conoce_presa = round(total_si_presa / total_fichas_todas * 100, 1) if total_fichas_todas > 0 else 0
+
+    # Longitud del canal principal (km_canal) - promedio por sector
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               ROUND(AVG(CAST(km_canal AS REAL)), 1) as prom,
+               COUNT(CASE WHEN km_canal IS NOT NULL AND km_canal != '' AND km_canal != '0' THEN 1 END) as con_dato
+        FROM "{fichas_table}"
+        GROUP BY sec
+    """)
+    km_canal_sec = {'Sector 1': {'prom': 0, 'con_dato': 0},
+                    'Sector 2': {'prom': 0, 'con_dato': 0},
+                    'Sector 3': {'prom': 0, 'con_dato': 0}}
+    for sec, prom, con_dato in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in km_canal_sec:
+            km_canal_sec[s_name]['prom'] = max(km_canal_sec[s_name]['prom'], prom or 0)
+            km_canal_sec[s_name]['con_dato'] += (con_dato or 0)
+
+    # Conoce a la Presidente (nom_presidente)
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               COUNT(CASE WHEN nom_presidente IS NOT NULL AND nom_presidente != '' THEN 1 END) as conoce,
+               COUNT(*) as total
+        FROM "{fichas_table}"
+        GROUP BY sec
+    """)
+    conoce_presidente_sec = {'Sector 1': {'conoce': 0, 'total': 0},
+                             'Sector 2': {'conoce': 0, 'total': 0},
+                             'Sector 3': {'conoce': 0, 'total': 0}}
+    for sec, conoce, total in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in conoce_presidente_sec:
+            conoce_presidente_sec[s_name]['conoce'] += conoce
+            conoce_presidente_sec[s_name]['total'] += total
+    total_conoce_pres = sum(d['conoce'] for d in conoce_presidente_sec.values())
+    pct_conoce_pres = round(total_conoce_pres / total_fichas_todas * 100, 1) if total_fichas_todas > 0 else 0
+
+    # Población y familias (hijos_hombres + hijos_mujeres por sector)
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               SUM(COALESCE(hijos_hombres, 0)) as h,
+               SUM(COALESCE(hijos_mujeres, 0)) as m,
+               COUNT(*) as familias
+        FROM "{fichas_table}"
+        GROUP BY sec
+    """)
+    poblacion_sec = {'Sector 1': {'h': 0, 'm': 0, 'familias': 0},
+                     'Sector 2': {'h': 0, 'm': 0, 'familias': 0},
+                     'Sector 3': {'h': 0, 'm': 0, 'familias': 0}}
+    for sec, h, m, fam in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in poblacion_sec:
+            poblacion_sec[s_name]['h'] += (h or 0)
+            poblacion_sec[s_name]['m'] += (m or 0)
+            poblacion_sec[s_name]['familias'] += fam
+    total_hijos = sum(d['h'] + d['m'] for d in poblacion_sec.values())
+    total_familias = sum(d['familias'] for d in poblacion_sec.values())
+    total_poblacion_est = total_familias + total_hijos
+
+    # Servicios básicos (agua_consumo, energia_electrica)
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               SUM(CASE WHEN agua_consumo = '1' THEN 1 ELSE 0 END) as agua_si,
+               SUM(CASE WHEN agua_consumo = '0' THEN 1 ELSE 0 END) as agua_no,
+               SUM(CASE WHEN energia_electrica = '1' THEN 1 ELSE 0 END) as energ_si,
+               SUM(CASE WHEN energia_electrica = '0' THEN 1 ELSE 0 END) as energ_no,
+               COUNT(*) as total
+        FROM "{fichas_table}"
+        GROUP BY sec
+    """)
+    servicios_sec = {'Sector 1': {'agua_si': 0, 'agua_no': 0, 'energ_si': 0, 'energ_no': 0, 'total': 0},
+                     'Sector 2': {'agua_si': 0, 'agua_no': 0, 'energ_si': 0, 'energ_no': 0, 'total': 0},
+                     'Sector 3': {'agua_si': 0, 'agua_no': 0, 'energ_si': 0, 'energ_no': 0, 'total': 0}}
+    for sec, a_si, a_no, e_si, e_no, total in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in servicios_sec:
+            servicios_sec[s_name]['agua_si'] += (a_si or 0)
+            servicios_sec[s_name]['agua_no'] += (a_no or 0)
+            servicios_sec[s_name]['energ_si'] += (e_si or 0)
+            servicios_sec[s_name]['energ_no'] += (e_no or 0)
+            servicios_sec[s_name]['total'] += total
+
+    # Material de construcción por sector
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               COALESCE(material_construccion, 'Sin dato') as mat, COUNT(*) as n
+        FROM "{fichas_table}"
+        GROUP BY sec, mat
+        ORDER BY sec, n DESC
+    """)
+    material_sec = {'Sector 1': {}, 'Sector 2': {}, 'Sector 3': {}}
+    for sec, mat, n in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in material_sec:
+            material_sec[s_name][mat] = material_sec[s_name].get(mat, 0) + n
+
+    # Nivel de instrucción por sector
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               COALESCE(NULLIF(nivel_instruccion, ''), 'Sin dato') as nivel, COUNT(*) as n
+        FROM "{fichas_table}"
+        GROUP BY sec, nivel
+        ORDER BY sec, n DESC
+    """)
+    instruccion_sec = {'Sector 1': {}, 'Sector 2': {}, 'Sector 3': {}}
+    for sec, nivel, n in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in instruccion_sec:
+            instruccion_sec[s_name][nivel] = instruccion_sec[s_name].get(nivel, 0) + n
+
+    # Tenencia del predio por sector
+    cursor.execute(f"""
+        SELECT COALESCE(NULLIF(sector_investigacion, ''), 'None') as sec,
+               COALESCE(NULLIF(tenencia_predio, ''), 'Sin dato') as ten, COUNT(*) as n
+        FROM "{fichas_table}"
+        GROUP BY sec, ten
+        ORDER BY sec, n DESC
+    """)
+    tenencia_sec = {'Sector 1': {}, 'Sector 2': {}, 'Sector 3': {}}
+    for sec, ten, n in cursor.fetchall():
+        s_name = 'Sector 1' if sec == 'None' else sec
+        if s_name in tenencia_sec:
+            tenencia_sec[s_name][ten] = tenencia_sec[s_name].get(ten, 0) + n
+
     
     with open(REPORT_MD_PATH, 'w', encoding='utf-8') as f:
         f.write(f"""# Informe Técnico: Estado del Catastro y Levantamiento de Información
@@ -1357,6 +1527,92 @@ Analizando detalladamente la información del catastro y el censo socio-agrícol
 2. **Fuerte Dependencia de Gestión Comunitaria**: En promedio, **más del 85% de los regantes se abastecen de reservorios de tipo Comunitario**. La infraestructura privada o familiar es muy baja (menor al 8% en el mejor de los casos). Esto demuestra que el tejido social y organizativo local es la base fundamental del éxito del sistema. Las juntas de agua locales son las aliadas centrales en el desarrollo de la presa y canales.
 3. **Aspersión como Tecnología Dominante con Oportunidad de Optimización**: El riego por aspersión abarca más del **95% de la aplicación** en los lotes con riego de todos los sectores, mientras que el riego por goteo (tecnología altamente eficiente) tiene una cobertura casi inexistente (menor al 5% en predios activos). Existe una oportunidad enorme de optimización y ahorro de recursos hídricos incentivando la transición de aspersión a goteo.
 4. **Seguridad Alimentaria Familiar Crítica**: En el área del proyecto, **más del 20% de los hogares reportan familias con 5 o más hijos** (con un promedio general superior a 3.1 hijos por familia). Estos hogares de 5 a 6 personas dependen de la producción de parcelas menores a 0.5 ha. Garantizar un flujo constante de agua para riego no solo es un tema de desarrollo económico, sino de seguridad alimentaria directa para estas familias numerosas.
+
+---
+
+## 6. Indicadores Clave para la Planificación
+
+A continuación se presentan los indicadores socioeconómicos y de infraestructura consolidados, extraídos del levantamiento censal de **{total_fichas_todas:,} familias** investigadas en los tres sectores del sistema de riego.
+
+### A. Superficie por Sector de Investigación
+
+| Sector | Fichas | Hectáreas Totales | Ha con Riego | Ha sin Riego |
+|---|---:|---:|---:|---:|
+| **Sector 1** | {poblacion_sec['Sector 1']['familias']:,} | {sector_stats_report[0]['sum_total']/10000:,.2f} ha | {sector_stats_report[0]['sum_riego']/10000:,.2f} ha | {(sector_stats_report[0]['sum_total']-sector_stats_report[0]['sum_riego'])/10000:,.2f} ha |
+| **Sector 2** | {poblacion_sec['Sector 2']['familias']:,} | {sector_stats_report[1]['sum_total']/10000:,.2f} ha | {sector_stats_report[1]['sum_riego']/10000:,.2f} ha | {(sector_stats_report[1]['sum_total']-sector_stats_report[1]['sum_riego'])/10000:,.2f} ha |
+| **Sector 3** | {poblacion_sec['Sector 3']['familias']:,} | {sector_stats_report[2]['sum_total']/10000:,.2f} ha | {sector_stats_report[2]['sum_riego']/10000:,.2f} ha | {(sector_stats_report[2]['sum_total']-sector_stats_report[2]['sum_riego'])/10000:,.2f} ha |
+| **TOTAL** | **{total_fichas_todas:,}** | **{sum(s['sum_total'] for s in sector_stats_report)/10000:,.2f} ha** | **{sum(s['sum_riego'] for s in sector_stats_report)/10000:,.2f} ha** | **{(sum(s['sum_total'] for s in sector_stats_report)-sum(s['sum_riego'] for s in sector_stats_report))/10000:,.2f} ha** |
+
+### B. Predios Catastrados y Adicionales
+
+| Concepto | Sector 1 | Sector 2 | Sector 3 | Total |
+|---|---:|---:|---:|---:|
+| **Predios catastrados (claves únicas)** | {predios_catastrados_sec['Sector 1']:,} | {predios_catastrados_sec['Sector 2']:,} | {predios_catastrados_sec['Sector 3']:,} | **{total_predios_catastrados:,}** |
+| **Predios adicionales (Sección 7)** | — | — | — | **{total_predios_adicionales:,}** |
+
+### C. Conocimiento del Proyecto Guanguilquí Porotog
+
+| Indicador | Sector 1 | Sector 2 | Sector 3 | Total | % |
+|---|---:|---:|---:|---:|---:|
+| **¿Conoce el Proyecto?** (Sí) | {conoce_presa_sec['Sector 1']['Sí']:,} | {conoce_presa_sec['Sector 2']['Sí']:,} | {conoce_presa_sec['Sector 3']['Sí']:,} | **{total_si_presa:,}** | **{pct_conoce_presa}%** |
+| No conoce | {conoce_presa_sec['Sector 1']['No']:,} | {conoce_presa_sec['Sector 2']['No']:,} | {conoce_presa_sec['Sector 3']['No']:,} | {total_no_presa:,} | {round(total_no_presa/total_fichas_todas*100,1) if total_fichas_todas else 0}% |
+| **¿Conoce a la Presidenta?** (Sí) | {conoce_presidente_sec['Sector 1']['conoce']:,} | {conoce_presidente_sec['Sector 2']['conoce']:,} | {conoce_presidente_sec['Sector 3']['conoce']:,} | **{total_conoce_pres:,}** | **{pct_conoce_pres}%** |
+
+### D. Longitud del Canal Principal (Percepción de los Usuarios)
+
+| Sector | Promedio estimado (km) | Regantes que respondieron |
+|---|---:|---:|
+| **Sector 1** | {km_canal_sec['Sector 1']['prom']} km | {km_canal_sec['Sector 1']['con_dato']:,} |
+| **Sector 2** | {km_canal_sec['Sector 2']['prom']} km | {km_canal_sec['Sector 2']['con_dato']:,} |
+| **Sector 3** | {km_canal_sec['Sector 3']['prom']} km | {km_canal_sec['Sector 3']['con_dato']:,} |
+
+> *Nota: Este dato refleja la percepción de los usuarios sobre la longitud del canal principal, no una medición técnica georreferenciada.*
+
+### E. Población y Familias Beneficiarias
+
+| Sector | Familias | Hijos Hombres | Hijos Mujeres | Total Hijos | Prom. Hijos |
+|---|---:|---:|---:|---:|---:|
+| **Sector 1** | {poblacion_sec['Sector 1']['familias']:,} | {poblacion_sec['Sector 1']['h']:,} | {poblacion_sec['Sector 1']['m']:,} | {poblacion_sec['Sector 1']['h']+poblacion_sec['Sector 1']['m']:,} | {(poblacion_sec['Sector 1']['h']+poblacion_sec['Sector 1']['m'])/max(poblacion_sec['Sector 1']['familias'],1):.1f} |
+| **Sector 2** | {poblacion_sec['Sector 2']['familias']:,} | {poblacion_sec['Sector 2']['h']:,} | {poblacion_sec['Sector 2']['m']:,} | {poblacion_sec['Sector 2']['h']+poblacion_sec['Sector 2']['m']:,} | {(poblacion_sec['Sector 2']['h']+poblacion_sec['Sector 2']['m'])/max(poblacion_sec['Sector 2']['familias'],1):.1f} |
+| **Sector 3** | {poblacion_sec['Sector 3']['familias']:,} | {poblacion_sec['Sector 3']['h']:,} | {poblacion_sec['Sector 3']['m']:,} | {poblacion_sec['Sector 3']['h']+poblacion_sec['Sector 3']['m']:,} | {(poblacion_sec['Sector 3']['h']+poblacion_sec['Sector 3']['m'])/max(poblacion_sec['Sector 3']['familias'],1):.1f} |
+| **TOTAL** | **{total_familias:,}** | **{sum(d['h'] for d in poblacion_sec.values()):,}** | **{sum(d['m'] for d in poblacion_sec.values()):,}** | **{total_hijos:,}** | **{total_hijos/max(total_familias,1):.1f}** |
+
+> **Población estimada beneficiaria:** {total_familias:,} titulares + {total_hijos:,} hijos = **~{total_poblacion_est:,} personas**.
+
+### F. Servicios Básicos
+
+| Servicio | Sector 1 | Sector 2 | Sector 3 | Total | % Cobertura |
+|---|---:|---:|---:|---:|---:|
+| **Agua de consumo** (Sí) | {servicios_sec['Sector 1']['agua_si']:,} | {servicios_sec['Sector 2']['agua_si']:,} | {servicios_sec['Sector 3']['agua_si']:,} | {sum(d['agua_si'] for d in servicios_sec.values()):,} | {round(sum(d['agua_si'] for d in servicios_sec.values())/(sum(d['agua_si']+d['agua_no'] for d in servicios_sec.values()) or 1)*100,1)}% |
+| **Energía eléctrica** (Sí) | {servicios_sec['Sector 1']['energ_si']:,} | {servicios_sec['Sector 2']['energ_si']:,} | {servicios_sec['Sector 3']['energ_si']:,} | {sum(d['energ_si'] for d in servicios_sec.values()):,} | {round(sum(d['energ_si'] for d in servicios_sec.values())/(sum(d['energ_si']+d['energ_no'] for d in servicios_sec.values()) or 1)*100,1)}% |
+
+### G. Material Predominante de Construcción
+
+| Material | Sector 1 | Sector 2 | Sector 3 | Total |
+|---|---:|---:|---:|---:|
+| **Bloque** | {material_sec['Sector 1'].get('BLOQUE',0):,} | {material_sec['Sector 2'].get('BLOQUE',0):,} | {material_sec['Sector 3'].get('BLOQUE',0):,} | {material_sec['Sector 1'].get('BLOQUE',0)+material_sec['Sector 2'].get('BLOQUE',0)+material_sec['Sector 3'].get('BLOQUE',0):,} |
+| **Hormigón Armado** | {material_sec['Sector 1'].get('HORMIGÓN ARMADO',0):,} | {material_sec['Sector 2'].get('HORMIGÓN ARMADO',0):,} | {material_sec['Sector 3'].get('HORMIGÓN ARMADO',0):,} | {material_sec['Sector 1'].get('HORMIGÓN ARMADO',0)+material_sec['Sector 2'].get('HORMIGÓN ARMADO',0)+material_sec['Sector 3'].get('HORMIGÓN ARMADO',0):,} |
+| **Tapia** | {material_sec['Sector 1'].get('TAPIA',0):,} | {material_sec['Sector 2'].get('TAPIA',0):,} | {material_sec['Sector 3'].get('TAPIA',0):,} | {material_sec['Sector 1'].get('TAPIA',0)+material_sec['Sector 2'].get('TAPIA',0)+material_sec['Sector 3'].get('TAPIA',0):,} |
+| **Ladrillo** | {material_sec['Sector 1'].get('LADRILLO',0):,} | {material_sec['Sector 2'].get('LADRILLO',0):,} | {material_sec['Sector 3'].get('LADRILLO',0):,} | {material_sec['Sector 1'].get('LADRILLO',0)+material_sec['Sector 2'].get('LADRILLO',0)+material_sec['Sector 3'].get('LADRILLO',0):,} |
+| **Adobe** | {material_sec['Sector 1'].get('ADOBE',0):,} | {material_sec['Sector 2'].get('ADOBE',0):,} | {material_sec['Sector 3'].get('ADOBE',0):,} | {material_sec['Sector 1'].get('ADOBE',0)+material_sec['Sector 2'].get('ADOBE',0)+material_sec['Sector 3'].get('ADOBE',0):,} |
+| **Mixta** | {material_sec['Sector 1'].get('MIXTA',0):,} | {material_sec['Sector 2'].get('MIXTA',0):,} | {material_sec['Sector 3'].get('MIXTA',0):,} | {material_sec['Sector 1'].get('MIXTA',0)+material_sec['Sector 2'].get('MIXTA',0)+material_sec['Sector 3'].get('MIXTA',0):,} |
+
+### H. Nivel de Instrucción
+
+| Nivel | Sector 1 | Sector 2 | Sector 3 | Total |
+|---|---:|---:|---:|---:|
+| **Primaria** | {instruccion_sec['Sector 1'].get('Primaria',0):,} | {instruccion_sec['Sector 2'].get('Primaria',0):,} | {instruccion_sec['Sector 3'].get('Primaria',0):,} | {instruccion_sec['Sector 1'].get('Primaria',0)+instruccion_sec['Sector 2'].get('Primaria',0)+instruccion_sec['Sector 3'].get('Primaria',0):,} |
+| **Secundaria** | {instruccion_sec['Sector 1'].get('Secundaria',0):,} | {instruccion_sec['Sector 2'].get('Secundaria',0):,} | {instruccion_sec['Sector 3'].get('Secundaria',0):,} | {instruccion_sec['Sector 1'].get('Secundaria',0)+instruccion_sec['Sector 2'].get('Secundaria',0)+instruccion_sec['Sector 3'].get('Secundaria',0):,} |
+| **Ninguno** | {instruccion_sec['Sector 1'].get('Ninguno',0):,} | {instruccion_sec['Sector 2'].get('Ninguno',0):,} | {instruccion_sec['Sector 3'].get('Ninguno',0):,} | {instruccion_sec['Sector 1'].get('Ninguno',0)+instruccion_sec['Sector 2'].get('Ninguno',0)+instruccion_sec['Sector 3'].get('Ninguno',0):,} |
+| **Alfabetizado** | {instruccion_sec['Sector 1'].get('Alfabetizado',0):,} | {instruccion_sec['Sector 2'].get('Alfabetizado',0):,} | {instruccion_sec['Sector 3'].get('Alfabetizado',0):,} | {instruccion_sec['Sector 1'].get('Alfabetizado',0)+instruccion_sec['Sector 2'].get('Alfabetizado',0)+instruccion_sec['Sector 3'].get('Alfabetizado',0):,} |
+| **Superior** | {instruccion_sec['Sector 1'].get('Superior',0):,} | {instruccion_sec['Sector 2'].get('Superior',0):,} | {instruccion_sec['Sector 3'].get('Superior',0):,} | {instruccion_sec['Sector 1'].get('Superior',0)+instruccion_sec['Sector 2'].get('Superior',0)+instruccion_sec['Sector 3'].get('Superior',0):,} |
+
+### I. Tenencia del Predio
+
+| Tenencia | Sector 1 | Sector 2 | Sector 3 | Total |
+|---|---:|---:|---:|---:|
+| **Escritura** | {tenencia_sec['Sector 1'].get('Escritura',0):,} | {tenencia_sec['Sector 2'].get('Escritura',0):,} | {tenencia_sec['Sector 3'].get('Escritura',0):,} | {tenencia_sec['Sector 1'].get('Escritura',0)+tenencia_sec['Sector 2'].get('Escritura',0)+tenencia_sec['Sector 3'].get('Escritura',0):,} |
+| **Sin Escritura** | {tenencia_sec['Sector 1'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 2'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 3'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 1'].get('Sin Escritura',0)+tenencia_sec['Sector 2'].get('Sin Escritura',0)+tenencia_sec['Sector 3'].get('Sin Escritura',0):,} |
 
 ---
 
