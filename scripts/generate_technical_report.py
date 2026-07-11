@@ -753,6 +753,227 @@ def generate_metodos_svg(data_sectores, output_path):
         f.write("\n".join(svg))
 
 
+# ── Helper para generar SVG de Conocimiento del Proyecto (Barras Agrupadas) ──
+def generate_conocimiento_svg(data_sectores, output_path):
+    # data_sectores es dict {'Sector 1': {'Proyecto': X, 'Presidenta': Y}, ...}
+    width, height = 650, 240
+    margin = {'top': 60, 'right': 180, 'bottom': 50, 'left': 50}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    cats = ['Conoce Proyecto', 'Conoce Presidenta']
+    colors = ['#10b981', '#6366f1'] # Esmeralda y Violeta/Indigo
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #ffffff; font-weight: bold; }
+    </style>
+    """)
+    
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Conocimiento del Proyecto y Directiva por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Porcentaje de regantes que conocen la iniciativa y a la directiva</text>')
+    
+    # Grid Y (0% a 100%)
+    for i in range(5):
+        val = 25 * i
+        y = margin['top'] + chart_height - (val / 100) * chart_height
+        svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
+        svg.append(f'<text x="{margin["left"] - 8}" y="{y + 4}" text-anchor="end" class="axis-label">{val}%</text>')
+        
+    group_width = chart_width / len(sectors)
+    bar_width = (group_width * 0.7) / 2
+    bar_gap = 2
+    
+    for s_idx, sec in enumerate(sectors):
+        group_x = margin['left'] + s_idx * group_width
+        svg.append(f'<text x="{group_x + group_width/2}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="legend-text">{sec}</text>')
+        
+        sec_data = data_sectores.get(sec, {'Proyecto': 0, 'Presidenta': 0})
+        vals = [sec_data.get('Proyecto', 0), sec_data.get('Presidenta', 0)]
+        
+        for c_idx, val in enumerate(vals):
+            bar_h = (val / 100) * chart_height
+            bar_x = group_x + (group_width * 0.15) + c_idx * (bar_width + bar_gap)
+            bar_y = margin['top'] + chart_height - bar_h
+            
+            svg.append(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_width}" height="{bar_h}" rx="2" fill="{colors[c_idx]}" opacity="0.95"/>')
+            if val > 15:
+                svg.append(f'<text x="{bar_x + bar_width/2}" y="{bar_y + 12}" text-anchor="middle" class="bar-val">{int(val)}%</text>')
+                
+    svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"] + 10}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    
+    # Leyenda
+    leg_x = width - margin['right'] + 20
+    for c_idx, cat in enumerate(cats):
+        leg_y = margin['top'] + 20 + c_idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{colors[c_idx]}"/>')
+        svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text">{cat}</text>')
+        
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Cobertura de Servicios Básicos (Barras Agrupadas) ──
+def generate_servicios_svg(data_sectores, output_path):
+    # data_sectores es dict {'Sector 1': {'Agua': X, 'Energía': Y}, ...}
+    width, height = 650, 240
+    margin = {'top': 60, 'right': 180, 'bottom': 50, 'left': 50}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    cats = ['Agua de Consumo', 'Energía Eléctrica']
+    colors = ['#06b6d4', '#f59e0b'] # Celeste y Ámbar
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .grid-line { stroke: #f1f5f9; stroke-width: 1.5; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #ffffff; font-weight: bold; }
+    </style>
+    """)
+    
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Cobertura de Servicios Básicos por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Porcentaje de acceso a agua de consumo y red de energía eléctrica</text>')
+    
+    # Grid Y
+    for i in range(5):
+        val = 25 * i
+        y = margin['top'] + chart_height - (val / 100) * chart_height
+        svg.append(f'<line x1="{margin["left"]}" y1="{y}" x2="{width - margin["right"]}" y2="{y}" class="grid-line"/>')
+        svg.append(f'<text x="{margin["left"] - 8}" y="{y + 4}" text-anchor="end" class="axis-label">{val}%</text>')
+        
+    group_width = chart_width / len(sectors)
+    bar_width = (group_width * 0.7) / 2
+    bar_gap = 2
+    
+    for s_idx, sec in enumerate(sectors):
+        group_x = margin['left'] + s_idx * group_width
+        svg.append(f'<text x="{group_x + group_width/2}" y="{height - margin["bottom"] + 16}" text-anchor="middle" class="legend-text">{sec}</text>')
+        
+        sec_data = data_sectores.get(sec, {'Agua': 0, 'Energía': 0})
+        vals = [sec_data.get('Agua', 0), sec_data.get('Energía', 0)]
+        
+        for c_idx, val in enumerate(vals):
+            bar_h = (val / 100) * chart_height
+            bar_x = group_x + (group_width * 0.15) + c_idx * (bar_width + bar_gap)
+            bar_y = margin['top'] + chart_height - bar_h
+            
+            svg.append(f'<rect x="{bar_x}" y="{bar_y}" width="{bar_width}" height="{bar_h}" rx="2" fill="{colors[c_idx]}" opacity="0.95"/>')
+            if val > 15:
+                svg.append(f'<text x="{bar_x + bar_width/2}" y="{bar_y + 12}" text-anchor="middle" class="bar-val">{int(val)}%</text>')
+                
+    svg.append(f'<line x1="{margin["left"]}" y1="{height - margin["bottom"]}" x2="{width - margin["right"] + 10}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    
+    # Leyenda
+    leg_x = width - margin['right'] + 20
+    for c_idx, cat in enumerate(cats):
+        leg_y = margin['top'] + 20 + c_idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{colors[c_idx]}"/>')
+        svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text">{cat}</text>')
+        
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
+# ── Helper para generar SVG de Tenencia de Tierra (Barras Apiladas Horizontales al 100%) ──
+def generate_tenencia_svg(data_sectores, output_path):
+    # data_sectores es dict {'Sector 1': {'Escritura': X, 'Sin Escritura': Y}, ...}
+    width, height = 650, 240
+    margin = {'top': 60, 'right': 180, 'bottom': 50, 'left': 80}
+    chart_width = width - margin['left'] - margin['right']
+    chart_height = height - margin['top'] - margin['bottom']
+    
+    cats = ['Escritura', 'Sin Escritura']
+    colors = ['#10b981', '#f43f5e'] # Esmeralda y Rosa/Coral
+    sectors = ['Sector 1', 'Sector 2', 'Sector 3']
+    
+    svg = []
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="100%" height="100%">')
+    svg.append("""
+    <style>
+        .title { font-family: 'Inter', system-ui, sans-serif; font-size: 15px; font-weight: bold; fill: #1e293b; }
+        .subtitle { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #64748b; }
+        .axis-label { font-family: 'Inter', system-ui, sans-serif; font-size: 10px; fill: #64748b; font-weight: 500; }
+        .legend-text { font-family: 'Inter', system-ui, sans-serif; font-size: 11px; fill: #1e293b; font-weight: 600; }
+        .bar-val { font-family: 'Inter', system-ui, sans-serif; font-size: 9px; fill: #ffffff; font-weight: bold; }
+        .axis-line { stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+    """)
+    
+    svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
+    svg.append(f'<text x="24" y="32" class="title">Estado Legal de Tenencia del Predio por Sector</text>')
+    svg.append(f'<text x="24" y="48" class="subtitle">Proporción relativa del estado de legalización de tierras</text>')
+    
+    # Grid X (0% a 100%)
+    for i in range(5):
+        val = 25 * i
+        x = margin['left'] + (val / 100) * chart_width
+        svg.append(f'<line x1="{x}" y1="{margin["top"]}" x2="{x}" y2="{height - margin["bottom"]}" stroke="#f1f5f9" stroke-width="1.5"/>')
+        svg.append(f'<text x="{x}" y="{height - margin["bottom"] + 14}" text-anchor="middle" class="axis-label">{val}%</text>')
+        
+    bar_height = 24
+    row_spacing = 30
+    
+    for s_idx, sec in enumerate(sectors):
+        y = margin['top'] + 10 + s_idx * row_spacing
+        svg.append(f'<text x="{margin["left"] - 12}" y="{y + bar_height/2 + 4}" text-anchor="end" class="legend-text">{sec}</text>')
+        
+        sec_data = data_sectores.get(sec, {'Escritura': 0, 'Sin Escritura': 0})
+        total_sec = sec_data.get('Escritura', 0) + sec_data.get('Sin Escritura', 0) or 1
+        pct_esc = (sec_data.get('Escritura', 0) / total_sec) * 100
+        pct_sin = (sec_data.get('Sin Escritura', 0) / total_sec) * 100
+        
+        current_x = margin['left']
+        
+        # Segmento Escritura
+        w_esc = (pct_esc / 100) * chart_width
+        if w_esc > 0:
+            svg.append(f'<rect x="{current_x}" y="{y}" width="{w_esc}" height="{bar_height}" rx="2" fill="{colors[0]}" opacity="0.95"/>')
+            if pct_esc > 12:
+                svg.append(f'<text x="{current_x + w_esc/2}" y="{y + bar_height/2 + 3}" text-anchor="middle" class="bar-val">{int(pct_esc)}%</text>')
+            current_x += w_esc
+            
+        # Segmento Sin Escritura
+        w_sin = (pct_sin / 100) * chart_width
+        if w_sin > 0:
+            svg.append(f'<rect x="{current_x}" y="{y}" width="{w_sin}" height="{bar_height}" rx="2" fill="{colors[1]}" opacity="0.95"/>')
+            if pct_sin > 12:
+                svg.append(f'<text x="{current_x + w_sin/2}" y="{y + bar_height/2 + 3}" text-anchor="middle" class="bar-val">{int(pct_sin)}%</text>')
+                
+    svg.append(f'<line x1="{margin["left"]}" y1="{margin["top"]}" x2="{margin["left"]}" y2="{height - margin["bottom"]}" class="axis-line"/>')
+    
+    # Leyenda
+    leg_x = width - margin['right'] + 30
+    for c_idx, cat in enumerate(cats):
+        leg_y = margin['top'] + 20 + c_idx * 30
+        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="14" height="14" rx="4" fill="{colors[c_idx]}"/>')
+        svg.append(f'<text x="{leg_x + 20}" y="{leg_y + 11}" class="legend-text">{cat}</text>')
+        
+    svg.append('</svg>')
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(svg))
+
+
 # ── MAIN PIPELINE ─────────────────────────────────────────────
 def main():
     import argparse
@@ -1345,6 +1566,36 @@ def main():
         if s_name in tenencia_sec:
             tenencia_sec[s_name][ten] = tenencia_sec[s_name].get(ten, 0) + n
 
+    # ── RENDERIZAR NUEVOS GRÁFICOS SVG DE INDICADORES ──
+    conocimiento_data_svg = {}
+    servicios_data_svg = {}
+    tenencia_data_svg = {}
+    for sec in ['Sector 1', 'Sector 2', 'Sector 3']:
+        tot_presa = conoce_presa_sec[sec]['Sí'] + conoce_presa_sec[sec]['No'] + conoce_presa_sec[sec]['SD'] or 1
+        pct_proyecto = (conoce_presa_sec[sec]['Sí'] / tot_presa) * 100
+        con_pres = conoce_presidente_sec[sec]['conoce']
+        tot_pres = conoce_presidente_sec[sec]['total'] or 1
+        pct_pres = (con_pres / tot_pres) * 100
+        
+        conocimiento_data_svg[sec] = {'Proyecto': pct_proyecto, 'Presidenta': pct_pres}
+        
+        tot_a = servicios_sec[sec]['agua_si'] + servicios_sec[sec]['agua_no'] or 1
+        pct_a = (servicios_sec[sec]['agua_si'] / tot_a) * 100
+        tot_e = servicios_sec[sec]['energ_si'] + servicios_sec[sec]['energ_no'] or 1
+        pct_e = (servicios_sec[sec]['energ_si'] / tot_e) * 100
+        
+        servicios_data_svg[sec] = {'Agua': pct_a, 'Energía': pct_e}
+        
+        esc = tenencia_sec[sec].get('Escritura', 0)
+        sin_esc = tenencia_sec[sec].get('Sin Escritura', 0)
+        tenencia_data_svg[sec] = {'Escritura': esc, 'Sin Escritura': sin_esc}
+
+    generate_conocimiento_svg(conocimiento_data_svg, os.path.join(GRAFICOS_DIR, 'chart_conocimiento.svg'))
+    generate_servicios_svg(servicios_data_svg, os.path.join(GRAFICOS_DIR, 'chart_servicios.svg'))
+    generate_tenencia_svg(tenencia_data_svg, os.path.join(GRAFICOS_DIR, 'chart_tenencia.svg'))
+
+    # ── MD WRITING ──
+
     
     with open(REPORT_MD_PATH, 'w', encoding='utf-8') as f:
         f.write(f"""# Informe Técnico: Estado del Catastro y Levantamiento de Información
@@ -1558,6 +1809,9 @@ A continuación se presentan los indicadores socioeconómicos y de infraestructu
 | No conoce | {conoce_presa_sec['Sector 1']['No']:,} | {conoce_presa_sec['Sector 2']['No']:,} | {conoce_presa_sec['Sector 3']['No']:,} | {total_no_presa:,} | {round(total_no_presa/total_fichas_todas*100,1) if total_fichas_todas else 0}% |
 | **¿Conoce a la Presidenta?** (Sí) | {conoce_presidente_sec['Sector 1']['conoce']:,} | {conoce_presidente_sec['Sector 2']['conoce']:,} | {conoce_presidente_sec['Sector 3']['conoce']:,} | **{total_conoce_pres:,}** | **{pct_conoce_pres}%** |
 
+#### Gráfico de Conocimiento del Proyecto y Directiva:
+![Conocimiento del Proyecto](informe_graficos/chart_conocimiento.svg)
+
 ### D. Longitud del Canal Principal (Percepción de los Usuarios)
 
 | Sector | Promedio estimado (km) | Regantes que respondieron |
@@ -1586,6 +1840,9 @@ A continuación se presentan los indicadores socioeconómicos y de infraestructu
 | **Agua de consumo** (Sí) | {servicios_sec['Sector 1']['agua_si']:,} | {servicios_sec['Sector 2']['agua_si']:,} | {servicios_sec['Sector 3']['agua_si']:,} | {sum(d['agua_si'] for d in servicios_sec.values()):,} | {round(sum(d['agua_si'] for d in servicios_sec.values())/(sum(d['agua_si']+d['agua_no'] for d in servicios_sec.values()) or 1)*100,1)}% |
 | **Energía eléctrica** (Sí) | {servicios_sec['Sector 1']['energ_si']:,} | {servicios_sec['Sector 2']['energ_si']:,} | {servicios_sec['Sector 3']['energ_si']:,} | {sum(d['energ_si'] for d in servicios_sec.values()):,} | {round(sum(d['energ_si'] for d in servicios_sec.values())/(sum(d['energ_si']+d['energ_no'] for d in servicios_sec.values()) or 1)*100,1)}% |
 
+#### Gráfico de Cobertura de Servicios Básicos:
+![Cobertura de Servicios Básicos](informe_graficos/chart_servicios.svg)
+
 ### G. Material Predominante de Construcción
 
 | Material | Sector 1 | Sector 2 | Sector 3 | Total |
@@ -1613,6 +1870,9 @@ A continuación se presentan los indicadores socioeconómicos y de infraestructu
 |---|---:|---:|---:|---:|
 | **Escritura** | {tenencia_sec['Sector 1'].get('Escritura',0):,} | {tenencia_sec['Sector 2'].get('Escritura',0):,} | {tenencia_sec['Sector 3'].get('Escritura',0):,} | {tenencia_sec['Sector 1'].get('Escritura',0)+tenencia_sec['Sector 2'].get('Escritura',0)+tenencia_sec['Sector 3'].get('Escritura',0):,} |
 | **Sin Escritura** | {tenencia_sec['Sector 1'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 2'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 3'].get('Sin Escritura',0):,} | {tenencia_sec['Sector 1'].get('Sin Escritura',0)+tenencia_sec['Sector 2'].get('Sin Escritura',0)+tenencia_sec['Sector 3'].get('Sin Escritura',0):,} |
+
+#### Gráfico de Tenencia de Tierras:
+![Tenencia de Predios](informe_graficos/chart_tenencia.svg)
 
 ---
 
