@@ -69224,5 +69224,392 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "ref_area_predio": 11335.57
+  },
+  {
+    "id_cultivo": "{612e651a-c376-4da7-a678-dec4966010a4}",
+    "ficha_id": "{3e16a102-5131-432f-afea-60782e33b45a}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 5146.74
+  },
+  {
+    "id_cultivo": "{d000807e-f5e7-4ae6-ae0e-62acae92ac26}",
+    "ficha_id": "{81b8fa19-77da-4482-8f1d-da3b3efab427}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 1150.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4627.09
+  },
+  {
+    "id_cultivo": "{a341d22b-e5f5-49a2-ac03-c81d56b03aa5}",
+    "ficha_id": "{81b8fa19-77da-4482-8f1d-da3b3efab427}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 1550.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "ALFALFA",
+    "ref_area_predio": 4627.09
+  },
+  {
+    "id_cultivo": "{f59deab0-5f80-4e4f-9063-2a0125e12342}",
+    "ficha_id": "{81b8fa19-77da-4482-8f1d-da3b3efab427}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1927.09,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4627.09
+  },
+  {
+    "id_cultivo": "{1c495c8e-bcdf-4cd1-896b-b060e1f15eab}",
+    "ficha_id": "{89dc5979-d2ae-4715-bc76-a7548240f1a6}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1745.39
+  },
+  {
+    "id_cultivo": "{1bbf3ee8-8218-4cf2-8e3f-9cf2b64a81fc}",
+    "ficha_id": "{89dc5979-d2ae-4715-bc76-a7548240f1a6}",
+    "tipo_cultivo": "Frijol",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1745.39
+  },
+  {
+    "id_cultivo": "{867df26e-54fd-4d62-aa53-8b83b04f5498}",
+    "ficha_id": "{89dc5979-d2ae-4715-bc76-a7548240f1a6}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1745.39
+  },
+  {
+    "id_cultivo": "{41356d4b-d2e8-4164-87bb-0e537ff8e79e}",
+    "ficha_id": "{835421b9-bc22-4b41-a60f-4ba386848088}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 600.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2624.75
+  },
+  {
+    "id_cultivo": "{6e499c55-395f-4fdc-9d78-c069ee31f14a}",
+    "ficha_id": "{835421b9-bc22-4b41-a60f-4ba386848088}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2024.75,
+    "ref_area_predio": 2624.75
+  },
+  {
+    "id_cultivo": "{eb0cb261-9b37-45b6-abcd-e64aafea1de2}",
+    "ficha_id": "{c5de07d4-e6ef-4053-b06e-227e9e3b4419}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 900.0,
+    "ref_area_predio": 1538.71
+  },
+  {
+    "id_cultivo": "{ebdd251f-8709-4c6b-858a-783a579ae33b}",
+    "ficha_id": "{c5de07d4-e6ef-4053-b06e-227e9e3b4419}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 300.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1538.71
+  },
+  {
+    "id_cultivo": "{b0fc1de4-8e5d-4d71-b02e-9510382958f4}",
+    "ficha_id": "{c5de07d4-e6ef-4053-b06e-227e9e3b4419}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 338.71,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1538.71
+  },
+  {
+    "id_cultivo": "{347adfec-850c-4fce-85e9-0f908b5dcfff}",
+    "ficha_id": "{97cbb39d-e42d-474f-9153-980f265873af}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 600.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3630.21
+  },
+  {
+    "id_cultivo": "{6fc674d6-b868-41e6-a582-fe971155431c}",
+    "ficha_id": "{97cbb39d-e42d-474f-9153-980f265873af}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3030.21,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3630.21
+  },
+  {
+    "id_cultivo": "{307ec150-5539-4882-a6fd-ad879e48b1ae}",
+    "ficha_id": "{3633a39a-1830-44b7-9aa8-25ec85932439}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 800.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6689.03
+  },
+  {
+    "id_cultivo": "{81e97eaa-834c-4f27-a0bc-bc442c5e7b4a}",
+    "ficha_id": "{3633a39a-1830-44b7-9aa8-25ec85932439}",
+    "tipo_cultivo": "Frijol",
+    "superficie_m2": 50.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6689.03
+  },
+  {
+    "id_cultivo": "{83e787a4-9c73-4f8e-91a8-7b339cd54870}",
+    "ficha_id": "{3633a39a-1830-44b7-9aa8-25ec85932439}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5839.03,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6689.03
+  },
+  {
+    "id_cultivo": "{afb2ab0c-0940-449b-9a8a-9e644b2f5bec}",
+    "ficha_id": "{50b0b145-e05d-4000-9c5f-7d8b7374a04b}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1635.91
+  },
+  {
+    "id_cultivo": "{e057a368-b936-4f43-88cd-e8c3dd734c0b}",
+    "ficha_id": "{50b0b145-e05d-4000-9c5f-7d8b7374a04b}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1635.91
+  },
+  {
+    "id_cultivo": "{ceaa25a3-f76b-4917-9efa-a5ac7cf42227}",
+    "ficha_id": "{50b0b145-e05d-4000-9c5f-7d8b7374a04b}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1635.91
+  },
+  {
+    "id_cultivo": "{28bc72b0-7e5a-41ba-8d1f-7e6b174dcd33}",
+    "ficha_id": "{50b0b145-e05d-4000-9c5f-7d8b7374a04b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1035.91,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1635.91
+  },
+  {
+    "id_cultivo": "{c1f8721c-6fd3-4a0a-ae4c-6c6612fa5ae3}",
+    "ficha_id": "{7ec986bd-0142-4922-b0e9-681003e6092d}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1727.88
+  },
+  {
+    "id_cultivo": "{8bcd2515-1eb2-447e-93e8-422f444ef105}",
+    "ficha_id": "{7ec986bd-0142-4922-b0e9-681003e6092d}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "Aguacate",
+    "ref_area_predio": 1727.88
+  },
+  {
+    "id_cultivo": "{595df05f-8898-42e3-b2de-09a737cefcb6}",
+    "ficha_id": "{07ef85f8-7af8-406d-8c4a-f233528ed88c}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 1539.75,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "Aguacate ",
+    "ref_area_predio": 1539.75
+  },
+  {
+    "id_cultivo": "{f9d5acba-ac44-4601-811e-ab9b7f3478ef}",
+    "ficha_id": "{3f7bfba1-354d-4b21-a9e6-52021dc9a3d1}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 5000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6474.12
+  },
+  {
+    "id_cultivo": "{70567fc8-0906-4932-b28b-5d7e2ff955e7}",
+    "ficha_id": "{3f7bfba1-354d-4b21-a9e6-52021dc9a3d1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1474.12,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6474.12
+  },
+  {
+    "id_cultivo": "{c8ede91a-5fb7-4474-8f30-25f091c9f21c}",
+    "ficha_id": "{509b2833-278a-48b3-997b-c37785c6fc02}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2121.06
+  },
+  {
+    "id_cultivo": "{2384310f-3a2f-462a-9b0a-64f5bfa13483}",
+    "ficha_id": "{509b2833-278a-48b3-997b-c37785c6fc02}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 600.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2121.06
+  },
+  {
+    "id_cultivo": "{7e2d0f41-5952-4171-913e-6f5d5be5a958}",
+    "ficha_id": "{509b2833-278a-48b3-997b-c37785c6fc02}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1021.06,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2121.06
+  },
+  {
+    "id_cultivo": "{c6c014be-1bbc-407f-a5c4-09ed96b6aa6c}",
+    "ficha_id": "{bafdae05-03c9-474b-a2d5-e1d68143c675}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 150.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 7004.3
+  },
+  {
+    "id_cultivo": "{f338ed4a-6e3e-4e2a-93aa-9b269db4e777}",
+    "ficha_id": "{bafdae05-03c9-474b-a2d5-e1d68143c675}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7004.3
+  },
+  {
+    "id_cultivo": "{9efeab9e-4e82-4341-a223-efb6972241c8}",
+    "ficha_id": "{bafdae05-03c9-474b-a2d5-e1d68143c675}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6754.3,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7004.3
+  },
+  {
+    "id_cultivo": "{82dbae3b-5aa3-47f6-b50b-6d02939c5d31}",
+    "ficha_id": "{ef4a7059-135a-4708-a7ce-182b375dfaa6}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 307.56,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "Patrones de rosas ",
+    "ref_area_predio": 307.56
+  },
+  {
+    "id_cultivo": "{e868cec0-92c7-4c42-b580-151f6b6fb912}",
+    "ficha_id": "{9e3492f2-55f5-4f2e-8d34-14c013eab016}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 522.23
+  },
+  {
+    "id_cultivo": "{8396d836-090c-46be-b023-f16b63cef5b6}",
+    "ficha_id": "{9e3492f2-55f5-4f2e-8d34-14c013eab016}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 60.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 522.23
+  },
+  {
+    "id_cultivo": "{cc8a148d-d071-4bf9-9a86-c5a180da55cf}",
+    "ficha_id": "{9e3492f2-55f5-4f2e-8d34-14c013eab016}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 522.23
+  },
+  {
+    "id_cultivo": "{50aeadae-d4a6-453e-8981-56e2c970ed9a}",
+    "ficha_id": "{9e3492f2-55f5-4f2e-8d34-14c013eab016}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 262.23,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 522.23
+  },
+  {
+    "id_cultivo": "{99582197-0184-4b18-960b-4413a8efdb11}",
+    "ficha_id": "{1e0fad2d-4b83-4d95-a895-353133f4938d}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 5000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5728.46
+  },
+  {
+    "id_cultivo": "{93ba769e-1d90-4cfb-9928-5bbd0872a64e}",
+    "ficha_id": "{1e0fad2d-4b83-4d95-a895-353133f4938d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 728.46,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5728.46
+  },
+  {
+    "id_cultivo": "{774f7c12-d8e9-40c2-b03f-551e6e8d3efd}",
+    "ficha_id": "{cf88c111-9e6c-4135-a669-300637bc371c}",
+    "tipo_cultivo": "MAÍZ",
+    "superficie_m2": 307.56,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 307.56
+  },
+  {
+    "id_cultivo": "{0610370e-d39e-4f34-a675-70d566a347e2}",
+    "ficha_id": "{43636e0c-ffde-4e34-916f-b32edb37b14c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1636.22,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1636.22
+  },
+  {
+    "id_cultivo": "{22c77b85-1024-4670-a222-5e5d9c0fefe5}",
+    "ficha_id": "{01ba0346-8a73-4c46-8dc9-bb597dc8931a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 836.58,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 836.58
+  },
+  {
+    "id_cultivo": "{79992e54-0db8-4134-a384-f2aa0cf39c3d}",
+    "ficha_id": "{4d310215-4dbb-4dd8-924e-d05dcf0a7501}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 12813.55,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 12813.55
+  },
+  {
+    "id_cultivo": "{34a2977e-4501-4e2f-ae88-3a21d7299bb5}",
+    "ficha_id": "{57b9102d-95bf-4bb7-b635-199e32e07fe5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 28210.52,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28210.52
   }
 ]

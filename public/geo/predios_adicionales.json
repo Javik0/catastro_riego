@@ -31693,5 +31693,15 @@
     "area_lote_asignado_otro": 9749.14,
     "tiene_observaciones": 1,
     "observaciones_otro": "Siembra papas y cebolla "
+  },
+  {
+    "fid": 2897,
+    "id_adicional": "{20db5bb5-59c0-4a8b-bb96-fccfebef52db}",
+    "ficha_id": "{cf88c111-9e6c-4135-a669-300637bc371c}",
+    "clave_catastral_otro": "1702540170030",
+    "area_total_otro": 881.72,
+    "area_riego_otro": 881.72,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 881.72
   }
 ]
