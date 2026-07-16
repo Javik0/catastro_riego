@@ -648,14 +648,14 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setFont('Helvetica', 'bold');
       doc.text(`${pct}%`, x + w - pad, cy, { align: 'right' });
       cy += fs(2.5, 4);
-      // Fondo gris
+      // Fondo gris (rect simple para máxima compatibilidad con jsPDF)
       doc.setFillColor(226, 232, 240);
       doc.setDrawColor(226, 232, 240);
-      doc.roundedRect(x + pad, cy, barW, barH, barH / 2, barH / 2, 'F');
+      doc.rect(x + pad, cy, barW, barH, 'F');
       // Barra coloreada
-      const fillW = Math.max(barW * (pct / 100), barH);
+      const fillW = Math.max(barW * (pct / 100), 0.5);
       doc.setFillColor(r, g, b);
-      doc.roundedRect(x + pad, cy, fillW, barH, barH / 2, barH / 2, 'F');
+      doc.rect(x + pad, cy, fillW, barH, 'F');
       cy += barH + fs(2, 3.5);
     };
 
@@ -722,13 +722,15 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         attributionControl: false
       });
 
+      // PASO CRÍTICO: Configurar la vista ANTES de añadir tiles,
+      // así las tiles cargan exactamente para la región correcta desde el inicio
       if (activeBounds) {
-        map.fitBounds(activeBounds, { padding: [40, 40] });
+        map.fitBounds(activeBounds, { padding: [20, 20] });
       } else {
         map.setView(mapCenter, mapZoom);
       }
 
-      // Añadir la misma capa base
+      // Añadir la capa base (se pide al servidor las tiles de la región ya configurada)
       const tileUrl = mapBase === 'satelite'
         ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
         : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
@@ -736,15 +738,20 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       const tileLayer = L.tileLayer(tileUrl, { maxZoom: 20 });
       tileLayer.addTo(map);
 
-      // Esperar a que se monte el mapa e invalidar tamaño para el renderizado off-screen
+      // Esperar a que el mapa esté montado y tenga el tamaño correcto
       await new Promise<void>((resolve) => {
         map.whenReady(() => {
           setTimeout(() => {
             map.invalidateSize();
             resolve();
-          }, 100);
+          }, 150);
         });
       });
+
+      // Forzar el encuadre de nuevo luego del invalidateSize para asegurar precisión
+      if (activeBounds) {
+        map.fitBounds(activeBounds, { padding: [20, 20] });
+      }
 
       // Dibujar capas vectoriales filtradas con simbología inteligente en el mapa off-screen
       
@@ -865,10 +872,24 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         });
       }
 
-      // Esperar un delay explícito de 3.5 segundos para que todas las tiles se descarguen y dibujen en el div gigante
-      setExportProgress('Descargando y renderizando fotografía satelital de alta definición...');
+      // Esperar a que las tiles se carguen usando eventos del TileLayer
+      // En lugar del timeout fijo (que fallaba), escuchar el evento 'load' del tileLayer
+      setExportProgress('Descargando tiles satelitales — por favor espere...');
       await new Promise<void>((resolve) => {
-        setTimeout(resolve, 3500);
+        // Timeout máximo de seguridad: 12 segundos
+        const maxWait = setTimeout(() => resolve(), 12000);
+        // Resolver apenas carguen todas las tiles visibles
+        tileLayer.once('load', () => {
+          clearTimeout(maxWait);
+          // Pequeña demora para que el canvas del DOM termine de pintar
+          setTimeout(resolve, 800);
+        });
+        // Si ya están en caché, el evento 'load' puede no dispararse; forzar con timeout corto
+        setTimeout(() => {
+          if (!map) return;
+          // Intentar forzar redibujado
+          map.invalidateSize();
+        }, 500);
       });
 
       // Capturar usando html2canvas con proxy para imágenes externas y escalamiento
@@ -1320,7 +1341,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
           {/* Lienzo del Papel (Relación aspect A3/A1 apaisado) */}
           <div
             id="print-sheet-canvas"
-            className="bg-white text-slate-900 shadow-2xl p-4 flex flex-col justify-between select-none relative transition-all"
+            className="bg-white text-slate-900 shadow-2xl p-4 flex flex-col justify-between select-none relative transition-all overflow-hidden"
             style={{
               width: formato === 'A3' ? '840px' : '1120px',
               height: formato === 'A3' ? '594px' : '792px',
@@ -1346,10 +1367,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
               <img src="/logo-der.png" alt="Consorcio" className="h-9 object-contain" />
             </div>
 
-            {/* ── 2. Cuerpo Central: Mapa + Leyenda ── */}
-            <div className="flex-1 flex gap-2 my-2 min-h-0 relative">
+          {/* ── 2. Cuerpo Central: Mapa + Leyenda ── */}
+            {/* overflow:hidden es CRÍTICO para que la leyenda no desborde el papel */}
+            <div className="flex-1 flex gap-2 my-2 overflow-hidden relative">
               {/* Contenedor del Mapa interactivo de visualización */}
-              <div className="flex-1 border border-slate-300 relative h-full bg-slate-100">
+              <div className="flex-1 border border-slate-300 relative overflow-hidden bg-slate-100">
                 {!loading && (
                   <MapContainer
                     center={[0.04, -78.15]}
