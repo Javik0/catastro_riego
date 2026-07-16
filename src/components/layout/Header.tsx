@@ -4,7 +4,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
 import { MobileMenuButton } from './Sidebar';
 import { useLocation } from 'react-router-dom';
-import { Filter, X, Search, Sun, Moon, LogOut } from 'lucide-react';
+import { Filter, X, Search, Sun, Moon, LogOut, Printer } from 'lucide-react';
 import { useData } from '../../App';
 
 interface Props {
@@ -176,6 +176,17 @@ export default function Header({ onMobileMenuOpen }: Props) {
             className="flex items-center gap-1 px-2 py-1.5 rounded-md text-xs text-red-400 border border-red-500/20 bg-red-500/10 hover:bg-red-500/20 transition-colors cursor-pointer shrink-0">
             <X className="w-3 h-3" />
             Limpiar
+          </button>
+        )}
+
+        {location.pathname === '/mapa' && (
+          <button
+            onClick={() => window.open('/mapa/impresion', '_blank')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer shrink-0 font-medium ml-auto shadow-sm"
+            title="Abrir Vista de Composición y Diseño de Mapa estilo QGIS"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            Componer Mapa
           </button>
         )}
       </div>

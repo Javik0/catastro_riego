@@ -12,6 +12,7 @@ import RoleProtectedRoute from './components/auth/RoleProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
 import DashboardHome from './components/dashboard/DashboardHome';
 import MapPage from './components/map/MapPage';
+import MapPrintComposerPage from './components/map/MapPrintComposerPage';
 import FichasPage from './components/fichas/FichasPage';
 import ReportesPage from './components/reportes/ReportesPage';
 import EncuestaPublicaPage from './components/encuestas/EncuestaPublicaPage';
@@ -330,6 +331,22 @@ export default function App() {
                   }
                 />
               </Route>
+              
+              {/* Composición e Impresión Cartográfica (fuera del Layout de Dashboard para pantalla completa) */}
+              <Route
+                path="/mapa/impresion"
+                element={
+                  <ProtectedRoute>
+                    <RoleProtectedRoute allowedRoles={['admin', 'cliente', 'tecnico']}>
+                      <FilteredDataProvider>
+                        {({ fichas, loading }) => (
+                          <MapPrintComposerPage fichas={fichas} loading={loading} />
+                        )}
+                      </FilteredDataProvider>
+                    </RoleProtectedRoute>
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Encuesta pública abierta para los comuneros/regantes */}
               <Route path="/encuesta" element={<EncuestaPublicaPage />} />
