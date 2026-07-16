@@ -159,8 +159,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const [mapCenter, setMapCenter] = useState<L.LatLng>(new L.LatLng(0.04, -78.15));
   const [exportProgress, setExportProgress] = useState<string | null>(null);
 
-  // Logos cargados en base64 para jsPDF
-  const [logosBase64, setLogosBase64] = useState<{ izq: string; der: string } | null>(null);
+  // Logos cargados en base64 para jsPDF (incluye aspect ratio para dimensiones sin distorsión)
+  const [logosBase64, setLogosBase64] = useState<{
+    izq: string; izqAr: number;
+    der: string; derAr: number;
+  } | null>(null);
 
   // Cargar datos espaciales al montar
   useEffect(() => {
@@ -195,12 +198,17 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       .then((data) => setCultivosData(data))
       .catch((e) => console.error('Error cargando cultivos:', e));
 
-    // Cargar logos
+    // Cargar logos — guardando también el aspect ratio para PDF sin distorsión
     Promise.all([
       loadImageBase64(LOGO_PICHINCHA),
       loadImageBase64(LOGO_CONSORCIO)
     ]).then(([izqRes, derRes]) => {
-      setLogosBase64({ izq: izqRes.data, der: derRes.data });
+      setLogosBase64({
+        izq: izqRes.data,
+        izqAr: izqRes.width / izqRes.height, // aspect ratio (ancho/alto)
+        der: derRes.data,
+        derAr: derRes.width / derRes.height,
+      });
     }).catch((e) => console.error('Error cargando logos base64:', e));
   }, []);
 
@@ -692,22 +700,21 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
     try {
       setExportProgress('Generando composición cartográfica...');
       
-      // Ancho y alto en píxeles (150 DPI)
-      const anchoPx = formato === 'A3' ? 2480 : 4967;
-      const altoPx = formato === 'A3' ? 1754 : 3508;
+      // Canvas off-screen: tamaño moderado proporcional al área del mapa en el PDF
+      // A3: mapW/mapH ≈ 288/231 = 1.247 → usamos 1560×1252px
+      // A1: mapW/mapH ≈ 577/466 = 1.238 → usamos 1800×1454px
+      // Tamaños pequeños = menos tiles = carga más rápida, jsPDF escala al tamaño final
+      const mapWidthPx = formato === 'A3' ? 1560 : 1800;
+      const mapHeightPx = formato === 'A3' ? 1252 : 1454;
 
-      // Crear div temporal fuera de pantalla para renderizar el Leaflet a alta resolución
+      // Crear div temporal fuera de pantalla para renderizar el Leaflet
       const printContainer = document.createElement('div');
       printContainer.style.position = 'absolute';
       printContainer.style.left = '-10000px';
       printContainer.style.top = '-10000px';
-      
-      // Ajustar tamaño del mapa principal dentro del layout en px (aproximadamente 72% del ancho y 82% del alto del papel)
-      const mapWidthPx = Math.round(anchoPx * 0.72);
-      const mapHeightPx = Math.round(altoPx * 0.82);
       printContainer.style.width = `${mapWidthPx}px`;
       printContainer.style.height = `${mapHeightPx}px`;
-      
+
       document.body.appendChild(printContainer);
 
       setExportProgress('Renderizando capas cartográficas a alta resolución...');
@@ -929,12 +936,26 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setDrawColor(226, 232, 240); // Borde slate-200
       doc.rect(margin, margin, width - margin * 2, headerHeight, 'S');
 
-      // Logos
+      // Logos — dimensiones calculadas desde el aspect ratio real de cada imagen (sin distorsión)
+      const logoIzqH = formato === 'A3' ? 18 : 32; // Alto en mm
+      const logoIzqW = logoIzqH * logosBase64!.izqAr; // Ancho proporcional
+      const logoDerH = formato === 'A3' ? 14 : 24;
+      const logoDerW = logoDerH * logosBase64!.derAr;
+
       // Pichincha (Izq)
-      doc.addImage(logosBase64!.izq, 'PNG', margin + (formato === 'A3' ? 4 : 8), margin + (formato === 'A3' ? 3 : 5), formato === 'A3' ? 30 : 55, formato === 'A3' ? 18 : 32);
+      doc.addImage(
+        logosBase64!.izq, 'PNG',
+        margin + (formato === 'A3' ? 4 : 8),
+        margin + (formato === 'A3' ? 3 : 5),
+        logoIzqW, logoIzqH
+      );
       // Consorcio (Der)
-      const logoDerWidth = formato === 'A3' ? 24 : 44;
-      doc.addImage(logosBase64!.der, 'PNG', width - margin - (formato === 'A3' ? 4 : 8) - logoDerWidth, margin + (formato === 'A3' ? 5 : 9), logoDerWidth, formato === 'A3' ? 14 : 24);
+      doc.addImage(
+        logosBase64!.der, 'PNG',
+        width - margin - (formato === 'A3' ? 4 : 8) - logoDerW,
+        margin + (formato === 'A3' ? 5 : 9),
+        logoDerW, logoDerH
+      );
 
       // Título
       doc.setFont('Helvetica', 'bold');
