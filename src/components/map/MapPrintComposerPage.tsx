@@ -655,11 +655,21 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
 
         try {
           const canvasLeyenda = await html2canvas(leyendaElement, {
-            scale: formato === 'A3' ? 3.5 : 5,
+            scale: formato === 'A3' ? 2.2 : 3,
             useCORS: true,
             allowTaint: true,
             logging: false,
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
+            windowWidth: 185,
+            onclone: (clonedDoc) => {
+              const clonedLey = clonedDoc.getElementById('composicion-leyenda');
+              if (clonedLey) {
+                clonedLey.style.width = '185px';
+                clonedLey.style.height = 'auto';
+                clonedLey.style.maxHeight = 'none';
+                clonedLey.style.overflow = 'visible';
+              }
+            }
           });
 
           const imgLeyenda = canvasLeyenda.toDataURL('image/jpeg', 0.95);
@@ -1253,7 +1263,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                   LEYENDA CARTOGRÁFICA
                 </div>
 
-                <div className="p-2 space-y-3 overflow-y-auto text-[7px] text-slate-700">
+                <div className="p-2 space-y-2 text-[7px] text-slate-700 flex-1 flex flex-col justify-start">
                   {/* Canales */}
                   {incluirCanales && (
                     <div className="flex items-center gap-2">
@@ -1301,26 +1311,27 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                   {modo === 'sector' && comunidadesData && (
                     <div className="space-y-1.5">
                       <p className="font-bold text-slate-800">Comunidades de {selectedSector}:</p>
-                      <div className="max-h-32 overflow-y-auto space-y-1">
+                      {/* Lista en dos columnas compactas sin scrollbars */}
+                      <div className={`grid ${comunidadesDelSector.length > 8 ? 'grid-cols-2 gap-x-2' : 'grid-cols-1'} gap-y-0.5 mt-1`}>
                         {comunidadesData.features
                           .filter((f: any) => f.properties?.sector === selectedSector)
-                          .slice(0, 12)
+                          .slice(0, formato === 'A1' ? 35 : 16)
                           .map((c: any) => {
                              const name = c.properties?.comunidad || '';
                              const count = c.properties?.total_fichas || 0;
                              const color = comunidadesColorMap.get(name) || '#94a3b8';
                             return (
-                              <div key={name} className="flex items-center gap-2 ml-1">
-                                <div className="w-3.5 h-2" style={{ backgroundColor: color }} />
-                                <span className="truncate">
+                              <div key={name} className="flex items-center gap-1 min-w-0">
+                                <div className="w-2.5 h-1.5 shrink-0" style={{ backgroundColor: color }} />
+                                <span className="truncate text-[6px]">
                                   {name} ({count})
                                 </span>
                               </div>
                             );
                           })}
-                        {comunidadesDelSector.length > 12 && (
-                          <p className="text-[6.5px] italic text-slate-500 ml-1">
-                            + {comunidadesDelSector.length - 12} comunidades más
+                        {comunidadesDelSector.length > (formato === 'A1' ? 35 : 16) && (
+                          <p className="text-[5.5px] italic text-slate-500 col-span-2">
+                            + {comunidadesDelSector.length - (formato === 'A1' ? 35 : 16)} más
                           </p>
                         )}
                       </div>
