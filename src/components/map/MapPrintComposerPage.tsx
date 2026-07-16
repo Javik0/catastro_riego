@@ -379,6 +379,309 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
     return calcularEscalaGrafica(mapLat, mapZoom, mapWidthPx, mapWidthMm);
   }, [mapZoom, mapLat, formato]);
 
+  // ─── Función vectorial para dibujar la leyenda directamente en jsPDF ───
+  const drawLegendToPDF = (
+    doc: jsPDF,
+    x: number, y: number, w: number, h: number
+  ) => {
+    const isA1 = formato === 'A1';
+    const fs = (a3: number, a1: number) => (isA1 ? a1 : a3); // helper font-size / dimensiones
+
+    // Fondo blanco y borde
+    doc.setFillColor(255, 255, 255);
+    doc.rect(x, y, w, h, 'F');
+    doc.setDrawColor(203, 213, 225);
+    doc.setLineWidth(0.3);
+    doc.rect(x, y, w, h, 'S');
+
+    // ── Header leyenda ──
+    doc.setFillColor(241, 245, 249); // slate-100
+    doc.rect(x, y, w, fs(6, 10), 'F');
+    doc.setDrawColor(203, 213, 225);
+    doc.line(x, y + fs(6, 10), x + w, y + fs(6, 10));
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(fs(6, 9.5));
+    doc.setTextColor(15, 23, 42);
+    doc.text('LEYENDA CARTOGRÁFICA', x + w / 2, y + fs(4.2, 7), { align: 'center' });
+
+    let cy = y + fs(6, 10) + fs(3, 5); // cursor vertical
+    const pad = fs(3, 5); // padding horizontal
+    const lineH = fs(4.5, 7); // altura de línea
+    const symW = fs(5, 8); // ancho símbolo
+    const symH = fs(2.5, 4); // alto símbolo
+
+    const writeLabel = (label: string, bold = false) => {
+      doc.setFont('Helvetica', bold ? 'bold' : 'normal');
+      doc.setFontSize(fs(5.5, 8.5));
+      doc.setTextColor(51, 65, 85);
+      doc.text(label, x + pad + symW + fs(2, 3), cy + fs(1.8, 3));
+      cy += lineH;
+    };
+
+    const drawRect = (fillR: number, fillG: number, fillB: number, strokeR = 150, strokeG = 150, strokeB = 150, dashed = false) => {
+      if (dashed) {
+        doc.setLineDashPattern([1, 1], 0);
+      }
+      doc.setFillColor(fillR, fillG, fillB);
+      doc.setDrawColor(strokeR, strokeG, strokeB);
+      doc.setLineWidth(0.3);
+      doc.rect(x + pad, cy - fs(0.5, 1), symW, symH, 'FD');
+      doc.setLineDashPattern([], 0);
+    };
+
+    // ── Simbología de capas ──
+    if (incluirCanales) {
+      // Línea discontinua celeste
+      doc.setDrawColor(56, 189, 248);
+      doc.setLineWidth(fs(0.7, 1.2));
+      doc.setLineDashPattern([fs(1.5, 2.5), fs(1, 1.5)], 0);
+      doc.line(x + pad, cy + fs(1, 1.5), x + pad + symW, cy + fs(1, 1.5));
+      doc.setLineDashPattern([], 0);
+      doc.setLineWidth(0.3);
+      writeLabel('Canales de Riego (Ramales)');
+    }
+    if (incluirCatastro) {
+      drawRect(255, 237, 213, 249, 115, 22); // orange tint
+      writeLabel('Catastro Rural (Predios)');
+    }
+    if (incluirOtrosPredios) {
+      doc.setFillColor(245, 245, 245);
+      doc.setDrawColor(113, 113, 122);
+      doc.setLineWidth(0.3);
+      doc.setLineDashPattern([1, 1], 0);
+      doc.rect(x + pad, cy - fs(0.5, 1), symW, symH, 'FD');
+      doc.setLineDashPattern([], 0);
+      writeLabel('Otros Predios del Regante');
+    }
+    if (incluirFichas) {
+      doc.setFillColor(220, 38, 38); // red-600
+      doc.setDrawColor(255, 255, 255);
+      doc.setLineWidth(0.4);
+      doc.circle(x + pad + symW / 2, cy + fs(0.8, 1.5), fs(1.5, 2.5), 'FD');
+      writeLabel('Ficha investigada (GPS)');
+    }
+
+    cy += fs(1, 2); // spacer
+
+    // ── Entidades dinámicas ──
+    if (modo === 'general' && sectoresData) {
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(fs(5.5, 8.5));
+      doc.setTextColor(15, 23, 42);
+      doc.text('Sectores de Investigación:', x + pad, cy);
+      cy += lineH;
+      sectoresData.features.forEach((s: any) => {
+        const name = s.properties?.sector || '';
+        const count = s.properties?.total_fichas || 0;
+        const color = SECTOR_COLORS_MAP[name] || '#6b7280';
+        const r = parseInt(color.slice(1, 3), 16);
+        const g = parseInt(color.slice(3, 5), 16);
+        const b = parseInt(color.slice(5, 7), 16);
+        doc.setFillColor(r, g, b);
+        doc.setDrawColor(r, g, b);
+        doc.rect(x + pad, cy - fs(0.5, 1), symW, symH, 'FD');
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(fs(5, 8));
+        doc.setTextColor(51, 65, 85);
+        doc.text(`${name} (${count} fichas)`, x + pad + symW + fs(2, 3), cy + fs(1.5, 2.5));
+        cy += lineH;
+      });
+      cy += fs(1, 2);
+    }
+
+    if (modo === 'sector' && comunidadesData) {
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(fs(5.5, 8.5));
+      doc.setTextColor(15, 23, 42);
+      doc.text(`Comunidades de ${selectedSector}:`, x + pad, cy);
+      cy += lineH;
+
+      const coms = comunidadesData.features
+        .filter((f: any) => f.properties?.sector === selectedSector)
+        .slice(0, isA1 ? 40 : 20);
+
+      // En A1 usar dos columnas
+      if (isA1 && coms.length > 10) {
+        const colW = w / 2 - pad;
+        coms.forEach((c: any, idx: number) => {
+          const name = c.properties?.comunidad || '';
+          const count = c.properties?.total_fichas || 0;
+          const color = comunidadesColorMap.get(name) || '#94a3b8';
+          const r = parseInt(color.slice(1, 3), 16);
+          const g = parseInt(color.slice(3, 5), 16);
+          const b = parseInt(color.slice(5, 7), 16);
+          const col = idx % 2;
+          const row = Math.floor(idx / 2);
+          const cx2 = x + pad + col * (colW + pad);
+          const rowY = cy + row * lineH;
+          doc.setFillColor(r, g, b);
+          doc.setDrawColor(r, g, b);
+          doc.rect(cx2, rowY - fs(0.5, 1), fs(3, 5), symH, 'FD');
+          doc.setFont('Helvetica', 'normal');
+          doc.setFontSize(fs(4.5, 7));
+          doc.setTextColor(51, 65, 85);
+          const label = `${name} (${count})`;
+          doc.text(label, cx2 + fs(3, 5) + 1, rowY + fs(1.5, 2.5), { maxWidth: colW - fs(4, 6) });
+        });
+        cy += Math.ceil(coms.length / 2) * lineH;
+      } else {
+        coms.forEach((c: any) => {
+          const name = c.properties?.comunidad || '';
+          const count = c.properties?.total_fichas || 0;
+          const color = comunidadesColorMap.get(name) || '#94a3b8';
+          const r = parseInt(color.slice(1, 3), 16);
+          const g = parseInt(color.slice(3, 5), 16);
+          const b = parseInt(color.slice(5, 7), 16);
+          doc.setFillColor(r, g, b);
+          doc.setDrawColor(r, g, b);
+          doc.rect(x + pad, cy - fs(0.5, 1), symW, symH, 'FD');
+          doc.setFont('Helvetica', 'normal');
+          doc.setFontSize(fs(5, 7.5));
+          doc.setTextColor(51, 65, 85);
+          doc.text(`${name} (${count})`, x + pad + symW + fs(2, 3), cy + fs(1.5, 2.5));
+          cy += lineH;
+        });
+      }
+      cy += fs(1, 2);
+    }
+
+    if (modo === 'comunidad') {
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(fs(5.5, 8.5));
+      doc.setTextColor(15, 23, 42);
+      doc.text('Comunidad Seleccionada:', x + pad, cy);
+      cy += lineH;
+      const color = comunidadesColorMap.get(selectedComunidad) || '#94a3b8';
+      const r = parseInt(color.slice(1, 3), 16);
+      const g = parseInt(color.slice(3, 5), 16);
+      const b = parseInt(color.slice(5, 7), 16);
+      doc.setFillColor(r, g, b);
+      doc.setDrawColor(r, g, b);
+      doc.rect(x + pad, cy - fs(0.5, 1), symW, symH, 'FD');
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(fs(5.5, 8.5));
+      doc.text(selectedComunidad, x + pad + symW + fs(2, 3), cy + fs(1.5, 2.5));
+      cy += lineH + fs(1, 2);
+    }
+
+    // ── Resumen de datos (si está activado) ──
+    if (!incluirTabla) return;
+
+    // Línea separadora
+    doc.setDrawColor(203, 213, 225);
+    doc.setLineWidth(0.2);
+    doc.line(x + pad, cy, x + w - pad, cy);
+    cy += fs(2, 3);
+
+    doc.setFont('Helvetica', 'bold');
+    doc.setFontSize(fs(5.5, 9));
+    doc.setTextColor(15, 23, 42);
+    doc.text('RESUMEN DE DATOS:', x + pad, cy);
+    cy += fs(4.5, 7);
+
+    const totalFichasVal =
+      modo === 'general'
+        ? fichas.length
+        : modo === 'sector'
+        ? sectorActualProperties?.total_fichas || 0
+        : comunidadActualProperties?.total_fichas || 0;
+    const areaRiegoVal =
+      modo === 'general'
+        ? (fichas.reduce((a, f) => a + (f.area_riego || 0), 0) / 10000).toFixed(1)
+        : modo === 'sector'
+        ? Number(sectorActualProperties?.area_riego_ha || 0).toFixed(1)
+        : Number(comunidadActualProperties?.area_riego_ha || 0).toFixed(1);
+    const caudalVal =
+      modo === 'general'
+        ? fichas.reduce((a, f) => a + (f.caudal_valor || 0), 0).toFixed(1)
+        : modo === 'sector'
+        ? Number(sectorActualProperties?.caudal_total_ls || 0).toFixed(1)
+        : Number(comunidadActualProperties?.caudal_total_ls || 0).toFixed(1);
+    const areaGeoVal =
+      modo === 'general'
+        ? '2,450.3'
+        : modo === 'sector'
+        ? Number(sectorActualProperties?.area_dissolve_ha || 0).toFixed(1)
+        : Number(comunidadActualProperties?.area_dissolve_ha || 0).toFixed(1);
+
+    const tableRows = [
+      ['Fichas investigadas:', `${totalFichasVal}`],
+      ['Área de riego:', `${areaRiegoVal} ha`],
+      ['Caudal total:', `${caudalVal} l/s`],
+      ['Área geográfica:', `${areaGeoVal} ha`],
+    ];
+
+    tableRows.forEach(([label, val]) => {
+      doc.setFont('Helvetica', 'normal');
+      doc.setFontSize(fs(5, 8));
+      doc.setTextColor(71, 85, 105);
+      doc.text(label, x + pad, cy);
+      doc.setFont('Helvetica', 'bold');
+      doc.setTextColor(15, 23, 42);
+      doc.text(val, x + w - pad, cy, { align: 'right' });
+      cy += fs(4, 6.5);
+    });
+
+    cy += fs(1.5, 2.5);
+
+    // ── Mini barras de progreso vectoriales ──
+    const drawSection = (title: string) => {
+      doc.setDrawColor(203, 213, 225);
+      doc.setLineWidth(0.15);
+      doc.line(x + pad, cy, x + w - pad, cy);
+      cy += fs(2, 3);
+      doc.setFont('Helvetica', 'bold');
+      doc.setFontSize(fs(5, 8));
+      doc.setTextColor(15, 23, 42);
+      doc.text(title, x + pad, cy);
+      cy += fs(4, 6.5);
+    };
+
+    const drawBar = (label: string, pct: number, r: number, g: number, b: number) => {
+      const barW = w - pad * 2;
+      const barH = fs(1.5, 2.5);
+      // Etiqueta + porcentaje
+      doc.setFont('Helvetica', 'normal');
+      doc.setFontSize(fs(4.5, 7.5));
+      doc.setTextColor(71, 85, 105);
+      doc.text(label, x + pad, cy);
+      doc.setFont('Helvetica', 'bold');
+      doc.text(`${pct}%`, x + w - pad, cy, { align: 'right' });
+      cy += fs(2.5, 4);
+      // Fondo gris
+      doc.setFillColor(226, 232, 240);
+      doc.setDrawColor(226, 232, 240);
+      doc.roundedRect(x + pad, cy, barW, barH, barH / 2, barH / 2, 'F');
+      // Barra coloreada
+      const fillW = Math.max(barW * (pct / 100), barH);
+      doc.setFillColor(r, g, b);
+      doc.roundedRect(x + pad, cy, fillW, barH, barH / 2, barH / 2, 'F');
+      cy += barH + fs(2, 3.5);
+    };
+
+    drawSection('MÉTODOS DE RIEGO:');
+    drawBar('Gravedad', statsDashboard.gravedadPct, 180, 83, 9);     // amber-600
+    drawBar('Aspersión', statsDashboard.aspersionPct, 14, 165, 233); // sky-500
+    drawBar('Goteo', statsDashboard.goteoPct, 16, 185, 129);         // emerald-500
+
+    drawSection('TIENE RESERVORIO:');
+    drawBar('Con Reservorio (SÍ)', statsDashboard.reservorioPct, 99, 102, 241); // indigo-500
+
+    if (statsDashboard.tenenciasSorted.length > 0) {
+      drawSection('TENENCIA DE TIERRA:');
+      statsDashboard.tenenciasSorted.forEach((t) =>
+        drawBar(t.name.length > 20 ? t.name.slice(0, 18) + '…' : t.name, t.pct, 100, 116, 139) // slate-500
+      );
+    }
+
+    if (statsDashboard.cultivosSorted.length > 0) {
+      drawSection('CULTIVOS PRINCIPALES:');
+      statsDashboard.cultivosSorted.forEach((c) =>
+        drawBar(c.name.length > 20 ? c.name.slice(0, 18) + '…' : c.name, c.pct, 22, 163, 74)  // green-600
+      );
+    }
+  };
+
   // ─── Exportación a PDF de alta resolución ───
   const handleExportPDF = async () => {
     if (!logosBase64) {
@@ -637,62 +940,14 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setDrawColor(203, 213, 225); // slate-300
       doc.rect(mapX, mapY, mapW, mapH, 'S');
 
-      // 3. Insertar leyenda lateral capturada directamente del DOM para conservar gráficos premium de Dashboard
+      // 3. Leyenda lateral: dibujada VECTORIALMENTE en jsPDF (100% confiable, sin html2canvas)
       const leyX = mapX + mapW + (formato === 'A3' ? 4 : 8);
       const leyY = mapY;
       const leyW = width - margin - leyX;
       const leyH = mapH;
 
-      setExportProgress('Generando e integrando infografía cartográfica y gráficos estadísticos...');
-      
-      const leyendaElement = document.getElementById('composicion-leyenda');
-      if (leyendaElement) {
-        const origOverflow = leyendaElement.style.overflow;
-        const origMaxHeight = leyendaElement.style.maxHeight;
-        
-        leyendaElement.style.overflow = 'visible';
-        leyendaElement.style.maxHeight = 'none';
-
-        try {
-          const canvasLeyenda = await html2canvas(leyendaElement, {
-            scale: formato === 'A3' ? 2.2 : 3,
-            useCORS: true,
-            allowTaint: true,
-            logging: false,
-            backgroundColor: '#ffffff',
-            windowWidth: 185,
-            onclone: (clonedDoc) => {
-              const clonedLey = clonedDoc.getElementById('composicion-leyenda');
-              if (clonedLey) {
-                clonedLey.style.width = '185px';
-                clonedLey.style.height = 'auto';
-                clonedLey.style.maxHeight = 'none';
-                clonedLey.style.overflow = 'visible';
-              }
-            }
-          });
-
-          const imgLeyenda = canvasLeyenda.toDataURL('image/jpeg', 0.95);
-          doc.addImage(imgLeyenda, 'JPEG', leyX, leyY, leyW, leyH);
-        } catch (err) {
-          console.error('Error al capturar la leyenda:', err);
-          doc.setFillColor(255, 255, 255);
-          doc.rect(leyX, leyY, leyW, leyH, 'F');
-          doc.setDrawColor(203, 213, 225);
-          doc.rect(leyX, leyY, leyW, leyH, 'S');
-          doc.setFont('Helvetica', 'bold');
-          doc.setFontSize(12);
-          doc.text('Error al generar Leyenda', leyX + 10, leyY + 15);
-        } finally {
-          leyendaElement.style.overflow = origOverflow;
-          leyendaElement.style.maxHeight = origMaxHeight;
-        }
-      } else {
-        doc.setFillColor(255, 255, 255);
-        doc.rect(leyX, leyY, leyW, leyH, 'F');
-        doc.setDrawColor(203, 213, 225);
-        doc.rect(leyX, leyY, leyW, leyH, 'S');
-      }
+      setExportProgress('Generando leyenda cartográfica vectorial e infografía de datos...');
+      drawLegendToPDF(doc, leyX, leyY, leyW, leyH);
 
       // 5. Membrete inferior (Escala y créditos vectoriales)
       const footerY = height - margin - (formato === 'A3' ? 8 : 16);
@@ -1257,51 +1512,58 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                 </div>
               </div>
 
-              {/* Leyenda Lateral */}
-              <div id="composicion-leyenda" className="w-[185px] border border-slate-300 bg-white flex flex-col justify-start overflow-hidden">
-                <div className="bg-slate-100 border-b border-slate-300 py-1.5 text-center text-[7.5px] font-bold text-slate-800 tracking-wider">
+              {/* Leyenda Lateral — previsualización en pantalla */}
+              <div
+                id="composicion-leyenda"
+                className="border border-slate-300 bg-white flex flex-col overflow-hidden"
+                style={{ width: formato === 'A1' ? '220px' : '175px', flexShrink: 0 }}
+              >
+                {/* Header */}
+                <div className="bg-slate-100 border-b border-slate-300 py-1 text-center text-[7px] font-bold text-slate-800 tracking-wider shrink-0">
                   LEYENDA CARTOGRÁFICA
                 </div>
 
-                <div className="p-2 space-y-2 text-[7px] text-slate-700 flex-1 flex flex-col justify-start">
-                  {/* Canales */}
+                {/* Contenedor principal — sin scroll, height se adapta */}
+                <div className="p-1.5 text-[6.5px] text-slate-700 flex flex-col gap-1 overflow-hidden">
+
+                  {/* ── Simbología de capas ── */}
                   {incluirCanales && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-0.5 border-t-2 border-dashed border-sky-400" />
-                      <span>Canales de Riego (Ramales)</span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="w-5 h-px border-t-2 border-dashed border-sky-400 shrink-0" />
+                      <span className="leading-none">Canales de Riego (Ramales)</span>
                     </div>
                   )}
-
-                  {/* Catastro */}
                   {incluirCatastro && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-3 bg-orange-500/10 border border-orange-500" />
-                      <span>Catastro Rural (Predios)</span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="w-4 h-2 bg-orange-500/10 border border-orange-500 shrink-0" />
+                      <span className="leading-none">Catastro Rural (Predios)</span>
                     </div>
                   )}
-
-                  {/* Otros Predios */}
                   {incluirOtrosPredios && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-5 h-3 bg-zinc-500/5 border border-zinc-400 border-dashed" />
-                      <span>Otros Predios del Regante</span>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="w-4 h-2 bg-zinc-50 border border-zinc-400 border-dashed shrink-0" />
+                      <span className="leading-none">Otros Predios del Regante</span>
+                    </div>
+                  )}
+                  {incluirFichas && (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div className="w-2 h-2 rounded-full bg-red-600 shrink-0" />
+                      <span className="leading-none">Ficha investigada (GPS)</span>
                     </div>
                   )}
 
-                  {/* Elementos dinámicos por modo */}
+                  {/* ── Entidades dinámicas ── */}
                   {modo === 'general' && sectoresData && (
-                    <div className="space-y-1.5">
-                      <p className="font-bold text-slate-800">Sectores de Investigación:</p>
+                    <div className="shrink-0">
+                      <p className="font-bold text-slate-800 mb-0.5">Sectores:</p>
                       {sectoresData.features.map((s: any) => {
                         const name = s.properties?.sector;
                         const count = s.properties?.total_fichas || 0;
                         const color = SECTOR_COLORS_MAP[name] || '#6b7280';
                         return (
-                          <div key={name} className="flex items-center gap-2 ml-1">
-                            <div className="w-4 h-2.5" style={{ backgroundColor: color }} />
-                            <span className="truncate">
-                              {name} ({count})
-                            </span>
+                          <div key={name} className="flex items-center gap-1.5 mb-0.5">
+                            <div className="w-3.5 h-2 shrink-0" style={{ backgroundColor: color }} />
+                            <span className="truncate">{name} ({count})</span>
                           </div>
                         );
                       })}
@@ -1309,186 +1571,104 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                   )}
 
                   {modo === 'sector' && comunidadesData && (
-                    <div className="space-y-1.5">
-                      <p className="font-bold text-slate-800">Comunidades de {selectedSector}:</p>
-                      {/* Lista en dos columnas compactas sin scrollbars */}
-                      <div className={`grid ${comunidadesDelSector.length > 8 ? 'grid-cols-2 gap-x-2' : 'grid-cols-1'} gap-y-0.5 mt-1`}>
+                    <div className="shrink-0">
+                      <p className="font-bold text-slate-800 mb-0.5">Comunidades — {selectedSector}:</p>
+                      <div className={`grid ${
+                        formato === 'A1' ? 'grid-cols-2 gap-x-2' : 'grid-cols-1'
+                      } gap-y-0.5`}>
                         {comunidadesData.features
                           .filter((f: any) => f.properties?.sector === selectedSector)
-                          .slice(0, formato === 'A1' ? 35 : 16)
+                          .slice(0, formato === 'A1' ? 24 : 12)
                           .map((c: any) => {
-                             const name = c.properties?.comunidad || '';
-                             const count = c.properties?.total_fichas || 0;
-                             const color = comunidadesColorMap.get(name) || '#94a3b8';
+                            const name = c.properties?.comunidad || '';
+                            const count = c.properties?.total_fichas || 0;
+                            const color = comunidadesColorMap.get(name) || '#94a3b8';
                             return (
                               <div key={name} className="flex items-center gap-1 min-w-0">
-                                <div className="w-2.5 h-1.5 shrink-0" style={{ backgroundColor: color }} />
-                                <span className="truncate text-[6px]">
-                                  {name} ({count})
-                                </span>
+                                <div className="w-2 h-1.5 shrink-0" style={{ backgroundColor: color }} />
+                                <span className="truncate text-[5.5px]">{name} ({count})</span>
                               </div>
                             );
                           })}
-                        {comunidadesDelSector.length > (formato === 'A1' ? 35 : 16) && (
-                          <p className="text-[5.5px] italic text-slate-500 col-span-2">
-                            + {comunidadesDelSector.length - (formato === 'A1' ? 35 : 16)} más
-                          </p>
+                        {comunidadesDelSector.length > (formato === 'A1' ? 24 : 12) && (
+                          <span className="text-[5px] italic text-slate-400 col-span-2">
+                            +{comunidadesDelSector.length - (formato === 'A1' ? 24 : 12)} más en PDF
+                          </span>
                         )}
                       </div>
                     </div>
                   )}
 
                   {modo === 'comunidad' && (
-                    <div className="space-y-1.5">
-                      <p className="font-bold text-slate-800">Comunidad Seleccionada:</p>
-                      <div className="flex items-center gap-2 ml-1">
-                         <div
-                           className="w-4 h-2.5"
-                           style={{
-                             backgroundColor: comunidadesColorMap.get(selectedComunidad || '') || '#94a3b8'
-                           }}
-                         />
-                        <span className="font-semibold truncate">{selectedComunidad}</span>
-                      </div>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <div
+                        className="w-4 h-2.5 shrink-0"
+                        style={{ backgroundColor: comunidadesColorMap.get(selectedComunidad || '') || '#94a3b8' }}
+                      />
+                      <span className="font-semibold truncate">{selectedComunidad}</span>
                     </div>
                   )}
 
-                  {/* Fichas */}
-                  {incluirFichas && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-600 border border-white" />
-                      <span>Ficha investigada (Punto GPS)</span>
-                    </div>
-                  )}
-
-                  {/* Resumen de datos y gráficos del Dashboard */}
+                  {/* ── Resumen numérico (siempre visible, sin scroll) ── */}
                   {incluirTabla && (
-                    <div className="border-t border-slate-200 pt-2 space-y-2">
-                      <p className="font-bold text-slate-800">RESUMEN DE DATOS:</p>
-                      <div className="grid grid-cols-2 gap-y-0.5 text-[6.5px]">
-                        <span className="font-medium text-slate-500">Fichas:</span>
+                    <div className="border-t border-slate-200 pt-1 shrink-0">
+                      <p className="font-bold text-slate-800 mb-0.5">RESUMEN:</p>
+                      <div className="grid grid-cols-2 gap-x-1 gap-y-0.5 text-[5.5px]">
+                        <span className="text-slate-500">Fichas:</span>
                         <span className="font-bold text-right">
-                          {modo === 'general'
-                            ? fichas.length
-                            : modo === 'sector'
-                            ? sectorActualProperties?.total_fichas || 0
+                          {modo === 'general' ? fichas.length
+                            : modo === 'sector' ? sectorActualProperties?.total_fichas || 0
                             : comunidadActualProperties?.total_fichas || 0}
                         </span>
-
-                        <span className="font-medium text-slate-500">Área Riego:</span>
+                        <span className="text-slate-500">Área riego:</span>
                         <span className="font-bold text-right">
                           {modo === 'general'
-                            ? (fichas.reduce((acc, c) => acc + (c.area_riego || 0), 0) / 10000).toFixed(1)
-                            : modo === 'sector'
-                            ? Number(sectorActualProperties?.area_riego_ha || 0).toFixed(1)
-                            : Number(comunidadActualProperties?.area_riego_ha || 0).toFixed(1)}{' '}
-                          ha
+                            ? (fichas.reduce((a, f) => a + (f.area_riego || 0), 0) / 10000).toFixed(1)
+                            : modo === 'sector' ? Number(sectorActualProperties?.area_riego_ha || 0).toFixed(1)
+                            : Number(comunidadActualProperties?.area_riego_ha || 0).toFixed(1)} ha
                         </span>
-
-                        <span className="font-medium text-slate-500">Caudal:</span>
+                        <span className="text-slate-500">Caudal:</span>
                         <span className="font-bold text-right">
                           {modo === 'general'
-                            ? fichas.reduce((acc, c) => acc + (c.caudal_valor || 0), 0).toFixed(1)
-                            : modo === 'sector'
-                            ? Number(sectorActualProperties?.caudal_total_ls || 0).toFixed(1)
-                            : Number(comunidadActualProperties?.caudal_total_ls || 0).toFixed(1)}{' '}
-                          l/s
-                        </span>
-
-                        <span className="font-medium text-slate-500">Área Geo:</span>
-                        <span className="font-bold text-right">
-                          {modo === 'general'
-                            ? '2,450.3'
-                            : modo === 'sector'
-                            ? Number(sectorActualProperties?.area_dissolve_ha || 0).toFixed(1)
-                            : Number(comunidadActualProperties?.area_dissolve_ha || 0).toFixed(1)}{' '}
-                          ha
+                            ? fichas.reduce((a, f) => a + (f.caudal_valor || 0), 0).toFixed(1)
+                            : modo === 'sector' ? Number(sectorActualProperties?.caudal_total_ls || 0).toFixed(1)
+                            : Number(comunidadActualProperties?.caudal_total_ls || 0).toFixed(1)} l/s
                         </span>
                       </div>
+                    </div>
+                  )}
 
-                      {/* Métodos de Riego */}
-                      <div className="border-t border-slate-100 pt-1.5 space-y-1">
-                        <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Métodos de Riego:</p>
-                        <div className="space-y-1 text-[5px]">
-                          <div>
-                            <div className="flex justify-between text-slate-600 mb-0.5">
-                              <span>Gravedad</span>
-                              <span className="font-bold">{statsDashboard.gravedadPct}%</span>
-                            </div>
-                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                              <div className="bg-amber-600 h-full rounded-full" style={{ width: `${statsDashboard.gravedadPct}%` }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-slate-600 mb-0.5">
-                              <span>Aspersión</span>
-                              <span className="font-bold">{statsDashboard.aspersionPct}%</span>
-                            </div>
-                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                              <div className="bg-sky-500 h-full rounded-full" style={{ width: `${statsDashboard.aspersionPct}%` }} />
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex justify-between text-slate-600 mb-0.5">
-                              <span>Goteo</span>
-                              <span className="font-bold">{statsDashboard.goteoPct}%</span>
-                            </div>
-                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                              <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${statsDashboard.goteoPct}%` }} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Reservorios */}
-                      <div className="border-t border-slate-100 pt-1.5 space-y-1">
-                        <div className="flex justify-between items-center text-[5.5px]">
-                          <span className="font-bold text-slate-800 uppercase">Tiene Reservorio:</span>
-                          <span className="font-bold text-indigo-600">{statsDashboard.reservorioPct}% SÍ</span>
-                        </div>
-                        <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                          <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${statsDashboard.reservorioPct}%` }} />
-                        </div>
-                      </div>
-
-                      {/* Tenencias */}
-                      {statsDashboard.tenenciasSorted.length > 0 && (
-                        <div className="border-t border-slate-100 pt-1.5 space-y-1">
-                          <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Tenencia de Tierra:</p>
-                          <div className="space-y-1 text-[5px]">
-                            {statsDashboard.tenenciasSorted.map((t) => (
-                              <div key={t.name}>
-                                <div className="flex justify-between text-slate-600 mb-0.5">
-                                  <span className="truncate max-w-[125px]">{t.name}</span>
-                                  <span className="font-bold">{t.pct}%</span>
-                                </div>
-                                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                                  <div className="bg-slate-500 h-full rounded-full" style={{ width: `${t.pct}%` }} />
-                                </div>
+                  {/* ── Gráficos de barras (solo A1, en A3 la info completa va en el PDF) ── */}
+                  {incluirTabla && (
+                    <div className="border-t border-slate-200 pt-1 shrink-0 space-y-1">
+                      <p className="font-bold text-[5px] text-slate-500 uppercase tracking-wider">
+                        {formato === 'A3' ? '⚡ Estadísticas completas en el PDF' : 'Métodos de Riego:'}
+                      </p>
+                      {formato === 'A1' && (
+                        <>
+                          {[
+                            { label: 'Gravedad', pct: statsDashboard.gravedadPct, color: '#d97706' },
+                            { label: 'Aspersión', pct: statsDashboard.aspersionPct, color: '#0ea5e9' },
+                            { label: 'Goteo', pct: statsDashboard.goteoPct, color: '#10b981' },
+                          ].map(({ label, pct, color }) => (
+                            <div key={label} className="shrink-0">
+                              <div className="flex justify-between text-[5px] mb-0.5">
+                                <span>{label}</span>
+                                <span className="font-bold">{pct}%</span>
                               </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Cultivos */}
-                      {statsDashboard.cultivosSorted.length > 0 && (
-                        <div className="border-t border-slate-100 pt-1.5 space-y-1">
-                          <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Cultivos Principales:</p>
-                          <div className="space-y-1 text-[5px]">
-                            {statsDashboard.cultivosSorted.map((c) => (
-                              <div key={c.name}>
-                                <div className="flex justify-between text-slate-600 mb-0.5">
-                                  <span className="truncate max-w-[125px]">{c.name}</span>
-                                  <span className="font-bold">{c.pct}%</span>
-                                </div>
-                                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
-                                  <div className="bg-green-600 h-full rounded-full" style={{ width: `${c.pct}%` }} />
-                                </div>
+                              <div className="w-full bg-slate-100 rounded-full" style={{ height: '3px' }}>
+                                <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: color }} />
                               </div>
-                            ))}
+                            </div>
+                          ))}
+                          <div className="flex justify-between items-center text-[5px] mt-0.5">
+                            <span className="font-bold text-slate-700">Con Reservorio:</span>
+                            <span className="font-bold text-indigo-600">{statsDashboard.reservorioPct}% SÍ</span>
                           </div>
-                        </div>
+                          <div className="w-full bg-slate-100 rounded-full" style={{ height: '3px' }}>
+                            <div className="h-full rounded-full bg-indigo-500" style={{ width: `${statsDashboard.reservorioPct}%` }} />
+                          </div>
+                        </>
                       )}
                     </div>
                   )}
