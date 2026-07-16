@@ -582,6 +582,8 @@ export default function MapPage({ fichas, loading }: Props) {
   const { selectedFichaMap, clearMapSelection } = useMapNav();
   const [catastroData, setCatastroData] = useState<FeatureCollection | null>(null);
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
+  const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
+  const [sectoresData, setSectoresData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
 
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
@@ -620,6 +622,21 @@ export default function MapPage({ fichas, loading }: Props) {
         const valid = data.features?.filter((f) => f.geometry != null) || [];
         setRamalesData({ type: 'FeatureCollection', features: valid });
         setLayerInfo((p) => ({ ...p, ramales: valid.length }));
+      }).catch(() => {});
+
+    // Cargar capas de Comunidades y Sectores (generadas por el script GIS)
+    fetch(`/geo/comunidades.geojson?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data: FeatureCollection) => {
+        const valid = data.features?.filter((f) => f.geometry != null) || [];
+        setComunidadesData({ type: 'FeatureCollection', features: valid });
+      }).catch(() => {});
+
+    fetch(`/geo/sectores.geojson?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data: FeatureCollection) => {
+        const valid = data.features?.filter((f) => f.geometry != null) || [];
+        setSectoresData({ type: 'FeatureCollection', features: valid });
       }).catch(() => {});
 
     // Cargar polígonos catastrales en background (lazy, ~4MB gzip)
@@ -743,7 +760,6 @@ export default function MapPage({ fichas, loading }: Props) {
               <GeoJSON
                 data={catastroData}
                 style={(feature) => {
-                  // Resaltar el polígono buscado
                   const isHighlighted = searchTarget &&
                     feature?.properties?.clave_cata === searchTarget.clave_cata;
                   return isHighlighted
@@ -776,6 +792,107 @@ export default function MapPage({ fichas, loading }: Props) {
                   if (p) {
                     const nombre = p.nombre || p.NOMBRE || p.name || p.ramal || Object.values(p)[0];
                     if (nombre) layer.bindTooltip(String(nombre), { sticky: true });
+                  }
+                }}
+              />
+            </LayersControl.Overlay>
+          )}
+
+          {/* ── Overlay: Sectores de Investigación ── */}
+          {sectoresData && sectoresData.features.length > 0 && (
+            <LayersControl.Overlay name="Sectores de Investigación">
+              <GeoJSON
+                key="sectores-layer"
+                data={sectoresData}
+                style={(feature) => {
+                  const sectorColors: Record<string, string> = {
+                    'Sector 1': '#8b5cf6',
+                    'Sector 2': '#06b6d4',
+                    'Sector 3': '#10b981',
+                  };
+                  const sec = feature?.properties?.sector || '';
+                  const color = sectorColors[sec] || '#6b7280';
+                  return {
+                    color,
+                    weight: 2.5,
+                    fillColor: color,
+                    fillOpacity: 0.10,
+                    opacity: 0.85,
+                    dashArray: '8 4',
+                  };
+                }}
+                onEachFeature={(feature, layer) => {
+                  const p = feature.properties;
+                  if (p) {
+                    const areaHa = Number(p.area_dissolve_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    const areaRiego = Number(p.area_riego_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    const caudal = Number(p.caudal_total_ls || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    layer.bindTooltip(
+                      `<b style="font-size:13px">${p.sector || '—'}</b><br/>
+                       <span style="color:#9ca3af">Fichas investigadas:</span> <b>${p.total_fichas || p.fichas_validas || '—'}</b><br/>
+                       <span style="color:#9ca3af">Predios en catastro:</span> <b>${p.predios_catastro || '—'}</b><br/>
+                       <span style="color:#9ca3af">Área geográfica:</span> <b>${areaHa} ha</b><br/>
+                       <span style="color:#9ca3af">Área con riego:</span> <b>${areaRiego} ha</b><br/>
+                       <span style="color:#9ca3af">Caudal total:</span> <b>${caudal} l/s</b>`,
+                      { sticky: true, opacity: 0.97 }
+                    );
+                    layer.on('mouseover', function (e: any) {
+                      (e.target as any).setStyle({ fillOpacity: 0.25, weight: 3.5 });
+                    });
+                    layer.on('mouseout', function (e: any) {
+                      (e.target as any).setStyle({ fillOpacity: 0.10, weight: 2.5 });
+                    });
+                  }
+                }}
+              />
+            </LayersControl.Overlay>
+          )}
+
+          {/* ── Overlay: Comunidades ── */}
+          {comunidadesData && comunidadesData.features.length > 0 && (
+            <LayersControl.Overlay name="Comunidades">
+              <GeoJSON
+                key="comunidades-layer"
+                data={comunidadesData}
+                style={(feature) => {
+                  const sectorColors: Record<string, string> = {
+                    'Sector 1': '#f59e0b',
+                    'Sector 2': '#ec4899',
+                    'Sector 3': '#14b8a6',
+                  };
+                  const sec = feature?.properties?.sector || '';
+                  const color = sectorColors[sec] || '#94a3b8';
+                  return {
+                    color,
+                    weight: 1.8,
+                    fillColor: color,
+                    fillOpacity: 0.08,
+                    opacity: 0.75,
+                    dashArray: '4 3',
+                  };
+                }}
+                onEachFeature={(feature, layer) => {
+                  const p = feature.properties;
+                  if (p) {
+                    const areaHa = Number(p.area_dissolve_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    const areaRiego = Number(p.area_riego_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    const caudal = Number(p.caudal_total_ls || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                    layer.bindTooltip(
+                      `<b style="font-size:13px">${p.comunidad || '—'}</b><br/>
+                       <span style="color:#9ca3af">Sector:</span> <b>${p.sector || '—'}</b><br/>
+                       <span style="color:#9ca3af">Fichas investigadas:</span> <b>${p.total_fichas || p.fichas_validas || '—'}</b><br/>
+                       <span style="color:#9ca3af">Predios en catastro:</span> <b>${p.predios_catastro || '—'}</b><br/>
+                       <span style="color:#9ca3af">Área geográfica:</span> <b>${areaHa} ha</b><br/>
+                       <span style="color:#9ca3af">Área con riego declarada:</span> <b>${areaRiego} ha</b><br/>
+                       <span style="color:#9ca3af">Caudal total:</span> <b>${caudal} l/s</b>`,
+                      { sticky: true, opacity: 0.97 }
+                    );
+                    layer.on('mouseover', function (e: any) {
+                      (e.target as any).setStyle({ fillOpacity: 0.22, weight: 3 });
+                    });
+                    layer.on('mouseout', function (e: any) {
+                      (e.target as any).setStyle({ fillOpacity: 0.08, weight: 1.8 });
+                    });
                   }
                 }}
               />
