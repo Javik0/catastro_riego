@@ -68,14 +68,24 @@ function MapStateTracker({
   return null;
 }
 
-// Subcomponente para forzar encuadre de zoom
-function FitBoundsHandler({ bounds }: { bounds: L.LatLngBoundsExpression | null }) {
+// Subcomponente para forzar encuadre de zoom e invalidar el tamaño gris del contenedor
+function FitBoundsHandler({
+  bounds,
+  formato
+}: {
+  bounds: L.LatLngBoundsExpression | null;
+  formato: string;
+}) {
   const map = useMapEvents({});
   useEffect(() => {
-    if (bounds) {
-      map.fitBounds(bounds, { padding: [20, 20] });
-    }
-  }, [bounds, map]);
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+      if (bounds) {
+        map.fitBounds(bounds, { padding: [30, 30] });
+      }
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [bounds, formato, map]);
   return null;
 }
 
@@ -267,18 +277,21 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
 
       setExportProgress('Renderizando capas cartográficas a alta resolución...');
 
-      // Crear instancia de mapa Leaflet off-screen
       const mapDiv = document.createElement('div');
       mapDiv.style.width = '100%';
       mapDiv.style.height = '100%';
       printContainer.appendChild(mapDiv);
 
       const map = L.map(mapDiv, {
-        center: mapCenter,
-        zoom: mapZoom,
         zoomControl: false,
         attributionControl: false
       });
+
+      if (activeBounds) {
+        map.fitBounds(activeBounds, { padding: [40, 40] });
+      } else {
+        map.setView(mapCenter, mapZoom);
+      }
 
       // Añadir la misma capa base
       const tileUrl = mapBase === 'satelite'
@@ -288,9 +301,14 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       const tileLayer = L.tileLayer(tileUrl, { maxZoom: 20 });
       tileLayer.addTo(map);
 
-      // Esperar a que se monte el mapa
+      // Esperar a que se monte el mapa e invalidar tamaño para el renderizado off-screen
       await new Promise<void>((resolve) => {
-        map.whenReady(() => resolve());
+        map.whenReady(() => {
+          setTimeout(() => {
+            map.invalidateSize();
+            resolve();
+          }, 100);
+        });
       });
 
       // Dibujar capas vectoriales filtradas con simbología inteligente en el mapa off-screen
@@ -384,16 +402,10 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         });
       }
 
-      // Forzar recarga de tiles y esperar a que terminen de cargarse las imágenes satelitales
-      setExportProgress('Capturando fotografía satelital (esperando carga de tiles)...');
+      // Esperar un delay explícito de 3.5 segundos para que todas las tiles se descarguen y dibujen en el div gigante
+      setExportProgress('Descargando y renderizando fotografía satelital de alta definición...');
       await new Promise<void>((resolve) => {
-        let loaded = 0;
-        tileLayer.on('load', () => {
-          loaded++;
-          if (loaded >= 1) resolve();
-        });
-        // Si tarda más de 5 segundos, continuar de todos modos
-        setTimeout(resolve, 5000);
+        setTimeout(resolve, 3500);
       });
 
       // Capturar usando html2canvas con proxy para imágenes externas y escalamiento
@@ -669,13 +681,13 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setTextColor(15, 23, 42);
       doc.text(escalaInfo.label, scaleX + escWidthMm + 2, scaleY);
 
-      // Proyección SRC
+      // Proyección SRC (Centrado dinámicamente en el papel)
       doc.setFont('Helvetica', 'normal');
       doc.setFontSize(formato === 'A3' ? 7.5 : 12);
-      doc.text(`SRC: WGS 84 / UTM zone 17S (EPSG:32717)`, margin + (formato === 'A3' ? 75 : 140), footerY + (formato === 'A3' ? 6.5 : 11.5));
+      doc.text(`SRC: WGS 84 / UTM zone 17S (EPSG:32717)`, width / 2, footerY + (formato === 'A3' ? 6.5 : 11.5), { align: 'center' });
 
-      // Flecha de Norte
-      const northX = margin + (formato === 'A3' ? 62 : 115);
+      // Flecha de Norte (Ubicado a la derecha de la escala gráfica para evitar solapamiento)
+      const northX = scaleX + escWidthMm + (formato === 'A3' ? 15 : 25);
       const northY = footerY + (formato === 'A3' ? 5 : 9);
       doc.setDrawColor(0, 0, 0);
       doc.setLineWidth(formato === 'A3' ? 0.3 : 0.6);
@@ -688,12 +700,12 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.text('N', northX - (formato === 'A3' ? 1 : 2), northY - (formato === 'A3' ? 3.5 : 6.5));
       doc.setLineWidth(0.2); // reset
 
-      // Créditos y Fecha (Der)
+      // Créditos y Fecha (Alineados dinámicamente a la derecha)
       doc.setFont('Helvetica', 'normal');
       doc.setFontSize(formato === 'A3' ? 7.5 : 12);
       doc.setTextColor(71, 85, 105);
       const dateStr = new Date().toLocaleDateString('es-EC', { year: 'numeric', month: '2-digit', day: '2-digit' });
-      doc.text(`Fecha: ${dateStr}`, width - margin - (formato === 'A3' ? 60 : 110), footerY + (formato === 'A3' ? 6.5 : 11.5));
+      doc.text(`Fecha: ${dateStr}`, width - margin - (formato === 'A3' ? 42 : 80), footerY + (formato === 'A3' ? 6.5 : 11.5));
       doc.setFont('Helvetica', 'bold');
       doc.text('Consorcio Cayambe SPT', width - margin - (formato === 'A3' ? 4 : 8), footerY + (formato === 'A3' ? 6.5 : 11.5), { align: 'right' });
 
@@ -1027,7 +1039,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                     />
 
                     {/* Handler para ajustar zoom automático */}
-                    {activeBounds && <FitBoundsHandler bounds={activeBounds} />}
+                    {activeBounds && <FitBoundsHandler bounds={activeBounds} formato={formato} />}
 
                     {/* Canales de riego */}
                     {incluirCanales && ramalesData && (
