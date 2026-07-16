@@ -28,7 +28,8 @@ import {
   PROJECT_SUBTITLE,
   PROJECT_LOCATION,
   LOGO_PICHINCHA,
-  LOGO_CONSORCIO
+  LOGO_CONSORCIO,
+  getNombreTecnico
 } from '../../lib/constants';
 import {
   getComunidadColor,
@@ -102,6 +103,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const [incluirFichas, setIncluirFichas] = useState<boolean>(true);
   const [incluirCanales, setIncluirCanales] = useState<boolean>(true);
   const [incluirCatastro, setIncluirCatastro] = useState<boolean>(true);
+  const [incluirOtrosPredios, setIncluirOtrosPredios] = useState<boolean>(true);
 
   // Textos personalizables del membrete
   const [tituloMap, setTituloMap] = useState<string>('MAPA GENERAL DEL PADRÓN DE USUARIOS');
@@ -112,6 +114,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const [ramalesData, setRamalesData] = useState<any>(null);
   const [comunidadesData, setComunidadesData] = useState<any>(null);
   const [sectoresData, setSectoresData] = useState<any>(null);
+  const [prediosAdicionalesData, setPrediosAdicionalesData] = useState<any>(null);
 
   // ── Estado del Mapa en Pantalla (para escala y exportación) ──
   const [mapZoom, setMapZoom] = useState<number>(14);
@@ -144,6 +147,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       .then((r) => r.json())
       .then((data) => setSectoresData(data))
       .catch((e) => console.error('Error cargando sectores:', e));
+
+    fetch(`/geo/predios_adicionales.json?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data) => setPrediosAdicionalesData(data))
+      .catch((e) => console.error('Error cargando predios adicionales:', e));
 
     // Cargar logos
     Promise.all([
@@ -382,6 +390,19 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         }).addTo(map);
       }
 
+      // 4.5 Otros Predios del Regante
+      if (incluirOtrosPredios && prediosAdicionalesData) {
+        L.geoJSON(prediosAdicionalesData, {
+          style: {
+            color: '#71717a',
+            weight: formato === 'A3' ? 1 : 1.5,
+            fillColor: '#a1a1aa',
+            fillOpacity: 0.04,
+            opacity: 0.6
+          }
+        }).addTo(map);
+      }
+
       // 5. Fichas (Círculos)
       if (incluirFichas && fichasConGeo.length > 0) {
         fichasConGeo.forEach((f) => {
@@ -528,6 +549,17 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         itemY += stepY;
       }
 
+      // Base: Otros Predios del Regante
+      if (incluirOtrosPredios) {
+        doc.setFillColor(161, 161, 170, 0.04);
+        doc.setDrawColor(113, 113, 122);
+        doc.rect(leyX + 6, itemY - (formato === 'A3' ? 3.5 : 6), 10, formato === 'A3' ? 4 : 7, 'FD');
+        
+        doc.setFont('Helvetica', 'normal');
+        doc.text('Otros Predios del Regante', leyX + 19, itemY);
+        itemY += stepY;
+      }
+
       // Elementos temáticos según modo
       if (modo === 'general' && sectoresData) {
         doc.setFont('Helvetica', 'bold');
@@ -555,7 +587,8 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
           (f: any) => f.properties?.sector === selectedSector
         );
 
-        coms.slice(0, 15).forEach((c: any) => {
+        const limit = formato === 'A1' ? 35 : 15;
+        coms.slice(0, limit).forEach((c: any) => {
           const name = c.properties?.comunidad || '';
           const count = c.properties?.total_fichas || 0;
           const color = comunidadesColorMap.get(name) || '#94a3b8';
@@ -568,9 +601,9 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
           itemY += stepY;
         });
 
-        if (coms.length > 15) {
+        if (coms.length > limit) {
           doc.setFont('Helvetica', 'italic');
-          doc.text(`+ ${coms.length - 15} comunidades más`, leyX + 19, itemY);
+          doc.text(`+ ${coms.length - limit} comunidades más`, leyX + 19, itemY);
           itemY += stepY;
         }
       } else if (modo === 'comunidad' && comunidadActualProperties) {
@@ -652,6 +685,80 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
           doc.text(val, leyX + (formato === 'A3' ? 38 : 65), itemY);
           itemY += stepY;
         });
+      }
+
+      // 4.6 Estadísticas adicionales de técnicos y auditoría (Solo en A1 por espacio de hoja)
+      if (formato === 'A1') {
+        // Línea divisoria
+        doc.setDrawColor(226, 232, 240);
+        doc.line(leyX + 4, itemY - 3, leyX + leyW - 4, itemY - 3);
+        itemY += stepY / 2;
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('FICHAS POR INVESTIGADOR', leyX + 6, itemY);
+        itemY += stepY * 1.2;
+
+        doc.setFontSize(11);
+        doc.setFont('Helvetica', 'normal');
+
+        // Contar fichas del grupo por técnico
+        const fichasGrupo = fichas.filter(f => {
+          if (modo === 'sector') return f.sector_investigacion === selectedSector;
+          if (modo === 'comunidad') return f.comunidad === selectedComunidad;
+          return true; // general
+        });
+
+        const tecsMap = new Map<string, number>();
+        fichasGrupo.forEach(f => {
+          const t = getNombreTecnico(f.creado_por);
+          tecsMap.set(t, (tecsMap.get(t) || 0) + 1);
+        });
+
+        const tecnicosOrdenados = Array.from(tecsMap.entries())
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 6);
+
+        if (tecnicosOrdenados.length > 0) {
+          tecnicosOrdenados.forEach(([tec, count]) => {
+            doc.setFont('Helvetica', 'bold');
+            doc.text(`● ${tec}:`, leyX + 8, itemY);
+            doc.setFont('Helvetica', 'normal');
+            doc.text(`${count} fichas`, leyX + 70, itemY);
+            itemY += stepY;
+          });
+        } else {
+          doc.text('Sin registros de investigadores.', leyX + 8, itemY);
+          itemY += stepY;
+        }
+
+        // Notas cartográficas de auditoría
+        doc.setDrawColor(226, 232, 240);
+        doc.line(leyX + 4, itemY - 3, leyX + leyW - 4, itemY - 3);
+        itemY += stepY / 2;
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('NOTAS CARTOGRÁFICAS', leyX + 6, itemY);
+        itemY += stepY * 1.2;
+
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10.5);
+        doc.setTextColor(100, 116, 139); // slate-500
+
+        const notas = [
+          '1. Geometrías obtenidas a partir de claves catastrales.',
+          '2. Se excluyen 774 registros con discrepancias espaciales',
+          '   superiores a 1.5 km para preservar exactitud física.',
+          '3. Coordenadas Datum WGS84, Proyección UTM Zona 17S.'
+        ];
+
+        notas.forEach(n => {
+          doc.text(n, leyX + 8, itemY);
+          itemY += stepY * 0.95;
+        });
+
+        doc.setTextColor(51, 65, 85); // reset
       }
 
       // 5. Membrete inferior (Escala y créditos vectoriales)
@@ -924,6 +1031,16 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                 />
                 Puntos de Fichas (GPS)
               </label>
+
+              <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer" title="Polígonos adicionales de catastro sin ficha de campo">
+                <input
+                  type="checkbox"
+                  checked={incluirOtrosPredios}
+                  onChange={(e) => setIncluirOtrosPredios(e.target.checked)}
+                  className="rounded border-slate-800 text-blue-600 bg-slate-900 focus:ring-0 focus:ring-offset-0"
+                />
+                Otros Predios del Regante
+              </label>
             </div>
           </div>
 
@@ -1118,6 +1235,21 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                       />
                     )}
 
+                    {/* Otros Predios del Regante */}
+                    {incluirOtrosPredios && prediosAdicionalesData && (
+                      <GeoJSON
+                        key={`print-adicionales-${incluirOtrosPredios}`}
+                        data={prediosAdicionalesData}
+                        style={{
+                          color: '#a1a1aa',
+                          weight: 1,
+                          fillColor: '#d4d4d8',
+                          fillOpacity: 0.05,
+                          opacity: 0.6
+                        }}
+                      />
+                    )}
+
                     {/* Puntos de fichas */}
                     {incluirFichas &&
                       fichasConGeo.map((f) => {
@@ -1175,6 +1307,14 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-3 bg-orange-500/10 border border-orange-500" />
                       <span>Catastro Rural (Predios)</span>
+                    </div>
+                  )}
+
+                  {/* Otros Predios */}
+                  {incluirOtrosPredios && (
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-3 bg-zinc-500/5 border border-zinc-400 border-dashed" />
+                      <span>Otros Predios del Regante</span>
                     </div>
                   )}
 

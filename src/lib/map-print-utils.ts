@@ -45,18 +45,25 @@ export function getComunidadColor(_comunidad: string, sector: string, index: num
   return '#94a3b8';
 }
 
-// ── Carga asíncrona de imágenes Base64 para jsPDF ──
+// ── Carga asíncrona de imágenes Base64 para jsPDF con Supersampling para nitidez extrema ──
 export function loadImageBase64(src: string): Promise<{ data: string; width: number; height: number }> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
       const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      // Supersampling: Multiplicar por 4 las dimensiones físicas para densidad de alta definición
+      const scale = 4;
+      canvas.width = img.naturalWidth * scale;
+      canvas.height = img.naturalHeight * scale;
+      
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.drawImage(img, 0, 0);
+        // Habilitar interpolación de alta calidad del navegador
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
         resolve({
           data: canvas.toDataURL('image/png'),
           width: img.naturalWidth,
