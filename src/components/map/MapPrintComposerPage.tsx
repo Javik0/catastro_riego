@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   MapContainer,
@@ -6,7 +6,8 @@ import {
   GeoJSON,
   CircleMarker,
   Tooltip,
-  useMapEvents
+  useMapEvents,
+  useMap
 } from 'react-leaflet';
 import L from 'leaflet';
 import jsPDF from 'jspdf';
@@ -28,8 +29,7 @@ import {
   PROJECT_SUBTITLE,
   PROJECT_LOCATION,
   LOGO_PICHINCHA,
-  LOGO_CONSORCIO,
-  getNombreTecnico
+  LOGO_CONSORCIO
 } from '../../lib/constants';
 import {
   getComunidadColor,
@@ -90,6 +90,37 @@ function FitBoundsHandler({
   return null;
 }
 
+// Subcomponente de Canvas para renderizar fluidamente los 24K polígonos
+function AllCatastroLayer({ data }: { data: any }) {
+  const map = useMap();
+  const layerRef = useRef<L.GeoJSON | null>(null);
+
+  useEffect(() => {
+    layerRef.current = L.geoJSON(data as any, {
+      renderer: L.canvas({ padding: 0.5 }),
+      style: {
+        color: '#94a3b8',
+        weight: 0.6,
+        fillColor: '#cbd5e1',
+        fillOpacity: 0.04,
+        opacity: 0.5
+      },
+      interactive: false
+    } as any);
+    layerRef.current.addTo(map);
+    layerRef.current.bringToBack();
+
+    return () => {
+      if (layerRef.current) {
+        map.removeLayer(layerRef.current);
+        layerRef.current = null;
+      }
+    };
+  }, [data, map]);
+
+  return null;
+}
+
 export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const navigate = useNavigate();
 
@@ -104,6 +135,12 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const [incluirCanales, setIncluirCanales] = useState<boolean>(true);
   const [incluirCatastro, setIncluirCatastro] = useState<boolean>(true);
   const [incluirOtrosPredios, setIncluirOtrosPredios] = useState<boolean>(true);
+  
+  // Catastro completo 24K
+  const [showAllCatastro, setShowAllCatastro] = useState<boolean>(false);
+  const [allCatastroData, setAllCatastroData] = useState<any>(null);
+  const [cargandoTodosPredios, setCargandoTodosPredios] = useState<boolean>(false);
+  const [cultivosData, setCultivosData] = useState<any[]>([]);
 
   // Textos personalizables del membrete
   const [tituloMap, setTituloMap] = useState<string>('MAPA GENERAL DEL PADRÓN DE USUARIOS');
@@ -153,6 +190,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       .then((data) => setPrediosAdicionalesData(data))
       .catch((e) => console.error('Error cargando predios adicionales:', e));
 
+    fetch(`/geo/cultivos.json?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data) => setCultivosData(data))
+      .catch((e) => console.error('Error cargando cultivos:', e));
+
     // Cargar logos
     Promise.all([
       loadImageBase64(LOGO_PICHINCHA),
@@ -175,6 +217,88 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       .map((f: any) => f.properties?.comunidad)
       .sort();
   }, [comunidadesData, selectedSector]);
+
+  // Estadísticas agregadas del Dashboard para mostrar en la leyenda del plano
+  const statsDashboard = useMemo(() => {
+    // Filtrar fichas del grupo actual
+    const fichasGrupo = fichas.filter((f) => {
+      if (modo === 'sector') return f.sector_investigacion === selectedSector;
+      if (modo === 'comunidad') return f.comunidad === selectedComunidad;
+      return true;
+    });
+
+    const totalFichas = fichasGrupo.length;
+
+    // 1. Métodos de riego
+    let gravedadSuma = 0;
+    let aspersionSuma = 0;
+    let goteoSuma = 0;
+    let fichasConRiegoMetodo = 0;
+
+    fichasGrupo.forEach((f) => {
+      if (f.metodo_gravedad_pct || f.metodo_aspersion_pct || f.metodo_goteo_pct) {
+        gravedadSuma += f.metodo_gravedad_pct || 0;
+        aspersionSuma += f.metodo_aspersion_pct || 0;
+        goteoSuma += f.metodo_goteo_pct || 0;
+        fichasConRiegoMetodo++;
+      }
+    });
+
+    const gravedadPct = fichasConRiegoMetodo > 0 ? Math.round(gravedadSuma / fichasConRiegoMetodo) : 0;
+    const aspersionPct = fichasConRiegoMetodo > 0 ? Math.round(aspersionSuma / fichasConRiegoMetodo) : 0;
+    const goteoPct = fichasConRiegoMetodo > 0 ? Math.round(goteoSuma / fichasConRiegoMetodo) : 0;
+
+    // 2. Tenencia de la tierra
+    const tenencias: Record<string, number> = {};
+    fichasGrupo.forEach((f) => {
+      const t = (f.tenencia_predio || 'OTROS').toUpperCase().trim();
+      tenencias[t] = (tenencias[t] || 0) + 1;
+    });
+    const tenenciasSorted = Object.entries(tenencias)
+      .map(([name, count]) => ({ name, pct: totalFichas > 0 ? Math.round((count / totalFichas) * 100) : 0 }))
+      .sort((a, b) => b.pct - a.pct)
+      .slice(0, 3);
+
+    // 3. Reservorios
+    const conReservorio = fichasGrupo.filter((f) => f.tiene_reservorio?.toUpperCase().trim() === 'SÍ').length;
+    const reservorioPct = totalFichas > 0 ? Math.round((conReservorio / totalFichas) * 100) : 0;
+
+    // 4. Cultivos principales
+    const cultivosCounts: Record<string, number> = {};
+    if (cultivosData && cultivosData.length > 0) {
+      const fichaIdsGrupo = new Set(fichasGrupo.map((f) => f.id));
+      const cultivosGrupo = cultivosData.filter((c) => fichaIdsGrupo.has(c.ficha_id));
+      
+      cultivosGrupo.forEach((c) => {
+        const tc = (c.tipo_cultivo || 'OTROS').toUpperCase().trim();
+        cultivosCounts[tc] = (cultivosCounts[tc] || 0) + 1;
+      });
+
+      const totalCultivos = cultivosGrupo.length;
+      const cultivosSorted = Object.entries(cultivosCounts)
+        .map(([name, count]) => ({ name, pct: totalCultivos > 0 ? Math.round((count / totalCultivos) * 100) : 0 }))
+        .sort((a, b) => b.pct - a.pct)
+        .slice(0, 3);
+
+      return {
+        gravedadPct,
+        aspersionPct,
+        goteoPct,
+        tenenciasSorted,
+        reservorioPct,
+        cultivosSorted
+      };
+    }
+
+    return {
+      gravedadPct,
+      aspersionPct,
+      goteoPct,
+      tenenciasSorted,
+      reservorioPct,
+      cultivosSorted: []
+    };
+  }, [fichas, modo, selectedSector, selectedComunidad, cultivosData]);
 
   // Comunidad por defecto al cambiar de sector o modo
   useEffect(() => {
@@ -403,6 +527,21 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         }).addTo(map);
       }
 
+      // 4.7 Todos los predios (24K Canvas)
+      if (showAllCatastro && allCatastroData) {
+        const canvasRenderer = L.canvas({ padding: 0.5 });
+        L.geoJSON(allCatastroData, {
+          renderer: canvasRenderer,
+          style: {
+            color: '#cbd5e1',
+            weight: formato === 'A3' ? 0.4 : 0.6,
+            fillColor: '#cbd5e1',
+            fillOpacity: 0.02,
+            opacity: 0.4
+          }
+        } as any).addTo(map);
+      }
+
       // 5. Fichas (Círculos)
       if (incluirFichas && fichasConGeo.length > 0) {
         fichasConGeo.forEach((f) => {
@@ -498,267 +637,51 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setDrawColor(203, 213, 225); // slate-300
       doc.rect(mapX, mapY, mapW, mapH, 'S');
 
-      // 3. Dibujar leyenda lateral (26% del ancho)
+      // 3. Insertar leyenda lateral capturada directamente del DOM para conservar gráficos premium de Dashboard
       const leyX = mapX + mapW + (formato === 'A3' ? 4 : 8);
       const leyY = mapY;
       const leyW = width - margin - leyX;
       const leyH = mapH;
 
-      doc.setFillColor(255, 255, 255);
-      doc.rect(leyX, leyY, leyW, leyH, 'F');
-      doc.setDrawColor(203, 213, 225);
-      doc.rect(leyX, leyY, leyW, leyH, 'S');
-
-      // Cabecera Leyenda
-      doc.setFillColor(241, 245, 249); // slate-100
-      const leyHeaderH = formato === 'A3' ? 10 : 18;
-      doc.rect(leyX, leyY, leyW, leyHeaderH, 'F');
-      doc.rect(leyX, leyY, leyW, leyHeaderH, 'S');
+      setExportProgress('Generando e integrando infografía cartográfica y gráficos estadísticos...');
       
-      doc.setFont('Helvetica', 'bold');
-      doc.setFontSize(formato === 'A3' ? 10 : 18);
-      doc.setTextColor(30, 41, 59); // slate-800
-      doc.text('LEYENDA CARTOGRÁFICA', leyX + leyW / 2, leyY + (formato === 'A3' ? 6.5 : 11.5), { align: 'center' });
-
-      // Elementos de la leyenda
-      let itemY = leyY + leyHeaderH + (formato === 'A3' ? 6 : 12);
-      const stepY = formato === 'A3' ? 5.5 : 10;
-      doc.setFontSize(formato === 'A3' ? 8 : 13);
-      doc.setTextColor(51, 65, 85); // slate-700
-
-      // Base: Canales
-      if (incluirCanales) {
-        doc.setDrawColor(56, 189, 248); // sky-400
-        doc.setLineWidth(formato === 'A3' ? 0.8 : 1.5);
-        doc.line(leyX + 6, itemY - (formato === 'A3' ? 1 : 2), leyX + 16, itemY - (formato === 'A3' ? 1 : 2));
-        doc.setLineWidth(0.2); // reset
+      const leyendaElement = document.getElementById('composicion-leyenda');
+      if (leyendaElement) {
+        const origOverflow = leyendaElement.style.overflow;
+        const origMaxHeight = leyendaElement.style.maxHeight;
         
-        doc.setFont('Helvetica', 'normal');
-        doc.text('Canales de Riego (Ramales)', leyX + 19, itemY);
-        itemY += stepY;
-      }
+        leyendaElement.style.overflow = 'visible';
+        leyendaElement.style.maxHeight = 'none';
 
-      // Base: Catastro
-      if (incluirCatastro) {
-        doc.setFillColor(249, 115, 22, 0.08); // naranja con opacidad
-        doc.setDrawColor(249, 115, 22);
-        doc.rect(leyX + 6, itemY - (formato === 'A3' ? 3.5 : 6), 10, formato === 'A3' ? 4 : 7, 'FD');
-        
-        doc.setFont('Helvetica', 'normal');
-        doc.text('Catastro Rural (Predios)', leyX + 19, itemY);
-        itemY += stepY;
-      }
-
-      // Base: Otros Predios del Regante
-      if (incluirOtrosPredios) {
-        doc.setFillColor(161, 161, 170, 0.04);
-        doc.setDrawColor(113, 113, 122);
-        doc.rect(leyX + 6, itemY - (formato === 'A3' ? 3.5 : 6), 10, formato === 'A3' ? 4 : 7, 'FD');
-        
-        doc.setFont('Helvetica', 'normal');
-        doc.text('Otros Predios del Regante', leyX + 19, itemY);
-        itemY += stepY;
-      }
-
-      // Elementos temáticos según modo
-      if (modo === 'general' && sectoresData) {
-        doc.setFont('Helvetica', 'bold');
-        doc.text('Sectores de Investigación:', leyX + 6, itemY);
-        itemY += stepY;
-
-        sectoresData.features.forEach((s: any) => {
-          const name = s.properties?.sector || '';
-          const count = s.properties?.total_fichas || 0;
-          const color = SECTOR_COLORS_MAP[name] || '#6b7280';
-          
-          doc.setFillColor(color);
-          doc.rect(leyX + 8, itemY - (formato === 'A3' ? 3.5 : 6), 8, formato === 'A3' ? 4 : 7, 'F');
-          
-          doc.setFont('Helvetica', 'normal');
-          doc.text(`${name} (${count} fichas)`, leyX + 19, itemY);
-          itemY += stepY;
-        });
-      } else if (modo === 'sector' && comunidadesData) {
-        doc.setFont('Helvetica', 'bold');
-        doc.text(`Comunidades de ${selectedSector}:`, leyX + 6, itemY);
-        itemY += stepY;
-
-        const coms = comunidadesData.features.filter(
-          (f: any) => f.properties?.sector === selectedSector
-        );
-
-        const limit = formato === 'A1' ? 35 : 15;
-        coms.slice(0, limit).forEach((c: any) => {
-          const name = c.properties?.comunidad || '';
-          const count = c.properties?.total_fichas || 0;
-          const color = comunidadesColorMap.get(name) || '#94a3b8';
-          
-          doc.setFillColor(color);
-          doc.rect(leyX + 8, itemY - (formato === 'A3' ? 3.5 : 6), 8, formato === 'A3' ? 4 : 7, 'F');
-          
-          doc.setFont('Helvetica', 'normal');
-          doc.text(`${name} (${count})`, leyX + 19, itemY);
-          itemY += stepY;
-        });
-
-        if (coms.length > limit) {
-          doc.setFont('Helvetica', 'italic');
-          doc.text(`+ ${coms.length - limit} comunidades más`, leyX + 19, itemY);
-          itemY += stepY;
-        }
-      } else if (modo === 'comunidad' && comunidadActualProperties) {
-        doc.setFont('Helvetica', 'bold');
-        doc.text('Comunidad Seleccionada:', leyX + 6, itemY);
-        itemY += stepY;
-
-        const color = comunidadesColorMap.get(selectedComunidad) || '#94a3b8';
-        doc.setFillColor(color);
-        doc.rect(leyX + 8, itemY - (formato === 'A3' ? 3.5 : 6), 8, formato === 'A3' ? 4 : 7, 'F');
-        
-        doc.setFont('Helvetica', 'normal');
-        doc.text(`${selectedComunidad} (${selectedSector})`, leyX + 19, itemY);
-        itemY += stepY * 1.5;
-      }
-
-      // Fichas
-      if (incluirFichas) {
-        doc.setFillColor(255, 0, 0); // Rojo por defecto para punto
-        doc.setDrawColor(255, 255, 255);
-        doc.circle(leyX + 11, itemY - (formato === 'A3' ? 1.5 : 3), formato === 'A3' ? 2 : 4, 'FD');
-        
-        doc.setFont('Helvetica', 'normal');
-        doc.text('Ficha investigada (Punto GPS)', leyX + 19, itemY);
-        itemY += stepY * 1.5;
-      }
-
-      // 4. Tabla Resumen en la Leyenda
-      if (incluirTabla) {
-        // Línea divisoria
-        doc.setDrawColor(226, 232, 240);
-        doc.line(leyX + 4, itemY - 3, leyX + leyW - 4, itemY - 3);
-        itemY += stepY / 2;
-
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(formato === 'A3' ? 9 : 14);
-        doc.text('RESUMEN DE DATOS', leyX + 6, itemY);
-        itemY += stepY * 1.2;
-
-        doc.setFontSize(formato === 'A3' ? 8 : 12);
-        doc.setFont('Helvetica', 'normal');
-
-        let fichasVal = 0;
-        let areaVal = '0.0';
-        let caudalVal = '0.0';
-        let areaGeo = '0.0';
-
-        if (modo === 'general') {
-          fichasVal = fichas.length;
-          // Sumar área y caudal de todas las fichas
-          const totalArea = fichas.reduce((acc, curr) => acc + (curr.area_riego || 0), 0) / 10000;
-          const totalCaudal = fichas.reduce((acc, curr) => acc + (curr.caudal_valor || 0), 0);
-          areaVal = totalArea.toFixed(1);
-          caudalVal = totalCaudal.toFixed(1);
-          areaGeo = '2,450.3'; // Constante aproximada del proyecto completo
-        } else if (modo === 'sector' && sectorActualProperties) {
-          fichasVal = sectorActualProperties.total_fichas || 0;
-          areaVal = Number(sectorActualProperties.area_riego_ha || 0).toFixed(1);
-          caudalVal = Number(sectorActualProperties.caudal_total_ls || 0).toFixed(1);
-          areaGeo = Number(sectorActualProperties.area_dissolve_ha || 0).toFixed(1);
-        } else if (modo === 'comunidad' && comunidadActualProperties) {
-          fichasVal = comunidadActualProperties.total_fichas || 0;
-          areaVal = Number(comunidadActualProperties.area_riego_ha || 0).toFixed(1);
-          caudalVal = Number(comunidadActualProperties.caudal_total_ls || 0).toFixed(1);
-          areaGeo = Number(comunidadActualProperties.area_dissolve_ha || 0).toFixed(1);
-        }
-
-        const statsRows = [
-          ['Fichas Totales:', `${fichasVal} und`],
-          ['Área Riego Decl.:', `${areaVal} ha`],
-          ['Caudal Sumado:', `${caudalVal} l/s`],
-          ['Área Geográfica:', `${areaGeo} ha`]
-        ];
-
-        statsRows.forEach(([lbl, val]) => {
-          doc.setFont('Helvetica', 'bold');
-          doc.text(lbl, leyX + 6, itemY);
-          doc.setFont('Helvetica', 'normal');
-          doc.text(val, leyX + (formato === 'A3' ? 38 : 65), itemY);
-          itemY += stepY;
-        });
-      }
-
-      // 4.6 Estadísticas adicionales de técnicos y auditoría (Solo en A1 por espacio de hoja)
-      if (formato === 'A1') {
-        // Línea divisoria
-        doc.setDrawColor(226, 232, 240);
-        doc.line(leyX + 4, itemY - 3, leyX + leyW - 4, itemY - 3);
-        itemY += stepY / 2;
-
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(14);
-        doc.text('FICHAS POR INVESTIGADOR', leyX + 6, itemY);
-        itemY += stepY * 1.2;
-
-        doc.setFontSize(11);
-        doc.setFont('Helvetica', 'normal');
-
-        // Contar fichas del grupo por técnico
-        const fichasGrupo = fichas.filter(f => {
-          if (modo === 'sector') return f.sector_investigacion === selectedSector;
-          if (modo === 'comunidad') return f.comunidad === selectedComunidad;
-          return true; // general
-        });
-
-        const tecsMap = new Map<string, number>();
-        fichasGrupo.forEach(f => {
-          const t = getNombreTecnico(f.creado_por);
-          tecsMap.set(t, (tecsMap.get(t) || 0) + 1);
-        });
-
-        const tecnicosOrdenados = Array.from(tecsMap.entries())
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 6);
-
-        if (tecnicosOrdenados.length > 0) {
-          tecnicosOrdenados.forEach(([tec, count]) => {
-            doc.setFont('Helvetica', 'bold');
-            doc.text(`● ${tec}:`, leyX + 8, itemY);
-            doc.setFont('Helvetica', 'normal');
-            doc.text(`${count} fichas`, leyX + 70, itemY);
-            itemY += stepY;
+        try {
+          const canvasLeyenda = await html2canvas(leyendaElement, {
+            scale: formato === 'A3' ? 3.5 : 5,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+            backgroundColor: '#ffffff'
           });
-        } else {
-          doc.text('Sin registros de investigadores.', leyX + 8, itemY);
-          itemY += stepY;
+
+          const imgLeyenda = canvasLeyenda.toDataURL('image/jpeg', 0.95);
+          doc.addImage(imgLeyenda, 'JPEG', leyX, leyY, leyW, leyH);
+        } catch (err) {
+          console.error('Error al capturar la leyenda:', err);
+          doc.setFillColor(255, 255, 255);
+          doc.rect(leyX, leyY, leyW, leyH, 'F');
+          doc.setDrawColor(203, 213, 225);
+          doc.rect(leyX, leyY, leyW, leyH, 'S');
+          doc.setFont('Helvetica', 'bold');
+          doc.setFontSize(12);
+          doc.text('Error al generar Leyenda', leyX + 10, leyY + 15);
+        } finally {
+          leyendaElement.style.overflow = origOverflow;
+          leyendaElement.style.maxHeight = origMaxHeight;
         }
-
-        // Notas cartográficas de auditoría
-        doc.setDrawColor(226, 232, 240);
-        doc.line(leyX + 4, itemY - 3, leyX + leyW - 4, itemY - 3);
-        itemY += stepY / 2;
-
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(14);
-        doc.text('NOTAS CARTOGRÁFICAS', leyX + 6, itemY);
-        itemY += stepY * 1.2;
-
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(10.5);
-        doc.setTextColor(100, 116, 139); // slate-500
-
-        const notas = [
-          '1. Geometrías obtenidas a partir de claves catastrales.',
-          '2. Se excluyen 774 registros con discrepancias espaciales',
-          '   superiores a 1.5 km para preservar exactitud física.',
-          '3. Coordenadas Datum WGS84, Proyección UTM Zona 17S.'
-        ];
-
-        notas.forEach(n => {
-          doc.text(n, leyX + 8, itemY);
-          itemY += stepY * 0.95;
-        });
-
-        doc.setTextColor(51, 65, 85); // reset
+      } else {
+        doc.setFillColor(255, 255, 255);
+        doc.rect(leyX, leyY, leyW, leyH, 'F');
+        doc.setDrawColor(203, 213, 225);
+        doc.rect(leyX, leyY, leyW, leyH, 'S');
       }
 
       // 5. Membrete inferior (Escala y créditos vectoriales)
@@ -1041,6 +964,38 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                 />
                 Otros Predios del Regante
               </label>
+
+              <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer" title="Cargar los 24K polígonos catastrales del cantón (Dibujado en Canvas)">
+                <input
+                  type="checkbox"
+                  checked={showAllCatastro}
+                  onChange={async (e) => {
+                    const checked = e.target.checked;
+                    setShowAllCatastro(checked);
+                    if (checked && !allCatastroData) {
+                      setCargandoTodosPredios(true);
+                      try {
+                        const timestamp = Date.now();
+                        const res = await fetch(`/geo/catastro_poligonos.json?t=${timestamp}`);
+                        const data = await res.json();
+                        const features = Object.entries(data).map(([fid, geom]) => ({
+                          type: 'Feature' as const,
+                          properties: { fid: Number(fid) },
+                          geometry: geom as any,
+                        }));
+                        setAllCatastroData({ type: 'FeatureCollection', features });
+                      } catch (err) {
+                        console.error('Error cargando catastro completo:', err);
+                      } finally {
+                        setCargandoTodosPredios(false);
+                      }
+                    }
+                  }}
+                  className="rounded border-slate-800 text-blue-600 bg-slate-900 focus:ring-0 focus:ring-offset-0"
+                />
+                <span>Todos los predios (24K)</span>
+                {cargandoTodosPredios && <span className="text-[10px] text-blue-400 animate-pulse ml-1">(Cargando...)</span>}
+              </label>
             </div>
           </div>
 
@@ -1250,6 +1205,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                       />
                     )}
 
+                    {/* Todos los predios (24K Canvas) */}
+                    {showAllCatastro && allCatastroData && (
+                      <AllCatastroLayer data={allCatastroData} />
+                    )}
+
                     {/* Puntos de fichas */}
                     {incluirFichas &&
                       fichasConGeo.map((f) => {
@@ -1288,7 +1248,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
               </div>
 
               {/* Leyenda Lateral */}
-              <div className="w-[185px] border border-slate-300 bg-white flex flex-col justify-start overflow-hidden">
+              <div id="composicion-leyenda" className="w-[185px] border border-slate-300 bg-white flex flex-col justify-start overflow-hidden">
                 <div className="bg-slate-100 border-b border-slate-300 py-1.5 text-center text-[7.5px] font-bold text-slate-800 tracking-wider">
                   LEYENDA CARTOGRÁFICA
                 </div>
@@ -1390,11 +1350,11 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                     </div>
                   )}
 
-                  {/* Resumen de datos */}
+                  {/* Resumen de datos y gráficos del Dashboard */}
                   {incluirTabla && (
-                    <div className="border-t border-slate-200 pt-2 space-y-1.5">
+                    <div className="border-t border-slate-200 pt-2 space-y-2">
                       <p className="font-bold text-slate-800">RESUMEN DE DATOS:</p>
-                      <div className="grid grid-cols-2 gap-y-1 text-[6.5px]">
+                      <div className="grid grid-cols-2 gap-y-0.5 text-[6.5px]">
                         <span className="font-medium text-slate-500">Fichas:</span>
                         <span className="font-bold text-right">
                           {modo === 'general'
@@ -1434,6 +1394,91 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                           ha
                         </span>
                       </div>
+
+                      {/* Métodos de Riego */}
+                      <div className="border-t border-slate-100 pt-1.5 space-y-1">
+                        <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Métodos de Riego:</p>
+                        <div className="space-y-1 text-[5px]">
+                          <div>
+                            <div className="flex justify-between text-slate-600 mb-0.5">
+                              <span>Gravedad</span>
+                              <span className="font-bold">{statsDashboard.gravedadPct}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                              <div className="bg-amber-600 h-full rounded-full" style={{ width: `${statsDashboard.gravedadPct}%` }} />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-slate-600 mb-0.5">
+                              <span>Aspersión</span>
+                              <span className="font-bold">{statsDashboard.aspersionPct}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                              <div className="bg-sky-500 h-full rounded-full" style={{ width: `${statsDashboard.aspersionPct}%` }} />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-slate-600 mb-0.5">
+                              <span>Goteo</span>
+                              <span className="font-bold">{statsDashboard.goteoPct}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                              <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${statsDashboard.goteoPct}%` }} />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Reservorios */}
+                      <div className="border-t border-slate-100 pt-1.5 space-y-1">
+                        <div className="flex justify-between items-center text-[5.5px]">
+                          <span className="font-bold text-slate-800 uppercase">Tiene Reservorio:</span>
+                          <span className="font-bold text-indigo-600">{statsDashboard.reservorioPct}% SÍ</span>
+                        </div>
+                        <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                          <div className="bg-indigo-500 h-full rounded-full" style={{ width: `${statsDashboard.reservorioPct}%` }} />
+                        </div>
+                      </div>
+
+                      {/* Tenencias */}
+                      {statsDashboard.tenenciasSorted.length > 0 && (
+                        <div className="border-t border-slate-100 pt-1.5 space-y-1">
+                          <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Tenencia de Tierra:</p>
+                          <div className="space-y-1 text-[5px]">
+                            {statsDashboard.tenenciasSorted.map((t) => (
+                              <div key={t.name}>
+                                <div className="flex justify-between text-slate-600 mb-0.5">
+                                  <span className="truncate max-w-[125px]">{t.name}</span>
+                                  <span className="font-bold">{t.pct}%</span>
+                                </div>
+                                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                                  <div className="bg-slate-500 h-full rounded-full" style={{ width: `${t.pct}%` }} />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Cultivos */}
+                      {statsDashboard.cultivosSorted.length > 0 && (
+                        <div className="border-t border-slate-100 pt-1.5 space-y-1">
+                          <p className="font-bold text-slate-800 uppercase tracking-wide text-[5.5px]">Cultivos Principales:</p>
+                          <div className="space-y-1 text-[5px]">
+                            {statsDashboard.cultivosSorted.map((c) => (
+                              <div key={c.name}>
+                                <div className="flex justify-between text-slate-600 mb-0.5">
+                                  <span className="truncate max-w-[125px]">{c.name}</span>
+                                  <span className="font-bold">{c.pct}%</span>
+                                </div>
+                                <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                                  <div className="bg-green-600 h-full rounded-full" style={{ width: `${c.pct}%` }} />
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
