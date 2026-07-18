@@ -974,26 +974,43 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       {/* ── BLOQUE FINAL: AUDITORÍA (4 columnas) + CONSENTIMIENTO ── */}
 
       {/* Consentimiento informado */}
-      <div style={{
-        margin: '10px 0 6px',
-        padding: '5px 10px',
-        background: '#fefce8',
-        border: '1px solid #fde68a',
-        borderRadius: '4px',
-        display: 'flex',
-        alignItems: 'flex-start',
-        gap: '8px',
-        breakInside: 'avoid'
-      }}>
-        <span style={{ fontSize: '9pt', marginTop: '1px' }}>
-          {(ficha as any).consentimiento_informado ? '☑' : '☐'}
-        </span>
-        <p style={{ fontSize: '7pt', color: '#713f12', margin: 0, lineHeight: '1.4' }}>
-          <strong>Consentimiento Informado:</strong> El/la informante autoriza el uso institucional de los datos
-          recopilados en esta ficha por parte del proyecto de Catastro de Riego – Cayambe,
-          conforme a la normativa vigente de protección de datos personales.
-        </p>
-      </div>
+      {(() => {
+        const tieneConsentimiento = 
+          (ficha as any).consentimiento_informado !== false && 
+          (ficha as any).consentimiento_inform !== 0 && 
+          (ficha as any).consentimiento_informado !== 0;
+        return (
+          <div style={{
+            margin: '10px 0 6px',
+            padding: '6px 10px',
+            background: '#f0fdf4',
+            border: '1px solid #bbf7d0',
+            borderRadius: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            breakInside: 'avoid'
+          }}>
+            <span style={{ 
+              fontSize: '6.5pt', 
+              fontWeight: 'bold', 
+              color: '#15803d', 
+              backgroundColor: '#dcfce7', 
+              padding: '2px 6px', 
+              borderRadius: '3px',
+              border: '1px solid #86efac',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}>
+              {tieneConsentimiento ? 'Otorgado' : 'No Otorgado'}
+            </span>
+            <p style={{ fontSize: '7.5pt', color: '#166534', margin: 0, lineHeight: '1.3' }}>
+              <strong>Consentimiento Informado:</strong> El/la informante autoriza el uso institucional de los datos
+              recopilados en esta ficha para el Catastro de Riego de Cayambe, conforme a la normativa de protección de datos personales.
+            </p>
+          </div>
+        );
+      })()}
 
       {/* Responsables — 4 columnas */}
       <div className="audit-block" style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>

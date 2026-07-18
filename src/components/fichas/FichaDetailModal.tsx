@@ -341,18 +341,26 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
           <div className="space-y-6">
 
             {/* Consentimiento informado */}
-            <div className="flex items-start gap-3 p-3 rounded-xl border border-amber-800/30 bg-amber-950/20">
-              <span className="text-lg mt-0.5">
-                {(ficha as any).consentimiento_informado ? '☑️' : '☐'}
-              </span>
-              <div>
-                <p className="text-[9px] text-amber-400 font-bold uppercase tracking-wider mb-1">Consentimiento Informado</p>
-                <p className="text-xs text-amber-200/80 leading-relaxed">
-                  El/la informante autoriza el uso institucional de los datos recopilados en esta ficha
-                  por parte del proyecto de Catastro de Riego – Cayambe.
-                </p>
-              </div>
-            </div>
+            {(() => {
+              const tieneConsentimiento = 
+                (ficha as any).consentimiento_informado !== false && 
+                (ficha as any).consentimiento_inform !== 0 && 
+                (ficha as any).consentimiento_informado !== 0;
+              return (
+                <div className="flex items-center gap-3 p-3 rounded-xl border border-emerald-800/30 bg-emerald-950/20">
+                  <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-wider">
+                    {tieneConsentimiento ? 'Otorgado' : 'No Otorgado'}
+                  </span>
+                  <div className="flex-1">
+                    <p className="text-[9px] text-emerald-400 font-bold uppercase tracking-wider">Consentimiento Informado</p>
+                    <p className="text-xs text-emerald-200/80 leading-relaxed mt-0.5">
+                      El/la informante autoriza el uso institucional de los datos recopilados en esta ficha
+                      por parte del proyecto de Catastro de Riego – Cayambe.
+                    </p>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* 4 Responsables */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
