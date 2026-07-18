@@ -42,12 +42,12 @@ export function Step1Propietario() {
                 <span className="ml-2 text-sm text-gray-700">Porotog</span>
               </label>
               <label className="flex items-center">
-                <input type="radio" {...register('sector')} value="Guanguilqui" className="text-agri-600 focus:ring-agri-500" />
-                <span className="ml-2 text-sm text-gray-700">Guanguilqui</span>
+                <input type="radio" {...register('sector')} value="Guanguilquí" className="text-agri-600 focus:ring-agri-500" />
+                <span className="ml-2 text-sm text-gray-700">Guanguilquí</span>
               </label>
               <label className="flex items-center">
-                <input type="radio" {...register('sector')} value="Guang-Portog" className="text-agri-600 focus:ring-agri-500" />
-                <span className="ml-2 text-sm text-gray-700">Guang-Portog</span>
+                <input type="radio" {...register('sector')} value="Guanguilquí–Porotog" className="text-agri-600 focus:ring-agri-500" />
+                <span className="ml-2 text-sm text-gray-700">Guanguilquí–Porotog</span>
               </label>
             </div>
           </div>
@@ -70,8 +70,14 @@ export function Step1Propietario() {
         <div>
           <label className="block text-sm font-medium text-gray-700">Tenencia del Predio</label>
           <select {...register('tenencia')} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-agri-500 focus:ring-agri-500 sm:text-sm p-2 border">
-            <option value="Escritura">Escritura</option>
-            <option value="Sin Escritura">Sin Escritura</option>
+            <option value="Propiedad / Escritura">Propiedad / Escritura</option>
+            <option value="Posesión">Posesión</option>
+            <option value="Arrendamiento">Arrendamiento</option>
+            <option value="Aparcería">Aparcería</option>
+            <option value="Comodato">Comodato</option>
+            <option value="Herencia">Herencia</option>
+            <option value="Uso Comunal">Uso Comunal</option>
+            <option value="Otra">Otra</option>
           </select>
         </div>
 

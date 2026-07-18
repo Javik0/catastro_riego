@@ -90,9 +90,16 @@ export function PadronWizard() {
 
       // Emplazamiento
       emplazamiento: '',
+      informante: '',
       investigadoPor: 'Téc. Ing. Ramiro Quilca – CONSORCIO CAYAMBE SPT',
+      supervisor: 'Téc. Steven Proaño / AP CATASTROS',
+      consentimientoInformado: false,
       fecha: new Date().toISOString().split('T')[0],
-      observaciones: ''
+      observaciones: '',
+
+      // Georreferenciación
+      datum: 'WGS84',
+      zonaUTM: '17S',
     }
   });
 
@@ -114,7 +121,7 @@ export function PadronWizard() {
               <Leaf className="h-7 w-7 text-agri-100" />
               <div>
                 <h1 className="text-xl font-bold">Padrón de Usuarios de Riego</h1>
-                <p className="text-agri-100 opacity-80 text-sm">Sistema de Riego Comunitario Guanguilqui Porotog</p>
+                <p className="text-agri-100 opacity-80 text-sm">Ficha de empadronamiento predial y productivo – línea base censal · Sistema Comunitario Guanguilquí–Porotog</p>
               </div>
             </div>
             <button

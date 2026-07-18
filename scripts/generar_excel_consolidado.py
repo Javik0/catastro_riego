@@ -2,7 +2,7 @@
 """
 Generar reporte Excel catastral premium ejecutivo de entrega para el cliente.
 Lee del GeoJSON depurado de la web para garantizar consistencia del 100% con el Dashboard.
-Estructura las pestañas con hipervínculos cruzados bidireccionales, formatos corporativos y fórmulas.
+Estructura las pestañas con vínculos cruzados bidireccionales, formatos corporativos y fórmulas.
 """
 
 import os
@@ -54,65 +54,21 @@ COMUNIDADES_POR_SECTOR = {
 
 # Metas de regantes planificadas de constants.ts
 META_COMUNEROS = {
-    # Sector 1
-    "LARCACHACA": 103,
-    "LA LIBERTAD": 125,
-    "SAN ANTONIO": 95,
-    "SAN JOSÉ": 120,
-    "MILAGRO": 38,
-    "ASOCIACIÓN 17 DE JUNIO": 32,
-    "CHAMBITOLA": 120,
-    "LA CANDELARIA": 170,
-    "CARRERA": 280,
-    "MATÍAS IMBAGO": 1,
-    "COCHAPAMBA": 244,
-    "JESÚS GRAN PODER": 56,
-    "SANTA BÁRBARA": 6,
-    "ASOCIACIÓN POROTOG": 48,
-    "COMUNA POROTOG": 80,
-    "CORDILLERAS DE LOS ANDES": 43,
-    "COMUNA IZACATA": 65,
-    "IZACATA GRANDE": 43,
-    "LOS ANDES IZACATA": 48,
-    "LOMA GORDA": 45,
-    "SAN JACINTO": 6,
-    
-    # Sector 2
-    "CUARTO LOTE": 46,
-    "ASOC. SAN VICENTE BAJO": 80,
-    "SANTA ROSA DE PACCHA": 46,
-    "ASOC. SAN VICENTE ALTO": 59,
-    "PUCARÁ": 231,
-    "ASOCIACIÓN SAN PEDRO": 24,
-    "PITANA ALTO": 99,
-    "ALPAKA": 15,
-    "ASOC. PITANA BAJO": 42,
-    "PROMEJ. PITANA BAJO": 180,
-    "SANTA ROSA DE PINGULMI": 117,
-    "SANTA MARIANITA DE PINGULMI": 189,
-    "PAMBAMARCA": 61,
-    
-    # Sector 3
-    "OTONCITO": 66,
-    "PAMBAMARQUITO": 100,
-    "MONTESERRÍN ALTO": 27,
-    "CHAUPIESTANCIA": 150,
-    "PUEBLO DE OTÓN": 152,
-    "CANGAHUA PUNGO": 147,
-    "CHINCHINLOMA": 80,
-    "ASOCIACIÓN ROSALÍA": 41,
-    "SR. COLOMA": 16,
-    "MONTESERÍN BAJO": 118,
-    "HDA. GUANGUILQUI": 15,
-    "PUEBLO DE ASCÁZUBI": 16,
-    "EL MANZANO": 19,
-    "JUNTA SAN LUIS": 33,
-    "SAN VICENTE DE GUAYLLABAMBA": 453,
-    
-    # Comunidades sin datos meta pero existentes
-    "AVELLANEDA": 0,
-    "HDA. SAN FRANSISCO": 0,
-    "SR. HERNÁN TIMPE": 0
+    "LARCACHACA": 103, "LA LIBERTAD": 125, "SAN ANTONIO": 95, "SAN JOSÉ": 120,
+    "MILAGRO": 38, "ASOCIACIÓN 17 DE JUNIO": 32, "CHAMBITOLA": 120,
+    "LA CANDELARIA": 170, "CARRERA": 280, "MATÍAS IMBAGO": 1, "COCHAPAMBA": 244,
+    "JESÚS GRAN PODER": 56, "SANTA BÁRBARA": 6, "ASOCIACIÓN POROTOG": 48,
+    "COMUNA POROTOG": 80, "CORDILLERAS DE LOS ANDES": 43, "COMUNA IZACATA": 65,
+    "IZACATA GRANDE": 43, "LOS ANDES IZACATA": 48, "LOMA GORDA": 45, "SAN JACINTO": 6,
+    "CUARTO LOTE": 46, "ASOC. SAN VICENTE BAJO": 80, "SANTA ROSA DE PACCHA": 46,
+    "ASOC. SAN VICENTE ALTO": 59, "PUCARÁ": 231, "ASOCIACIÓN SAN PEDRO": 24,
+    "PITANA ALTO": 99, "ALPAKA": 15, "ASOC. PITANA BAJO": 42, "PROMEJ. PITANA BAJO": 180,
+    "SANTA ROSA DE PINGULMI": 117, "SANTA MARIANITA DE PINGULMI": 189, "PAMBAMARCA": 61,
+    "OTONCITO": 66, "PAMBAMARQUITO": 100, "MONTESERRÍN ALTO": 27, "CHAUPIESTANCIA": 150,
+    "PUEBLO DE OTÓN": 152, "CANGAHUA PUNGO": 147, "CHINCHINLOMA": 80, "ASOCIACIÓN ROSALÍA": 41,
+    "SR. COLOMA": 16, "MONTESERÍN BAJO": 118, "HDA. GUANGUILQUI": 15, "PUEBLO DE ASCÁZUBI": 16,
+    "EL MANZANO": 19, "JUNTA SAN LUIS": 33, "SAN VICENTE DE GUAYLLABAMBA": 453,
+    "AVELLANEDA": 0, "HDA. SAN FRANSISCO": 0, "SR. HERNÁN TIMPE": 0
 }
 
 MAPEO_TECNICOS = {
@@ -136,32 +92,29 @@ def main():
         return
 
     print("=" * 85)
-    print(" GENERANDO EXCEL CATASTRAL CONSISTENTE CON LA WEB (LEENDO DE GEOJSON)")
+    print(" GENERANDO EXCEL CATASTRAL CONSISTENTE CON LA WEB (LEYENDO DE GEOJSON)")
     print("=" * 85)
 
-    # 1. Cargar fichas del GeoJSON depurado
+    # 1. Cargar fichas
     with open(FICHAS_GEOJSON, 'r', encoding='utf-8') as f:
         geojson_data = json.load(f)
     properties_list = [feat['properties'] for feat in geojson_data['features']]
     df_fichas = pd.DataFrame(properties_list)
-    print(f"Cargados {len(df_fichas)} predios depurados de {FICHAS_GEOJSON}")
+    print(f"Cargados {len(df_fichas)} predios depurados.")
 
     # 2. Cargar cultivos
     df_cultivos = pd.read_json(CULTIVOS_JSON)
-    print(f"Cargados {len(df_cultivos)} cultivos depurados de {CULTIVOS_JSON}")
+    print(f"Cargados {len(df_cultivos)} cultivos depurados.")
 
     # 3. Cargar animales
     df_animales = pd.read_json(ANIMALES_JSON)
-    print(f"Cargados {len(df_animales)} animales depurados de {ANIMALES_JSON}")
+    print(f"Cargados {len(df_animales)} animales depurados.")
 
     # 4. Cargar predios adicionales
     df_adicionales = pd.read_json(ADICIONALES_JSON)
-    print(f"Cargados {len(df_adicionales)} predios adicionales depurados de {ADICIONALES_JSON}")
+    print(f"Cargados {len(df_adicionales)} predios adicionales.")
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # PRE-PROCESAMIENTO Y DEPURACIÓN DE DATOS (CLIENTE)
-    # ─────────────────────────────────────────────────────────────────────────
-    # Asegurar que todas las columnas clave existan en el DataFrame (evita errores si vienen vacías)
+    # Columnas requeridas
     columnas_requeridas = [
         'id', 'codigo_final', 'propietario', 'apellidos', 'nombres', 'cedula', 'clave_catastral',
         'parroquia', 'comunidad', 'sector_comunidad', 'canal', 'sector', 'area_total', 'area_riego',
@@ -190,23 +143,16 @@ def main():
 
     df_fichas['comunidad_norm'] = df_fichas['comunidad'].apply(normalize_com)
     
-    # Derivar sector_investigacion priorizando la comunidad (idéntico al frontend)
     def derivar_sector(row):
         c_norm = normalize_com(row['comunidad'])
-        
-        # Para Asociación Rosalía respetamos el sector ingresado en SQLite/GeoJSON si existe
         if c_norm == 'ASOCIACION ROSALIA':
             val = row['sector_investigacion']
             if isinstance(val, str) and val.strip() != '':
                 return val.strip()
             return 'Sector 3'
-            
-        # Para las demás, la comunidad manda sobre el sector de investigación
         for sec, coms in COMUNIDADES_POR_SECTOR.items():
             if any(normalize_com(c) == c_norm for c in coms):
                 return sec
-                
-        # Fallback al valor físico o por defecto
         val = row['sector_investigacion']
         if isinstance(val, str) and val.strip() != '':
             return val.strip()
@@ -214,9 +160,6 @@ def main():
         
     df_fichas['sector_investigacion'] = df_fichas.apply(derivar_sector, axis=1)
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # CREACIÓN DEL LIBRO DE EXCEL PREMIUM
-    # ─────────────────────────────────────────────────────────────────────────
     wb = Workbook()
     
     # Fuentes y estilos corporativos
@@ -246,7 +189,7 @@ def main():
     ws_dashboard.title = "Resumen Ejecutivo"
     ws_dashboard.views.sheetView[0].showGridLines = True
     
-    ws_dashboard.cell(row=2, column=2, value="SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG").font = font_title
+    ws_dashboard.cell(row=2, column=2, value="SISTEMA DE RIEGO COMUNITARIO GUANGUILQUÍ–POROTOG").font = font_title
     ws_dashboard.cell(row=3, column=2, value="MONITOREO Y COBERTURA DE CATASTRO DE RIEGO Y ENCUESTAS").font = Font(name='Calibri', size=11, italic=True)
     
     ws_dashboard.cell(row=5, column=2, value="CATASTRO GLOBAL: RESUMEN CONSOLIDADO POR SECTORES").font = font_section
@@ -264,7 +207,6 @@ def main():
         coms = COMUNIDADES_POR_SECTOR[sectorName]
         planificado = sum(META_COMUNEROS.get(c, 0) for c in coms)
         
-        # Conteo robusto de fichas levantadas insensible a tildes
         coms_norm = [normalize_com(c) for c in coms]
         levantado = len(df_fichas[(df_fichas['comunidad_norm'].isin(coms_norm)) & (df_fichas['sector_investigacion'] == sectorName)])
         
@@ -312,7 +254,7 @@ def main():
     headers_padron = [
         "N° REGISTRO", "CÉDULA / RUC", "CLAVE CATASTRAL", "APELLIDOS Y NOMBRES", 
         "HIJOS HOMBRES", "HIJOS MUJERES", "NIVEL INSTRUCCIÓN", "TENENCIA PREDIO",
-        "PARROQUIA", "COMUNIDAD", "SECTOR / CANAL", 
+        "PARROQUIA", "SECTOR INVESTIGACIÓN", "COMUNIDAD", "SECTOR COMUNIDAD", "CANAL DE RIEGO", 
         "ÁREA TOTAL (m²)", "ÁREA CON RIEGO (m²)", "ÁREA SIN RIEGO (m²)",
         "TIENE RESERVORIO", "DÍAS DE RIEGO", "HORAS DE TURNO", "CONSTRUCCIÓN: AGUA", "CONSTRUCCIÓN: ENERGÍA",
         "FRECUENCIA", "GRAVEDAD %", "ASPERSIÓN %", "GOTEO %", "TARIFA ($)", "TIPO TARIFA",
@@ -356,48 +298,50 @@ def main():
         ws_padron.cell(row=r_num, column=7, value=row['nivel_instruccion'] or '').alignment = align_center
         ws_padron.cell(row=r_num, column=8, value=row['tenencia_predio'] or '').alignment = align_center
         
-        # Parroquia, Comunidad, Sector/Canal
+        # Parroquia, Sector Investigación, Comunidad, Sector Comunidad, Canal
         ws_padron.cell(row=r_num, column=9, value=row['parroquia']).alignment = align_center
-        ws_padron.cell(row=r_num, column=10, value=row['comunidad']).alignment = align_left
-        ws_padron.cell(row=r_num, column=11, value=row['canal'] or row['sector'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=10, value=row['sector_investigacion']).alignment = align_center
+        ws_padron.cell(row=r_num, column=11, value=row['comunidad']).alignment = align_left
+        ws_padron.cell(row=r_num, column=12, value=row['sector_comunidad'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=13, value=row['canal'] or '').alignment = align_left
         
         # Áreas
-        ws_padron.cell(row=r_num, column=12, value=row['area_total'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=13, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=14, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=14, value=row['area_total'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=15, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=16, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
         
         # Reservorio y turnos de riego
-        ws_padron.cell(row=r_num, column=15, value=row['tiene_reservorio'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=16, value=row['dias_riego'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=17, value=row['horas_turno'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=17, value=row['tiene_reservorio'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=18, value=row['dias_riego'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=19, value=row['horas_turno'] or 0).number_format = '0'
         
         # Construcción: Agua / Energía
         agua_str = "SÍ" if row['agua_consumo'] in [1, True] else "NO"
         energia_str = "SÍ" if row['energia_electrica'] in [1, True] else "NO"
-        ws_padron.cell(row=r_num, column=18, value=agua_str).alignment = align_center
-        ws_padron.cell(row=r_num, column=19, value=energia_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=20, value=agua_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=21, value=energia_str).alignment = align_center
         
         # Frecuencia y métodos de riego
-        ws_padron.cell(row=r_num, column=20, value=row['frecuencia_riego'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=21, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=22, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=23, value=row['metodo_goteo_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=22, value=row['frecuencia_riego'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=23, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=24, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=25, value=row['metodo_goteo_pct'] or 0).number_format = '0'
         
         # Tarifa
-        ws_padron.cell(row=r_num, column=24, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
-        ws_padron.cell(row=r_num, column=25, value=row['tipo_tarifa'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=26, value=get_tecnico_name(row['creado_por'])).alignment = align_left
+        ws_padron.cell(row=r_num, column=26, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
+        ws_padron.cell(row=r_num, column=27, value=row['tipo_tarifa'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=28, value=get_tecnico_name(row['creado_por'])).alignment = align_left
         
         # Fecha
         fecha_val = str(row['fecha_creacion'] or '')[:10]
-        ws_padron.cell(row=r_num, column=27, value=fecha_val).alignment = align_center
+        ws_padron.cell(row=r_num, column=29, value=fecha_val).alignment = align_center
         
-        # Bordes y fuente
-        for c in range(1, 31):
+        # Bordes y fuente (32 columnas totales)
+        for c in range(1, 33):
             ws_padron.cell(row=r_num, column=c).border = cell_border
             ws_padron.cell(row=r_num, column=c).font = font_data
 
-    ws_padron.auto_filter.ref = f"A1:AD{len(df_fichas) + 1}"
+    ws_padron.auto_filter.ref = f"A1:AF{len(df_fichas) + 1}"
     ws_padron.freeze_panes = "A2"
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -557,16 +501,13 @@ def main():
     ws_predios.auto_filter.ref = f"A1:F{r_idx - 1}"
     ws_predios.freeze_panes = "A2"
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # ESCRIBIR HIPERVÍNCULOS EN EL PADRÓN GENERAL (DESPLAZAMIENTO CRUZADO)
-    # ─────────────────────────────────────────────────────────────────────────
-    print("Inyectando hipervínculos de navegación interactiva bidireccionales...")
+    # ENLACES BIDIRECCIONALES
+    print("Inyectando hipervínculos...")
     for idx, row in df_fichas.iterrows():
         r_num = idx + 2
         f_id = row['id']
         
-        # Enlace a Cultivos (Columna 28)
-        col_cultivos = ws_padron.cell(row=r_num, column=28)
+        col_cultivos = ws_padron.cell(row=r_num, column=30)
         if f_id in cultivos_indices:
             col_cultivos.value = "Ver Cultivos"
             col_cultivos.hyperlink = f"#'Cultivos y Producción'!A{cultivos_indices[f_id]}"
@@ -576,8 +517,7 @@ def main():
             col_cultivos.value = "-"
             col_cultivos.alignment = align_center
             
-        # Enlace a Animales (Columna 29)
-        col_animales = ws_padron.cell(row=r_num, column=29)
+        col_animales = ws_padron.cell(row=r_num, column=31)
         if f_id in animales_indices:
             col_animales.value = "Ver Animales"
             col_animales.hyperlink = f"#'Inventario Pecuario'!A{animales_indices[f_id]}"
@@ -587,8 +527,7 @@ def main():
             col_animales.value = "-"
             col_animales.alignment = align_center
             
-        # Enlace a Adicionales (Columna 30)
-        col_predios = ws_padron.cell(row=r_num, column=30)
+        col_predios = ws_padron.cell(row=r_num, column=32)
         if f_id in predios_indices:
             col_predios.value = "Ver Lotes"
             col_predios.hyperlink = f"#'Lotes Adicionales'!A{predios_indices[f_id]}"
@@ -598,10 +537,7 @@ def main():
             col_predios.value = "-"
             col_predios.alignment = align_center
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # AUTO-AJUSTAR ANCHO DE COLUMNAS DE TODAS LAS PESTAÑAS (EVITA ###)
-    # ─────────────────────────────────────────────────────────────────────────
-    print("Auto-ajustando el ancho de columnas de forma dinámica...")
+    print("Auto-ajustando columnas...")
     for sheet in wb.worksheets:
         for col in sheet.columns:
             max_len = 0
@@ -614,14 +550,12 @@ def main():
             col_letter = col[0].column_letter
             sheet.column_dimensions[col_letter].width = max(max_len + 3, 12)
 
-    # Ajustar dimensiones de la pestaña de resumen a mano para que luzca perfecta
     ws_dashboard.column_dimensions['B'].width = 45
     ws_dashboard.column_dimensions['C'].width = 20
     ws_dashboard.column_dimensions['D'].width = 30
     ws_dashboard.column_dimensions['E'].width = 25
     ws_dashboard.column_dimensions['F'].width = 20
 
-    # Guardar los archivos de forma segura
     saved_desktop = False
     saved_downloads = False
     
@@ -633,10 +567,10 @@ def main():
         alt_path = OUTPUT_XLSX_DESKTOP.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
         try:
             wb.save(alt_path)
-            print(f"  ⚠️ Escritorio bloqueado (Excel abierto). Guardado alternativo en:\n    -> {alt_path}")
+            print(f"  ⚠️ Escritorio bloqueado. Guardado alternativo en: {alt_path}")
             saved_desktop = True
         except Exception as e:
-            print(f"  ❌ Error al guardar archivo alternativo en Escritorio: {e}")
+            print(f"  ❌ Error: {e}")
             
     try:
         wb.save(OUTPUT_XLSX_DOWNLOADS)
@@ -646,15 +580,15 @@ def main():
         alt_path = OUTPUT_XLSX_DOWNLOADS.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
         try:
             wb.save(alt_path)
-            print(f"  ⚠️ Descargas bloqueado (Excel abierto). Guardado alternativo en:\n    -> {alt_path}")
+            print(f"  ⚠️ Descargas bloqueado. Guardado alternativo en: {alt_path}")
             saved_downloads = True
         except Exception as e:
-            print(f"  ❌ Error al guardar archivo alternativo en Descargas: {e}")
+            print(f"  ❌ Error: {e}")
 
     if saved_desktop or saved_downloads:
         print(f"\n[OK] Excel catastral premium generado con éxito.")
     else:
-        print(f"\n[ERROR] No se pudo guardar el archivo de Excel en ninguna ruta.")
+        print(f"\n[ERROR] No se pudo guardar el Excel.")
     print("=" * 85)
 
 if __name__ == "__main__":

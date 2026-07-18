@@ -173,7 +173,8 @@ export const ALIASES: Record<string, string> = {
 
 // ── Proyecto ──
 export const PROJECT_TITLE = 'ESTUDIO DEFINITIVO DE PRESA EN EL RIO POROTOG';
-export const PROJECT_SUBTITLE = 'PADRÓN DE USUARIOS: SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG';
+export const PROJECT_SUBTITLE = 'PADRÓN DE USUARIOS: SISTEMA DE RIEGO COMUNITARIO GUANGUILQUÍ–POROTOG';
+export const PROJECT_SUBTITLE_ALCANCE = 'Ficha de empadronamiento predial y productivo – línea base censal';
 export const PROJECT_LOCATION = 'Provincia Pichincha — Cantón Cayambe';
 
 export const LOGO_PICHINCHA = '/logo-izq.png';

@@ -159,15 +159,25 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
         );
       case 'servicios':
         return (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Agua Consumo" value={ficha.agua_consumo} icon={Droplets} />
-            <Field label="Energía Eléctrica" value={ficha.energia_electrica} icon={Lightbulb} />
-            <Field label="Material Construcción" value={ficha.material_construccion} icon={Building} />
-            <Field label="Material (otro)" value={ficha.material_constr_otro} icon={Building} />
-            <Field label="COTA (msnm)" value={ficha.cota_msnm} icon={Compass} />
-            <Field label="Coordenada X (UTM)" value={ficha.coord_x_utm} icon={Compass} />
-            <Field label="Coordenada Y (UTM)" value={ficha.coord_y_utm} icon={Compass} />
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Field label="Agua Consumo" value={ficha.agua_consumo} icon={Droplets} />
+              <Field label="Energía Eléctrica" value={ficha.energia_electrica} icon={Lightbulb} />
+              <Field label="Material Construcción" value={ficha.material_construccion} icon={Building} />
+              <Field label="Material (otro)" value={ficha.material_constr_otro} icon={Building} />
+              <Field label="COTA (msnm)" value={ficha.cota_msnm} icon={Compass} />
+              <Field label="Coordenada X (UTM Este)" value={ficha.coord_x_utm} icon={Compass} />
+              <Field label="Coordenada Y (UTM Norte)" value={ficha.coord_y_utm} icon={Compass} />
+              <Field label="Datum" value={(ficha as any).datum || 'WGS 84'} icon={Compass} />
+              <Field label="Zona UTM" value={(ficha as any).zona_utm || '17S'} icon={Compass} />
+            </div>
+            <div className="mt-3 p-3 rounded-xl border border-blue-800/30 bg-blue-950/20">
+              <p className="text-[9px] text-blue-400 font-bold uppercase tracking-wider mb-1">📍 Referencia Cartográfica</p>
+              <p className="text-xs text-blue-300">
+                Polígono del predio referenciado a la capa <strong className="text-white">Catastro Rural – GADM Cayambe</strong> (insumo municipal). Datum WGS 84 · Zona 17S.
+              </p>
+            </div>
+          </>
         );
       case 'produccion':
         return (
@@ -326,13 +336,31 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
             <Field label="Temas de Capacitación" value={ficha.temas_capacitacion} icon={BookOpen} />
           </div>
         );
-      case 'auditoria':
+        case 'auditoria':
         return (
           <div className="space-y-6">
+
+            {/* Consentimiento informado */}
+            <div className="flex items-start gap-3 p-3 rounded-xl border border-amber-800/30 bg-amber-950/20">
+              <span className="text-lg mt-0.5">
+                {(ficha as any).consentimiento_informado ? '☑️' : '☐'}
+              </span>
+              <div>
+                <p className="text-[9px] text-amber-400 font-bold uppercase tracking-wider mb-1">Consentimiento Informado</p>
+                <p className="text-xs text-amber-200/80 leading-relaxed">
+                  El/la informante autoriza el uso institucional de los datos recopilados en esta ficha
+                  por parte del proyecto de Catastro de Riego – Cayambe.
+                </p>
+              </div>
+            </div>
+
+            {/* 4 Responsables */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="ID" value={ficha.id} icon={Hash} />
-              <Field label="Investigado por" value={getNombreTecnico(ficha.creado_por)} icon={User} />
+              <Field label="Informante" value={(ficha as any).informante || ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`} icon={User} />
+              <Field label="Investigador / Encuestador" value={getNombreTecnico(ficha.creado_por)} icon={User} />
+              <Field label="Supervisor" value={(ficha as any).supervisor || 'Téc. Steven Proaño / AP CATASTROS'} icon={Award} />
               <Field label="Fecha de Registro" value={safeToDate(ficha.fecha_creacion).toLocaleString('es-EC')} icon={Calendar} />
+              <Field label="ID" value={ficha.id} icon={Hash} />
               <Field label="Nombre Archivo Foto" value={ficha.foto_predio} icon={ImageIcon} />
               <div className="col-span-full">
                 <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />

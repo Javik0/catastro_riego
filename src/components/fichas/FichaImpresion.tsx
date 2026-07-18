@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, CircleMarker, Rectangle, useMap } from 'react-leaflet';
 import type { FeatureCollection } from 'geojson';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
-import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION } from '../../lib/constants';
+import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_SUBTITLE_ALCANCE, PROJECT_LOCATION } from '../../lib/constants';
 import { wgs84ToUtm17S } from '../../lib/utm';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -483,7 +483,8 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         <div className="report-title-block" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <h2 className="text-[7pt] font-bold text-slate-500 uppercase tracking-[0.12em] mb-1">{PROJECT_TITLE}</h2>
           <h1 className="text-[10pt] font-black text-[#0f172a] uppercase tracking-tight leading-tight">{PROJECT_SUBTITLE}</h1>
-          <p className="text-[7pt] text-slate-500 mt-1 font-medium tracking-wide">{PROJECT_LOCATION}</p>
+          <p className="text-[7pt] text-slate-500 mt-1 font-medium tracking-wide">{PROJECT_SUBTITLE_ALCANCE}</p>
+          <p className="text-[6.5pt] text-slate-400 mt-0.5 tracking-wide">{PROJECT_LOCATION}</p>
         </div>
         <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
       </div>
@@ -677,6 +678,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         <div className="detail-item">
           <p className="detail-label">Zona UTM</p>
           <p className="detail-value font-mono">17S</p>
+        </div>
+        <div className="detail-item col-4" style={{ background: '#eff6ff', borderColor: '#bfdbfe' }}>
+          <p className="detail-label" style={{ color: '#1d4ed8' }}>📍 Referencia Cartográfica</p>
+          <p className="detail-value" style={{ color: '#1e3a8a', fontSize: '7.5pt' }}>
+            Polígono del predio referenciado a la capa <strong>Catastro Rural – GADM Cayambe</strong> (insumo municipal). Datum WGS 84 · Zona 17S.
+          </p>
         </div>
       </div>
 
@@ -964,49 +971,79 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
       </div>
 
-      {/* ── BLOQUE FINAL: AUDITORÍA, FECHA E INVESTIGADOR ── */}
-      <div className="audit-block">
-        {/* Columna 1: Investigador */}
+      {/* ── BLOQUE FINAL: AUDITORÍA (4 columnas) + CONSENTIMIENTO ── */}
+
+      {/* Consentimiento informado */}
+      <div style={{
+        margin: '10px 0 6px',
+        padding: '5px 10px',
+        background: '#fefce8',
+        border: '1px solid #fde68a',
+        borderRadius: '4px',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '8px',
+        breakInside: 'avoid'
+      }}>
+        <span style={{ fontSize: '9pt', marginTop: '1px' }}>
+          {(ficha as any).consentimiento_informado ? '☑' : '☐'}
+        </span>
+        <p style={{ fontSize: '7pt', color: '#713f12', margin: 0, lineHeight: '1.4' }}>
+          <strong>Consentimiento Informado:</strong> El/la informante autoriza el uso institucional de los datos
+          recopilados en esta ficha por parte del proyecto de Catastro de Riego – Cayambe,
+          conforme a la normativa vigente de protección de datos personales.
+        </p>
+      </div>
+
+      {/* Responsables — 4 columnas */}
+      <div className="audit-block" style={{ gridTemplateColumns: '1fr 1fr 1fr 1fr' }}>
+        {/* Columna 1: Informante */}
+        <div className="audit-item">
+          <div className="audit-item-label">Informante</div>
+          <p className="audit-item-value">{(ficha as any).informante || ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}</p>
+          <p className="audit-item-sub">Propietario / Regante</p>
+        </div>
+        {/* Columna 2: Investigador */}
         <div className="audit-item">
           <div className="audit-item-label">Investigador (Técnico)</div>
           <p className="audit-item-value">{getNombreTecnico(ficha.creado_por)}</p>
           <p className="audit-item-sub">Responsable del Levantamiento</p>
-          <div className="mt-1 flex items-start">
+          <div className="mt-1">
             <span style={{
-              fontSize: '5.5pt',
-              fontWeight: 700,
-              color: '#475569',
-              backgroundColor: '#f1f5f9',
-              padding: '2px 5px',
-              borderRadius: '3px',
-              border: '1px solid #cbd5e1',
-              letterSpacing: '0.05em'
-            }}>
-              AP&CATASTROS
-            </span>
+              fontSize: '5.5pt', fontWeight: 700, color: '#475569',
+              backgroundColor: '#f1f5f9', padding: '2px 5px',
+              borderRadius: '3px', border: '1px solid #cbd5e1', letterSpacing: '0.05em'
+            }}>AP&CATASTROS</span>
           </div>
         </div>
-        {/* Columna 2: Fecha de Investigación */}
+        {/* Columna 3: Supervisor */}
         <div className="audit-item">
-          <div className="audit-item-label">Fecha de Investigación</div>
+          <div className="audit-item-label">Supervisor</div>
+          <p className="audit-item-value">{(ficha as any).supervisor || 'Téc. Steven Proaño'}</p>
+          <p className="audit-item-sub">AP CATASTROS</p>
+        </div>
+        {/* Columna 4: Fecha */}
+        <div className="audit-item">
+          <div className="audit-item-label">Fecha de Registro</div>
           <p className="audit-item-value">
             {safeToDate(ficha.fecha_creacion).toLocaleDateString('es-EC', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             })}
           </p>
           <p className="audit-item-sub">Registro en campo</p>
         </div>
-        {/* Columna 3: Observaciones */}
-        <div className="audit-item">
-          <div className="audit-item-label">Observaciones Generales</div>
-          <p className="audit-item-value" style={{ fontWeight: '400', fontStyle: ficha.observaciones ? 'italic' : 'normal', fontSize: '8pt', lineHeight: '1.4', color: '#334155' }}>
-            {ficha.observaciones ? `"${ficha.observaciones}"` : 'Sin observaciones registradas.'}
-          </p>
-        </div>
       </div>
+
+      {/* Observaciones — fila completa */}
+      {ficha.observaciones && (
+        <div style={{
+          marginTop: '6px', padding: '5px 10px',
+          background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px'
+        }}>
+          <p style={{ fontSize: '6.5pt', textTransform: 'uppercase', color: '#475569', fontWeight: 700, marginBottom: '2px' }}>Observaciones Generales</p>
+          <p style={{ fontSize: '8pt', fontStyle: 'italic', color: '#334155', lineHeight: '1.4' }}>"{ficha.observaciones}"</p>
+        </div>
+      )}
     </div>
   );
 }

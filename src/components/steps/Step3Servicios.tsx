@@ -70,20 +70,47 @@ export function Step3Servicios() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Coord. X</label>
-              <input type="text" {...register('coordX')} placeholder="Longitud" className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Coord. X (Este)</label>
+              <input type="text" {...register('coordX')} placeholder="Ej. 812350" className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Coord. Y</label>
-              <input type="text" {...register('coordY')} placeholder="Latitud" className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
+              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Coord. Y (Norte)</label>
+              <input type="text" {...register('coordY')} placeholder="Ej. 9987450" className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">COTA</label>
+              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">COTA (msnm)</label>
               <input type="text" {...register('cota')} placeholder="msnm" className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border" />
             </div>
           </div>
-          <p className="text-xs text-blue-600 mt-4 opacity-80">
-            * Puede escribir las coordenadas manualmente si dispone del equipo topográfico.
+
+          <div className="grid grid-cols-2 gap-4 mt-3">
+            <div>
+              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Datum</label>
+              <select {...register('datum')} className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border bg-white">
+                <option value="WGS84">WGS 84</option>
+                <option value="PSAD56">PSAD 56</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-blue-800 uppercase tracking-wider">Zona UTM</label>
+              <select {...register('zonaUTM')} className="mt-1 block w-full rounded-md border-blue-200 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border bg-white">
+                <option value="17S">17S (Ecuador Sierra)</option>
+                <option value="17N">17N</option>
+                <option value="18S">18S</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="mt-4 p-3 bg-blue-100 border border-blue-200 rounded-lg">
+            <p className="text-xs text-blue-800 font-semibold mb-1">📍 Referencia Cartográfica</p>
+            <p className="text-xs text-blue-700">
+              Polígono del predio referenciado a la capa:&nbsp;
+              <strong>Catastro Rural – GADM Cayambe</strong> (insumo municipal). Datum: WGS 84 · Zona 17S.
+            </p>
+          </div>
+
+          <p className="text-xs text-blue-600 mt-2 opacity-80">
+            * Coordenadas UTM. Puede ingresar manualmente o usar GPS.
           </p>
         </div>
 

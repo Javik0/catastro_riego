@@ -1564,7 +1564,12 @@ def main():
     for sec, ten, n in cursor.fetchall():
         s_name = 'Sector 1' if sec == 'None' else sec
         if s_name in tenencia_sec:
-            tenencia_sec[s_name][ten] = tenencia_sec[s_name].get(ten, 0) + n
+            # Normalizar dinámicamente las 8 nuevas opciones a las 2 categorías principales del reporte
+            ten_norm = 'Escritura'
+            if any(term in ten.lower() for term in ['sin título', 'arrendamiento', 'aparcería', 'medería', 'comodato', 'préstamo', 'comunal', 'comunitario', 'otra', 'sin dato']):
+                ten_norm = 'Sin Escritura'
+            
+            tenencia_sec[s_name][ten_norm] = tenencia_sec[s_name].get(ten_norm, 0) + n
 
     # ── RENDERIZAR NUEVOS GRÁFICOS SVG DE INDICADORES ──
     conocimiento_data_svg = {}
