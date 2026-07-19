@@ -17,6 +17,7 @@ import FichasPage from './components/fichas/FichasPage';
 import ReportesPage from './components/reportes/ReportesPage';
 import EncuestaPublicaPage from './components/encuestas/EncuestaPublicaPage';
 import AdminEncuestasPage from './components/encuestas/AdminEncuestasPage';
+import AdminAuditoriaFichasHijas from './components/fichas/AdminAuditoriaFichasHijas';
 
 // ── Data Loader: lee los GeoJSON exportados ──
 function useLocalData() {
@@ -327,6 +328,18 @@ export default function App() {
                   element={
                     <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
                       <AdminEncuestasPage />
+                    </RoleProtectedRoute>
+                  }
+                />
+                <Route
+                  path="auditoria-hijas"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
+                      <FilteredDataProvider>
+                        {({ fichas, loading }) => (
+                          <AdminAuditoriaFichasHijas fichas={fichas} loading={loading} />
+                        )}
+                      </FilteredDataProvider>
                     </RoleProtectedRoute>
                   }
                 />

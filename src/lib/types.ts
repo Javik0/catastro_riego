@@ -249,7 +249,13 @@ export interface EncuestaPublica {
   actividad_productiva: string;
   
   // Respuestas Pestaña 7 (Otros predios)
-  predios_adicionales: { clave_catastral_otro: string; area_riego_otro: number }[];
+  predios_adicionales: {
+    clave_catastral_otro: string;
+    area_riego_otro: number;
+    // v4.3: producción opcional declarada por el regante para ese predio
+    cultivos?: { tipo_cultivo: string; superficie_m2: number }[];
+    animales?: { especie: string; cantidad: number }[];
+  }[];
 }
 
 // ── Filtros del Dashboard ──

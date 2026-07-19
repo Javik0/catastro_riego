@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { submitEncuestaPublica } from '../../lib/firestoreService';
 import { NIVELES_INSTRUCCION, TIPOS_CULTIVO, ESPECIES_ANIMALES, MATERIALES_CONSTRUCCION, PROJECT_SUBTITLE, LOGO_PICHINCHA, LOGO_CONSORCIO, PARROQUIAS, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
 import { 
@@ -45,8 +45,43 @@ export default function EncuestaPublicaPage() {
   const [actividadProductiva, setActividadProductiva] = useState('Particular');
 
   // Step 4 State (Otros Predios)
+  // v4.3: cada predio adicional puede llevar su propia producción (opcional) —
+  // si el regante la llena, alimenta la ficha hija; si no, queda pendiente para campo.
+  type PredioAdicionalEncuesta = {
+    clave_catastral_otro: string;
+    area_riego_otro: number;
+    cultivos?: { tipo_cultivo: string; superficie_m2: number }[];
+    animales?: { especie: string; cantidad: number }[];
+  };
   const [tieneOtrosPredios, setTieneOtrosPredios] = useState(false);
-  const [prediosAdicionales, setPrediosAdicionales] = useState<{ clave_catastral_otro: string; area_riego_otro: number }[]>([]);
+  const [prediosAdicionales, setPrediosAdicionales] = useState<PredioAdicionalEncuesta[]>([]);
+
+  // v4.3: validación de clave catastral contra el catastro oficial (carga diferida)
+  // Nota: objeto plano (no Map) porque el ícono 'Map' de lucide-react opaca al Map nativo aquí
+  const [clavesCatastro, setClavesCatastro] = useState<Record<string, number> | null>(null);
+  const [cargandoCatastro, setCargandoCatastro] = useState(false);
+  useEffect(() => {
+    if (tieneOtrosPredios && !clavesCatastro && !cargandoCatastro) {
+      setCargandoCatastro(true);
+      fetch('/geo/catastro_busqueda.json')
+        .then((r) => r.json())
+        .then((data: { clave_cata: string; area_predi: number }[]) => {
+          const m: Record<string, number> = {};
+          for (const d of data) if (d.clave_cata) m[String(d.clave_cata).trim()] = d.area_predi || 0;
+          setClavesCatastro(m);
+        })
+        .catch(() => setClavesCatastro(null)) // sin catálogo → no se bloquea la encuesta
+        .finally(() => setCargandoCatastro(false));
+    }
+  }, [tieneOtrosPredios, clavesCatastro, cargandoCatastro]);
+
+  // Producción temporal del predio adicional que se está agregando (opcional)
+  const [tempPredioCultivos, setTempPredioCultivos] = useState<{ tipo_cultivo: string; superficie_m2: number }[]>([]);
+  const [tempPredioAnimales, setTempPredioAnimales] = useState<{ especie: string; cantidad: number }[]>([]);
+  const [tempPCultivo, setTempPCultivo] = useState('');
+  const [tempPCultivoArea, setTempPCultivoArea] = useState('');
+  const [tempPAnimal, setTempPAnimal] = useState('');
+  const [tempPAnimalCant, setTempPAnimalCant] = useState('');
 
   // Temp item states for adding
   const [tempCultivo, setTempCultivo] = useState('');
@@ -116,15 +151,28 @@ export default function EncuestaPublicaPage() {
     setAnimales(animales.filter((_, i) => i !== index));
   };
 
+  // v4.3: estado de validación de la clave que se está escribiendo
+  const claveTrim = tempPredioClave.trim();
+  const claveValidada: 'vacia' | 'valida' | 'invalida' | 'sin_catalogo' =
+    !claveTrim ? 'vacia'
+      : !clavesCatastro ? 'sin_catalogo'
+      : claveTrim in clavesCatastro ? 'valida' : 'invalida';
+
   const addPredioAdicional = () => {
-    if (!tempPredioClave.trim()) return;
+    if (!claveTrim) return;
+    // Solo se bloquea si el catálogo cargó y la clave NO existe en el catastro
+    if (claveValidada === 'invalida') return;
     const area = parseFloat(tempPredioArea) || 0;
     setPrediosAdicionales([...prediosAdicionales, {
-      clave_catastral_otro: tempPredioClave.trim(),
-      area_riego_otro: area
+      clave_catastral_otro: claveTrim,
+      area_riego_otro: area,
+      cultivos: tempPredioCultivos.length > 0 ? tempPredioCultivos : undefined,
+      animales: tempPredioAnimales.length > 0 ? tempPredioAnimales : undefined,
     }]);
     setTempPredioClave('');
     setTempPredioArea('');
+    setTempPredioCultivos([]);
+    setTempPredioAnimales([]);
   };
 
   const removePredioAdicional = (index: number) => {
@@ -1027,13 +1075,31 @@ export default function EncuestaPublicaPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <label className="block text-[10px] text-slate-400 mb-0.5">Clave Catastral de la otra parcela</label>
-                        <input 
+                        <input
                           type="text"
                           value={tempPredioClave}
                           onChange={(e) => setTempPredioClave(e.target.value)}
                           placeholder="Ej: 1702521010088"
-                          className="w-full bg-slate-950 border border-slate-850 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none"
+                          className={`w-full bg-slate-950 border rounded-lg px-2.5 py-1.5 text-xs focus:outline-none ${
+                            claveValidada === 'valida' ? 'border-emerald-600'
+                              : claveValidada === 'invalida' ? 'border-red-600'
+                              : 'border-slate-850'
+                          }`}
                         />
+                        {/* v4.3: validación en vivo contra el catastro oficial */}
+                        {cargandoCatastro && (
+                          <p className="text-[10px] text-slate-500 mt-0.5">Cargando catálogo catastral…</p>
+                        )}
+                        {claveValidada === 'valida' && (
+                          <p className="text-[10px] text-emerald-400 mt-0.5">
+                            ✓ Clave encontrada en el catastro{clavesCatastro?.[claveTrim] ? ` — ${Math.round(clavesCatastro[claveTrim]).toLocaleString('es-EC')} m²` : ''}
+                          </p>
+                        )}
+                        {claveValidada === 'invalida' && (
+                          <p className="text-[10px] text-red-400 mt-0.5">
+                            ✗ Esta clave no existe en el catastro. Verifique el número (13 dígitos, sin espacios).
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label className="block text-[10px] text-slate-400 mb-0.5">Área de Riego de esa parcela (m²)</label>
@@ -1047,11 +1113,89 @@ export default function EncuestaPublicaPage() {
                       </div>
                     </div>
 
+                    {/* v4.3: Producción de ESTA parcela (opcional) */}
+                    <div className="border border-slate-800 rounded-xl p-3 space-y-3 bg-slate-900/30">
+                      <p className="text-[10px] text-slate-400">
+                        🌱 <span className="font-semibold text-slate-300">¿Qué produce en esta parcela?</span> (opcional — si no lo llena, un técnico lo investigará en campo)
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <div className="flex gap-1.5">
+                            <select
+                              value={tempPCultivo}
+                              onChange={(e) => setTempPCultivo(e.target.value)}
+                              className="flex-1 bg-slate-950 border border-slate-850 rounded-lg px-2 py-1.5 text-xs focus:outline-none"
+                            >
+                              <option value="">Cultivo…</option>
+                              {TIPOS_CULTIVO.map((tc) => <option key={tc} value={tc}>{tc}</option>)}
+                            </select>
+                            <input
+                              type="number"
+                              value={tempPCultivoArea}
+                              onChange={(e) => setTempPCultivoArea(e.target.value)}
+                              placeholder="m²"
+                              className="w-16 bg-slate-950 border border-slate-850 rounded-lg px-2 py-1.5 text-xs focus:outline-none"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!tempPCultivo) return;
+                                setTempPredioCultivos([...tempPredioCultivos, { tipo_cultivo: tempPCultivo, superficie_m2: parseFloat(tempPCultivoArea) || 0 }]);
+                                setTempPCultivo(''); setTempPCultivoArea('');
+                              }}
+                              className="px-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs cursor-pointer"
+                            >+</button>
+                          </div>
+                          {tempPredioCultivos.map((c, i) => (
+                            <div key={i} className="flex items-center justify-between text-[10px] text-slate-300 bg-slate-950/60 rounded px-2 py-1">
+                              <span>🌾 {c.tipo_cultivo}{c.superficie_m2 ? ` — ${c.superficie_m2} m²` : ''}</span>
+                              <button type="button" onClick={() => setTempPredioCultivos(tempPredioCultivos.filter((_, j) => j !== i))} className="text-red-400 cursor-pointer">✗</button>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="flex gap-1.5">
+                            <select
+                              value={tempPAnimal}
+                              onChange={(e) => setTempPAnimal(e.target.value)}
+                              className="flex-1 bg-slate-950 border border-slate-850 rounded-lg px-2 py-1.5 text-xs focus:outline-none"
+                            >
+                              <option value="">Animal…</option>
+                              {ESPECIES_ANIMALES.map((ea) => <option key={ea} value={ea}>{ea}</option>)}
+                            </select>
+                            <input
+                              type="number"
+                              value={tempPAnimalCant}
+                              onChange={(e) => setTempPAnimalCant(e.target.value)}
+                              placeholder="Cant."
+                              className="w-16 bg-slate-950 border border-slate-850 rounded-lg px-2 py-1.5 text-xs focus:outline-none"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!tempPAnimal) return;
+                                setTempPredioAnimales([...tempPredioAnimales, { especie: tempPAnimal, cantidad: parseInt(tempPAnimalCant) || 1 }]);
+                                setTempPAnimal(''); setTempPAnimalCant('');
+                              }}
+                              className="px-2 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white text-xs cursor-pointer"
+                            >+</button>
+                          </div>
+                          {tempPredioAnimales.map((a, i) => (
+                            <div key={i} className="flex items-center justify-between text-[10px] text-slate-300 bg-slate-950/60 rounded px-2 py-1">
+                              <span>🐄 {a.especie} — {a.cantidad}</span>
+                              <button type="button" onClick={() => setTempPredioAnimales(tempPredioAnimales.filter((_, j) => j !== i))} className="text-red-400 cursor-pointer">✗</button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="flex justify-end pt-1">
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         onClick={addPredioAdicional}
-                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                        disabled={claveValidada === 'invalida' || !claveTrim}
+                        className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 disabled:bg-slate-800 disabled:text-slate-500 disabled:cursor-not-allowed text-white font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
                       >
                         <Plus className="w-3.5 h-3.5" /> Agregar terreno
                       </button>
@@ -1072,7 +1216,16 @@ export default function EncuestaPublicaPage() {
                           <tbody>
                             {prediosAdicionales.map((p, idx) => (
                               <tr key={idx} className="border-b border-slate-900/60 hover:bg-slate-900/20">
-                                <td className="py-2 font-medium">{p.clave_catastral_otro}</td>
+                                <td className="py-2 font-medium">
+                                  {p.clave_catastral_otro}
+                                  {(p.cultivos?.length || p.animales?.length) ? (
+                                    <span className="block text-[9px] text-emerald-400 mt-0.5">
+                                      🌱 {p.cultivos?.length || 0} cultivo(s) · 🐄 {p.animales?.length || 0} animal(es)
+                                    </span>
+                                  ) : (
+                                    <span className="block text-[9px] text-slate-500 mt-0.5">Producción pendiente (campo)</span>
+                                  )}
+                                </td>
                                 <td className="py-2">{p.area_riego_otro} m²</td>
                                 <td className="py-2 text-right">
                                   <button type="button" onClick={() => removePredioAdicional(idx)} className="text-red-400 hover:text-red-300 cursor-pointer">

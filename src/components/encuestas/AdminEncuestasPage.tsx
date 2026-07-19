@@ -727,7 +727,7 @@ export default function AdminEncuestasPage() {
                               <span className="text-[9px] block" style={{ color: 'var(--text-secondary)' }}>Área de Riego Adicional</span>
                               <span className="font-mono text-xs" style={{ color: 'var(--text-primary)' }}>{p.area_riego_otro} m²</span>
                             </div>
-                            <button 
+                            <button
                               onClick={() => handleCopy(String(p.area_riego_otro), `pa_area_${i}`)}
                               className="p-1 rounded transition-colors cursor-pointer hover:bg-black/5 dark:hover:bg-white/10"
                               style={{ color: 'var(--text-secondary)' }}
@@ -735,6 +735,26 @@ export default function AdminEncuestasPage() {
                               {copySuccess[`pa_area_${i}`] ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                             </button>
                           </div>
+                          {/* v4.3: Producción declarada por el regante para este predio (Sección 4) */}
+                          {(p.cultivos?.length || p.animales?.length) ? (
+                            <div className="border-t pt-1.5 space-y-1" style={{ borderTopColor: 'var(--border-color)' }}>
+                              <span className="text-[9px] block font-semibold text-emerald-500">🌱 Producción declarada (para Sección 4 de la ficha hija)</span>
+                              {p.cultivos?.map((c, ci) => (
+                                <span key={`c${ci}`} className="text-[10px] block" style={{ color: 'var(--text-primary)' }}>
+                                  🌾 {c.tipo_cultivo}{c.superficie_m2 ? ` — ${c.superficie_m2.toLocaleString('es-EC')} m²` : ''}
+                                </span>
+                              ))}
+                              {p.animales?.map((a, ai) => (
+                                <span key={`a${ai}`} className="text-[10px] block" style={{ color: 'var(--text-primary)' }}>
+                                  🐄 {a.especie} — {a.cantidad}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="border-t pt-1.5" style={{ borderTopColor: 'var(--border-color)' }}>
+                              <span className="text-[9px] italic" style={{ color: 'var(--text-secondary)' }}>Sin producción declarada — la ficha hija quedará pendiente de investigación en campo</span>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

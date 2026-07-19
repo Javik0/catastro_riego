@@ -1,12 +1,30 @@
 {
-  "total": 267,
-  "pendientes": 267,
+  "total": 2411,
+  "pendientes": 2411,
   "completadas": 0,
   "en_revision": 0,
   "por_sector": {
     "Sector 3": {
       "total": 267,
       "pendientes": 267,
+      "completadas": 0,
+      "en_revision": 0
+    },
+    "Sector 1": {
+      "total": 890,
+      "pendientes": 890,
+      "completadas": 0,
+      "en_revision": 0
+    },
+    "Sin sector": {
+      "total": 737,
+      "pendientes": 737,
+      "completadas": 0,
+      "en_revision": 0
+    },
+    "Sector 2": {
+      "total": 517,
+      "pendientes": 517,
       "completadas": 0,
       "en_revision": 0
     }

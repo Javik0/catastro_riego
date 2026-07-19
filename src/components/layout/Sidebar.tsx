@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import {
   LayoutDashboard, Map, ClipboardList, FileText, ClipboardCheck,
-  LogOut, ChevronLeft, ChevronRight, Menu, X,
+  LogOut, ChevronLeft, ChevronRight, Menu, X, GitBranch,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { path: '/fichas', icon: ClipboardList, label: 'Fichas', end: false },
   { path: '/reportes', icon: FileText, label: 'Reportes', end: false },
   { path: '/encuestas', icon: ClipboardCheck, label: 'Encuestas', end: false },
+  { path: '/auditoria-hijas', icon: GitBranch, label: 'Fichas Hijas', end: false },
 ];
 
 interface Props {
@@ -25,10 +26,10 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
   const filteredNavItems = NAV_ITEMS.filter((item) => {
     if (isTecnico) {
-      return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas';
+      return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas' || item.path === '/auditoria-hijas';
     }
-    // El admin puede ver todo (incluyendo encuestas), el cliente no puede ver encuestas
-    if (item.path === '/encuestas') {
+    // El admin puede ver todo; el cliente no ve encuestas ni el panel de fichas hijas
+    if (item.path === '/encuestas' || item.path === '/auditoria-hijas') {
       return isAdmin;
     }
     return true;
