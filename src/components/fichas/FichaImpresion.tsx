@@ -491,7 +491,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
 
       <div className="text-center mb-4 flex flex-col items-center">
         <h3 className="text-[10.5pt] font-extrabold text-[#1e3a8a] uppercase tracking-[0.08em] relative inline-block">
-          Ficha Técnica de Información de Regante
+          Ficha de empadronamiento predial y productivo – línea base censal
           <div className="absolute -bottom-1.5 left-[15%] right-[15%] h-[2px] bg-blue-500/60 rounded-full"></div>
         </h3>
         <div className="flex gap-4 mt-3.5 text-[7.5pt] font-mono text-slate-700 bg-slate-50/80 px-4 py-1.5 rounded-md border border-slate-200 shadow-sm">
