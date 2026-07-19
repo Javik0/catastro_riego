@@ -1040,29 +1040,79 @@ MAPEO_TECNICOS = {
     'u0_a200': 'Melanie2',
 }
 
+def _es_ficha_hija(props):
+    """Helper: el GeoPackage guarda booleanos como 1/0."""
+    return props.get('es_ficha_hija') in (1, True)
+
+
 def export_stats(fichas):
     print("\n📊 Generando estadísticas para el Login...")
     claves = set()
     tecnicos = set()
+    hijas = [f for f in fichas if _es_ficha_hija(f['properties'])]
+    principales = [f for f in fichas if not _es_ficha_hija(f['properties'])]
     for f in fichas:
         c = f['properties'].get('cod_poligono') or f['properties'].get('clave_catastral')
         if c:
             claves.add(c)
         t = f['properties'].get('creado_por')
-        if t:
+        if t and t.strip() != 'AUTO-SECCION7':  # el generador no es un técnico
             nombre_tec = MAPEO_TECNICOS.get(t.strip(), t.strip())
             tecnicos.add(nombre_tec)
-            
+
+    hijas_pendientes = sum(
+        1 for f in hijas
+        if (f['properties'].get('estado_investigacion') or 'pendiente_produccion') != 'completada'
+    )
     stats = {
-        "fichas": len(fichas),
+        # "fichas" = solo principales, para no inflar el conteo público con hijas pendientes
+        "fichas": len(principales),
         "predios": len(claves),
-        "tecnicos": len(tecnicos) if len(tecnicos) > 0 else 9
+        "tecnicos": len(tecnicos) if len(tecnicos) > 0 else 9,
+        "fichas_hijas": len(hijas),
+        "fichas_hijas_pendientes": hijas_pendientes,
+        "fichas_hijas_completadas": len(hijas) - hijas_pendientes,
     }
-    
+
     path = os.path.join(OUTPUT_DIR, 'stats.json')
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(stats, f, ensure_ascii=False, indent=2)
-    print(f"  ✓ {stats['fichas']} fichas, {stats['predios']} predios, {stats['tecnicos']} técnicos → stats.json")
+    print(f"  ✓ {stats['fichas']} fichas principales + {stats['fichas_hijas']} hijas, {stats['predios']} predios, {stats['tecnicos']} técnicos → stats.json")
+
+
+def export_auditoria_fichas_hijas(fichas):
+    """Control de fichas hijas por sector/estado/técnico → auditoria_fichas_hijas.json"""
+    print("\n📋 Generando auditoría de fichas hijas...")
+    hijas = [f['properties'] for f in fichas if _es_ficha_hija(f['properties'])]
+    por_sector = {}
+    por_tecnico = {}
+    for p in hijas:
+        sector = p.get('sector_investigacion') or 'Sin sector'
+        estado = p.get('estado_investigacion') or 'pendiente_produccion'
+        s = por_sector.setdefault(sector, {'total': 0, 'pendientes': 0, 'completadas': 0, 'en_revision': 0})
+        s['total'] += 1
+        if estado == 'completada':
+            s['completadas'] += 1
+            tec = p.get('completado_por') or 'Sin asignar'
+            tec = MAPEO_TECNICOS.get(tec.strip(), tec.strip()) if isinstance(tec, str) else tec
+            por_tecnico[tec] = por_tecnico.get(tec, 0) + 1
+        elif estado == 'en_revision':
+            s['en_revision'] += 1
+        else:
+            s['pendientes'] += 1
+
+    data = {
+        'total': len(hijas),
+        'pendientes': sum(s['pendientes'] for s in por_sector.values()),
+        'completadas': sum(s['completadas'] for s in por_sector.values()),
+        'en_revision': sum(s['en_revision'] for s in por_sector.values()),
+        'por_sector': por_sector,
+        'completadas_por_tecnico': por_tecnico,
+    }
+    path = os.path.join(OUTPUT_DIR, 'auditoria_fichas_hijas.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    print(f"  ✓ {data['total']} fichas hijas ({data['pendientes']} pendientes, {data['completadas']} completadas) → auditoria_fichas_hijas.json")
 
 def verificar_y_reinyectar_monteserin():
     print("\n🔍 Validando consistencia de fichas locales inyectadas (Monteserín Bajo)...")
@@ -1121,6 +1171,7 @@ if __name__ == '__main__':
     export_ramales()
     export_tablas_hijas()
     export_stats(fichas)
+    export_auditoria_fichas_hijas(fichas)
 
     # Escribir reporte histórico de depuración en logs_depuracion/
     try:

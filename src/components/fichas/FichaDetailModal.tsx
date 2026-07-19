@@ -5,7 +5,7 @@ import {
   Hash, CreditCard, Phone, Users, Award, BookOpen, Ruler, Waves, Calendar, Percent, 
   DollarSign, Lightbulb, Compass, Activity, FileText 
 } from 'lucide-react';
-import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
+import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico } from '../../lib/constants';
 import FichaImpresion from './FichaImpresion';
 
@@ -14,6 +14,10 @@ const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
 interface Props {
   ficha: FichaPredio;
   onClose: () => void;
+  /** Lista completa de fichas — habilita los links ficha madre ↔ fichas hijas */
+  todasFichas?: FichaPredio[];
+  /** Navegar a otra ficha dentro del mismo modal (madre o hija) */
+  onSelectFicha?: (f: FichaPredio) => void;
 }
 
 const TABS = [
@@ -50,8 +54,11 @@ function Field({ label, value, icon: Icon }: FieldProps) {
   );
 }
 
-export default function FichaDetailModal({ ficha, onClose }: Props) {
+export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelectFicha }: Props) {
   const [activeTab, setActiveTab] = useState<string>('propietario');
+  const fichaMadre = esFichaHija(ficha) && ficha.ficha_madre_id && todasFichas
+    ? todasFichas.find((f) => f.id === ficha.ficha_madre_id)
+    : undefined;
   const [cultivos, setCultivos] = useState<CultivoAgricola[]>([]);
   const [animales, setAnimales] = useState<AnimalEspecie[]>([]);
   const [prediosAdicionales, setPrediosAdicionales] = useState<PredioAdicional[]>([]);
@@ -315,6 +322,26 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
                         <p className="text-xs text-slate-300 italic">"{pa.observaciones_otro}"</p>
                       </div>
                     )}
+                    {/* Link a la ficha hija generada (v4.3) */}
+                    {pa.ficha_hija_generada_id && todasFichas && onSelectFicha && (() => {
+                      const hija = todasFichas.find((f) => f.id === pa.ficha_hija_generada_id);
+                      if (!hija) return null;
+                      const pendiente = esHijaPendiente(hija);
+                      return (
+                        <div className="mt-2 pt-2 border-t border-slate-700/10">
+                          <button
+                            onClick={() => onSelectFicha(hija)}
+                            className={`px-2.5 py-1 rounded-lg border font-semibold text-[11px] transition-colors cursor-pointer ${
+                              pendiente
+                                ? 'bg-white/5 border-slate-500/40 text-slate-200 hover:bg-white/10'
+                                : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
+                            }`}
+                          >
+                            {pendiente ? '⚪' : '✅'} Ver ficha hija generada: {hija.codigo_final} →
+                          </button>
+                        </div>
+                      );
+                    })()}
                   </div>
                 ))}
               </div>
@@ -374,6 +401,23 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
                 <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />
               </div>
             </div>
+
+            {/* Datos de Ficha Hija (v4.3) */}
+            {esFichaHija(ficha) && (
+              <div className="border border-slate-700/40 rounded-xl p-4 bg-slate-800/10 space-y-3">
+                <span className="text-xs font-bold text-blue-400">📋 Datos de Ficha Hija</span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Field label="Estado de Investigación" value={
+                    esHijaPendiente(ficha) ? '⚪ Pendiente Producción (S4)'
+                      : ficha.estado_investigacion === 'en_revision' ? '🔄 En Revisión' : '✅ Completada'
+                  } icon={Activity} />
+                  <Field label="Origen de los Datos" value={ficha.origen_datos} icon={FileText} />
+                  <Field label="Ficha Madre (ID)" value={ficha.ficha_madre_id} icon={Hash} />
+                  <Field label="Sección 4 Completada por" value={ficha.completado_por ? getNombreTecnico(ficha.completado_por) : null} icon={User} />
+                  <Field label="Fecha de Completación" value={ficha.fecha_completado} icon={Calendar} />
+                </div>
+              </div>
+            )}
  
             {/* Foto del Predio */}
             <div className="border border-slate-700/40 rounded-xl overflow-hidden">
@@ -451,6 +495,39 @@ export default function FichaDetailModal({ ficha, onClose }: Props) {
           </div>
         </div>
  
+        {/* Banner de Ficha Hija (v4.3) */}
+        {esFichaHija(ficha) && (
+          <div className={`flex flex-wrap items-center gap-2 px-6 py-2.5 border-b text-xs ${
+            esHijaPendiente(ficha)
+              ? 'bg-slate-100/5 border-slate-500/30'
+              : 'bg-emerald-950/30 border-emerald-800/30'
+          }`}>
+            <span className={`px-2 py-0.5 rounded-full font-bold text-[10px] uppercase tracking-wider border ${
+              esHijaPendiente(ficha)
+                ? 'bg-white/10 text-slate-200 border-slate-400/40'
+                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+            }`}>
+              {esHijaPendiente(ficha) ? '⚪ Pendiente Producción (S4)' : '✅ Completada'}
+            </span>
+            <span className="text-slate-400">
+              📋 Ficha Hija — generada desde la Sección 7 de la ficha madre
+            </span>
+            {fichaMadre && onSelectFicha && (
+              <button
+                onClick={() => onSelectFicha(fichaMadre)}
+                className="ml-auto px-2.5 py-1 rounded-lg bg-blue-600/10 border border-blue-500/30 text-blue-400 font-semibold hover:bg-blue-600/20 transition-colors cursor-pointer text-[11px]"
+              >
+                Ver ficha madre: {fichaMadre.codigo_final} →
+              </button>
+            )}
+            {ficha.completado_por && (
+              <span className="text-emerald-300/80 text-[10px]">
+                Completada por {getNombreTecnico(ficha.completado_por)} · {ficha.fecha_completado || ''}
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Tabs Modernas en Píldoras */}
         <div className="flex overflow-x-auto gap-1 border-b border-slate-800/60 px-6 py-3 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-800">
           {TABS.map(({ id, label, icon: Icon }) => (

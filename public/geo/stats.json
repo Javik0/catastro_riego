@@ -1,5 +1,8 @@
 {
   "fichas": 4173,
-  "predios": 3033,
-  "tecnicos": 9
+  "predios": 3298,
+  "tecnicos": 9,
+  "fichas_hijas": 267,
+  "fichas_hijas_pendientes": 267,
+  "fichas_hijas_completadas": 0
 }

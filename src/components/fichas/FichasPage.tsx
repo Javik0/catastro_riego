@@ -4,7 +4,7 @@ import {
   Search, ChevronLeft, ChevronRight, ArrowUpDown,
   Eye, Loader2, X, MapPin,
 } from 'lucide-react';
-import { type FichaPredio, safeToDate } from '../../lib/types';
+import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esHijaCompletada } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico } from '../../lib/constants';
 import { useMapNav } from '../../hooks/useMapNav';
 import FichaDetailModal from './FichaDetailModal';
@@ -17,6 +17,7 @@ interface Props {
 const PAGE_SIZES = [25, 50, 100];
 
 const COLUMNS: { key: keyof FichaPredio; label: string; width?: string }[] = [
+  { key: 'es_ficha_hija', label: 'Tipo', width: '70px' },
   { key: 'codigo_final', label: 'Código', width: '90px' },
   { key: 'propietario', label: 'Propietario' },
   { key: 'cedula', label: 'Cédula', width: '100px' },
@@ -36,13 +37,22 @@ export default function FichasPage({ fichas, loading }: Props) {
   const [sortKey, setSortKey] = useState<keyof FichaPredio>('fecha_creacion');
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('desc');
   const [selectedFicha, setSelectedFicha] = useState<FichaPredio | null>(null);
+  const [filtroTipo, setFiltroTipo] = useState<'todas' | 'principales' | 'hijas' | 'hijas_pendientes'>('todas');
   const { navigateToFichaMap } = useMapNav();
   const navigate = useNavigate();
 
+  const totalHijas = useMemo(() => fichas.filter(esFichaHija).length, [fichas]);
+  const totalHijasPendientes = useMemo(() => fichas.filter(esHijaPendiente).length, [fichas]);
+
   const filtered = useMemo(() => {
-    if (!search.trim()) return fichas;
+    let base = fichas;
+    if (filtroTipo === 'principales') base = fichas.filter((f) => !esFichaHija(f));
+    else if (filtroTipo === 'hijas') base = fichas.filter(esFichaHija);
+    else if (filtroTipo === 'hijas_pendientes') base = fichas.filter(esHijaPendiente);
+
+    if (!search.trim()) return base;
     const q = search.toLowerCase();
-    return fichas.filter(
+    return base.filter(
       (f) =>
         f.propietario?.toLowerCase().includes(q) ||
         f.apellidos?.toLowerCase().includes(q) ||
@@ -51,7 +61,7 @@ export default function FichasPage({ fichas, loading }: Props) {
         f.codigo_final?.toLowerCase().includes(q) ||
         f.clave_catastral?.includes(q)
     );
-  }, [fichas, search]);
+  }, [fichas, search, filtroTipo]);
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
@@ -95,9 +105,34 @@ export default function FichasPage({ fichas, loading }: Props) {
 
   const formatCell = (ficha: FichaPredio, key: keyof FichaPredio): React.ReactNode => {
     const val = ficha[key];
-    if (val == null) return '—';
+    // 'es_ficha_hija' es null en las fichas principales — el badge lo resuelve
+    if (val == null && key !== 'es_ficha_hija') return '—';
 
     switch (key) {
+      case 'es_ficha_hija': {
+        if (esHijaPendiente(ficha)) {
+          return (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 border border-slate-400/40 text-slate-200"
+              title="Ficha hija — pendiente Sección 4 (Producción)">
+              ⚪ Hija
+            </span>
+          );
+        }
+        if (esHijaCompletada(ficha)) {
+          return (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400"
+              title="Ficha hija — Sección 4 completada">
+              ✅ Hija
+            </span>
+          );
+        }
+        return (
+          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-blue-500/10 border border-blue-500/20 text-blue-400"
+            title="Ficha principal investigada en campo">
+            🔵 Ppal.
+          </span>
+        );
+      }
       case 'creado_por':
         return (
           <span className="flex items-center gap-1.5">
@@ -150,6 +185,21 @@ export default function FichasPage({ fichas, loading }: Props) {
             </button>
           )}
         </div>
+
+        {totalHijas > 0 && (
+          <select
+            value={filtroTipo}
+            onChange={(e) => { setFiltroTipo(e.target.value as typeof filtroTipo); setPage(0); }}
+            className="py-2 px-2 rounded-lg text-xs focus:outline-none cursor-pointer"
+            style={inputStyle}
+            title="Filtrar por tipo de ficha"
+          >
+            <option value="todas">Todas las fichas</option>
+            <option value="principales">🔵 Solo principales</option>
+            <option value="hijas">Solo fichas hijas</option>
+            <option value="hijas_pendientes">⚪ Hijas pendientes S4 ({totalHijasPendientes})</option>
+          </select>
+        )}
 
         <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
           {sorted.length} de {fichas.length} registros
@@ -300,7 +350,12 @@ export default function FichasPage({ fichas, loading }: Props) {
       </div>
 
       {selectedFicha && (
-        <FichaDetailModal ficha={selectedFicha} onClose={() => setSelectedFicha(null)} />
+        <FichaDetailModal
+          ficha={selectedFicha}
+          onClose={() => setSelectedFicha(null)}
+          todasFichas={fichas}
+          onSelectFicha={(f) => setSelectedFicha(f)}
+        />
       )}
     </div>
   );

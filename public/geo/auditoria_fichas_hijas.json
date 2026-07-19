@@ -1,0 +1,15 @@
+{
+  "total": 267,
+  "pendientes": 267,
+  "completadas": 0,
+  "en_revision": 0,
+  "por_sector": {
+    "Sector 3": {
+      "total": 267,
+      "pendientes": 267,
+      "completadas": 0,
+      "en_revision": 0
+    }
+  },
+  "completadas_por_tecnico": {}
+}

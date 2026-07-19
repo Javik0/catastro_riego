@@ -7,7 +7,7 @@ import L from 'leaflet';
 import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X } from 'lucide-react';
-import { type FichaPredio, safeToDate } from '../../lib/types';
+import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
 import { useMapNav } from '../../hooks/useMapNav';
 import { wgs84ToUtm17S, type CRS } from '../../lib/utm';
@@ -43,12 +43,15 @@ const pulseIcon = L.divIcon({
 });
 
 // ── Leyenda ──────────────────────────────────────────────────────────
-function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros }: {
+function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, showHijas, onToggleHijas, totalHijasPendientes }: {
   showAll: boolean;
   onToggleAll: () => void;
   allLoaded: boolean;
   showOtros: boolean;
   onToggleOtros: () => void;
+  showHijas: boolean;
+  onToggleHijas: () => void;
+  totalHijasPendientes: number;
 }) {
   const [show, setShow] = useState(true);
   return (
@@ -78,6 +81,27 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros }
                 );
               })}
           </div>
+          {totalHijasPendientes > 0 && (
+            <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={showHijas}
+                  onChange={onToggleHijas}
+                  className="w-3 h-3 rounded accent-slate-300 cursor-pointer"
+                />
+                <div className="w-3 h-3 rounded-full shrink-0 bg-white" style={{ border: '1.5px dashed #334155' }} />
+                <div>
+                  <span className="text-[10px] font-medium" style={{ color: 'var(--text-secondary)' }}>
+                    Fichas hijas pendientes
+                  </span>
+                  <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
+                    {totalHijasPendientes.toLocaleString('es-EC')} pendientes de Sección 4
+                  </span>
+                </div>
+              </label>
+            </div>
+          )}
           <div className="mt-3 pt-2 border-t space-y-1.5" style={{ borderColor: 'var(--border-color)' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Capas</p>
             <div className="flex items-center gap-2">
@@ -480,7 +504,13 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
     }
   }, [isSelected]);
 
-  const color = getColorTecnico(ficha.creado_por);
+  // Fichas hijas (v4.3): pendiente = BLANCO con borde negro discontinuo;
+  // completada = color del técnico que llenó la S4, con borde azul.
+  const hijaPendiente = esHijaPendiente(ficha);
+  const hijaCompletada = esFichaHija(ficha) && !hijaPendiente;
+  const color = hijaPendiente
+    ? '#ffffff'
+    : getColorTecnico((hijaCompletada && ficha.completado_por) || ficha.creado_por);
   const lat = coords[0];
   const lng = coords[1];
   const utm = wgs84ToUtm17S(lat, lng);
@@ -491,9 +521,10 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
       center={coords}
       radius={isSelected ? 11 : 6}
       pathOptions={{
-        fillColor: color, fillOpacity: 0.9,
-        color: isSelected ? '#fff' : 'rgba(255,255,255,0.5)',
-        weight: isSelected ? 3 : 1,
+        fillColor: color, fillOpacity: hijaPendiente ? 0.95 : 0.9,
+        color: hijaPendiente ? '#1e293b' : hijaCompletada ? '#2563eb' : (isSelected ? '#fff' : 'rgba(255,255,255,0.5)'),
+        weight: isSelected ? 3 : (esFichaHija(ficha) ? 1.5 : 1),
+        dashArray: hijaPendiente ? '3 3' : undefined,
       }}
     >
       <Tooltip direction="top" offset={[0, -8]} opacity={0.9}>
@@ -504,6 +535,15 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
           <div className="font-bold text-sm border-b pb-1 mb-2">
             {ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}
           </div>
+          {esFichaHija(ficha) && (
+            <div className={`px-2 py-1 rounded text-[10px] font-bold mb-1 ${
+              hijaPendiente ? 'bg-slate-200 text-slate-700' : 'bg-emerald-100 text-emerald-700'
+            }`}>
+              {hijaPendiente
+                ? '⚪ FICHA HIJA — Pendiente Sección 4 (Producción)'
+                : '✅ FICHA HIJA — Completada'}
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
             {([
               ['Código', ficha.codigo_final],
@@ -592,6 +632,7 @@ export default function MapPage({ fichas, loading }: Props) {
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
   const [showOtrosPredios, setShowOtrosPredios] = useState(true); // Visible por defecto
+  const [showHijasPendientes, setShowHijasPendientes] = useState(true); // Fichas hijas ⚪ visibles por defecto
   const [currentZoom, setCurrentZoom] = useState(13);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
@@ -909,6 +950,7 @@ export default function MapPage({ fichas, loading }: Props) {
         {/* ── Fichas: Se ocultan en zoom amplio (< 13) para evitar contaminación visual, excepto la seleccionada ── */}
         {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
           if (currentZoom < 13 && selectedFichaMap?.id !== ficha.id) return null;
+          if (!showHijasPendientes && esHijaPendiente(ficha) && selectedFichaMap?.id !== ficha.id) return null;
           return <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />;
         })}
 
@@ -975,6 +1017,9 @@ export default function MapPage({ fichas, loading }: Props) {
           allLoaded={poligonosLoaded}
           showOtros={showOtrosPredios}
           onToggleOtros={() => setShowOtrosPredios(!showOtrosPredios)}
+          showHijas={showHijasPendientes}
+          onToggleHijas={() => setShowHijasPendientes(!showHijasPendientes)}
+          totalHijasPendientes={fichas.filter(esHijaPendiente).length}
         />
         <MouseCoordinates />
       </MapContainer>

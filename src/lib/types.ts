@@ -102,9 +102,31 @@ export interface FichaPredio {
   dispositivo?: string;
   precision_gps?: number;
 
+  // Ficha Hija (v4.3 — generadas desde Sección 7 "Otros Predios")
+  ficha_madre_id?: string;         // UUID de la ficha madre (null si es principal)
+  es_ficha_hija?: boolean;         // true si fue generada automáticamente
+  estado_investigacion?: 'pendiente_produccion' | 'completada' | 'en_revision' | string;
+  completado_por?: string;         // Técnico que completó la Sección 4
+  fecha_completado?: string;
+  origen_datos?: 'campo' | 'auto_seccion7' | 'encuesta_web' | 'imputado' | string;
+
   // Geometría (para el mapa)
   geo?: { lat: number; lng: number };
   _geojson?: { type: string; coordinates: [number, number] };
+}
+
+// ── Helpers de Ficha Hija (v4.3) ──
+// El GeoJSON exporta booleanos como 1/0, por eso se aceptan ambos formatos.
+export function esFichaHija(f: FichaPredio): boolean {
+  return f.es_ficha_hija === true || (f.es_ficha_hija as unknown) === 1;
+}
+
+export function esHijaPendiente(f: FichaPredio): boolean {
+  return esFichaHija(f) && (f.estado_investigacion || 'pendiente_produccion') !== 'completada';
+}
+
+export function esHijaCompletada(f: FichaPredio): boolean {
+  return esFichaHija(f) && f.estado_investigacion === 'completada';
 }
 
 // ── Cultivo Agrícola (tabla hija — 905+ registros) ──
@@ -146,6 +168,7 @@ export interface PredioAdicional {
   area_sin_riego_otro?: number;
   tiene_observaciones?: boolean;
   observaciones_otro?: string;
+  ficha_hija_generada_id?: string; // UUID de la ficha hija generada (v4.3, trazabilidad)
 }
 
 // ── Polígono del Catastro Rural ──

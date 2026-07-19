@@ -7,7 +7,7 @@ import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
   Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin
 } from 'lucide-react';
-import { type FichaPredio, type EstadisticasResumen } from '../../lib/types';
+import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
 import { getColorTecnico, TECNICOS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -116,7 +116,10 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
   useEffect(() => {
     if (fichas.length > 0) {
-      const s = calcularEstadisticas(fichas);
+      // Las fichas hijas PENDIENTES (Sección 4 sin investigar) se excluyen de
+      // las estadísticas para no duplicar datos heredados de la ficha madre.
+      // Las hijas COMPLETADAS sí cuentan: ya fueron investigadas en campo.
+      const s = calcularEstadisticas(fichas.filter((f) => !esHijaPendiente(f)));
 
       // Calcular cultivos frecuentes desde datos filtrados
       const cultivoCount: Record<string, number> = {};
@@ -165,7 +168,14 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
   const totalDeclaradosPuros = clavesDeclaradasPuras.length;
 
+  // ── Métricas de Fichas Hijas (v4.3 — generadas desde Sección 7) ──
+  const fichasHijas = fichas.filter(esFichaHija);
+  const hijasPendientes = fichasHijas.filter(esHijaPendiente).length;
+  const hijasCompletadas = fichasHijas.length - hijasPendientes;
+  const totalPrincipales = fichas.length - fichasHijas.length;
+
   const fichasPorTecnico = Object.entries(stats.fichasPorTecnico)
+    .filter(([nombre]) => nombre !== 'AUTO-SECCION7') // generador automático, no es un técnico
     .map(([nombre, principales]) => ({
       nombre,
       principales,
@@ -287,20 +297,32 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3">
-        <KPICard 
-          icon={ClipboardList} 
-          label="Fichas Levantadas" 
-          value={stats.totalFichas} 
-          color="#3b82f6" 
-          sub={`Total de fichas registradas en el catastro`}
+        <KPICard
+          icon={ClipboardList}
+          label="Fichas Levantadas"
+          value={totalPrincipales}
+          color="#3b82f6"
+          sub={fichasHijas.length > 0
+            ? `+ ${fichasHijas.length.toLocaleString('es-EC')} fichas hijas (Sección 7)`
+            : `Total de fichas registradas en el catastro`}
         />
-        <KPICard 
-          icon={MapPin} 
-          label="Otros Predios del Regante" 
-          value={totalDeclaradosPuros} 
-          color="#06b6d4" 
-          sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
-        />
+        {fichasHijas.length > 0 ? (
+          <KPICard
+            icon={MapPin}
+            label="Fichas Hijas (Otros Predios)"
+            value={fichasHijas.length}
+            color="#06b6d4"
+            sub={`⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4 · ✅ ${hijasCompletadas.toLocaleString('es-EC')} completadas`}
+          />
+        ) : (
+          <KPICard
+            icon={MapPin}
+            label="Otros Predios del Regante"
+            value={totalDeclaradosPuros}
+            color="#06b6d4"
+            sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
+          />
+        )}
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
