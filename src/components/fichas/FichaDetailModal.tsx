@@ -337,7 +337,7 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
                                 : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
                             }`}
                           >
-                            {pendiente ? '⚪' : '✅'} Ver ficha hija generada: {hija.codigo_final} →
+                            {pendiente ? '⚪' : '✅'} Ver ficha adicional generada: {hija.codigo_final} →
                           </button>
                         </div>
                       );
@@ -405,14 +405,14 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
             {/* Datos de Ficha Hija (v4.3) */}
             {esFichaHija(ficha) && (
               <div className="border border-slate-700/40 rounded-xl p-4 bg-slate-800/10 space-y-3">
-                <span className="text-xs font-bold text-blue-400">📋 Datos de Ficha Hija</span>
+                <span className="text-xs font-bold text-blue-400">📋 Datos de Ficha Adicional</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Field label="Estado de Investigación" value={
                     esHijaPendiente(ficha) ? '⚪ Pendiente Producción (S4)'
                       : ficha.estado_investigacion === 'en_revision' ? '🔄 En Revisión' : '✅ Completada'
                   } icon={Activity} />
                   <Field label="Origen de los Datos" value={ficha.origen_datos} icon={FileText} />
-                  <Field label="Ficha Madre (ID)" value={ficha.ficha_madre_id} icon={Hash} />
+                  <Field label="Ficha Principal (ID)" value={ficha.ficha_madre_id} icon={Hash} />
                   <Field label="Sección 4 Completada por" value={ficha.completado_por ? getNombreTecnico(ficha.completado_por) : null} icon={User} />
                   <Field label="Fecha de Completación" value={ficha.fecha_completado} icon={Calendar} />
                 </div>
@@ -510,14 +510,14 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
               {esHijaPendiente(ficha) ? '⚪ Pendiente Producción (S4)' : '✅ Completada'}
             </span>
             <span className="text-slate-400">
-              📋 Ficha Hija — generada desde la Sección 7 de la ficha madre
+              📋 Ficha Adicional — generada desde la Sección 7 del regante
             </span>
             {fichaMadre && onSelectFicha && (
               <button
                 onClick={() => onSelectFicha(fichaMadre)}
                 className="ml-auto px-2.5 py-1 rounded-lg bg-blue-600/10 border border-blue-500/30 text-blue-400 font-semibold hover:bg-blue-600/20 transition-colors cursor-pointer text-[11px]"
               >
-                Ver ficha madre: {fichaMadre.codigo_final} →
+                Ver ficha principal: {fichaMadre.codigo_final} →
               </button>
             )}
             {ficha.completado_por && (

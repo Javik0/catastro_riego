@@ -76,7 +76,7 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
                 ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                 : 'bg-blue-50 text-blue-700 border-blue-200'
           }`}>
-            {hijaPend ? '⚪ Pendiente S4' : esHija ? '✅ Hija completada' : 'Investigado'}
+            {hijaPend ? '⚪ Pendiente S4' : esHija ? '✅ Adicional completada' : 'Investigado'}
           </span>
         </div>
         <div className="text-[10px] opacity-70 font-mono mt-0.5">
@@ -125,7 +125,7 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
         <div className="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-2 py-2 mb-2 text-[11px] text-slate-600 text-center">
           🔍 Producción pendiente de investigación en campo
           <span className="block text-[9px] opacity-70 mt-0.5">
-            Ficha hija generada desde la Sección 7 del regante
+            Ficha adicional generada desde la Sección 7 del regante
           </span>
         </div>
       ) : (

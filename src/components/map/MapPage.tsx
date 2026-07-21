@@ -99,7 +99,7 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
                 <div className="w-3 h-3 rounded-full shrink-0 bg-white" style={{ border: '1.5px dashed #334155' }} />
                 <div>
                   <span className="text-[10px] font-medium" style={{ color: 'var(--text-secondary)' }}>
-                    Fichas hijas pendientes
+                    Fichas adicionales pendientes
                   </span>
                   <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
                     {totalHijasPendientes.toLocaleString('es-EC')} pendientes de Sección 4
@@ -546,8 +546,8 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
               hijaPendiente ? 'bg-slate-200 text-slate-700' : 'bg-emerald-100 text-emerald-700'
             }`}>
               {hijaPendiente
-                ? '⚪ FICHA HIJA — Pendiente Sección 4 (Producción)'
-                : '✅ FICHA HIJA — Completada'}
+                ? '⚪ FICHA ADICIONAL — Pendiente Sección 4 (Producción)'
+                : '✅ FICHA ADICIONAL — Completada'}
             </div>
           )}
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
@@ -877,7 +877,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                     let extra = '';
                     if (f0) {
                       if (esHijaPendiente(f0)) {
-                        extra = `<br/><span style="color:#64748b">⚪ Ficha hija — pendiente producción</span>`;
+                        extra = `<br/><span style="color:#64748b">⚪ Ficha adicional — pendiente producción</span>`;
                       } else {
                         const cs = (cpf.get(f0.id) || []);
                         const ppal = cs.find((c: any) => c.es_principal) || cs[0];

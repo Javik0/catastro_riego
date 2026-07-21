@@ -5,7 +5,7 @@ import {
   Users, MapPin, Filter, Loader2, BarChart3, Download,
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
-import { type FichaPredio, type PredioAdicional, safeToDate } from '../../lib/types';
+import { type FichaPredio, type PredioAdicional, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, META_COMUNEROS } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -72,7 +72,10 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   }, []);
 
   const getFilteredFichas = (): FichaPredio[] => {
-    let result = [...fichas];
+    // El padrón lista REGANTES, no parcelas: las fichas adicionales (generadas
+    // desde la Sección 7) ya se muestran como sub-filas "Predio Adicional" bajo
+    // su regante, así que se excluyen del listado numerado para no duplicarlas.
+    let result = fichas.filter((f) => !esFichaHija(f));
     switch (reportType) {
       case 'sector':
         if (filterSector) result = result.filter((f) => f.sector_investigacion === filterSector);
@@ -217,7 +220,17 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         adicionales.forEach((pa) => {
           // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
           const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
-          
+
+          // Estado de investigación del lote (ficha adicional generada desde la Sección 7)
+          const fichaAdic = pa.ficha_hija_generada_id
+            ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
+            : undefined;
+          const etiquetaAdicional = fichaAdic
+            ? (esHijaPendiente(fichaAdic)
+                ? '   - Predio Adicional (pendiente investigacion)'
+                : '   - Predio Adicional (investigado)')
+            : '   - Predio Adicional';
+
           const ubicacionAdicional = [
             fichaAdicionalFisica?.parroquia,
             fichaAdicionalFisica?.sector,
@@ -228,10 +241,10 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
 
           rows.push([
             { content: '', styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } }, // #
-            { 
-              content: '   - Predio Adicional', 
-              colSpan: 2, 
-              styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] } 
+            {
+              content: etiquetaAdicional,
+              colSpan: 2,
+              styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] }
             }, // Código + Propietario
             { 
               content: pa.clave_catastral_otro ? `ClvP ${pa.clave_catastral_otro}` : '', 
@@ -591,6 +604,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           'Código': f.codigo_final,
           'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
           'Cédula': f.cedula,
+          'Celular': f.telefono_celular || '',
           'Parroquia': f.parroquia,
           'Sector': f.sector,
           'Comunidad': f.comunidad,

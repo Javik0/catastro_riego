@@ -113,16 +113,16 @@ export default function FichasPage({ fichas, loading }: Props) {
         if (esHijaPendiente(ficha)) {
           return (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 border border-slate-400/40 text-slate-200"
-              title="Ficha hija — pendiente Sección 4 (Producción)">
-              ⚪ Hija
+              title="Ficha adicional — pendiente Sección 4 (Producción)">
+              ⚪ Adicional
             </span>
           );
         }
         if (esHijaCompletada(ficha)) {
           return (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400"
-              title="Ficha hija — Sección 4 completada">
-              ✅ Hija
+              title="Ficha adicional — Sección 4 completada">
+              ✅ Adicional
             </span>
           );
         }
@@ -196,8 +196,8 @@ export default function FichasPage({ fichas, loading }: Props) {
           >
             <option value="todas">Todas las fichas</option>
             <option value="principales">🔵 Solo principales</option>
-            <option value="hijas">Solo fichas hijas</option>
-            <option value="hijas_pendientes">⚪ Hijas pendientes S4 ({totalHijasPendientes})</option>
+            <option value="hijas">Solo fichas adicionales</option>
+            <option value="hijas_pendientes">⚪ Adicionals pendientes S4 ({totalHijasPendientes})</option>
           </select>
         )}
 

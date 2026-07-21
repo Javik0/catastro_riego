@@ -738,7 +738,7 @@ export default function AdminEncuestasPage() {
                           {/* v4.3: Producción declarada por el regante para este predio (Sección 4) */}
                           {(p.cultivos?.length || p.animales?.length) ? (
                             <div className="border-t pt-1.5 space-y-1" style={{ borderTopColor: 'var(--border-color)' }}>
-                              <span className="text-[9px] block font-semibold text-emerald-500">🌱 Producción declarada (para Sección 4 de la ficha hija)</span>
+                              <span className="text-[9px] block font-semibold text-emerald-500">🌱 Producción declarada (para Sección 4 de la ficha adicional)</span>
                               {p.cultivos?.map((c, ci) => (
                                 <span key={`c${ci}`} className="text-[10px] block" style={{ color: 'var(--text-primary)' }}>
                                   🌾 {c.tipo_cultivo}{c.superficie_m2 ? ` — ${c.superficie_m2.toLocaleString('es-EC')} m²` : ''}
@@ -752,7 +752,7 @@ export default function AdminEncuestasPage() {
                             </div>
                           ) : (
                             <div className="border-t pt-1.5" style={{ borderTopColor: 'var(--border-color)' }}>
-                              <span className="text-[9px] italic" style={{ color: 'var(--text-secondary)' }}>Sin producción declarada — la ficha hija quedará pendiente de investigación en campo</span>
+                              <span className="text-[9px] italic" style={{ color: 'var(--text-secondary)' }}>Sin producción declarada — la ficha adicional quedará pendiente de investigación en campo</span>
                             </div>
                           )}
                         </div>

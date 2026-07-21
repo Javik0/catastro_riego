@@ -86,6 +86,25 @@ def get_tecnico_name(usr):
     if not usr: return "Desconocido"
     return MAPEO_TECNICOS.get(usr, str(usr))
 
+def limpiar_texto(valor):
+    """Texto limpio para Excel: evita 'nan'/'None' y el sufijo '.0' de los
+    códigos numéricos leídos como float (claves catastrales, teléfonos)."""
+    if valor is None:
+        return ""
+    try:
+        if pd.isna(valor):
+            return ""
+    except (TypeError, ValueError):
+        pass
+    if isinstance(valor, float) and valor.is_integer():
+        return str(int(valor))
+    texto = str(valor).strip()
+    if texto.lower() in ("nan", "none", "nat"):
+        return ""
+    if texto.endswith(".0") and texto[:-2].isdigit():
+        return texto[:-2]
+    return texto
+
 def main():
     if not os.path.exists(FICHAS_GEOJSON):
         print(f"[ERROR] Archivo GeoJSON de fichas no encontrado en: {FICHAS_GEOJSON}")
@@ -100,6 +119,29 @@ def main():
         geojson_data = json.load(f)
     properties_list = [feat['properties'] for feat in geojson_data['features']]
     df_fichas = pd.DataFrame(properties_list)
+
+    # Estado de investigación de cada ficha adicional (id -> texto), calculado
+    # ANTES de excluirlas del padrón, para la pestaña "Lotes Adicionales".
+    estados_adicionales = {}
+    if 'es_ficha_hija' in df_fichas.columns:
+        for _p in properties_list:
+            if _p.get('es_ficha_hija') in (1, True):
+                _est = (_p.get('estado_investigacion') or 'pendiente_produccion')
+                estados_adicionales[str(_p.get('id') or '').strip()] = (
+                    'Investigado' if _est == 'completada'
+                    else 'En revisión' if _est == 'en_revision'
+                    else 'Pendiente investigación'
+                )
+
+    # El padrón lista REGANTES, no parcelas: las fichas adicionales (generadas
+    # desde la Sección 7) ya aparecen en la pestaña "Lotes Adicionales" bajo su
+    # regante, por lo que se excluyen del padrón para no duplicar registros.
+    if 'es_ficha_hija' in df_fichas.columns:
+        _total = len(df_fichas)
+        df_fichas = df_fichas[~df_fichas['es_ficha_hija'].isin([1, True])].reset_index(drop=True)
+        _excluidas = _total - len(df_fichas)
+        if _excluidas:
+            print(f"  Fichas adicionales excluidas del padrón (van como lotes adicionales): {_excluidas}")
     print(f"Cargados {len(df_fichas)} predios depurados.")
 
     # 2. Cargar cultivos
@@ -252,7 +294,8 @@ def main():
     ws_padron.views.sheetView[0].showGridLines = True
     
     headers_padron = [
-        "N° REGISTRO", "CÉDULA / RUC", "CLAVE CATASTRAL", "APELLIDOS Y NOMBRES", 
+        "N° REGISTRO", "CÉDULA / RUC", "CLAVE CATASTRAL", "APELLIDOS Y NOMBRES",
+        "CELULAR",
         "HIJOS HOMBRES", "HIJOS MUJERES", "NIVEL INSTRUCCIÓN", "TENENCIA PREDIO",
         "PARROQUIA", "SECTOR INVESTIGACIÓN", "COMUNIDAD", "SECTOR COMUNIDAD", "CANAL DE RIEGO", 
         "ÁREA TOTAL (m²)", "ÁREA CON RIEGO (m²)", "ÁREA SIN RIEGO (m²)",
@@ -289,59 +332,64 @@ def main():
         cc_cell.alignment = align_center
         
         ws_padron.cell(row=r_num, column=4, value=row['propietario']).alignment = align_left
-        
+
+        # Celular (contacto del regante) — sin 'nan' cuando el dato no existe
+        cel_cell = ws_padron.cell(row=r_num, column=5, value=limpiar_texto(row.get('telefono_celular')))
+        cel_cell.number_format = '@'
+        cel_cell.alignment = align_center
+
         # Hijos hombres/mujeres
-        ws_padron.cell(row=r_num, column=5, value=row['hijos_hombres'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=6, value=row['hijos_mujeres'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=6, value=row['hijos_hombres'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=7, value=row['hijos_mujeres'] or 0).number_format = '0'
         
         # Nivel Instrucción y Tenencia Predio
-        ws_padron.cell(row=r_num, column=7, value=row['nivel_instruccion'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=8, value=row['tenencia_predio'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=8, value=row['nivel_instruccion'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=9, value=row['tenencia_predio'] or '').alignment = align_center
         
         # Parroquia, Sector Investigación, Comunidad, Sector Comunidad, Canal
-        ws_padron.cell(row=r_num, column=9, value=row['parroquia']).alignment = align_center
-        ws_padron.cell(row=r_num, column=10, value=row['sector_investigacion']).alignment = align_center
-        ws_padron.cell(row=r_num, column=11, value=row['comunidad']).alignment = align_left
-        ws_padron.cell(row=r_num, column=12, value=row['sector_comunidad'] or '').alignment = align_left
-        ws_padron.cell(row=r_num, column=13, value=row['canal'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=10, value=row['parroquia']).alignment = align_center
+        ws_padron.cell(row=r_num, column=11, value=row['sector_investigacion']).alignment = align_center
+        ws_padron.cell(row=r_num, column=12, value=row['comunidad']).alignment = align_left
+        ws_padron.cell(row=r_num, column=13, value=row['sector_comunidad'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=14, value=row['canal'] or '').alignment = align_left
         
         # Áreas
-        ws_padron.cell(row=r_num, column=14, value=row['area_total'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=15, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=16, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=15, value=row['area_total'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=16, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=17, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
         
         # Reservorio y turnos de riego
-        ws_padron.cell(row=r_num, column=17, value=row['tiene_reservorio'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=18, value=row['dias_riego'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=19, value=row['horas_turno'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=18, value=row['tiene_reservorio'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=19, value=row['dias_riego'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=20, value=row['horas_turno'] or 0).number_format = '0'
         
         # Construcción: Agua / Energía
         agua_str = "SÍ" if row['agua_consumo'] in [1, True] else "NO"
         energia_str = "SÍ" if row['energia_electrica'] in [1, True] else "NO"
-        ws_padron.cell(row=r_num, column=20, value=agua_str).alignment = align_center
-        ws_padron.cell(row=r_num, column=21, value=energia_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=21, value=agua_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=22, value=energia_str).alignment = align_center
         
         # Frecuencia y métodos de riego
-        ws_padron.cell(row=r_num, column=22, value=row['frecuencia_riego'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=23, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=24, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=25, value=row['metodo_goteo_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=23, value=row['frecuencia_riego'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=24, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=25, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=26, value=row['metodo_goteo_pct'] or 0).number_format = '0'
         
         # Tarifa
-        ws_padron.cell(row=r_num, column=26, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
-        ws_padron.cell(row=r_num, column=27, value=row['tipo_tarifa'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=28, value=get_tecnico_name(row['creado_por'])).alignment = align_left
+        ws_padron.cell(row=r_num, column=27, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
+        ws_padron.cell(row=r_num, column=28, value=row['tipo_tarifa'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=29, value=get_tecnico_name(row['creado_por'])).alignment = align_left
         
         # Fecha
         fecha_val = str(row['fecha_creacion'] or '')[:10]
-        ws_padron.cell(row=r_num, column=29, value=fecha_val).alignment = align_center
+        ws_padron.cell(row=r_num, column=30, value=fecha_val).alignment = align_center
         
-        # Bordes y fuente (32 columnas totales)
-        for c in range(1, 33):
+        # Bordes y fuente (33 columnas totales, incluye CELULAR)
+        for c in range(1, 34):
             ws_padron.cell(row=r_num, column=c).border = cell_border
             ws_padron.cell(row=r_num, column=c).font = font_data
 
-    ws_padron.auto_filter.ref = f"A1:AF{len(df_fichas) + 1}"
+    ws_padron.auto_filter.ref = f"A1:AG{len(df_fichas) + 1}"
     ws_padron.freeze_panes = "A2"
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -457,7 +505,7 @@ def main():
     ws_predios = wb.create_sheet(title="Lotes Adicionales")
     ws_predios.views.sheetView[0].showGridLines = True
     
-    headers_predios = ["CÓDIGO PREDIO", "PROPIETARIO / REGANTE", "COMUNIDAD", "CÓDIGO LOTE ADICIONAL", "ÁREA LOTE (m²)", "VOLVER AL PADRÓN"]
+    headers_predios = ["CÓDIGO PREDIO", "PROPIETARIO / REGANTE", "COMUNIDAD", "CÓDIGO LOTE ADICIONAL", "ÁREA LOTE (m²)", "ESTADO INVESTIGACIÓN", "VOLVER AL PADRÓN"]
     for col_idx, h in enumerate(headers_predios, start=1):
         cell = ws_predios.cell(row=1, column=col_idx, value=h)
         cell.font = font_header
@@ -483,22 +531,29 @@ def main():
             ws_predios.cell(row=r_idx, column=1, value=codigo_final).alignment = align_center
             ws_predios.cell(row=r_idx, column=2, value=propietario).alignment = align_left
             ws_predios.cell(row=r_idx, column=3, value=comunidad).alignment = align_left
-            ws_predios.cell(row=r_idx, column=4, value=str(row['clave_catastral_otro'] or '').upper().strip()).alignment = align_center
+            ws_predios.cell(row=r_idx, column=4, value=limpiar_texto(row['clave_catastral_otro']).upper()).alignment = align_center
             ws_predios.cell(row=r_idx, column=5, value=row['area_total_otro'] or 0.0).number_format = '#,##0.00'
-            
+
+            # Estado de investigación del lote (ficha adicional generada desde la Sección 7)
+            estado_lote = "Sin ficha adicional"
+            id_adic = str(row.get('ficha_hija_generada_id') or '').strip()
+            if id_adic and id_adic in estados_adicionales:
+                estado_lote = estados_adicionales[id_adic]
+            ws_predios.cell(row=r_idx, column=6, value=estado_lote).alignment = align_center
+
             r_padron = padron_indices.get(f_id, 2)
-            ret_cell = ws_predios.cell(row=r_idx, column=6, value="Volver")
+            ret_cell = ws_predios.cell(row=r_idx, column=7, value="Volver")
             ret_cell.hyperlink = f"#'Padrón General'!D{r_padron}"
             ret_cell.font = font_link
             ret_cell.alignment = align_center
-            
-            for c in range(1, 7):
+
+            for c in range(1, 8):
                 ws_predios.cell(row=r_idx, column=c).border = cell_border
-                if c != 6:
+                if c != 7:
                     ws_predios.cell(row=r_idx, column=c).font = font_data
             r_idx += 1
 
-    ws_predios.auto_filter.ref = f"A1:F{r_idx - 1}"
+    ws_predios.auto_filter.ref = f"A1:G{r_idx - 1}"
     ws_predios.freeze_panes = "A2"
 
     # ENLACES BIDIRECCIONALES
@@ -507,7 +562,7 @@ def main():
         r_num = idx + 2
         f_id = row['id']
         
-        col_cultivos = ws_padron.cell(row=r_num, column=30)
+        col_cultivos = ws_padron.cell(row=r_num, column=31)
         if f_id in cultivos_indices:
             col_cultivos.value = "Ver Cultivos"
             col_cultivos.hyperlink = f"#'Cultivos y Producción'!A{cultivos_indices[f_id]}"
@@ -517,7 +572,7 @@ def main():
             col_cultivos.value = "-"
             col_cultivos.alignment = align_center
             
-        col_animales = ws_padron.cell(row=r_num, column=31)
+        col_animales = ws_padron.cell(row=r_num, column=32)
         if f_id in animales_indices:
             col_animales.value = "Ver Animales"
             col_animales.hyperlink = f"#'Inventario Pecuario'!A{animales_indices[f_id]}"
@@ -527,7 +582,7 @@ def main():
             col_animales.value = "-"
             col_animales.alignment = align_center
             
-        col_predios = ws_padron.cell(row=r_num, column=32)
+        col_predios = ws_padron.cell(row=r_num, column=33)
         if f_id in predios_indices:
             col_predios.value = "Ver Lotes"
             col_predios.hyperlink = f"#'Lotes Adicionales'!A{predios_indices[f_id]}"

@@ -303,13 +303,13 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           value={totalPrincipales}
           color="#3b82f6"
           sub={fichasHijas.length > 0
-            ? `+ ${fichasHijas.length.toLocaleString('es-EC')} fichas hijas (Sección 7)`
+            ? `+ ${fichasHijas.length.toLocaleString('es-EC')} fichas adicionales (Sección 7)`
             : `Total de fichas registradas en el catastro`}
         />
         {fichasHijas.length > 0 ? (
           <KPICard
             icon={MapPin}
-            label="Fichas Hijas (Otros Predios)"
+            label="Fichas Adicionales (Otros Predios)"
             value={fichasHijas.length}
             color="#06b6d4"
             sub={`⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4 · ✅ ${hijasCompletadas.toLocaleString('es-EC')} completadas`}

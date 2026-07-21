@@ -98,7 +98,7 @@ export default function AdminAuditoriaFichasHijas({ fichas, loading }: Props) {
         <GitBranch className="w-5 h-5 text-blue-500" />
         <div>
           <h2 className="text-sm font-bold" style={{ color: 'var(--text-heading)' }}>
-            Auditoría de Fichas Hijas
+            Auditoría de Fichas Adicionales
           </h2>
           <p className="text-[11px]" style={{ color: 'var(--text-muted)' }}>
             Control de predios de la Sección 7 convertidos en fichas — avance de investigación de la Sección 4 (Producción)
@@ -109,7 +109,7 @@ export default function AdminAuditoriaFichasHijas({ fichas, loading }: Props) {
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { label: 'Total Fichas Hijas', value: totales.total, color: '#3b82f6' },
+          { label: 'Total Fichas Adicionales', value: totales.total, color: '#3b82f6' },
           { label: '⚪ Pendientes S4', value: totales.pendientes, color: '#94a3b8' },
           { label: '✅ Completadas', value: totales.completadas, color: '#10b981' },
           { label: '% de Avance', value: `${pctAvance}%`, color: '#f59e0b' },
@@ -174,7 +174,7 @@ export default function AdminAuditoriaFichasHijas({ fichas, loading }: Props) {
           <option value="todos">Todos los sectores</option>
           {sectores.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{filtradas.length} fichas hijas</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{filtradas.length} fichas adicionales</span>
       </div>
 
       {/* Tabla madre → hija */}
@@ -184,7 +184,7 @@ export default function AdminAuditoriaFichasHijas({ fichas, loading }: Props) {
           <table className="w-full">
             <thead>
               <tr className="border-b" style={{ borderColor: 'var(--border-color)' }}>
-                {['Ficha Hija', 'Estado', 'Propietario', 'Clave Catastral', 'Sector', 'Ficha Madre', 'Completada por', 'Fecha S4'].map((h) => (
+                {['Ficha Adicional', 'Estado', 'Propietario', 'Clave Catastral', 'Sector', 'Ficha Principal', 'Completada por', 'Fecha S4'].map((h) => (
                   <th key={h} className="px-3 py-3 text-left text-[10px] font-semibold uppercase tracking-wider"
                     style={{ color: 'var(--text-muted)' }}>{h}</th>
                 ))}
@@ -195,7 +195,7 @@ export default function AdminAuditoriaFichasHijas({ fichas, loading }: Props) {
                 <tr>
                   <td colSpan={8} className="px-3 py-10 text-center text-xs" style={{ color: 'var(--text-muted)' }}>
                     {hijas.length === 0
-                      ? 'Aún no se han generado fichas hijas — se crean con generar_fichas_hijas.py en QGIS.'
+                      ? 'Aún no se han generado fichas adicionales — se crean con generar_fichas_hijas.py en QGIS.'
                       : 'Sin resultados con los filtros actuales.'}
                   </td>
                 </tr>
