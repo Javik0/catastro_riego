@@ -9,6 +9,8 @@ import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X } from 'lucide-react';
 import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
+import PredioPopupCard from './PredioPopupCard';
+import FichaDetailModal from '../fichas/FichaDetailModal';
 import { useMapNav } from '../../hooks/useMapNav';
 import { wgs84ToUtm17S, type CRS } from '../../lib/utm';
 import 'leaflet/dist/leaflet.css';
@@ -16,6 +18,10 @@ import 'leaflet/dist/leaflet.css';
 interface Props {
   fichas: FichaPredio[];
   loading: boolean;
+  /** v4.4: datos para la Tarjeta de Predio (clic en polígono) */
+  allFichas?: FichaPredio[];
+  cultivosData?: any[];
+  animalesData?: any[];
 }
 
 // ── Tipo para el índice de búsqueda catastral ──
@@ -618,8 +624,59 @@ function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
 // Componente Principal del Mapa
 // ══════════════════════════════════════════════════════════════
 
-export default function MapPage({ fichas, loading }: Props) {
+export default function MapPage({ fichas, loading, allFichas, cultivosData = [], animalesData = [] }: Props) {
   const { selectedFichaMap, clearMapSelection } = useMapNav();
+
+  // ── v4.4: Índices en memoria para la Tarjeta de Predio ──
+  // Se calculan una sola vez por cambio de datos; el clic sobre cualquiera de
+  // los 5.310 polígonos resuelve en O(1) sin recorrer listas.
+  const fichasBase = allFichas && allFichas.length > 0 ? allFichas : fichas;
+  const fichasPorClave = useMemo(() => {
+    const m = new Map<string, FichaPredio[]>();
+    for (const f of fichasBase) {
+      const clave = (f.clave_catastral || '').trim();
+      if (!clave) continue;
+      const arr = m.get(clave);
+      if (arr) arr.push(f); else m.set(clave, [f]);
+    }
+    // Fichas principales primero, hijas después (orden de presentación)
+    for (const arr of m.values()) {
+      arr.sort((a, b) => Number(esFichaHija(a)) - Number(esFichaHija(b)));
+    }
+    return m;
+  }, [fichasBase]);
+
+  const cultivosPorFicha = useMemo(() => {
+    const m = new Map<string, any[]>();
+    for (const c of cultivosData) {
+      if (!c.ficha_id) continue;
+      const arr = m.get(c.ficha_id);
+      if (arr) arr.push(c); else m.set(c.ficha_id, [c]);
+    }
+    return m;
+  }, [cultivosData]);
+
+  const animalesPorFicha = useMemo(() => {
+    const m = new Map<string, any[]>();
+    for (const a of animalesData) {
+      if (!a.ficha_id) continue;
+      const arr = m.get(a.ficha_id);
+      if (arr) arr.push(a); else m.set(a.ficha_id, [a]);
+    }
+    return m;
+  }, [animalesData]);
+
+  // Refs para que los handlers de Leaflet (ligados una sola vez) lean datos frescos
+  const indicesRef = useRef({ fichasPorClave, cultivosPorFicha, animalesPorFicha });
+  useEffect(() => {
+    indicesRef.current = { fichasPorClave, cultivosPorFicha, animalesPorFicha };
+  }, [fichasPorClave, cultivosPorFicha, animalesPorFicha]);
+
+  // Predio seleccionado (clic en polígono) y ficha abierta en modal
+  const [predioSeleccionado, setPredioSeleccionado] = useState<{
+    props: any; latlng: [number, number];
+  } | null>(null);
+  const [fichaModal, setFichaModal] = useState<FichaPredio | null>(null);
   const [catastroData, setCatastroData] = useState<FeatureCollection | null>(null);
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
@@ -809,14 +866,37 @@ export default function MapPage({ fichas, loading }: Props) {
                 }}
                 onEachFeature={(feature, layer) => {
                   const p = feature.properties;
-                  if (p) {
-                    layer.bindTooltip(
-                      `<b>${p.apellidos || ''} ${p.nombres || ''}</b><br/>
+                  if (!p) return;
+                  // Tooltip perezoso: se arma al momento de mostrarlo, con los
+                  // índices actuales (estado + cultivo principal si existen)
+                  layer.bindTooltip(() => {
+                    const clave = String(p.clave_cata || '').trim();
+                    const { fichasPorClave: fpc, cultivosPorFicha: cpf } = indicesRef.current;
+                    const fichasPredio = fpc.get(clave) || [];
+                    const f0 = fichasPredio[0];
+                    let extra = '';
+                    if (f0) {
+                      if (esHijaPendiente(f0)) {
+                        extra = `<br/><span style="color:#64748b">⚪ Ficha hija — pendiente producción</span>`;
+                      } else {
+                        const cs = (cpf.get(f0.id) || []);
+                        const ppal = cs.find((c: any) => c.es_principal) || cs[0];
+                        if (ppal?.tipo_cultivo) extra = `<br/>🌱 ${ppal.tipo_cultivo}`;
+                      }
+                      if (fichasPredio.length > 1) extra += `<br/><span style="color:#64748b">${fichasPredio.length} fichas en este predio</span>`;
+                    }
+                    return `<b>${p.apellidos || ''} ${p.nombres || ''}</b><br/>
                        Clave: ${p.clave_cata || '—'}<br/>
-                       Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}`,
-                      { sticky: true, opacity: 0.9 }
-                    );
-                  }
+                       Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}${extra}<br/>
+                       <span style="color:#3b82f6;font-size:10px">Clic para ver detalles</span>`;
+                  }, { sticky: true, opacity: 0.9 });
+                  // Clic → abrir la Tarjeta de Predio
+                  layer.on('click', (e: LeafletMouseEvent) => {
+                    setPredioSeleccionado({
+                      props: p,
+                      latlng: [e.latlng.lat, e.latlng.lng],
+                    });
+                  });
                 }}
               />
             </LayersControl.Overlay>
@@ -1022,7 +1102,35 @@ export default function MapPage({ fichas, loading }: Props) {
           totalHijasPendientes={fichas.filter(esHijaPendiente).length}
         />
         <MouseCoordinates />
+
+        {/* ── v4.4: Tarjeta de Predio (clic en polígono catastral) ── */}
+        {predioSeleccionado && (
+          <Popup
+            key={`predio-${predioSeleccionado.props.clave_cata}-${predioSeleccionado.latlng.join(',')}`}
+            position={predioSeleccionado.latlng}
+            maxWidth={310}
+            eventHandlers={{ remove: () => setPredioSeleccionado(null) }}
+          >
+            <PredioPopupCard
+              predio={predioSeleccionado.props}
+              fichas={fichasPorClave.get(String(predioSeleccionado.props.clave_cata || '').trim()) || []}
+              cultivosPorFicha={cultivosPorFicha}
+              animalesPorFicha={animalesPorFicha}
+              onVerFicha={(f) => setFichaModal(f)}
+            />
+          </Popup>
+        )}
       </MapContainer>
+
+      {/* Modal de ficha completa abierto desde la Tarjeta de Predio */}
+      {fichaModal && (
+        <FichaDetailModal
+          ficha={fichaModal}
+          onClose={() => setFichaModal(null)}
+          todasFichas={fichasBase}
+          onSelectFicha={(f) => setFichaModal(f)}
+        />
+      )}
     </div>
   );
 }
