@@ -2008,17 +2008,6 @@
     "ficha_hija_generada_id": "{1f070c2c-ec34-4d92-83b9-ec07e77f7c60}"
   },
   {
-    "fid": 204,
-    "id_adicional": "{94026f71-d0c0-4ef9-adb2-4c6c713e6a9e}",
-    "ficha_id": "{303bb264-ba75-448f-8fa9-2838179cc324}",
-    "clave_catastral_otro": "1702521040048",
-    "area_total_otro": 8227.41,
-    "area_riego_otro": 8227.41,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 8227.41,
-    "ficha_hija_generada_id": "{40e556e8-e1c9-41eb-a6cc-67b669610105}"
-  },
-  {
     "fid": 205,
     "id_adicional": "{d1db795d-8815-4a93-a08d-e27963926967}",
     "ficha_id": "{d3e136bb-f1e3-4138-b54d-df08a4766970}",
@@ -2533,9 +2522,11 @@
     "ficha_id": "{abe4a3d9-af9f-483b-ad6d-41dc4954ca3d}",
     "clave_catastral_otro": "1702520670058",
     "area_total_otro": 6797.56,
-    "area_riego_otro": 6797.56,
-    "area_sin_riego_otro": 0.0,
+    "area_riego_otro": 679756.0,
+    "area_sin_riego_otro": -672958.44,
     "area_lote_asignado_otro": 6797.56,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra 1000 m habas ,papas 2000 m y pastor mejorado 3000 m ",
     "ficha_hija_generada_id": "{b9ae0f54-8e28-4281-ad88-7fb5536cee53}"
   },
   {
@@ -2544,9 +2535,11 @@
     "ficha_id": "{abe4a3d9-af9f-483b-ad6d-41dc4954ca3d}",
     "clave_catastral_otro": "1702520600049",
     "area_total_otro": 6794.79,
-    "area_riego_otro": 6794.79,
-    "area_sin_riego_otro": 0.0,
+    "area_riego_otro": 679479.0,
+    "area_sin_riego_otro": -672684.21,
     "area_lote_asignado_otro": 6794.79,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Siembra todo pasto mejorado ",
     "ficha_hija_generada_id": "{68e3ac6c-4cb8-46cf-8e1c-a0199bbad34f}"
   },
   {
@@ -4527,6 +4520,8 @@
     "area_riego_otro": 5500.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5500.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 500m2 de cebolla, potrero es 500, bosque es 1500 ",
     "ficha_hija_generada_id": "{fb7d8fc5-edfa-4bd5-b0bb-cf2e6479e0ea}"
   },
   {
@@ -4538,6 +4533,8 @@
     "area_riego_otro": 4123.75,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4123.75,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado todo el predio de cebolla 4123m2 ",
     "ficha_hija_generada_id": "{eca22cb8-402d-42bd-9e9d-485fa04e2e8d}"
   },
   {
@@ -4549,6 +4546,8 @@
     "area_riego_otro": 5589.55,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5589.55,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1500m2, papas 1000m2, pasto mejorado 500 m2 y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{4462d9e0-2cbb-47d6-a0e1-4c891ea1dd64}"
   },
   {
@@ -4560,6 +4559,8 @@
     "area_riego_otro": 5423.54,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5423.54,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 800m2 de habas , cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{5e0349fd-f6c1-4eb2-baaa-c1f8bb0d72f1}"
   },
   {
@@ -4571,6 +4572,8 @@
     "area_riego_otro": 5000.0,
     "area_sin_riego_otro": 5841.52,
     "area_lote_asignado_otro": 10841.52,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{0137ca39-e8a5-4a9f-b181-c341ccb33f73}"
   },
   {
@@ -4582,6 +4585,8 @@
     "area_riego_otro": 7442.25,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7442.25,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de habas , cebolla 1500m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{c3e32fa4-bb05-45d8-aa79-cf3d1bb932f2}"
   },
   {
@@ -4591,8 +4596,10 @@
     "clave_catastral_otro": "1702520380060",
     "area_total_otro": 4723.96,
     "area_riego_otro": 4723.96,
-    "area_sin_riego_otro": -4723.96,
-    "area_lote_asignado_otro": 4723.96
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4723.96,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1000m2, papas 1000m2 ,chorros 1000m2  y el resto es pasto no mejorado "
   },
   {
     "fid": 431,
@@ -4604,7 +4611,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10242.53,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Heredera la hermana María Pastora Sopalo Lanchimba, ya fallecida y el Sr. está a cargo y baja el agua del terreno de él. ",
+    "observaciones_otro": "Heredera la hermana María Pastora Sopalo Lanchimba, ya fallecida y el Sr. está a cargo y baja el agua del terreno de él. Y tiene cultivado  cebolla 2500m², papas 1500m², pasto mejorado 1500m² y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{78ebbf8f-f788-41cd-a289-112c20d297ef}"
   },
   {
@@ -4617,7 +4624,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10461.47,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Candelaria Moras",
+    "observaciones_otro": "Sector: Candelaria Moras Tiene cultivado 1000m2 de habas , cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{85644d75-1522-4e3f-be87-5001667285f7}"
   },
   {
@@ -4629,6 +4636,8 @@
     "area_riego_otro": 6294.98,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 6294.98,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{9e0c7aa9-d541-4037-804a-b299b12743d7}"
   },
   {
@@ -4653,6 +4662,8 @@
     "area_riego_otro": 4620.74,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4620.74,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo el predio es de pasto mejorado 2000m²  y el resto del predio es  potrero ",
     "ficha_hija_generada_id": "{c57b7531-ef87-44ac-b44f-261d70a669a4}"
   },
   {
@@ -4664,6 +4675,8 @@
     "area_riego_otro": 3593.75,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3593.75,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1000m2, papas 500m² , pasto mejorado 500m² y el resto es potrero ",
     "ficha_hija_generada_id": "{2f2d8749-a714-4db0-953f-ce324227aee1}"
   },
   {
@@ -4676,7 +4689,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9502.95,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Candelaria Moras Urpichupa",
+    "observaciones_otro": "Sector: Candelaria Moras Urpichupa y tiene cultivado  cebolla 1000m2 , papas 1000m2, chuchos 800m², pasto mejorado 1000m2  y el resto potrero ",
     "ficha_hija_generada_id": "{2130f9f3-51d0-4abb-9390-0ecb93aa44b3}"
   },
   {
@@ -4688,6 +4701,8 @@
     "area_riego_otro": 5588.97,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5588.97,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "TIENE CULTIVADO CEBOLLA 1000m², PAPAS 1000,m² PASTO MEJORADO 500m² Y EL RESTO ES POTERO",
     "ficha_hija_generada_id": "{715735ae-58be-422d-b999-d39ebe002066}"
   },
   {
@@ -4709,6 +4724,8 @@
     "area_riego_otro": 4874.02,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4874.02,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de habas , cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{7d9b41ff-938c-416d-8a7e-4302f73e4b5f}"
   },
   {
@@ -4756,7 +4773,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7187.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembra todo el terreno avena,trigo y cebada",
+    "observaciones_otro": "Siembra todo el terreno avena200m2 ,trigo2500m2 y cebada 2000m2 , cebolla 500m2 ",
     "ficha_hija_generada_id": "{b67507f5-54fe-4cf9-953d-d80233789c25}"
   },
   {
@@ -4766,10 +4783,10 @@
     "clave_catastral_otro": "1702520580184",
     "area_total_otro": 41501.01,
     "area_riego_otro": 8300.2,
-    "area_sin_riego_otro": -8300.2,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8300.2,
     "tiene_observaciones": 1,
-    "observaciones_otro": "El hijo siembra en su parte"
+    "observaciones_otro": "El hijo siembra en su parte 1000m2 de habas , cebolla 1000m2, papas 1000m2, trigo 200m2 y el resto es pasto no mejorado "
   },
   {
     "fid": 446,
@@ -4781,7 +4798,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembra de papas y potrero",
+    "observaciones_otro": "Siembra de papas 1500, cebolla 2500m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{0f62b2d5-2c7d-4798-9902-1ca050c8097d}"
   },
   {
@@ -4791,10 +4808,10 @@
     "clave_catastral_otro": "1702521430053",
     "area_total_otro": 67530.59,
     "area_riego_otro": 7500.0,
-    "area_sin_riego_otro": -7500.0,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7500.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto no mejorado"
+    "observaciones_otro": "Todo este predio es pasto no mejorado"
   },
   {
     "fid": 448,
@@ -4806,7 +4823,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5481.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto natural",
+    "observaciones_otro": "Todo este predio es pasto natural",
     "ficha_hija_generada_id": "{7b755606-0b64-4797-bd07-ecb825363c46}"
   },
   {
@@ -4819,7 +4836,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9240.98,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembra pasto mejorado",
+    "observaciones_otro": "En todo el predio siembra pasto mejorado",
     "ficha_hija_generada_id": "{27aab913-8a79-4137-bea1-c2a844c7dfa3}"
   },
   {
@@ -4829,10 +4846,10 @@
     "clave_catastral_otro": "1702521040110",
     "area_total_otro": 13398.0,
     "area_riego_otro": 13398.0,
-    "area_sin_riego_otro": -13398.0,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 13398.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembra cebolla y pasto"
+    "observaciones_otro": "Siembra cebolla 4000m2, trigo 2000m2, papas 2000m2  y el resto pasto no mejorado "
   },
   {
     "fid": 451,
@@ -4844,7 +4861,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 6417.4,
     "tiene_observaciones": 1,
-    "observaciones_otro": "No tiene riego pero si necesita ",
+    "observaciones_otro": "No tiene riego pero si necesita por lo cual no puede cultivar ",
     "ficha_hija_generada_id": "{155e7496-11a4-4cc7-ad38-35c9f08e9ee5}"
   },
   {
@@ -4857,7 +4874,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3832.76,
     "tiene_observaciones": 1,
-    "observaciones_otro": "En proceso de lotizar, el predio pertenece a dos propietarios, de los dos propietarios se divide un terreno para dos herederos el Área de Lote Asignada al Regate: 3832.76 m² aprox., Lote: 1 ",
+    "observaciones_otro": "En proceso de lotizar, el predio pertenece a dos propietarios, de los dos propietarios se divide un terreno para dos herederos el Área de Lote Asignada al Regate: 3832.76 m² aprox., Lote: 1 Tiene cultivado cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{082773ff-3b12-4343-bd51-619036cbda09}"
   },
   {
@@ -4882,7 +4899,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5753.66,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Candelaria Sopalo Loma",
+    "observaciones_otro": "Sector: Candelaria Sopalo Loma Tiene cultivado 1000m2 de habas , cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{f558dc83-d0df-44d5-8c92-d802730fa90f}"
   },
   {
@@ -4894,7 +4911,8 @@
     "area_riego_otro": 7985.96,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7985.96,
-    "tiene_observaciones": 0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de habas , cebolla 1000m2, papas 1000m2, trigo 1000m2 el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{235ac66a-ca61-4668-b8df-2e0f1caad873}"
   },
   {
@@ -4907,7 +4925,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Riego por gravedad. Esta en el sector Moras Candelaria ",
+    "observaciones_otro": "Riego por gravedad. Esta en el sector Moras Candelaria y tiene cultivado cebolla 800m2 y el resto pasto no mejorado",
     "ficha_hija_generada_id": "{72dfc06d-62fd-46bd-b987-91279a91ffc9}"
   },
   {
@@ -4943,7 +4961,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 6000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Es en Larcachaca con cultivo de cebolla. Es manejado por la viuda",
+    "observaciones_otro": "Es en Larcachaca con cultivo de cebolla 3000m2 , papas 2500m2 y el resto pasto no mejorado. Es manejado por la viuda",
     "ficha_hija_generada_id": "{39a750b7-516a-4e12-8c18-8d2d332499ef}"
   },
   {
@@ -4956,7 +4974,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Es todo pasto mejorado. Maneja la viuda la propiedad ",
+    "observaciones_otro": "Es todo el terreno es pasto mejorado. Maneja la viuda la propiedad ",
     "ficha_hija_generada_id": "{4c990ef8-d062-4e0d-a56e-8dc82e576329}"
   },
   {
@@ -4969,7 +4987,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2600.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Es una ladera ubicado en Sopaloma con pasto mejorado y bosque ",
+    "observaciones_otro": "Es una ladera ubicado en Sopaloma con pasto mejorado1500m2 y el resto es bosque ",
     "ficha_hija_generada_id": "{4690a683-d2c5-458f-a86a-0bf1057b87d6}"
   },
   {
@@ -4982,7 +5000,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Este lote está a nombre de María Lourdes Sopalo Titumaita, en el sector Moras Urpichupa. Es de pasto y cebolla",
+    "observaciones_otro": "Este lote está a nombre de María Lourdes Sopalo Titumaita, en el sector Moras Urpichupa. Es de pasto 1000m2 y cebolla 2000m2",
     "ficha_hija_generada_id": "{debe759d-4f2b-4088-aabf-8b8f19379f1b}"
   },
   {
@@ -4995,7 +5013,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3600.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Esta en Moras Urpichupa con cultivo y pasto",
+    "observaciones_otro": "Esta en Moras Urpichupa con cultivo de cebolla 1000m2 , papas 1000m2 y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{996d7520-0b47-4270-86ea-133808cd94a2}"
   },
   {
@@ -5020,7 +5038,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2273.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "En el sector Moras con cultivos de cebolla 2300, ocas 500 papas 1000, melloco 500",
+    "observaciones_otro": "En el sector Moras con cultivos de cebolla 2000, ocas 500 papas 1000, melloco 500",
     "ficha_hija_generada_id": "{1f861ec2-570e-436a-856b-82b7ea133158}"
   },
   {
@@ -5033,7 +5051,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2520.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Esta en proceso de legalización ",
+    "observaciones_otro": "Esta en proceso de legalización  tiene cultivado papas 800m2, cebolla 1500m2  y el resto potrero ",
     "ficha_hija_generada_id": "{d846848d-8065-4b23-af6b-edc1560ed878}"
   },
   {
@@ -5046,7 +5064,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1465.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Es adjunto al otro lote. Esta en proceso de legalización ",
+    "observaciones_otro": "Es adjunto al otro lote. Esta en proceso de legalización  y tiene cultivado cebolla 1400m2",
     "ficha_hija_generada_id": "{d453f4cd-4230-456c-87b1-75d9d8f9f6dc}"
   },
   {
@@ -5072,7 +5090,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9934.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Tiene cultivos de maíz, chochos y pasto",
+    "observaciones_otro": "Tiene cultivos de maíz 2000m2, chochos 2000m2 y el resto pasto no mejorado ",
     "ficha_hija_generada_id": "{455886b2-3030-45cb-95d9-93b35f7171bc}"
   },
   {
@@ -5085,7 +5103,7 @@
     "area_sin_riego_otro": 3903.64,
     "area_lote_asignado_otro": 6703.64,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Tiene cebolla 1000 papas 1600 y pasto no mejorado 2000",
+    "observaciones_otro": "Tiene cebolla 1000m2, papas 1600 y pasto no mejorado 200",
     "ficha_hija_generada_id": "{afdf8683-ab2f-4fc4-8173-0953db487ae1}"
   },
   {
@@ -5098,7 +5116,7 @@
     "area_sin_riego_otro": 828.08,
     "area_lote_asignado_otro": 4828.08,
     "tiene_observaciones": 1,
-    "observaciones_otro": "2500 de papas y 1500 de pasto no mejorado",
+    "observaciones_otro": "Tiene cultivado 2500 de papas y 1500 de pasto no mejorado",
     "ficha_hija_generada_id": "{4cf40388-f386-47ce-be8e-23ddbe2a5552}"
   },
   {
@@ -5108,10 +5126,10 @@
     "clave_catastral_otro": "1702521430091",
     "area_total_otro": 17398.02,
     "area_riego_otro": 8699.01,
-    "area_sin_riego_otro": -8699.01,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8699.01,
     "tiene_observaciones": 1,
-    "observaciones_otro": "No cuenta con escrituras y son dos herederos y lanzarte que le corresponde al señor es pasto no mejorado y no cuenta con casa "
+    "observaciones_otro": "No cuenta con escrituras y son dos herederos y la parte que le corresponde al señor es de 8699.01 y todo es de pasto no mejorado y no cuenta con casa "
   },
   {
     "fid": 473,
@@ -5123,7 +5141,7 @@
     "area_sin_riego_otro": 30.0,
     "area_lote_asignado_otro": 1289.65,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Alverja ",
+    "observaciones_otro": "Tiene cultivado alverja 1200m2",
     "ficha_hija_generada_id": "{023510ef-2898-4fcd-8627-87b6f279d1c2}"
   },
   {
@@ -5149,7 +5167,7 @@
     "area_sin_riego_otro": 7804.38,
     "area_lote_asignado_otro": 9404.38,
     "tiene_observaciones": 1,
-    "observaciones_otro": "1600 sembrado papa y el restobpasto no mejorado",
+    "observaciones_otro": "1000m2 sembrado papa y el resto pasto no mejorado",
     "ficha_hija_generada_id": "{397dc416-bb93-408a-95f1-51c51d56e06a}"
   },
   {
@@ -5158,11 +5176,11 @@
     "ficha_id": "{edc80e16-99c2-44b2-89ea-075a624378b7}",
     "clave_catastral_otro": "1702521430024",
     "area_total_otro": 26481.28,
-    "area_riego_otro": 26481.28,
-    "area_sin_riego_otro": 0.0,
+    "area_riego_otro": 10000.0,
+    "area_sin_riego_otro": 16433.28,
     "area_lote_asignado_otro": 26433.28,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Todo el resto del terreno es potrero pero si riega agua ",
+    "observaciones_otro": "Todo el terreno es potrero pero si riega agua ",
     "ficha_hija_generada_id": "{c77a6962-49fd-4d72-b81e-7f362fd93307}"
   },
   {
@@ -5187,6 +5205,8 @@
     "area_riego_otro": 12009.22,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 12009.22,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 1000m2 y papas 200m2 ",
     "ficha_hija_generada_id": "{6699b8f0-5a96-4076-aaf3-f7f2724054e6}"
   },
   {
@@ -5198,6 +5218,8 @@
     "area_riego_otro": 12105.54,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 12105.54,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado cebolla 3000m2, papá 1000m2, trigo 2000m2, maíz 1000m2 el resto es de pasto no mejorado ",
     "ficha_hija_generada_id": "{a8d1b01b-a4fa-4d10-bdb9-2d66ee5539ef}"
   },
   {
@@ -5209,6 +5231,8 @@
     "area_riego_otro": 4545.87,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4545.87,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado todo el predio de trigo ",
     "ficha_hija_generada_id": "{4fde8357-88ce-459a-afa4-4d3a6166e083}"
   },
   {
@@ -5220,6 +5244,8 @@
     "area_riego_otro": 4545.66,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4545.66,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado papas 1000m2 , cebolla 1000m2 y el resto pasto no mejorado",
     "ficha_hija_generada_id": "{dec2deab-28d0-41cd-a32e-250d9ce273d0}"
   },
   {
@@ -5231,6 +5257,8 @@
     "area_riego_otro": 3958.6,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3958.6,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de cebolla , 1000m2 de habas y el resto pasto no mejorado ",
     "ficha_hija_generada_id": "{941bb89a-2354-4d04-a6b5-3432b31c1fa6}"
   },
   {
@@ -5242,6 +5270,8 @@
     "area_riego_otro": 3965.22,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3965.22,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado papas 1000m2, ocas 1000m2 y el resto pasto no mejorado ",
     "ficha_hija_generada_id": "{0e9bb71d-ec7e-412c-8a05-646d7abf92a5}"
   },
   {
@@ -5263,6 +5293,8 @@
     "area_riego_otro": 1594.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1594.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo es cultivado cebolla ",
     "ficha_hija_generada_id": "{2aa2e683-f5d7-4dab-af14-e984ffc96cb5}"
   },
   {
@@ -5274,6 +5306,8 @@
     "area_riego_otro": 1594.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1594.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo es cultivado cebolla ",
     "ficha_hija_generada_id": "{70fbe944-abf2-44e6-b0b1-37861ed7052d}"
   },
   {
@@ -5285,6 +5319,8 @@
     "area_riego_otro": 10461.47,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10461.47,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de habas, cebolla 1000m2, papas 1000m2, chochos 1000m2  y el resto es de pasto no mejorado ",
     "ficha_hija_generada_id": "{85052ba6-105b-48cb-87d7-34352fbca984}"
   },
   {
@@ -5296,6 +5332,8 @@
     "area_riego_otro": 1594.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1594.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo es sembrado maíz ",
     "ficha_hija_generada_id": "{58eb7be6-4011-4f9e-9501-6c4a1605c59d}"
   },
   {
@@ -5307,6 +5345,8 @@
     "area_riego_otro": 7102.16,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7102.16,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado 1000m2 de papas, cebolla 1000m2, trigo 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{6afce1fc-d490-4f9f-804d-519159de96e7}"
   },
   {
@@ -5318,6 +5358,8 @@
     "area_riego_otro": 2084.99,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2084.99,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Tiene cultivado papa 1000m2, cebolla 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{7a6cacbe-0006-4a4c-abce-51b906f4c106}"
   },
   {
@@ -5329,6 +5371,8 @@
     "area_riego_otro": 1594.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1594.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo tiene cultivado cebolla ",
     "ficha_hija_generada_id": "{76403ca1-3205-4aaf-8eaa-5d8d8c3d5abf}"
   },
   {
@@ -5340,6 +5384,8 @@
     "area_riego_otro": 1594.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1594.0,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Todo tiene cultivado cebolla ",
     "ficha_hija_generada_id": "{820e19da-7b1b-4b0a-b109-13f6cdf15d68}"
   },
   {
@@ -5352,7 +5398,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9042.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto natural",
+    "observaciones_otro": "Todo es pasto natural ",
     "ficha_hija_generada_id": "{c3bc509b-2b27-4258-aae9-2224a42e0255}"
   },
   {
@@ -5362,10 +5408,10 @@
     "clave_catastral_otro": "1702520380056",
     "area_total_otro": 10005.3,
     "area_riego_otro": 10005.3,
-    "area_sin_riego_otro": -10005.3,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10005.3,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto natural "
+    "observaciones_otro": "Todo es de pasto natural "
   },
   {
     "fid": 495,
@@ -5374,10 +5420,10 @@
     "clave_catastral_otro": "1702520580184",
     "area_total_otro": 41501.01,
     "area_riego_otro": 2500.0,
-    "area_sin_riego_otro": -2500.0,
+    "area_sin_riego_otro": 5800.2,
     "area_lote_asignado_otro": 8300.2,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Terreno dividido  para 5 personas area total de cada uno es 8300.20 siembra papas 1000 rosas 1500"
+    "observaciones_otro": "Terreno dividido  para 5 personas area total de cada uno es 8300.20 siembra papas 1000m2, 1500 de cebolla "
   },
   {
     "fid": 496,
@@ -5389,7 +5435,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4275.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "El terreno se divide en 4  personas  que son regantes y es pasto natural"
+    "observaciones_otro": "El terreno se divide en 4  personas  que son regantes y toda la parte que le corresponde es de pasto natural"
   },
   {
     "fid": 497,
@@ -5398,7 +5444,7 @@
     "clave_catastral_otro": "1702520380023",
     "area_total_otro": 37558.36,
     "area_riego_otro": 7635.0,
-    "area_sin_riego_otro": -7635.0,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7635.0,
     "tiene_observaciones": 1,
     "observaciones_otro": "Es predio dividido para 8 personas , el area total que le pertenece al señor es de 7635 m Siembra pasto mejorado"
@@ -5413,7 +5459,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3400.77,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Terreno se divide para 6 personas , el área que le pertenece al señor es de 3400.77m, siembra Pasto mejorado",
+    "observaciones_otro": "Terreno se divide para 6 personas , el área que le pertenece al señor es de 3400.77m, todo siembra Pasto mejorado",
     "ficha_hija_generada_id": "{0f037bf6-5e97-4095-b968-36075970f87d}"
   },
   {
@@ -5426,7 +5472,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5042.97,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Cebolla 1200m pasto cultivado el total",
+    "observaciones_otro": "Cebolla 1200m pasto cultivado el total y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{5cff99a9-a806-47a7-b99f-446ca7e1a21e}"
   },
   {
@@ -5439,7 +5485,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9579.51,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Sector Moras ",
+    "observaciones_otro": "Sector Moras no tiene agua de riego ",
     "ficha_hija_generada_id": "{179f5561-ebf7-43e6-a552-8b50779b43a6}"
   },
   {
@@ -5462,10 +5508,10 @@
     "clave_catastral_otro": "1702520580188",
     "area_total_otro": 14002.04,
     "area_riego_otro": 9002.04,
-    "area_sin_riego_otro": -9002.04,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 9002.04,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Rosas 1100m , papas 1200, habas 400m, arboles frutales 40m , pasto mejorado 6262.04"
+    "observaciones_otro": "Rosas 1100m , papas 1200, habas 400m, arboles frutales 40m , pasto mejorado es el resto"
   },
   {
     "fid": 503,
@@ -5474,10 +5520,10 @@
     "clave_catastral_otro": "1702520580149",
     "area_total_otro": 10425.76,
     "area_riego_otro": 10425.76,
-    "area_sin_riego_otro": -10425.76,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 10425.76,
     "tiene_observaciones": 1,
-    "observaciones_otro": "ES EL NUEVO PROPIETARIO Y SI TIENE ESCRITURAS EL REGANTE."
+    "observaciones_otro": "ES EL NUEVO PROPIETARIO Y SI TIENE ESCRITURAS EL REGANTE. PERO ASTA EL MOMENTO NO A CULTIVADO NADA POR QUE NO ABASTECE  EL AGUA "
   },
   {
     "fid": 504,
@@ -5489,7 +5535,7 @@
     "area_sin_riego_otro": 4425.76,
     "area_lote_asignado_otro": 10425.76,
     "tiene_observaciones": 1,
-    "observaciones_otro": "EL PREDIO ESTA FRACCIONADO SOLO RIEGA 6000 MTS CUADRADOS Y EL RESTAURANTE ES DE OTRO REGANTE COMUNERO QUE ES LA HIJA.",
+    "observaciones_otro": "EL PREDIO ESTA FRACCIONADO SOLO RIEGA 6000 MTS CUADRADOS Y TIENE CULTIVADO CEBOLLA 1000m2, PAPAS 1500m2, PASTO MEJORADO 1000m2 Y EL RESTO ES POTRERO EL RESTANTE ES DE OTRO REGANTE COMUNERO QUE ES LA HIJA.",
     "ficha_hija_generada_id": "{14e4394d-3440-479c-a3a5-c0b0b333d21a}"
   },
   {
@@ -5851,7 +5897,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 12095.22,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Potrero",
+    "observaciones_otro": "Todo el predio es potrero ya que no tiene suficiente agua para cultivar ",
     "ficha_hija_generada_id": "{a43ebfc9-fd86-4f2b-8fc1-984e228da20b}"
   },
   {
@@ -5864,7 +5910,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5933.48,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto no mejorado ",
+    "observaciones_otro": "Todo el predio es pasto no mejorado ",
     "ficha_hija_generada_id": "{1c022487-30be-47ba-960b-80052c15e1af}"
   },
   {
@@ -5877,7 +5923,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1259.6,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Potrero y cebolla ",
+    "observaciones_otro": "Cultiva cebolla 1000m2 y el resto pasto no mejorado",
     "ficha_hija_generada_id": "{ea5b01b2-f028-482f-b062-8b825564cb0d}"
   },
   {
@@ -5890,7 +5936,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2326.87,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Pasto no mejorado y cebolla",
+    "observaciones_otro": "Pasto no mejorado 1100m2 y cebolla 1000m2",
     "ficha_hija_generada_id": "{44cd7614-5624-4b12-9415-677a48e1ba3a}"
   },
   {
@@ -6010,10 +6056,10 @@
     "clave_catastral_otro": "1702520380007",
     "area_total_otro": 10781.73,
     "area_riego_otro": 3595.91,
-    "area_sin_riego_otro": -3595.91,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3595.91,
     "tiene_observaciones": 1,
-    "observaciones_otro": "En proceso de lotizar, el predio pertenece a tres propietarios el Área de Lote Asignada al Regate: 3595.91 m² aprox., Lote: 2"
+    "observaciones_otro": "En proceso de lotizar, el predio pertenece a tres propietarios el Área de Lote Asignada al Regate: 3595.91 m² aprox., Lote: 2 y tiene cultivado cebolla 1000m2, papas 1000m2  y el resto es potrero "
   },
   {
     "fid": 550,
@@ -6025,7 +6071,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3832.76,
     "tiene_observaciones": 1,
-    "observaciones_otro": "En proceso de lotizar, el predio pertenece a dos propietarios, de los dos propietarios se divide un terreno para dos herederos el Área de Lote Asignada al Regate: 3832.76 m² aprox., Lote: 2",
+    "observaciones_otro": "En proceso de lotizar, el predio pertenece a dos propietarios, de los dos propietarios se divide un terreno para dos herederos el Área de Lote Asignada al Regate: 3832.76 m² aprox., Lote: 2 y tiene cultivado cebolla 1000m² , papas 1000m² y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{04ad21bd-073b-4e19-ad1c-085804e747e9}"
   },
   {
@@ -6386,7 +6432,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5176.34,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembran cebada",
+    "observaciones_otro": "En todo el predio siembran cebada",
     "ficha_hija_generada_id": "{6fdaab47-b026-4566-92fd-6708155d1c54}"
   },
   {
@@ -6399,7 +6445,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 2555.09,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Siembran maíz ",
+    "observaciones_otro": "Todo es cultivado maíz ",
     "ficha_hija_generada_id": "{55fa5a1a-5d3f-43ab-826e-6de21c88e543}"
   },
   {
@@ -11462,17 +11508,6 @@
     "ficha_hija_generada_id": "{ed77b22e-08a2-40b5-98c2-fe678d78bbb5}"
   },
   {
-    "fid": 1002,
-    "id_adicional": "{070c4072-ee60-4589-8ee3-d20563e7a1de}",
-    "ficha_id": "{728b0cd4-301a-47fb-9574-364dd27f2495}",
-    "clave_catastral_otro": "1702520730113",
-    "area_total_otro": 258298.8,
-    "area_riego_otro": 258298.8,
-    "area_sin_riego_otro": -258298.8,
-    "area_lote_asignado_otro": 258298.8,
-    "observaciones_otro": "EL COMUNERO REGANTE QUE NO POSEE RIEGO PESE A QUE PAGA LA CUOTA MENSUAL."
-  },
-  {
     "fid": 1003,
     "id_adicional": "{29d6d22b-e48d-4e73-b950-6f9d5ad3ae0b}",
     "ficha_id": "{9b4e75a8-f6ef-46c5-9f08-14af52382175}",
@@ -11913,18 +11948,6 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8925.5,
     "ficha_hija_generada_id": "{a5539685-b927-4bc9-9b43-3c34e802bbe5}"
-  },
-  {
-    "fid": 1039,
-    "id_adicional": "{834a9af8-2034-432f-922e-13741d44236f}",
-    "ficha_id": "{7c5301d3-43ff-4676-a933-ac236818fed4}",
-    "clave_catastral_otro": "1702521220113",
-    "area_total_otro": 39891.33,
-    "area_riego_otro": 39891.33,
-    "area_sin_riego_otro": -39891.33,
-    "area_lote_asignado_otro": 39891.33,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Mitad de pasto y habas"
   },
   {
     "fid": 1040,
@@ -19145,30 +19168,6 @@
     "ficha_hija_generada_id": "{40bec96d-4408-4c12-be1d-bf12da544c4c}"
   },
   {
-    "fid": 1639,
-    "id_adicional": "{74a97563-f27c-4e9c-bc12-aaa1a621f6c2}",
-    "ficha_id": "{aafa4381-a436-4718-a7e7-5d2df5289b56}",
-    "clave_catastral_otro": "1702521010052",
-    "area_total_otro": 9785.79,
-    "area_riego_otro": 9785.79,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 9785.79,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {74a97563-f27c-4e9c-bc12-aaa1a621f6c2}. Técnico: Dylan Chavez en 2026-05-21T08:56:13.907Z."
-  },
-  {
-    "fid": 1640,
-    "id_adicional": "{674e7ee4-4f35-471f-9628-848c6478c6ee}",
-    "ficha_id": "{aafa4381-a436-4718-a7e7-5d2df5289b56}",
-    "clave_catastral_otro": "1702521010052",
-    "area_total_otro": 9785.79,
-    "area_riego_otro": 9785.79,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 9785.79,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {674e7ee4-4f35-471f-9628-848c6478c6ee}. Técnico: Melany Jara en 2026-05-21T10:49:09.989Z."
-  },
-  {
     "fid": 1641,
     "id_adicional": "{4d94eeb6-49e6-403e-af15-9958513b8a81}",
     "ficha_id": "{a975653f-2299-4f9b-9dec-f85a0268018e}",
@@ -19180,18 +19179,6 @@
     "tiene_observaciones": 1,
     "observaciones_otro": "Unificación física. Ficha original: {4d94eeb6-49e6-403e-af15-9958513b8a81}. Técnico: Dylan Chavez en 2026-05-21T09:08:05.531Z.",
     "ficha_hija_generada_id": "{76b17104-0fab-48f4-878a-0ddfbf2edaa3}"
-  },
-  {
-    "fid": 1642,
-    "id_adicional": "{456258fa-65c1-446b-bd48-fcd1b1cf40dc}",
-    "ficha_id": "{39011801-a802-41cb-8ed8-4abc9694f572}",
-    "clave_catastral_otro": "1702521010011",
-    "area_total_otro": 6238.11,
-    "area_riego_otro": 6238.11,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 6238.11,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {456258fa-65c1-446b-bd48-fcd1b1cf40dc}. Técnico: Dylan Chavez en 2026-05-21T09:25:13.079Z."
   },
   {
     "fid": 1643,
@@ -19242,7 +19229,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3308.34,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {7cde89bf-319c-44cb-af1d-c14324d151b3}. Técnico: Dylan Chavez en 2026-05-21T10:22:33.795Z.",
+    "observaciones_otro": "Unificación física. Ficha original: {7cde89bf-319c-44cb-af1d-c14324d151b3}. Técnico: Dylan Chavez en 2026-05-21T10:22:33.795Z. Tiene cultivado 1000m2 de cebolla, papa 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{d26c0827-8e4a-4c25-a55d-cc3d08964052}"
   },
   {
@@ -20555,42 +20542,6 @@
     "ficha_hija_generada_id": "{d8b2aef5-1577-4df2-be34-a2cd9be335cf}"
   },
   {
-    "fid": 1751,
-    "id_adicional": "{b98744e8-62f1-4181-9ba6-95c703a53198}",
-    "ficha_id": "{c678767e-f8b4-439f-90cc-3fc77c41ae14}",
-    "clave_catastral_otro": "1702520530001",
-    "area_total_otro": 12691.27,
-    "area_riego_otro": 12691.27,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 12691.27,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {b98744e8-62f1-4181-9ba6-95c703a53198}. Técnico: Melany Jara en 2026-05-22T11:09:48.296Z."
-  },
-  {
-    "fid": 1752,
-    "id_adicional": "{983ca905-f1ab-42bc-99cc-8009c11053a5}",
-    "ficha_id": "{c678767e-f8b4-439f-90cc-3fc77c41ae14}",
-    "clave_catastral_otro": "1702520530001",
-    "area_total_otro": 6423.82,
-    "area_riego_otro": 6423.82,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 6423.82,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {983ca905-f1ab-42bc-99cc-8009c11053a5}. Técnico: Melany Jara en 2026-05-22T11:06:23.265Z."
-  },
-  {
-    "fid": 1753,
-    "id_adicional": "{40574b1a-646d-4bf9-be94-6fb99df75aee}",
-    "ficha_id": "{c678767e-f8b4-439f-90cc-3fc77c41ae14}",
-    "clave_catastral_otro": "1702520530001",
-    "area_total_otro": 1640.3,
-    "area_riego_otro": 1640.3,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 1640.3,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {40574b1a-646d-4bf9-be94-6fb99df75aee}. Técnico: Melany Jara en 2026-05-22T11:01:04.982Z."
-  },
-  {
     "fid": 1754,
     "id_adicional": "{2f8faec6-b390-4795-83b7-94b1d724a942}",
     "ficha_id": "{fa4970b3-bd19-428e-b47f-7cec734252d7}",
@@ -21132,20 +21083,8 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4494.91,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {48cf5962-f087-49f7-95d2-af7027ce6cba}. Técnico: Huguito Ipial en 2026-05-27T09:19:51.343Z. Obs. Orig: LA COMUNERA TAMBIEN  ESTA COMO REGANTE EN DOS PREDIOS ALEDAÑOS AL SUYO QUE ESTAN NOMBRE DE SUS HIJOS ",
+    "observaciones_otro": "Unificación física. Ficha original: {48cf5962-f087-49f7-95d2-af7027ce6cba}. Técnico: Huguito Ipial en 2026-05-27T09:19:51.343Z. Obs. Orig: LA COMUNERA TAMBIEN  ESTA COMO REGANTE EN DOS PREDIOS ALEDAÑOS AL SUYO QUE ESTAN NOMBRE DE SUS HIJOS Y EN ESTE PREDIO TIENE CULTIVADO CEBOLLA 1000m2, PAPAS 500m2, HABAS 500m2 EL RESTO DEL TERRENO ES DE PASTO NO MEJORADO.",
     "ficha_hija_generada_id": "{c6ee8641-3f38-4c31-993f-d6362dde942f}"
-  },
-  {
-    "fid": 1797,
-    "id_adicional": "{ba9ce883-06f1-4bc2-897c-532cc884752a}",
-    "ficha_id": "{36ee1cce-5160-4e16-b47e-677ec6f7ceb3}",
-    "clave_catastral_otro": "1702520660070",
-    "area_total_otro": 4968.51,
-    "area_riego_otro": 4968.51,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 4968.51,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {ba9ce883-06f1-4bc2-897c-532cc884752a}. Técnico: Pablo Barrionuevo en 2026-05-26T09:32:04.948Z. Obs. Orig: Tiene otras propiedades con clave 1702520670017de 2500 m tiene 1000 de invernadero de flores cultivo de papas, habas.\nClavev170252106025 de 10000 de pasto y cultivos para consumo..\nEl señor de la información ya está registrado en otra organización. Tiene la cédula 1715902795"
   },
   {
     "fid": 1798,
@@ -21169,7 +21108,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7528.03,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {76925021-c1d8-473b-8651-388e10317d1b}. Técnico: Martha Simbaña en 2026-05-27T10:10:37.143Z.",
+    "observaciones_otro": "Unificación física. Ficha original: {76925021-c1d8-473b-8651-388e10317d1b}. Técnico: Martha Simbaña en 2026-05-27T10:10:37.143Z. Tiene cultivado 1000m2 de cebolla, papas 1000m2, habas 1000m2 , trigo 1000m2  y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{fe0e2a57-9f8d-4c38-bfd7-1aa2eeb5159b}"
   },
   {
@@ -21177,48 +21116,48 @@
     "id_adicional": "{28522170-f5c7-485a-a609-93215960839b}",
     "ficha_id": "{04c0d6dd-9886-4ce2-bfb6-758f7a783c9e}",
     "clave_catastral_otro": "1702521430093",
-    "area_total_otro": 41501.01,
+    "area_total_otro": 29288.32,
     "area_riego_otro": 41501.01,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 41501.01,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {28522170-f5c7-485a-a609-93215960839b}. Técnico: Pablo Barrionuevo en 2026-05-27T07:53:33.508Z."
+    "observaciones_otro": "Unificación física. Ficha original: {28522170-f5c7-485a-a609-93215960839b}. Técnico: Pablo Barrionuevo en 2026-05-27T07:53:33.508Z. Tiene cultivado cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado "
   },
   {
     "fid": 1801,
     "id_adicional": "{36333f39-88aa-46bb-ae27-774e52ef21f7}",
     "ficha_id": "{04c0d6dd-9886-4ce2-bfb6-758f7a783c9e}",
     "clave_catastral_otro": "1702521430093",
-    "area_total_otro": 6000.0,
+    "area_total_otro": 29288.32,
     "area_riego_otro": 6000.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 6000.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {36333f39-88aa-46bb-ae27-774e52ef21f7}. Técnico: Pablo Barrionuevo en 2026-05-27T07:43:13.871Z. Obs. Orig: Es heredero "
+    "observaciones_otro": "Unificación física. Ficha original: {36333f39-88aa-46bb-ae27-774e52ef21f7}. Técnico: Pablo Barrionuevo en 2026-05-27T07:43:13.871Z. Obs. Orig: Es heredero Tiene cultivado trigo 1500m2 , cebolla 1000m2, papas 1000m2  y el resto es pasto no mejorado "
   },
   {
     "fid": 1802,
     "id_adicional": "{4e0edfde-0b8a-4c25-b3eb-d4dd7b3b6c08}",
     "ficha_id": "{424d787e-41ec-415c-bdef-db4e9b24fef5}",
     "clave_catastral_otro": "1702520570077",
-    "area_total_otro": 4060.0,
+    "area_total_otro": 29514.79,
     "area_riego_otro": 4060.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 4060.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {4e0edfde-0b8a-4c25-b3eb-d4dd7b3b6c08}. Técnico: Pablo Barrionuevo en 2026-05-27T09:51:57.072Z. Obs. Orig: Este predio es dividido para 4 personas que están en proceso de legalización . Tiene la CI 1715889042"
+    "observaciones_otro": "Unificación física. Ficha original: {4e0edfde-0b8a-4c25-b3eb-d4dd7b3b6c08}. Técnico: Pablo Barrionuevo en 2026-05-27T09:51:57.072Z. Obs. Orig: Este predio es dividido para 4 personas que están en proceso de legalización . Tiene la CI 1715889042 y todo es cultivado cebolla 4000m2 "
   },
   {
     "fid": 1803,
     "id_adicional": "{bc4b22f8-2d95-4d13-b5b1-f0fd4ef1eaeb}",
     "ficha_id": "{ae602cd8-e2d4-4784-82ad-8cc06cd3c34a}",
     "clave_catastral_otro": "1702521450042",
-    "area_total_otro": 5400.0,
+    "area_total_otro": 10822.0,
     "area_riego_otro": 5400.0,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5400.0,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {bc4b22f8-2d95-4d13-b5b1-f0fd4ef1eaeb}. Técnico: Pablo Barrionuevo en 2026-05-27T12:23:49.973Z. Obs. Orig: El propietario hace a medias el uso del suelo con su hija"
+    "observaciones_otro": "Unificación física. Ficha original: {bc4b22f8-2d95-4d13-b5b1-f0fd4ef1eaeb}. Técnico: Pablo Barrionuevo en 2026-05-27T12:23:49.973Z. Obs. Orig: El propietario hace a medias el uso del suelo con su hija y todo el cultivado cebolla "
   },
   {
     "fid": 1804,

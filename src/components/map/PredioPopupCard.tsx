@@ -14,6 +14,7 @@ interface PredioCatastral {
   area_predi?: number;
   apellidos?: string;
   nombres?: string;
+  cedula?: string;
   comunidad?: string;
 }
 
@@ -32,18 +33,39 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
   const [idx, setIdx] = useState(0);
   const ficha = fichas[Math.min(idx, fichas.length - 1)];
 
-  // ── Polígono sin ficha asociada ──
+  // ── Polígono SIN ficha de riego (v4.5): datos básicos del catastro para
+  // identificarlo y planificar el alcance de investigación ──
   if (!ficha) {
+    const dueno = `${predio.apellidos || ''} ${predio.nombres || ''}`.trim();
     return (
-      <div className="text-xs min-w-[230px] max-w-[280px]">
-        <div className="font-bold text-sm border-b pb-1.5 mb-2">
-          {`${predio.apellidos || ''} ${predio.nombres || ''}`.trim() || 'Predio catastral'}
+      <div className="text-xs min-w-[240px] max-w-[290px]">
+        <div className="border-b pb-1.5 mb-2">
+          <div className="flex items-start justify-between gap-2">
+            <div className="font-bold text-sm leading-tight">
+              {dueno || 'Propietario no registrado en catastro'}
+            </div>
+            <span className="shrink-0 px-1.5 py-0.5 rounded-full text-[9px] font-bold border whitespace-nowrap bg-amber-50 text-amber-700 border-amber-300">
+              Sin investigar
+            </span>
+          </div>
+          <div className="text-[10px] opacity-70 font-mono mt-0.5 flex items-center gap-1">
+            <MapPin className="w-3 h-3" /> {predio.clave_cata}
+          </div>
         </div>
-        <div className="flex items-center gap-1 text-[11px] opacity-70 font-mono mb-2">
-          <MapPin className="w-3 h-3" /> {predio.clave_cata}
+        <div className="space-y-1 mb-2">
+          {[
+            ['Cédula / RUC', predio.cedula || '—'],
+            ['Comunidad', predio.comunidad || '—'],
+            ['Área catastral', predio.area_predi ? `${fmt(predio.area_predi)} m²` : '—'],
+          ].map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-2">
+              <span className="opacity-60">{k}:</span>
+              <span className="font-medium text-right">{v}</span>
+            </div>
+          ))}
         </div>
-        <div className="rounded-lg border border-dashed border-gray-300 px-2 py-2 text-[11px] text-gray-500 text-center">
-          Sin ficha de riego asociada — {fmt(predio.area_predi)} m² según catastro
+        <div className="rounded-lg border border-dashed border-amber-300 bg-amber-50 px-2 py-1.5 text-[10px] text-amber-800 text-center">
+          📋 Predio sin ficha de riego — candidato a investigación de alcance
         </div>
       </div>
     );

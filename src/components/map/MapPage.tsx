@@ -148,7 +148,7 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
                   Todos los predios
                 </span>
                 <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
-                  {allLoaded ? '24K polígonos (Canvas)' : 'Cargando...'}
+                  {allLoaded ? '24K polígonos — clic para identificar' : 'Cargando...'}
                 </span>
               </div>
             </label>
@@ -160,9 +160,16 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
 }
 
 // ── Capa de TODOS los polígonos catastrales (24K, Canvas renderer) ──
-function AllCatastroLayer({ data }: { data: FeatureCollection }) {
+// v4.5: clicable — al tocar un polígono sin investigar se muestran sus datos
+// básicos del catastro para identificarlo y planificar el alcance.
+function AllCatastroLayer({ data, onPolyClick }: {
+  data: FeatureCollection;
+  onPolyClick?: (fid: number, latlng: [number, number]) => void;
+}) {
   const map = useMap();
   const layerRef = useRef<L.GeoJSON | null>(null);
+  const clickRef = useRef(onPolyClick);
+  useEffect(() => { clickRef.current = onPolyClick; }, [onPolyClick]);
 
   useEffect(() => {
     // Crear capa con Canvas renderer para rendimiento óptimo
@@ -175,7 +182,14 @@ function AllCatastroLayer({ data }: { data: FeatureCollection }) {
         fillOpacity: 0.04,
         opacity: 0.5,
       },
-      interactive: false, // Sin eventos = máximo rendimiento
+      onEachFeature: (feature: any, layer: L.Layer) => {
+        layer.on('click', (e: LeafletMouseEvent) => {
+          const fid = feature.properties?.fid;
+          if (fid != null && clickRef.current) {
+            clickRef.current(Number(fid), [e.latlng.lat, e.latlng.lng]);
+          }
+        });
+      },
     } as any);
     layerRef.current.addTo(map);
     // Insertar debajo de las demás capas
@@ -677,6 +691,36 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     props: any; latlng: [number, number];
   } | null>(null);
   const [fichaModal, setFichaModal] = useState<FichaPredio | null>(null);
+
+  // v4.5: índice catastral fid → atributos (para la tarjeta de predios SIN investigar)
+  const busquedaPorFidRef = useRef<Map<number, CatastroBusqueda> | null>(null);
+  useEffect(() => {
+    fetch(`/geo/catastro_busqueda.json?t=${Date.now()}`)
+      .then((r) => r.json())
+      .then((d: CatastroBusqueda[]) => {
+        busquedaPorFidRef.current = new Map(d.map((item) => [Number(item.fid), item]));
+      })
+      .catch(() => { busquedaPorFidRef.current = null; });
+  }, []);
+
+  // Clic en un polígono de la capa "Todos los predios" (24K): resolver sus
+  // atributos catastrales y abrir la Tarjeta de Predio (investigado o no)
+  const handleAllCatastroClick = useCallback((fid: number, latlng: [number, number]) => {
+    const rec = busquedaPorFidRef.current?.get(fid);
+    setPredioSeleccionado({
+      props: rec
+        ? {
+            clave_cata: rec.clave_cata,
+            area_predi: rec.area_predi,
+            apellidos: rec.apellidos,
+            nombres: rec.nombres,
+            cedula: rec.cedula,
+            comunidad: rec.comunidad,
+          }
+        : { clave_cata: `(fid ${fid})` },
+      latlng,
+    });
+  }, []);
   const [catastroData, setCatastroData] = useState<FeatureCollection | null>(null);
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
@@ -1089,7 +1133,9 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         )}
 
         {/* ── Capa de TODOS los 24K polígonos (Canvas renderer, toggle en leyenda) ── */}
-        {showAllCatastro && allCatastroFC && <AllCatastroLayer data={allCatastroFC} />}
+        {showAllCatastro && allCatastroFC && (
+          <AllCatastroLayer data={allCatastroFC} onPolyClick={handleAllCatastroClick} />
+        )}
 
         <MapLegend
           showAll={showAllCatastro}

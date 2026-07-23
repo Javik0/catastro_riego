@@ -1,8 +1,8 @@
 {
   "total": 2411,
-  "pendientes": 2411,
-  "completadas": 0,
-  "en_revision": 0,
+  "pendientes": 2131,
+  "completadas": 172,
+  "en_revision": 108,
   "por_sector": {
     "Sector 3": {
       "total": 267,
@@ -11,23 +11,31 @@
       "en_revision": 0
     },
     "Sector 1": {
-      "total": 890,
-      "pendientes": 890,
-      "completadas": 0,
-      "en_revision": 0
+      "total": 899,
+      "pendientes": 725,
+      "completadas": 103,
+      "en_revision": 71
     },
     "Sin sector": {
-      "total": 737,
-      "pendientes": 737,
-      "completadas": 0,
-      "en_revision": 0
+      "total": 728,
+      "pendientes": 629,
+      "completadas": 69,
+      "en_revision": 30
     },
     "Sector 2": {
       "total": 517,
-      "pendientes": 517,
+      "pendientes": 510,
       "completadas": 0,
-      "en_revision": 0
+      "en_revision": 7
     }
   },
-  "completadas_por_tecnico": {}
+  "completadas_por_tecnico": {
+    "Dylan Chavez": 2,
+    "Melany Jara": 12,
+    "Mayra Benavides": 65,
+    "JVK-DIGITALIZACION": 2,
+    "Martha Simbaña": 48,
+    "Pablo Barrionuevo": 4,
+    "jvk-corp": 39
+  }
 }
