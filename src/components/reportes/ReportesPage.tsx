@@ -191,7 +191,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         doc.setTextColor(0, 0, 0); // Reset color
       }
 
-      const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
+      const headers = ['#', 'Código del Lote', 'Propietario / Regante', 'Celular / Teléfono', 'Identificación\n(Cédula / Clave)', 'Ubicación\n(Parroquia / Sector / Comunidad)', 'Área Total', 'Área Riego', 'Técnico', 'Fecha'];
       
       const rows: any[] = [];
       dataToRender.forEach((f, i) => {
@@ -199,7 +199,8 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         rows.push([
           i + 1,
           f.codigo_final,
-          f.propietario || `${f.apellidos} ${f.nombres}`,
+          f.propietario || `${f.apellidos} ${f.nombres}`.trim() || 'No registrado',
+          f.telefono_celular || f.telefono_casa || '—',
           [
             f.cedula ? `C.I. ${f.cedula}` : '', 
             f.clave_catastral ? `ClvP ${f.clave_catastral}` : ''
@@ -227,7 +228,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             : undefined;
           const etiquetaAdicional = fichaAdic
             ? (esHijaPendiente(fichaAdic)
-                ? '   - Predio Adicional (pendiente investigacion)'
+                ? '   - Predio Adicional (pendiente investigación)'
                 : '   - Predio Adicional (investigado)')
             : '   - Predio Adicional';
 
@@ -246,6 +247,10 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
               colSpan: 2,
               styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] }
             }, // Código + Propietario
+            { 
+              content: '', 
+              styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } 
+            }, // Celular / Teléfono (vacío en predio adicional)
             { 
               content: pa.clave_catastral_otro ? `ClvP ${pa.clave_catastral_otro}` : '', 
               styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
@@ -274,8 +279,8 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
       autoTable(doc, {
         head: [headers], body: rows, startY: tableStartY,
         styles: { 
-          fontSize: 6, 
-          cellPadding: 1.5,
+          fontSize: 5.5, 
+          cellPadding: 1.2,
           valign: 'middle',
           lineColor: [226, 232, 240], // Bordes muy finos de color Slate-200
           lineWidth: 0.1,
@@ -284,8 +289,20 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           fillColor: [15, 23, 42], // Slate-900 muy moderno
           textColor: 255, 
           fontStyle: 'bold', 
-          fontSize: 6,
+          fontSize: 5.5,
           halign: 'left',
+        },
+        columnStyles: {
+          0: { cellWidth: 7 }, // #
+          1: { cellWidth: 22 }, // Código del Lote
+          2: { cellWidth: 48 }, // Propietario / Regante
+          3: { cellWidth: 24, fontStyle: 'normal' }, // Celular / Teléfono
+          4: { cellWidth: 32 }, // Identificación (Cédula / Clave)
+          5: { cellWidth: 52 }, // Ubicación (Parroquia / Sector / Comunidad)
+          6: { cellWidth: 22, halign: 'right' }, // Área Total
+          7: { cellWidth: 22, halign: 'right' }, // Área Riego
+          8: { cellWidth: 28 }, // Técnico
+          9: { cellWidth: 20, halign: 'center' }, // Fecha
         },
         alternateRowStyles: { 
           fillColor: [255, 255, 255] 
