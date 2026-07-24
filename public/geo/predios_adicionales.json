@@ -709,15 +709,6 @@
     "area_sin_riego_otro": 0.0
   },
   {
-    "fid": 74,
-    "id_adicional": "{fac36aa3-0109-4b5b-9c8a-661ee6bab96b}",
-    "ficha_id": "{c6e0e184-4c58-4906-9d0c-7bcce0b1a07e}",
-    "clave_catastral_otro": "1702521100076",
-    "area_total_otro": 10971.1,
-    "area_riego_otro": 10971.1,
-    "area_sin_riego_otro": 0.0
-  },
-  {
     "fid": 75,
     "id_adicional": "{e8ce7a59-9d43-4b86-9b0c-a71bf8580d64}",
     "ficha_id": "{56631568-3717-42bb-ac8e-b61450f9c757}",
@@ -5281,7 +5272,7 @@
     "clave_catastral_otro": "1702521430245",
     "area_total_otro": 8630.78,
     "area_riego_otro": 8630.78,
-    "area_sin_riego_otro": -8630.78,
+    "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 8630.78
   },
   {
@@ -5472,7 +5463,7 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 5042.97,
     "tiene_observaciones": 1,
-    "observaciones_otro": "Cebolla 1200m pasto cultivado el total y el resto es pasto no mejorado ",
+    "observaciones_otro": "Cebolla 1200m y el resto es pasto no mejorado ",
     "ficha_hija_generada_id": "{5cff99a9-a806-47a7-b99f-446ca7e1a21e}"
   },
   {
@@ -20899,42 +20890,6 @@
     "observaciones_otro": "Unificación física. Ficha original: {893cb8f5-5362-4892-af34-5aee823242a5}. Técnico: Pablo Barrionuevo en 2026-05-22T09:28:33.975Z."
   },
   {
-    "fid": 1782,
-    "id_adicional": "{c7ba661c-703a-47f2-823e-eb8f2236b46c}",
-    "ficha_id": "{f4b8a49a-db1f-47ae-b96f-3e08e77126cd}",
-    "clave_catastral_otro": "1702521020025",
-    "area_total_otro": 8140.37,
-    "area_riego_otro": 8140.37,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 8140.37,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {c7ba661c-703a-47f2-823e-eb8f2236b46c}. Técnico: Pablo Barrionuevo en 2026-05-22T10:46:42.715Z."
-  },
-  {
-    "fid": 1783,
-    "id_adicional": "{28461365-39c9-4997-86ed-ceb29786de05}",
-    "ficha_id": "{f4b8a49a-db1f-47ae-b96f-3e08e77126cd}",
-    "clave_catastral_otro": "1702521020025",
-    "area_total_otro": 8140.37,
-    "area_riego_otro": 8140.37,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 8140.37,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {28461365-39c9-4997-86ed-ceb29786de05}. Técnico: Pablo Barrionuevo en 2026-05-22T10:57:36.392Z."
-  },
-  {
-    "fid": 1784,
-    "id_adicional": "{e47bd8d3-bf9e-4387-9696-46d70bd0aeeb}",
-    "ficha_id": "{f4b8a49a-db1f-47ae-b96f-3e08e77126cd}",
-    "clave_catastral_otro": "1702521020025",
-    "area_total_otro": 8140.37,
-    "area_riego_otro": 8140.37,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 8140.37,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {e47bd8d3-bf9e-4387-9696-46d70bd0aeeb}. Técnico: Pablo Barrionuevo en 2026-05-22T10:58:19.575Z."
-  },
-  {
     "fid": 1785,
     "id_adicional": "{d60048d0-a16b-47eb-ac6e-b18382d63531}",
     "ficha_id": "{592f6fd0-ecf0-4e6b-908e-b29ef5e99aa5}",
@@ -20957,30 +20912,6 @@
     "area_lote_asignado_otro": 2542.08,
     "tiene_observaciones": 1,
     "observaciones_otro": "Unificación física. Ficha original: {65e6b200-b402-4f91-977a-a8fd96012cf5}. Técnico: Pablo Barrionuevo en 2026-05-22T12:34:34.982Z."
-  },
-  {
-    "fid": 1787,
-    "id_adicional": "{e7f32332-330e-4b94-8380-b36e1cded925}",
-    "ficha_id": "{ed70f3ea-cc13-4445-8a8e-1007bcbc8b72}",
-    "clave_catastral_otro": "1702520540081",
-    "area_total_otro": 3111.07,
-    "area_riego_otro": 3111.07,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 3111.07,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {e7f32332-330e-4b94-8380-b36e1cded925}. Técnico: Pablo Barrionuevo en 2026-05-22T13:16:37.807Z."
-  },
-  {
-    "fid": 1788,
-    "id_adicional": "{bd67c51f-392d-45dd-8b49-944aa991c647}",
-    "ficha_id": "{ed70f3ea-cc13-4445-8a8e-1007bcbc8b72}",
-    "clave_catastral_otro": "1702520540081",
-    "area_total_otro": 1774.09,
-    "area_riego_otro": 1774.09,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 1774.09,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Unificación física. Ficha original: {bd67c51f-392d-45dd-8b49-944aa991c647}. Técnico: Pablo Barrionuevo en 2026-05-22T13:33:58.490Z."
   },
   {
     "fid": 1789,
@@ -34084,5 +34015,116 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 881.72,
     "ficha_hija_generada_id": "{8fa66c2f-a731-48bb-a794-b5900db02d80}"
+  },
+  {
+    "fid": 2898,
+    "id_adicional": "{e234395b-b83f-4e90-8786-ea1efa28aebb}",
+    "ficha_id": "{f7d30376-9872-4762-9f21-0d175c1da477}",
+    "clave_catastral_otro": "1702520700062",
+    "area_total_otro": 2833.33,
+    "area_riego_otro": 2833.33,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2833.33,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "PREDIO ADICIONAL ACERO SALAZAR ROSA CRISTINA 1712426251 170252070062"
+  },
+  {
+    "fid": 2899,
+    "id_adicional": "{deecf0e8-0cfd-4a84-9b97-7dcc156ea5be}",
+    "ficha_id": "{f7d30376-9872-4762-9f21-0d175c1da477}",
+    "clave_catastral_otro": "1702520700058",
+    "area_total_otro": 2715.18,
+    "area_riego_otro": 2715.18,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2715.18,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "PREDIO ADICIONAL ACERO SALAZAR MARIA CRISTINA 1712426251"
+  },
+  {
+    "fid": 2900,
+    "id_adicional": "{b445b57f-5453-43c7-9a15-328f408c402e}",
+    "ficha_id": "{3dd5129a-0d37-4b2c-a2b1-c38af377333d}",
+    "clave_catastral_otro": "1702520550043",
+    "area_total_otro": 4502.5,
+    "area_riego_otro": 4502.5,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4502.5,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "PREDIO ADICIONAL LANCHIMBA AIGAJE FELIPE 1703989002 Cebolla y pasto mitad mitad"
+  },
+  {
+    "fid": 2901,
+    "id_adicional": "{61039000-88f3-44d6-861d-4fc8ef5fb203}",
+    "ficha_id": "{e481f7a3-386b-4003-886a-1eb48118d547}",
+    "clave_catastral_otro": "1702520980090",
+    "area_total_otro": 18986.12,
+    "area_riego_otro": 18986.12,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 18986.12,
+    "tiene_observaciones": 1
+  },
+  {
+    "fid": 2902,
+    "id_adicional": "{84288055-e577-416e-9051-73dd27a76895}",
+    "ficha_id": "{522b3895-b43e-4883-89c9-775bc7fe5db7}",
+    "clave_catastral_otro": "1702521690016",
+    "area_total_otro": 4970.85,
+    "area_riego_otro": 4970.85,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 4970.85,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "Predio extra 1702521690016 PINANJOTA ACERO JAIME ERNESTO  1715205686"
+  },
+  {
+    "fid": 2903,
+    "id_adicional": "{9458f514-8309-47ec-8024-2f6c631419b0}",
+    "ficha_id": "{0dda6254-5ff0-41f3-bf79-77a1d6deb0c3}",
+    "clave_catastral_otro": "1702520160027",
+    "area_total_otro": 2154.64,
+    "area_riego_otro": 2154.64,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2154.64
+  },
+  {
+    "fid": 2904,
+    "id_adicional": "{15638ff9-7801-48eb-b2bb-9c2bed84face}",
+    "ficha_id": "{0dda6254-5ff0-41f3-bf79-77a1d6deb0c3}",
+    "clave_catastral_otro": "1702520210038",
+    "area_total_otro": 4438.11,
+    "area_riego_otro": 2219.06,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 2219.06,
+    "tiene_observaciones": 1,
+    "observaciones_otro": "FLORES INVERNADERO"
+  },
+  {
+    "fid": 2905,
+    "id_adicional": "{bbd48f29-6f30-4309-8a60-dc25081a6ca8}",
+    "ficha_id": "{04414b3d-69f0-438d-82b8-2998e966dd62}",
+    "clave_catastral_otro": "1702520150118",
+    "area_total_otro": 3275.34,
+    "area_riego_otro": 3275.34,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 3275.34
+  },
+  {
+    "fid": 2906,
+    "id_adicional": "{97de31c2-6eab-4e95-ac11-70760161e01d}",
+    "ficha_id": "{04414b3d-69f0-438d-82b8-2998e966dd62}",
+    "clave_catastral_otro": "1702520210116",
+    "area_total_otro": 1257.5,
+    "area_riego_otro": 1257.5,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1257.5
+  },
+  {
+    "fid": 2907,
+    "id_adicional": "{61bf59f6-6849-4e46-a37c-59bd427c8943}",
+    "ficha_id": "{04414b3d-69f0-438d-82b8-2998e966dd62}",
+    "clave_catastral_otro": "1702520210118",
+    "area_total_otro": 5920.38,
+    "area_riego_otro": 5920.38,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 5920.38
   }
 ]
