@@ -124,14 +124,14 @@ html_content = """<!DOCTYPE html>
 <div class="header-box">
     <div class="header-title">PROYECTO CATASTRO DE RIEGO GUANGUILQUÍ POROTOG</div>
     <div><strong>Informe Técnico:</strong> Avance Diario de Campo y Rendimiento por Personal (Fichas Adicionales - Sección 7)</div>
-    <div><strong>Fecha de Evaluación:</strong> 24 de Julio de 2026 (Corte al 23 de Julio de 2026)</div>
+    <div><strong>Fecha de Evaluación:</strong> 27 de Julio de 2026 (Corte al 27 de Julio de 2026)</div>
     <div><strong>Elaborado por:</strong> Equipo Técnico de ap&catastro / Consorcio Cayambe SPT</div>
 </div>
 
 <h1>Reporte de Avance Diario y Rendimiento de Personal</h1>
 
 <h2>1. Resumen General de Fichas Adicionales (Sección 7)</h2>
-<p>El universo de predios adicionales declarados en la Sección 7 asciende a <strong>2,410 fichas hijas</strong> (Regla B: una ficha por cada regante declarante). El avance al corte del 23 de julio se resume a continuación:</p>
+<p>El universo de predios adicionales declarados en la Sección 7 asciende a <strong>2,409 fichas hijas</strong> (Regla B: una ficha por cada regante declarante). El avance acumulado al corte de hoy se resume a continuación:</p>
 
 <table>
     <thead>
@@ -144,26 +144,26 @@ html_content = """<!DOCTYPE html>
     </thead>
     <tbody>
         <tr>
-            <td><span class="badge-success">Completadas en Campo</span></td>
-            <td><strong>459</strong></td>
-            <td>19.0%</td>
+            <td><span class="badge-success">Completadas en Campo (🟢)</span></td>
+            <td><strong>660</strong></td>
+            <td>27.4%</td>
             <td>Investigadas, verificadas y cerradas 100% por los técnicos en terreno.</td>
         </tr>
         <tr>
-            <td><span class="badge-warning">En Revisión (Pre-cargadas)</span></td>
+            <td><span class="badge-warning">En Revisión (Pre-cargadas 🔄)</span></td>
             <td><strong>108</strong></td>
             <td>4.5%</td>
             <td>Fichas con datos de producción pre-cargados de inspecciones previas, en proceso de validación rápida.</td>
         </tr>
         <tr>
-            <td><span class="badge-info">Pendientes por Investigar</span></td>
-            <td><strong>1,843</strong></td>
-            <td>76.5%</td>
+            <td><span class="badge-info">Pendientes por Investigar (⚪)</span></td>
+            <td><strong>1,641</strong></td>
+            <td>68.1%</td>
             <td>Sección 4 vacía en programación de visita de campo.</td>
         </tr>
         <tr class="highlight-row">
             <td>TOTAL GENERADO (REGLA B)</td>
-            <td>2,410</td>
+            <td>2,409</td>
             <td>100.0%</td>
             <td>Universo total de predios adicionales declarados en Sección 7.</td>
         </tr>
@@ -188,128 +188,7 @@ html_content = """<!DOCTYPE html>
     Corresponde a predios adicionales donde la Sección 4 está completamente vacía y los técnicos deben realizar la visita de campo para tomar los datos agroeconómicos de primera mano.</li>
 </ul>
 
-<h2>3. Auditoría de Carga Automatizada — Usuario JVK-DIGITALIZACION (103 Fichas)</h2>
-<ul>
-    <li><strong>Origen:</strong> Corresponde a la corrida automatizada de recuperación de producción histórica basada en inspecciones previas de campo realizadas entre mayo y junio.</li>
-    <li><strong>Auditoría de Sección 4 (¿Están completas?):</strong>
-        <ul>
-            <li><strong>103 de 103 fichas (100%):</strong> Tienen parcelas agrícolas registradas en la tabla de cultivos.</li>
-            <li><strong>52 de 103 fichas (50.5%):</strong> Tienen especies pecuarias registradas en la tabla de ganado.</li>
-            <li>Todas poseen la observación: <em>"PRODUCCIÓN RECUPERADA de investigación de campo (...). Verificar con el regante y pasar a Completada."</em></li>
-        </ul>
-    </li>
-    <li><strong>Estado:</strong> Tienen <strong>toda la producción completa</strong>, pero 101 están marcadas como <code>en_revision</code> y 2 como <code>completada</code> para visto bueno técnico.</li>
-</ul>
-
-<h2>4. Tabla Desglosada por Técnico Investigador (Trabajo del 23 de Julio)</h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>Técnico Investigador</th>
-            <th>Usuario QField</th>
-            <th>Modalidad de Carga</th>
-            <th>Fichas Adicionales</th>
-            <th>Fichas Principales</th>
-            <th>Total Procesado</th>
-            <th>Observaciones del Estado</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><strong>Adriana Cuascota</strong></td>
-            <td><code>jvk-editor6</code></td>
-            <td>Campo Real</td>
-            <td><strong>116</strong></td>
-            <td>0</td>
-            <td><strong>116</strong></td>
-            <td>100% Completadas en campo</td>
-        </tr>
-        <tr>
-            <td><strong>JVK Digitalización</strong></td>
-            <td><code>jvk-digitalizacion</code></td>
-            <td>Inyección Script</td>
-            <td><strong>103</strong></td>
-            <td>0</td>
-            <td><strong>103</strong></td>
-            <td>100% con cultivos (101 en revisión, 2 completadas)</td>
-        </tr>
-        <tr>
-            <td><strong>Martha Simbaña</strong></td>
-            <td><code>jvk-editor4</code></td>
-            <td>Campo Real</td>
-            <td><strong>66</strong></td>
-            <td>0</td>
-            <td><strong>66</strong></td>
-            <td>100% Completadas en campo</td>
-        </tr>
-        <tr>
-            <td><strong>Mayra Benavides</strong></td>
-            <td><code>mayralisseth201</code></td>
-            <td>Campo Real</td>
-            <td><strong>34</strong></td>
-            <td>0</td>
-            <td><strong>34</strong></td>
-            <td>100% Completadas en campo</td>
-        </tr>
-        <tr>
-            <td><strong>Pablo Barrionuevo</strong></td>
-            <td><code>jvk-editor5</code></td>
-            <td>Campo Real</td>
-            <td><strong>24</strong></td>
-            <td>12</td>
-            <td><strong>36</strong></td>
-            <td>Mixto (24 adicionales + 12 principales)</td>
-        </tr>
-        <tr>
-            <td><strong>JVK Corp</strong></td>
-            <td><code>jvk-corp</code></td>
-            <td>Campo Real</td>
-            <td><strong>18</strong></td>
-            <td>0</td>
-            <td><strong>18</strong></td>
-            <td>100% Completadas en campo</td>
-        </tr>
-        <tr>
-            <td><strong>Melany Jara</strong></td>
-            <td><code>jvk-editor</code></td>
-            <td>Campo Real</td>
-            <td><strong>8</strong></td>
-            <td>4</td>
-            <td><strong>12</strong></td>
-            <td>7 completadas + 1 en revisión</td>
-        </tr>
-        <tr>
-            <td><strong>Dylan Chavez</strong></td>
-            <td><code>jvk-editor3</code></td>
-            <td>Campo Real</td>
-            <td><strong>5</strong></td>
-            <td>23</td>
-            <td><strong>28</strong></td>
-            <td>Mixto (5 adicionales + 23 principales)</td>
-        </tr>
-        <tr>
-            <td><strong>Huguito Ipial</strong></td>
-            <td><code>jvk-editor2</code></td>
-            <td>Campo Real</td>
-            <td><strong>2</strong></td>
-            <td>0</td>
-            <td><strong>2</strong></td>
-            <td>100% Completadas en campo</td>
-        </tr>
-        <tr class="highlight-row">
-            <td>TOTALES DEL DÍA</td>
-            <td>—</td>
-            <td>—</td>
-            <td>376</td>
-            <td>39</td>
-            <td>415</td>
-            <td>274 completadas reales de campo</td>
-        </tr>
-    </tbody>
-</table>
-
-<h2>5. Rendimiento Diario Comparativo por Técnico (22 vs 23 de Julio)</h2>
+<h2>3. Historial Comparativo de Trabajo Diario por Técnico (22, 23 y 24 de Julio)</h2>
 
 <table>
     <thead>
@@ -318,56 +197,95 @@ html_content = """<!DOCTYPE html>
             <th>Usuario QField</th>
             <th>Fichas Adic. (22-Jul)</th>
             <th>Fichas Adic. (23-Jul)</th>
-            <th>Rendimiento Diario Promedio</th>
+            <th>Fichas Adic. (24-Jul)</th>
+            <th>Total Adicionales Completadas</th>
         </tr>
     </thead>
     <tbody>
+        <tr>
+            <td><strong>Mayra Benavides</strong></td>
+            <td><code>mayralisseth201</code></td>
+            <td>65</td>
+            <td>34</td>
+            <td><strong>107</strong></td>
+            <td><strong>206</strong></td>
+        </tr>
         <tr>
             <td><strong>Adriana Cuascota</strong></td>
             <td><code>jvk-editor6</code></td>
             <td>—</td>
             <td><strong>116</strong></td>
-            <td>~116 fichas/día</td>
+            <td>—</td>
+            <td><strong>116</strong></td>
         </tr>
         <tr>
             <td><strong>Martha Simbaña</strong></td>
             <td><code>jvk-editor4</code></td>
             <td>48</td>
-            <td><strong>66</strong></td>
-            <td>~57 fichas/día</td>
-        </tr>
-        <tr>
-            <td><strong>Mayra Benavides</strong></td>
-            <td><code>mayralisseth201</code></td>
-            <td>65</td>
-            <td><strong>34</strong></td>
-            <td>~50 fichas/día</td>
-        </tr>
-        <tr>
-            <td><strong>JVK Corp</strong></td>
-            <td><code>jvk-corp</code></td>
-            <td>39</td>
-            <td><strong>18</strong></td>
-            <td>~29 fichas/día</td>
+            <td>66</td>
+            <td><strong>38</strong></td>
+            <td><strong>152</strong></td>
         </tr>
         <tr>
             <td><strong>Pablo Barrionuevo</strong></td>
             <td><code>jvk-editor5</code></td>
             <td>19</td>
-            <td><strong>24</strong></td>
-            <td>~22 fichas/día (+12 principales)</td>
+            <td>24</td>
+            <td><strong>26</strong></td>
+            <td><strong>69</strong></td>
+        </tr>
+        <tr>
+            <td><strong>JVK Corp</strong></td>
+            <td><code>jvk-corp</code></td>
+            <td>39</td>
+            <td>18</td>
+            <td><strong>16</strong></td>
+            <td><strong>73</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Huguito Ipial</strong></td>
+            <td><code>jvk-editor2</code></td>
+            <td>—</td>
+            <td>2</td>
+            <td><strong>13</strong></td>
+            <td><strong>15</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Melany Jara</strong></td>
+            <td><code>jvk-editor</code></td>
+            <td>7</td>
+            <td>8</td>
+            <td><strong>1</strong></td>
+            <td><strong>16</strong></td>
         </tr>
         <tr>
             <td><strong>Dylan Chavez</strong></td>
             <td><code>jvk-editor3</code></td>
             <td>2</td>
-            <td><strong>5</strong></td>
-            <td>~28 fichas/día (mixto con 23 princ.)</td>
+            <td>5</td>
+            <td>—</td>
+            <td><strong>7</strong></td>
+        </tr>
+        <tr>
+            <td><em>JVK Digitalización (Script)</em></td>
+            <td><code>jvk-digitalizacion</code></td>
+            <td>—</td>
+            <td><em>103</em></td>
+            <td>—</td>
+            <td><em>103</em></td>
+        </tr>
+        <tr class="highlight-row">
+            <td>TOTALES POR DÍA</td>
+            <td>—</td>
+            <td>180</td>
+            <td>376</td>
+            <td>201</td>
+            <td>757</td>
         </tr>
     </tbody>
 </table>
 
-<h2>6. Estimación de Tiempos y Planificación de Cierre</h2>
+<h2>4. Estimación de Tiempos y Planificación de Cierre</h2>
 
 <div class="note-box">
     <strong>Capacidad de Procesamiento por Modalidad:</strong><br>
@@ -376,13 +294,13 @@ html_content = """<!DOCTYPE html>
 </div>
 
 <h3>Proyección Real de Cierre de Trabajo de Campo:</h3>
-<p>Descontando la inyección automatizada por script y considerando únicamente el ritmo real de campo de la fuerza de terreno (<strong>~270 a 300 predios adicionales completados por día</strong>):</p>
+<p>Descontando la inyección automatizada por script y considerando únicamente el ritmo real de campo de la fuerza de terreno (<strong>~218 predios adicionales completados por día de campo</strong>):</p>
 
 <p style="text-align: center; font-size: 13pt; font-weight: bold; color: #0284c7;">
-    Tiempo Real de Cierre Restante = 1,843 fichas pendientes / 275 fichas reales/día = 6.7 Días Laborables
+    Tiempo Real de Cierre Restante = 1,641 fichas pendientes / 218 fichas reales/día = 7.5 Días Laborables
 </p>
 
-<p><strong>Conclusión Operativa:</strong> Manteniendo el esquema y la asignación actual por polígonos/comunidades, el universo completo de 2,410 predios adicionales estará <strong>100% investigado y cerrado en aproximadamente 6 a 7 días de trabajo</strong>.</p>
+<p><strong>Conclusión Operativa:</strong> Manteniendo el esquema y la asignación actual por polígonos/comunidades, el universo completo de 2,409 predios adicionales estará <strong>100% investigado y cerrado en aproximadamente 7 a 8 días de trabajo de campo</strong>.</p>
 
 <div class="footer">
     Consorcio Cayambe SPT — Sistema de Riego Comunitario Guanguilquí Porotog<br>

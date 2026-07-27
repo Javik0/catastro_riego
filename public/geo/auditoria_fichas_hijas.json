@@ -11,16 +11,16 @@
       "en_revision": 0
     },
     "Sector 1": {
-      "total": 955,
+      "total": 957,
       "pendientes": 477,
-      "completadas": 407,
-      "en_revision": 71
+      "completadas": 408,
+      "en_revision": 72
     },
     "Sin sector": {
-      "total": 670,
+      "total": 668,
       "pendientes": 396,
-      "completadas": 244,
-      "en_revision": 30
+      "completadas": 243,
+      "en_revision": 29
     },
     "Sector 2": {
       "total": 517,
