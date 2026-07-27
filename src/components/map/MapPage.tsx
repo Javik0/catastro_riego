@@ -905,8 +905,8 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                   const isHighlighted = searchTarget &&
                     feature?.properties?.clave_cata === searchTarget.clave_cata;
                   return isHighlighted
-                    ? { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.25, opacity: 1 }
-                    : { color: '#f97316', weight: 1.5, fillColor: '#f97316', fillOpacity: 0.08, opacity: 0.7 };
+                    ? { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.50, opacity: 1 }
+                    : { color: '#ea580c', weight: 1.5, fillColor: '#f97316', fillOpacity: 0.35, opacity: 0.85 };
                 }}
                 onEachFeature={(feature, layer) => {
                   const p = feature.properties;
