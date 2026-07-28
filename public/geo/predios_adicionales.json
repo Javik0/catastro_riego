@@ -17314,26 +17314,6 @@
     "ficha_hija_generada_id": "{187e2d1f-a4ce-486f-aeea-6ab170f1baff}"
   },
   {
-    "fid": 1490,
-    "id_adicional": "{2a584881-fa78-4230-868f-6144f4f7374e}",
-    "ficha_id": "{87ec2305-8f84-453a-803e-b6a716b6faa9}",
-    "clave_catastral_otro": "1702520700021",
-    "area_total_otro": 29086.38,
-    "area_riego_otro": 29086.38,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 29086.38
-  },
-  {
-    "fid": 1491,
-    "id_adicional": "{6116af94-1825-483c-bb85-593c08401b3f}",
-    "ficha_id": "{569867c5-567d-4752-be55-a946a9c08f99}",
-    "clave_catastral_otro": "1702520720040",
-    "area_total_otro": 13344.5,
-    "area_riego_otro": 3336.0,
-    "area_sin_riego_otro": -3336.0,
-    "area_lote_asignado_otro": 3336.0
-  },
-  {
     "fid": 1492,
     "id_adicional": "{6f157d5e-9e1a-481a-b4a0-f4c717a31434}",
     "ficha_id": "{4334641f-34f5-4886-80e4-c8a1e3663db3}",
@@ -17602,18 +17582,6 @@
     "tiene_observaciones": 1,
     "observaciones_otro": "EL COMUNERO REGANTE NO TIENE RIEGO EN ESTA ÁREA  PESE A PAGAR MENSUALMENTE LA CUOTA DE RIEGO.",
     "ficha_hija_generada_id": "{7ec009d8-cee6-4c3d-88ba-35aa2eb1c6a8}"
-  },
-  {
-    "fid": 1513,
-    "id_adicional": "{2b311d77-0fb2-4f89-ab88-5cd6cd86abec}",
-    "ficha_id": "{5802b9e5-1c0e-452f-b0fc-6cf858ad07c0}",
-    "clave_catastral_otro": "1702520970012",
-    "area_total_otro": 27637.88,
-    "area_riego_otro": 5000.0,
-    "area_sin_riego_otro": -5000.0,
-    "area_lote_asignado_otro": 9212.62,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA FRACCIONADO EN TRES PARTES Y SOLO LE CORRESPONDE UN AREA TOTAL DE 9212.62"
   },
   {
     "fid": 1514,
@@ -33303,16 +33271,6 @@
     "area_lote_asignado_otro": 8500.0,
     "tiene_observaciones": 1,
     "observaciones_otro": "Sector: Santa Marianita de Pingulmi"
-  },
-  {
-    "fid": 2841,
-    "id_adicional": "{0e30fdf5-652b-4927-9317-98d17a728e72}",
-    "ficha_id": "{fb117630-697c-4c07-b32e-d4ca76a7940c}",
-    "clave_catastral_otro": "1702521470022",
-    "area_total_otro": 13168.17,
-    "area_riego_otro": 13168.17,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 13168.17
   },
   {
     "fid": 2842,

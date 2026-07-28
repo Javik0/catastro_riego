@@ -24,13 +24,20 @@ interface Props {
   cultivosPorFicha: Map<string, CultivoAgricola[]>;
   animalesPorFicha: Map<string, AnimalEspecie[]>;
   onVerFicha: (f: FichaPredio) => void;
+  /** v4.6: resuelve la ficha madre de una adicional (por ficha_madre_id) */
+  resolverMadre?: (f: FichaPredio) => FichaPredio | undefined;
+  /** v4.6: resuelve los predios adicionales declarados por una ficha principal */
+  resolverHijas?: (f: FichaPredio) => FichaPredio[];
+  /** v4.6: navegar en el mapa hacia otra ficha (madre o adicional) */
+  onIrAMadre?: (madre: FichaPredio) => void;
 }
 
 const fmt = (n: number | undefined | null) =>
   n != null && isFinite(n) ? Math.round(n).toLocaleString('es-EC') : '—';
 
-export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, animalesPorFicha, onVerFicha }: Props) {
+export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, animalesPorFicha, onVerFicha, resolverMadre, resolverHijas, onIrAMadre }: Props) {
   const [idx, setIdx] = useState(0);
+  const [filtro, setFiltro] = useState('');
   const ficha = fichas[Math.min(idx, fichas.length - 1)];
 
   // ── Polígono SIN ficha de riego (v4.5): datos básicos del catastro para
@@ -73,6 +80,20 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
 
   const hijaPend = esHijaPendiente(ficha);
   const esHija = esFichaHija(ficha);
+  const madre = esHija && resolverMadre ? resolverMadre(ficha) : undefined;
+  const otrosPredios = !esHija && resolverHijas ? resolverHijas(ficha) : [];
+
+  // v4.6: lista compacta — conservar el índice original para la selección
+  const totalPend = fichas.filter(esHijaPendiente).length;
+  const q = filtro.trim().toLowerCase();
+  const fichasVisibles = fichas
+    .map((f, i) => ({ f, i }))
+    .filter(({ f }) =>
+      !q ||
+      `${f.apellidos || ''} ${f.nombres || ''} ${f.propietario || ''} ${f.codigo_final || ''}`
+        .toLowerCase()
+        .includes(q)
+    );
   const cultivos = (cultivosPorFicha.get(ficha.id) || [])
     .slice()
     .sort((a, b) => (b.superficie_m2 || 0) - (a.superficie_m2 || 0));
@@ -104,26 +125,106 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
         <div className="text-[10px] opacity-70 font-mono mt-0.5">
           {predio.clave_cata}{ficha.comunidad ? ` · ${ficha.comunidad}` : ''}
         </div>
-        {/* Varias fichas en el mismo polígono (multi-declarante / herencias) */}
+        {/* Varias fichas en el mismo polígono (multi-declarante / herencias / fraccionamiento) */}
         {fichas.length > 1 && (
-          <div className="flex flex-wrap gap-1 mt-1.5">
-            {fichas.map((f, i) => (
-              <button
-                key={f.id}
-                onClick={(e) => { e.stopPropagation(); setIdx(i); }}
-                className={`px-1.5 py-0.5 rounded text-[9px] font-semibold border cursor-pointer ${
-                  i === Math.min(idx, fichas.length - 1)
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
-                }`}
-                title={f.propietario || f.codigo_final}
-              >
-                {i + 1}. {(f.apellidos || f.codigo_final || '').split(' ')[0]}
-              </button>
-            ))}
+          <div className="mt-1.5">
+            {/* v4.6: resumen del predio */}
+            <div className="text-[9px] opacity-70 mb-1">
+              <b>{fichas.length}</b> fichas en este predio
+              {totalPend > 0 && <> · <b>{totalPend}</b> pendientes S4 · <b>{fichas.length - totalPend}</b> investigadas</>}
+            </div>
+            {/* v4.6: buscador cuando la lista es larga */}
+            {fichas.length > 15 && (
+              <input
+                type="text"
+                value={filtro}
+                onChange={(e) => setFiltro(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                placeholder={`Filtrar ${fichas.length} fichas por apellido...`}
+                className="w-full mb-1 px-1.5 py-1 text-[10px] rounded border border-gray-300 outline-none focus:border-blue-400"
+              />
+            )}
+            {/* v4.6: contenedor con scroll — el popup ya no se desborda */}
+            <div className="flex flex-wrap gap-1 max-h-[104px] overflow-y-auto pr-1">
+              {fichasVisibles.map(({ f, i }) => (
+                <button
+                  key={f.id}
+                  onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+                  className={`px-1.5 py-0.5 rounded text-[9px] font-semibold border cursor-pointer ${
+                    i === Math.min(idx, fichas.length - 1)
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : esHijaPendiente(f)
+                        ? 'bg-slate-50 text-slate-500 border-slate-300 border-dashed hover:bg-slate-100'
+                        : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
+                  }`}
+                  title={f.propietario || f.codigo_final}
+                >
+                  {i + 1}. {(f.apellidos || f.codigo_final || '').split(' ')[0]}
+                </button>
+              ))}
+              {fichasVisibles.length === 0 && (
+                <span className="text-[9px] opacity-60 py-1">Sin coincidencias para «{filtro}»</span>
+              )}
+            </div>
           </div>
         )}
       </div>
+
+      {/* v4.6: vínculo con el regante principal (ficha madre) */}
+      {esHija && madre && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50 px-2 py-1.5 mb-2">
+          <div className="text-[9px] font-semibold uppercase tracking-wider text-blue-500 mb-0.5">
+            Regante principal (ficha madre)
+          </div>
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <div className="text-[11px] font-semibold text-blue-900 leading-tight truncate">
+                {madre.propietario || `${madre.apellidos || ''} ${madre.nombres || ''}`.trim() || madre.codigo_final}
+              </div>
+              {madre.clave_catastral && (
+                <div className="font-mono text-[10px] text-blue-700">{madre.clave_catastral}</div>
+              )}
+            </div>
+            {onIrAMadre && (
+              <button
+                onClick={(e) => { e.stopPropagation(); onIrAMadre(madre); }}
+                className="shrink-0 flex items-center gap-1 px-1.5 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[9px] font-bold cursor-pointer"
+                title="Ver el predio del regante principal en el mapa"
+              >
+                <MapPin className="w-3 h-3" /> Ir al predio
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* v4.6: navegación inversa — otros predios declarados por este regante */}
+      {otrosPredios.length > 0 && (
+        <div className="rounded-lg border border-blue-200 bg-blue-50 px-2 py-1.5 mb-2">
+          <div className="text-[9px] font-semibold uppercase tracking-wider text-blue-500 mb-1">
+            Otros predios declarados ({otrosPredios.length})
+          </div>
+          <div className="space-y-1 max-h-[104px] overflow-y-auto pr-0.5">
+            {otrosPredios.map((h, i) => (
+              <button
+                key={h.id}
+                onClick={(e) => { e.stopPropagation(); onIrAMadre?.(h); }}
+                className="w-full flex items-center justify-between gap-2 px-1.5 py-1 rounded border border-blue-200 bg-white hover:bg-blue-100 cursor-pointer text-left"
+                title="Ver este predio en el mapa"
+              >
+                <span className="text-[10px] text-blue-900 truncate">
+                  {i + 1}. {h.comunidad || h.sector || h.codigo_final}
+                  {h.area_total ? ` — ${fmt(h.area_total)} m²` : ''}
+                </span>
+                <span className="shrink-0 text-[9px]">{esHijaPendiente(h) ? '⚪' : '✅'}</span>
+              </button>
+            ))}
+          </div>
+          <div className="text-[8px] text-blue-600 mt-1">
+            Declarados en la Sección 7 · clic para ubicarlos
+          </div>
+        </div>
+      )}
 
       {/* Superficies con barra de riego */}
       <div className="mb-2">

@@ -227,13 +227,6 @@
     "es_autoconsumo": 1
   },
   {
-    "id_cultivo": "{832c4cd3-63a9-4012-88e1-2752305a7096}",
-    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
-    "tipo_cultivo": "Flores",
-    "superficie_m2": 600.0,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{b82dd077-56a1-477e-b813-d53168774914}",
     "ficha_id": "{3e20335f-df67-40ce-bec4-7d1d8ab1e353}",
     "tipo_cultivo": "Cebolla",
@@ -381,21 +374,6 @@
     "ficha_id": "{2c01d453-b08a-4c95-95fc-16ba9822fb5e}",
     "tipo_cultivo": "Pasto mejorado",
     "superficie_m2": 1750.0
-  },
-  {
-    "id_cultivo": "{8bbe9acf-79bc-4ab3-9772-4c3235e2a8ec}",
-    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1500.0,
-    "es_autoconsumo": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{f7a1cbe7-a6b9-4b2c-9f03-f643d4f0032a}",
-    "ficha_id": "{ec1b20d1-093c-4fac-a2e7-f5f4416a93a9}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 2500.0,
-    "es_mercado": 1
   },
   {
     "id_cultivo": "{232146cb-ce8e-4c44-bc3a-5886d5169357}",
@@ -1872,14 +1850,6 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{6c0eb42c-bc14-4d87-b4cd-716eb9b51ab3}",
-    "ficha_id": "{eb875d1d-643e-4f93-a1e1-f8ba1a5e6d30}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 800.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{63a955da-4785-4092-af80-00bb0c0c1c59}",
     "ficha_id": "{eb875d1d-643e-4f93-a1e1-f8ba1a5e6d30}",
     "tipo_cultivo": "Papas",
@@ -1914,13 +1884,6 @@
   {
     "id_cultivo": "{26c2bc48-c47e-414d-a17d-61cb33abc343}",
     "ficha_id": "{8a6bc54f-df83-4b34-ad88-ba7bcf8a158b}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 2500.0,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{9719777c-a422-44f4-95c6-10f8770d00c4}",
-    "ficha_id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
     "tipo_cultivo": "Cebolla",
     "superficie_m2": 2500.0,
     "es_mercado": 1
@@ -2556,14 +2519,6 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{30a51fcd-fdaf-4cd5-8a07-56107438c940}",
-    "ficha_id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 2000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{39862d27-978d-4f5d-ae92-cb979344677f}",
     "ficha_id": "{b53f5c89-a193-4e7b-9bb2-2bacdd20c6dd}",
     "tipo_cultivo": "CEBOLLA",
@@ -2655,56 +2610,6 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "ref_area_predio": 734.04
-  },
-  {
-    "id_cultivo": "{a2a8d5d1-74f5-4419-8de1-1d64b95aad07}",
-    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 200.0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 734.04
-  },
-  {
-    "id_cultivo": "{dc4bb5a8-aa04-413e-b795-03ecfcf46dcc}",
-    "ficha_id": "{ead7443c-e0be-46b9-b712-aa8802af55f1}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 134.0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 734.04
-  },
-  {
-    "id_cultivo": "{98e3236c-edff-4116-93f7-a5385fe2d9d5}",
-    "ficha_id": "{a102741c-37f2-4fef-801a-9c8712c4949e}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1500.0,
-    "es_principal": 1,
-    "es_mercado": 1,
-    "ref_area_predio": 2791.66
-  },
-  {
-    "id_cultivo": "{e91a7036-6db3-4332-951c-c3c4287632c3}",
-    "ficha_id": "{a102741c-37f2-4fef-801a-9c8712c4949e}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 1291.0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 2791.66
-  },
-  {
-    "id_cultivo": "{4f04485c-9402-41ab-b0eb-696c084e76aa}",
-    "ficha_id": "{ce4e7497-37b1-4359-b1e4-696ebef72623}",
-    "tipo_cultivo": "PASTO MEJORADO",
-    "superficie_m2": 500.0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 1177.45
-  },
-  {
-    "id_cultivo": "{f045538b-ff3f-4d3e-9755-fa6b5ba7f390}",
-    "ficha_id": "{ce4e7497-37b1-4359-b1e4-696ebef72623}",
-    "tipo_cultivo": "CEBOLLA",
-    "superficie_m2": 500.0,
-    "es_principal": 1,
-    "es_mercado": 1,
-    "ref_area_predio": 1177.45
   },
   {
     "id_cultivo": "{d6a0e862-cdf1-4216-8481-fe734c098ade}",
@@ -34558,15 +34463,6 @@
     "ref_area_predio": 5285.79
   },
   {
-    "id_cultivo": "{63b30a1e-3671-4c81-8697-c323a6f1fbd7}",
-    "ficha_id": "{248a3f21-bbcd-4c4a-9d08-d2a1c1f21c9c}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 435.79,
-    "es_principal": 0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 5285.79
-  },
-  {
     "id_cultivo": "{2080ee71-a7a5-4e97-bf28-08bbe8a15378}",
     "ficha_id": "{2ff6eb2b-a37c-4c48-bce8-4f5019ef1597}",
     "tipo_cultivo": "Pasto no mejorado",
@@ -44978,10 +44874,10 @@
   {
     "id_cultivo": "{2551ca18-4ed7-4cbd-be7c-89b2aaae0f4b}",
     "ficha_id": "{bb27d29a-04b0-43f5-acf7-7c5915e8e4c7}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 4500.0,
+    "tipo_cultivo": "PASTO MEJORADO",
+    "superficie_m2": 2566.14,
     "es_autoconsumo": 1,
-    "ref_area_predio": 5132.28
+    "ref_area_predio": 2566.14
   },
   {
     "id_cultivo": "{ccd96b8c-9564-4b93-814d-28db429de67e}",
@@ -44995,38 +44891,38 @@
   {
     "id_cultivo": "{d12dca51-d914-45f7-84e0-11a76197673c}",
     "ficha_id": "{935e4377-4e5f-451e-82ab-45a641d5a0a7}",
-    "tipo_cultivo": "Flores",
+    "tipo_cultivo": "FLORES",
     "superficie_m2": 450.0,
     "es_principal": 1,
     "es_exportacion": 1,
-    "ref_area_predio": 5132.28
+    "ref_area_predio": 2566.4
   },
   {
     "id_cultivo": "{76c6f37b-b2c5-4dbb-b548-702af9721a40}",
     "ficha_id": "{935e4377-4e5f-451e-82ab-45a641d5a0a7}",
-    "tipo_cultivo": "Habas",
+    "tipo_cultivo": "PAPAS",
     "superficie_m2": 600.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "ref_area_predio": 5132.28
+    "ref_area_predio": 2566.4
   },
   {
     "id_cultivo": "{0fa39ea3-c163-4ba6-b737-7c532c1fc725}",
     "ficha_id": "{935e4377-4e5f-451e-82ab-45a641d5a0a7}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "OTROS",
     "superficie_m2": 300.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alverja",
-    "ref_area_predio": 5132.28
+    "tipo_cultivo_otro": "ALVERJA",
+    "ref_area_predio": 2566.4
   },
   {
     "id_cultivo": "{63a4e5f3-0191-4436-ac06-825d0625068c}",
     "ficha_id": "{935e4377-4e5f-451e-82ab-45a641d5a0a7}",
-    "tipo_cultivo": "Pasto mejorado",
+    "tipo_cultivo": "PASTO NO MEJORADO",
     "superficie_m2": 25.0,
     "es_autoconsumo": 1,
-    "ref_area_predio": 5132.28
+    "ref_area_predio": 2566.4
   },
   {
     "id_cultivo": "{ef0d04a7-905f-4915-a25c-0c85a9f262f1}",
@@ -56635,11 +56531,11 @@
   {
     "id_cultivo": "{99404465-91b5-4b46-bed4-6d069cc0e9b6}",
     "ficha_id": "{915f9946-3ece-498a-9a38-1eb729c4a7a3}",
-    "tipo_cultivo": "Maíz",
+    "tipo_cultivo": "MAÍZ",
     "superficie_m2": 100.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "ref_area_predio": 1278.52
+    "ref_area_predio": 639.0
   },
   {
     "id_cultivo": "{d604f67b-8cc7-47e5-9631-afd3b1964f5d}",
@@ -72105,14 +72001,6 @@
     "es_autoconsumo": 1
   },
   {
-    "id_cultivo": "{caa43af3-0a8c-485f-b138-cd0748e13955}",
-    "ficha_id": "{392ff456-d6ab-43b5-a3de-18f734dcaa53}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 10000.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
     "id_cultivo": "{763cf0aa-13ff-4f9a-9df6-4d1220276025}",
     "ficha_id": "{392ff456-d6ab-43b5-a3de-18f734dcaa53}",
     "tipo_cultivo": "Cebolla",
@@ -72160,51 +72048,6 @@
     "es_autoconsumo": 1
   },
   {
-    "id_cultivo": "{2bb6cc40-68e6-4bd0-b065-9b718b9aa9ba}",
-    "ficha_id": "{1211fe5c-7864-4794-a07e-c37cd0d7640f}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 800.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{3832d6f3-df5c-4011-a70a-feaec1be5375}",
-    "ficha_id": "{1211fe5c-7864-4794-a07e-c37cd0d7640f}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 2000.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{eac2a972-6f8e-4349-9871-e42a9306c7aa}",
-    "ficha_id": "{fe155ac6-4752-4939-8846-a89f5712b599}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 800.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{d2b043d5-e741-4828-a177-8cd91fc2d3a9}",
-    "ficha_id": "{fe155ac6-4752-4939-8846-a89f5712b599}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 4293.64,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{ad434773-3b67-4cc8-aa2c-01064f84931d}",
-    "ficha_id": "{0d47a230-2ede-4f09-97be-fe7676a43964}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 6066.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{fed56177-b272-48f1-97e7-22e0617ba6b8}",
-    "ficha_id": "{0d47a230-2ede-4f09-97be-fe7676a43964}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 1000.0,
-    "es_autoconsumo": 1
-  },
-  {
     "id_cultivo": "{a1355bbd-5465-4321-8c6a-99a3e14ec57c}",
     "ficha_id": "{ba44f503-f916-430e-99d4-33ce8e189367}",
     "tipo_cultivo": "Flores",
@@ -72220,52 +72063,6 @@
     "es_autoconsumo": 1
   },
   {
-    "id_cultivo": "{4d9c11ee-7ba4-49b3-83ad-3c6b7b76738f}",
-    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
-    "tipo_cultivo": "Flores",
-    "superficie_m2": 2000.0,
-    "es_principal": 1,
-    "es_exportacion": 1
-  },
-  {
-    "id_cultivo": "{e52706e5-b515-44fe-a789-3aefbd67e556}",
-    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 3500.0,
-    "es_principal": 0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{855eada9-2f6c-4633-82f9-010c269c8b89}",
-    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1000.0
-  },
-  {
-    "id_cultivo": "{5a9525ef-4685-4705-be71-c6f3f80dcd8d}",
-    "ficha_id": "{a0725bb9-6736-4742-aa90-e0356433e202}",
-    "tipo_cultivo": "Papas",
-    "superficie_m2": 1000.0,
-    "es_principal": 1,
-    "es_exportacion": 1
-  },
-  {
-    "id_cultivo": "{dfb502a2-0216-45a9-8fbf-797a96993530}",
-    "ficha_id": "{a0725bb9-6736-4742-aa90-e0356433e202}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 2000.0,
-    "es_principal": 0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{ac4dbd51-d269-4fa0-8d2f-6197c9430efd}",
-    "ficha_id": "{35acc7fa-ae05-45da-8a1e-b9cd203c6cab}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3240.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{4c7b6bae-e4c1-4255-9fad-832f8aa0d686}",
     "ficha_id": "{d6d42ec9-10cf-45b1-a344-3d5c64e11215}",
     "tipo_cultivo": "Cebolla",
@@ -72279,14 +72076,6 @@
     "tipo_cultivo": "Pasto mejorado",
     "superficie_m2": 370.0,
     "es_autoconsumo": 0
-  },
-  {
-    "id_cultivo": "{ef096e5b-2877-48ba-9bb2-9afa9ef2721c}",
-    "ficha_id": "{4fe3d0bd-e072-4a74-a4f5-b1dcdaf7f28f}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 5641.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
   },
   {
     "id_cultivo": "{a4b6be89-415b-4bec-9179-d818312a4579}",
@@ -72309,22 +72098,6 @@
     "ficha_id": "{6cb437f3-153e-483c-9a18-d3810fb15965}",
     "tipo_cultivo": "Pasto mejorado",
     "superficie_m2": 5000.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{ff62aae0-5971-4fc8-aa3d-0ef3605e04d0}",
-    "ficha_id": "{a0e9d1a4-ab46-4eeb-b8ec-470dc2b0e493}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 2500.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{c6ac1077-09f8-4b44-86c0-638dd15db1a0}",
-    "ficha_id": "{a0e9d1a4-ab46-4eeb-b8ec-470dc2b0e493}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 2000.0,
     "es_autoconsumo": 1
   },
   {
@@ -72366,30 +72139,6 @@
     "superficie_m2": 800.0,
     "es_principal": 0,
     "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{4ca4fcc3-5680-44a7-9102-6d26b7e2ad23}",
-    "ficha_id": "{2ad91cd5-18f9-45a2-b073-4e3fab03c91a}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 400.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{d358ef02-0cd6-4732-ad39-3fc68a59a32d}",
-    "ficha_id": "{c5b6d027-1f5e-455b-8ee7-51ef5cf422a8}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{b4d41aba-ba89-4937-86a0-a893ea028d5e}",
-    "ficha_id": "{c5b6d027-1f5e-455b-8ee7-51ef5cf422a8}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_mercado": 1
   },
   {
     "id_cultivo": "{07638b85-bc14-4f23-bfcd-4734ff5278cc}",
@@ -72468,13 +72217,6 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{3f7912f9-c524-46d8-9628-9d427b7d87e1}",
-    "ficha_id": "{4720f7aa-2798-487a-aaf8-2df759ae475e}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1000.0,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{942a2797-6ca5-469f-a264-baa908c77d64}",
     "ficha_id": "{af1b0ca7-f6c8-4105-a448-66aedaa1aff1}",
     "tipo_cultivo": "Pasto no mejorado",
@@ -72504,28 +72246,6 @@
     "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 15.0,
     "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{5f1861ac-302b-4551-8af7-4331f2ae3da7}",
-    "ficha_id": "{9b2d9993-ac2c-4dd5-a994-3ba075632e67}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{8866d3ef-745b-4785-9451-d890d2cc50c5}",
-    "ficha_id": "{544b5b9e-e425-4287-8f10-4226ad3ab726}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 600.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{e772b5e7-3827-47f8-a6c4-c7f08cc8d0bc}",
-    "ficha_id": "{544b5b9e-e425-4287-8f10-4226ad3ab726}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 50.0,
     "es_autoconsumo": 1
   },
   {
@@ -72564,50 +72284,6 @@
     "ref_area_predio": 3308.34
   },
   {
-    "id_cultivo": "{528115b1-a7a5-4f74-874d-5cb34e968baa}",
-    "ficha_id": "{41235186-be7f-4649-865b-b661960777da}",
-    "tipo_cultivo": "Flores",
-    "superficie_m2": 600.0,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{dd2e62b2-e197-4d20-961c-c698eb38f541}",
-    "ficha_id": "{fb4455fa-d3e5-4a20-b8d7-3343eb6fa3bc}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 800.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{8e538deb-b863-4cba-bfc7-db10ea44fd50}",
-    "ficha_id": "{fb4455fa-d3e5-4a20-b8d7-3343eb6fa3bc}",
-    "tipo_cultivo": "Papas",
-    "superficie_m2": 250.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{8786c099-81fd-49a9-b617-b884fdcd0ad2}",
-    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
-    "tipo_cultivo": "PASTO MEJORADO",
-    "superficie_m2": 500.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{e01278c3-1c8d-4fef-b0f3-bede2bb5680f}",
-    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
-    "tipo_cultivo": "CEBOLLA",
-    "superficie_m2": 500.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{0983debd-edd1-4b67-93bc-13adb7578c47}",
-    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
-    "tipo_cultivo": "Hortalizas",
-    "superficie_m2": 177.0,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{ccf0d3f6-d7b3-42ba-94dc-897df9860922}",
     "ficha_id": "{67f97f16-0ade-47b8-9ddf-437851e44ea0}",
     "tipo_cultivo": "Flores",
@@ -72622,34 +72298,11 @@
     "superficie_m2": 100.0
   },
   {
-    "id_cultivo": "{9183d482-684a-4340-ace0-514e609cdab9}",
-    "ficha_id": "{60522cdb-4257-4ad0-b86f-d3ba3b33e80c}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1500.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{d9b4cc93-9677-4bcb-942b-51257922d17a}",
-    "ficha_id": "{60522cdb-4257-4ad0-b86f-d3ba3b33e80c}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 1291.0,
-    "es_autoconsumo": 1
-  },
-  {
     "id_cultivo": "{baae934b-2a05-494c-85f5-973d5c567e57}",
     "ficha_id": "{5f185608-aa32-4a8f-b05e-e6c41bf8d517}",
     "tipo_cultivo": "Cebolla",
     "superficie_m2": 2500.0,
     "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{0c0d1a57-64ba-4675-958f-4378f07a6c3b}",
-    "ficha_id": "{67f2f420-155d-4a23-a2d6-ed33891f3e00}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
   },
   {
     "id_cultivo": "{11d3f7d8-961d-4cfb-a904-726eaba22601}",
@@ -72699,50 +72352,6 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{11654c9f-6cdc-4530-b139-0fd3950aa159}",
-    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
-    "tipo_cultivo": "Frutales",
-    "superficie_m2": 400.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{e0466da2-4d20-4b5b-a839-a379ff592581}",
-    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 200.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{af6ca47e-912d-4213-9e70-22a6f6f79ddd}",
-    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 134.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{ef964c51-5d3d-458e-a28a-7d8036249cae}",
-    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 200.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{a2d4f42a-c8e2-4f08-b887-34cc56570dcc}",
-    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
-    "tipo_cultivo": "Papas",
-    "superficie_m2": 100.0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{f22a9dfb-4e44-459a-a02a-0162280c5261}",
-    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
-    "tipo_cultivo": "Habas",
-    "superficie_m2": 50.0,
-    "es_autoconsumo": 1
-  },
-  {
     "id_cultivo": "{e8023a7b-4577-472f-9c66-895211a251e4}",
     "ficha_id": "{37543d4a-5a9a-42b6-9dce-249e321a74d2}",
     "tipo_cultivo": "Pasto mejorado",
@@ -72757,63 +72366,10 @@
     "es_autoconsumo": 1
   },
   {
-    "id_cultivo": "{3dda2085-e44d-4db8-9c12-4a97b3b45e9f}",
-    "ficha_id": "{ce3fd694-1235-4d4e-a080-893fee955551}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 500.0,
-    "es_principal": 0,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{7750c37c-25f7-451a-99c2-c2a0f2180d0d}",
-    "ficha_id": "{ce3fd694-1235-4d4e-a080-893fee955551}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 450.0,
-    "es_principal": 1
-  },
-  {
-    "id_cultivo": "{6b4632fc-8dab-467d-8f7e-f7bf1b0db568}",
-    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{e7a55c61-3252-485c-b8d9-bb998b8f5b9d}",
-    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
-    "tipo_cultivo": "Pasto mejorado",
-    "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{66e1c50c-21db-420f-88d9-fc963d74cc4a}",
-    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
-    "tipo_cultivo": "Papas",
-    "superficie_m2": 500.0,
-    "es_exportacion": 1
-  },
-  {
     "id_cultivo": "{19b21fbb-ee12-4849-b1ab-ddf87d95c02d}",
     "ficha_id": "{9aec4f4a-350f-4ebd-869b-bff0a3e87837}",
     "tipo_cultivo": "Cebolla",
     "superficie_m2": 4300.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{e18e1b28-5272-46aa-9b5c-a804c0ff2521}",
-    "ficha_id": "{ffbe0f09-7177-4169-9123-6bb62b55872d}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 6000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{3509d355-1721-4502-8d51-987442f9e060}",
-    "ficha_id": "{022a5f40-55a5-4361-b4d9-0c15830492b9}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3000.0,
     "es_principal": 1,
     "es_mercado": 1
   },
@@ -72823,21 +72379,6 @@
     "tipo_cultivo": "Papas",
     "superficie_m2": 300.0,
     "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{55d90ea9-971d-4cd2-9825-44942e75f772}",
-    "ficha_id": "{0a5b1dea-6a6e-4b30-b77c-c8ce4567fca2}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 500.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{180b2e1e-9c68-4fbd-ad38-64c4b24f5ec3}",
-    "ficha_id": "{0a5b1dea-6a6e-4b30-b77c-c8ce4567fca2}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 500.0,
     "es_autoconsumo": 1
   },
   {
@@ -72907,22 +72448,6 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{eef474bd-0bc1-405d-a2ed-41bc498e0c46}",
-    "ficha_id": "{2a01e6ff-b268-4c54-8743-b51465b68e91}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 11000.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_cultivo": "{95d17838-7ae1-4de0-8b4b-932de335080f}",
-    "ficha_id": "{fc6c45fd-8f64-4b62-87d8-f1dabe42be91}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 3000.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
     "id_cultivo": "{873b8144-fdb1-4eae-a42f-0773ad9845b1}",
     "ficha_id": "{8e70734a-7d47-4deb-b619-db0b483849f0}",
     "tipo_cultivo": "Cebolla",
@@ -72938,12 +72463,6 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{3863738d-4b36-4f72-8228-3ac5373431b3}",
-    "ficha_id": "{5916633b-86a5-4cac-b2bf-c2edd56d1f8a}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 2700.0
   },
   {
     "id_cultivo": "{9e8a78f7-5bf5-4cce-917f-2d4514a8b595}",
@@ -73057,25 +72576,13 @@
     "es_mercado": 1
   },
   {
-    "id_cultivo": "{96ca8ade-de6d-41f2-b1ab-5e79f9e1da18}",
-    "ficha_id": "{243d62da-9250-4968-9d91-0360b94da3c1}",
-    "tipo_cultivo": "Cebolla",
-    "superficie_m2": 300.0,
-    "es_principal": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_cultivo": "{56b83018-ce12-4b3c-b4a8-34f346ee89f5}",
-    "ficha_id": "{243d62da-9250-4968-9d91-0360b94da3c1}",
-    "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 200.0,
-    "es_autoconsumo": 1
-  },
-  {
     "id_cultivo": "{1bb5e1e4-e197-442b-9fb5-5385ded63b91}",
     "ficha_id": "{ab2703bf-aca2-4ae3-a443-aafd28a4701d}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 3610.41
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3610.41
   },
   {
     "id_cultivo": "{b3412576-1b93-4418-b15a-fa273c6f3e18}",
@@ -83789,14 +83296,6 @@
     "ref_area_predio": 1537.98
   },
   {
-    "id_cultivo": "{eaf521e6-d037-4d0d-a99b-d3274f59db67}",
-    "ficha_id": "{0ff44e41-3536-4ac2-8bef-69ec8c5863e2}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 3065.68,
-    "es_principal": 1,
-    "ref_area_predio": 3065.68
-  },
-  {
     "id_cultivo": "{f15ed7bc-75fc-4e22-a820-d891c903a949}",
     "ficha_id": "{504bb3e7-3d52-42c1-9f4e-96b456024192}",
     "tipo_cultivo": "Flores",
@@ -83804,5 +83303,4513 @@
     "es_principal": 1,
     "es_exportacion": 1,
     "ref_area_predio": 3065.68
+  },
+  {
+    "id_cultivo": "{86c08aeb-3c28-498c-8b2a-6d2b6dfee291}",
+    "ficha_id": "{41facf43-8d8f-4e87-bc09-4f9799bbd1c2}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6726.165,
+    "es_mercado": 1,
+    "ref_area_predio": 13452.33
+  },
+  {
+    "id_cultivo": "{0aaad88c-4d50-4464-b2d6-b2e5021e2058}",
+    "ficha_id": "{41facf43-8d8f-4e87-bc09-4f9799bbd1c2}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 3363.082,
+    "es_autoconsumo": 1,
+    "es_mercado": 0,
+    "ref_area_predio": 13452.33
+  },
+  {
+    "id_cultivo": "{aa2c0399-c3d9-4fb9-a6c8-27a1c45331da}",
+    "ficha_id": "{41facf43-8d8f-4e87-bc09-4f9799bbd1c2}",
+    "tipo_cultivo": "HABAS",
+    "superficie_m2": 3363.08,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13452.33
+  },
+  {
+    "id_cultivo": "{aea5933c-33b6-487d-a516-1a97955fa248}",
+    "ficha_id": "{ed8ef0fe-c4c4-41d9-87ae-def027070330}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13450.31
+  },
+  {
+    "id_cultivo": "{68d29ae8-e1a4-4f53-9f52-d4db9c4ca914}",
+    "ficha_id": "{ed8ef0fe-c4c4-41d9-87ae-def027070330}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 13350.31,
+    "ref_area_predio": 13450.31
+  },
+  {
+    "id_cultivo": "{cbc1802d-4802-4e16-b559-ed56bc73fc4a}",
+    "ficha_id": "{d514ed68-9b67-4a8a-baa0-fb27be714e9c}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 10348.24
+  },
+  {
+    "id_cultivo": "{cb3a44de-6e86-4a2c-b51d-526c972a391b}",
+    "ficha_id": "{23537ee3-d682-46a1-90e6-a9693949113a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3.65,
+    "es_mercado": 1,
+    "ref_area_predio": 10348.24
+  },
+  {
+    "id_cultivo": "{5d9e73c6-7cd9-42ef-8bf2-bc00d147c41b}",
+    "ficha_id": "{f0ddc2b0-636c-492a-8b64-fb25e5545762}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 21477.63,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 21477.63
+  },
+  {
+    "id_cultivo": "{d239b000-9300-4c0e-8100-7432d393aa83}",
+    "ficha_id": "{faa5986c-a0d7-46b6-888e-f54ec764dea4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1916.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 10062.59
+  },
+  {
+    "id_cultivo": "{fbedc52a-aa4f-4fe9-9251-a3f3c3fea8c5}",
+    "ficha_id": "{197a5ba9-7d3a-42ef-bc14-93717f07450a}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 2800.0,
+    "es_mercado": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{469e9344-2b86-4a9f-95da-65fc2a8e648e}",
+    "ficha_id": "{197a5ba9-7d3a-42ef-bc14-93717f07450a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 900.13,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{3f75feef-3775-4242-8d65-684b25808a4e}",
+    "ficha_id": "{692e1df2-a6e9-451f-90de-2fc488437264}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{1b518773-7506-4416-8a23-8fdad1fb3302}",
+    "ficha_id": "{faac4f12-1784-40e7-b10a-1be3031532f5}",
+    "tipo_cultivo": "PASTO NO MEJORADO",
+    "superficie_m2": 6725.2,
+    "es_principal": 1,
+    "es_autoconsumo": 0,
+    "ref_area_predio": 13450.24
+  },
+  {
+    "id_cultivo": "{072f2d5b-4a9a-467a-a1c5-7454e6581034}",
+    "ficha_id": "{faac4f12-1784-40e7-b10a-1be3031532f5}",
+    "tipo_cultivo": "CEBOLLA",
+    "superficie_m2": 6725.04,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13450.24
+  },
+  {
+    "id_cultivo": "{548998b3-3a8f-4d56-b01a-8657764a732d}",
+    "ficha_id": "{bbf27830-4d26-4768-8811-164c0550133c}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 13028.57,
+    "es_mercado": 1,
+    "ref_area_predio": 26057.14
+  },
+  {
+    "id_cultivo": "{22a5190a-48bb-4968-8624-96f6eac75d68}",
+    "ficha_id": "{bbf27830-4d26-4768-8811-164c0550133c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13028.57,
+    "es_principal": 1,
+    "ref_area_predio": 26057.14
+  },
+  {
+    "id_cultivo": "{911482df-d323-4ab6-ab70-2ceec7ee06eb}",
+    "ficha_id": "{c50e08cf-ce9a-4d61-9fe3-7ed09e2dd0d6}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1588.17,
+    "es_principal": 1,
+    "ref_area_predio": 1588.17
+  },
+  {
+    "id_cultivo": "{97bc47ef-1894-40e0-a19c-5abdb2edf74c}",
+    "ficha_id": "{1cc021ee-ec51-4553-a8be-a5c411a5a745}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2582.79,
+    "es_principal": 1,
+    "ref_area_predio": 2582.79
+  },
+  {
+    "id_cultivo": "{4b33b606-582e-46dc-bd01-808edcd774ec}",
+    "ficha_id": "{87e4b677-2d2d-4872-97ba-62f9fbdd8ce0}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 3696.81
+  },
+  {
+    "id_cultivo": "{5733e172-c8f9-4dd2-8b8b-a7c62ae3fce1}",
+    "ficha_id": "{87e4b677-2d2d-4872-97ba-62f9fbdd8ce0}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2696.81,
+    "es_mercado": 1,
+    "ref_area_predio": 3696.81
+  },
+  {
+    "id_cultivo": "{7f2c0809-6053-4339-8e38-854f6df5a8f1}",
+    "ficha_id": "{1efffe55-5f87-4936-83a1-33c87fc69f7b}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1233.16,
+    "es_mercado": 1,
+    "ref_area_predio": 2466.32
+  },
+  {
+    "id_cultivo": "{3d1f95a4-eb4e-4aad-8fb4-fbfd5aa87480}",
+    "ficha_id": "{1efffe55-5f87-4936-83a1-33c87fc69f7b}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1233.16,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2466.32
+  },
+  {
+    "id_cultivo": "{f1d2cd82-49a3-45af-9833-dc6060100f5d}",
+    "ficha_id": "{5a25d3ec-876c-40d6-9121-01cfc961ae08}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 6715.1,
+    "es_principal": 1,
+    "ref_area_predio": 13430.19
+  },
+  {
+    "id_cultivo": "{463c6da1-5ace-4b8d-b224-7b1af5d831c9}",
+    "ficha_id": "{5a25d3ec-876c-40d6-9121-01cfc961ae08}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6715.09,
+    "es_principal": 1,
+    "ref_area_predio": 13430.19
+  },
+  {
+    "id_cultivo": "{68672d19-2dab-44f3-99dc-1185eb0aa95d}",
+    "ficha_id": "{4816e371-64ef-4ba3-9bc7-95d8517de4ed}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4813.49,
+    "es_mercado": 1,
+    "ref_area_predio": 4813.49
+  },
+  {
+    "id_cultivo": "{ef4a02dc-cf31-46dc-a89b-454d07491532}",
+    "ficha_id": "{29213019-1e69-4307-a0d2-2b206802da69}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4904.5,
+    "es_principal": 1,
+    "ref_area_predio": 4904.5
+  },
+  {
+    "id_cultivo": "{706b33f1-e905-4956-9f17-b8bf828b3ce7}",
+    "ficha_id": "{d70d7ede-cba6-4e29-bab8-962350ce8d70}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6896.59,
+    "es_principal": 1,
+    "ref_area_predio": 6896.59
+  },
+  {
+    "id_cultivo": "{5105d7a1-8ba6-4452-8c8b-850f9d92d607}",
+    "ficha_id": "{7ec009d8-cee6-4c3d-88ba-35aa2eb1c6a8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13441.25,
+    "es_principal": 1,
+    "ref_area_predio": 13441.25
+  },
+  {
+    "id_cultivo": "{9e3d0904-d675-4394-acd9-05a58123357c}",
+    "ficha_id": "{692e1df2-a6e9-451f-90de-2fc488437264}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 250.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{632d3a41-29f9-4598-8060-be50ab67ad79}",
+    "ficha_id": "{692e1df2-a6e9-451f-90de-2fc488437264}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 250.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{0f3d2bef-6d85-41e4-a88b-73cda1e44719}",
+    "ficha_id": "{692e1df2-a6e9-451f-90de-2fc488437264}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1200.13,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{eeeacc5c-3495-478e-b030-a90bb0e351e0}",
+    "ficha_id": "{a8cb7a73-fbaa-4069-8270-94a9fe576ee5}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{034484cc-a277-4ec2-abbc-8b402a5dbdb2}",
+    "ficha_id": "{a8cb7a73-fbaa-4069-8270-94a9fe576ee5}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{c18860d4-10c8-48c7-8181-7291b3bbefc7}",
+    "ficha_id": "{a8cb7a73-fbaa-4069-8270-94a9fe576ee5}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1500.13,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{52e0cf80-5f55-4e19-9717-f852fb8213ed}",
+    "ficha_id": "{34b9f46a-12fa-486a-9abb-55b61bc4542f}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3700.13,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{e0417eec-68a7-406a-a63d-df115ad48cd1}",
+    "ficha_id": "{a1e66d41-ca2a-40c8-afab-85c8adb11b84}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3700.13,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3700.126
+  },
+  {
+    "id_cultivo": "{312394ae-7b98-49fd-91d6-1cbd857b6a77}",
+    "ficha_id": "{3566fb05-ddb2-4e1d-bfe3-badc243069da}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2181.08,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{00039b28-f1bb-4c89-99ec-6c8dacf96c08}",
+    "ficha_id": "{724f7cb1-921b-4731-9c3a-a277fc44e5e8}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{3d85524d-7806-4594-be3b-f95470f47381}",
+    "ficha_id": "{724f7cb1-921b-4731-9c3a-a277fc44e5e8}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1681.08,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{a40d6b87-b399-4edf-9d42-493eea1017a2}",
+    "ficha_id": "{f7bb6c58-f609-4261-88e0-1199e71ac17b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 8059.73,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8059.73
+  },
+  {
+    "id_cultivo": "{74d4f4da-46ec-4441-b39e-821261e534a9}",
+    "ficha_id": "{4a14b1e5-4a66-4d02-b857-622b1f45a2a8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 20023.63,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 40047.26
+  },
+  {
+    "id_cultivo": "{0ccd3ecc-b5af-4210-bdb8-bba2c66ff160}",
+    "ficha_id": "{4a14b1e5-4a66-4d02-b857-622b1f45a2a8}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 5000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 40047.26
+  },
+  {
+    "id_cultivo": "{fcc0cc05-3c95-425c-99b7-25390d847c0a}",
+    "ficha_id": "{4a14b1e5-4a66-4d02-b857-622b1f45a2a8}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 15023.63,
+    "es_mercado": 1,
+    "ref_area_predio": 40047.26
+  },
+  {
+    "id_cultivo": "{69f7be8d-b439-40d9-95a4-225f0a031d18}",
+    "ficha_id": "{f6812ad7-27db-4c34-b1b4-3f3cbcb47cc2}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 287.04,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 287.04
+  },
+  {
+    "id_cultivo": "{b481adfd-245b-4628-a3d3-34efb5e9ff1c}",
+    "ficha_id": "{c254a5f0-e40e-4011-87c5-55040bed61a1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4481.79
+  },
+  {
+    "id_cultivo": "{ab3759e5-964b-4e4c-8d42-2a0457908aed}",
+    "ficha_id": "{c254a5f0-e40e-4011-87c5-55040bed61a1}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4481.79
+  },
+  {
+    "id_cultivo": "{9da0f62a-3fdb-4ea7-aedb-f06b66a5ad78}",
+    "ficha_id": "{c254a5f0-e40e-4011-87c5-55040bed61a1}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2481.79,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4481.79
+  },
+  {
+    "id_cultivo": "{8d997fbe-42a0-4a88-81b0-606036b64efc}",
+    "ficha_id": "{00b56043-b37b-44ea-a8db-22a380d5bb95}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 5030.48
+  },
+  {
+    "id_cultivo": "{cdf0725e-a854-4cec-8e5b-ec6be3c96dd9}",
+    "ficha_id": "{00b56043-b37b-44ea-a8db-22a380d5bb95}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3030.48,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5030.48
+  },
+  {
+    "id_cultivo": "{9da5b1e0-7a99-4299-b375-3614128ea92f}",
+    "ficha_id": "{2f2b9996-1132-47ac-899d-bf9be3b13e78}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 9326.36
+  },
+  {
+    "id_cultivo": "{7709533f-3d78-4dac-96ce-bb71a27c6224}",
+    "ficha_id": "{2f2b9996-1132-47ac-899d-bf9be3b13e78}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 9326.36
+  },
+  {
+    "id_cultivo": "{525888ab-18f5-4054-b948-1de1733e73ca}",
+    "ficha_id": "{2f2b9996-1132-47ac-899d-bf9be3b13e78}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 9326.36
+  },
+  {
+    "id_cultivo": "{2b347b18-52b6-458a-9082-ad2f00ba520d}",
+    "ficha_id": "{2f2b9996-1132-47ac-899d-bf9be3b13e78}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6826.36,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 9326.36
+  },
+  {
+    "id_cultivo": "{35e659ac-4cd6-4458-9c1b-0453b911e4dd}",
+    "ficha_id": "{714a1e8e-55f4-4bfc-9403-8ee9eabf44c5}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1200.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{fe57818d-d00e-4775-a226-3a3fd02d2448}",
+    "ficha_id": "{714a1e8e-55f4-4bfc-9403-8ee9eabf44c5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 981.08,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{88f6b7a4-09d6-44df-983d-e070bce894e8}",
+    "ficha_id": "{458ed774-cced-4775-8c33-1913ed9475a8}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1500.0,
+    "es_principal": 1,
+    "es_exportacion": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{484b27d1-de19-4437-bbd5-feceb44be359}",
+    "ficha_id": "{866076fb-387f-4806-9e8c-4b0e052755a2}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2181.08,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2181.078
+  },
+  {
+    "id_cultivo": "{0309ebcf-57ea-46b5-afd1-dc1d3c6104ea}",
+    "ficha_id": "{c56961c0-63b6-4e00-bcd9-0c740bf3fb4d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2977.79,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2977.79
+  },
+  {
+    "id_cultivo": "{d7cf88db-20c1-437d-9aaa-83438ad5c8f3}",
+    "ficha_id": "{2f26c67d-28d0-48dd-b0e6-43b158a045a9}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4271.72,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4271.72
+  },
+  {
+    "id_cultivo": "{6a9d6570-f8db-4c5e-a8d3-905a63779b2b}",
+    "ficha_id": "{70272cf7-be7d-4f2e-a179-e4a67ef7607e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2711.27,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2711.27
+  },
+  {
+    "id_cultivo": "{658809fc-f1a8-4c17-8cba-9f4489453b2b}",
+    "ficha_id": "{3d7d2ce7-a26a-4183-8374-a39b4ea7a9d5}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 10719.06
+  },
+  {
+    "id_cultivo": "{d208526a-8a50-4e6d-9124-e2c7197656c0}",
+    "ficha_id": "{3d7d2ce7-a26a-4183-8374-a39b4ea7a9d5}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 10719.06
+  },
+  {
+    "id_cultivo": "{ec8c9fa4-fabf-42dd-8d8e-93a453a289c7}",
+    "ficha_id": "{3d7d2ce7-a26a-4183-8374-a39b4ea7a9d5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 7219.06,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 10719.06
+  },
+  {
+    "id_cultivo": "{74ee0cf0-c501-4a19-b250-5499579cb63d}",
+    "ficha_id": "{c8fe21fa-323c-44ad-87e6-87b71a22758a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 1965.07
+  },
+  {
+    "id_cultivo": "{7fed450b-a0da-4306-8fe9-0ca8a57e0c87}",
+    "ficha_id": "{c8fe21fa-323c-44ad-87e6-87b71a22758a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 965.07,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1965.07
+  },
+  {
+    "id_cultivo": "{4195dc45-763c-4b7e-baae-77e4c6b71f46}",
+    "ficha_id": "{2ac80813-b47d-43a9-b0f9-4a9ca2d38824}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 72737.18,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 72737.18
+  },
+  {
+    "id_cultivo": "{fb9f1aa4-cdf5-455c-95dc-a0dea5bb8fe4}",
+    "ficha_id": "{cd2188ad-96d7-4872-9771-865239e2bf1b}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5497.78
+  },
+  {
+    "id_cultivo": "{30e32985-ca13-4ad8-a0f5-ad972db44ef8}",
+    "ficha_id": "{cd2188ad-96d7-4872-9771-865239e2bf1b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4497.78,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5497.78
+  },
+  {
+    "id_cultivo": "{2e97398b-2c36-4724-af08-199a98734ce1}",
+    "ficha_id": "{91470681-26e0-48ce-a808-8cf6b29f6d42}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 449.93,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 449.93
+  },
+  {
+    "id_cultivo": "{c0a66006-b669-4f33-8882-aa730c54feca}",
+    "ficha_id": "{b6abf34f-cb7d-4d04-a789-796df4134a25}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 44486.15,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 44486.15
+  },
+  {
+    "id_cultivo": "{d73f2373-ec6e-4e4d-8343-1c51dacea90d}",
+    "ficha_id": "{3e8204a5-5f96-4e34-a0b6-b16aace56377}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 15309.74
+  },
+  {
+    "id_cultivo": "{f2c7697e-378e-4474-a638-6fec360a9704}",
+    "ficha_id": "{3e8204a5-5f96-4e34-a0b6-b16aace56377}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 15209.74,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 15309.74
+  },
+  {
+    "id_cultivo": "{d1670b1f-67aa-4389-a04d-16af2621ee01}",
+    "ficha_id": "{1d00efc2-5f10-4a3c-bd8f-213030eb6925}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4977.41
+  },
+  {
+    "id_cultivo": "{c36cb4f0-f322-4368-9a54-89209783d3b9}",
+    "ficha_id": "{1d00efc2-5f10-4a3c-bd8f-213030eb6925}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2977.41,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4977.41
+  },
+  {
+    "id_cultivo": "{610dc29e-0032-4786-a56b-7bc326f065f0}",
+    "ficha_id": "{130562b7-2285-4c68-8054-4861435ef6ab}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 555.68,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 555.68
+  },
+  {
+    "id_cultivo": "{fa30a586-5472-44d3-a0ec-f95574e7a6f1}",
+    "ficha_id": "{e19929ef-4938-44a5-a76a-601828996b31}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13450.24,
+    "es_principal": 1,
+    "ref_area_predio": 13450.24
+  },
+  {
+    "id_cultivo": "{22daab00-ee70-4cab-9732-f54420615a4f}",
+    "ficha_id": "{7389768b-6fca-4dfc-b065-f83c2a4cb25b}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 13624.555,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{0b65f7cf-8620-410f-a31d-2aa8e229aadc}",
+    "ficha_id": "{7389768b-6fca-4dfc-b065-f83c2a4cb25b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13624.56,
+    "es_principal": 1,
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{79322648-39df-48de-8d14-569907f41db0}",
+    "ficha_id": "{916c59e2-ad8f-4728-bbbe-edc885bec411}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13624.0,
+    "es_principal": 1,
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{e4ac4b63-f96e-47e7-befe-e3562ac7c70f}",
+    "ficha_id": "{916c59e2-ad8f-4728-bbbe-edc885bec411}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 4541.51,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{653afbf8-1776-4a44-9ad9-4f75c704d4de}",
+    "ficha_id": "{916c59e2-ad8f-4728-bbbe-edc885bec411}",
+    "tipo_cultivo": "Melloco",
+    "superficie_m2": 4541.51,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{f996b51b-14fe-4039-8405-3ba8d0916c42}",
+    "ficha_id": "{916c59e2-ad8f-4728-bbbe-edc885bec411}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 4542.09,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "Arveja",
+    "ref_area_predio": 27249.11
+  },
+  {
+    "id_cultivo": "{39231d50-5075-493d-bcbe-07ed30cc8253}",
+    "ficha_id": "{bf234e02-8d28-4ab5-93f6-54908a93cd77}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4835.605,
+    "es_principal": 1,
+    "ref_area_predio": 9671.21
+  },
+  {
+    "id_cultivo": "{1624f39a-a27c-4fb8-be41-c2abe4b0e5c7}",
+    "ficha_id": "{bf234e02-8d28-4ab5-93f6-54908a93cd77}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4835.6,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 9671.21
+  },
+  {
+    "id_cultivo": "{196bb462-1e67-466d-99db-33f21df15233}",
+    "ficha_id": "{eb47b12e-7e1d-4730-99bf-5456890e02db}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 9671.21,
+    "es_principal": 1,
+    "ref_area_predio": 9671.21
+  },
+  {
+    "id_cultivo": "{0eb2a672-05b6-43cb-9a75-cd123f4e6217}",
+    "ficha_id": "{5d7f9ca9-122e-4a8f-82ab-3e2d6d92a575}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 13470.98,
+    "es_principal": 1,
+    "ref_area_predio": 13470.98
+  },
+  {
+    "id_cultivo": "{8cf9eab9-e78a-49db-84f1-b419f01050b8}",
+    "ficha_id": "{58f7846e-2666-4201-8bf9-80bd797a8130}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 10937.7,
+    "es_mercado": 1,
+    "ref_area_predio": 10937.7
+  },
+  {
+    "id_cultivo": "{a0c8cbd8-3083-4e7d-a1a3-567c23d00025}",
+    "ficha_id": "{ce47f28f-bb41-427f-ab19-d0fa53002f52}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 300.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13416.19
+  },
+  {
+    "id_cultivo": "{6353845a-e159-44cc-9a59-8286f393bc4d}",
+    "ficha_id": "{ce47f28f-bb41-427f-ab19-d0fa53002f52}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 13116.19,
+    "ref_area_predio": 13416.19
+  },
+  {
+    "id_cultivo": "{141758bd-16ee-47fb-8071-06891441fbf6}",
+    "ficha_id": "{048e246e-5be8-4187-babc-0ee44b86085d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2431.35,
+    "es_principal": 1,
+    "ref_area_predio": 4862.71
+  },
+  {
+    "id_cultivo": "{663dc46e-be29-4610-a057-e7b9b7ac1e42}",
+    "ficha_id": "{048e246e-5be8-4187-babc-0ee44b86085d}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2431.36,
+    "es_principal": 1,
+    "ref_area_predio": 4862.71
+  },
+  {
+    "id_cultivo": "{0726d48a-e24c-4b8d-b988-69388295c34f}",
+    "ficha_id": "{85e476ee-2418-4c34-b0b1-9164894ddb2e}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1223.96,
+    "es_autoconsumo": 0,
+    "es_mercado": 1,
+    "ref_area_predio": 2447.92
+  },
+  {
+    "id_cultivo": "{3ce1e950-ff05-4fdc-b57b-669310bcde00}",
+    "ficha_id": "{85e476ee-2418-4c34-b0b1-9164894ddb2e}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1223.96,
+    "es_principal": 1,
+    "ref_area_predio": 2447.92
+  },
+  {
+    "id_cultivo": "{e1c37ae9-a369-4f4b-b8dc-2f2eb5b13645}",
+    "ficha_id": "{c50749bf-37f4-4585-9931-2a22d900c936}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6725.885,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 13451.77
+  },
+  {
+    "id_cultivo": "{f9872440-2fdf-4e5e-b7d5-4db83b27bdb5}",
+    "ficha_id": "{c50749bf-37f4-4585-9931-2a22d900c936}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2241.36,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13451.77
+  },
+  {
+    "id_cultivo": "{9c533cc3-3b5d-4e8c-b021-1d97707b8dcb}",
+    "ficha_id": "{c50749bf-37f4-4585-9931-2a22d900c936}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 2241.96,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13451.77
+  },
+  {
+    "id_cultivo": "{6aff3e22-493c-44b0-852d-35e6d86bbad1}",
+    "ficha_id": "{c50749bf-37f4-4585-9931-2a22d900c936}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2242.56,
+    "es_principal": 1,
+    "ref_area_predio": 13451.77
+  },
+  {
+    "id_cultivo": "{2860a5ff-7741-4a63-b824-a5653f218b0a}",
+    "ficha_id": "{13069f3a-a3dd-4add-8bad-e1c833659d14}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 10518.05
+  },
+  {
+    "id_cultivo": "{3c034858-e82e-4c83-9600-de85a8348448}",
+    "ficha_id": "{13069f3a-a3dd-4add-8bad-e1c833659d14}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 4018.05,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 10518.05
+  },
+  {
+    "id_cultivo": "{b3263ef0-4a6a-4b2c-b934-3a59f724a279}",
+    "ficha_id": "{f08b2c4e-21de-417a-8a82-764020bf2387}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 231.53,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 231.53
+  },
+  {
+    "id_cultivo": "{27f450c6-28e9-424e-aa58-e6dc6dc3f23c}",
+    "ficha_id": "{3fabcbd7-e16d-49da-8ab0-e4c7a4cded39}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28437.39
+  },
+  {
+    "id_cultivo": "{ffec0c2a-078f-49a4-840f-99e6dafbd45b}",
+    "ficha_id": "{3fabcbd7-e16d-49da-8ab0-e4c7a4cded39}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28437.39
+  },
+  {
+    "id_cultivo": "{7997e4e1-0cc9-432f-83e7-4ef3323d857d}",
+    "ficha_id": "{3fabcbd7-e16d-49da-8ab0-e4c7a4cded39}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28437.39
+  },
+  {
+    "id_cultivo": "{669e82f5-070d-4c5b-9b94-a8cfca0f14db}",
+    "ficha_id": "{3fabcbd7-e16d-49da-8ab0-e4c7a4cded39}",
+    "tipo_cultivo": "Chocho",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28437.39
+  },
+  {
+    "id_cultivo": "{cd948225-42ea-4fc4-8b0e-ca0a3c1d56c0}",
+    "ficha_id": "{3fabcbd7-e16d-49da-8ab0-e4c7a4cded39}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 20937.39,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 28437.39
+  },
+  {
+    "id_cultivo": "{672c0731-3205-401f-9bc8-e5a81db9b619}",
+    "ficha_id": "{623f0bfd-eebe-47a4-95df-051fc641288a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 4350.97,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5350.97
+  },
+  {
+    "id_cultivo": "{e918aa03-7fe9-4298-801a-14c5ed1cc815}",
+    "ficha_id": "{623f0bfd-eebe-47a4-95df-051fc641288a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 5350.97
+  },
+  {
+    "id_cultivo": "{1112441f-9d30-4b10-a378-58f7e5d6ab10}",
+    "ficha_id": "{c08e4a1a-1035-447e-a405-fd3019ffcd8f}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 4123.51,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4123.51
+  },
+  {
+    "id_cultivo": "{595d323c-41f4-47a2-96a5-f8d62cee756b}",
+    "ficha_id": "{3b508ba3-3673-49a0-9c3d-af90fb45c861}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3189.28
+  },
+  {
+    "id_cultivo": "{73408961-8af9-4a7a-b585-be11be83f174}",
+    "ficha_id": "{3b508ba3-3673-49a0-9c3d-af90fb45c861}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1689.28,
+    "es_autoconsumo": 0,
+    "es_mercado": 1,
+    "ref_area_predio": 3189.28
+  },
+  {
+    "id_cultivo": "{067faab8-4b27-4cb8-a753-e2b9ceca7a35}",
+    "ficha_id": "{b85401db-5ff9-4c53-b9fc-0da106574b4a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1222.9,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1222.9
+  },
+  {
+    "id_cultivo": "{8e71188d-f214-45b9-b2a0-1df1ab44814d}",
+    "ficha_id": "{4d887b4a-2865-4a85-acc3-968fdaa87207}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 58621.19
+  },
+  {
+    "id_cultivo": "{192b13d6-6b46-4faa-85e4-3d8844fbd074}",
+    "ficha_id": "{392ff456-d6ab-43b5-a3de-18f734dcaa53}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 11685.29,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13813.29
+  },
+  {
+    "id_cultivo": "{b3d21e8d-b744-4e4e-9c10-b73534f14777}",
+    "ficha_id": "{ccb3f12a-17c6-4c17-bb5c-ef1bf3f6feb6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5330.43,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5330.43
+  },
+  {
+    "id_cultivo": "{ad3f21ab-496d-445d-8ce4-5127ace65e78}",
+    "ficha_id": "{56c14093-f66b-4d85-8535-79ac71c1b091}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 32991.53,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 32991.53
+  },
+  {
+    "id_cultivo": "{e19caa43-5a3b-460e-bd9e-eed4f376fc96}",
+    "ficha_id": "{14b6c215-dfb2-41d0-8fd1-3ef558ab67e4}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 500.85,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 500.85
+  },
+  {
+    "id_cultivo": "{664ffe87-7d9e-4cb1-8146-7b4afe143b2e}",
+    "ficha_id": "{09d7cf2c-ea41-4a5d-9f79-e8c582531467}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 10000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 30174.62
+  },
+  {
+    "id_cultivo": "{a3661900-d521-4562-9468-f3223d47b47e}",
+    "ficha_id": "{09d7cf2c-ea41-4a5d-9f79-e8c582531467}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 10000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "Avena ",
+    "ref_area_predio": 30174.62
+  },
+  {
+    "id_cultivo": "{6b6f35ca-1f41-439c-af64-d8164f4dce0b}",
+    "ficha_id": "{09d7cf2c-ea41-4a5d-9f79-e8c582531467}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 10174.62,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 30174.62
+  },
+  {
+    "id_cultivo": "{c306e8ff-4b1e-4a29-b88c-c6a20acf70f1}",
+    "ficha_id": "{5f95e722-ff49-4b32-9fb6-d9b4734abbf1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 40000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 81535.37
+  },
+  {
+    "id_cultivo": "{6510edac-7e6c-49e8-9258-75afaae8cc21}",
+    "ficha_id": "{5f95e722-ff49-4b32-9fb6-d9b4734abbf1}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 10000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 81535.37
+  },
+  {
+    "id_cultivo": "{5dfd3a61-c90b-4e6c-9e6a-10e1d23ae21c}",
+    "ficha_id": "{5f95e722-ff49-4b32-9fb6-d9b4734abbf1}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 10000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 0,
+    "ref_area_predio": 81535.37
+  },
+  {
+    "id_cultivo": "{16037199-03e0-4c1d-b590-4045130752bb}",
+    "ficha_id": "{5f95e722-ff49-4b32-9fb6-d9b4734abbf1}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 21535.37,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "Terreno preparado",
+    "ref_area_predio": 81535.37
+  },
+  {
+    "id_cultivo": "{8abe03da-22f0-4fea-acf4-3f872e50eda6}",
+    "ficha_id": "{fffb1811-5e55-4549-bf23-dee9070ae477}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 8515.53
+  },
+  {
+    "id_cultivo": "{79e38e17-0a0a-4419-afe1-7f739c7f2bf5}",
+    "ficha_id": "{fffb1811-5e55-4549-bf23-dee9070ae477}",
+    "tipo_cultivo": "Chocho",
+    "superficie_m2": 2500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 8515.53
+  },
+  {
+    "id_cultivo": "{9bb55eea-fd8d-4f70-b8cf-3abc818e1454}",
+    "ficha_id": "{fffb1811-5e55-4549-bf23-dee9070ae477}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8515.53
+  },
+  {
+    "id_cultivo": "{0dede359-9873-4daa-bca5-3a9c2cf21a7b}",
+    "ficha_id": "{fffb1811-5e55-4549-bf23-dee9070ae477}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1015.53,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8515.53
+  },
+  {
+    "id_cultivo": "{f60deea6-304b-4110-ae3e-9c53682901b6}",
+    "ficha_id": "{63a469a2-a0f6-443f-9160-eae2af95eb59}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 48618.99
+  },
+  {
+    "id_cultivo": "{bb117a6a-c676-43e2-b7dc-8dee0ad1dddb}",
+    "ficha_id": "{70838b77-7148-4d26-af89-7cc179b6ebdf}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3221.68
+  },
+  {
+    "id_cultivo": "{73af6097-a176-41ae-bbb5-42afe486d9dd}",
+    "ficha_id": "{70838b77-7148-4d26-af89-7cc179b6ebdf}",
+    "tipo_cultivo": "Melloco",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3221.68
+  },
+  {
+    "id_cultivo": "{71221a7c-5480-4c5d-9f35-853404201ec8}",
+    "ficha_id": "{70838b77-7148-4d26-af89-7cc179b6ebdf}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3221.68
+  },
+  {
+    "id_cultivo": "{84c8054c-982d-47f5-9fdb-8fe8b129d65e}",
+    "ficha_id": "{70838b77-7148-4d26-af89-7cc179b6ebdf}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 221.68,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3221.68
+  },
+  {
+    "id_cultivo": "{c563b99d-8882-4e35-abdb-ed093d3afe0c}",
+    "ficha_id": "{311a259a-d618-495f-b3e0-67e8b09eacdc}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3033.41
+  },
+  {
+    "id_cultivo": "{42e50f98-c771-48b3-802a-f45a41f367d8}",
+    "ficha_id": "{311a259a-d618-495f-b3e0-67e8b09eacdc}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3033.41
+  },
+  {
+    "id_cultivo": "{90d80562-2e27-4d24-b883-d4b235184445}",
+    "ficha_id": "{311a259a-d618-495f-b3e0-67e8b09eacdc}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3033.41
+  },
+  {
+    "id_cultivo": "{77225cb5-c015-417d-a44d-f9cc08e51ee4}",
+    "ficha_id": "{311a259a-d618-495f-b3e0-67e8b09eacdc}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3033.41
+  },
+  {
+    "id_cultivo": "{fc6848bd-d90c-4f60-8b01-2bdbe428fd84}",
+    "ficha_id": "{311a259a-d618-495f-b3e0-67e8b09eacdc}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 433.41,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3033.41
+  },
+  {
+    "id_cultivo": "{b328d8aa-44b2-4a4a-88f2-0defa0134107}",
+    "ficha_id": "{c0b4fbd5-21d4-420f-ac61-eee504b0abfb}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2451.27
+  },
+  {
+    "id_cultivo": "{0eded27b-1bc2-4b72-8244-62e0e1c9b74b}",
+    "ficha_id": "{c0b4fbd5-21d4-420f-ac61-eee504b0abfb}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1951.27,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2451.27
+  },
+  {
+    "id_cultivo": "{33748dc7-b348-4e05-8e94-ef8460da5df4}",
+    "ficha_id": "{4988e584-f9f0-4fe5-893e-72f5cfabc036}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1307.94
+  },
+  {
+    "id_cultivo": "{fbd6c158-b474-426e-846e-1105ec72cf1c}",
+    "ficha_id": "{4988e584-f9f0-4fe5-893e-72f5cfabc036}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1307.94
+  },
+  {
+    "id_cultivo": "{bc9c2800-3c29-48e8-a105-b1a27c3889e4}",
+    "ficha_id": "{4988e584-f9f0-4fe5-893e-72f5cfabc036}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1307.94
+  },
+  {
+    "id_cultivo": "{c36decd2-dd6a-4c2c-b014-d891a5966bba}",
+    "ficha_id": "{4988e584-f9f0-4fe5-893e-72f5cfabc036}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 707.94,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1307.94
+  },
+  {
+    "id_cultivo": "{78f73421-9e52-41ef-b4df-f712d7251398}",
+    "ficha_id": "{f53dccb3-60df-4b1e-bd9c-614ed45fd7e5}",
+    "tipo_cultivo": "PASTO MEJORADO",
+    "superficie_m2": 500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3158.81
+  },
+  {
+    "id_cultivo": "{9454fb7c-97f0-4f89-b46e-89b2345ea228}",
+    "ficha_id": "{f53dccb3-60df-4b1e-bd9c-614ed45fd7e5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2658.81,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3158.81
+  },
+  {
+    "id_cultivo": "{98f04b5f-e738-4fe8-bc9b-34b63f11e94b}",
+    "ficha_id": "{d26e1508-5a54-4aec-9b29-5066ca96f6c8}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 11000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 11925.5
+  },
+  {
+    "id_cultivo": "{e0932f90-66df-4cd2-8f0c-d5194557e55a}",
+    "ficha_id": "{d26e1508-5a54-4aec-9b29-5066ca96f6c8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 925.5,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11925.5
+  },
+  {
+    "id_cultivo": "{e8203bd6-0e67-4055-a592-c45647fd9b15}",
+    "ficha_id": "{eaf89db1-10ab-49ca-b81e-a9fa1e148076}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3109.91
+  },
+  {
+    "id_cultivo": "{4cab05f5-4541-440c-9387-0218953f01ba}",
+    "ficha_id": "{eaf89db1-10ab-49ca-b81e-a9fa1e148076}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "ref_area_predio": 3109.91
+  },
+  {
+    "id_cultivo": "{72069185-d217-48ca-b764-40104f64dd54}",
+    "ficha_id": "{eaf89db1-10ab-49ca-b81e-a9fa1e148076}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3109.91
+  },
+  {
+    "id_cultivo": "{5df559c2-1599-474a-9ed7-e2982de710df}",
+    "ficha_id": "{eaf89db1-10ab-49ca-b81e-a9fa1e148076}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 300.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3109.91
+  },
+  {
+    "id_cultivo": "{bb7657be-7d0a-4a03-a46a-0e4c9116076c}",
+    "ficha_id": "{eaf89db1-10ab-49ca-b81e-a9fa1e148076}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 309.91,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3109.91
+  },
+  {
+    "id_cultivo": "{a0cdb961-e36f-4f20-9c86-ee3ad2d6e8e2}",
+    "ficha_id": "{4cfb1b74-be46-46ec-84c3-cb0edb5d2a15}",
+    "tipo_cultivo": "CEBADA",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 8583.85
+  },
+  {
+    "id_cultivo": "{a0197cc4-9fd8-4a55-9ff0-bd527b663c3d}",
+    "ficha_id": "{4cfb1b74-be46-46ec-84c3-cb0edb5d2a15}",
+    "tipo_cultivo": "PAPAS",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 8583.85
+  },
+  {
+    "id_cultivo": "{11b6a51d-c273-4d05-8c82-694a4b25dbdd}",
+    "ficha_id": "{4cfb1b74-be46-46ec-84c3-cb0edb5d2a15}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 8583.85
+  },
+  {
+    "id_cultivo": "{92fba283-3874-4171-bc61-47d2370608a8}",
+    "ficha_id": "{4cfb1b74-be46-46ec-84c3-cb0edb5d2a15}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2583.85,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8583.85
+  },
+  {
+    "id_cultivo": "{5fc454a1-0a33-43b0-af51-039900c51262}",
+    "ficha_id": "{dc814668-87d5-4011-a0a0-16fbf2040572}",
+    "tipo_cultivo": "CHOCHO",
+    "superficie_m2": 500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1033.23
+  },
+  {
+    "id_cultivo": "{abb6e1c9-1041-4a1f-b32e-3e9152496f71}",
+    "ficha_id": "{dc814668-87d5-4011-a0a0-16fbf2040572}",
+    "tipo_cultivo": "PAPAS",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1033.23
+  },
+  {
+    "id_cultivo": "{6bc9a662-007c-4e69-82eb-0ea5d5101f18}",
+    "ficha_id": "{dc814668-87d5-4011-a0a0-16fbf2040572}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1033.23
+  },
+  {
+    "id_cultivo": "{c792d302-4475-49e4-89ae-542f9579bee4}",
+    "ficha_id": "{dc814668-87d5-4011-a0a0-16fbf2040572}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 333.23,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1033.23
+  },
+  {
+    "id_cultivo": "{f8dd70ba-ade1-4b97-b8a8-1bff489886f3}",
+    "ficha_id": "{4bd7c7de-6170-494a-b5f2-22e36a2eea64}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 6634.74
+  },
+  {
+    "id_cultivo": "{687eb520-4c75-4a89-a418-a319c723cb07}",
+    "ficha_id": "{4bd7c7de-6170-494a-b5f2-22e36a2eea64}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 6634.74
+  },
+  {
+    "id_cultivo": "{e9bfa7dc-046a-4e19-8b66-d7a56ecc1e3a}",
+    "ficha_id": "{4bd7c7de-6170-494a-b5f2-22e36a2eea64}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 6634.74
+  },
+  {
+    "id_cultivo": "{4b28a7de-c35b-4256-80cf-2d1e7ebf97da}",
+    "ficha_id": "{4bd7c7de-6170-494a-b5f2-22e36a2eea64}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1000.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6634.74
+  },
+  {
+    "id_cultivo": "{17e05973-624d-436f-aa08-7ccf8ed9aa4b}",
+    "ficha_id": "{4bd7c7de-6170-494a-b5f2-22e36a2eea64}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 634.74,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6634.74
+  },
+  {
+    "id_cultivo": "{ef72f4c0-1bf5-4b23-b435-cd5032d5147a}",
+    "ficha_id": "{63a469a2-a0f6-443f-9160-eae2af95eb59}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 3000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 48618.99
+  },
+  {
+    "id_cultivo": "{da9f1338-e255-414a-ac66-f3b3798a33e2}",
+    "ficha_id": "{63a469a2-a0f6-443f-9160-eae2af95eb59}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 48618.99
+  },
+  {
+    "id_cultivo": "{145aeee9-262a-474e-94ed-12cd4cd7947f}",
+    "ficha_id": "{63a469a2-a0f6-443f-9160-eae2af95eb59}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 48618.99
+  },
+  {
+    "id_cultivo": "{3bc4360d-c300-45e9-b764-15b5250ea38d}",
+    "ficha_id": "{63a469a2-a0f6-443f-9160-eae2af95eb59}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 38618.99,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 48618.99
+  },
+  {
+    "id_cultivo": "{0238f84b-0d33-4818-9322-7074f425a4a5}",
+    "ficha_id": "{a7d6c311-904c-48f2-9ee9-b665673d3825}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2063.81
+  },
+  {
+    "id_cultivo": "{ceeec47d-b1bb-414c-9502-a37a70dcfa36}",
+    "ficha_id": "{a7d6c311-904c-48f2-9ee9-b665673d3825}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2063.81
+  },
+  {
+    "id_cultivo": "{5ce82c41-0f09-45de-add8-0899d490a4dc}",
+    "ficha_id": "{a7d6c311-904c-48f2-9ee9-b665673d3825}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2063.81
+  },
+  {
+    "id_cultivo": "{49b40a4f-8294-4ea4-8549-dafab04b1c53}",
+    "ficha_id": "{a7d6c311-904c-48f2-9ee9-b665673d3825}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 63.81,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2063.81
+  },
+  {
+    "id_cultivo": "{911873f9-0355-4e7e-9ee1-6433bb98f279}",
+    "ficha_id": "{40390155-083a-4bf3-afd0-523424eb6d99}",
+    "tipo_cultivo": "CEBOLLA",
+    "superficie_m2": 4000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 40306.15
+  },
+  {
+    "id_cultivo": "{321f606e-9292-4fa0-a7ad-764edd1fbc25}",
+    "ficha_id": "{40390155-083a-4bf3-afd0-523424eb6d99}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 4000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 40306.15
+  },
+  {
+    "id_cultivo": "{224186e3-7f57-4f69-a1f5-2089bdabf2d8}",
+    "ficha_id": "{40390155-083a-4bf3-afd0-523424eb6d99}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 32306.15,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 40306.15
+  },
+  {
+    "id_cultivo": "{9e2e139b-4402-4d87-8896-595dacb5609f}",
+    "ficha_id": "{68752d53-c4e4-40aa-a223-b6624608ed3a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3861.11
+  },
+  {
+    "id_cultivo": "{23f48730-b4cf-44d2-b0bd-653bdb1c7bf8}",
+    "ficha_id": "{68752d53-c4e4-40aa-a223-b6624608ed3a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 800.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3861.11
+  },
+  {
+    "id_cultivo": "{e7080b62-fe3b-401d-98e7-a865d17d3fce}",
+    "ficha_id": "{68752d53-c4e4-40aa-a223-b6624608ed3a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 561.11,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3861.11
+  },
+  {
+    "id_cultivo": "{c70a1162-7a90-4b7d-9f00-57344aadc26e}",
+    "ficha_id": "{325c2cc7-5c46-4cf4-b5ea-e2d8691328c8}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6757.56,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 6757.56
+  },
+  {
+    "id_cultivo": "{64cc5a4c-3b88-437f-94c8-8191cf710ff0}",
+    "ficha_id": "{29b63fd6-031c-490e-8176-9fd0293bf76d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3077.63
+  },
+  {
+    "id_cultivo": "{64d11b4d-b8d3-478e-92d4-a76746ed31b2}",
+    "ficha_id": "{29b63fd6-031c-490e-8176-9fd0293bf76d}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3077.63
+  },
+  {
+    "id_cultivo": "{9dee0948-c7bd-456b-b890-25b3fc3c8e15}",
+    "ficha_id": "{29b63fd6-031c-490e-8176-9fd0293bf76d}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3077.63
+  },
+  {
+    "id_cultivo": "{eae29a28-2b03-40b5-9a07-fa7ad8baa6f3}",
+    "ficha_id": "{29b63fd6-031c-490e-8176-9fd0293bf76d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 577.63,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3077.63
+  },
+  {
+    "id_cultivo": "{a874fbfd-5a93-4a0b-932b-f1f018bc43e2}",
+    "ficha_id": "{a0bbf9b9-6165-4d00-b477-c3b64848302c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 478.57,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 478.57
+  },
+  {
+    "id_cultivo": "{98509ff9-6a7d-4c58-9624-3f308d95eb77}",
+    "ficha_id": "{43840331-ff81-4174-9262-bd99c1c4ad39}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 8429.93,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8429.93
+  },
+  {
+    "id_cultivo": "{fd445c2f-6bf5-43f1-8fed-6a363bec9dca}",
+    "ficha_id": "{bcb218c2-39cd-40ae-8ae1-5249c5dd66de}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1033.89,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1033.89
+  },
+  {
+    "id_cultivo": "{3002bcc9-3e95-4d0e-8624-257ebf882fd2}",
+    "ficha_id": "{d9e9a1de-bf52-4416-b5df-feec516e47bc}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4498.71
+  },
+  {
+    "id_cultivo": "{43bb19ba-776c-4d6b-93b7-2c8ba34e3fad}",
+    "ficha_id": "{d9e9a1de-bf52-4416-b5df-feec516e47bc}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1998.71,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4498.71
+  },
+  {
+    "id_cultivo": "{54c7cc8d-dc77-4451-827f-3a52a8cc9243}",
+    "ficha_id": "{ab2703bf-aca2-4ae3-a443-aafd28a4701d}",
+    "tipo_cultivo": "CEBADA",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3610.41
+  },
+  {
+    "id_cultivo": "{5c8d4bd7-70ed-4621-9b03-fa9f978a98c9}",
+    "ficha_id": "{ab2703bf-aca2-4ae3-a443-aafd28a4701d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1610.41,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3610.41
+  },
+  {
+    "id_cultivo": "{e3c3af40-599d-45d5-9749-a2cc10029460}",
+    "ficha_id": "{24d2649a-4a1f-4028-a88c-0079ff0cd534}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2693.59
+  },
+  {
+    "id_cultivo": "{ab2ec93a-35f0-4d9a-860b-11c0886006df}",
+    "ficha_id": "{24d2649a-4a1f-4028-a88c-0079ff0cd534}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2693.59
+  },
+  {
+    "id_cultivo": "{97fd09f0-dca9-4abc-ab16-b12b6dd88ee0}",
+    "ficha_id": "{24d2649a-4a1f-4028-a88c-0079ff0cd534}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 693.59,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2693.59
+  },
+  {
+    "id_cultivo": "{1cc0d2e1-388d-4524-be81-95789b6f9529}",
+    "ficha_id": "{312287d1-da62-4705-9507-b4853e624a40}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3529.06
+  },
+  {
+    "id_cultivo": "{6c172e3d-b41e-4139-8332-2a427f7ee7df}",
+    "ficha_id": "{312287d1-da62-4705-9507-b4853e624a40}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1029.06,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3529.06
+  },
+  {
+    "id_cultivo": "{5bbf7e8c-89ae-4b60-ac8d-3ec62eb84c35}",
+    "ficha_id": "{9c899dc6-e046-4af5-869c-9f0414ceae20}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 40306.15,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 40306.15
+  },
+  {
+    "id_cultivo": "{4204a575-28af-46ff-975b-a0893e06fff4}",
+    "ficha_id": "{22135dc3-b075-4c65-b17a-d71943ef8456}",
+    "tipo_cultivo": "FLORES",
+    "superficie_m2": 2500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4383.03
+  },
+  {
+    "id_cultivo": "{9f4236ca-6bb5-47c5-81e1-76d3754ae1cc}",
+    "ficha_id": "{22135dc3-b075-4c65-b17a-d71943ef8456}",
+    "tipo_cultivo": "CEBOLLA",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4383.03
+  },
+  {
+    "id_cultivo": "{b571d22f-a9e1-448d-b034-084d960d17d6}",
+    "ficha_id": "{22135dc3-b075-4c65-b17a-d71943ef8456}",
+    "tipo_cultivo": "PAPAS",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4383.03
+  },
+  {
+    "id_cultivo": "{bfc823d1-2a48-45a8-85e0-bb359c975039}",
+    "ficha_id": "{22135dc3-b075-4c65-b17a-d71943ef8456}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 883.03,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4383.03
+  },
+  {
+    "id_cultivo": "{a4a4a773-7cff-4040-bbe0-804cbc64a4f2}",
+    "ficha_id": "{94ca0e89-31c1-43d5-8639-1753d0db9760}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6325.29,
+    "es_mercado": 1,
+    "ref_area_predio": 6325.29
+  },
+  {
+    "id_cultivo": "{8581f1a3-f27f-40df-a573-240e21d0b292}",
+    "ficha_id": "{56c23063-0784-4885-98ad-a1805e76c539}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 10083.94,
+    "es_mercado": 1,
+    "ref_area_predio": 13445.25
+  },
+  {
+    "id_cultivo": "{51897385-a152-4bf6-ae31-56329e67ef81}",
+    "ficha_id": "{56c23063-0784-4885-98ad-a1805e76c539}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3361.31,
+    "ref_area_predio": 13445.25
+  },
+  {
+    "id_cultivo": "{e38ca769-194d-4ded-9bf2-e0f6728eed07}",
+    "ficha_id": "{248a3f21-bbcd-4c4a-9d08-d2a1c1f21c9c}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 435.79,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5285.79
+  },
+  {
+    "id_cultivo": "{a9beee29-6c26-46d8-8b2b-a4e943470683}",
+    "ficha_id": "{4a7f0be0-8a7b-4739-b555-9c190af9e0ad}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4767.92
+  },
+  {
+    "id_cultivo": "{06dbf2f4-b1bb-4d77-931c-c4b1fb9bd3da}",
+    "ficha_id": "{4a7f0be0-8a7b-4739-b555-9c190af9e0ad}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4767.92
+  },
+  {
+    "id_cultivo": "{33e14d82-1e63-4b28-9699-d7f5a6cf0d80}",
+    "ficha_id": "{4a7f0be0-8a7b-4739-b555-9c190af9e0ad}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 2767.92,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4767.92
+  },
+  {
+    "id_cultivo": "{d86064e6-5dd8-4d52-84cb-d9888473fc4b}",
+    "ficha_id": "{9bb7d987-e576-434e-ae35-e3ea5462465a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6296.77,
+    "es_mercado": 1,
+    "ref_area_predio": 6296.77
+  },
+  {
+    "id_cultivo": "{ec5f6253-bdde-4dc7-ae47-ca237dc273da}",
+    "ficha_id": "{befaecbe-9724-4de3-9229-588ab1353092}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4214.05,
+    "es_mercado": 1,
+    "ref_area_predio": 7023.42
+  },
+  {
+    "id_cultivo": "{ee21d542-9000-4b29-b8b0-cfc512e86e76}",
+    "ficha_id": "{befaecbe-9724-4de3-9229-588ab1353092}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1401.68,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7023.42
+  },
+  {
+    "id_cultivo": "{3d16f8b5-7f5d-4674-afdf-f14a7b728440}",
+    "ficha_id": "{befaecbe-9724-4de3-9229-588ab1353092}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1407.69,
+    "ref_area_predio": 7023.42
+  },
+  {
+    "id_cultivo": "{ee9605d3-df8c-48c8-a2cf-f8a68d465c3e}",
+    "ficha_id": "{144232ff-5b63-46a0-a793-a45157aded02}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3200.47,
+    "es_principal": 1,
+    "ref_area_predio": 3200.47
+  },
+  {
+    "id_cultivo": "{b5841dc2-da4e-4dfb-80f1-d0289467db1c}",
+    "ficha_id": "{89d6af56-d621-4f93-af9b-406a0ea1719a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 599.85,
+    "es_principal": 1,
+    "ref_area_predio": 599.85
+  },
+  {
+    "id_cultivo": "{09324d82-e85b-49c6-956c-5a186f9cceab}",
+    "ficha_id": "{06bdfa27-1a2b-4d4d-8885-8e94d694b9d9}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 599.95,
+    "es_principal": 1,
+    "ref_area_predio": 599.95
+  },
+  {
+    "id_cultivo": "{e2f68029-b22c-45b3-9425-9ebde5e314c5}",
+    "ficha_id": "{fd18552e-9a26-4584-b5e5-617453c659a6}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 730.3,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "Frutilla",
+    "ref_area_predio": 730.3
+  },
+  {
+    "id_cultivo": "{87a2dcff-0854-441d-a1f5-4116eaea225f}",
+    "ficha_id": "{93c020d4-1b39-49e7-85d1-dff9fe4ff0cd}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 1136.93,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "Frutilla",
+    "ref_area_predio": 1136.93
+  },
+  {
+    "id_cultivo": "{d58ece88-a948-4ab3-bc2a-255f6bee70b3}",
+    "ficha_id": "{ed59f5ac-249b-4efc-9d0e-23e18d263f4e}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3307.21,
+    "es_mercado": 1,
+    "ref_area_predio": 3307.21
+  },
+  {
+    "id_cultivo": "{f1aef607-c24b-46d2-9450-38aee55cd61f}",
+    "ficha_id": "{eec58745-8b8d-4bdd-b9da-56763b4591a4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6003.615,
+    "es_principal": 1,
+    "ref_area_predio": 12007.23
+  },
+  {
+    "id_cultivo": "{a0ed33dc-f364-4838-9c9a-35b427039ca0}",
+    "ficha_id": "{eec58745-8b8d-4bdd-b9da-56763b4591a4}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 6003.62,
+    "ref_area_predio": 12007.23
+  },
+  {
+    "id_cultivo": "{e2d0295f-2b75-430e-a60a-9bb4fd7132d5}",
+    "ficha_id": "{49d4556c-778c-4940-a37f-369e5144ff27}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3049.3,
+    "es_mercado": 1,
+    "ref_area_predio": 3049.3
+  },
+  {
+    "id_cultivo": "{27804ebb-5a89-47a7-9568-6add9c9c3dbd}",
+    "ficha_id": "{db9d0208-ed48-4179-9b82-403d25260271}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5063.96,
+    "es_principal": 1,
+    "ref_area_predio": 5063.96
+  },
+  {
+    "id_cultivo": "{823a6778-5f46-4d42-a25c-09f951606cf3}",
+    "ficha_id": "{3515a88f-f98a-473e-b7cf-89fbc20c1fc1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2559.24,
+    "es_mercado": 1,
+    "ref_area_predio": 2559.24
+  },
+  {
+    "id_cultivo": "{77ffdf16-5c42-45d0-ab0d-765c206f49a9}",
+    "ficha_id": "{03b6cc45-ca8e-4712-af4c-149ce0b01ea6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 12121.07,
+    "ref_area_predio": 12121.07
+  },
+  {
+    "id_cultivo": "{e8f7eec3-4460-4c37-83f6-53f0e13e1d8b}",
+    "ficha_id": "{8823d533-e799-4a61-9a75-947793ba0353}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 11987.1,
+    "es_principal": 1,
+    "ref_area_predio": 11987.1
+  },
+  {
+    "id_cultivo": "{cd064d30-a47f-4fde-885c-ac96fbcba8d2}",
+    "ficha_id": "{3bea3bba-6085-4b3b-9095-f795423a4834}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1401.3,
+    "es_mercado": 1,
+    "ref_area_predio": 1868.4
+  },
+  {
+    "id_cultivo": "{d33c1146-5f08-46c7-9342-b96d09b52e01}",
+    "ficha_id": "{3bea3bba-6085-4b3b-9095-f795423a4834}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 467.1,
+    "es_principal": 1,
+    "ref_area_predio": 1868.4
+  },
+  {
+    "id_cultivo": "{0f43e193-991d-467b-9980-37dafe6642bd}",
+    "ficha_id": "{be92439c-d6cc-457a-9a21-753b4db474b7}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 416.78,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1250.36
+  },
+  {
+    "id_cultivo": "{c141ab72-b760-428e-b3a6-459041733f9e}",
+    "ficha_id": "{be92439c-d6cc-457a-9a21-753b4db474b7}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 416.8,
+    "ref_area_predio": 1250.36
+  },
+  {
+    "id_cultivo": "{60b70d3c-5b64-43cf-9a88-64418c8bfecf}",
+    "ficha_id": "{be92439c-d6cc-457a-9a21-753b4db474b7}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 416.78,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1250.36
+  },
+  {
+    "id_cultivo": "{1e86699e-8b6e-497e-8825-8977e3bd8b9e}",
+    "ficha_id": "{7bf17c48-ea64-4269-8c72-9dd2ef2c5cc4}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 600.03,
+    "es_principal": 1,
+    "ref_area_predio": 600.03
+  },
+  {
+    "id_cultivo": "{6d5e346c-bc56-420d-b634-865d20990342}",
+    "ficha_id": "{c150ad89-a461-4d1f-96b1-31f0c6d94dc2}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 3033.27,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 12133.11
+  },
+  {
+    "id_cultivo": "{9e57d8e8-094d-4966-aa77-2c4fcc318feb}",
+    "ficha_id": "{c150ad89-a461-4d1f-96b1-31f0c6d94dc2}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 2274.96,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 12133.11
+  },
+  {
+    "id_cultivo": "{d97fc41d-9e74-4337-99b7-3bdf554e3d63}",
+    "ficha_id": "{c150ad89-a461-4d1f-96b1-31f0c6d94dc2}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6824.88,
+    "ref_area_predio": 12133.11
+  },
+  {
+    "id_cultivo": "{dda7680c-a9f5-45b9-9745-a28e0a22f578}",
+    "ficha_id": "{79799301-5c47-4dc5-a80b-4b8931dad154}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 600.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2508.71
+  },
+  {
+    "id_cultivo": "{da595247-3cc2-400f-9ce6-804cc48c74c3}",
+    "ficha_id": "{79799301-5c47-4dc5-a80b-4b8931dad154}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1908.71,
+    "es_principal": 1,
+    "ref_area_predio": 2508.71
+  },
+  {
+    "id_cultivo": "{319c611e-76ae-4ba1-af97-29574e605df0}",
+    "ficha_id": "{8c6344e6-47da-4830-b86e-1cbae1cf8b28}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1992.55,
+    "es_mercado": 1,
+    "ref_area_predio": 3985.11
+  },
+  {
+    "id_cultivo": "{8a75eac2-32ef-4b0a-b38e-fe8e744cfee7}",
+    "ficha_id": "{8c6344e6-47da-4830-b86e-1cbae1cf8b28}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1992.56,
+    "es_principal": 1,
+    "ref_area_predio": 3985.11
+  },
+  {
+    "id_cultivo": "{32902dea-c005-4d87-8ece-c2795d0cab60}",
+    "ficha_id": "{9edffaed-a7cf-44dc-a6e1-bbae859fb938}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 2403.11
+  },
+  {
+    "id_cultivo": "{1f8d1f75-aa51-4b17-912e-fdc5b3e0a429}",
+    "ficha_id": "{9edffaed-a7cf-44dc-a6e1-bbae859fb938}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1403.11,
+    "es_mercado": 1,
+    "ref_area_predio": 2403.11
+  },
+  {
+    "id_cultivo": "{e2ad7915-6a29-4c9b-b75a-913ec3f7a8a2}",
+    "ficha_id": "{e58df095-7688-4f67-840e-2801f82a025e}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4026.25
+  },
+  {
+    "id_cultivo": "{7e511350-edfb-4cfc-acc0-73c1be29f170}",
+    "ficha_id": "{e58df095-7688-4f67-840e-2801f82a025e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1026.25,
+    "es_principal": 1,
+    "ref_area_predio": 4026.25
+  },
+  {
+    "id_cultivo": "{430605aa-cf57-41d7-92c6-0704bcdb575a}",
+    "ficha_id": "{379add30-725e-4fb0-b32f-ee2e004ff585}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 13433.37,
+    "es_principal": 1,
+    "ref_area_predio": 13433.37
+  },
+  {
+    "id_cultivo": "{95ec5b51-be4e-4e7d-b73f-ed07046a5425}",
+    "ficha_id": "{799a3266-6586-46bb-aded-7e618cde98d4}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 11366.46
+  },
+  {
+    "id_cultivo": "{0c28c390-b201-4c88-96b2-0d3f43a55edf}",
+    "ficha_id": "{799a3266-6586-46bb-aded-7e618cde98d4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 11366.46
+  },
+  {
+    "id_cultivo": "{9b32ff31-e5c4-41c1-9691-f1e8d2aab864}",
+    "ficha_id": "{799a3266-6586-46bb-aded-7e618cde98d4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5366.46,
+    "ref_area_predio": 11366.46
+  },
+  {
+    "id_cultivo": "{b6dd91f9-1e6a-4c59-ae45-f6f97ff5ba06}",
+    "ficha_id": "{fc6c45fd-8f64-4b62-87d8-f1dabe42be91}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3384.36
+  },
+  {
+    "id_cultivo": "{f667bd14-60b5-4480-960d-4e7a152889a1}",
+    "ficha_id": "{fc6c45fd-8f64-4b62-87d8-f1dabe42be91}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2384.36,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3384.36
+  },
+  {
+    "id_cultivo": "{3a352819-45ef-413d-8b2f-4465f32e3b09}",
+    "ficha_id": "{243d62da-9250-4968-9d91-0360b94da3c1}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 9319.91
+  },
+  {
+    "id_cultivo": "{a0dec405-ecf4-474f-9371-5213c2fedc50}",
+    "ficha_id": "{243d62da-9250-4968-9d91-0360b94da3c1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2819.91,
+    "ref_area_predio": 9319.91
+  },
+  {
+    "id_cultivo": "{8c372b96-aaed-4d8d-8922-c79c3613af2d}",
+    "ficha_id": "{243d62da-9250-4968-9d91-0360b94da3c1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 9319.91
+  },
+  {
+    "id_cultivo": "{4b3efc8d-9940-4e36-9989-51537a8487a0}",
+    "ficha_id": "{1211fe5c-7864-4794-a07e-c37cd0d7640f}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2896.13,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4896.13
+  },
+  {
+    "id_cultivo": "{3be174b4-f657-44fd-b461-a021a4e27bf4}",
+    "ficha_id": "{1211fe5c-7864-4794-a07e-c37cd0d7640f}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4896.13
+  },
+  {
+    "id_cultivo": "{6c733735-1db9-44e2-b6ee-b1560d77e258}",
+    "ficha_id": "{0a5b1dea-6a6e-4b30-b77c-c8ce4567fca2}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1086.94,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4086.94
+  },
+  {
+    "id_cultivo": "{879c35ad-9f01-49d7-9b48-291747ac4ebc}",
+    "ficha_id": "{0a5b1dea-6a6e-4b30-b77c-c8ce4567fca2}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4086.94
+  },
+  {
+    "id_cultivo": "{47e309ac-5c47-4d41-9f72-bf2b5d83e045}",
+    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 838.1,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1238.1
+  },
+  {
+    "id_cultivo": "{66c41b23-c8cb-4789-ad15-edeb8157e1df}",
+    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1238.1
+  },
+  {
+    "id_cultivo": "{c9d08150-22a3-46a0-966b-446bf8420d2c}",
+    "ficha_id": "{b5c55fff-7807-491a-920d-03507af67ccf}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 200.0,
+    "ref_area_predio": 1238.1
+  },
+  {
+    "id_cultivo": "{31bb6496-f6de-4b1b-8dad-b2903df69ac8}",
+    "ficha_id": "{5916633b-86a5-4cac-b2bf-c2edd56d1f8a}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1767.52,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2767.52
+  },
+  {
+    "id_cultivo": "{b71e0d07-ab5b-495e-8b64-94595ccb3bff}",
+    "ficha_id": "{5916633b-86a5-4cac-b2bf-c2edd56d1f8a}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 400.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2767.52
+  },
+  {
+    "id_cultivo": "{661bbb8c-2acc-43cb-85f7-4ab8a1339ae9}",
+    "ficha_id": "{5916633b-86a5-4cac-b2bf-c2edd56d1f8a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 600.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2767.52
+  },
+  {
+    "id_cultivo": "{420a8906-1431-4fe8-b34d-ac9e8c90f1ed}",
+    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
+    "tipo_cultivo": "PASTO MEJORADO",
+    "superficie_m2": 6768.23,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7768.23
+  },
+  {
+    "id_cultivo": "{a0651572-5aae-440d-9f0e-04440d2f4367}",
+    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 7768.23
+  },
+  {
+    "id_cultivo": "{81fa33c2-3807-403c-ad16-c45931a51ada}",
+    "ficha_id": "{ae51da20-e712-4843-a4b6-0451078fc541}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7768.23
+  },
+  {
+    "id_cultivo": "{40942ef2-659b-4ad0-bcca-fbba714067a2}",
+    "ficha_id": "{ce3fd694-1235-4d4e-a080-893fee955551}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 738.51,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 938.51
+  },
+  {
+    "id_cultivo": "{d1eabcb9-23b1-4b13-99ca-b093dee76043}",
+    "ficha_id": "{ce3fd694-1235-4d4e-a080-893fee955551}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 938.51
+  },
+  {
+    "id_cultivo": "{2f322113-f735-42c4-9072-721531a7f214}",
+    "ficha_id": "{ce3fd694-1235-4d4e-a080-893fee955551}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 938.51
+  },
+  {
+    "id_cultivo": "{97d42718-f431-46f3-b4aa-c7160b2fcb56}",
+    "ficha_id": "{4720f7aa-2798-487a-aaf8-2df759ae475e}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 911.54,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1011.54
+  },
+  {
+    "id_cultivo": "{7ab7b7c6-a604-489d-99b5-b6ce5157ff8a}",
+    "ficha_id": "{4720f7aa-2798-487a-aaf8-2df759ae475e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 100.0,
+    "ref_area_predio": 1011.54
+  },
+  {
+    "id_cultivo": "{8e099846-2b0d-4537-a7f1-5dd4b8c176e8}",
+    "ficha_id": "{a0e9d1a4-ab46-4eeb-b8ec-470dc2b0e493}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2138.07,
+    "es_principal": 1,
+    "ref_area_predio": 2138.07
+  },
+  {
+    "id_cultivo": "{3bb20d21-83a6-4306-996d-a1859c0d0faa}",
+    "ficha_id": "{741d0ffd-0e70-4cdd-94ef-ad9381f9cb69}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1420.78,
+    "es_exportacion": 1,
+    "ref_area_predio": 6420.78
+  },
+  {
+    "id_cultivo": "{44c3eb6f-e24c-46c6-9016-735aa820af97}",
+    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2541.22,
+    "es_exportacion": 1,
+    "ref_area_predio": 6541.22
+  },
+  {
+    "id_cultivo": "{02bdc4a4-0279-42a3-864c-23e9054d65b0}",
+    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 150.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6541.22
+  },
+  {
+    "id_cultivo": "{2032658b-0985-42d6-8db6-fa933751e83d}",
+    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3250.0,
+    "ref_area_predio": 6541.22
+  },
+  {
+    "id_cultivo": "{d0201cae-3c4f-4346-b3c5-84befb978793}",
+    "ficha_id": "{cd002499-e146-4aeb-950e-5705d52c741d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 600.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 6541.22
+  },
+  {
+    "id_cultivo": "{2b422a0e-7be5-49ba-8ab6-208968f03dc9}",
+    "ficha_id": "{67f2f420-155d-4a23-a2d6-ed33891f3e00}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 3379.39,
+    "es_principal": 1,
+    "ref_area_predio": 3379.39
+  },
+  {
+    "id_cultivo": "{2a62f39b-eaf1-403d-92a4-1f853222f2c5}",
+    "ficha_id": "{a0725bb9-6736-4742-aa90-e0356433e202}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 5999.33
+  },
+  {
+    "id_cultivo": "{21728dc6-e926-423d-aa7d-8c3951831165}",
+    "ficha_id": "{35acc7fa-ae05-45da-8a1e-b9cd203c6cab}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 4999.33,
+    "es_principal": 1,
+    "es_exportacion": 1,
+    "ref_area_predio": 5999.33
+  },
+  {
+    "id_cultivo": "{3e87f627-d602-4f51-8485-99f3c688d720}",
+    "ficha_id": "{78dce60b-2102-4636-b0f0-99fd616c6016}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3138.64,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3138.64
+  },
+  {
+    "id_cultivo": "{22ad5af4-ea9e-46c9-a9fc-0e7a7af41fb4}",
+    "ficha_id": "{0294cb59-f346-4d15-9536-86fa2ffa94a3}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 10007.01,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 10007.01
+  },
+  {
+    "id_cultivo": "{f407f219-918e-4118-b319-647607667609}",
+    "ficha_id": "{2dfdd965-b468-4a8c-b32f-30af0fb3cf5d}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 8276.31,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8276.31
+  },
+  {
+    "id_cultivo": "{1009259b-65c0-408b-84b4-c8213f9e9836}",
+    "ficha_id": "{8775bdc8-d31e-42e4-9f9c-e6a6335c62e8}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 6454.23,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6454.23
+  },
+  {
+    "id_cultivo": "{d1258108-275c-4ec0-8191-3b15ae204f04}",
+    "ficha_id": "{7d0cd070-cecd-4bad-b206-4541014cfbd4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4435.64,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4435.64
+  },
+  {
+    "id_cultivo": "{0abc6e5e-dbbd-4a14-845b-85f4588caf4a}",
+    "ficha_id": "{619fbc4f-e89e-42cb-a7d8-7a8378fcf280}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 16922.33,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 16922.33
+  },
+  {
+    "id_cultivo": "{b45c5d9f-fa11-4c06-a15e-14fc081ba188}",
+    "ficha_id": "{b2d3d6b4-645c-45dc-8c73-9c4bdf86afc7}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 7000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 10323.97
+  },
+  {
+    "id_cultivo": "{0b1dca43-8c4f-470f-8544-50da7427adfe}",
+    "ficha_id": "{b2d3d6b4-645c-45dc-8c73-9c4bdf86afc7}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3323.97,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 10323.97
+  },
+  {
+    "id_cultivo": "{31643c92-3207-4205-989b-8a8dff038545}",
+    "ficha_id": "{6e4311fc-8e91-4ad9-8037-5edd6b501bb6}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 3954.19,
+    "es_principal": 1,
+    "es_autoconsumo": 0,
+    "es_mercado": 1,
+    "ref_area_predio": 3954.19
+  },
+  {
+    "id_cultivo": "{c5b73ce8-38b1-4a8d-b43d-98365adeaccb}",
+    "ficha_id": "{91c474fb-8dea-4c57-8eec-fce1188fce0d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4636.24
+  },
+  {
+    "id_cultivo": "{2f419b33-6b2f-4d6c-9dbd-39a1579083f0}",
+    "ficha_id": "{91c474fb-8dea-4c57-8eec-fce1188fce0d}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4636.24
+  },
+  {
+    "id_cultivo": "{9bd05edd-11e6-4cdf-b471-1b8163cdf444}",
+    "ficha_id": "{91c474fb-8dea-4c57-8eec-fce1188fce0d}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1636.24,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4636.24
+  },
+  {
+    "id_cultivo": "{1b200e0d-ef8d-4b0d-94b8-7dfbea3ae2f2}",
+    "ficha_id": "{2a01e6ff-b268-4c54-8743-b51465b68e91}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 9990.29,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 9990.29
+  },
+  {
+    "id_cultivo": "{d9c04245-043d-4c16-809d-990ca32340ec}",
+    "ficha_id": "{4fe3d0bd-e072-4a74-a4f5-b1dcdaf7f28f}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 5000.32,
+    "es_principal": 1,
+    "es_exportacion": 1,
+    "ref_area_predio": 5640.32
+  },
+  {
+    "id_cultivo": "{77b8bf79-1883-480a-bce8-38caa04cac8a}",
+    "ficha_id": "{4fe3d0bd-e072-4a74-a4f5-b1dcdaf7f28f}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 640.0,
+    "ref_area_predio": 5640.32
+  },
+  {
+    "id_cultivo": "{d88e78cb-563d-4821-b52d-47bc4035e973}",
+    "ficha_id": "{544b5b9e-e425-4287-8f10-4226ad3ab726}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 70.67,
+    "es_mercado": 1,
+    "ref_area_predio": 570.67
+  },
+  {
+    "id_cultivo": "{3beedc22-e68c-42f6-90c2-08c87fe08a44}",
+    "ficha_id": "{544b5b9e-e425-4287-8f10-4226ad3ab726}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 570.67
+  },
+  {
+    "id_cultivo": "{882ca1c1-e6bd-4ae3-ba58-8b7c16d49ad8}",
+    "ficha_id": "{0ff44e41-3536-4ac2-8bef-69ec8c5863e2}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1265.68,
+    "es_mercado": 1,
+    "ref_area_predio": 3065.68
+  },
+  {
+    "id_cultivo": "{e174602b-7855-41ce-848b-0670872ff51e}",
+    "ficha_id": "{0ff44e41-3536-4ac2-8bef-69ec8c5863e2}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1800.0,
+    "es_principal": 1,
+    "ref_area_predio": 3065.68
+  },
+  {
+    "id_cultivo": "{acaf8c65-e77f-46bc-8fd8-ad68d41ea7b6}",
+    "ficha_id": "{022a5f40-55a5-4361-b4d9-0c15830492b9}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 7861.59
+  },
+  {
+    "id_cultivo": "{cc1d5b3b-57b0-4987-9135-19e1071f6910}",
+    "ficha_id": "{ffbe0f09-7177-4169-9123-6bb62b55872d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 7861.59
+  },
+  {
+    "id_cultivo": "{790de6d5-22b4-4afc-aacc-ac9ebe6136c4}",
+    "ficha_id": "{c5b6d027-1f5e-455b-8ee7-51ef5cf422a8}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 917.69,
+    "es_mercado": 1,
+    "ref_area_predio": 6017.69
+  },
+  {
+    "id_cultivo": "{6f557350-7416-453d-acd6-fa1bfc85278b}",
+    "ficha_id": "{c5b6d027-1f5e-455b-8ee7-51ef5cf422a8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2100.0,
+    "ref_area_predio": 6017.69
+  },
+  {
+    "id_cultivo": "{edd8d49b-f41f-4f66-8880-b83293ee04dd}",
+    "ficha_id": "{c5b6d027-1f5e-455b-8ee7-51ef5cf422a8}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 3000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 6017.69
+  },
+  {
+    "id_cultivo": "{15ca15ce-4ec5-48f6-9793-8767c9cba033}",
+    "ficha_id": "{9b2d9993-ac2c-4dd5-a994-3ba075632e67}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.42,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1933.42
+  },
+  {
+    "id_cultivo": "{71fba9a0-9483-4ccf-bede-d50e036b99de}",
+    "ficha_id": "{9b2d9993-ac2c-4dd5-a994-3ba075632e67}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 933.0,
+    "ref_area_predio": 1933.42
+  },
+  {
+    "id_cultivo": "{7ce6821e-632f-450f-80a7-7ef085ca5d0f}",
+    "ficha_id": "{0d47a230-2ede-4f09-97be-fe7676a43964}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4000.47,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4506.47
+  },
+  {
+    "id_cultivo": "{9be2c6d2-275d-4b53-9bd2-4a5955b9b9d2}",
+    "ficha_id": "{0d47a230-2ede-4f09-97be-fe7676a43964}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 506.0,
+    "ref_area_predio": 4506.47
+  },
+  {
+    "id_cultivo": "{ee3c6247-edc1-46fa-9f50-81fa4b012e32}",
+    "ficha_id": "{2ad91cd5-18f9-45a2-b073-4e3fab03c91a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 280.49,
+    "ref_area_predio": 780.49
+  },
+  {
+    "id_cultivo": "{8d8a154a-7bdb-4834-a6dd-3df5af59138b}",
+    "ficha_id": "{e03e5d89-1779-4108-9fa8-6c7aef2a450f}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 10000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 16117.64
+  },
+  {
+    "id_cultivo": "{cc9f32fc-4843-4704-9e90-535e4c12f6f0}",
+    "ficha_id": "{e03e5d89-1779-4108-9fa8-6c7aef2a450f}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 0,
+    "ref_area_predio": 16117.64
+  },
+  {
+    "id_cultivo": "{e613e558-4f10-4213-bbe1-7eafa802942c}",
+    "ficha_id": "{e03e5d89-1779-4108-9fa8-6c7aef2a450f}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5117.64,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 16117.64
+  },
+  {
+    "id_cultivo": "{9095cfdc-c00a-414f-98ba-0aaacdb90a31}",
+    "ficha_id": "{4b56e0e3-f852-4638-ace6-570f543837b6}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2694.97,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4694.97
+  },
+  {
+    "id_cultivo": "{65c018d5-2c53-4832-afa8-f35b772b0ba5}",
+    "ficha_id": "{4b56e0e3-f852-4638-ace6-570f543837b6}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4694.97
+  },
+  {
+    "id_cultivo": "{158d8a94-1e40-472b-a382-c04cbd9a11cb}",
+    "ficha_id": "{4b56e0e3-f852-4638-ace6-570f543837b6}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4694.97
+  },
+  {
+    "id_cultivo": "{b5c503a6-1cae-47c2-b9aa-8842ca88fef9}",
+    "ficha_id": "{96c6b95c-0e6e-4c44-9fcb-674fb8060dac}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4676.42
+  },
+  {
+    "id_cultivo": "{b30c57ba-57f9-483f-8150-8c4c12eb6aa9}",
+    "ficha_id": "{96c6b95c-0e6e-4c44-9fcb-674fb8060dac}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 4676.42
+  },
+  {
+    "id_cultivo": "{6260691c-2b65-46f4-a30b-ab62e98f2521}",
+    "ficha_id": "{96c6b95c-0e6e-4c44-9fcb-674fb8060dac}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 0,
+    "ref_area_predio": 4676.42
+  },
+  {
+    "id_cultivo": "{3708bf68-62c2-45ed-bffa-cf198470cb24}",
+    "ficha_id": "{96c6b95c-0e6e-4c44-9fcb-674fb8060dac}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4076.42,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4676.42
+  },
+  {
+    "id_cultivo": "{16bc4527-2b72-4a8a-8bcb-ef152219c0f1}",
+    "ficha_id": "{5bbbda2d-6e53-4b84-9bf9-6f15f815f30e}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 0,
+    "es_mercado": 1,
+    "ref_area_predio": 4344.74
+  },
+  {
+    "id_cultivo": "{a3238af8-8393-4047-ae4c-17fc926c328f}",
+    "ficha_id": "{5bbbda2d-6e53-4b84-9bf9-6f15f815f30e}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4344.74
+  },
+  {
+    "id_cultivo": "{19ea8de4-0985-4ba9-b153-4f5f03b6dafa}",
+    "ficha_id": "{5bbbda2d-6e53-4b84-9bf9-6f15f815f30e}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4344.74
+  },
+  {
+    "id_cultivo": "{22ddd160-02e6-4cb7-a24c-64f5322f712b}",
+    "ficha_id": "{5bbbda2d-6e53-4b84-9bf9-6f15f815f30e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3744.74,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 4344.74
+  },
+  {
+    "id_cultivo": "{1df5a4dd-4f2e-45f9-8ecf-5e5fc8ac4e68}",
+    "ficha_id": "{52a412a4-7f7c-4cd1-a29c-d645ce68acb3}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1033.56,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1033.56
+  },
+  {
+    "id_cultivo": "{14f3cc36-2049-4a75-ab5c-ec9c919a7a29}",
+    "ficha_id": "{91a92826-5c55-4882-8755-025b18ae5df7}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1189.34,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1189.34
+  },
+  {
+    "id_cultivo": "{2525496f-cd84-4b56-9be3-f00d81b94671}",
+    "ficha_id": "{1026bb54-fed5-4f29-847b-712735039d99}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 8337.37,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8337.37
+  },
+  {
+    "id_cultivo": "{c528e0b7-52cd-4ceb-be92-cedd4bf5918a}",
+    "ficha_id": "{1864be68-74fc-439e-8b73-431a96050b8a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11277.01
+  },
+  {
+    "id_cultivo": "{9e451bf4-9101-4a16-becb-81d0b93ba43d}",
+    "ficha_id": "{b17d2dbf-0343-4cc2-b940-cc50331784b6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6368.4,
+    "ref_area_predio": 6368.4
+  },
+  {
+    "id_cultivo": "{3c3b9a35-f492-4589-bb5b-25cccd55282a}",
+    "ficha_id": "{dff44007-094d-494d-a793-99e9e9977fae}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 750.0,
+    "ref_area_predio": 1919.68
+  },
+  {
+    "id_cultivo": "{ae3ee56c-1536-4fcb-adf3-09814c94d886}",
+    "ficha_id": "{dff44007-094d-494d-a793-99e9e9977fae}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 669.68,
+    "ref_area_predio": 1919.68
+  },
+  {
+    "id_cultivo": "{3dd67ddd-15ea-4599-9b9a-a5c821e3a283}",
+    "ficha_id": "{dff44007-094d-494d-a793-99e9e9977fae}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 500.0,
+    "ref_area_predio": 1919.68
+  },
+  {
+    "id_cultivo": "{7e080484-76ed-4b2a-8fd4-a709cff6aacd}",
+    "ficha_id": "{ccf37a4a-1f2b-4a0c-b481-db5bb5d115e5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1045.43,
+    "ref_area_predio": 1045.43
+  },
+  {
+    "id_cultivo": "{1ec87a85-a505-4d06-8a06-7e40ee367641}",
+    "ficha_id": "{a2d52512-3f99-4775-bede-1d2621edc4c4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 495.56,
+    "ref_area_predio": 4995.56
+  },
+  {
+    "id_cultivo": "{7a8730d9-7053-40cf-81c6-c181ac3a41d2}",
+    "ficha_id": "{a2d52512-3f99-4775-bede-1d2621edc4c4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4500.0,
+    "ref_area_predio": 4995.56
+  },
+  {
+    "id_cultivo": "{78c19808-f2a1-4309-8a15-9af015009576}",
+    "ficha_id": "{d26d4f26-84c9-4735-8625-017b1feb161c}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 961.14,
+    "ref_area_predio": 4961.14
+  },
+  {
+    "id_cultivo": "{c3907fe0-59c3-4854-be13-24c6f242b3a2}",
+    "ficha_id": "{d26d4f26-84c9-4735-8625-017b1feb161c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4000.0,
+    "ref_area_predio": 4961.14
+  },
+  {
+    "id_cultivo": "{f6ec16d5-453a-4271-9231-dace3b7d82a9}",
+    "ficha_id": "{d1cacc4b-f3c5-4a08-b081-d3d5b7fb44c1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 10230.33,
+    "ref_area_predio": 16230.33
+  },
+  {
+    "id_cultivo": "{8485d23f-34d8-4339-a167-bf718e88ece8}",
+    "ficha_id": "{d1cacc4b-f3c5-4a08-b081-d3d5b7fb44c1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 16230.33
+  },
+  {
+    "id_cultivo": "{233bc164-d268-44dc-bc35-1053193978ab}",
+    "ficha_id": "{d1cacc4b-f3c5-4a08-b081-d3d5b7fb44c1}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 16230.33
+  },
+  {
+    "id_cultivo": "{d4c57829-9e86-426b-aae7-512dd79b0844}",
+    "ficha_id": "{d1cacc4b-f3c5-4a08-b081-d3d5b7fb44c1}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 16230.33
+  },
+  {
+    "id_cultivo": "{c235fb45-55aa-4a81-8e06-16016096c599}",
+    "ficha_id": "{9b608a98-198c-4399-8d69-b59b5c2e2d85}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2504.93,
+    "ref_area_predio": 2504.93
+  },
+  {
+    "id_cultivo": "{df57defe-2b2f-4464-b233-349a2258fe44}",
+    "ficha_id": "{fe763b22-2a8b-4cc4-81e5-9bf32266261c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3695.9,
+    "ref_area_predio": 3695.9
+  },
+  {
+    "id_cultivo": "{287e36c4-81e5-48c7-b2ba-c47103a2f328}",
+    "ficha_id": "{3f5bd47a-747e-42b7-9f60-4c37655d4d93}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2071.36,
+    "ref_area_predio": 8471.36
+  },
+  {
+    "id_cultivo": "{773474f8-ab28-4d54-9cf3-1baae9e71565}",
+    "ficha_id": "{3f5bd47a-747e-42b7-9f60-4c37655d4d93}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 3400.0,
+    "ref_area_predio": 8471.36
+  },
+  {
+    "id_cultivo": "{17487345-3496-40c4-a77b-c71bbca3b284}",
+    "ficha_id": "{3f5bd47a-747e-42b7-9f60-4c37655d4d93}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 3000.0,
+    "ref_area_predio": 8471.36
+  },
+  {
+    "id_cultivo": "{cb8ca68e-5c68-47ee-94fc-4ff101c16313}",
+    "ficha_id": "{62a66d3f-9a5e-466d-a98d-f5f4903913ce}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 505.85,
+    "ref_area_predio": 505.85
+  },
+  {
+    "id_cultivo": "{3ca55994-5c17-445f-ad69-bb5fea8b127b}",
+    "ficha_id": "{92ba25e1-0d0d-4272-9a23-31bdeb7264d8}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3346.1,
+    "ref_area_predio": 5346.1
+  },
+  {
+    "id_cultivo": "{02329673-b5d2-4a55-b12f-a398b0d828f0}",
+    "ficha_id": "{92ba25e1-0d0d-4272-9a23-31bdeb7264d8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 5346.1
+  },
+  {
+    "id_cultivo": "{0e98e5d7-5230-4675-a99d-77c51c9a8884}",
+    "ficha_id": "{e075850c-bdf3-4cf2-9838-ba800a9d0b89}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 448.39,
+    "ref_area_predio": 448.39
+  },
+  {
+    "id_cultivo": "{3cb48315-290f-4f73-b287-6340d32c319f}",
+    "ficha_id": "{8a7ab8e5-e953-44f3-9ce3-c1412f5f6a92}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2052.71,
+    "ref_area_predio": 2052.71
+  },
+  {
+    "id_cultivo": "{af992987-5365-4c01-b42c-80b83169510f}",
+    "ficha_id": "{b359f6e3-f87e-4883-bac9-d127fda83465}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6543.6,
+    "ref_area_predio": 6543.6
+  },
+  {
+    "id_cultivo": "{ead782c5-ac52-4b05-a8af-151f079cac88}",
+    "ficha_id": "{e3da85f2-ba41-4f97-bae2-c3422a64d998}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5160.7,
+    "ref_area_predio": 5160.7
+  },
+  {
+    "id_cultivo": "{4c5b5fc8-bf2b-4110-8caa-fc4b7cb52a5b}",
+    "ficha_id": "{f4c2f43b-10c7-44f3-9065-47ea8a55c9f1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1111.04,
+    "ref_area_predio": 1111.04
+  },
+  {
+    "id_cultivo": "{8c83ec5b-e871-481e-a034-065b14cf9ec9}",
+    "ficha_id": "{6b907ec6-2107-4125-b9e7-7bed25d010a1}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 6159.34,
+    "ref_area_predio": 6159.34
+  },
+  {
+    "id_cultivo": "{978dd64f-33eb-4db2-94ba-307fb7e7200b}",
+    "ficha_id": "{8aa6500d-96fa-4bee-913a-7e9e63a29562}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 7405.67,
+    "ref_area_predio": 13405.67
+  },
+  {
+    "id_cultivo": "{2ce82f2c-c9fd-461c-9235-0d5bb7567c89}",
+    "ficha_id": "{8aa6500d-96fa-4bee-913a-7e9e63a29562}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 13405.67
+  },
+  {
+    "id_cultivo": "{f1dd6fc9-20ef-4523-aa75-3732e611d177}",
+    "ficha_id": "{8aa6500d-96fa-4bee-913a-7e9e63a29562}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4000.0,
+    "ref_area_predio": 13405.67
+  },
+  {
+    "id_cultivo": "{d3740db1-bbf1-4a45-804a-587f1dfa5600}",
+    "ficha_id": "{cd8b034c-8b3b-4185-b23d-e5b2f7c7e432}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1500.0,
+    "ref_area_predio": 2301.34
+  },
+  {
+    "id_cultivo": "{f9fc7e4d-22ec-4977-bbf1-19070c665e78}",
+    "ficha_id": "{cd8b034c-8b3b-4185-b23d-e5b2f7c7e432}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 801.34,
+    "ref_area_predio": 2301.34
+  },
+  {
+    "id_cultivo": "{4224a7e1-2154-4618-a29a-ed36ace95496}",
+    "ficha_id": "{6e1f7581-9f0d-4e76-be42-0a173bd081af}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1252.77,
+    "ref_area_predio": 1252.77
+  },
+  {
+    "id_cultivo": "{8cc1507b-aa84-4c39-b81e-20740d72b59e}",
+    "ficha_id": "{1d6fcad3-a4e5-4fec-9671-96722e245460}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3623.37,
+    "ref_area_predio": 3623.37
+  },
+  {
+    "id_cultivo": "{cb1b9812-9890-401b-bf44-31327aed4263}",
+    "ficha_id": "{e6e26d30-e5a3-4b46-b131-0a0af19c88d8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 908.84,
+    "ref_area_predio": 908.84
+  },
+  {
+    "id_cultivo": "{56077087-700e-4165-aec6-38ecfb4ce8b7}",
+    "ficha_id": "{a65fd4dc-b692-4a8c-8524-637b22254c2e}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1278.24,
+    "ref_area_predio": 1278.24
+  },
+  {
+    "id_cultivo": "{494746c7-2e1f-4d2c-acb7-09be4feadab6}",
+    "ficha_id": "{4ef581a5-38db-4972-b456-4c3d3b2d869a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1124.99,
+    "ref_area_predio": 1124.99
+  },
+  {
+    "id_cultivo": "{fd52cdee-35c6-4eec-85d0-a3946f6e9b06}",
+    "ficha_id": "{c93c2520-5438-403d-81c3-fb1b65d2a930}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3278.17,
+    "ref_area_predio": 3278.17
+  },
+  {
+    "id_cultivo": "{ae7be03c-c823-43b6-bcfe-0f8eb1b3f1f7}",
+    "ficha_id": "{c2e00827-aa9a-4034-9a2d-315437ad22f0}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1558.22,
+    "ref_area_predio": 3458.22
+  },
+  {
+    "id_cultivo": "{7089c1d4-408e-469d-b15d-500e9b25b982}",
+    "ficha_id": "{c2e00827-aa9a-4034-9a2d-315437ad22f0}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 900.0,
+    "ref_area_predio": 3458.22
+  },
+  {
+    "id_cultivo": "{227d16fa-77cb-4e82-a31d-140e28565906}",
+    "ficha_id": "{c2e00827-aa9a-4034-9a2d-315437ad22f0}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "ref_area_predio": 3458.22
+  },
+  {
+    "id_cultivo": "{60154bc1-d27d-4e2d-9d2e-8fc45c332083}",
+    "ficha_id": "{5aae2ed7-5be4-407d-8076-903b5470bea8}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 571.13,
+    "ref_area_predio": 571.13
+  },
+  {
+    "id_cultivo": "{1c3c606d-eeb5-4e29-b3b1-f9d4da5b89ec}",
+    "ficha_id": "{c09478b8-bfc2-4a7e-aa44-9f00db7450ca}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3241.16,
+    "ref_area_predio": 3241.16
+  },
+  {
+    "id_cultivo": "{70d17ea2-7c43-40ed-9044-48d1605be3b1}",
+    "ficha_id": "{de7401b1-45a5-4660-8f68-96dc5b59156b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5661.79,
+    "ref_area_predio": 5661.79
+  },
+  {
+    "id_cultivo": "{5e643fb0-be95-41fb-8b40-9132dc58b49a}",
+    "ficha_id": "{fc29f7eb-4547-40ab-a379-0db7aeffb4aa}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 2493.99,
+    "ref_area_predio": 2493.99
+  },
+  {
+    "id_cultivo": "{732df3c1-904d-4656-894f-848a89cc1210}",
+    "ficha_id": "{76d1cad8-d34f-447f-9d92-7e20fc89d2f6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5649.77,
+    "ref_area_predio": 5649.77
+  },
+  {
+    "id_cultivo": "{0341bce0-9d44-49e4-a82c-aa2220712c03}",
+    "ficha_id": "{d44c66f1-6d66-4b50-be74-d850bf6ed6b9}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5760.16,
+    "ref_area_predio": 5760.16
+  },
+  {
+    "id_cultivo": "{db38cc5b-bbf2-43c6-82be-ee85221d1d99}",
+    "ficha_id": "{fc74f132-219a-4f09-b9b9-237a14a8f98f}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5507.23,
+    "ref_area_predio": 5507.23
+  },
+  {
+    "id_cultivo": "{12f69815-4c5e-4175-baa9-61b47cc1b6aa}",
+    "ficha_id": "{6d941af5-ce78-49e0-8976-c2f3e13c081c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1272.18,
+    "ref_area_predio": 2272.18
+  },
+  {
+    "id_cultivo": "{d60ceb84-07dd-492a-857e-7980fc99eab9}",
+    "ficha_id": "{6d941af5-ce78-49e0-8976-c2f3e13c081c}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1000.0,
+    "ref_area_predio": 2272.18
+  },
+  {
+    "id_cultivo": "{ab587ea8-1276-445f-9959-b679ed47d831}",
+    "ficha_id": "{1bd59ecc-8c7b-4f16-9acf-b0db7f7a8906}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4820.5,
+    "ref_area_predio": 8820.5
+  },
+  {
+    "id_cultivo": "{05153006-c452-46b1-a8d0-8d2a4dc9ca44}",
+    "ficha_id": "{1bd59ecc-8c7b-4f16-9acf-b0db7f7a8906}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 4000.0,
+    "ref_area_predio": 8820.5
+  },
+  {
+    "id_cultivo": "{48c00936-ec84-4240-bb8b-9f94d9d91342}",
+    "ficha_id": "{cbe15558-d1cd-489e-9459-41d10eb2785d}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 6580.52,
+    "ref_area_predio": 6580.52
+  },
+  {
+    "id_cultivo": "{e48a903e-f01f-4b83-9d3e-e69873a59809}",
+    "ficha_id": "{c727cadc-e269-48ee-bc3b-ace5f99686d6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3572.66,
+    "ref_area_predio": 6572.66
+  },
+  {
+    "id_cultivo": "{e20ed9a5-da5f-438f-b44b-f5fc51fdee45}",
+    "ficha_id": "{c727cadc-e269-48ee-bc3b-ace5f99686d6}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "ref_area_predio": 6572.66
+  },
+  {
+    "id_cultivo": "{d78b17e8-22c6-4b0d-a2ad-e0f45884baab}",
+    "ficha_id": "{c727cadc-e269-48ee-bc3b-ace5f99686d6}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 6572.66
+  },
+  {
+    "id_cultivo": "{3844f960-67d8-4008-9983-1dcbd4073301}",
+    "ficha_id": "{fb59a983-5eba-4093-8ce1-c0b7596484db}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 1904.96,
+    "ref_area_predio": 1904.96
+  },
+  {
+    "id_cultivo": "{0af127b5-c106-45e1-a40b-81cab0dc3a89}",
+    "ficha_id": "{5c89c9eb-1f4d-444f-a794-1f5094193fb6}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 1628.61,
+    "ref_area_predio": 1628.61
+  },
+  {
+    "id_cultivo": "{6edbf66d-a028-4fa0-b3fc-e666eb5c3331}",
+    "ficha_id": "{b15c6fad-ea76-4dab-ae94-d772cf9f207b}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 1685.51,
+    "ref_area_predio": 1685.51
+  },
+  {
+    "id_cultivo": "{e32082d7-5c9e-4f2b-8175-6e54415e6834}",
+    "ficha_id": "{ce941191-2879-4d0b-b884-254508d6bce5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6604.36,
+    "ref_area_predio": 12604.36
+  },
+  {
+    "id_cultivo": "{d013e8f8-78f9-45c5-bbc5-370fd7b065fa}",
+    "ficha_id": "{7d8f5280-4e0a-4d81-b8b2-67cd62049f6e}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 12604.36
+  },
+  {
+    "id_cultivo": "{baa7e4f9-c253-4a4b-9b57-0fcfa0436a90}",
+    "ficha_id": "{7d8f5280-4e0a-4d81-b8b2-67cd62049f6e}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 12604.36
+  },
+  {
+    "id_cultivo": "{37c69f58-b4c6-471d-bd5c-bc1e40c49b01}",
+    "ficha_id": "{7d8f5280-4e0a-4d81-b8b2-67cd62049f6e}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 12604.36
+  },
+  {
+    "id_cultivo": "{c3526c9b-b208-4421-a2d2-f6658771af0e}",
+    "ficha_id": "{3f4e37e0-c452-48aa-b079-6c5af93ade0c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3000.0,
+    "ref_area_predio": 3410.8
+  },
+  {
+    "id_cultivo": "{1f800d4f-ef43-4a5e-b4e4-b0a1ca4dfd6c}",
+    "ficha_id": "{3f4e37e0-c452-48aa-b079-6c5af93ade0c}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 410.8,
+    "ref_area_predio": 3410.8
+  },
+  {
+    "id_cultivo": "{fee97f1f-f5f8-4010-90ab-29df3b2d6c21}",
+    "ficha_id": "{74593329-f859-4458-9c27-f0632d2f9310}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 411.29,
+    "ref_area_predio": 6411.29
+  },
+  {
+    "id_cultivo": "{a0ba2762-2902-4ef0-b4e9-aa0ad888cdf7}",
+    "ficha_id": "{74593329-f859-4458-9c27-f0632d2f9310}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6000.0,
+    "ref_area_predio": 6411.29
+  },
+  {
+    "id_cultivo": "{0ade39ec-cea5-4ad5-b8f2-e6126f3caef5}",
+    "ficha_id": "{9a5d44bb-c969-4871-b6ed-663bbe92a856}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1999.98,
+    "ref_area_predio": 1999.98
+  },
+  {
+    "id_cultivo": "{222db3ad-9041-453e-906a-55a3c452aa8e}",
+    "ficha_id": "{418c1ab9-3b55-40c9-9608-aaa120facfaf}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3020.22,
+    "ref_area_predio": 3020.22
+  },
+  {
+    "id_cultivo": "{b5c2a5f0-fd30-474d-89af-be0e26460745}",
+    "ficha_id": "{87b0c43d-8beb-48ec-882d-72c91217347a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3261.98,
+    "ref_area_predio": 3261.98
+  },
+  {
+    "id_cultivo": "{605335c5-efa8-45da-bf6b-8d336d369b03}",
+    "ficha_id": "{5dbdcadc-2b77-4302-b5fd-d92fd541a66c}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 4465.24,
+    "ref_area_predio": 4465.24
+  },
+  {
+    "id_cultivo": "{e5e4d8fe-52b6-48c7-8167-368076b2a6f9}",
+    "ficha_id": "{f7bfe3ca-2ba9-4a4a-bb5e-52efcfe40f16}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4947.69,
+    "ref_area_predio": 4947.69
+  },
+  {
+    "id_cultivo": "{764e6fd7-6b31-4552-89e4-8ce4b6966a4d}",
+    "ficha_id": "{d57a017b-a8fb-4a89-94b0-61fb96059993}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1932.63,
+    "ref_area_predio": 4932.63
+  },
+  {
+    "id_cultivo": "{d23569ec-14fd-4273-af31-079be9e99b7b}",
+    "ficha_id": "{d57a017b-a8fb-4a89-94b0-61fb96059993}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1500.0,
+    "ref_area_predio": 4932.63
+  },
+  {
+    "id_cultivo": "{7fc24aa6-e25d-4496-85d5-5a6ac04a84ab}",
+    "ficha_id": "{d57a017b-a8fb-4a89-94b0-61fb96059993}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1500.0,
+    "ref_area_predio": 4932.63
+  },
+  {
+    "id_cultivo": "{c601bcfa-7c2a-4912-8f65-e1f6088eac6a}",
+    "ficha_id": "{fe155ac6-4752-4939-8846-a89f5712b599}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 800.64,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 5093.64
+  },
+  {
+    "id_cultivo": "{eff65050-c30d-4c82-a3b9-791cab8ec0f7}",
+    "ficha_id": "{fe155ac6-4752-4939-8846-a89f5712b599}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4293.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 5093.64
+  },
+  {
+    "id_cultivo": "{9bb75dfd-f9ca-4fb4-8d4b-fd9765e07902}",
+    "ficha_id": "{60522cdb-4257-4ad0-b86f-d3ba3b33e80c}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1000.66,
+    "es_exportacion": 1,
+    "ref_area_predio": 2791.66
+  },
+  {
+    "id_cultivo": "{d1e41d44-67c6-4316-ac12-fef773f7a2f9}",
+    "ficha_id": "{60522cdb-4257-4ad0-b86f-d3ba3b33e80c}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 2791.66
+  },
+  {
+    "id_cultivo": "{70ffe940-fa52-47af-9eb1-fa2a5f57e7f3}",
+    "ficha_id": "{60522cdb-4257-4ad0-b86f-d3ba3b33e80c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 791.0,
+    "ref_area_predio": 2791.66
+  },
+  {
+    "id_cultivo": "{eb1bf5ed-89d1-48ff-a417-973962ace91a}",
+    "ficha_id": "{fb4455fa-d3e5-4a20-b8d7-3343eb6fa3bc}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 625.03,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1125.03
+  },
+  {
+    "id_cultivo": "{01df3b33-11ef-47a1-ba15-b9bd5bf1596c}",
+    "ficha_id": "{fb4455fa-d3e5-4a20-b8d7-3343eb6fa3bc}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1125.03
+  },
+  {
+    "id_cultivo": "{63a12724-91b5-4eaa-9330-facafed916c7}",
+    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 77.45,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1177.45
+  },
+  {
+    "id_cultivo": "{7ceab783-e30b-44bb-b3d6-dd1c83eadf60}",
+    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1177.45
+  },
+  {
+    "id_cultivo": "{0abb6180-ef26-45c0-9507-03e5aebb136f}",
+    "ficha_id": "{e7c12bea-feb2-406e-ac3a-9012cd360fb4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 100.0,
+    "ref_area_predio": 1177.45
+  },
+  {
+    "id_cultivo": "{d5f93813-1b2c-4759-8852-1a6301d4792c}",
+    "ficha_id": "{41235186-be7f-4649-865b-b661960777da}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 837.21,
+    "es_principal": 1,
+    "es_exportacion": 1,
+    "ref_area_predio": 837.21
+  },
+  {
+    "id_cultivo": "{100ca303-4831-4c61-81db-9fc09d55a29a}",
+    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 34.04,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 734.04
+  },
+  {
+    "id_cultivo": "{dd794fcf-6884-4727-882e-d0f8ba7ad6d0}",
+    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 734.04
+  },
+  {
+    "id_cultivo": "{d854446c-92a0-4f25-83f4-74ab9e20c2d9}",
+    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 400.0,
+    "es_mercado": 1,
+    "ref_area_predio": 734.04
+  },
+  {
+    "id_cultivo": "{ed6a02cb-4036-4cf2-b0fb-ce4ab74158c1}",
+    "ficha_id": "{c8174c33-d70f-4c3f-adc5-234652ac7c89}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 100.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 734.04
+  },
+  {
+    "id_cultivo": "{0f82dbde-7c4a-41ed-9998-bbf63bb70a70}",
+    "ficha_id": "{cd289d01-ffa4-4da3-affd-78b6659b9da1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3180.48
+  },
+  {
+    "id_cultivo": "{bf47ee47-d7ce-42c1-a700-0338f4202d83}",
+    "ficha_id": "{cd289d01-ffa4-4da3-affd-78b6659b9da1}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3180.48
+  },
+  {
+    "id_cultivo": "{e0878124-cf9f-42a0-a421-234024c67882}",
+    "ficha_id": "{cd289d01-ffa4-4da3-affd-78b6659b9da1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1180.48,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3180.48
+  },
+  {
+    "id_cultivo": "{fb17de31-1325-4328-a8e7-89e00a31e89b}",
+    "ficha_id": "{1b93f0da-b26b-45bd-bfd3-2b7cd8105628}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 383.18,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 383.18
+  },
+  {
+    "id_cultivo": "{d9803413-ba41-453e-879c-05d09bb673bb}",
+    "ficha_id": "{8b581544-3411-4d2b-9d13-95c8aba68dd5}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 0,
+    "es_exportacion": 1,
+    "ref_area_predio": 13457.8
+  },
+  {
+    "id_cultivo": "{aa4f3ae4-f7a8-4d84-91bc-0c42657fd112}",
+    "ficha_id": "{8b581544-3411-4d2b-9d13-95c8aba68dd5}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 13457.8
+  },
+  {
+    "id_cultivo": "{55cf84ae-50ba-47fb-a37f-070ebb63fa35}",
+    "ficha_id": "{8b581544-3411-4d2b-9d13-95c8aba68dd5}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13457.8
+  },
+  {
+    "id_cultivo": "{70bc4299-994f-4777-8568-54fbf5afa212}",
+    "ficha_id": "{8b581544-3411-4d2b-9d13-95c8aba68dd5}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13457.8
+  },
+  {
+    "id_cultivo": "{09308397-a51d-427c-8b98-b7fb31fa2278}",
+    "ficha_id": "{8b581544-3411-4d2b-9d13-95c8aba68dd5}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 8957.8,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 13457.8
+  },
+  {
+    "id_cultivo": "{d50a6ea2-c75d-4de8-b86f-330ea44ee5e9}",
+    "ficha_id": "{29912f09-151e-4e81-a7aa-b6cad34f4f47}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 426.01,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 426.01
+  },
+  {
+    "id_cultivo": "{cb02b89e-469e-4ec9-a5d6-3561c29c4559}",
+    "ficha_id": "{5f99b0be-4937-4fa5-ac39-7c4032271b49}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 7484.93
+  },
+  {
+    "id_cultivo": "{57ac608b-5899-466a-ba4f-640a709af75a}",
+    "ficha_id": "{5f99b0be-4937-4fa5-ac39-7c4032271b49}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7484.93
+  },
+  {
+    "id_cultivo": "{d6f5ef2d-e697-4429-b615-72ff3243a4c7}",
+    "ficha_id": "{5f99b0be-4937-4fa5-ac39-7c4032271b49}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7484.93
+  },
+  {
+    "id_cultivo": "{c129e9bf-7269-4d43-9cfd-64b395b931ed}",
+    "ficha_id": "{5f99b0be-4937-4fa5-ac39-7c4032271b49}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 4484.93,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 7484.93
+  },
+  {
+    "id_cultivo": "{487067d1-45f6-4eb3-bcfa-9bcc08bde778}",
+    "ficha_id": "{7c1ccbad-55ea-4e6c-a797-9dea352602f2}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 11431.79
+  },
+  {
+    "id_cultivo": "{f5f87330-ed05-4e58-897d-5940a7dfcea5}",
+    "ficha_id": "{7c1ccbad-55ea-4e6c-a797-9dea352602f2}",
+    "tipo_cultivo": "Melloco",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11431.79
+  },
+  {
+    "id_cultivo": "{21d4a588-4b6e-44a4-b574-1faedfcc2374}",
+    "ficha_id": "{7c1ccbad-55ea-4e6c-a797-9dea352602f2}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 9931.79,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11431.79
+  },
+  {
+    "id_cultivo": "{9628fd57-52ae-4879-94c2-f3a84d610028}",
+    "ficha_id": "{4a67ecb6-a4dd-4cac-9c1f-9289a5de3879}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 231.64,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 231.64
+  },
+  {
+    "id_cultivo": "{413e18cc-666e-4728-b99c-bac2e0af0988}",
+    "ficha_id": "{bcb2927b-9c60-40e9-a2c2-d455df0ec932}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 786.41,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 786.41
+  },
+  {
+    "id_cultivo": "{c61b7891-92d0-404c-ac6b-652641cd4661}",
+    "ficha_id": "{7ffb73f0-82f4-4e81-9c9d-8dcd25f23cdb}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1281.5
+  },
+  {
+    "id_cultivo": "{86c3afd4-bcf4-4e3d-9648-62c9e761fa67}",
+    "ficha_id": "{7ffb73f0-82f4-4e81-9c9d-8dcd25f23cdb}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1281.5
+  },
+  {
+    "id_cultivo": "{5772cb4e-9eea-4139-823d-8ad16ab82334}",
+    "ficha_id": "{7ffb73f0-82f4-4e81-9c9d-8dcd25f23cdb}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 581.5,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1281.5
+  },
+  {
+    "id_cultivo": "{33538eb7-ba5a-41b0-b6ef-9307de70e3b1}",
+    "ficha_id": "{a1d8be10-900e-47ed-b70b-7ad9b92bf238}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 1129.06
+  },
+  {
+    "id_cultivo": "{3b81ffb3-1fce-4ce0-9703-d519e6aded70}",
+    "ficha_id": "{a1d8be10-900e-47ed-b70b-7ad9b92bf238}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 629.06,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1129.06
+  },
+  {
+    "id_cultivo": "{7b0447d3-0c42-4cc8-8342-d4fd13dcfe00}",
+    "ficha_id": "{2d21d425-3243-4414-a0cc-4775e2ba46a4}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1129.08
+  },
+  {
+    "id_cultivo": "{d042366c-427e-4766-b51b-d0acad6c28fd}",
+    "ficha_id": "{2d21d425-3243-4414-a0cc-4775e2ba46a4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 629.08,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1129.08
+  },
+  {
+    "id_cultivo": "{d699219f-5b32-4989-a1ff-31f06fe27a3e}",
+    "ficha_id": "{df96d206-5bbc-4aac-9a3c-4b1ec11bb9d4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 4367.78,
+    "ref_area_predio": 19367.78
+  },
+  {
+    "id_cultivo": "{9946bcf8-75d6-4128-8a3e-6739a78a6cdd}",
+    "ficha_id": "{df96d206-5bbc-4aac-9a3c-4b1ec11bb9d4}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 5000.0,
+    "ref_area_predio": 19367.78
+  },
+  {
+    "id_cultivo": "{b5ab0c49-fe28-4c63-bd66-2e81858a30f2}",
+    "ficha_id": "{df96d206-5bbc-4aac-9a3c-4b1ec11bb9d4}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2500.0,
+    "ref_area_predio": 19367.78
+  },
+  {
+    "id_cultivo": "{a86d7053-42b6-4266-b7bf-c22ada9c2160}",
+    "ficha_id": "{df96d206-5bbc-4aac-9a3c-4b1ec11bb9d4}",
+    "tipo_cultivo": "Frijol",
+    "superficie_m2": 2500.0,
+    "ref_area_predio": 19367.78
+  },
+  {
+    "id_cultivo": "{ef7d120a-4c1a-4aeb-8a22-9a5b81541f5b}",
+    "ficha_id": "{df96d206-5bbc-4aac-9a3c-4b1ec11bb9d4}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5000.0,
+    "ref_area_predio": 19367.78
+  },
+  {
+    "id_cultivo": "{d47216cc-e865-4a2c-a6bd-238d2ae1cf10}",
+    "ficha_id": "{f2812937-e302-46b0-b1cd-5b85a08f69c0}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 3697.17,
+    "ref_area_predio": 11697.17
+  },
+  {
+    "id_cultivo": "{6815ee63-b06e-42e0-af14-341468ad8cab}",
+    "ficha_id": "{f2812937-e302-46b0-b1cd-5b85a08f69c0}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 11697.17
+  },
+  {
+    "id_cultivo": "{16b77578-7840-449e-895e-1ff15c261e0f}",
+    "ficha_id": "{f2812937-e302-46b0-b1cd-5b85a08f69c0}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 6000.0,
+    "ref_area_predio": 11697.17
+  },
+  {
+    "id_cultivo": "{b8dd0b40-9931-45fc-91ce-2cd52636ffa9}",
+    "ficha_id": "{ec97deb9-4c0f-41af-b422-46f3facbbcf7}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 12679.43,
+    "ref_area_predio": 18679.43
+  },
+  {
+    "id_cultivo": "{97b08486-1f77-4921-8565-0282cf8af171}",
+    "ficha_id": "{ec97deb9-4c0f-41af-b422-46f3facbbcf7}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 1000.0,
+    "ref_area_predio": 18679.43
+  },
+  {
+    "id_cultivo": "{61885018-0102-4cdd-ad00-9aa3a8f1a04d}",
+    "ficha_id": "{ec97deb9-4c0f-41af-b422-46f3facbbcf7}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 5000.0,
+    "ref_area_predio": 18679.43
+  },
+  {
+    "id_cultivo": "{d984109d-a1ca-4449-aedb-b5c2ca907132}",
+    "ficha_id": "{44cc8e49-4f33-44e5-bd2b-a17bd2ebc324}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6618.83,
+    "ref_area_predio": 6618.83
+  },
+  {
+    "id_cultivo": "{e78b1a38-761b-4e4b-b606-68b654a2b631}",
+    "ficha_id": "{925d4ba5-51f2-409c-a3c6-bd505aa6a7c6}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 3500.0,
+    "ref_area_predio": 18900.42
+  },
+  {
+    "id_cultivo": "{740c77a6-4536-49cb-a5dd-f4565d12a332}",
+    "ficha_id": "{925d4ba5-51f2-409c-a3c6-bd505aa6a7c6}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 15400.42,
+    "ref_area_predio": 18900.42
+  },
+  {
+    "id_cultivo": "{69093c5a-3eb0-42d0-9a95-d514945edac5}",
+    "ficha_id": "{17b57089-5a3f-4e7b-ba2d-283b20153e7b}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 1171.43,
+    "ref_area_predio": 9171.43
+  },
+  {
+    "id_cultivo": "{f98c8de9-73d3-483b-b10a-186f1a5603b5}",
+    "ficha_id": "{17b57089-5a3f-4e7b-ba2d-283b20153e7b}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3000.0,
+    "ref_area_predio": 9171.43
+  },
+  {
+    "id_cultivo": "{09740f03-339e-45f4-a94b-6f633cbb3f9c}",
+    "ficha_id": "{17b57089-5a3f-4e7b-ba2d-283b20153e7b}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 2500.0,
+    "ref_area_predio": 9171.43
+  },
+  {
+    "id_cultivo": "{40a05a1a-f1da-47a2-93f3-3ab8c993714f}",
+    "ficha_id": "{17b57089-5a3f-4e7b-ba2d-283b20153e7b}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2500.0,
+    "ref_area_predio": 9171.43
+  },
+  {
+    "id_cultivo": "{45fbfc3d-d887-4427-a91b-e5c4363a7a7a}",
+    "ficha_id": "{86ff23dc-2b6d-424d-bb2c-f657a85d07a1}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 752.97,
+    "ref_area_predio": 752.97
+  },
+  {
+    "id_cultivo": "{914a8393-2527-4021-bbae-7036c251cd48}",
+    "ficha_id": "{6888b59c-0e10-4592-83d5-118b500e7560}",
+    "tipo_cultivo": "Bosque",
+    "superficie_m2": 5781.28,
+    "ref_area_predio": 72781.28
+  },
+  {
+    "id_cultivo": "{35a4f84a-037f-424e-ad15-43d507918673}",
+    "ficha_id": "{6888b59c-0e10-4592-83d5-118b500e7560}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 67000.0,
+    "ref_area_predio": 72781.28
+  },
+  {
+    "id_cultivo": "{e0bdf3ba-34c7-4ad4-be9b-462eec370dbf}",
+    "ficha_id": "{122ddf0e-4e59-4db9-8808-e95fa8974722}",
+    "tipo_cultivo": "Monte",
+    "superficie_m2": 71084.52,
+    "ref_area_predio": 71084.52
+  },
+  {
+    "id_cultivo": "{eb3cd9b1-ca72-4b93-93bc-7bd8755b1690}",
+    "ficha_id": "{7438faf2-f94a-4a9c-9ab7-af15d04f6c3a}",
+    "tipo_cultivo": "Monte",
+    "superficie_m2": 61348.04,
+    "ref_area_predio": 61348.04
+  },
+  {
+    "id_cultivo": "{4af6ad3a-39b6-4991-b3bb-59df61dfb980}",
+    "ficha_id": "{f37f12f3-6cbc-435a-a14c-5c0215e116ca}",
+    "tipo_cultivo": "Monte",
+    "superficie_m2": 74904.83,
+    "ref_area_predio": 74904.83
+  },
+  {
+    "id_cultivo": "{94b98290-26fe-4b57-8e58-0e5e8c3f6312}",
+    "ficha_id": "{3e22d77e-1f48-4d52-9cc4-a99ad8df715c}",
+    "tipo_cultivo": "Monte",
+    "superficie_m2": 88483.22,
+    "ref_area_predio": 88483.22
+  },
+  {
+    "id_cultivo": "{12132cb6-6fc1-4962-af7d-ccf3e4e9ade2}",
+    "ficha_id": "{daa47ccc-25b1-4e6b-bceb-70d6f3f50737}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 7000.06,
+    "ref_area_predio": 7000.06
+  },
+  {
+    "id_cultivo": "{99e7961a-3e8f-4539-bdd2-43b8b76b3c32}",
+    "ficha_id": "{dbb27eda-ef1d-4eb8-b43b-a3dd2b1d2243}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 7000.14
+  },
+  {
+    "id_cultivo": "{f6353afb-4553-4f2f-84e1-e55c43564fb3}",
+    "ficha_id": "{dbb27eda-ef1d-4eb8-b43b-a3dd2b1d2243}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 5000.14,
+    "ref_area_predio": 7000.14
+  },
+  {
+    "id_cultivo": "{178216c7-090f-4aa2-9744-3704873da940}",
+    "ficha_id": "{842185f8-1b22-484d-8e58-be00a4dcd300}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 6999.65,
+    "ref_area_predio": 6999.65
+  },
+  {
+    "id_cultivo": "{dd48131c-cfb1-4fa7-9c5f-468072883fb5}",
+    "ficha_id": "{1cf22816-5b75-416c-8651-312162c720cc}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 10125.33,
+    "ref_area_predio": 12125.33
+  },
+  {
+    "id_cultivo": "{e512e114-1f9f-4126-89ac-ec794654d075}",
+    "ficha_id": "{1cf22816-5b75-416c-8651-312162c720cc}",
+    "tipo_cultivo": "Monte",
+    "superficie_m2": 2000.0,
+    "ref_area_predio": 12125.33
+  },
+  {
+    "id_cultivo": "{5dc28680-3e81-4268-b0e2-78c1d2218436}",
+    "ficha_id": "{3f71e29b-4f1b-4802-80ae-a1247c2ba99c}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3750.22,
+    "ref_area_predio": 3750.22
+  },
+  {
+    "id_cultivo": "{c2cb8d69-10db-4736-95a3-985d5c9b747b}",
+    "ficha_id": "{a11e0813-686b-4dd6-83ee-033cf97ae081}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 8083.67,
+    "ref_area_predio": 24983.67
+  },
+  {
+    "id_cultivo": "{d6b62bdc-af99-4979-a445-4e27fc1f5f18}",
+    "ficha_id": "{a11e0813-686b-4dd6-83ee-033cf97ae081}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 6900.0,
+    "ref_area_predio": 24983.67
+  },
+  {
+    "id_cultivo": "{16f6ef30-76fe-4762-9fa4-ea129fb04b8a}",
+    "ficha_id": "{a11e0813-686b-4dd6-83ee-033cf97ae081}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 10000.0,
+    "ref_area_predio": 24983.67
+  },
+  {
+    "id_cultivo": "{cb091569-d561-4c69-9ee9-10e5ec2eb22a}",
+    "ficha_id": "{b89c85fb-f059-4b8d-bc5b-21babfe241bd}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1487.01,
+    "ref_area_predio": 2787.01
+  },
+  {
+    "id_cultivo": "{3f2493e8-6793-40e9-b52f-6c8ad66e9fa9}",
+    "ficha_id": "{b89c85fb-f059-4b8d-bc5b-21babfe241bd}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 1300.0,
+    "ref_area_predio": 2787.01
+  },
+  {
+    "id_cultivo": "{ee0138a9-0c30-422a-a708-de09f905eb8f}",
+    "ficha_id": "{c9a3afc4-b786-47cc-8df7-e643f605d1de}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 31090.28
+  },
+  {
+    "id_cultivo": "{22bd3e84-26b9-47aa-84e4-3627f2030353}",
+    "ficha_id": "{c9a3afc4-b786-47cc-8df7-e643f605d1de}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 10000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 31090.28
+  },
+  {
+    "id_cultivo": "{bfa6f9cc-2718-4917-840a-c82abc30b5ff}",
+    "ficha_id": "{c9a3afc4-b786-47cc-8df7-e643f605d1de}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 10000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 31090.28
+  },
+  {
+    "id_cultivo": "{cae31b39-2bbc-4391-8d8b-a3c6fe373104}",
+    "ficha_id": "{9d32820a-81cc-4417-ae93-013ea7bea2df}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 10000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 31137.04
+  },
+  {
+    "id_cultivo": "{e07bf5f4-92ab-4e68-802b-6470e4f459a2}",
+    "ficha_id": "{b64a3e87-0303-470c-91ae-4217902a29d4}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 5000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 33942.88
+  },
+  {
+    "id_cultivo": "{fcf231f8-877c-4a83-b59e-854014dea203}",
+    "ficha_id": "{b64a3e87-0303-470c-91ae-4217902a29d4}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 28942.88,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 33942.88
+  },
+  {
+    "id_cultivo": "{2e425e71-f3fb-438a-80f3-dfecb789c875}",
+    "ficha_id": "{b64a3e87-0303-470c-91ae-4217902a29d4}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 33942.88
+  },
+  {
+    "id_cultivo": "{5af873b0-022f-42ba-8748-59ca58ea0c03}",
+    "ficha_id": "{8c9960a5-a614-4061-a824-fcee75496947}",
+    "tipo_cultivo": "CEBOLLA",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3020.63
+  },
+  {
+    "id_cultivo": "{3a62ceff-72d8-4d0b-b4e1-7d518f4b8850}",
+    "ficha_id": "{8c9960a5-a614-4061-a824-fcee75496947}",
+    "tipo_cultivo": "HABAS",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3020.63
+  },
+  {
+    "id_cultivo": "{ad2c8c5a-d03f-47a6-ad74-3c9f38dbde99}",
+    "ficha_id": "{cfa9dee7-d6be-43c5-b080-3ffd28ceb5a4}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 25074.66,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 25074.66
+  },
+  {
+    "id_cultivo": "{2bbe40b6-756d-451a-a4e4-3cb54ccabe70}",
+    "ficha_id": "{2a539118-3e54-4d53-8b04-cca9fa09209c}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 10000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{b95ec1ec-2a8e-44c3-8d6b-57d96d3f1d39}",
+    "ficha_id": "{f4e2782f-598c-49df-906c-ae92ceef15e0}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 5000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{d6e9cd85-2ba7-4ad5-9ee5-d5681d6f043a}",
+    "ficha_id": "{f4e2782f-598c-49df-906c-ae92ceef15e0}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{ca951c4f-b155-4c0a-9a09-bc709c96ed8b}",
+    "ficha_id": "{f4e2782f-598c-49df-906c-ae92ceef15e0}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{2ed72dc2-2a2c-4596-9c45-7196fc3fe276}",
+    "ficha_id": "{c6a2e177-4eec-43c5-94ea-9583108a4b72}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 5000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{58016f06-b7a5-40ae-9e31-503a36c513cb}",
+    "ficha_id": "{c6a2e177-4eec-43c5-94ea-9583108a4b72}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{c92922ad-629d-46d6-a7cf-983860060e98}",
+    "ficha_id": "{c6a2e177-4eec-43c5-94ea-9583108a4b72}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 1500.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 29259.85
+  },
+  {
+    "id_cultivo": "{b250551f-8047-47eb-9f0d-b50cd568054e}",
+    "ficha_id": "{57aa640a-0aa1-44c2-9442-33fac629a520}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 30411.73,
+    "es_principal": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 30411.73
+  },
+  {
+    "id_cultivo": "{6efe6e94-4690-45e4-a58d-ec5a6fdb766e}",
+    "ficha_id": "{eaee637a-3651-40c3-bd23-c52b27ae6eb8}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1389.66,
+    "es_mercado": 1,
+    "ref_area_predio": 1389.66
+  },
+  {
+    "id_cultivo": "{b90d7f71-3425-4bac-983f-665e624f5462}",
+    "ficha_id": "{2af70600-bdb7-49db-b138-063a3808b417}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 515.01,
+    "es_mercado": 1,
+    "ref_area_predio": 515.01
+  },
+  {
+    "id_cultivo": "{29992ba0-a80f-4710-9d03-99a252e3f1f5}",
+    "ficha_id": "{e9217e8b-6b07-4ff2-83bb-3c56c5fba415}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 1622.79,
+    "es_mercado": 1,
+    "ref_area_predio": 1622.79
+  },
+  {
+    "id_cultivo": "{297c5f96-b459-4663-baec-e68884227228}",
+    "ficha_id": "{9f9f50e5-d309-4af6-8bfc-3f7e85a306da}",
+    "tipo_cultivo": "CEBOLLA",
+    "superficie_m2": 1000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 1936.42
+  },
+  {
+    "id_cultivo": "{7ca5258e-bf98-4f38-bf19-92b846ee1cb1}",
+    "ficha_id": "{9f9f50e5-d309-4af6-8bfc-3f7e85a306da}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 936.42,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1936.42
+  },
+  {
+    "id_cultivo": "{3dcf60b2-a0c0-47a1-9632-332ed2fc94c4}",
+    "ficha_id": "{fa06775e-98c1-4d89-82fb-970ebe997a8d}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 6440.22,
+    "es_mercado": 1,
+    "ref_area_predio": 6440.22
+  },
+  {
+    "id_cultivo": "{aa711616-4103-4bbb-b099-0f3938cc738e}",
+    "ficha_id": "{1f5ab48c-9018-4ded-b62a-c6a63f8a7a46}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3015.6,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3015.6
+  },
+  {
+    "id_cultivo": "{1dc29c38-b612-49ad-893f-ed8cb40b1269}",
+    "ficha_id": "{c3e7fe89-ddb0-41bc-86b7-5ed8e253c8e1}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 299.99,
+    "es_mercado": 1,
+    "ref_area_predio": 299.99
+  },
+  {
+    "id_cultivo": "{4aaa803e-88e8-43e9-9804-8d09499f08e6}",
+    "ficha_id": "{40f332e0-977f-4dc6-bc2d-e0389034cc68}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 571.53,
+    "es_mercado": 1,
+    "ref_area_predio": 571.53
+  },
+  {
+    "id_cultivo": "{9a56c5ae-12eb-4ea4-9d66-c725f735284e}",
+    "ficha_id": "{66e665d7-0628-4874-ba99-db190e7939d4}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2400.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3339.5
+  },
+  {
+    "id_cultivo": "{5c5e4619-e22b-4dcb-b9e0-03b666756dbf}",
+    "ficha_id": "{66e665d7-0628-4874-ba99-db190e7939d4}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 350.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3339.5
+  },
+  {
+    "id_cultivo": "{29c45ca2-45b9-46e9-9139-cd52375a59da}",
+    "ficha_id": "{66e665d7-0628-4874-ba99-db190e7939d4}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 589.5,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3339.5
+  },
+  {
+    "id_cultivo": "{79d93a9b-5388-47cd-9f77-04d90723bf0e}",
+    "ficha_id": "{36dc4944-e083-41b0-b13f-00b2366cc374}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 381.16,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 381.16
+  },
+  {
+    "id_cultivo": "{2058ba48-6aa9-482d-903d-23f103e3dda3}",
+    "ficha_id": "{3f5544e6-3045-44b6-af35-8ab7330afc44}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 76.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 76.0
+  },
+  {
+    "id_cultivo": "{67f97a94-0aa5-49df-87d6-f93006de0838}",
+    "ficha_id": "{25039bf9-9076-4b1b-918e-902392cb52c4}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 864.45,
+    "es_mercado": 1,
+    "ref_area_predio": 864.45
+  },
+  {
+    "id_cultivo": "{1a5d4f53-e96b-43c1-a976-7dd5d43941e9}",
+    "ficha_id": "{0dd47f2a-22bf-4261-9c4f-8d382127f984}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 8437.81,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 8437.81
+  },
+  {
+    "id_cultivo": "{514553b5-a11a-4d27-ac93-41297306637a}",
+    "ficha_id": "{3a6639ff-190f-4c33-99d9-59d4ecf1a418}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 4488.99
+  },
+  {
+    "id_cultivo": "{bbae5b3d-cf66-43e9-9b03-ae39bc77a358}",
+    "ficha_id": "{3a6639ff-190f-4c33-99d9-59d4ecf1a418}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2488.99,
+    "es_mercado": 1,
+    "ref_area_predio": 4488.99
+  },
+  {
+    "id_cultivo": "{c67a95ac-49c8-415e-8d47-ff9b5aa4aa32}",
+    "ficha_id": "{7c1f1f7d-1198-4c7a-acb8-83b47960bef5}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2449.23,
+    "es_mercado": 1,
+    "ref_area_predio": 2449.23
+  },
+  {
+    "id_cultivo": "{21623a4c-04c9-4367-ab8a-061dd11696ef}",
+    "ficha_id": "{b5b0320e-e581-412a-aeef-8bd210205cab}",
+    "tipo_cultivo": "Cebolla",
+    "superficie_m2": 5000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 19679.46
+  },
+  {
+    "id_cultivo": "{f41210c7-5cc4-47ff-aeb0-90280813c5f9}",
+    "ficha_id": "{b5b0320e-e581-412a-aeef-8bd210205cab}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 5000.0,
+    "es_mercado": 1,
+    "ref_area_predio": 19679.46
+  },
+  {
+    "id_cultivo": "{457c52ce-976c-480b-ad59-0f3ac4a5db63}",
+    "ficha_id": "{b5b0320e-e581-412a-aeef-8bd210205cab}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 9679.46,
+    "es_mercado": 1,
+    "tipo_cultivo_otro": "Alverja ",
+    "ref_area_predio": 19679.46
+  },
+  {
+    "id_cultivo": "{476ea791-9f20-4fa7-99eb-c21325c5553f}",
+    "ficha_id": "{9fcb5fcf-e0ee-4a86-af4a-b18a18be5205}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 614.87,
+    "es_mercado": 1,
+    "ref_area_predio": 614.87
+  },
+  {
+    "id_cultivo": "{092c406e-7907-48fd-8dc1-65f5fa9afad1}",
+    "ficha_id": "{d2b858b1-301c-4f7e-8969-dde2d0b3cedb}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 2500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 3585.12
+  },
+  {
+    "id_cultivo": "{63744679-ada3-4738-96de-19da22903647}",
+    "ficha_id": "{d2b858b1-301c-4f7e-8969-dde2d0b3cedb}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 3585.12
+  },
+  {
+    "id_cultivo": "{bbe5c274-9d3e-4ff8-a91d-480b850114c3}",
+    "ficha_id": "{d2b858b1-301c-4f7e-8969-dde2d0b3cedb}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 585.12,
+    "es_autoconsumo": 0,
+    "es_mercado": 1,
+    "ref_area_predio": 3585.12
+  },
+  {
+    "id_cultivo": "{a9d2c3ac-57ab-4df4-be21-fa892f37cc2a}",
+    "ficha_id": "{5ea133d1-9754-4c1c-b2c4-ad8919530e0c}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 3400.0,
+    "es_mercado": 1,
+    "ref_area_predio": 6826.14
+  },
+  {
+    "id_cultivo": "{dfa8be38-e406-4b38-ab3f-a25d69952538}",
+    "ficha_id": "{5ea133d1-9754-4c1c-b2c4-ad8919530e0c}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 3426.14,
+    "es_mercado": 1,
+    "ref_area_predio": 6826.14
+  },
+  {
+    "id_cultivo": "{9b2aaf1a-ed78-42b4-bbf7-18898724dcfd}",
+    "ficha_id": "{ffb3564a-0cb4-4f61-b085-500cdccccaa9}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2500.0,
+    "es_mercado": 1,
+    "ref_area_predio": 45347.72
+  },
+  {
+    "id_cultivo": "{7177acb8-d41a-42e6-82db-5d39df5a3316}",
+    "ficha_id": "{ffb3564a-0cb4-4f61-b085-500cdccccaa9}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 42847.72,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 45347.72
+  },
+  {
+    "id_cultivo": "{a5ac6ece-e32c-4ffe-bc51-1f4de06291b1}",
+    "ficha_id": "{0c117669-cd31-4db5-91d4-75bdbcff8f17}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 874.1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 874.1
+  },
+  {
+    "id_cultivo": "{7a41cf09-3735-4454-aa9f-17f8fcea06eb}",
+    "ficha_id": "{9991be50-fd78-47e4-8ada-3c3916b8ecba}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1486.28,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1486.28
+  },
+  {
+    "id_cultivo": "{691a76d5-6813-49bc-99b9-41ee2826acc5}",
+    "ficha_id": "{91934fdc-1dae-4022-b936-b0f0326ce19f}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 11560.8,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 11560.8
+  },
+  {
+    "id_cultivo": "{5463d626-3d41-461d-b371-6361a65adef5}",
+    "ficha_id": "{71e6d2fe-00d1-4717-a3ac-12bffbc20e49}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 100.0,
+    "ref_area_predio": 240.77
+  },
+  {
+    "id_cultivo": "{6c707e90-c6b7-437b-b9d8-0813522d0628}",
+    "ficha_id": "{71e6d2fe-00d1-4717-a3ac-12bffbc20e49}",
+    "tipo_cultivo": "Habas",
+    "superficie_m2": 140.77,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 240.77
+  },
+  {
+    "id_cultivo": "{1d0b20af-593b-42b2-b55e-128db31abb74}",
+    "ficha_id": "{3011a8f9-d5c6-4268-bafe-4562641bf915}",
+    "tipo_cultivo": "PAPAS",
+    "superficie_m2": 1000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3552.17
+  },
+  {
+    "id_cultivo": "{466c4e67-2d33-4325-8878-395317dc3473}",
+    "ficha_id": "{3011a8f9-d5c6-4268-bafe-4562641bf915}",
+    "tipo_cultivo": "Cebada",
+    "superficie_m2": 800.0,
+    "ref_area_predio": 3552.17
+  },
+  {
+    "id_cultivo": "{31831a11-a805-4189-b0d1-6bb16ea6ff1e}",
+    "ficha_id": "{3011a8f9-d5c6-4268-bafe-4562641bf915}",
+    "tipo_cultivo": "TRIGO",
+    "superficie_m2": 800.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 3552.17
+  },
+  {
+    "id_cultivo": "{08484c6b-b761-486d-9e00-d9b9ef12d3e6}",
+    "ficha_id": "{3011a8f9-d5c6-4268-bafe-4562641bf915}",
+    "tipo_cultivo": "HABAS",
+    "superficie_m2": 952.17,
+    "es_mercado": 1,
+    "ref_area_predio": 3552.17
+  },
+  {
+    "id_cultivo": "{c18d2401-1a1e-418d-b110-233eaf1fabe2}",
+    "ficha_id": "{ee69c452-6168-45b6-a1a0-86135ded84f8}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 240.85,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 240.85
+  },
+  {
+    "id_cultivo": "{c7c6e994-ced1-4324-8933-e0f210e7a024}",
+    "ficha_id": "{e2c810b0-00d3-4dfa-8d47-146b04c8b2b1}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 472.76,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 472.76
+  },
+  {
+    "id_cultivo": "{2fc174c5-334b-4e03-b478-46e8f89c3833}",
+    "ficha_id": "{cce5216e-98eb-4211-90d5-ad1e0c37c4bc}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2171.1
+  },
+  {
+    "id_cultivo": "{6ce10236-b668-4502-9602-aa4d72fa4131}",
+    "ficha_id": "{cce5216e-98eb-4211-90d5-ad1e0c37c4bc}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2171.1
+  },
+  {
+    "id_cultivo": "{c986a33d-c6fb-4803-811c-29cfc8423bf8}",
+    "ficha_id": "{cce5216e-98eb-4211-90d5-ad1e0c37c4bc}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1171.1,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2171.1
+  },
+  {
+    "id_cultivo": "{ab7c4b54-4d0b-4f97-92fd-f16d9dabfea4}",
+    "ficha_id": "{54b8406f-bfa4-4ffe-94b2-2c29359eaa04}",
+    "tipo_cultivo": "CEBADA",
+    "superficie_m2": 700.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1231.28
+  },
+  {
+    "id_cultivo": "{d3329241-f1ff-48ee-877a-073fbd3e911b}",
+    "ficha_id": "{54b8406f-bfa4-4ffe-94b2-2c29359eaa04}",
+    "tipo_cultivo": "Trigo",
+    "superficie_m2": 300.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1231.28
+  },
+  {
+    "id_cultivo": "{92705a5e-f8b4-49b1-a096-b4a3b0772458}",
+    "ficha_id": "{54b8406f-bfa4-4ffe-94b2-2c29359eaa04}",
+    "tipo_cultivo": "Frijol",
+    "superficie_m2": 231.28,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1231.28
+  },
+  {
+    "id_cultivo": "{f070c9d1-a2b4-46e2-8bf4-9904ec842b6e}",
+    "ficha_id": "{594c4b95-efef-4ede-aba8-a6fe46cbc1a9}",
+    "tipo_cultivo": "PASTO NO MEJORADO",
+    "superficie_m2": 3536.21,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3536.21
+  },
+  {
+    "id_cultivo": "{3ae160df-2e64-494b-bd7d-9bc742279444}",
+    "ficha_id": "{d24c434e-e87c-4291-9536-4728e60746f0}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3554.23,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3554.23
+  },
+  {
+    "id_cultivo": "{021daa05-1910-41dd-8229-1af08996efcc}",
+    "ficha_id": "{3c0c2744-ea49-4b0d-9411-4d364dff7bb2}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 3178.81,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 3178.81
+  },
+  {
+    "id_cultivo": "{90f5b11d-1134-48b6-b30e-416676b7475a}",
+    "ficha_id": "{bb51f2b1-d434-46ff-905d-01543704ea5e}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 2132.23
+  },
+  {
+    "id_cultivo": "{f22328a2-fb99-4de5-bd7f-3f1b70d1d142}",
+    "ficha_id": "{bb51f2b1-d434-46ff-905d-01543704ea5e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 132.23,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2132.23
+  },
+  {
+    "id_cultivo": "{49e83a53-68f9-4f76-8c88-2a09bc840464}",
+    "ficha_id": "{a1b9bd42-58ad-48b7-93b7-d5a5b969820e}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 2000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 24628.78
+  },
+  {
+    "id_cultivo": "{99613348-875c-4b7b-b568-83bc5d6945a4}",
+    "ficha_id": "{a1b9bd42-58ad-48b7-93b7-d5a5b969820e}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "es_mercado": 1,
+    "ref_area_predio": 24628.78
+  },
+  {
+    "id_cultivo": "{a7bad003-d8c1-4179-a3e0-168bc32cbc76}",
+    "ficha_id": "{a1b9bd42-58ad-48b7-93b7-d5a5b969820e}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 2000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 24628.78
+  },
+  {
+    "id_cultivo": "{0b451cbe-6092-4d30-b74a-a4fcf55d4d33}",
+    "ficha_id": "{a1b9bd42-58ad-48b7-93b7-d5a5b969820e}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 18628.78,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 24628.78
   }
 ]

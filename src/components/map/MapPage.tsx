@@ -111,8 +111,12 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
           <div className="mt-3 pt-2 border-t space-y-1.5" style={{ borderColor: 'var(--border-color)' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Capas</p>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-2 rounded-sm border border-orange-400/60" style={{ background: 'rgba(249,115,22,0.15)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Catastro investigado</span>
+              <div className="w-3 h-2 rounded-sm border border-orange-400/60" style={{ background: 'rgba(249,115,22,0.35)' }} />
+              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio investigado (ficha principal)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-2 rounded-sm border border-blue-500/60" style={{ background: 'rgba(59,130,246,0.35)' }} />
+              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (unificado)</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-5 h-0.5 rounded" style={{ background: '#38bdf8' }} />
@@ -512,7 +516,15 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
 }
 
 // ── Marcador de ficha ──
-function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, number] }) {
+function FichaMarker({ ficha, coords, madre, hijas, onIrAFicha }: {
+  ficha: FichaPredio;
+  coords: [number, number];
+  /** v4.6: ficha madre resuelta (solo para fichas adicionales) */
+  madre?: FichaPredio;
+  /** v4.6: predios adicionales que declaró este regante (solo fichas principales) */
+  hijas?: FichaPredio[];
+  onIrAFicha?: (f: FichaPredio) => void;
+}) {
   const markerRef = useRef<LeafletCircleMarker | null>(null);
   const { selectedFichaMap } = useMapNav();
   const isSelected = selectedFichaMap?.id === ficha.id;
@@ -564,9 +576,61 @@ function FichaMarker({ ficha, coords }: { ficha: FichaPredio; coords: [number, n
                 : '✅ FICHA ADICIONAL — Completada'}
             </div>
           )}
+          {/* v4.6: vínculo con el regante principal (ficha madre) */}
+          {esFichaHija(ficha) && madre && (
+            <div className="rounded border border-blue-200 bg-blue-50 px-2 py-1.5 mb-1">
+              <div className="text-[9px] font-semibold uppercase tracking-wider text-blue-500 mb-0.5">
+                Regante principal (ficha madre)
+              </div>
+              <div className="text-[11px] font-semibold text-blue-900 leading-tight">
+                {madre.propietario || `${madre.apellidos || ''} ${madre.nombres || ''}`.trim() || madre.codigo_final}
+              </div>
+              {madre.clave_catastral && (
+                <div className="font-mono text-[10px] text-blue-700">
+                  Clave: {madre.clave_catastral}
+                </div>
+              )}
+              <button
+                onClick={(e) => { e.stopPropagation(); onIrAFicha?.(madre); }}
+                className="mt-1 w-full px-2 py-1 rounded bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold cursor-pointer"
+              >
+                📍 Ir al predio principal
+              </button>
+            </div>
+          )}
+          {/* v4.6: navegación inversa — otros predios declarados por este regante */}
+          {!esFichaHija(ficha) && hijas && hijas.length > 0 && (
+            <div className="rounded border border-blue-200 bg-blue-50 px-2 py-1.5 mb-1">
+              <div className="text-[9px] font-semibold uppercase tracking-wider text-blue-500 mb-1">
+                Otros predios declarados ({hijas.length})
+              </div>
+              <div className="space-y-1 max-h-[112px] overflow-y-auto pr-0.5">
+                {hijas.map((h, i) => (
+                  <button
+                    key={h.id}
+                    onClick={(e) => { e.stopPropagation(); onIrAFicha?.(h); }}
+                    className="w-full flex items-center justify-between gap-2 px-1.5 py-1 rounded border border-blue-200 bg-white hover:bg-blue-100 cursor-pointer text-left"
+                    title="Ver este predio en el mapa"
+                  >
+                    <span className="text-[10px] text-blue-900 truncate">
+                      {i + 1}. {h.comunidad || h.sector || h.codigo_final}
+                      {h.area_total ? ` — ${Math.round(h.area_total).toLocaleString('es-EC')} m²` : ''}
+                    </span>
+                    <span className="shrink-0 text-[9px]">
+                      {esHijaPendiente(h) ? '⚪' : '✅'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              <div className="text-[8px] text-blue-600 mt-1">
+                Declarados en la Sección 7 · clic para ubicarlos
+              </div>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
             {([
               ['Código', ficha.codigo_final],
+              ['Clave catastral', ficha.clave_catastral || ficha.cod_poligono],
               ['Cédula', ficha.cedula],
               ['Parroquia', ficha.parroquia],
               ['Sector', ficha.sector],
@@ -639,7 +703,7 @@ function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
 // ══════════════════════════════════════════════════════════════
 
 export default function MapPage({ fichas, loading, allFichas, cultivosData = [], animalesData = [] }: Props) {
-  const { selectedFichaMap, clearMapSelection } = useMapNav();
+  const { selectedFichaMap, navigateToFichaMap, clearMapSelection } = useMapNav();
 
   // ── v4.4: Índices en memoria para la Tarjeta de Predio ──
   // Se calculan una sola vez por cambio de datos; el clic sobre cualquiera de
@@ -658,6 +722,48 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
       arr.sort((a, b) => Number(esFichaHija(a)) - Number(esFichaHija(b)));
     }
     return m;
+  }, [fichasBase]);
+
+  // v4.6: índice id → ficha (para resolver la ficha madre de una adicional)
+  const fichasPorId = useMemo(() => {
+    const m = new Map<string, FichaPredio>();
+    for (const f of fichasBase) m.set(f.id, f);
+    return m;
+  }, [fichasBase]);
+
+  // v4.6: índice madre → predios adicionales que declaró (navegación inversa)
+  const hijasPorMadre = useMemo(() => {
+    const m = new Map<string, FichaPredio[]>();
+    for (const f of fichasBase) {
+      if (!esFichaHija(f) || !f.ficha_madre_id) continue;
+      const arr = m.get(f.ficha_madre_id);
+      if (arr) arr.push(f); else m.set(f.ficha_madre_id, [f]);
+    }
+    return m;
+  }, [fichasBase]);
+
+  // v4.6: simbología igual a QGIS — un polígono es "Predio Adicional" (AZUL)
+  // cuando TODAS sus fichas son adicionales; si tiene al menos una ficha
+  // principal (incluye los predios mixtos) se pinta TOMATE.
+  const clavesSoloAdicionales = useMemo(() => {
+    const comp = new Map<string, { hija: boolean; principal: boolean }>();
+    for (const f of fichasBase) {
+      const claves = new Set(
+        [f.clave_catastral, f.cod_poligono]
+          .map((c) => String(c || '').trim())
+          .filter(Boolean)
+      );
+      for (const clave of claves) {
+        const c = comp.get(clave) || { hija: false, principal: false };
+        if (esFichaHija(f)) c.hija = true; else c.principal = true;
+        comp.set(clave, c);
+      }
+    }
+    const s = new Set<string>();
+    for (const [clave, c] of comp) {
+      if (c.hija && !c.principal) s.add(clave);
+    }
+    return s;
   }, [fichasBase]);
 
   const cultivosPorFicha = useMemo(() => {
@@ -900,13 +1006,20 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           {catastroData && catastroData.features.length > 0 && (
             <LayersControl.Overlay checked name="Catastro Rural">
               <GeoJSON
+                key={`catastro-${clavesSoloAdicionales.size}`}
                 data={catastroData}
                 style={(feature) => {
                   const isHighlighted = searchTarget &&
                     feature?.properties?.clave_cata === searchTarget.clave_cata;
-                  return isHighlighted
-                    ? { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.50, opacity: 1 }
-                    : { color: '#ea580c', weight: 1.5, fillColor: '#f97316', fillOpacity: 0.35, opacity: 0.85 };
+                  if (isHighlighted) {
+                    return { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.50, opacity: 1 };
+                  }
+                  // v4.6: simbología QGIS — azul si el predio solo tiene fichas adicionales
+                  const clave = String(feature?.properties?.clave_cata || '').trim();
+                  if (clavesSoloAdicionales.has(clave)) {
+                    return { color: '#2563eb', weight: 1.5, fillColor: '#3b82f6', fillOpacity: 0.35, opacity: 0.85 };
+                  }
+                  return { color: '#ea580c', weight: 1.5, fillColor: '#f97316', fillOpacity: 0.35, opacity: 0.85 };
                 }}
                 onEachFeature={(feature, layer) => {
                   const p = feature.properties;
@@ -1075,7 +1188,19 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
           if (currentZoom < 13 && selectedFichaMap?.id !== ficha.id) return null;
           if (!showHijasPendientes && esHijaPendiente(ficha) && selectedFichaMap?.id !== ficha.id) return null;
-          return <FichaMarker key={ficha.id} ficha={ficha} coords={getCoords(ficha)} />;
+          const madre = esFichaHija(ficha) && ficha.ficha_madre_id
+            ? fichasPorId.get(ficha.ficha_madre_id)
+            : undefined;
+          return (
+            <FichaMarker
+              key={ficha.id}
+              ficha={ficha}
+              coords={getCoords(ficha)}
+              madre={madre}
+              hijas={hijasPorMadre.get(ficha.id)}
+              onIrAFicha={navigateToFichaMap}
+            />
+          );
         })}
 
 
@@ -1099,9 +1224,18 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                   `<b>${p.apellidos || ''} ${p.nombres || ''}</b><br/>
                    Clave: ${p.clave_cata || '—'}<br/>
                    Comunidad: ${p.comunidad || '—'}<br/>
-                   Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}`,
+                   Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}<br/>
+                   <span style="color:#3b82f6;font-size:10px">Clic para ver detalles</span>`,
                   { sticky: true, opacity: 0.95 }
                 );
+                // v4.6: el resaltado de búsqueda queda ENCIMA del polígono catastral
+                // e intercepta el clic — abrir también la Tarjeta de Predio desde aquí
+                layer.on('click', (e: LeafletMouseEvent) => {
+                  setPredioSeleccionado({
+                    props: p,
+                    latlng: [e.latlng.lat, e.latlng.lng],
+                  });
+                });
               }
             }}
           />
@@ -1163,6 +1297,9 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
               cultivosPorFicha={cultivosPorFicha}
               animalesPorFicha={animalesPorFicha}
               onVerFicha={(f) => setFichaModal(f)}
+              resolverMadre={(f) => (f.ficha_madre_id ? fichasPorId.get(f.ficha_madre_id) : undefined)}
+              resolverHijas={(f) => hijasPorMadre.get(f.id) || []}
+              onIrAMadre={(m) => { setPredioSeleccionado(null); navigateToFichaMap(m); }}
             />
           </Popup>
         )}
