@@ -32,6 +32,9 @@ export const TECNICOS: Record<string, { nombre: string; color: string }> = {
   'jvk-editor3': { nombre: 'Dylan Chavez', color: '#111111' },
   
   'u0_a200': { nombre: 'Melanie2', color: '#a855f7' },
+
+  // Melany Recalde — cuenta jvk-corp (antes caía en "Otro / Sin asignar")
+  'jvk-corp': { nombre: 'Melany Recalde', color: '#FF00FF' },
 };
 
 export function getNombreTecnico(username: string): string {

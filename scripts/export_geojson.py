@@ -1038,6 +1038,7 @@ MAPEO_TECNICOS = {
     'u0_a302': 'Dylan Chavez',
     'jvk-editor3': 'Dylan Chavez',
     'u0_a200': 'Melanie2',
+    'jvk-corp': 'Melany Recalde',
 }
 
 def _es_ficha_hija(props):

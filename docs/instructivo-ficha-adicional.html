@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Instructivo — Vincular ficha adicional al regante principal</title>
+<style>
+  @page { size: A4; margin: 14mm 15mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1a1a1a; margin: 0; line-height: 1.45; font-size: 10.5pt;
+  }
+  header {
+    border-bottom: 3px solid #1e4d8c; padding-bottom: 8px; margin-bottom: 14px;
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
+  }
+  h1 { font-size: 16pt; margin: 0 0 2px; color: #1e4d8c; }
+  .sub { font-size: 9pt; color: #555; margin: 0; }
+  .meta { font-size: 8pt; color: #777; text-align: right; white-space: nowrap; }
+
+  .cuando {
+    background: #f0f6ff; border-left: 4px solid #1e4d8c;
+    padding: 8px 12px; margin-bottom: 14px; font-size: 10pt;
+  }
+  .cuando b { color: #1e4d8c; }
+
+  ol.pasos { list-style: none; counter-reset: paso; padding: 0; margin: 0; }
+  ol.pasos > li {
+    counter-increment: paso; position: relative;
+    padding: 0 0 11px 34px; margin-bottom: 10px;
+    border-bottom: 1px dotted #ccc;
+  }
+  ol.pasos > li:last-child { border-bottom: none; }
+  ol.pasos > li::before {
+    content: counter(paso); position: absolute; left: 0; top: 0;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #1e4d8c; color: #fff; font-weight: 700; font-size: 12pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .titulo-paso { font-weight: 700; font-size: 11pt; display: block; margin-bottom: 2px; }
+  .campo {
+    display: inline-block; background: #eef2f7; border: 1px solid #c3d0e0;
+    border-radius: 3px; padding: 0 5px; font-family: Consolas, monospace;
+    font-size: 9.5pt; font-weight: 600;
+  }
+  .clave { background: #fff6d9; border-color: #e0c860; }
+
+  .aviso {
+    background: #fff8e6; border-left: 4px solid #e0a800;
+    padding: 6px 10px; margin-top: 6px; font-size: 9.5pt;
+  }
+  .aviso b { color: #8a6100; }
+
+  .verificar {
+    margin-top: 16px; border: 2px solid #1e4d8c; border-radius: 6px; padding: 10px 14px;
+    break-inside: avoid;
+  }
+  .verificar h2 { font-size: 11.5pt; margin: 0 0 8px; color: #1e4d8c; }
+  table.puntos { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+  table.puntos td { padding: 5px 6px; vertical-align: middle; border-bottom: 1px solid #e5e5e5; }
+  table.puntos tr:last-child td { border-bottom: none; }
+  .dot {
+    display: inline-block; width: 15px; height: 15px; border-radius: 50%;
+    vertical-align: middle; margin-right: 6px;
+  }
+  .d-blanco { background: #fff; border: 2px dashed #333; }
+  .d-color  { background: #00d000; border: 2px solid #2563eb; }
+  .d-mal    { background: #00d000; border: 2px solid #000; }
+
+  .problemas { margin-top: 14px; font-size: 9.5pt; break-inside: avoid; }
+  .problemas h2 { font-size: 11.5pt; margin: 0 0 6px; color: #1e4d8c; }
+  .problemas dt { font-weight: 700; margin-top: 6px; }
+  .problemas dd { margin: 1px 0 0 14px; }
+
+  footer {
+    margin-top: 16px; padding-top: 7px; border-top: 1px solid #ccc;
+    font-size: 8pt; color: #777; display: flex; justify-content: space-between;
+  }
+  @media print { body { font-size: 10pt; } .no-print { display: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Registrar un predio adicional de un regante</h1>
+    <p class="sub">Cómo crear la ficha y dejarla vinculada a su regante principal — QField</p>
+  </div>
+  <div class="meta">
+    Padrón Guanguilquí–Porotog<br>
+    Consorcio Cayambe SPT<br>
+    Julio 2026 · v1
+  </div>
+</header>
+
+<div class="cuando">
+  <b>¿Cuándo se usa?</b> Cuando un regante que ya tiene su ficha levantada menciona
+  <b>otro predio</b> que todavía no está registrado. Antes se anotaba la clave en observaciones;
+  ahora la ficha se crea y se vincula directamente desde QField.
+</div>
+
+<ol class="pasos">
+
+  <li>
+    <span class="titulo-paso">Verifica la comunidad</span>
+    La lista de reganes solo muestra los de <b>la misma comunidad</b> de la ficha que estás creando.
+    Usa la comunidad del <b>regante principal</b>.
+  </li>
+
+  <li>
+    <span class="titulo-paso">Crea la ficha sobre el predio nuevo</span>
+    Con la capa <span class="campo">Fichas_Predios</span> activa, toca <b>+</b> y coloca el punto
+    <b>sobre el predio nuevo</b>, no sobre el del regante principal.
+    <div class="aviso"><b>Importante:</b> cada predio adicional necesita su propia ubicación.
+    Si pones el punto en el mismo sitio, después no se puede encontrar en el mapa.</div>
+  </li>
+
+  <li>
+    <span class="titulo-paso">Llena los datos básicos</span>
+    Propietario, cédula, comunidad, <b>clave catastral del predio nuevo</b> y área.
+    Los mismos campos de siempre.
+  </li>
+
+  <li>
+    <span class="titulo-paso">Marca que es ficha adicional</span>
+    Activa la casilla <span class="campo clave">Es Ficha Hija</span>.
+    <div class="aviso"><b>Este paso es el más importante.</b> Si no lo marcas, la ficha se cuenta
+    como principal y el regante aparece dos veces en el padrón.</div>
+  </li>
+
+  <li>
+    <span class="titulo-paso">Elige al regante principal</span>
+    En el campo <span class="campo clave">ID de Ficha Madre</span> toca el desplegable.
+    Aparece la lista como <span class="campo">APELLIDOS NOMBRES — CI 1712345678</span>.
+    Puedes <b>escribir para filtrar</b> por apellido o cédula. Selecciona al regante.
+  </li>
+
+  <li>
+    <span class="titulo-paso">Define el estado</span>
+    Déjala en <span class="campo">⚪ Pendiente Producción (S4)</span> si vas a levantar los cultivos
+    después. Si ya cargas cultivos o animales ahí mismo, se marca como completada sola.
+  </li>
+
+  <li>
+    <span class="titulo-paso">Guarda y sincroniza</span>
+    Guarda la ficha y sincroniza con QFieldCloud cuando tengas señal.
+  </li>
+
+</ol>
+
+<div class="verificar">
+  <h2>Cómo saber que quedó bien</h2>
+  <table class="puntos">
+    <tr>
+      <td style="width:auto"><span class="dot d-blanco"></span></td>
+      <td><b>Blanco con borde discontinuo</b></td>
+      <td>Ficha adicional pendiente de producción. <b>Correcto.</b></td>
+    </tr>
+    <tr>
+      <td><span class="dot d-color"></span></td>
+      <td><b>Tu color con borde azul</b></td>
+      <td>Ficha adicional ya completada. <b>Correcto.</b></td>
+    </tr>
+    <tr>
+      <td><span class="dot d-mal"></span></td>
+      <td><b>Tu color con borde negro</b></td>
+      <td>Quedó como ficha <b>principal</b> → vuelve al paso 4.</td>
+    </tr>
+  </table>
+</div>
+
+<div class="problemas">
+  <h2>Si algo no sale</h2>
+  <dl>
+    <dt>El regante no aparece en la lista</dt>
+    <dd>Su ficha está registrada en otra comunidad. Anota el caso y repórtalo; no fuerces el dato.</dd>
+
+    <dt>El punto se queda blanco aunque cargué los cultivos</dt>
+    <dd>Ya está corregido en esta versión del proyecto. Si vuelve a pasar, avisa indicando el código de la ficha.</dd>
+
+    <dt>No veo el campo “ID de Ficha Madre”</dt>
+    <dd>Estás con el proyecto anterior. Sincroniza con QFieldCloud para recibir la versión nueva.</dd>
+  </dl>
+</div>
+
+<footer>
+  <span>Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog</span>
+  <span>Dudas: coordinación técnica</span>
+</footer>
+
+</body>
+</html>
