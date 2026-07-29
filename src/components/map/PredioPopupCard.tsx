@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Sprout, PawPrint, Ruler, FileText, MapPin } from 'lucide-react';
-import { type FichaPredio, type CultivoAgricola, type AnimalEspecie, esFichaHija, esHijaPendiente } from '../../lib/types';
+import { type FichaPredio, type CultivoAgricola, type AnimalEspecie, esFichaHija, esHijaPendiente, esLoteFraccionamiento } from '../../lib/types';
 import { getNombreTecnico } from '../../lib/constants';
 
 /**
@@ -194,6 +194,17 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
                 <MapPin className="w-3 h-3" /> Ir al predio
               </button>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* v4.6: lote de fraccionamiento — producción asignada, no levantada en campo */}
+      {esLoteFraccionamiento(ficha) && (
+        <div className="rounded-lg border border-amber-300 bg-amber-50 px-2 py-1.5 mb-2">
+          <div className="text-[10px] font-bold text-amber-800">📦 Lote de fraccionamiento</div>
+          <div className="text-[9px] text-amber-700 mt-0.5">
+            Digitalizado del plano comunal. La producción fue asignada por criterio
+            técnico y está pendiente de verificación en campo.
           </div>
         </div>
       )}

@@ -133,6 +133,22 @@ def main():
                     else 'Pendiente investigación'
                 )
 
+    # Claves catastrales que YA tienen ficha propia. Sirve para explicar los lotes
+    # adicionales sin ficha: muchos NO faltan por levantar, sino que el predio ya
+    # está registrado a nombre de otro regante (típico entre familiares que se
+    # declaran los predios entre sí). Sin esta distinción los técnicos salen a
+    # buscar en campo predios que ya están investigados.
+    claves_con_ficha_ppal = set()
+    claves_con_ficha_adic = set()
+    for _p in properties_list:
+        _k = str(_p.get('clave_catastral') or '').strip()
+        if not _k:
+            continue
+        if _p.get('es_ficha_hija') in (1, True):
+            claves_con_ficha_adic.add(_k)
+        else:
+            claves_con_ficha_ppal.add(_k)
+
     # El padrón lista REGANTES, no parcelas: las fichas adicionales (generadas
     # desde la Sección 7) ya aparecen en la pestaña "Lotes Adicionales" bajo su
     # regante, por lo que se excluyen del padrón para no duplicar registros.
@@ -534,12 +550,28 @@ def main():
             ws_predios.cell(row=r_idx, column=4, value=limpiar_texto(row['clave_catastral_otro']).upper()).alignment = align_center
             ws_predios.cell(row=r_idx, column=5, value=row['area_total_otro'] or 0.0).number_format = '#,##0.00'
 
-            # Estado de investigación del lote (ficha adicional generada desde la Sección 7)
-            estado_lote = "Sin ficha adicional"
+            # Estado de investigación del lote (ficha adicional generada desde la Sección 7).
+            # Si no tiene ficha adicional hay que decir POR QUÉ: en la mayoría de casos
+            # el predio ya está levantado a nombre de otro regante y NO falta trabajo.
             id_adic = str(row.get('ficha_hija_generada_id') or '').strip()
+            clave_lote = limpiar_texto(row['clave_catastral_otro']).upper().strip()
             if id_adic and id_adic in estados_adicionales:
                 estado_lote = estados_adicionales[id_adic]
-            ws_predios.cell(row=r_idx, column=6, value=estado_lote).alignment = align_center
+            elif not clave_lote:
+                estado_lote = "Declarado sin clave catastral"
+            elif clave_lote in claves_con_ficha_ppal:
+                estado_lote = "Ya investigado — ficha propia de otro regante"
+            elif clave_lote in claves_con_ficha_adic:
+                estado_lote = "Ya investigado — consta como lote de otro regante"
+            else:
+                estado_lote = "FALTA LEVANTAR"
+            celda_estado = ws_predios.cell(row=r_idx, column=6, value=estado_lote)
+            celda_estado.alignment = align_center
+            if estado_lote == "FALTA LEVANTAR":
+                celda_estado.font = Font(name='Calibri', size=10, bold=True, color="9C0006")
+                celda_estado.fill = PatternFill(start_color="FFC7CE", end_color="FFC7CE", fill_type="solid")
+            elif estado_lote.startswith("Ya investigado"):
+                celda_estado.font = Font(name='Calibri', size=10, color="375623")
 
             r_padron = padron_indices.get(f_id, 2)
             ret_cell = ws_predios.cell(row=r_idx, column=7, value="Volver")

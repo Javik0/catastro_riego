@@ -28,8 +28,9 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
     if (isTecnico) {
       return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas' || item.path === '/auditoria-hijas';
     }
-    // El admin puede ver todo; el cliente no ve encuestas ni el panel de fichas hijas
-    if (item.path === '/encuestas' || item.path === '/auditoria-hijas') {
+    // El cliente (Consorcio) solo consulta: Dashboard, Mapa y Fichas.
+    // Reportes, encuestas y el panel de fichas adicionales son de trabajo interno.
+    if (item.path === '/reportes' || item.path === '/encuestas' || item.path === '/auditoria-hijas') {
       return isAdmin;
     }
     return true;

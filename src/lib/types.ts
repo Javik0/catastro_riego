@@ -129,6 +129,16 @@ export function esHijaCompletada(f: FichaPredio): boolean {
   return esFichaHija(f) && f.estado_investigacion === 'completada';
 }
 
+// ── Lote de fraccionamiento (v4.6) ──
+// Los 490 lotes de ALPAKA se digitalizaron desde el plano de fraccionamiento
+// comunal, no de una entrevista en campo: su Sección 4 fue asignada por criterio
+// técnico. Se identifican por comunidad + código, NO por creado_por (ese usuario
+// tiene además cientos de fichas legítimas de otras comunidades).
+export function esLoteFraccionamiento(f: FichaPredio): boolean {
+  return (f.comunidad || '').trim().toUpperCase() === 'ALPAKA' &&
+    (f.codigo_final || '').trim().toUpperCase().startsWith('LOTE ');
+}
+
 // ── Cultivo Agrícola (tabla hija — 905+ registros) ──
 export interface CultivoAgricola {
   id_cultivo: string;

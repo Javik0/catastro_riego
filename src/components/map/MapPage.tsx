@@ -6,8 +6,8 @@ import {
 import L from 'leaflet';
 import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection, Geometry } from 'geojson';
-import { Loader2, MapPin, Eye, EyeOff, Search, X } from 'lucide-react';
-import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
+import { Loader2, MapPin, Eye, EyeOff, Search, X, Download } from 'lucide-react';
+import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
 import PredioPopupCard from './PredioPopupCard';
 import FichaDetailModal from '../fichas/FichaDetailModal';
@@ -49,17 +49,22 @@ const pulseIcon = L.divIcon({
 });
 
 // ── Leyenda ──────────────────────────────────────────────────────────
-function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, showHijas, onToggleHijas, totalHijasPendientes }: {
+function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, totalHijasPendientes, tecnicosOcultos, onToggleTecnico, onTodosTecnicos, conteoPorTecnico }: {
   showAll: boolean;
   onToggleAll: () => void;
   allLoaded: boolean;
-  showOtros: boolean;
-  onToggleOtros: () => void;
   showHijas: boolean;
   onToggleHijas: () => void;
   totalHijasPendientes: number;
+  /** v4.6: técnicos cuyos puntos están apagados */
+  tecnicosOcultos: Set<string>;
+  onToggleTecnico: (nombre: string) => void;
+  onTodosTecnicos: (visibles: boolean) => void;
+  conteoPorTecnico: Map<string, number>;
 }) {
   const [show, setShow] = useState(true);
+  const nombres = Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre))).sort();
+  const algunoOculto = tecnicosOcultos.size > 0;
   return (
     <div className="absolute bottom-4 right-4 z-[1000]">
       <button
@@ -72,20 +77,46 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
       {show && (
         <div className="rounded-lg border p-3 max-w-[210px] shadow-lg"
           style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
-          <p className="text-[10px] font-semibold mb-2 uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Técnicos</p>
+          {/* v4.6: cada técnico se puede apagar y prender */}
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Técnicos</p>
+            <button
+              onClick={() => onTodosTecnicos(algunoOculto)}
+              className="text-[9px] px-1.5 py-0.5 rounded border cursor-pointer hover:brightness-125"
+              style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+              title={algunoOculto ? 'Mostrar todos los técnicos' : 'Ocultar todos los técnicos'}
+            >
+              {algunoOculto ? 'Todos' : 'Ninguno'}
+            </button>
+          </div>
           <div className="space-y-1.5">
-            {Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre)))
-              .sort()
-              .map((nombre) => {
-                const tec = Object.values(TECNICOS).find((t) => t.nombre === nombre);
-                if (!tec) return null;
-                return (
-                  <div key={nombre} className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full shrink-0 border border-white/20" style={{ background: tec.color }} />
-                    <span className="text-[10px] truncate" style={{ color: 'var(--text-secondary)' }}>{nombre}</span>
-                  </div>
-                );
-              })}
+            {nombres.map((nombre) => {
+              const tec = Object.values(TECNICOS).find((t) => t.nombre === nombre);
+              if (!tec) return null;
+              const visible = !tecnicosOcultos.has(nombre);
+              const n = conteoPorTecnico.get(nombre) || 0;
+              return (
+                <label key={nombre} className="flex items-center gap-2 cursor-pointer"
+                  title={`${n.toLocaleString('es-EC')} fichas — clic para ${visible ? 'ocultar' : 'mostrar'}`}>
+                  <input
+                    type="checkbox"
+                    checked={visible}
+                    onChange={() => onToggleTecnico(nombre)}
+                    className="w-3 h-3 rounded cursor-pointer shrink-0"
+                    style={{ accentColor: tec.color }}
+                  />
+                  <div className="w-3 h-3 rounded-full shrink-0 border border-white/20"
+                    style={{ background: tec.color, opacity: visible ? 1 : 0.25 }} />
+                  <span className="text-[10px] truncate flex-1"
+                    style={{ color: 'var(--text-secondary)', opacity: visible ? 1 : 0.45 }}>{nombre}</span>
+                  {n > 0 && (
+                    <span className="text-[8px] shrink-0" style={{ color: 'var(--text-muted)', opacity: visible ? 1 : 0.45 }}>
+                      {n.toLocaleString('es-EC')}
+                    </span>
+                  )}
+                </label>
+              );
+            })}
           </div>
           {totalHijasPendientes > 0 && (
             <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
@@ -116,28 +147,16 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showOtros, onToggleOtros, 
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-2 rounded-sm border border-blue-500/60" style={{ background: 'rgba(59,130,246,0.35)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (unificado)</span>
+              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (investigado)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-2 rounded-sm" style={{ background: 'rgba(125,211,252,0.45)', border: '1px solid rgba(14,165,233,0.7)' }} />
+              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (pendiente S4)</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-5 h-0.5 rounded" style={{ background: '#38bdf8' }} />
               <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Canales de riego</span>
             </div>
-            <label className="flex items-center gap-2 cursor-pointer mt-1 pt-1 border-t" style={{ borderColor: 'var(--border-color)' }}>
-              <input
-                type="checkbox"
-                checked={showOtros}
-                onChange={onToggleOtros}
-                className="w-3 h-3 rounded accent-blue-400 cursor-pointer"
-              />
-              <div>
-                <span className="text-[10px] font-medium" style={{ color: showOtros ? '#3b82f6' : 'var(--text-secondary)' }}>
-                  Otros Predios del Regante
-                </span>
-                <span className="text-[8px] block" style={{ color: 'var(--text-muted)' }}>
-                  Polígonos adicionales del catastro
-                </span>
-              </div>
-            </label>
             {/* Toggle: Todos los predios */}
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -515,6 +534,79 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
   );
 }
 
+// ── Descarga de la entrega cartográfica (v4.6) ──────────────
+// Paquete con el GeoPackage y el proyecto QGIS listos para revisar. Se genera
+// con scripts/generar_gpkg_cliente.py + generar_proyecto_qgis_cliente.py.
+function DescargaGeoPackage() {
+  const [info, setInfo] = useState<{ mb: number; fecha: string } | null>(null);
+  const [abierto, setAbierto] = useState(false);
+
+  useEffect(() => {
+    fetch('/descargas/padron_riego_porotog.zip', { method: 'HEAD' })
+      .then((r) => {
+        if (!r.ok) return;
+        const len = Number(r.headers.get('content-length') || 0);
+        const mod = r.headers.get('last-modified');
+        setInfo({
+          mb: len ? len / (1024 * 1024) : 0,
+          fecha: mod ? new Date(mod).toLocaleDateString('es-EC') : '',
+        });
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!info) return null;
+
+  return (
+    <div className="absolute top-3 right-16 z-[1000]">
+      <button
+        onClick={() => setAbierto(!abierto)}
+        className="flex items-center gap-1.5 px-3 py-2 rounded-lg border shadow-lg backdrop-blur-md text-xs font-medium cursor-pointer hover:brightness-110 transition-all"
+        style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+        title="Descargar la cartografía para revisarla en QGIS"
+      >
+        <Download className="w-3.5 h-3.5 text-emerald-400" />
+        QGIS
+      </button>
+
+      {abierto && (
+        <div className="absolute right-0 mt-1 w-[290px] rounded-lg border shadow-xl p-3"
+          style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
+          <p className="text-xs font-bold mb-1" style={{ color: 'var(--text-primary)' }}>
+            Entrega cartográfica
+          </p>
+          <p className="text-[10px] leading-relaxed mb-2" style={{ color: 'var(--text-muted)' }}>
+            Predios con la información de las fichas incorporada, listos para abrir en
+            QGIS con su simbología. Incluye el catastro completo, comunidades, sectores
+            y canales de riego.
+          </p>
+          <div className="text-[10px] mb-2 space-y-0.5" style={{ color: 'var(--text-secondary)' }}>
+            <div className="flex justify-between"><span className="opacity-60">Formato:</span><span>GeoPackage + proyecto QGIS</span></div>
+            <div className="flex justify-between"><span className="opacity-60">Sistema:</span><span>UTM 17S (EPSG:32717)</span></div>
+            {info.mb > 0 && (
+              <div className="flex justify-between"><span className="opacity-60">Tamaño:</span><span>{info.mb.toFixed(1)} MB</span></div>
+            )}
+            {info.fecha && (
+              <div className="flex justify-between"><span className="opacity-60">Actualizado:</span><span>{info.fecha}</span></div>
+            )}
+          </div>
+          <a
+            href="/descargas/padron_riego_porotog.zip"
+            download
+            onClick={() => setAbierto(false)}
+            className="flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold cursor-pointer"
+          >
+            <Download className="w-3.5 h-3.5" /> Descargar paquete
+          </a>
+          <p className="text-[9px] mt-1.5 text-center" style={{ color: 'var(--text-muted)' }}>
+            Descomprimir y abrir el archivo .qgz
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Marcador de ficha ──
 function FichaMarker({ ficha, coords, madre, hijas, onIrAFicha }: {
   ficha: FichaPredio;
@@ -596,6 +688,15 @@ function FichaMarker({ ficha, coords, madre, hijas, onIrAFicha }: {
               >
                 📍 Ir al predio principal
               </button>
+            </div>
+          )}
+          {/* v4.6: lote de fraccionamiento — producción asignada, no levantada */}
+          {esLoteFraccionamiento(ficha) && (
+            <div className="px-2 py-1 rounded text-[10px] font-bold mb-1 bg-amber-100 text-amber-800">
+              📦 LOTE DE FRACCIONAMIENTO
+              <span className="block font-normal text-[9px] mt-0.5">
+                Producción asignada por criterio técnico — verificar en campo
+              </span>
             </div>
           )}
           {/* v4.6: navegación inversa — otros predios declarados por este regante */}
@@ -742,11 +843,14 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     return m;
   }, [fichasBase]);
 
-  // v4.6: simbología igual a QGIS — un polígono es "Predio Adicional" (AZUL)
-  // cuando TODAS sus fichas son adicionales; si tiene al menos una ficha
-  // principal (incluye los predios mixtos) se pinta TOMATE.
-  const clavesSoloAdicionales = useMemo(() => {
-    const comp = new Map<string, { hija: boolean; principal: boolean }>();
+  // v4.6: simbología de predios, igual que QGIS.
+  //   TOMATE  → tiene al menos una ficha principal (incluye los predios mixtos)
+  //   AZUL    → solo fichas adicionales, todas completadas
+  //   CELESTE → solo fichas adicionales y alguna sigue pendiente de Sección 4
+  // En los predios con varias adicionales manda lo pendiente: si queda trabajo
+  // por hacer el predio no debe leerse como cerrado.
+  const estadoPorClave = useMemo(() => {
+    const comp = new Map<string, { principal: boolean; pendiente: boolean; completada: boolean }>();
     for (const f of fichasBase) {
       const claves = new Set(
         [f.clave_catastral, f.cod_poligono]
@@ -754,16 +858,20 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           .filter(Boolean)
       );
       for (const clave of claves) {
-        const c = comp.get(clave) || { hija: false, principal: false };
-        if (esFichaHija(f)) c.hija = true; else c.principal = true;
+        const c = comp.get(clave) || { principal: false, pendiente: false, completada: false };
+        if (!esFichaHija(f)) c.principal = true;
+        else if (esHijaPendiente(f)) c.pendiente = true;
+        else c.completada = true;
         comp.set(clave, c);
       }
     }
-    const s = new Set<string>();
+    const m = new Map<string, 'azul' | 'celeste'>();
     for (const [clave, c] of comp) {
-      if (c.hija && !c.principal) s.add(clave);
+      if (c.principal) continue;              // tomate
+      if (c.pendiente) m.set(clave, 'celeste');
+      else if (c.completada) m.set(clave, 'azul');
     }
-    return s;
+    return m;
   }, [fichasBase]);
 
   const cultivosPorFicha = useMemo(() => {
@@ -838,8 +946,9 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   const [poligonosLoaded, setPoligonosLoaded] = useState(false);
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
-  const [showOtrosPredios, setShowOtrosPredios] = useState(true); // Visible por defecto
   const [showHijasPendientes, setShowHijasPendientes] = useState(true); // Fichas hijas ⚪ visibles por defecto
+  // v4.6: técnicos apagados desde la leyenda (por nombre, no por usuario)
+  const [tecnicosOcultos, setTecnicosOcultos] = useState<Set<string>>(new Set());
   const [currentZoom, setCurrentZoom] = useState(13);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
@@ -930,6 +1039,34 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     setSearchTarget(item);
   }, []);
 
+  // v4.6: apagar/prender los puntos de cada investigador
+  const toggleTecnico = useCallback((nombre: string) => {
+    setTecnicosOcultos((prev) => {
+      const s = new Set(prev);
+      if (s.has(nombre)) s.delete(nombre); else s.add(nombre);
+      return s;
+    });
+  }, []);
+
+  const todosTecnicos = useCallback((visibles: boolean) => {
+    setTecnicosOcultos(visibles
+      ? new Set()
+      : new Set(Object.values(TECNICOS).map((t) => t.nombre)));
+  }, []);
+
+  // El color del punto sigue al técnico que completó la S4 en las hijas
+  const tecnicoDeFicha = useCallback((f: FichaPredio) =>
+    getNombreTecnico((esFichaHija(f) && f.completado_por) || f.creado_por), []);
+
+  const conteoPorTecnico = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const f of fichas) {
+      const n = tecnicoDeFicha(f);
+      m.set(n, (m.get(n) || 0) + 1);
+    }
+    return m;
+  }, [fichas, tecnicoDeFicha]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-180px)]">
@@ -984,6 +1121,9 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
       {/* Buscador de predios catastrales */}
       <MapSearchBar onSelect={handleSearchSelect} />
 
+      {/* v4.6: entrega cartográfica para revisar en QGIS */}
+      <DescargaGeoPackage />
+
       <MapContainer center={[0.04, -78.15]} zoom={14} className="h-full w-full">
         {/* ── Basemaps ── */}
         <LayersControl position="topright">
@@ -1006,7 +1146,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           {catastroData && catastroData.features.length > 0 && (
             <LayersControl.Overlay checked name="Catastro Rural">
               <GeoJSON
-                key={`catastro-${clavesSoloAdicionales.size}`}
+                key={`catastro-${estadoPorClave.size}`}
                 data={catastroData}
                 style={(feature) => {
                   const isHighlighted = searchTarget &&
@@ -1014,9 +1154,13 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                   if (isHighlighted) {
                     return { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.50, opacity: 1 };
                   }
-                  // v4.6: simbología QGIS — azul si el predio solo tiene fichas adicionales
+                  // v4.6: simbología QGIS — azul/celeste según el estado de las adicionales
                   const clave = String(feature?.properties?.clave_cata || '').trim();
-                  if (clavesSoloAdicionales.has(clave)) {
+                  const est = estadoPorClave.get(clave);
+                  if (est === 'celeste') {
+                    return { color: '#0ea5e9', weight: 1.5, fillColor: '#7dd3fc', fillOpacity: 0.35, opacity: 0.85 };
+                  }
+                  if (est === 'azul') {
                     return { color: '#2563eb', weight: 1.5, fillColor: '#3b82f6', fillOpacity: 0.35, opacity: 0.85 };
                   }
                   return { color: '#ea580c', weight: 1.5, fillColor: '#f97316', fillOpacity: 0.35, opacity: 0.85 };
@@ -1188,6 +1332,8 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
           if (currentZoom < 13 && selectedFichaMap?.id !== ficha.id) return null;
           if (!showHijasPendientes && esHijaPendiente(ficha) && selectedFichaMap?.id !== ficha.id) return null;
+          // v4.6: técnico apagado en la leyenda (la ficha seleccionada siempre se ve)
+          if (tecnicosOcultos.has(tecnicoDeFicha(ficha)) && selectedFichaMap?.id !== ficha.id) return null;
           const madre = esFichaHija(ficha) && ficha.ficha_madre_id
             ? fichasPorId.get(ficha.ficha_madre_id)
             : undefined;
@@ -1275,11 +1421,13 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           showAll={showAllCatastro}
           onToggleAll={() => setShowAllCatastro(!showAllCatastro)}
           allLoaded={poligonosLoaded}
-          showOtros={showOtrosPredios}
-          onToggleOtros={() => setShowOtrosPredios(!showOtrosPredios)}
           showHijas={showHijasPendientes}
           onToggleHijas={() => setShowHijasPendientes(!showHijasPendientes)}
           totalHijasPendientes={fichas.filter(esHijaPendiente).length}
+          tecnicosOcultos={tecnicosOcultos}
+          onToggleTecnico={toggleTecnico}
+          onTodosTecnicos={todosTecnicos}
+          conteoPorTecnico={conteoPorTecnico}
         />
         <MouseCoordinates />
 

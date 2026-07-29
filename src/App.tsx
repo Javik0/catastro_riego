@@ -310,10 +310,12 @@ export default function App() {
                     </RoleProtectedRoute>
                   }
                 />
+                {/* Reportes y composición cartográfica son herramientas de trabajo
+                    interno: el cliente (Consorcio) no accede ni escribiendo la URL */}
                 <Route
                   path="reportes"
                   element={
-                    <RoleProtectedRoute allowedRoles={['admin', 'cliente']}>
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
                       <FilteredDataProvider>
                         {({ fichas, allFichas, cultivosData, animalesData, prediosAdicionalesData, loading }) => (
                           <ReportesPage
@@ -356,7 +358,7 @@ export default function App() {
                 path="/mapa/impresion"
                 element={
                   <ProtectedRoute>
-                    <RoleProtectedRoute allowedRoles={['admin', 'cliente', 'tecnico']}>
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
                       <FilteredDataProvider>
                         {({ fichas, loading }) => (
                           <MapPrintComposerPage fichas={fichas} loading={loading} />

@@ -14,7 +14,7 @@ interface Props {
 export default function Header({ onMobileMenuOpen }: Props) {
   const { filtros, setFiltro, resetFiltros, hasActiveFilters } = useFiltros();
   const { toggleTheme, isDark } = useTheme();
-  const { logout } = useAuth();
+  const { logout, isCliente } = useAuth();
   const location = useLocation();
   const { fichas: allFichas } = useData();
 
@@ -179,7 +179,8 @@ export default function Header({ onMobileMenuOpen }: Props) {
           </button>
         )}
 
-        {location.pathname === '/mapa' && (
+        {/* La composición cartográfica es herramienta de trabajo: el cliente no la ve */}
+        {location.pathname === '/mapa' && !isCliente && (
           <button
             onClick={() => window.open('/mapa/impresion', '_blank')}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-emerald-400 border border-emerald-500/20 bg-emerald-500/10 hover:bg-emerald-500/20 hover:scale-[1.02] transition-all cursor-pointer shrink-0 font-medium ml-auto shadow-sm"

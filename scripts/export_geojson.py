@@ -977,6 +977,21 @@ def export_tablas_hijas():
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     all_tables = [t[0] for t in cursor.fetchall()]
 
+    # ── Registros huérfanos ────────────────────────────────────────────
+    # Cuando un técnico borra una ficha en QField, sus cultivos y animales quedan
+    # en las tablas hijas apuntando a un ficha_id que ya no existe. Nadie los puede
+    # consultar, pero contaminan los denominadores: el dashboard mostraba
+    # "11.367 de 11.595 parcelas (98%)" cuando en realidad la cobertura es del 100%
+    # y esas 228 parcelas de diferencia son fantasmas.
+    # Se descartan aquí, en el origen, para que web, reportes y Excel coincidan.
+    fichas_table = next((t for t in all_tables if 'Fichas_Predios' in t
+                         and not any(x in t for x in ('gpkg_', 'rtree_', 'log_'))), None)
+    ids_validos = set()
+    if fichas_table:
+        cursor.execute(f'SELECT id FROM "{fichas_table}"')
+        ids_validos = {r[0] for r in cursor.fetchall() if r[0]}
+
+    total_descartados = 0
     for keyword, output_name in [('Cultivo','cultivos'), ('Animal','animales'), ('Predios_Adicionales','predios_adicionales')]:
         matched = [t for t in all_tables if keyword in t and not any(x in t for x in ('gpkg_','rtree_','log_'))]
         if not matched: print(f"  ⚠ No se encontró tabla para '{keyword}'"); continue
@@ -985,9 +1000,16 @@ def export_tablas_hijas():
         all_cols = [c[1] for c in cursor.fetchall()]
         cursor.execute(f'SELECT * FROM "{table}"')
         data = []
+        huerfanos = 0
         for row in cursor.fetchall():
             item = {all_cols[i]: row[i] for i in range(len(all_cols)) if all_cols[i] not in ('geom','fid_1') and row[i] is not None}
             if item:
+                # Descartar si su ficha ya no existe (o si nunca tuvo ficha_id:
+                # el diccionario omite los nulos, por eso puede faltar la clave)
+                if ids_validos and item.get('ficha_id') not in ids_validos:
+                    huerfanos += 1
+                    continue
+
                 # Regla de área con riego por defecto si está en 0 (normalización de datos)
                 if output_name == 'predios_adicionales':
                     ar = item.get('area_riego_otro')
@@ -1003,7 +1025,13 @@ def export_tablas_hijas():
         path = os.path.join(OUTPUT_DIR, f'{output_name}.json')
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
-        print(f"  ✓ {len(data)} {output_name} exportados desde QField (datos crudos)")
+        total_descartados += huerfanos
+        extra = f" ({huerfanos} descartados: su ficha ya no existe)" if huerfanos else ""
+        print(f"  ✓ {len(data)} {output_name} exportados desde QField{extra}")
+
+    if total_descartados:
+        print(f"  ℹ  {total_descartados} registros huérfanos excluidos. Siguen en el "
+              f"GeoPackage de QField; conviene depurarlos allí en algún momento.")
     conn.close()
 
 # ══════════════════════════════════════════════════════════════
