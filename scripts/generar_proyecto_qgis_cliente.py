@@ -55,8 +55,12 @@ CAPAS = [
     ('canales_riego', 'canales_lyr', 'Canales de riego', True),
     ('catastro_completo', 'catastro_lyr', 'Catastro rural completo', False),
 ]
+# La capa de fichas lleva punto GPS (una capa con geometría siempre carga bien y
+# de ella cuelga la pestaña "Fichas del predio"); va apagada porque el cliente
+# consulta por predio, no por punto.
+CAPAS.append(('fichas', 'fichas_lyr', 'Fichas de empadronamiento', False))
+
 TABLAS = [
-    ('fichas', 'fichas_lyr', 'Fichas de empadronamiento'),
     ('cultivos', 'cultivos_lyr', 'Cultivos (Sección 4)'),
     ('animales', 'animales_lyr', 'Especies pecuarias (Sección 4)'),
 ]
@@ -84,7 +88,72 @@ def estilo_de(cur, tabla):
     return qml[ini:fin + len('</renderer-v2>')] if ini >= 0 and fin > ini else ''
 
 
-def maplayer(tabla, lid, titulo, cols, renderer, geom=True, relaciones_tabs=''):
+# ── Diseño del formulario ─────────────────────────────────────────────
+# Los campos se agrupan en secciones con título en vez de caer en una lista
+# plana. Cada entrada es (título del grupo, columnas, [campos]).
+GRUPOS_PREDIO = [
+    ('Identificación del predio', 2,
+     ['clave_catastral', 'estado_predio', 'comunidad', 'sector_riego', 'parroquia']),
+    ('Propiedad', 1, ['propietarios', 'propietario_catastro']),
+    ('Fichas levantadas', 4,
+     ['total_fichas', 'fichas_principales', 'fichas_adicionales', 'adicionales_pendientes']),
+    ('Superficies y caudal', 2,
+     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_ls']),
+    ('Producción declarada', 1, ['cultivos_predio', 'animales_predio']),
+]
+
+GRUPOS_FICHA = [
+    ('Regante', 2,
+     ['apellidos', 'nombres', 'cedula', 'telefono_celular', 'telefono_casa',
+      'nivel_instruccion']),
+    ('Ubicación', 2,
+     ['codigo_predio', 'clave_catastral', 'parroquia', 'comunidad', 'sector',
+      'sector_comunidad', 'cota_msnm', 'tenencia_predio']),
+    ('Tipo de ficha', 2, ['tipo_ficha', 'estado_investigacion', 'regante_principal']),
+    ('Superficies', 3, ['area_total_m2', 'area_riego_m2', 'area_sin_riego_m2']),
+    ('Riego', 3,
+     ['canal', 'caudal_ls', 'caudal_tipo', 'frecuencia_riego', 'dias_riego',
+      'horas_turno', 'metodo_gravedad_pct', 'metodo_aspersion_pct', 'metodo_goteo_pct']),
+    ('Tarifa y servicios', 3,
+     ['valor_tarifa', 'tipo_tarifa', 'tiene_reservorio', 'agua_consumo',
+      'energia_electrica', 'material_construccion']),
+    ('Organización', 2, ['org_riego', 'actividad_productiva']),
+    ('Registro', 2, ['investigado_por', 'fecha_registro', 'foto_url', 'observaciones']),
+]
+
+
+def _grupos_xml(grupos, cols, sangria='          '):
+    """Convierte la definición de grupos en contenedores de QGIS."""
+    idx = {c: i for i, c in enumerate(cols)}
+    out = []
+    usados = set()
+    for titulo, ncols, campos in grupos:
+        presentes = [c for c in campos if c in idx]
+        if not presentes:
+            continue
+        usados.update(presentes)
+        campos_xml = "\n".join(
+            '{s}    <attributeEditorField index="{i}" name="{c}" showLabel="1"/>'.format(
+                s=sangria, i=idx[c], c=c) for c in presentes)
+        out.append(
+            '{s}  <attributeEditorContainer collapsed="0" columnCount="{n}" groupBox="1" '
+            'name="{t}" showLabel="1" visibilityExpressionEnabled="0">\n{f}\n'
+            '{s}  </attributeEditorContainer>'.format(
+                s=sangria, n=ncols, t=esc(titulo), f=campos_xml))
+    # cualquier campo no contemplado va a un grupo final, para no perderlo
+    resto = [c for c in cols if c not in usados]
+    if resto:
+        campos_xml = "\n".join(
+            '{s}    <attributeEditorField index="{i}" name="{c}" showLabel="1"/>'.format(
+                s=sangria, i=idx[c], c=c) for c in resto)
+        out.append(
+            '{s}  <attributeEditorContainer collapsed="1" columnCount="2" groupBox="1" '
+            'name="Otros datos" showLabel="1" visibilityExpressionEnabled="0">\n{f}\n'
+            '{s}  </attributeEditorContainer>'.format(s=sangria, f=campos_xml))
+    return "\n".join(out)
+
+
+def maplayer(tabla, lid, titulo, cols, renderer, geom='Polygon', relaciones_tabs='', grupos=None):
     campos_xml = "\n".join(
         '      <field configurationFlags="NoFlag" name="{}"><editWidget type="TextEdit">'
         '<config><Option/></config></editWidget></field>'.format(c) for c in cols)
@@ -94,20 +163,27 @@ def maplayer(tabla, lid, titulo, cols, renderer, geom=True, relaciones_tabs=''):
             c=c, i=i, n=esc(c.replace('_', ' ').capitalize()))
         for i, c in enumerate(cols))
 
-    if relaciones_tabs:
+    if relaciones_tabs or grupos:
         layout = 'tablayout'
-        editorlayout = ('    <attributeEditorForm>\n'
-                        '      <attributeEditorContainer collapsed="0" columnCount="1" '
-                        'groupBox="0" name="Datos" showLabel="1" visibilityExpressionEnabled="0">\n'
-                        + "\n".join(
-                            '        <attributeEditorField index="{i}" name="{c}" showLabel="1"/>'.format(i=i, c=c)
-                            for i, c in enumerate(cols))
-                        + '\n      </attributeEditorContainer>\n'
-                        + relaciones_tabs
-                        + '    </attributeEditorForm>\n')
+        cuerpo = (_grupos_xml(grupos, cols) if grupos else "\n".join(
+            '          <attributeEditorField index="{i}" name="{c}" showLabel="1"/>'.format(i=i, c=c)
+            for i, c in enumerate(cols)))
+        # OJO: <attributeEditorForm> debe ser hijo DIRECTO de <maplayer>, junto a
+        # <editorlayout>. No existe ningún elemento <editformconfig> en el esquema
+        # de los .qgs (ese es el nombre de la clase C++, no de la etiqueta XML);
+        # si se envuelve ahí, QGIS no lo encuentra y muestra la lista plana.
+        form = ('    <attributeEditorForm>\n'
+                '        <attributeEditorContainer collapsed="0" columnCount="1" '
+                'groupBox="0" name="{t}" showLabel="1" visibilityExpressionEnabled="0">\n'
+                '{c}\n'
+                '        </attributeEditorContainer>\n'
+                '{r}'
+                '    </attributeEditorForm>\n').format(
+                    t='Datos del predio' if tabla == 'predios_investigados' else 'Ficha',
+                    c=cuerpo, r=relaciones_tabs)
     else:
         layout = 'generatedlayout'
-        editorlayout = ''
+        form = ''
 
     return """  <maplayer type="vector" geometry="{gt}" hasScaleBasedVisibilityFlag="0" readOnly="1">
     <id>{lid}</id>
@@ -131,12 +207,33 @@ def maplayer(tabla, lid, titulo, cols, renderer, geom=True, relaciones_tabs=''):
 {editable}
     </editable>
     <editorlayout>{layout}</editorlayout>
-{editorform}    <editformconfig readOnly="1"><editorlayout>{layout}</editorlayout></editformconfig>
-  </maplayer>""".format(
-        gt='Polygon' if geom else 'NoGeometry', lid=lid, gp=GPKG_NAME, t=tabla,
+{form}  </maplayer>""".format(
+        gt=geom, lid=lid, gp=GPKG_NAME, t=tabla,
         titulo=esc(titulo), wkt=esc(UTM17S_WKT), renderer=('    ' + renderer) if renderer else '',
-        campos=campos_xml, alias=alias, editable=editable, layout=layout,
-        editorform=editorlayout)
+        campos=campos_xml, alias=alias, editable=editable, layout=layout, form=form)
+
+
+# Python de QGIS (OSGeo4W). Si está disponible, el .qgz se construye con la API
+# oficial (construir_qgz_pyqgis.py), que además VERIFICA las relaciones releyendo
+# el proyecto. El generador XML de más abajo queda solo como respaldo para
+# máquinas sin QGIS.
+PYQGIS_BAT = r"C:\OSGeo4W\bin\python-qgis.bat"
+
+
+def construir_con_pyqgis():
+    if not os.path.exists(PYQGIS_BAT):
+        return False
+    import subprocess
+    script = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'construir_qgz_pyqgis.py')
+    r = subprocess.run([PYQGIS_BAT, script], capture_output=True, text=True,
+                       encoding='utf-8', errors='replace')
+    salida = (r.stdout or '')
+    ok = r.returncode == 0 and os.path.exists(QGZ) and 'VERIFICACION OK' in salida
+    for linea in salida.strip().splitlines()[-8:]:
+        print("  [PyQGIS] " + linea)
+    if not ok:
+        print("  [PyQGIS] falló (código {}); se usa el generador XML de respaldo".format(r.returncode))
+    return ok
 
 
 def main():
@@ -147,6 +244,10 @@ def main():
     print("=" * 74)
     print(" PROYECTO QGIS Y PAQUETE DE ENTREGA")
     print("=" * 74)
+
+    if construir_con_pyqgis():
+        empaquetar()
+        return
 
     con = sqlite3.connect(GPKG)
     cur = con.cursor()
@@ -172,13 +273,26 @@ def main():
         cols = columnas(cur, tabla)
         tabs = ''
         if tabla == 'predios_investigados':
-            tabs = ('      <attributeEditorContainer collapsed="0" columnCount="1" groupBox="0" '
+            tabs = ('        <attributeEditorContainer collapsed="0" columnCount="1" groupBox="0" '
                     'name="Fichas del predio" showLabel="1" visibilityExpressionEnabled="0">\n'
-                    '        <attributeEditorRelation forceSuppressFormPopup="0" name="rel_predio_fichas" '
-                    'nmRelationId="" relation="rel_predio_fichas" showLabel="0"/>\n'
-                    '      </attributeEditorContainer>\n')
+                    '          <attributeEditorRelation forceSuppressFormPopup="0" '
+                    'name="rel_predio_fichas" nmRelationId="" relation="rel_predio_fichas" '
+                    'showLabel="0"/>\n'
+                    '        </attributeEditorContainer>\n')
+        elif tabla == 'fichas':
+            tabs = ''.join(
+                '        <attributeEditorContainer collapsed="0" columnCount="1" groupBox="0" '
+                'name="{n}" showLabel="1" visibilityExpressionEnabled="0">\n'
+                '          <attributeEditorRelation forceSuppressFormPopup="0" name="{r}" '
+                'nmRelationId="" relation="{r}" showLabel="0"/>\n'
+                '        </attributeEditorContainer>\n'.format(n=n, r=r)
+                for r, n in (('rel_ficha_cultivos', 'Cultivos'),
+                             ('rel_ficha_animales', 'Especies pecuarias')))
+        tipo = 'Point' if tabla == 'fichas' else ('Line' if tabla == 'canales_riego' else 'Polygon')
+        grupos = (GRUPOS_PREDIO if tabla == 'predios_investigados'
+                  else GRUPOS_FICHA if tabla == 'fichas' else None)
         capas_xml.append(maplayer(tabla, lid, titulo, cols, estilo_de(cur, tabla),
-                                  geom=True, relaciones_tabs=tabs))
+                                  geom=tipo, relaciones_tabs=tabs, grupos=grupos))
         tree_xml.append('    <layer-tree-layer checked="{c}" expanded="0" id="{i}" '
                         'name="{n}" providerKey="ogr" source="./{g}|layername={t}"/>'.format(
                             c='Qt::Checked' if visible else 'Qt::Unchecked',
@@ -188,34 +302,14 @@ def main():
     # tablas sin geometría
     for tabla, lid, titulo in TABLAS:
         cols = columnas(cur, tabla)
-        tabs = ''
-        if tabla == 'fichas':
-            tabs = ''.join(
-                '      <attributeEditorContainer collapsed="0" columnCount="1" groupBox="0" '
-                'name="{n}" showLabel="1" visibilityExpressionEnabled="0">\n'
-                '        <attributeEditorRelation forceSuppressFormPopup="0" name="{r}" '
-                'nmRelationId="" relation="{r}" showLabel="0"/>\n'
-                '      </attributeEditorContainer>\n'.format(n=n, r=r)
-                for r, n in (('rel_ficha_cultivos', 'Cultivos'),
-                             ('rel_ficha_animales', 'Especies pecuarias')))
-        capas_xml.append(maplayer(tabla, lid, titulo, cols, '', geom=False, relaciones_tabs=tabs))
+        capas_xml.append(maplayer(tabla, lid, titulo, cols, '', geom='NoGeometry'))
         tree_xml.append('    <layer-tree-layer checked="Qt::Unchecked" expanded="0" id="{i}" '
                         'name="{n}" providerKey="ogr" source="./{g}|layername={t}"/>'.format(
                             i=lid, n=esc(titulo), g=GPKG_NAME, t=tabla))
 
-    # capa base satelital
-    base_src = ('type=xyz&amp;url=https://server.arcgisonline.com/ArcGIS/rest/services/'
-                'World_Imagery/MapServer/tile/%7Bz%7D/%7By%7D/%7Bx%7D&amp;zmax=19&amp;zmin=0')
-    capas_xml.append("""  <maplayer type="raster" hasScaleBasedVisibilityFlag="0">
-    <id>base_esri</id>
-    <datasource>{s}</datasource>
-    <layername>Imagen satelital (ESRI)</layername>
-    <provider>wms</provider>
-    <srs><spatialrefsys nativeFormat="Wkt"><authid>EPSG:3857</authid>
-      <description>WGS 84 / Pseudo-Mercator</description></spatialrefsys></srs>
-  </maplayer>""".format(s=base_src))
-    tree_xml.append('    <layer-tree-layer checked="Qt::Checked" expanded="0" id="base_esri" '
-                    'name="Imagen satelital (ESRI)" providerKey="wms" source="{}"/>'.format(base_src))
+    # Sin capa base: la declaración XYZ no cargaba en QGIS y solo estorbaba en el
+    # panel. Si el cliente quiere fondo satelital lo agrega desde el navegador de
+    # QGIS (XYZ Tiles), que es el camino normal.
 
     cur.execute("SELECT min_x,min_y,max_x,max_y FROM gpkg_contents WHERE table_name='predios_investigados'")
     ext = cur.fetchone()
@@ -271,7 +365,11 @@ def main():
     with zipfile.ZipFile(QGZ, 'w', zipfile.ZIP_DEFLATED) as z:
         z.writestr('padron_riego_porotog.qgs', qgs)
     print("  proyecto: {} ({:.0f} KB)".format(os.path.basename(QGZ), os.path.getsize(QGZ) / 1024))
+    empaquetar()
 
+
+def empaquetar():
+    """Arma el .zip final (GeoPackage + .qgz + LEEME) en public/descargas."""
     leeme = """PADRÓN DE USUARIOS — SISTEMA DE RIEGO COMUNITARIO GUANGUILQUÍ–POROTOG
 Entrega cartográfica para revisión en QGIS
 Generado el {fecha}
@@ -281,21 +379,42 @@ CÓMO ABRIRLO
    superior. Las capas se cargan con su simbología y no hay que configurar nada.
 
 QUÉ CONTIENE
-   Predios investigados      predios con ficha de empadronamiento
+   Predios investigados      CAPA PRINCIPAL. Predios con ficha de empadronamiento.
       naranja  = predio con ficha principal
       azul     = predio adicional ya investigado
       celeste  = predio adicional pendiente de la Sección 4 (producción)
+      Para mostrar u ocultar cada color por separado, despliegue la flecha que
+      está a la izquierda del nombre de la capa en el panel de Capas.
    Catastro rural completo   universo catastral de referencia
    Comunidades / Sectores    ámbito territorial del estudio
    Canales de riego          red de conducción
 
+   Fichas de empadronamiento, Cultivos y Especies pecuarias son las capas de
+   detalle. No hace falta abrirlas: alimentan las pestañas del formulario del
+   predio. Vienen apagadas a propósito. Si le interesa, la capa de Fichas tiene
+   el punto GPS donde se levantó cada ficha y puede encenderla.
+
 CÓMO CONSULTAR UN PREDIO
-   Active la herramienta Identificar y haga clic sobre un predio. En la ficha que
-   se abre encontrará los datos del predio y, en la pestaña "Fichas del predio",
-   el listado de sus fichas. Al abrir una ficha verá sus cultivos y sus especies
-   pecuarias en pestañas propias.
-   Un predio puede tener varias fichas (por herencia, copropiedad o
-   fraccionamiento): todas aparecen en esa pestaña.
+   Active la herramienta Identificar y haga clic sobre un predio. Se abre un
+   formulario con dos pestañas:
+      "Datos del predio"    identificación, propiedad, fichas levantadas,
+                            superficies y caudal
+      "Fichas del predio"   el listado de las fichas de ese predio
+   Seleccione una ficha de la lista y ábrala: verá los datos del regante, del
+   riego y de la tarifa, y en sus propias pestañas los "Cultivos" (cada uno con
+   su superficie y destino), las "Especies pecuarias" (con cantidades) y los
+   "Predios adicionales del regante" — los otros predios que ese regante
+   declaró, con acceso directo a cada uno.
+
+   PREDIOS CON VARIAS FICHAS
+   Un predio puede tener varias fichas, por herencia, copropiedad o porque
+   corresponde a un terreno comunal con varias parcelas familiares. En el campo
+   Propietarios se muestran los primeros nombres y el total; el listado completo
+   está en la pestaña "Fichas del predio", y la producción de cada regante en su
+   propia ficha.
+
+   "Área catastro (m²)" es la superficie del polígono según el catastro.
+   "Área declarada (m²)" es la suma de lo que reportaron las fichas del predio.
 
 FOTOGRAFÍAS
    El campo "foto_url" de cada ficha enlaza a la imagen del predio. Requiere

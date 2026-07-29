@@ -198,6 +198,18 @@ def crear_gpkg(path):
         ('WGS 84 / UTM zone 17S', 32717, 'EPSG', 32717, utm17s, 'Sistema del catastro'),
     ])
 
+    # Tablas que GDAL/QGIS esperan encontrar. Sin gpkg_ogr_contents las capas sin
+    # geometría (fichas, cultivos, animales) se abren vacías, y al quedar vacías la
+    # relación del formulario no muestra nada.
+    cur.executescript("""
+    CREATE TABLE gpkg_extensions (
+      table_name TEXT, column_name TEXT, extension_name TEXT NOT NULL,
+      definition TEXT NOT NULL, scope TEXT NOT NULL,
+      CONSTRAINT ge_tce UNIQUE (table_name, column_name, extension_name));
+    CREATE TABLE gpkg_ogr_contents (
+      table_name TEXT NOT NULL PRIMARY KEY, feature_count INTEGER DEFAULT NULL);
+    """)
+
     # Tabla de estilos de QGIS: es lo que hace que la capa se pinte sola
     cur.executescript("""
     CREATE TABLE layer_styles (
@@ -228,6 +240,19 @@ def registrar_capa(cur, tabla, tipo_geom, titulo, descripcion, bbox):
 def cargar(nombre):
     with open(os.path.join(GEO, nombre), encoding='utf-8') as f:
         return json.load(f)
+
+
+def _resumen_propietarios(fs, tope=3):
+    """Nombres del predio. Con muchas fichas, amontonarlos todos en un campo es
+    ilegible: se listan las primeras y se remite a la pestaña de fichas."""
+    nombres = sorted({("{} {}".format(x.get('apellidos') or '', x.get('nombres') or '')).strip()
+                      for x in fs if (x.get('apellidos') or x.get('nombres'))})
+    if not nombres:
+        return None
+    if len(nombres) <= tope:
+        return ' / '.join(nombres)
+    return "{} … y {} más (ver pestaña «Fichas del predio»)".format(
+        ' / '.join(nombres[:tope]), len(nombres) - tope)
 
 
 def txt(v):
@@ -262,6 +287,20 @@ def _simbolo_relleno(nombre, relleno, borde, ancho='0.4'):
     </symbol>""".format(n=nombre, r=relleno, b=borde, w=ancho)
 
 
+def _simbolo_punto(nombre, color, tam='1.6'):
+    return """<symbol alpha="1" clip_to_extent="1" force_rhr="0" name="{n}" type="marker">
+      <layer class="SimpleMarker" enabled="1" pass="0">
+        <Option type="Map">
+          <Option name="name" type="QString" value="circle"/>
+          <Option name="color" type="QString" value="{c}"/>
+          <Option name="outline_color" type="QString" value="255,255,255,200,rgb:1,1,1,0.784"/>
+          <Option name="outline_width" type="QString" value="0.2"/>
+          <Option name="size" type="QString" value="{t}"/>
+        </Option>
+      </layer>
+    </symbol>""".format(n=nombre, c=color, t=tam)
+
+
 def _simbolo_linea(nombre, color, ancho='0.6'):
     return """<symbol alpha="1" clip_to_extent="1" force_rhr="0" name="{n}" type="line">
       <layer class="SimpleLine" enabled="1" pass="0">
@@ -275,26 +314,35 @@ def _simbolo_linea(nombre, color, ancho='0.6'):
 
 
 def _bloque_solo_lectura(campos):
-    """Deja todos los campos no editables: el entregable es un visor."""
+    """Marca la capa como no editable.
+
+    OJO: no se declara aquí <editorlayout> ni la configuración de campos. El estilo
+    del GeoPackage se limita a la simbología (styleCategories="Symbology|MapTips");
+    si además trajera la categoría Forms, al cargar la capa pisaría el formulario
+    por pestañas que define el proyecto .qgz y el usuario vería una lista plana.
+    """
     ed = "\n".join('    <field editable="0" name="{}"/>'.format(c) for c in campos)
-    al = "\n".join('    <field labelOnTop="0" name="{}"/>'.format(c) for c in campos)
-    return ("  <editable>\n{}\n  </editable>\n"
-            "  <labelOnTop>\n{}\n  </labelOnTop>\n"
-            "  <editorlayout>generatedlayout</editorlayout>\n"
-            "  <readOnly>1</readOnly>\n").format(ed, al)
+    return "  <editable>\n{}\n  </editable>\n  <readOnly>1</readOnly>\n".format(ed)
 
 
 def qml_predios(campos):
+    # Los 'key' deben ser UUID con llaves: si no, QGIS no lista las categorías en el
+    # panel de capas y no se pueden apagar los predios naranjas, azules o celestes
+    # por separado.
     reglas = [
-        ("\"estado_predio\" = 'Investigado'", 'Predio investigado (ficha principal)', '0'),
-        ("\"estado_predio\" = 'Adicional investigado'", 'Predio adicional — investigado', '1'),
-        ("\"estado_predio\" = 'Adicional pendiente'", 'Predio adicional — pendiente Sección 4', '2'),
-        ("ELSE", 'Otro', '3'),
+        ("\"estado_predio\" = 'Investigado'", 'Predio investigado (ficha principal)', '0',
+         '{7c1a5e40-2b90-4c11-9f21-0a5d3e7b1001}'),
+        ("\"estado_predio\" = 'Adicional investigado'", 'Predio adicional — investigado', '1',
+         '{7c1a5e40-2b90-4c11-9f21-0a5d3e7b1002}'),
+        ("\"estado_predio\" = 'Adicional pendiente'", 'Predio adicional — pendiente Sección 4', '2',
+         '{7c1a5e40-2b90-4c11-9f21-0a5d3e7b1003}'),
+        ("ELSE", 'Predio sin ficha', '3',
+         '{7c1a5e40-2b90-4c11-9f21-0a5d3e7b1004}'),
     ]
     r = "\n".join(
-        '        <rule filter="{f}" key="{{r{i}}}" label="{l}" symbol="{s}"/>'.format(
-            f=f.replace('"', '&quot;'), i=i, l=l, s=s)
-        for i, (f, l, s) in enumerate(reglas))
+        '        <rule filter="{f}" key="{k}" label="{l}" symbol="{s}"/>'.format(
+            f=f.replace('"', '&quot;'), k=k, l=l, s=s)
+        for f, l, s, k in reglas)
     simbolos = "\n".join([
         _simbolo_relleno('0', '249,115,22,90,rgb:0.976,0.451,0.086,0.353', '234,88,12,255,rgb:0.918,0.345,0.047,1'),
         _simbolo_relleno('1', '59,130,246,90,rgb:0.231,0.510,0.965,0.353', '37,99,235,255,rgb:0.145,0.388,0.922,1'),
@@ -302,9 +350,9 @@ def qml_predios(campos):
         _simbolo_relleno('3', '148,163,184,60,rgb:0.580,0.639,0.722,0.235', '100,116,139,255,rgb:0.392,0.455,0.545,1'),
     ])
     return """<!DOCTYPE qgis>
-<qgis version="3.36.0" styleCategories="Symbology|Fields|Forms|MapTips">
+<qgis version="3.36.0" styleCategories="Symbology|MapTips">
   <renderer-v2 type="RuleRenderer" symbollevels="0" forceraster="0" enableorderby="0">
-    <rules key="{{predios}}">
+    <rules key="{{7c1a5e40-2b90-4c11-9f21-0a5d3e7b1000}}">
 {reglas}
     </rules>
     <symbols>
@@ -318,7 +366,7 @@ def qml_predios(campos):
 def qml_simple(campos, simbolo, maptip=''):
     mt = '<mapTip>{}</mapTip>'.format(maptip) if maptip else ''
     return """<!DOCTYPE qgis>
-<qgis version="3.36.0" styleCategories="Symbology|Fields|Forms|MapTips">
+<qgis version="3.36.0" styleCategories="Symbology|MapTips">
   <renderer-v2 type="singleSymbol" symbollevels="0" forceraster="0" enableorderby="0">
     <symbols>
 {s}
@@ -428,29 +476,38 @@ def main():
         fs = por_clave.get(k, [])
         ppal = [x for x in fs if not es_hija(x)]
         adic = [x for x in fs if es_hija(x)]
-        cs, ans = [], []
+        # Resumen CUANTIFICADO por predio. Se agrupa en mayúsculas para que
+        # "PAPAS" y "Papas" no salgan como dos cultivos distintos.
+        cult_sum, anim_sum = {}, {}
         for x in fs:
             for c in cult_por_ficha.get(x.get('id'), []):
                 t = txt(c.get('tipo_cultivo_otro')) or txt(c.get('tipo_cultivo'))
                 if t:
-                    cs.append(t)
+                    d = cult_sum.setdefault(t.strip().upper(), {'n': t.strip().capitalize(), 's': 0.0})
+                    d['s'] += c.get('superficie_m2') or 0
             for a in anim_por_ficha.get(x.get('id'), []):
                 t = txt(a.get('especie_otro')) or txt(a.get('especie'))
                 if t:
-                    ans.append(t)
+                    d = anim_sum.setdefault(t.strip().upper(), {'n': t.strip().capitalize(), 'c': 0})
+                    d['c'] += a.get('cantidad') or 0
+        cultivos_txt = ", ".join(
+            "{} ({:.2f} ha)".format(d['n'], d['s'] / 10000.0) if d['s'] else d['n']
+            for d in sorted(cult_sum.values(), key=lambda v: -v['s'])) or None
+        animales_txt = ", ".join(
+            "{}: {:,}".format(d['n'], d['c']) if d['c'] else d['n']
+            for d in sorted(anim_sum.values(), key=lambda v: -v['c'])) or None
         vals = (blob, k, estado_de(fs) if fs else 'Sin ficha',
                 txt(fs[0].get('comunidad')) if fs else None,
                 txt(fs[0].get('sector')) if fs else None,
                 txt(fs[0].get('parroquia')) if fs else None,
-                ' / '.join(sorted({("{} {}".format(x.get('apellidos') or '', x.get('nombres') or '')).strip()
-                                   for x in fs if (x.get('apellidos') or x.get('nombres'))})) or None,
+                _resumen_propietarios(fs),
                 ("{} {}".format(p.get('apellidos') or '', p.get('nombres') or '')).strip() or None,
                 num(p.get('area_predi')),
                 len(fs), len(ppal), len(adic), sum(1 for x in adic if pendiente(x)),
                 num(sum(x.get('area_total') or 0 for x in fs)),
                 num(sum(x.get('area_riego') or 0 for x in fs)),
                 num(sum(x.get('caudal_valor') or 0 for x in fs)),
-                ', '.join(sorted(set(cs))) or None, ', '.join(sorted(set(ans))) or None)
+                cultivos_txt, animales_txt)
         cur.execute("INSERT INTO predios_investigados (geom,{}) VALUES ({})".format(
             ",".join(c for c, _ in cols_predios), ",".join('?' * (len(cols_predios) + 1))), vals)
         e = struct.unpack('<dddd', blob[8:40])
@@ -503,6 +560,7 @@ def main():
     CAMPOS_FICHA = [
         ('ficha_id', 'TEXT'), ('clave_catastral', 'TEXT'), ('codigo_predio', 'TEXT'),
         ('tipo_ficha', 'TEXT'), ('estado_investigacion', 'TEXT'), ('regante_principal', 'TEXT'),
+        ('ficha_madre_id', 'TEXT'),
         ('apellidos', 'TEXT'), ('nombres', 'TEXT'), ('cedula', 'TEXT'),
         ('telefono_celular', 'TEXT'), ('telefono_casa', 'TEXT'),
         ('parroquia', 'TEXT'), ('comunidad', 'TEXT'), ('sector', 'TEXT'),
@@ -517,9 +575,25 @@ def main():
         ('observaciones', 'TEXT'), ('investigado_por', 'TEXT'), ('fecha_registro', 'TEXT'),
         ('foto_url', 'TEXT'),
     ]
-    crear_tabla(cur, 'fichas', CAMPOS_FICHA, con_geom=False)
+    # La capa de fichas lleva su punto GPS. No es para mostrarla en el mapa —va
+    # apagada— sino porque una capa con geometría siempre carga bien, y de ella
+    # depende la pestaña "Fichas del predio" del formulario.
+    crear_tabla(cur, 'fichas', CAMPOS_FICHA, con_geom=True, tipo_geom='POINT')
 
     por_id = {f.get('id'): f for f in fichas}
+    geom_ficha = {}
+    for ft in cargar('fichas_predios.geojson')['features']:
+        g = ft.get('geometry')
+        fid_ = (ft.get('properties') or {}).get('id')
+        if g and g.get('type') == 'Point' and fid_:
+            try:
+                x, y = _tr.transform(g['coordinates'][0], g['coordinates'][1])
+                geom_ficha[fid_] = (
+                    b'GP' + struct.pack('<BBi', 0, 0x03, SRS_ID)   # cabecera + envelope XY
+                    + struct.pack('<dddd', x, x, y, y)             # bbox del punto
+                    + struct.pack('<BIdd', 1, 1, x, y))            # WKB: LE, tipo Point, x, y
+            except Exception:
+                pass
 
     def nombre_regante(f):
         return ("{} {}".format(f.get('apellidos') or '', f.get('nombres') or '')).strip() or None
@@ -532,17 +606,24 @@ def main():
         return ("https://firebasestorage.googleapis.com/v0/b/{}/o/fotos_predios%2F{}?alt=media"
                 .format(BUCKET, base.replace(' ', '%20')))
 
-    ins_f = "INSERT INTO fichas ({}) VALUES ({})".format(
-        ",".join(c for c, _ in CAMPOS_FICHA), ",".join('?' * len(CAMPOS_FICHA)))
+    ins_f = "INSERT INTO fichas (geom,{}) VALUES ({})".format(
+        ",".join(c for c, _ in CAMPOS_FICHA), ",".join('?' * (len(CAMPOS_FICHA) + 1)))
+    bbf = [1e18, -1e18, 1e18, -1e18]
     for f in fichas:
         hija = es_hija(f)
         madre = por_id.get(f.get('ficha_madre_id')) if hija else None
-        cur.execute(ins_f, (
+        gb = geom_ficha.get(f.get('id'))
+        if gb:
+            e = struct.unpack('<dddd', gb[8:40])
+            bbf[0] = min(bbf[0], e[0]); bbf[1] = max(bbf[1], e[1])
+            bbf[2] = min(bbf[2], e[2]); bbf[3] = max(bbf[3], e[3])
+        cur.execute(ins_f, (gb,
             txt(f.get('id')), txt(f.get('clave_catastral')) or txt(f.get('cod_poligono')),
             txt(f.get('codigo_final')),
             'Ficha adicional' if hija else 'Ficha principal',
             ('Pendiente Sección 4' if pendiente(f) else 'Investigada') if hija else 'Investigada',
             nombre_regante(madre) if madre else None,
+            txt(f.get('ficha_madre_id')) if hija else None,
             txt(f.get('apellidos')), txt(f.get('nombres')), txt(f.get('cedula')),
             txt(f.get('telefono_celular')), txt(f.get('telefono_casa')),
             txt(f.get('parroquia')), txt(f.get('comunidad')), txt(f.get('sector')),
@@ -556,21 +637,51 @@ def main():
             num(f.get('cota_msnm')), txt(f.get('org_riego')), txt(f.get('actividad_productiva')),
             txt(f.get('observaciones')), TECNICOS.get(txt(f.get('creado_por')), txt(f.get('creado_por'))),
             txt(f.get('fecha_creacion')), foto_url(f)))
-    registrar_capa(cur, 'fichas', None, 'Fichas de empadronamiento',
-                   'Una fila por ficha. Se enlaza al predio por la clave catastral.', None)
+    registrar_capa(cur, 'fichas', 'POINT', 'Fichas de empadronamiento',
+                   'Una fila por ficha. Se enlaza al predio por la clave catastral.', bbf)
     guardar_estilo(cur, 'fichas', [c for c, _ in CAMPOS_FICHA],
-                   qml_simple([c for c, _ in CAMPOS_FICHA], ''), geom_col='')
+                   qml_simple([c for c, _ in CAMPOS_FICHA],
+                              _simbolo_punto('0', '37,99,235,220,rgb:0.145,0.388,0.922,0.863'),
+                              '[% "apellidos" %] [% "nombres" %]'))
 
-    CAMPOS_CULT = [('ficha_id', 'TEXT'), ('cultivo', 'TEXT'), ('superficie_m2', 'REAL'),
+    # clave_catastral en cultivos/animales (heredada de su ficha): identifica en
+    # que parcela esta ese registro, util para analisis espacial general.
+    #
+    # clave_predio_principal: SOLO se llena si la ficha dueña del registro es
+    # PRINCIPAL. Cuando otro regante declara esta misma tierra como "predio
+    # adicional" (Seccion 7), su ficha es ADICIONAL y este campo queda en NULL:
+    # asi su produccion NO se mezcla en "Cultivos/Animales del predio" con la
+    # del dueño. Sigue siendo consultable abriendo esa ficha adicional en
+    # particular (pestañas "Cultivos"/"Especies pecuarias" de la ficha).
+    def clave_de_ficha(ficha_id):
+        f = por_id.get(ficha_id)
+        return (txt(f.get('clave_catastral')) or txt(f.get('cod_poligono'))) if f else None
+
+    def clave_predio_si_principal(ficha_id):
+        f = por_id.get(ficha_id)
+        if not f or es_hija(f):
+            return None
+        return txt(f.get('clave_catastral')) or txt(f.get('cod_poligono'))
+
+    def regante_de_ficha(ficha_id):
+        f = por_id.get(ficha_id)
+        return nombre_regante(f) if f else None
+
+    CAMPOS_CULT = [('ficha_id', 'TEXT'), ('clave_catastral', 'TEXT'),
+                   ('clave_predio_principal', 'TEXT'), ('regante', 'TEXT'),
+                   ('cultivo', 'TEXT'), ('superficie_m2', 'REAL'),
                    ('es_principal', 'TEXT'), ('destino', 'TEXT')]
     crear_tabla(cur, 'cultivos', CAMPOS_CULT, con_geom=False)
     for c in cultivos:
         destinos = [n for n, k in (('Autoconsumo', 'es_autoconsumo'), ('Mercado', 'es_mercado'),
                                    ('Agroindustria', 'es_agroindustria'), ('Exportación', 'es_exportacion'))
                     if c.get(k) in (1, True)]
-        cur.execute("INSERT INTO cultivos (ficha_id,cultivo,superficie_m2,es_principal,destino) "
-                    "VALUES (?,?,?,?,?)",
-                    (txt(c.get('ficha_id')), txt(c.get('tipo_cultivo_otro')) or txt(c.get('tipo_cultivo')),
+        fid_c = txt(c.get('ficha_id'))
+        cur.execute("INSERT INTO cultivos (ficha_id,clave_catastral,clave_predio_principal,regante,"
+                    "cultivo,superficie_m2,es_principal,destino) VALUES (?,?,?,?,?,?,?,?)",
+                    (fid_c, clave_de_ficha(fid_c), clave_predio_si_principal(fid_c),
+                     regante_de_ficha(fid_c),
+                     txt(c.get('tipo_cultivo_otro')) or txt(c.get('tipo_cultivo')),
                      num(c.get('superficie_m2')), 'Sí' if c.get('es_principal') in (1, True) else 'No',
                      ', '.join(destinos) or None))
     registrar_capa(cur, 'cultivos', None, 'Cultivos (Sección 4)',
@@ -578,15 +689,20 @@ def main():
     guardar_estilo(cur, 'cultivos', [c for c, _ in CAMPOS_CULT],
                    qml_simple([c for c, _ in CAMPOS_CULT], ''), geom_col='')
 
-    CAMPOS_ANIM = [('ficha_id', 'TEXT'), ('especie', 'TEXT'), ('cantidad', 'INTEGER'),
-                   ('destino', 'TEXT')]
+    CAMPOS_ANIM = [('ficha_id', 'TEXT'), ('clave_catastral', 'TEXT'),
+                   ('clave_predio_principal', 'TEXT'), ('regante', 'TEXT'),
+                   ('especie', 'TEXT'), ('cantidad', 'INTEGER'), ('destino', 'TEXT')]
     crear_tabla(cur, 'animales', CAMPOS_ANIM, con_geom=False)
     for a in animales:
         destinos = [n for n, k in (('Autoconsumo', 'es_autoconsumo'), ('Mercado', 'es_mercado'),
                                    ('Agroindustria', 'es_agroindustria'), ('Exportación', 'es_exportacion'))
                     if a.get(k) in (1, True)]
-        cur.execute("INSERT INTO animales (ficha_id,especie,cantidad,destino) VALUES (?,?,?,?)",
-                    (txt(a.get('ficha_id')), txt(a.get('especie_otro')) or txt(a.get('especie')),
+        fid_a = txt(a.get('ficha_id'))
+        cur.execute("INSERT INTO animales (ficha_id,clave_catastral,clave_predio_principal,regante,"
+                    "especie,cantidad,destino) VALUES (?,?,?,?,?,?,?)",
+                    (fid_a, clave_de_ficha(fid_a), clave_predio_si_principal(fid_a),
+                     regante_de_ficha(fid_a),
+                     txt(a.get('especie_otro')) or txt(a.get('especie')),
                      a.get('cantidad'), ', '.join(destinos) or None))
     registrar_capa(cur, 'animales', None, 'Especies pecuarias (Sección 4)',
                    'Animales declarados en cada ficha.', None)
@@ -651,6 +767,12 @@ def main():
                  lambda cs: qml_simple(cs, _simbolo_linea('0', '56,189,248,255,rgb:0.220,0.741,0.973,1', '0.8'),
                                        '[% "nombre" %]'),
                  tipo='MULTILINESTRING')
+
+    # Conteo por tabla: GDAL lo consulta al abrir el archivo.
+    tablas = [t for (t,) in cur.execute("SELECT table_name FROM gpkg_contents").fetchall()]
+    for t in tablas:
+        n = cur.execute('SELECT COUNT(*) FROM "{}"'.format(t)).fetchone()[0]
+        cur.execute("INSERT OR REPLACE INTO gpkg_ogr_contents VALUES (?,?)", (t, n))
 
     con.commit()
     cur.execute("VACUUM")

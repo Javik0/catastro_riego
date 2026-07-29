@@ -1,0 +1,3862 @@
+{
+  "resumen": {
+    "predios_afectados": 385,
+    "area_catastral_ha": 1540.24,
+    "area_declarada_ha": 5754.73,
+    "exceso_ha": 4214.49,
+    "con_fichas_clonando_el_poligono": 202,
+    "cultivos_que_no_caben": 140
+  },
+  "detalle": [
+    {
+      "clave": "1702520290469",
+      "comunidad": "ALPAKA",
+      "n": 2,
+      "area_cat": 15011.875040229252,
+      "suma": 6810864.869999999,
+      "factor": 453.6984788208035,
+      "iguales": 0,
+      "sup_cult": 1602239.7941800002
+    },
+    {
+      "clave": "1702520290462",
+      "comunidad": "ALPAKA",
+      "n": 2,
+      "area_cat": 16405.446770352257,
+      "suma": 6812257.52,
+      "factor": 415.24364531851927,
+      "iguales": 1,
+      "sup_cult": 6808976.368
+    },
+    {
+      "clave": "1702540170034",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 370.2990185978003,
+      "suma": 21381.2,
+      "factor": 57.74036366870083,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702540170165",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 214.98065511819695,
+      "suma": 10690.6,
+      "factor": 49.72819528400022,
+      "iguales": 0,
+      "sup_cult": 500.0
+    },
+    {
+      "clave": "1702540120132",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 236.38690374428447,
+      "suma": 10690.6,
+      "factor": 45.225009637440564,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520660013",
+      "comunidad": "CHAMBITOLA",
+      "n": 3,
+      "area_cat": 1000.7971456333642,
+      "suma": 38041.57,
+      "factor": 38.011269482513384,
+      "iguales": 1,
+      "sup_cult": 69456.04000000001
+    },
+    {
+      "clave": "1702540120148",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 403.07154640400273,
+      "suma": 10690.6,
+      "factor": 26.522834706086403,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702540120142",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 539.7277973940586,
+      "suma": 10690.6,
+      "factor": 19.807391895723924,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702540120055",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 593.8250064508854,
+      "suma": 10690.6,
+      "factor": 18.002946800597908,
+      "iguales": 0,
+      "sup_cult": 150.0
+    },
+    {
+      "clave": "1702520080118",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 3875.1469876560413,
+      "suma": 47035.75,
+      "factor": 12.137797649954562,
+      "iguales": 0,
+      "sup_cult": 2600.0
+    },
+    {
+      "clave": "1702540120033",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 887.4610877140196,
+      "suma": 10690.6,
+      "factor": 12.046274645728465,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520080001",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 4073.1023636661052,
+      "suma": 47035.75,
+      "factor": 11.547892932812081,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702550130001",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 318.19748538509333,
+      "suma": 3580.98,
+      "factor": 11.25395442916897,
+      "iguales": 0,
+      "sup_cult": 50.0
+    },
+    {
+      "clave": "1702520270345",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 11,
+      "area_cat": 9558.501052962452,
+      "suma": 105143.5,
+      "factor": 10.999998788242328,
+      "iguales": 11,
+      "sup_cult": 18179.05
+    },
+    {
+      "clave": "1702540120002",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1015.1910464198087,
+      "suma": 10690.6,
+      "factor": 10.530628730130813,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702521170020",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 3372.918083290752,
+      "suma": 34298.7,
+      "factor": 10.168850577757535,
+      "iguales": 0,
+      "sup_cult": 2000.0
+    },
+    {
+      "clave": "1702520500001",
+      "comunidad": "CARRERA",
+      "n": 11,
+      "area_cat": 785611.5716054039,
+      "suma": 7906115.699999999,
+      "factor": 10.06364466328288,
+      "iguales": 10,
+      "sup_cult": 2485334.71
+    },
+    {
+      "clave": "1702520280044",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 10,
+      "area_cat": 86353.26136355019,
+      "suma": 863532.6,
+      "factor": 9.99999984209627,
+      "iguales": 10,
+      "sup_cult": 87353.26
+    },
+    {
+      "clave": "1702520300023",
+      "comunidad": "PITANA ALTO",
+      "n": 10,
+      "area_cat": 42495.30184985474,
+      "suma": 424953.0,
+      "factor": 9.99999956469194,
+      "iguales": 10,
+      "sup_cult": 37300.0
+    },
+    {
+      "clave": "1702521170021",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 3456.47160344903,
+      "suma": 34298.7,
+      "factor": 9.923038269944165,
+      "iguales": 0,
+      "sup_cult": 2500.0
+    },
+    {
+      "clave": "1702550130009",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 325.9682647975065,
+      "suma": 3068.25,
+      "factor": 9.41272611892454,
+      "iguales": 0,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "1702520080120",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 5038.321895126691,
+      "suma": 47035.75,
+      "factor": 9.335598435164545,
+      "iguales": 0,
+      "sup_cult": 5031.69
+    },
+    {
+      "clave": "1702520790017",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 9,
+      "area_cat": 11226.808115654185,
+      "suma": 101041.29,
+      "factor": 9.000001510590735,
+      "iguales": 9,
+      "sup_cult": 11226.78
+    },
+    {
+      "clave": "1702520080112",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 5571.650685896843,
+      "suma": 47035.75,
+      "factor": 8.441977548782543,
+      "iguales": 0,
+      "sup_cult": 6250.0
+    },
+    {
+      "clave": "1702520290290",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 13053.394340317725,
+      "suma": 106373.96,
+      "factor": 8.149141688874376,
+      "iguales": 0,
+      "sup_cult": 85099.16
+    },
+    {
+      "clave": "1702520290514",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 1872.178580699093,
+      "suma": 15000.46,
+      "factor": 8.012301900387438,
+      "iguales": 0,
+      "sup_cult": 12000.36
+    },
+    {
+      "clave": "1702520290243",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 19074.154642188758,
+      "suma": 148193.89,
+      "factor": 7.769355590324331,
+      "iguales": 0,
+      "sup_cult": 118555.12
+    },
+    {
+      "clave": "1702521550081",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 6081.3949437524025,
+      "suma": 47035.75,
+      "factor": 7.734368584023838,
+      "iguales": 0,
+      "sup_cult": 10000.0
+    },
+    {
+      "clave": "17025401700100800030000",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 1,
+      "area_cat": 776.9146,
+      "suma": 6000.0,
+      "factor": 7.722856540474333,
+      "iguales": 0,
+      "sup_cult": 6000.0
+    },
+    {
+      "clave": "1702540110250",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1430.8275352343055,
+      "suma": 10690.6,
+      "factor": 7.4716202594251575,
+      "iguales": 0,
+      "sup_cult": 1500.0
+    },
+    {
+      "clave": "1702520740059",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 1115.2579929500266,
+      "suma": 7962.75,
+      "factor": 7.1398277800612915,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520280039",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 7,
+      "area_cat": 13624.95829236033,
+      "suma": 95374.72,
+      "factor": 7.000000877322149,
+      "iguales": 7,
+      "sup_cult": 10597.188
+    },
+    {
+      "clave": "1702520990062",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 2899.799267474288,
+      "suma": 19926.8,
+      "factor": 6.871785996882519,
+      "iguales": 0,
+      "sup_cult": 2899.78
+    },
+    {
+      "clave": "1702520750190",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 5018.585037672374,
+      "suma": 34298.7,
+      "factor": 6.834336718922627,
+      "iguales": 0,
+      "sup_cult": 10000.0
+    },
+    {
+      "clave": "1702540120151",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 196.2209153448697,
+      "suma": 1278.52,
+      "factor": 6.515717235101705,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702540170141",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 197.3758716307861,
+      "suma": 1278.52,
+      "factor": 6.477590140255929,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702521070018",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 3188.523688817546,
+      "suma": 19926.8,
+      "factor": 6.249538013433982,
+      "iguales": 0,
+      "sup_cult": 3090.0
+    },
+    {
+      "clave": "1702520840041",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 938.2397465589404,
+      "suma": 5846.21,
+      "factor": 6.231040649728795,
+      "iguales": 1,
+      "sup_cult": 6100.0
+    },
+    {
+      "clave": "1702521050010",
+      "comunidad": "LARCACHACA",
+      "n": 6,
+      "area_cat": 10062.588861095202,
+      "suma": 60375.54,
+      "factor": 6.0000006790925156,
+      "iguales": 6,
+      "sup_cult": 13723.0
+    },
+    {
+      "clave": "1702520300012",
+      "comunidad": "PITANA ALTO",
+      "n": 6,
+      "area_cat": 61026.77758316267,
+      "suma": 366160.68,
+      "factor": 6.000000237617396,
+      "iguales": 6,
+      "sup_cult": 79926.78
+    },
+    {
+      "clave": "1702520290022",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 6,
+      "area_cat": 57509.16335161947,
+      "suma": 345054.96,
+      "factor": 5.99999965032152,
+      "iguales": 6,
+      "sup_cult": 57509.159999999996
+    },
+    {
+      "clave": "1702520750194",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 6059.527031720264,
+      "suma": 34298.7,
+      "factor": 5.660293257287904,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702521510056",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 8651.155786414156,
+      "suma": 47035.75,
+      "factor": 5.4369324933282694,
+      "iguales": 0,
+      "sup_cult": 600.0
+    },
+    {
+      "clave": "1702540120185",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1969.5305593961434,
+      "suma": 10690.6,
+      "factor": 5.427993969932475,
+      "iguales": 0,
+      "sup_cult": 600.0
+    },
+    {
+      "clave": "1702540120189",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1988.5508305631822,
+      "suma": 10690.6,
+      "factor": 5.376075801377574,
+      "iguales": 0,
+      "sup_cult": 600.0
+    },
+    {
+      "clave": "1702520840198",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 937.2700520461445,
+      "suma": 4907.97,
+      "factor": 5.236452385612302,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520150211",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 1,
+      "area_cat": 712.6941582634893,
+      "suma": 3707.35,
+      "factor": 5.201880718418012,
+      "iguales": 0,
+      "sup_cult": 707.35
+    },
+    {
+      "clave": "1702521100070",
+      "comunidad": "LOS ANDES IZACATA",
+      "n": 1,
+      "area_cat": 1815.3041541720045,
+      "suma": 9307.38,
+      "factor": 5.127173856022643,
+      "iguales": 0,
+      "sup_cult": 9307.38
+    },
+    {
+      "clave": "1702520660070",
+      "comunidad": "CHAMBITOLA",
+      "n": 3,
+      "area_cat": 6718.846878729523,
+      "suma": 33749.15,
+      "factor": 5.023056874066116,
+      "iguales": 1,
+      "sup_cult": 31000.0
+    },
+    {
+      "clave": "1702520770064",
+      "comunidad": "PUCARÁ",
+      "n": 5,
+      "area_cat": 23887.32566433141,
+      "suma": 119436.65000000001,
+      "factor": 5.000000907524905,
+      "iguales": 5,
+      "sup_cult": 22000.0
+    },
+    {
+      "clave": "1702521450005",
+      "comunidad": "LARCACHACA",
+      "n": 5,
+      "area_cat": 12464.368117036123,
+      "suma": 62321.850000000006,
+      "factor": 5.000000755338682,
+      "iguales": 5,
+      "sup_cult": 40273.0
+    },
+    {
+      "clave": "1702520280016",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 5,
+      "area_cat": 48600.09640888646,
+      "suma": 243000.5,
+      "factor": 5.000000369455393,
+      "iguales": 5,
+      "sup_cult": 18000.0
+    },
+    {
+      "clave": "1702521050015",
+      "comunidad": "LARCACHACA",
+      "n": 5,
+      "area_cat": 11823.679630573552,
+      "suma": 59118.4,
+      "factor": 5.00000015622313,
+      "iguales": 5,
+      "sup_cult": 28025.0
+    },
+    {
+      "clave": "1702550220015",
+      "comunidad": "ASOCIACIÓN ROSALÍA",
+      "n": 5,
+      "area_cat": 98055.53750021847,
+      "suma": 490277.69999999995,
+      "factor": 5.0000001274676364,
+      "iguales": 5,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520790054",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 5,
+      "area_cat": 27958.910106961688,
+      "suma": 139794.55,
+      "factor": 4.999999980871627,
+      "iguales": 5,
+      "sup_cult": 24367.120000000003
+    },
+    {
+      "clave": "1702540120206",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 260.78032120553974,
+      "suma": 1278.52,
+      "factor": 4.902670546955521,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702521550033",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 9652.44930153597,
+      "suma": 47035.75,
+      "factor": 4.872934167342927,
+      "iguales": 0,
+      "sup_cult": 21000.0
+    },
+    {
+      "clave": "1702540050119",
+      "comunidad": "OTONCITO",
+      "n": 7,
+      "area_cat": 65965.48451351371,
+      "suma": 295607.809,
+      "factor": 4.481249719911353,
+      "iguales": 4,
+      "sup_cult": 35245.89
+    },
+    {
+      "clave": "1702521100112",
+      "comunidad": "LOS ANDES IZACATA",
+      "n": 1,
+      "area_cat": 6845.518926005309,
+      "suma": 29281.54,
+      "factor": 4.277475574388221,
+      "iguales": 0,
+      "sup_cult": 6000.0
+    },
+    {
+      "clave": "1702521170022",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 8173.928125454847,
+      "suma": 34298.7,
+      "factor": 4.1961098108005945,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702520980022",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 5,
+      "area_cat": 19992.7880796234,
+      "suma": 83303.291,
+      "factor": 4.166667033544086,
+      "iguales": 4,
+      "sup_cult": 30452.72
+    },
+    {
+      "clave": "1702550340057",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 503.85919415441754,
+      "suma": 2070.1,
+      "factor": 4.108489085872624,
+      "iguales": 0,
+      "sup_cult": 500.0
+    },
+    {
+      "clave": "1702520660080",
+      "comunidad": "ASOCIACIÓN 17 DE JUNIO",
+      "n": 3,
+      "area_cat": 17241.98626627301,
+      "suma": 69645.99,
+      "factor": 4.039325221841424,
+      "iguales": 1,
+      "sup_cult": 69645.99
+    },
+    {
+      "clave": "1702520290102",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 956362.7376459587,
+      "suma": 3837280.51,
+      "factor": 4.012369322800345,
+      "iguales": 0,
+      "sup_cult": 3646024.4040800002
+    },
+    {
+      "clave": "1702521070062",
+      "comunidad": "CARRERA",
+      "n": 4,
+      "area_cat": 24318.869463699655,
+      "suma": 97276.45999999999,
+      "factor": 4.000040386137309,
+      "iguales": 4,
+      "sup_cult": 23200.0
+    },
+    {
+      "clave": "1702520790030",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 4,
+      "area_cat": 2599.375856725833,
+      "suma": 10397.52,
+      "factor": 4.000006375798493,
+      "iguales": 4,
+      "sup_cult": 2079.504
+    },
+    {
+      "clave": "1702521440058",
+      "comunidad": "COCHAPAMBA",
+      "n": 4,
+      "area_cat": 1778.5679714119203,
+      "suma": 7114.28,
+      "factor": 4.000004562295312,
+      "iguales": 4,
+      "sup_cult": 1778.5700000000002
+    },
+    {
+      "clave": "1702521470028",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 10348.236051993032,
+      "suma": 41392.96,
+      "factor": 4.00000152605988,
+      "iguales": 4,
+      "sup_cult": 11641.65
+    },
+    {
+      "clave": "1702521050001",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 12346.045316066766,
+      "suma": 49384.2,
+      "factor": 4.000001517549341,
+      "iguales": 4,
+      "sup_cult": 13025.0
+    },
+    {
+      "clave": "1702521050024",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 12625.046278381124,
+      "suma": 50500.2,
+      "factor": 4.00000117912245,
+      "iguales": 4,
+      "sup_cult": 42209.64
+    },
+    {
+      "clave": "1702520220056",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 4,
+      "area_cat": 20020.54721941602,
+      "suma": 80082.2,
+      "factor": 4.000000555546049,
+      "iguales": 4,
+      "sup_cult": 8000.0
+    },
+    {
+      "clave": "1702520180024",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 4,
+      "area_cat": 6986.969933966016,
+      "suma": 27947.88,
+      "factor": 4.000000037804075,
+      "iguales": 4,
+      "sup_cult": 6986.96
+    },
+    {
+      "clave": "1702521430070",
+      "comunidad": "LA CANDELARIA",
+      "n": 4,
+      "area_cat": 40511.94018827028,
+      "suma": 162047.76,
+      "factor": 3.999999981410885,
+      "iguales": 4,
+      "sup_cult": 19477.0
+    },
+    {
+      "clave": "1702521470024",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 10462.801270388423,
+      "suma": 41851.2,
+      "factor": 3.9999995143218756,
+      "iguales": 4,
+      "sup_cult": 41060.0
+    },
+    {
+      "clave": "1702521050026",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 13629.421987519447,
+      "suma": 54517.68,
+      "factor": 3.999999416697363,
+      "iguales": 4,
+      "sup_cult": 43631.0
+    },
+    {
+      "clave": "1702520980013",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 4,
+      "area_cat": 16371.122531759167,
+      "suma": 65484.48,
+      "factor": 3.9999993814085353,
+      "iguales": 4,
+      "sup_cult": 20669.010000000002
+    },
+    {
+      "clave": "1702521010140",
+      "comunidad": "LARCACHACA",
+      "n": 4,
+      "area_cat": 1500.5318210202438,
+      "suma": 6002.12,
+      "factor": 3.9999951456671075,
+      "iguales": 4,
+      "sup_cult": 4532.0
+    },
+    {
+      "clave": "1702520750039",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 8637.477936361662,
+      "suma": 34298.7,
+      "factor": 3.970916076741671,
+      "iguales": 0,
+      "sup_cult": 3400.0
+    },
+    {
+      "clave": "1702540170005",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 341.90071658214583,
+      "suma": 1278.52,
+      "factor": 3.739448143838037,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702520840018",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1316.823590536875,
+      "suma": 4907.97,
+      "factor": 3.727127942778576,
+      "iguales": 0,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "1702521110101",
+      "comunidad": "LOS ANDES IZACATA",
+      "n": 1,
+      "area_cat": 7962.754465312259,
+      "suma": 29281.54,
+      "factor": 3.6773129358135654,
+      "iguales": 0,
+      "sup_cult": 5200.0
+    },
+    {
+      "clave": "1702550140055",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 1700.736536941642,
+      "suma": 6136.5,
+      "factor": 3.6081426292134533,
+      "iguales": 0,
+      "sup_cult": 500.0
+    },
+    {
+      "clave": "1702520840110",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1361.2901831276176,
+      "suma": 4907.97,
+      "factor": 3.605381175028932,
+      "iguales": 0,
+      "sup_cult": 800.0
+    },
+    {
+      "clave": "1702521070020",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 5541.444361786238,
+      "suma": 19926.8,
+      "factor": 3.595957786279526,
+      "iguales": 0,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702520850024",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1396.4749806463692,
+      "suma": 4907.97,
+      "factor": 3.5145420204580455,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702520850162",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1444.7525424939379,
+      "suma": 4907.97,
+      "factor": 3.397100787604666,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702521500089",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 2385.516152096506,
+      "suma": 8052.75,
+      "factor": 3.375684542283588,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702540100046",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 1,
+      "area_cat": 3173.779573340429,
+      "suma": 10690.6,
+      "factor": 3.3684128821675086,
+      "iguales": 0,
+      "sup_cult": 2000.0
+    },
+    {
+      "clave": "1702521510168",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 14107.831644381624,
+      "suma": 47035.75,
+      "factor": 3.334016962041914,
+      "iguales": 0,
+      "sup_cult": 2500.0
+    },
+    {
+      "clave": "1702520580184",
+      "comunidad": "LA CANDELARIA",
+      "n": 5,
+      "area_cat": 41501.00625500645,
+      "suma": 136503.03,
+      "factor": 3.289149886179761,
+      "iguales": 3,
+      "sup_cult": 104002.02
+    },
+    {
+      "clave": "1702520890021",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 2453.7362293310475,
+      "suma": 8052.75,
+      "factor": 3.281831968628262,
+      "iguales": 0,
+      "sup_cult": 8000.0
+    },
+    {
+      "clave": "1702521400074",
+      "comunidad": "MILAGRO",
+      "n": 3,
+      "area_cat": 26488.13339539685,
+      "suma": 85497.31,
+      "factor": 3.227758963750079,
+      "iguales": 1,
+      "sup_cult": 58350.0
+    },
+    {
+      "clave": "1702520840201",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 793.8137288306208,
+      "suma": 2423.66,
+      "factor": 3.053184786272632,
+      "iguales": 1,
+      "sup_cult": 2423.66
+    },
+    {
+      "clave": "1702520200009",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 2828.637679765144,
+      "suma": 8485.92,
+      "factor": 3.000002460797513,
+      "iguales": 3,
+      "sup_cult": 2121.45
+    },
+    {
+      "clave": "1702521430022",
+      "comunidad": "LA CANDELARIA",
+      "n": 3,
+      "area_cat": 26632.635068810203,
+      "suma": 79897.92,
+      "factor": 3.000000555467732,
+      "iguales": 3,
+      "sup_cult": 13150.0
+    },
+    {
+      "clave": "1702520190052",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 11292.958270135423,
+      "suma": 33878.88,
+      "factor": 3.0000004595424516,
+      "iguales": 3,
+      "sup_cult": 11292.960000000001
+    },
+    {
+      "clave": "1702520840099",
+      "comunidad": "PUCARÁ",
+      "n": 3,
+      "area_cat": 2412.4296396987706,
+      "suma": 7237.289999999999,
+      "factor": 3.0000004480560465,
+      "iguales": 3,
+      "sup_cult": 6300.0
+    },
+    {
+      "clave": "1702520530016",
+      "comunidad": "LA LIBERTAD",
+      "n": 3,
+      "area_cat": 32056.005270645826,
+      "suma": 96168.03,
+      "factor": 3.000000442602327,
+      "iguales": 3,
+      "sup_cult": 11002.5
+    },
+    {
+      "clave": "1702520990057",
+      "comunidad": "CARRERA",
+      "n": 3,
+      "area_cat": 3173.2097320022667,
+      "suma": 9519.630000000001,
+      "factor": 3.0000002533690706,
+      "iguales": 3,
+      "sup_cult": 3973.21
+    },
+    {
+      "clave": "1702520770035",
+      "comunidad": "PUCARÁ",
+      "n": 3,
+      "area_cat": 10769.419117814337,
+      "suma": 32308.260000000002,
+      "factor": 3.0000002457474224,
+      "iguales": 3,
+      "sup_cult": 7484.7
+    },
+    {
+      "clave": "1702520960050",
+      "comunidad": "COCHAPAMBA",
+      "n": 3,
+      "area_cat": 2856.1598688704125,
+      "suma": 8568.48,
+      "factor": 3.0000001377334535,
+      "iguales": 3,
+      "sup_cult": 2106.0
+    },
+    {
+      "clave": "1702520290050",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 3,
+      "area_cat": 39541.309054604855,
+      "suma": 118623.93,
+      "factor": 3.0000000717271504,
+      "iguales": 3,
+      "sup_cult": 7000.0
+    },
+    {
+      "clave": "1702520280011",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 3,
+      "area_cat": 39386.575866210376,
+      "suma": 118159.73000000001,
+      "factor": 3.0000000609692217,
+      "iguales": 3,
+      "sup_cult": 32186.58
+    },
+    {
+      "clave": "1702520180001",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 9459.139917876542,
+      "suma": 28377.42,
+      "factor": 3.000000026045748,
+      "iguales": 3,
+      "sup_cult": 22071.32
+    },
+    {
+      "clave": "1702510110001",
+      "comunidad": "JUNTA SAN LUIS",
+      "n": 3,
+      "area_cat": 113154.2793718639,
+      "suma": 339462.83999999997,
+      "factor": 3.000000016653442,
+      "iguales": 3,
+      "sup_cult": 3420.43
+    },
+    {
+      "clave": "1702520190029",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 4781.139975123767,
+      "suma": 14343.420000000002,
+      "factor": 3.0000000156089763,
+      "iguales": 3,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520680046",
+      "comunidad": "SAN ANTONIO",
+      "n": 3,
+      "area_cat": 21135.550128320672,
+      "suma": 63406.649999999994,
+      "factor": 2.999999981786042,
+      "iguales": 3,
+      "sup_cult": 24035.55
+    },
+    {
+      "clave": "1702510090009",
+      "comunidad": "EL MANZANO",
+      "n": 3,
+      "area_cat": 3944.1900589508377,
+      "suma": 11832.57,
+      "factor": 2.9999999551612597,
+      "iguales": 3,
+      "sup_cult": 33029.46
+    },
+    {
+      "clave": "1702520660051",
+      "comunidad": "CHAMBITOLA",
+      "n": 3,
+      "area_cat": 29049.50067600233,
+      "suma": 87148.5,
+      "factor": 2.999999930187888,
+      "iguales": 3,
+      "sup_cult": 22100.0
+    },
+    {
+      "clave": "1702520670001",
+      "comunidad": "CHAMBITOLA",
+      "n": 3,
+      "area_cat": 20226.16049945644,
+      "suma": 60678.479999999996,
+      "factor": 2.9999999259192407,
+      "iguales": 3,
+      "sup_cult": 17613.0
+    },
+    {
+      "clave": "1702520970053",
+      "comunidad": "COMUNA IZACATA",
+      "n": 3,
+      "area_cat": 24251.85094747383,
+      "suma": 72755.54999999999,
+      "factor": 2.999999882795688,
+      "iguales": 3,
+      "sup_cult": 24751.85
+    },
+    {
+      "clave": "1702520720194",
+      "comunidad": "COCHAPAMBA",
+      "n": 3,
+      "area_cat": 27136.421162030863,
+      "suma": 81409.26,
+      "factor": 2.9999998715345484,
+      "iguales": 3,
+      "sup_cult": 18000.0
+    },
+    {
+      "clave": "1702521430094",
+      "comunidad": "LA CANDELARIA",
+      "n": 3,
+      "area_cat": 33927.061622889814,
+      "suma": 101781.18,
+      "factor": 2.999999856495988,
+      "iguales": 3,
+      "sup_cult": 22100.0
+    },
+    {
+      "clave": "1702520730089",
+      "comunidad": "JESÚS GRAN PODER",
+      "n": 3,
+      "area_cat": 59402.52305479292,
+      "suma": 178207.56,
+      "factor": 2.999999845724082,
+      "iguales": 3,
+      "sup_cult": 59402.520000000004
+    },
+    {
+      "clave": "1702520790019",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 3,
+      "area_cat": 14127.880905341506,
+      "suma": 42383.64,
+      "factor": 2.999999807754288,
+      "iguales": 3,
+      "sup_cult": 9500.0
+    },
+    {
+      "clave": "1702550330042",
+      "comunidad": "CHINCHINLOMA",
+      "n": 3,
+      "area_cat": 22860.901549390594,
+      "suma": 68582.70000000001,
+      "factor": 2.99999979667592,
+      "iguales": 3,
+      "sup_cult": 20820.3
+    },
+    {
+      "clave": "1702520270137",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 3,
+      "area_cat": 38360.76295661158,
+      "suma": 115082.28,
+      "factor": 2.9999997687784585,
+      "iguales": 3,
+      "sup_cult": 36000.0
+    },
+    {
+      "clave": "1702520530040",
+      "comunidad": "LA LIBERTAD",
+      "n": 3,
+      "area_cat": 18951.311518552324,
+      "suma": 56853.93000000001,
+      "factor": 2.999999759612576,
+      "iguales": 3,
+      "sup_cult": 32129.09
+    },
+    {
+      "clave": "1702521390078",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 3,
+      "area_cat": 17317.872089384444,
+      "suma": 51953.61,
+      "factor": 2.9999996380529144,
+      "iguales": 3,
+      "sup_cult": 17317.86
+    },
+    {
+      "clave": "1702520770007",
+      "comunidad": "PUCARÁ",
+      "n": 3,
+      "area_cat": 23568.7829077467,
+      "suma": 70706.34,
+      "factor": 2.999999629881605,
+      "iguales": 3,
+      "sup_cult": 26000.0
+    },
+    {
+      "clave": "1702520980029",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 3,
+      "area_cat": 17627.10238336922,
+      "suma": 52881.299999999996,
+      "factor": 2.999999594368518,
+      "iguales": 3,
+      "sup_cult": 16762.0
+    },
+    {
+      "clave": "1702520900053",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 3,
+      "area_cat": 32074.434882612022,
+      "suma": 96223.29000000001,
+      "factor": 2.999999543317408,
+      "iguales": 3,
+      "sup_cult": 12573.8
+    },
+    {
+      "clave": "1702520990046",
+      "comunidad": "CARRERA",
+      "n": 3,
+      "area_cat": 6804.121881971148,
+      "suma": 20412.36,
+      "factor": 2.999999170221589,
+      "iguales": 3,
+      "sup_cult": 9400.0
+    },
+    {
+      "clave": "1702521130129",
+      "comunidad": "COCHAPAMBA",
+      "n": 3,
+      "area_cat": 5438.292448961622,
+      "suma": 16314.869999999999,
+      "factor": 2.9999986490456454,
+      "iguales": 3,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702540060047",
+      "comunidad": "PAMBAMARQUITO",
+      "n": 3,
+      "area_cat": 3949.3119580043895,
+      "suma": 11847.93,
+      "factor": 2.9999985126489803,
+      "iguales": 3,
+      "sup_cult": 5923.95
+    },
+    {
+      "clave": "1702520190005",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 3149.893847595022,
+      "suma": 9449.67,
+      "factor": 2.9999963355002977,
+      "iguales": 3,
+      "sup_cult": 2362.41
+    },
+    {
+      "clave": "1702520230036",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 2231.064292574523,
+      "suma": 6693.18,
+      "factor": 2.9999942279908245,
+      "iguales": 3,
+      "sup_cult": 2581.06
+    },
+    {
+      "clave": "1702520290621",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 5728.365272513731,
+      "suma": 16871.21,
+      "factor": 2.9452049925923363,
+      "iguales": 0,
+      "sup_cult": 13496.96
+    },
+    {
+      "clave": "1702520850042",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1688.5187519937244,
+      "suma": 4907.97,
+      "factor": 2.9066718946442838,
+      "iguales": 0,
+      "sup_cult": 550.0
+    },
+    {
+      "clave": "1702540170140",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 444.3725799091273,
+      "suma": 1278.52,
+      "factor": 2.8771352189675,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520990034",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 7173.661674469064,
+      "suma": 19926.8,
+      "factor": 2.7777724827641554,
+      "iguales": 0,
+      "sup_cult": 2395.6
+    },
+    {
+      "clave": "1702520840197",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1771.9449955778077,
+      "suma": 4907.97,
+      "factor": 2.7698207406260806,
+      "iguales": 0,
+      "sup_cult": 500.0
+    },
+    {
+      "clave": "1702540170132",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 3870.9938877343434,
+      "suma": 10690.6,
+      "factor": 2.7617196797634596,
+      "iguales": 0,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "1702550130007",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 1122.9694149325876,
+      "suma": 3068.25,
+      "factor": 2.732264974629063,
+      "iguales": 0,
+      "sup_cult": 900.0
+    },
+    {
+      "clave": "1702550350036",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 1133.0997891798384,
+      "suma": 3068.25,
+      "factor": 2.707837411408279,
+      "iguales": 0,
+      "sup_cult": 1200.0
+    },
+    {
+      "clave": "1702540120249",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 477.00000004794197,
+      "suma": 1278.52,
+      "factor": 2.6803354294999986,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520140020",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 1,
+      "area_cat": 2838.4110403047043,
+      "suma": 7207.35,
+      "factor": 2.539219971194267,
+      "iguales": 0,
+      "sup_cult": 7207.35
+    },
+    {
+      "clave": "1702520470049",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 2867.2324531305917,
+      "suma": 7230.32,
+      "factor": 2.5217069484915897,
+      "iguales": 0,
+      "sup_cult": 4200.0
+    },
+    {
+      "clave": "1702520840163",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1952.6233997378731,
+      "suma": 4907.97,
+      "factor": 2.5135261621154714,
+      "iguales": 0,
+      "sup_cult": 1500.0
+    },
+    {
+      "clave": "1702520850022",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 1965.768539044472,
+      "suma": 4907.97,
+      "factor": 2.4967181550202673,
+      "iguales": 0,
+      "sup_cult": 600.0
+    },
+    {
+      "clave": "1702520260120",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 3082.5905652162946,
+      "suma": 7230.32,
+      "factor": 2.3455336824767947,
+      "iguales": 0,
+      "sup_cult": 3081.0
+    },
+    {
+      "clave": "1702520470025",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 3100.1702547806376,
+      "suma": 7230.32,
+      "factor": 2.3322332019831613,
+      "iguales": 0,
+      "sup_cult": 1400.0
+    },
+    {
+      "clave": "1702520830236",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 1,
+      "area_cat": 3464.102420600202,
+      "suma": 8052.75,
+      "factor": 2.3246281495928613,
+      "iguales": 0,
+      "sup_cult": 1800.0
+    },
+    {
+      "clave": "1702550320023",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 3,
+      "area_cat": 9841.460854420093,
+      "suma": 22751.17,
+      "factor": 2.3117675654607486,
+      "iguales": 2,
+      "sup_cult": 9841.46
+    },
+    {
+      "clave": "1702540120075",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 567.1470650087631,
+      "suma": 1278.52,
+      "factor": 2.254300654769756,
+      "iguales": 0,
+      "sup_cult": 50.0
+    },
+    {
+      "clave": "1702520080034",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 20958.064403674052,
+      "suma": 47035.75,
+      "factor": 2.2442792947880434,
+      "iguales": 0,
+      "sup_cult": 17512.5
+    },
+    {
+      "clave": "1702520370012",
+      "comunidad": "CARRERA",
+      "n": 3,
+      "area_cat": 20434.30823139555,
+      "suma": 45361.11,
+      "factor": 2.2198505320726527,
+      "iguales": 1,
+      "sup_cult": 10000.0
+    },
+    {
+      "clave": "1702520080030",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 21297.584274360834,
+      "suma": 47035.75,
+      "factor": 2.2085016494863288,
+      "iguales": 0,
+      "sup_cult": 1600.0
+    },
+    {
+      "clave": "1702520700021",
+      "comunidad": "IZACATA GRANDE",
+      "n": 3,
+      "area_cat": 29086.379767181636,
+      "suma": 63990.036,
+      "factor": 2.2000000176096304,
+      "iguales": 2,
+      "sup_cult": 15665.01
+    },
+    {
+      "clave": "1702521510002",
+      "comunidad": "ASOCIACIÓN POROTOG",
+      "n": 3,
+      "area_cat": 51980.69961316881,
+      "suma": 109737.03,
+      "factor": 2.111111062695262,
+      "iguales": 2,
+      "sup_cult": 62756.329999999994
+    },
+    {
+      "clave": "1702510040121",
+      "comunidad": "MONTESERÍN BAJO",
+      "n": 120,
+      "area_cat": 8093825.232929021,
+      "suma": 17072650.46,
+      "factor": 2.109342612259703,
+      "iguales": 2,
+      "sup_cult": 8193825.23
+    },
+    {
+      "clave": "1702540170149",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 609.1886595113211,
+      "suma": 1278.52,
+      "factor": 2.098725870940544,
+      "iguales": 0,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520900080",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 7666.0869656109335,
+      "suma": 15925.5,
+      "factor": 2.0773962089707196,
+      "iguales": 0,
+      "sup_cult": 7300.0
+    },
+    {
+      "clave": "1702520200004",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 1966.347190499552,
+      "suma": 4080.65,
+      "factor": 2.0752438937110123,
+      "iguales": 1,
+      "sup_cult": 4080.65
+    },
+    {
+      "clave": "1702520290616",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 15524.381991950571,
+      "suma": 31854.77,
+      "factor": 2.0519187183436207,
+      "iguales": 0,
+      "sup_cult": 25483.809999999998
+    },
+    {
+      "clave": "1702520740156",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 3934.281592317691,
+      "suma": 8052.75,
+      "factor": 2.0468158699479653,
+      "iguales": 0,
+      "sup_cult": 8052.75
+    },
+    {
+      "clave": "1702520290362",
+      "comunidad": "PITANA ALTO",
+      "n": 3,
+      "area_cat": 11499.914603672694,
+      "suma": 23002.189,
+      "factor": 2.0002052008850444,
+      "iguales": 0,
+      "sup_cult": 20701.73
+    },
+    {
+      "clave": "1702520470092",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 3461.3448000429735,
+      "suma": 6922.93,
+      "factor": 2.0000694527497087,
+      "iguales": 2,
+      "sup_cult": 4561.34
+    },
+    {
+      "clave": "1702520280097",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 1131.1961821944938,
+      "suma": 2262.4,
+      "factor": 2.0000067500325165,
+      "iguales": 2,
+      "sup_cult": 2231.2
+    },
+    {
+      "clave": "1702520550076",
+      "comunidad": "SAN JOSÉ",
+      "n": 2,
+      "area_cat": 2369.9064648643684,
+      "suma": 4739.82,
+      "factor": 2.0000029833545616,
+      "iguales": 2,
+      "sup_cult": 2100.0
+    },
+    {
+      "clave": "1702540230009",
+      "comunidad": "OTONCITO",
+      "n": 2,
+      "area_cat": 2407.4173619900193,
+      "suma": 4814.84,
+      "factor": 2.0000021915684605,
+      "iguales": 2,
+      "sup_cult": 2407.42
+    },
+    {
+      "clave": "1702550150001",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 3,
+      "area_cat": 1698.8583095709146,
+      "suma": 3397.72,
+      "factor": 2.0000019900766013,
+      "iguales": 1,
+      "sup_cult": 3248.8599999999997
+    },
+    {
+      "clave": "1702520720146",
+      "comunidad": "COCHAPAMBA",
+      "n": 2,
+      "area_cat": 599.8095420865661,
+      "suma": 1199.62,
+      "factor": 2.0000015268627847,
+      "iguales": 2,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "1702520270088",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 1968.9586097478082,
+      "suma": 3937.92,
+      "factor": 2.000001412170053,
+      "iguales": 2,
+      "sup_cult": 1968.96
+    },
+    {
+      "clave": "1702521040143",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 4519.0069706692475,
+      "suma": 9038.02,
+      "factor": 2.0000013407063864,
+      "iguales": 2,
+      "sup_cult": 11300.0
+    },
+    {
+      "clave": "1702520150006",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 2,
+      "area_cat": 2189.8885443443387,
+      "suma": 4379.78,
+      "factor": 2.0000013294335597,
+      "iguales": 2,
+      "sup_cult": 2189.9
+    },
+    {
+      "clave": "1702520560072",
+      "comunidad": "SAN JOSÉ",
+      "n": 2,
+      "area_cat": 7089.075980233751,
+      "suma": 14178.16,
+      "factor": 2.0000011340733996,
+      "iguales": 2,
+      "sup_cult": 14178.16
+    },
+    {
+      "clave": "1702521000178",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 7230.316123520905,
+      "suma": 14460.64,
+      "factor": 2.000001072284815,
+      "iguales": 2,
+      "sup_cult": 10872.65
+    },
+    {
+      "clave": "1702520280005",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 9346.935098782491,
+      "suma": 18693.88,
+      "factor": 2.0000010487325435,
+      "iguales": 2,
+      "sup_cult": 9246.92
+    },
+    {
+      "clave": "1702520870067",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 4757.437522162137,
+      "suma": 9514.88,
+      "factor": 2.000001041669113,
+      "iguales": 2,
+      "sup_cult": 6257.4400000000005
+    },
+    {
+      "clave": "1702520270087",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 7732.196237888602,
+      "suma": 15464.4,
+      "factor": 2.0000009731029276,
+      "iguales": 2,
+      "sup_cult": 6732.2
+    },
+    {
+      "clave": "1702521430143",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 8690.986182126078,
+      "suma": 17381.98,
+      "factor": 2.0000008785824397,
+      "iguales": 2,
+      "sup_cult": 17240.989999999998
+    },
+    {
+      "clave": "1702521090034",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 7950.356724633603,
+      "suma": 15900.72,
+      "factor": 2.0000008239545743,
+      "iguales": 2,
+      "sup_cult": 1700.0
+    },
+    {
+      "clave": "1702520790029",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 2,
+      "area_cat": 5182.047886005618,
+      "suma": 10364.1,
+      "factor": 2.0000008158914886,
+      "iguales": 2,
+      "sup_cult": 3591.02
+    },
+    {
+      "clave": "1702520580101",
+      "comunidad": "MILAGRO",
+      "n": 2,
+      "area_cat": 9465.636391675176,
+      "suma": 18931.28,
+      "factor": 2.00000076240512,
+      "iguales": 2,
+      "sup_cult": 9100.0
+    },
+    {
+      "clave": "1702521450007",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 10180.916357063123,
+      "suma": 20361.84,
+      "factor": 2.0000007156402724,
+      "iguales": 2,
+      "sup_cult": 25141.0
+    },
+    {
+      "clave": "1702520270122",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 5219.768157908669,
+      "suma": 10439.54,
+      "factor": 2.0000007058134672,
+      "iguales": 2,
+      "sup_cult": 9219.77
+    },
+    {
+      "clave": "1702520800062",
+      "comunidad": "PAMBAMARCA",
+      "n": 2,
+      "area_cat": 11588.856027115013,
+      "suma": 23177.72,
+      "factor": 2.000000685638855,
+      "iguales": 2,
+      "sup_cult": 11588.86
+    },
+    {
+      "clave": "1702520780011",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 14261.675290800476,
+      "suma": 28523.36,
+      "factor": 2.000000660399207,
+      "iguales": 2,
+      "sup_cult": 8200.0
+    },
+    {
+      "clave": "1702520580195",
+      "comunidad": "MILAGRO",
+      "n": 2,
+      "area_cat": 9328.927003576555,
+      "suma": 18657.86,
+      "factor": 2.0000006423940166,
+      "iguales": 2,
+      "sup_cult": 18200.0
+    },
+    {
+      "clave": "1702550330074",
+      "comunidad": "CHINCHINLOMA",
+      "n": 2,
+      "area_cat": 11616.046298334006,
+      "suma": 23232.1,
+      "factor": 2.000000637336646,
+      "iguales": 2,
+      "sup_cult": 11616.05
+    },
+    {
+      "clave": "1702520900009",
+      "comunidad": "CUARTO LOTE",
+      "n": 2,
+      "area_cat": 15617.775237053189,
+      "suma": 31235.56,
+      "factor": 2.0000006099392187,
+      "iguales": 2,
+      "sup_cult": 21017.78
+    },
+    {
+      "clave": "1702520940094",
+      "comunidad": "COCHAPAMBA",
+      "n": 2,
+      "area_cat": 8988.657287359594,
+      "suma": 17977.32,
+      "factor": 2.0000006035696587,
+      "iguales": 2,
+      "sup_cult": 8988.66
+    },
+    {
+      "clave": "1702520910072",
+      "comunidad": "SAN JACINTO",
+      "n": 2,
+      "area_cat": 16592.015067652377,
+      "suma": 33184.04,
+      "factor": 2.000000594544738,
+      "iguales": 2,
+      "sup_cult": 16592.02
+    },
+    {
+      "clave": "1702520200018",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 2,
+      "area_cat": 6326.148268330763,
+      "suma": 12652.3,
+      "factor": 2.000000547464006,
+      "iguales": 2,
+      "sup_cult": 8526.15
+    },
+    {
+      "clave": "1702520780013",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 13417.976361207211,
+      "suma": 26835.96,
+      "factor": 2.0000005423757936,
+      "iguales": 2,
+      "sup_cult": 1600.0
+    },
+    {
+      "clave": "1702520180002",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 7880.108074976186,
+      "suma": 15760.22,
+      "factor": 2.0000004885780234,
+      "iguales": 2,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702520920112",
+      "comunidad": "LOMA GORDA",
+      "n": 2,
+      "area_cat": 15341.59683810425,
+      "suma": 30683.2,
+      "factor": 2.0000004121990407,
+      "iguales": 2,
+      "sup_cult": 15341.6
+    },
+    {
+      "clave": "1702520740149",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 4304.569164365936,
+      "suma": 8609.14,
+      "factor": 2.0000003882544486,
+      "iguales": 2,
+      "sup_cult": 8609.14
+    },
+    {
+      "clave": "1702520830014",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 2,
+      "area_cat": 10425.817984380581,
+      "suma": 20851.64,
+      "factor": 2.000000386659238,
+      "iguales": 2,
+      "sup_cult": 10425.82
+    },
+    {
+      "clave": "1702521070022",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 4892.919202191253,
+      "suma": 9785.84,
+      "factor": 2.000000326107468,
+      "iguales": 2,
+      "sup_cult": 2728.0
+    },
+    {
+      "clave": "1702520490039",
+      "comunidad": "SAN ANTONIO",
+      "n": 2,
+      "area_cat": 10650.518429392898,
+      "suma": 21301.04,
+      "factor": 2.0000002949353335,
+      "iguales": 2,
+      "sup_cult": 14650.52
+    },
+    {
+      "clave": "1702550320080",
+      "comunidad": "CHINCHINLOMA",
+      "n": 2,
+      "area_cat": 7831.968870724501,
+      "suma": 15663.94,
+      "factor": 2.0000002883758907,
+      "iguales": 2,
+      "sup_cult": 15663.94
+    },
+    {
+      "clave": "1702520540009",
+      "comunidad": "LA LIBERTAD",
+      "n": 2,
+      "area_cat": 25283.296408929702,
+      "suma": 50566.6,
+      "factor": 2.000000284066622,
+      "iguales": 2,
+      "sup_cult": 31283.3
+    },
+    {
+      "clave": "1702521430120",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 31901.685497795057,
+      "suma": 63803.38,
+      "factor": 2.0000002822549887,
+      "iguales": 2,
+      "sup_cult": 8275.0
+    },
+    {
+      "clave": "1702520490069",
+      "comunidad": "SAN ANTONIO",
+      "n": 2,
+      "area_cat": 15760.057951167515,
+      "suma": 31520.12,
+      "factor": 2.0000002600031666,
+      "iguales": 2,
+      "sup_cult": 24500.0
+    },
+    {
+      "clave": "1702521470022",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 13168.168326629497,
+      "suma": 26336.34,
+      "factor": 2.000000254153875,
+      "iguales": 2,
+      "sup_cult": 268363.0
+    },
+    {
+      "clave": "1702520300038",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 23263.82708549567,
+      "suma": 46527.66,
+      "factor": 2.0000002505610377,
+      "iguales": 2,
+      "sup_cult": 23263.83
+    },
+    {
+      "clave": "1702520510008",
+      "comunidad": "LA LIBERTAD",
+      "n": 2,
+      "area_cat": 24494.946989083288,
+      "suma": 48989.9,
+      "factor": 2.0000002458398227,
+      "iguales": 2,
+      "sup_cult": 32044.95
+    },
+    {
+      "clave": "1702520900068",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 28601.95660136537,
+      "suma": 57203.92,
+      "factor": 2.000000237650499,
+      "iguales": 2,
+      "sup_cult": 29301.96
+    },
+    {
+      "clave": "1702520240017",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 11734.84892398533,
+      "suma": 23469.7,
+      "factor": 2.0000001833879035,
+      "iguales": 2,
+      "sup_cult": 23469.7
+    },
+    {
+      "clave": "1702520800028",
+      "comunidad": "PAMBAMARCA",
+      "n": 2,
+      "area_cat": 10602.64904535305,
+      "suma": 21205.3,
+      "factor": 2.000000180077063,
+      "iguales": 2,
+      "sup_cult": 12202.65
+    },
+    {
+      "clave": "1702521120006",
+      "comunidad": "COCHAPAMBA",
+      "n": 2,
+      "area_cat": 28156.65748869287,
+      "suma": 56313.32,
+      "factor": 2.000000178381055,
+      "iguales": 2,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702520480050",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 21760.43813583264,
+      "suma": 43520.88,
+      "factor": 2.000000171335462,
+      "iguales": 2,
+      "sup_cult": 11753.48
+    },
+    {
+      "clave": "1702520190047",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 6121.949602137293,
+      "suma": 12243.9,
+      "factor": 2.0000001299790857,
+      "iguales": 2,
+      "sup_cult": 6621.95
+    },
+    {
+      "clave": "1702520830194",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 2,
+      "area_cat": 26654.788583221816,
+      "suma": 53309.58,
+      "factor": 2.0000001063057153,
+      "iguales": 2,
+      "sup_cult": 21300.0
+    },
+    {
+      "clave": "1702520730212",
+      "comunidad": "JESÚS GRAN PODER",
+      "n": 2,
+      "area_cat": 50518.58745402192,
+      "suma": 101037.18,
+      "factor": 2.0000001007937156,
+      "iguales": 2,
+      "sup_cult": 50518.59
+    },
+    {
+      "clave": "1702520910064",
+      "comunidad": "CUARTO LOTE",
+      "n": 2,
+      "area_cat": 20745.009015749176,
+      "suma": 41490.02,
+      "factor": 2.000000094890373,
+      "iguales": 2,
+      "sup_cult": 20745.01
+    },
+    {
+      "clave": "1702520300133",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 31015.848935635957,
+      "suma": 62031.7,
+      "factor": 2.0000000686335584,
+      "iguales": 2,
+      "sup_cult": 41015.85
+    },
+    {
+      "clave": "1702520270195",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 2,
+      "area_cat": 21713.99937896284,
+      "suma": 43428.0,
+      "factor": 2.0000000572015453,
+      "iguales": 2,
+      "sup_cult": 43428.0
+    },
+    {
+      "clave": "1702520750081",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 22848.07944640281,
+      "suma": 45696.16,
+      "factor": 2.0000000484589693,
+      "iguales": 2,
+      "sup_cult": 4300.0
+    },
+    {
+      "clave": "1702520990016",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 7899.179809273846,
+      "suma": 15798.36,
+      "factor": 2.000000048290116,
+      "iguales": 2,
+      "sup_cult": 9899.18
+    },
+    {
+      "clave": "1702521630003",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 10665.419863303205,
+      "suma": 21330.84,
+      "factor": 2.0000000256336454,
+      "iguales": 2,
+      "sup_cult": 10665.42
+    },
+    {
+      "clave": "1702520300128",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 27583.96977372058,
+      "suma": 55167.94,
+      "factor": 2.0000000164065885,
+      "iguales": 2,
+      "sup_cult": 3300.0
+    },
+    {
+      "clave": "1702550330040",
+      "comunidad": "CHINCHINLOMA",
+      "n": 2,
+      "area_cat": 107548.05968729623,
+      "suma": 215096.12,
+      "factor": 2.000000005815145,
+      "iguales": 2,
+      "sup_cult": 130548.06
+    },
+    {
+      "clave": "1702521560108",
+      "comunidad": "COMUNA POROTOG",
+      "n": 2,
+      "area_cat": 114985.91988394826,
+      "suma": 229971.84,
+      "factor": 2.0000000020185382,
+      "iguales": 2,
+      "sup_cult": 115985.92
+    },
+    {
+      "clave": "1702520260042",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 23588.82999795281,
+      "suma": 47177.66,
+      "factor": 2.000000000173573,
+      "iguales": 2,
+      "sup_cult": 5488.86
+    },
+    {
+      "clave": "1702520230006",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 11773.890067668946,
+      "suma": 23547.78,
+      "factor": 1.9999999885052524,
+      "iguales": 2,
+      "sup_cult": 7886.9
+    },
+    {
+      "clave": "1702521670007",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 15156.210131303373,
+      "suma": 30312.42,
+      "factor": 1.9999999826733237,
+      "iguales": 2,
+      "sup_cult": 1080.0
+    },
+    {
+      "clave": "1702520290004",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 31859.75045475045,
+      "suma": 63719.5,
+      "factor": 1.999999971452981,
+      "iguales": 2,
+      "sup_cult": 18000.0
+    },
+    {
+      "clave": "1702520380023",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 37558.360869360054,
+      "suma": 75116.72,
+      "factor": 1.999999953706177,
+      "iguales": 2,
+      "sup_cult": 42194.36
+    },
+    {
+      "clave": "1702520530027",
+      "comunidad": "LA LIBERTAD",
+      "n": 2,
+      "area_cat": 17602.100460625494,
+      "suma": 35204.2,
+      "factor": 1.99999994766244,
+      "iguales": 2,
+      "sup_cult": 21400.0
+    },
+    {
+      "clave": "1702520980009",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 2,
+      "area_cat": 16964.48063367817,
+      "suma": 33928.96,
+      "factor": 1.9999999252935372,
+      "iguales": 2,
+      "sup_cult": 14798.68
+    },
+    {
+      "clave": "1702520920041",
+      "comunidad": "SANTA BÁRBARA",
+      "n": 2,
+      "area_cat": 110993.82429790766,
+      "suma": 221987.64,
+      "factor": 1.9999999225559137,
+      "iguales": 2,
+      "sup_cult": 100000.0
+    },
+    {
+      "clave": "1702520900027",
+      "comunidad": "CUARTO LOTE",
+      "n": 2,
+      "area_cat": 40535.80166936083,
+      "suma": 81071.6,
+      "factor": 1.999999917635238,
+      "iguales": 2,
+      "sup_cult": 21000.0
+    },
+    {
+      "clave": "1702520510007",
+      "comunidad": "LA LIBERTAD",
+      "n": 2,
+      "area_cat": 27557.02122648955,
+      "suma": 55114.04,
+      "factor": 1.999999910985332,
+      "iguales": 2,
+      "sup_cult": 55114.04
+    },
+    {
+      "clave": "1702520980044",
+      "comunidad": "SAN ANTONIO",
+      "n": 2,
+      "area_cat": 17238.090809662808,
+      "suma": 34476.18,
+      "factor": 1.999999906061197,
+      "iguales": 2,
+      "sup_cult": 168238.09
+    },
+    {
+      "clave": "1702540080056",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 2,
+      "area_cat": 22806.851360725275,
+      "suma": 45613.7,
+      "factor": 1.999999880673991,
+      "iguales": 2,
+      "sup_cult": 10000.0
+    },
+    {
+      "clave": "1702521450006",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 10890.920715649836,
+      "suma": 21781.84,
+      "factor": 1.9999998685786344,
+      "iguales": 2,
+      "sup_cult": 16400.0
+    },
+    {
+      "clave": "1702520680015",
+      "comunidad": "SAN ANTONIO",
+      "n": 2,
+      "area_cat": 37846.14272605869,
+      "suma": 75692.28,
+      "factor": 1.9999998559399454,
+      "iguales": 2,
+      "sup_cult": 42846.14
+    },
+    {
+      "clave": "1702520370016",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 33306.58255411006,
+      "suma": 66613.16,
+      "factor": 1.999999846630314,
+      "iguales": 2,
+      "sup_cult": 12000.0
+    },
+    {
+      "clave": "1702521730029",
+      "comunidad": "SANTA BÁRBARA",
+      "n": 2,
+      "area_cat": 40005.33341925683,
+      "suma": 80010.66,
+      "factor": 1.999999829059951,
+      "iguales": 2,
+      "sup_cult": 40005.33
+    },
+    {
+      "clave": "1702521050019",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 14277.281235763989,
+      "suma": 28554.56,
+      "factor": 1.999999826890853,
+      "iguales": 2,
+      "sup_cult": 26600.0
+    },
+    {
+      "clave": "1702520900077",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 2,
+      "area_cat": 8052.750778087477,
+      "suma": 16105.5,
+      "factor": 1.999999806752376,
+      "iguales": 2,
+      "sup_cult": 10900.0
+    },
+    {
+      "clave": "1702520300020",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 23014.82222448414,
+      "suma": 46029.64,
+      "factor": 1.999999806691173,
+      "iguales": 2,
+      "sup_cult": 23014.82
+    },
+    {
+      "clave": "1702520260052",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 21086.40205517265,
+      "suma": 42172.8,
+      "factor": 1.999999805071283,
+      "iguales": 2,
+      "sup_cult": 16000.0
+    },
+    {
+      "clave": "1702520580189",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 29632.85304230204,
+      "suma": 59265.7,
+      "factor": 1.9999997946669505,
+      "iguales": 2,
+      "sup_cult": 13340.0
+    },
+    {
+      "clave": "1702521100051",
+      "comunidad": "LOS ANDES IZACATA",
+      "n": 2,
+      "area_cat": 29281.543199780863,
+      "suma": 58563.08,
+      "factor": 1.9999997814472523,
+      "iguales": 2,
+      "sup_cult": 33464.61
+    },
+    {
+      "clave": "1702520300125",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 21463.592750077205,
+      "suma": 42927.18,
+      "factor": 1.9999997437449324,
+      "iguales": 2,
+      "sup_cult": 27463.59
+    },
+    {
+      "clave": "1702520270140",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 2,
+      "area_cat": 35799.9246393081,
+      "suma": 71599.84,
+      "factor": 1.999999740820231,
+      "iguales": 2,
+      "sup_cult": 27000.0
+    },
+    {
+      "clave": "1702520580070",
+      "comunidad": "MILAGRO",
+      "n": 2,
+      "area_cat": 20172.842693444978,
+      "suma": 40345.68,
+      "factor": 1.9999997329632695,
+      "iguales": 2,
+      "sup_cult": 20174.84
+    },
+    {
+      "clave": "1702520750021",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 2,
+      "area_cat": 24871.80349338424,
+      "suma": 49743.6,
+      "factor": 1.9999997190887873,
+      "iguales": 2,
+      "sup_cult": 49743.6
+    },
+    {
+      "clave": "1702520380058",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 15280.522224044822,
+      "suma": 30561.04,
+      "factor": 1.9999997089046055,
+      "iguales": 2,
+      "sup_cult": 14500.0
+    },
+    {
+      "clave": "1702520780035",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 26352.71420889609,
+      "suma": 52705.42,
+      "factor": 1.9999996805720992,
+      "iguales": 2,
+      "sup_cult": 28512.31
+    },
+    {
+      "clave": "1702520580140",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 11236.271813210004,
+      "suma": 22472.54,
+      "factor": 1.999999677257718,
+      "iguales": 2,
+      "sup_cult": 14000.0
+    },
+    {
+      "clave": "1702540060067",
+      "comunidad": "PAMBAMARQUITO",
+      "n": 2,
+      "area_cat": 18313.702961151983,
+      "suma": 36627.4,
+      "factor": 1.999999676618979,
+      "iguales": 2,
+      "sup_cult": 18313.7
+    },
+    {
+      "clave": "1702521170049",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 2,
+      "area_cat": 13573.482500615663,
+      "suma": 27146.96,
+      "factor": 1.999999631543981,
+      "iguales": 2,
+      "sup_cult": 27146.96
+    },
+    {
+      "clave": "1702540060030",
+      "comunidad": "PAMBAMARQUITO",
+      "n": 2,
+      "area_cat": 8447.831592321416,
+      "suma": 16895.66,
+      "factor": 1.9999996230224528,
+      "iguales": 2,
+      "sup_cult": 2000.0
+    },
+    {
+      "clave": "1702521070010",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 13926.382667412823,
+      "suma": 27852.76,
+      "factor": 1.9999996169266798,
+      "iguales": 2,
+      "sup_cult": 13900.0
+    },
+    {
+      "clave": "1702520780043",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 10599.522183188199,
+      "suma": 21199.04,
+      "factor": 1.9999995880591293,
+      "iguales": 2,
+      "sup_cult": 10599.52
+    },
+    {
+      "clave": "1702520990048",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 5919.711270968846,
+      "suma": 11839.42,
+      "factor": 1.9999995705976903,
+      "iguales": 2,
+      "sup_cult": 5419.71
+    },
+    {
+      "clave": "1702520150050",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 2,
+      "area_cat": 5917.831276767615,
+      "suma": 11835.66,
+      "factor": 1.999999568501515,
+      "iguales": 2,
+      "sup_cult": 3500.0
+    },
+    {
+      "clave": "1702521500007",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 2,
+      "area_cat": 21068.794655523576,
+      "suma": 42137.58,
+      "factor": 1.9999995580645547,
+      "iguales": 2,
+      "sup_cult": 21068.695
+    },
+    {
+      "clave": "1702520380007",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 10781.732715800474,
+      "suma": 21563.46,
+      "factor": 1.9999994962218883,
+      "iguales": 2,
+      "sup_cult": 3593.9
+    },
+    {
+      "clave": "1702521010043",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 2393.760612306335,
+      "suma": 4787.52,
+      "factor": 1.9999994884147296,
+      "iguales": 2,
+      "sup_cult": 8000.0
+    },
+    {
+      "clave": "1702521720001",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 5679.71146159591,
+      "suma": 11359.42,
+      "factor": 1.999999485327408,
+      "iguales": 2,
+      "sup_cult": 6179.71
+    },
+    {
+      "clave": "1702520690047",
+      "comunidad": "LA LIBERTAD",
+      "n": 2,
+      "area_cat": 4068.9411676165637,
+      "suma": 8137.88,
+      "factor": 1.9999994260833394,
+      "iguales": 2,
+      "sup_cult": 10399.93
+    },
+    {
+      "clave": "1702540120229",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 11511.683303427526,
+      "suma": 23023.36,
+      "factor": 1.9999994260739393,
+      "iguales": 2,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702521470029",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 14991.664756382495,
+      "suma": 29983.32,
+      "factor": 1.999999365463066,
+      "iguales": 2,
+      "sup_cult": 9800.0
+    },
+    {
+      "clave": "1702521000002",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 11933.408964358854,
+      "suma": 23866.809999999998,
+      "factor": 1.9999993355865258,
+      "iguales": 2,
+      "sup_cult": 5983.35
+    },
+    {
+      "clave": "1702520810015",
+      "comunidad": "PAMBAMARCA",
+      "n": 2,
+      "area_cat": 10474.133533002048,
+      "suma": 20948.26,
+      "factor": 1.9999993253853336,
+      "iguales": 2,
+      "sup_cult": 10474.130000000001
+    },
+    {
+      "clave": "1702540110021",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 2,
+      "area_cat": 8455.012926192798,
+      "suma": 16910.02,
+      "factor": 1.9999993078206213,
+      "iguales": 2,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702540080021",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 2,
+      "area_cat": 10625.923699574223,
+      "suma": 21251.84,
+      "factor": 1.9999993036700945,
+      "iguales": 2,
+      "sup_cult": 10600.0
+    },
+    {
+      "clave": "1702521450004",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 11570.024028895867,
+      "suma": 23140.04,
+      "factor": 1.9999993035630943,
+      "iguales": 2,
+      "sup_cult": 26754.0
+    },
+    {
+      "clave": "1702520270052",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 8895.423277999244,
+      "suma": 17790.84,
+      "factor": 1.9999992629919587,
+      "iguales": 2,
+      "sup_cult": 17790.84
+    },
+    {
+      "clave": "1702520780065",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 9665.523616610091,
+      "suma": 19331.04,
+      "factor": 1.9999992516473533,
+      "iguales": 2,
+      "sup_cult": 8832.76
+    },
+    {
+      "clave": "1702521070045",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 20902.24789742451,
+      "suma": 41804.48,
+      "factor": 1.9999992443468715,
+      "iguales": 2,
+      "sup_cult": 20951.120000000003
+    },
+    {
+      "clave": "1702520300186",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 7500.9228520690895,
+      "suma": 15001.84,
+      "factor": 1.999999239541815,
+      "iguales": 2,
+      "sup_cult": 15001.84
+    },
+    {
+      "clave": "1702520890082",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 6865.032624586057,
+      "suma": 13730.06,
+      "factor": 1.9999992353755034,
+      "iguales": 2,
+      "sup_cult": 13730.06
+    },
+    {
+      "clave": "1702550340033",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 1841.2907545962319,
+      "suma": 3682.58,
+      "factor": 1.9999991803616783,
+      "iguales": 2,
+      "sup_cult": 1600.0
+    },
+    {
+      "clave": "1702520300136",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 4808.13221432472,
+      "suma": 9616.26,
+      "factor": 1.9999990789251956,
+      "iguales": 2,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702521190077",
+      "comunidad": "SAN JACINTO",
+      "n": 2,
+      "area_cat": 7402.833475342539,
+      "suma": 14805.66,
+      "factor": 1.999999061077748,
+      "iguales": 2,
+      "sup_cult": 14805.66
+    },
+    {
+      "clave": "1702520190102",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 6999.033528355627,
+      "suma": 13998.06,
+      "factor": 1.9999989917591872,
+      "iguales": 2,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702520840051",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 1573.5108462765963,
+      "suma": 3147.02,
+      "factor": 1.9999989243460274,
+      "iguales": 2,
+      "sup_cult": 1573.51
+    },
+    {
+      "clave": "1702520300042",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 5485.793019423416,
+      "suma": 10971.58,
+      "factor": 1.9999988991843458,
+      "iguales": 2,
+      "sup_cult": 5485.74
+    },
+    {
+      "clave": "1702520280009",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 8060.6245046884105,
+      "suma": 16121.24,
+      "factor": 1.9999988822979142,
+      "iguales": 2,
+      "sup_cult": 5100.0
+    },
+    {
+      "clave": "1702550340060",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 4765.252828040038,
+      "suma": 9530.5,
+      "factor": 1.9999988130577158,
+      "iguales": 2,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "1702520220104",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 7951.754913101934,
+      "suma": 15903.5,
+      "factor": 1.9999987642722927,
+      "iguales": 2,
+      "sup_cult": 7951.75
+    },
+    {
+      "clave": "1702540170008",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 3296.4322745786494,
+      "suma": 6592.86,
+      "factor": 1.9999986199755007,
+      "iguales": 2,
+      "sup_cult": 4924.639999999999
+    },
+    {
+      "clave": "1702521040121",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 6284.974964087549,
+      "suma": 12569.94,
+      "factor": 1.9999984203317986,
+      "iguales": 2,
+      "sup_cult": 7800.0
+    },
+    {
+      "clave": "1702540120167",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 2017.111752373853,
+      "suma": 4034.22,
+      "factor": 1.9999982624920498,
+      "iguales": 2,
+      "sup_cult": 2117.1099999999997
+    },
+    {
+      "clave": "1702540120017",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 2370.982498345662,
+      "suma": 4741.96,
+      "factor": 1.999997892565075,
+      "iguales": 2,
+      "sup_cult": 3556.4700000000003
+    },
+    {
+      "clave": "1702520180038",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 3091.3542714663918,
+      "suma": 6182.7,
+      "factor": 1.9999972365080048,
+      "iguales": 2,
+      "sup_cult": 900.0
+    },
+    {
+      "clave": "1702510070083",
+      "comunidad": "JUNTA SAN LUIS",
+      "n": 2,
+      "area_cat": 175175.63580598158,
+      "suma": 350350.64,
+      "factor": 1.9999963944074743,
+      "iguales": 2,
+      "sup_cult": 191175.64
+    },
+    {
+      "clave": "1702540050103",
+      "comunidad": "PAMBAMARCA",
+      "n": 2,
+      "area_cat": 2529.0049461039653,
+      "suma": 5058.0,
+      "factor": 1.9999960884979897,
+      "iguales": 2,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520840007",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 1463.493130311135,
+      "suma": 2926.98,
+      "factor": 1.999995722137576,
+      "iguales": 2,
+      "sup_cult": 1463.49
+    },
+    {
+      "clave": "1702521010019",
+      "comunidad": "LARCACHACA",
+      "n": 2,
+      "area_cat": 1693.4139117584232,
+      "suma": 3386.82,
+      "factor": 1.9999953800327304,
+      "iguales": 2,
+      "sup_cult": 500.0
+    },
+    {
+      "clave": "1702520280010",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 1322.223409644791,
+      "suma": 2644.44,
+      "factor": 1.9999948425587293,
+      "iguales": 2,
+      "sup_cult": 2122.2200000000003
+    },
+    {
+      "clave": "1702520660112",
+      "comunidad": "CHAMBITOLA",
+      "n": 2,
+      "area_cat": 1673.2047874617951,
+      "suma": 3346.4,
+      "factor": 1.9999942774945052,
+      "iguales": 2,
+      "sup_cult": 3173.2
+    },
+    {
+      "clave": "1702520190132",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 904.6149076540465,
+      "suma": 1809.22,
+      "factor": 1.999989149738734,
+      "iguales": 2,
+      "sup_cult": 603.08
+    },
+    {
+      "clave": "1702540120120",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 428.9442587345357,
+      "suma": 857.88,
+      "factor": 1.9999801431796838,
+      "iguales": 2,
+      "sup_cult": 428.94
+    },
+    {
+      "clave": "1702521000143",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 1737.3007244821217,
+      "suma": 3461.59,
+      "factor": 1.9925105373060141,
+      "iguales": 0,
+      "sup_cult": 1870.0
+    },
+    {
+      "clave": "1702520900118",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 4118.184773651665,
+      "suma": 8052.75,
+      "factor": 1.955412503956079,
+      "iguales": 0,
+      "sup_cult": 2000.0
+    },
+    {
+      "clave": "1702521170019",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 17800.331310466023,
+      "suma": 34298.7,
+      "factor": 1.9268573939313962,
+      "iguales": 0,
+      "sup_cult": 1100.0
+    },
+    {
+      "clave": "1702520740151",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 4134.028840697934,
+      "suma": 7962.75,
+      "factor": 1.9261476653500258,
+      "iguales": 0,
+      "sup_cult": 900.0
+    },
+    {
+      "clave": "1702520890083",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 4237.021051807003,
+      "suma": 8052.75,
+      "factor": 1.9005687962219746,
+      "iguales": 0,
+      "sup_cult": 2700.0
+    },
+    {
+      "clave": "17025401700200200020000",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 1,
+      "area_cat": 3600.0973,
+      "suma": 6840.0,
+      "factor": 1.8999486486101362,
+      "iguales": 0,
+      "sup_cult": 6840.0
+    },
+    {
+      "clave": "1702521720041",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 57164.659532917314,
+      "suma": 106829.32,
+      "factor": 1.8688000746070066,
+      "iguales": 1,
+      "sup_cult": 53664.66
+    },
+    {
+      "clave": "1702520830051",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 1,
+      "area_cat": 4311.449540343495,
+      "suma": 8052.75,
+      "factor": 1.8677593056924504,
+      "iguales": 0,
+      "sup_cult": 1500.0
+    },
+    {
+      "clave": "1702520740089",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 4333.082631317284,
+      "suma": 7962.75,
+      "factor": 1.8376640090935157,
+      "iguales": 0,
+      "sup_cult": 5000.0
+    },
+    {
+      "clave": "1702520770072",
+      "comunidad": "PUCARÁ",
+      "n": 5,
+      "area_cat": 23694.544348421387,
+      "suma": 43326.42,
+      "factor": 1.828539910407121,
+      "iguales": 1,
+      "sup_cult": 35494.54
+    },
+    {
+      "clave": "1702520780019",
+      "comunidad": "PITANA ALTO",
+      "n": 1,
+      "area_cat": 7469.523964402316,
+      "suma": 13417.98,
+      "factor": 1.7963634716143062,
+      "iguales": 0,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702521550062",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 26542.70429191057,
+      "suma": 47035.75,
+      "factor": 1.7720782887346977,
+      "iguales": 0,
+      "sup_cult": 5308.5
+    },
+    {
+      "clave": "1702521380038",
+      "comunidad": "COMUNA IZACATA",
+      "n": 1,
+      "area_cat": 3433.222723119054,
+      "suma": 6078.64,
+      "factor": 1.7705347104535085,
+      "iguales": 0,
+      "sup_cult": 6078.64
+    },
+    {
+      "clave": "1702520830050",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 1,
+      "area_cat": 4645.922846274697,
+      "suma": 8052.75,
+      "factor": 1.733293958262145,
+      "iguales": 0,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702521430214",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 27175.372071392427,
+      "suma": 47035.75,
+      "factor": 1.7308226682759806,
+      "iguales": 0,
+      "sup_cult": 9058.45
+    },
+    {
+      "clave": "1702520840161",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 2865.52361240278,
+      "suma": 4907.97,
+      "factor": 1.7127655060167526,
+      "iguales": 0,
+      "sup_cult": 2400.0
+    },
+    {
+      "clave": "1702520270098",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 2,
+      "area_cat": 21445.226130167368,
+      "suma": 36445.229999999996,
+      "factor": 1.6994565493870855,
+      "iguales": 1,
+      "sup_cult": 19645.23
+    },
+    {
+      "clave": "1702520830081",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 1,
+      "area_cat": 4768.137631006847,
+      "suma": 8052.75,
+      "factor": 1.6888669378235983,
+      "iguales": 0,
+      "sup_cult": 8052.75
+    },
+    {
+      "clave": "1702521000004",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 4289.939227136925,
+      "suma": 7230.32,
+      "factor": 1.6854131532360805,
+      "iguales": 0,
+      "sup_cult": 3800.0
+    },
+    {
+      "clave": "1702520200013",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 3,
+      "area_cat": 11376.395203643064,
+      "suma": 19140.66,
+      "factor": 1.682489018478418,
+      "iguales": 1,
+      "sup_cult": 7186.23
+    },
+    {
+      "clave": "1702520290297",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 24647.736281939375,
+      "suma": 40370.57,
+      "factor": 1.6379017341881221,
+      "iguales": 0,
+      "sup_cult": 32296.449999999997
+    },
+    {
+      "clave": "1702540130011",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 6528.025398072006,
+      "suma": 10690.6,
+      "factor": 1.6376468147868073,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702520780012",
+      "comunidad": "PITANA ALTO",
+      "n": 3,
+      "area_cat": 15294.240354895717,
+      "suma": 25026.11,
+      "factor": 1.6363094484773866,
+      "iguales": 0,
+      "sup_cult": 7100.0
+    },
+    {
+      "clave": "17025101000200500280000",
+      "comunidad": "JUNTA SAN LUIS",
+      "n": 1,
+      "area_cat": 1722.2172,
+      "suma": 2800.0,
+      "factor": 1.6258111926881231,
+      "iguales": 0,
+      "sup_cult": 800.0
+    },
+    {
+      "clave": "1702520780020",
+      "comunidad": "PITANA ALTO",
+      "n": 1,
+      "area_cat": 8278.843619558571,
+      "suma": 13417.98,
+      "factor": 1.6207553393447778,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702520860014",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 4970.460908744864,
+      "suma": 8052.75,
+      "factor": 1.6201213826734375,
+      "iguales": 0,
+      "sup_cult": 5000.0
+    },
+    {
+      "clave": "1702520980028",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 2,
+      "area_cat": 4064.210209501862,
+      "suma": 6580.34,
+      "factor": 1.6190944023061573,
+      "iguales": 1,
+      "sup_cult": 4573.93
+    },
+    {
+      "clave": "1702521110091",
+      "comunidad": "COMUNA IZACATA",
+      "n": 2,
+      "area_cat": 10091.932873271742,
+      "suma": 16170.57,
+      "factor": 1.6023263534409142,
+      "iguales": 1,
+      "sup_cult": 15091.93
+    },
+    {
+      "clave": "1702550340040",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 4,
+      "area_cat": 25912.334587651087,
+      "suma": 41459.740000000005,
+      "factor": 1.6000001798278056,
+      "iguales": 1,
+      "sup_cult": 7182.47
+    },
+    {
+      "clave": "1702521510074",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 29740.593523598545,
+      "suma": 47035.75,
+      "factor": 1.5815336692147084,
+      "iguales": 0,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520980016",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 1,
+      "area_cat": 2572.287296552573,
+      "suma": 4064.21,
+      "factor": 1.57999847273939,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702550350029",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 440.3175109513704,
+      "suma": 680.64,
+      "factor": 1.5457936218102653,
+      "iguales": 1,
+      "sup_cult": 0
+    },
+    {
+      "clave": "17025401700200200050000",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 2,
+      "area_cat": 4577.3256,
+      "suma": 7068.017,
+      "factor": 1.544136820854518,
+      "iguales": 0,
+      "sup_cult": 6800.0
+    },
+    {
+      "clave": "1702520900119",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 1,
+      "area_cat": 5298.373719648625,
+      "suma": 8052.75,
+      "factor": 1.519853152324264,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702520480042",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 4144.176690651329,
+      "suma": 6216.27,
+      "factor": 1.500001197830927,
+      "iguales": 1,
+      "sup_cult": 2372.09
+    },
+    {
+      "clave": "1702520380022",
+      "comunidad": "LA CANDELARIA",
+      "n": 2,
+      "area_cat": 12409.73643540562,
+      "suma": 18614.61,
+      "factor": 1.5000004308626211,
+      "iguales": 1,
+      "sup_cult": 6704.87
+    },
+    {
+      "clave": "1702520830061",
+      "comunidad": "ASOC. SAN VICENTE ALTO",
+      "n": 2,
+      "area_cat": 18930.386009532365,
+      "suma": 28395.585,
+      "factor": 1.5000003161954252,
+      "iguales": 1,
+      "sup_cult": 28395.59
+    },
+    {
+      "clave": "1702520180051",
+      "comunidad": "SANTA MARIANITA DE PINGULMI",
+      "n": 2,
+      "area_cat": 29079.97762889511,
+      "suma": 43619.97,
+      "factor": 1.5000001223060546,
+      "iguales": 1,
+      "sup_cult": 7050.0
+    },
+    {
+      "clave": "1702520950040",
+      "comunidad": "COCHAPAMBA",
+      "n": 3,
+      "area_cat": 13347.87855527212,
+      "suma": 20021.379999999997,
+      "factor": 1.4999671983149705,
+      "iguales": 0,
+      "sup_cult": 11347.880000000001
+    },
+    {
+      "clave": "1702520740001",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 52834.165152988215,
+      "suma": 77834.17,
+      "factor": 1.4731787617845575,
+      "iguales": 1,
+      "sup_cult": 31800.0
+    },
+    {
+      "clave": "1702520290045",
+      "comunidad": "PITANA ALTO",
+      "n": 2,
+      "area_cat": 56124.564426286,
+      "suma": 82249.12,
+      "factor": 1.465474535807329,
+      "iguales": 1,
+      "sup_cult": 3500.0
+    },
+    {
+      "clave": "1702540120071",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 874.0981524327699,
+      "suma": 1278.0,
+      "factor": 1.4620783677932505,
+      "iguales": 0,
+      "sup_cult": 974.1
+    },
+    {
+      "clave": "1702521490062",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 2379.86345576124,
+      "suma": 3461.59,
+      "factor": 1.4545330286156066,
+      "iguales": 0,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702521580063",
+      "comunidad": "LOS ANDES IZACATA",
+      "n": 1,
+      "area_cat": 20366.80265169962,
+      "suma": 29281.54,
+      "factor": 1.43770922224537,
+      "iguales": 0,
+      "sup_cult": 6000.0
+    },
+    {
+      "clave": "1702520680109",
+      "comunidad": "SAN ANTONIO",
+      "n": 1,
+      "area_cat": 6164.440234307734,
+      "suma": 8767.33,
+      "factor": 1.4222426800743524,
+      "iguales": 0,
+      "sup_cult": 876733.0
+    },
+    {
+      "clave": "1702520850052",
+      "comunidad": "PUCARÁ",
+      "n": 2,
+      "area_cat": 12000.509554453925,
+      "suma": 16908.48,
+      "factor": 1.4089801706565457,
+      "iguales": 1,
+      "sup_cult": 1150.0
+    },
+    {
+      "clave": "1702520890105",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 2426.849579105423,
+      "suma": 3402.47,
+      "factor": 1.4020110802475887,
+      "iguales": 0,
+      "sup_cult": 6804.94
+    },
+    {
+      "clave": "1702521500098",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 5838.563495100257,
+      "suma": 8052.75,
+      "factor": 1.3792348078012506,
+      "iguales": 0,
+      "sup_cult": 20500.0
+    },
+    {
+      "clave": "1702520980094",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 1,
+      "area_cat": 2963.2165317565223,
+      "suma": 4064.21,
+      "factor": 1.3715534981815303,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702540120146",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 945.1599663352094,
+      "suma": 1278.52,
+      "factor": 1.3527022361700003,
+      "iguales": 0,
+      "sup_cult": 100.0
+    },
+    {
+      "clave": "1702520990073",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 8652.599454223284,
+      "suma": 11652.6,
+      "factor": 1.3467166788025111,
+      "iguales": 1,
+      "sup_cult": 1700.0
+    },
+    {
+      "clave": "1702520970012",
+      "comunidad": "IZACATA GRANDE",
+      "n": 2,
+      "area_cat": 27637.884652938512,
+      "suma": 36850.44,
+      "factor": 1.3333306967138672,
+      "iguales": 1,
+      "sup_cult": 13691.13
+    },
+    {
+      "clave": "1702520790020",
+      "comunidad": "ASOC. PITANA BAJO",
+      "n": 6,
+      "area_cat": 34767.13017008939,
+      "suma": 46066.445,
+      "factor": 1.3249999288014735,
+      "iguales": 1,
+      "sup_cult": 14776.042
+    },
+    {
+      "clave": "1702520750043",
+      "comunidad": "ASOCIACIÓN SAN PEDRO",
+      "n": 1,
+      "area_cat": 26183.682704173065,
+      "suma": 34298.7,
+      "factor": 1.3099265060423906,
+      "iguales": 0,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702520070001",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 36272.93275273535,
+      "suma": 47035.75,
+      "factor": 1.2967175916166587,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702550140015",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 2378.756706763755,
+      "suma": 3068.25,
+      "factor": 1.2898544820812234,
+      "iguales": 0,
+      "sup_cult": 0
+    },
+    {
+      "clave": "1702520980061",
+      "comunidad": "SAN JOSÉ",
+      "n": 1,
+      "area_cat": 15533.111347822625,
+      "suma": 20000.0,
+      "factor": 1.2875720486484201,
+      "iguales": 0,
+      "sup_cult": 20000.0
+    },
+    {
+      "clave": "1702520570013",
+      "comunidad": "MILAGRO",
+      "n": 2,
+      "area_cat": 9300.229382252932,
+      "suma": 11936.21,
+      "factor": 1.283431785325333,
+      "iguales": 1,
+      "sup_cult": 11500.0
+    },
+    {
+      "clave": "1702520980105",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 2,
+      "area_cat": 14437.325720482151,
+      "suma": 18501.54,
+      "factor": 1.2815074175234527,
+      "iguales": 1,
+      "sup_cult": 5500.0
+    },
+    {
+      "clave": "1702520080058",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 37031.222243928416,
+      "suma": 47035.75,
+      "factor": 1.27016466510802,
+      "iguales": 0,
+      "sup_cult": 9000.0
+    },
+    {
+      "clave": "1702520940017",
+      "comunidad": "COCHAPAMBA",
+      "n": 2,
+      "area_cat": 37064.176209949175,
+      "suma": 47064.18,
+      "factor": 1.2698024025518881,
+      "iguales": 1,
+      "sup_cult": 47064.18
+    },
+    {
+      "clave": "1702521500070",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 6351.686848488899,
+      "suma": 8052.75,
+      "factor": 1.2678128176164405,
+      "iguales": 0,
+      "sup_cult": 3000.0
+    },
+    {
+      "clave": "1702521400038",
+      "comunidad": "SAN JOSÉ",
+      "n": 1,
+      "area_cat": 7905.25261614998,
+      "suma": 10000.0,
+      "factor": 1.2649817134964885,
+      "iguales": 0,
+      "sup_cult": 10000.0
+    },
+    {
+      "clave": "1702520980002",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 1,
+      "area_cat": 3230.589290208237,
+      "suma": 4064.21,
+      "factor": 1.2580398295501158,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702520890088",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 42741.520536866716,
+      "suma": 52741.52,
+      "factor": 1.2339645229632805,
+      "iguales": 1,
+      "sup_cult": 11200.0
+    },
+    {
+      "clave": "1702521630048",
+      "comunidad": "PITANA ALTO",
+      "n": 4,
+      "area_cat": 15886.08209875705,
+      "suma": 19586.08,
+      "factor": 1.2329081442637417,
+      "iguales": 1,
+      "sup_cult": 19286.08
+    },
+    {
+      "clave": "1702520440031",
+      "comunidad": "CARRERA",
+      "n": 2,
+      "area_cat": 32852.37191492069,
+      "suma": 39853.6,
+      "factor": 1.213111799148345,
+      "iguales": 0,
+      "sup_cult": 7536.0
+    },
+    {
+      "clave": "1702520980005",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 1,
+      "area_cat": 3375.457843081939,
+      "suma": 4064.21,
+      "factor": 1.2040470327098503,
+      "iguales": 0,
+      "sup_cult": 3975.46
+    },
+    {
+      "clave": "1702550140016",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 3686.2961373400567,
+      "suma": 4423.55,
+      "factor": 1.199998544661669,
+      "iguales": 1,
+      "sup_cult": 1037.26
+    },
+    {
+      "clave": "1702550140041",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 1,
+      "area_cat": 2557.9695652921773,
+      "suma": 3068.25,
+      "factor": 1.1994865152547416,
+      "iguales": 0,
+      "sup_cult": 1000.0
+    },
+    {
+      "clave": "1702520590053",
+      "comunidad": "ASOCIACIÓN POROTOG",
+      "n": 2,
+      "area_cat": 53830.90457642003,
+      "suma": 63830.9,
+      "factor": 1.1857668100186514,
+      "iguales": 1,
+      "sup_cult": 63830.9
+    },
+    {
+      "clave": "1702540170158",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1083.9240737681848,
+      "suma": 1278.52,
+      "factor": 1.1795291118088338,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702520980007",
+      "comunidad": "CORDILLERAS DE LOS ANDES",
+      "n": 1,
+      "area_cat": 3474.932392548997,
+      "suma": 4064.21,
+      "factor": 1.1695795891495733,
+      "iguales": 0,
+      "sup_cult": 4064.21
+    },
+    {
+      "clave": "1702520860067",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 6971.666559459578,
+      "suma": 8052.75,
+      "factor": 1.1550681506810654,
+      "iguales": 0,
+      "sup_cult": 5000.0
+    },
+    {
+      "clave": "1702520290513",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 31854.89497601337,
+      "suma": 36692.12,
+      "factor": 1.1518518591139304,
+      "iguales": 0,
+      "sup_cult": 29353.690000000002
+    },
+    {
+      "clave": "1702520280040",
+      "comunidad": "PROMEJ. PITANA BAJO",
+      "n": 8,
+      "area_cat": 29349.443103600108,
+      "suma": 33541.39,
+      "factor": 1.1428288394298594,
+      "iguales": 0,
+      "sup_cult": 29555.85
+    },
+    {
+      "clave": "1702550130013",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 9,
+      "area_cat": 5716.701366811379,
+      "suma": 6513.341,
+      "factor": 1.139353025822471,
+      "iguales": 0,
+      "sup_cult": 1466.67
+    },
+    {
+      "clave": "1702540120116",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1122.426757287393,
+      "suma": 1278.52,
+      "factor": 1.1390676422306991,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702520890014",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 3,
+      "area_cat": 20158.643058133785,
+      "suma": 22645.04,
+      "factor": 1.1233414835857707,
+      "iguales": 0,
+      "sup_cult": 12619.54
+    },
+    {
+      "clave": "1702520980001",
+      "comunidad": "COCHAPAMBA",
+      "n": 1,
+      "area_cat": 3618.319212022529,
+      "suma": 4064.21,
+      "factor": 1.1232314679412245,
+      "iguales": 0,
+      "sup_cult": 2346.12
+    },
+    {
+      "clave": "1702521390212",
+      "comunidad": "SANTA ROSA DE PINGULMI",
+      "n": 1,
+      "area_cat": 1452.1678404217148,
+      "suma": 1629.85,
+      "factor": 1.1223564898164151,
+      "iguales": 0,
+      "sup_cult": 1629.85
+    },
+    {
+      "clave": "1702520700049",
+      "comunidad": "COMUNA IZACATA",
+      "n": 1,
+      "area_cat": 5431.6574378310615,
+      "suma": 6078.64,
+      "factor": 1.1191132853229582,
+      "iguales": 0,
+      "sup_cult": 6630.75
+    },
+    {
+      "clave": "1702540110224",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 9658.106270806373,
+      "suma": 10690.6,
+      "factor": 1.1069043661607405,
+      "iguales": 0,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702540120027",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 2,
+      "area_cat": 12007.712516536341,
+      "suma": 13286.23,
+      "factor": 1.1064746913038563,
+      "iguales": 1,
+      "sup_cult": 400.0
+    },
+    {
+      "clave": "1702550350001",
+      "comunidad": "CANGAHUA PUNGO",
+      "n": 2,
+      "area_cat": 1015.5866689747809,
+      "suma": 1115.5900000000001,
+      "factor": 1.0984685345724075,
+      "iguales": 1,
+      "sup_cult": 1015.59
+    },
+    {
+      "clave": "1702520770104",
+      "comunidad": "PUCARÁ",
+      "n": 1,
+      "area_cat": 4542.225832018638,
+      "suma": 4907.97,
+      "factor": 1.0805209123252286,
+      "iguales": 0,
+      "sup_cult": 4000.0
+    },
+    {
+      "clave": "1702521110103",
+      "comunidad": "COMUNA IZACATA",
+      "n": 1,
+      "area_cat": 5636.370544746078,
+      "suma": 6078.64,
+      "factor": 1.0784670652404467,
+      "iguales": 0,
+      "sup_cult": 5000.0
+    },
+    {
+      "clave": "1702540170170",
+      "comunidad": "CHAUPIESTANCIA",
+      "n": 1,
+      "area_cat": 1185.8814450688315,
+      "suma": 1278.52,
+      "factor": 1.0781178888634957,
+      "iguales": 0,
+      "sup_cult": 200.0
+    },
+    {
+      "clave": "1702520470095",
+      "comunidad": "CARRERA",
+      "n": 1,
+      "area_cat": 3233.6505300475274,
+      "suma": 3461.59,
+      "factor": 1.0704898280857587,
+      "iguales": 0,
+      "sup_cult": 3399.0
+    },
+    {
+      "clave": "1702520860122",
+      "comunidad": "SANTA ROSA DE PACCHA",
+      "n": 1,
+      "area_cat": 3198.4940921624666,
+      "suma": 3402.47,
+      "factor": 1.0637724822870087,
+      "iguales": 0,
+      "sup_cult": 3500.0
+    },
+    {
+      "clave": "1702520080148",
+      "comunidad": "COMUNA POROTOG",
+      "n": 1,
+      "area_cat": 44254.404482951475,
+      "suma": 47035.75,
+      "factor": 1.0628490101616892,
+      "iguales": 0,
+      "sup_cult": 250.0
+    },
+    {
+      "clave": "1702520290703",
+      "comunidad": "ALPAKA",
+      "n": 1,
+      "area_cat": 22803.65148654633,
+      "suma": 24053.56,
+      "factor": 1.0548117705706515,
+      "iguales": 0,
+      "sup_cult": 19242.84
+    },
+    {
+      "clave": "1702520740018",
+      "comunidad": "ASOC. SAN VICENTE BAJO",
+      "n": 2,
+      "area_cat": 15133.765225773961,
+      "suma": 15925.5,
+      "factor": 1.0523157827820437,
+      "iguales": 0,
+      "sup_cult": 300.0
+    },
+    {
+      "clave": "17025401700200200060000",
+      "comunidad": "PUEBLO DE OTÓN",
+      "n": 1,
+      "area_cat": 4466.4737,
+      "suma": 4700.0,
+      "factor": 1.0522842662210237,
+      "iguales": 0,
+      "sup_cult": 4700.0
+    }
+  ]
+}
