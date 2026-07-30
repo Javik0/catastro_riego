@@ -22,6 +22,14 @@ import struct
 import os
 import math
 import re
+import sys
+
+# Nombre de comunidad: canonizar y renombrar SOLO desde este módulo, compartido
+# con generar_capas_sectores_comunidades.py y generar_gpkg_cliente.py. Si cada
+# script normaliza a su manera, las claves dejan de coincidir y el dato se
+# pierde en silencio (ver docs/METODOLOGIA-CAUDAL.md).
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from comunidades_canon import canonica as _norm_com, nombre_publico  # noqa: E402
 
 # ── Directorios ───────────────────────────────────────────────
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'public', 'geo')
@@ -628,6 +636,20 @@ def export_fichas():
 
         features.append({'type': 'Feature', 'properties': props, 'geometry': geom})
 
+    # Renombres de presentación (comunidades_canon.py). Se aplica al final, sobre
+    # TODAS las fichas: los bloques de corrección de arriba tienen `continue` y
+    # no cubren el 100%. El data.gpkg no se toca, así que en QField los técnicos
+    # siguen viendo el nombre original y no hace falta resincronizar.
+    renombradas = 0
+    for feat in features:
+        p = feat['properties']
+        nuevo = nombre_publico(p.get('comunidad'))
+        if nuevo and nuevo != (p.get('comunidad') or '').strip():
+            p['comunidad'] = nuevo
+            renombradas += 1
+    if renombradas:
+        print(f"  ✓ {renombradas} fichas con comunidad renombrada para presentación")
+
     _save(features, 'fichas_predios.geojson')
     print(f"  ✓ {len(features)} fichas exportadas ({sin_geom} sin coordenadas GPS — geometry: null)")
     conn.close()
@@ -1131,16 +1153,15 @@ def export_stats(fichas):
 # Las claves van en NOMBRE CANÓNICO (ver scripts/comunidades_canon.py): sin
 # acentos y ya corregidas, para que coincidan con las capas de comunidades y
 # sectores. Si no coinciden, el caudal de esa comunidad se pierde en silencio.
+#
+# Se aceptan el nombre original y el renombrado de presentación porque este
+# cálculo corre sobre las fichas YA exportadas: si solo estuviera una de las dos
+# claves, un renombre futuro dejaría la comunidad en 0 l/s sin que nada falle.
 CAUDAL_ACTA = {
     'ALPAKA': 18.5,
     'MONTESERIN BAJO': 14.65,
+    'SR. COLOMA MONTESERRIN BAJO': 14.65,
 }
-
-# Nombre canónico compartido con generar_capas_sectores_comunidades.py y
-# generar_gpkg_cliente.py. Nunca normalizar la comunidad por cuenta propia.
-import sys  # noqa: E402
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from comunidades_canon import canonica as _norm_com  # noqa: E402
 
 
 def calcular_caudal_por_comunidad(fichas):

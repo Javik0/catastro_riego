@@ -1,4 +1,4 @@
-import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
+import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
@@ -122,7 +122,7 @@ export default function Header({ onMobileMenuOpen }: Props) {
             const nuevoSec = e.target.value;
             setFiltro('sectorInv', nuevoSec);
             if (nuevoSec && filtros.comunidad) {
-              const pertenecientes = COMUNIDADES_POR_SECTOR[nuevoSec] || [];
+              const pertenecientes = COMUNIDADES_POR_SECTOR_FILTRO[nuevoSec] || [];
               if (!pertenecientes.includes(filtros.comunidad)) {
                 setFiltro('comunidad', '');
               }
@@ -146,8 +146,8 @@ export default function Header({ onMobileMenuOpen }: Props) {
         <select value={filtros.comunidad} onChange={(e) => setFiltro('comunidad', e.target.value)}
           className={`${inputClass} min-w-[130px] hidden md:block`} style={inputStyle}>
           <option value="">Comunidad</option>
-          {(filtros.sectorInv 
-            ? (COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []) 
+          {(filtros.sectorInv
+            ? (COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || [])
             : COMUNIDADES
           ).map((c) => {
             const hasFichas = comunidadesConFichas.has(c.trim().toUpperCase());

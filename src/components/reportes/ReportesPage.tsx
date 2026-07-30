@@ -6,7 +6,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, META_COMUNEROS } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -33,7 +33,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
 
   useEffect(() => {
     if (filtros.sectorInv && filterComunidad) {
-      const pertenecientes = COMUNIDADES_POR_SECTOR[filtros.sectorInv] || [];
+      const pertenecientes = COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || [];
       if (!pertenecientes.includes(filterComunidad)) {
         setFilterComunidad('');
       }
@@ -70,6 +70,44 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   const tecnicosUnicos = useMemo(() => {
     return Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre))).sort();
   }, []);
+
+  // ── Fichas adicionales que no pasaron por la Sección 7 ──
+  // El desglose del listado sale de Predios_Adicionales, la tabla que llena el
+  // técnico en la Sección 7. Las fichas adicionales creadas por script — los 118
+  // comuneros de SR. COLOMA MONTESERRIN BAJO — tienen su ficha_madre_id correcto
+  // pero ningún registro ahí, así que quedaban invisibles: el cuadro de avance
+  // las contaba y el detalle mostraba solo la ficha madre.
+  // Se arman aquí como registros equivalentes, indexados por ficha madre.
+  const adicionalesSinSeccion7 = useMemo(() => {
+    const yaListadas = new Set<string>();
+    prediosAdicionalesData.forEach((pa) => {
+      if (pa.ficha_hija_generada_id) yaListadas.add(pa.ficha_hija_generada_id);
+      if (pa.id_adicional) yaListadas.add(pa.id_adicional);
+    });
+
+    const porMadre = new Map<string, PredioAdicional[]>();
+    allFichas.forEach((h) => {
+      if (!esFichaHija(h) || !h.ficha_madre_id || yaListadas.has(h.id)) return;
+      const lista = porMadre.get(h.ficha_madre_id) || [];
+      lista.push({
+        id_adicional: h.id,
+        ficha_id: h.ficha_madre_id,
+        ficha_hija_generada_id: h.id,
+        clave_catastral_otro: h.clave_catastral || '',
+        area_total_otro: h.area_total,
+        area_riego_otro: h.area_riego,
+      });
+      porMadre.set(h.ficha_madre_id, lista);
+    });
+    return porMadre;
+  }, [allFichas, prediosAdicionalesData]);
+
+  /** Predios adicionales de una ficha: los de la Sección 7 más las fichas hijas
+   *  vinculadas que nunca tuvieron registro ahí. */
+  const adicionalesDe = (fichaId: string): PredioAdicional[] => [
+    ...prediosAdicionalesData.filter((pa) => pa.ficha_id === fichaId),
+    ...(adicionalesSinSeccion7.get(fichaId) || []),
+  ];
 
   const getFilteredFichas = (): FichaPredio[] => {
     // El padrón lista REGANTES, no parcelas: las fichas adicionales (generadas
@@ -217,7 +255,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         ]);
 
         // Desglose de predios adicionales (tanto físicos como unificados virtuales)
-        const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
+        const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
           // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
           const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
@@ -647,7 +685,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         });
 
         // Predios Adicionales
-        const adicionales = prediosAdicionalesData.filter((pa) => pa.ficha_id === f.id);
+        const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
           const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
 
@@ -1076,12 +1114,12 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   className="px-3 py-2 rounded-lg text-sm cursor-pointer min-w-[220px]" style={selectStyle}>
                   <option value="">
                     {filtros.sectorInv 
-                      ? `Comunidades del ${filtros.sectorInv} (${(COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []).length})`
+                      ? `Comunidades del ${filtros.sectorInv} (${(COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || []).length})`
                       : `Todas las comunidades (${COMUNIDADES.length})`
                     }
                   </option>
-                  {(filtros.sectorInv 
-                    ? (COMUNIDADES_POR_SECTOR[filtros.sectorInv] || []) 
+                  {(filtros.sectorInv
+                    ? (COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || [])
                     : COMUNIDADES
                   ).map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>

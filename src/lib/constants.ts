@@ -183,8 +183,27 @@ export const PROJECT_LOCATION = 'Provincia Pichincha — Cantón Cayambe';
 export const LOGO_PICHINCHA = '/logo-izq.png';
 export const LOGO_CONSORCIO = '/logo-der.png';
 
+// ── Comunidades que quedaron fuera de la investigación ──
+// No corresponden al sistema o no se llegó a levantar ninguna ficha en ellas,
+// así que no tiene sentido ofrecerlas en los selectores de filtro (JAVIKO,
+// 2026-07-30). SIGUEN contando en META_COMUNEROS y en COMUNIDADES_POR_SECTOR
+// porque el avance se mide contra el padrón oficial completo: sacarlas del
+// denominador subiría el porcentaje de cobertura sin haber levantado una ficha.
+export const COMUNIDADES_SIN_INVESTIGAR: ReadonlySet<string> = new Set([
+  'AVELLANEDA',
+  'MATÍAS IMBAGO',
+  'SAN VICENTE DE GUAYLLABAMBA',
+  'SR. COLOMA',
+  'SR. HERNÁN TIMPE',
+  'HDA. SAN FRANSISCO',
+]);
+
 // ── Comunidades Unificadas Oficiales (Depuradas de QField) ──
-export const COMUNIDADES = [
+// Catálogo COMPLETO del padrón. Los selectores no lo usan directamente: usan
+// COMUNIDADES, que se deriva quitando las sin investigar. Mantener dos listas a
+// mano es cómo SAN VICENTE DE GUAYLLABAMBA se quedó en el selector cuando ya se
+// había depurado del resto.
+export const COMUNIDADES_TODAS = [
   'ALPAKA',
   'ASOC. PITANA BAJO',
   'ASOC. SAN VICENTE ALTO',
@@ -217,7 +236,6 @@ export const COMUNIDADES = [
   'LOS ANDES IZACATA',
   'MATÍAS IMBAGO',
   'MILAGRO',
-  'MONTESERÍN BAJO',
   'MONTESERRÍN ALTO',
   'OTONCITO',
   'PAMBAMARCA',
@@ -236,10 +254,28 @@ export const COMUNIDADES = [
   'SANTA ROSA DE PACCHA',
   'SANTA ROSA DE PINGULMI',
   'SR. COLOMA',
+  // Renombrada desde 'MONTESERÍN BAJO' (JAVIKO, 2026-07-30). Ver
+  // RENOMBRES_PRESENTACION en scripts/comunidades_canon.py: el dato de campo
+  // conserva el nombre original, solo cambia lo que se muestra.
+  'SR. COLOMA MONTESERRIN BAJO',
   'SR. HERNÁN TIMPE',
 ] as const;
 
+/** Lo que se ofrece en los selectores: el catálogo menos las sin investigar. */
+export const COMUNIDADES: readonly string[] = COMUNIDADES_TODAS.filter(
+  (c) => !COMUNIDADES_SIN_INVESTIGAR.has(c)
+);
+
 // ── Mapeo oficial de Comunidades por Sector de Investigación (QField) ──
+// Es el PADRÓN OFICIAL: alimenta las metas de cobertura y decide a qué sector
+// pertenece cada ficha, así que incluye comunidades sin investigar a propósito.
+// Para los selectores usar COMUNIDADES_POR_SECTOR_FILTRO.
+//
+// Una comunidad NO debe repetirse en dos sectores: App.tsx los recorre en orden
+// y se queda con el primero, así que la duplicada quedaba asignada al sector
+// equivocado y su meta se contaba dos veces en el total global. Le pasaba a
+// ASOCIACIÓN ROSALÍA, que estaba en Sector 2 y Sector 3 y mandaba sus 47 fichas
+// al Sector 2 cuando en campo son del Sector 3.
 export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
   'Sector 1': [
     "ASOCIACIÓN 17 DE JUNIO", "ASOCIACIÓN POROTOG", "AVELLANEDA",
@@ -251,8 +287,10 @@ export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
     "SAN JOSÉ", "SANTA BÁRBARA"
   ],
   'Sector 2': [
+    // ASOCIACIÓN ROSALÍA salió de aquí: no correspondía al Sector 2 y no se
+    // investigó (JAVIKO, 2026-07-30). Sus 47 fichas son del Sector 3.
     "ALPAKA", "ASOC. PITANA BAJO", "ASOC. SAN VICENTE ALTO",
-    "ASOC. SAN VICENTE BAJO", "ASOCIACIÓN ROSALÍA", "ASOCIACIÓN SAN PEDRO",
+    "ASOC. SAN VICENTE BAJO", "ASOCIACIÓN SAN PEDRO",
     "CUARTO LOTE", "PAMBAMARCA", "PITANA ALTO", "PROMEJ. PITANA BAJO",
     "PUCARÁ", "SANTA MARIANITA DE PINGULMI", "SANTA ROSA DE PACCHA",
     "SANTA ROSA DE PINGULMI"
@@ -260,12 +298,22 @@ export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
   'Sector 3': [
     "ASOCIACIÓN ROSALÍA", "CANGAHUA PUNGO", "CHAUPIESTANCIA",
     "CHINCHINLOMA", "EL MANZANO", "HDA. GUANGUILQUI",
-    "HDA. SAN FRANSISCO", "JUNTA SAN LUIS", "MONTESERÍN BAJO",
+    "HDA. SAN FRANSISCO", "JUNTA SAN LUIS",
     "MONTESERRÍN ALTO", "OTONCITO", "PAMBAMARQUITO", "PUEBLO DE ASCÁZUBI",
     "PUEBLO DE OTÓN", "SAN VICENTE DE GUAYLLABAMBA", "SR. COLOMA",
-    "SR. HERNÁN TIMPE"
+    "SR. COLOMA MONTESERRIN BAJO", "SR. HERNÁN TIMPE"
   ]
 };
+
+// Lo que se ofrece en los SELECTORES: el padrón oficial menos las comunidades
+// donde no se levantó ninguna ficha. Nunca usar para calcular metas o cobertura.
+export const COMUNIDADES_POR_SECTOR_FILTRO: Record<string, string[]> =
+  Object.fromEntries(
+    Object.entries(COMUNIDADES_POR_SECTOR).map(([sector, comunidades]) => [
+      sector,
+      comunidades.filter((c) => !COMUNIDADES_SIN_INVESTIGAR.has(c)),
+    ])
+  );
 
 // ── Meta de comuneros planificados por comunidad (Catastro Oficial) ──
 export const META_COMUNEROS: Record<string, number> = {
@@ -317,7 +365,10 @@ export const META_COMUNEROS: Record<string, number> = {
   "CHINCHINLOMA": 80,
   "ASOCIACIÓN ROSALÍA": 41,
   "SR. COLOMA": 16,
-  "MONTESERÍN BAJO": 118,
+  // 118 comuneros del acta. Sobre el mismo polígono hay además 4 fichas
+  // principales (hacienda, comunidad, bosque productivo y páramo), así que el
+  // levantado da 122 y la cobertura pasa del 100%.
+  "SR. COLOMA MONTESERRIN BAJO": 118,
   "HDA. GUANGUILQUI": 15,
   "PUEBLO DE ASCÁZUBI": 16,
   "EL MANZANO": 19,

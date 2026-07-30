@@ -24,6 +24,22 @@ CORRECCIONES_COM en este archivo y NO en ningún otro.
 import re
 import unicodedata
 
+# Renombres de PRESENTACIÓN: el nombre con el que la comunidad aparece en la
+# web, el mapa y el entregable del cliente. El `data.gpkg` NO se toca — en
+# QField los técnicos siguen viendo el nombre original, así que renombrar aquí
+# no obliga a coordinar una ventana de sincronización.
+#
+# Un renombre es TAMBIÉN una corrección canónica (se fusiona abajo en
+# CORRECCIONES_COM): si solo cambiara el texto mostrado, los scripts que leen
+# el data.gpkg crudo seguirían agrupando por el nombre viejo y no cruzarían con
+# los que leen el GeoJSON ya renombrado — que es exactamente cómo el caudal de
+# Monteserrín volvió a quedar en 0 l/s la primera vez.
+RENOMBRES_PRESENTACION = {
+    # Monteserrín Bajo se reestructuró en 4 fichas a nombre del Sr. Coloma más
+    # 118 adicionales de los comuneros (JAVIKO, 2026-07-30).
+    'MONTESERIN BAJO': 'SR. COLOMA MONTESERRIN BAJO',
+}
+
 # Escrituras erróneas detectadas en campo → nombre correcto.
 # La comparación es por subcadena sobre el nombre ya normalizado, así que
 # 'INSACATA' captura también 'INSACATA GRANDE'.
@@ -38,6 +54,7 @@ CORRECCIONES_COM = {
     'PANBAMAQUITO': 'PAMBAMARQUITO',
     'PAMBAMAQUITO': 'PAMBAMARQUITO',
     'PANBAMARQUITO': 'PAMBAMARQUITO',
+    **RENOMBRES_PRESENTACION,
 }
 
 
@@ -58,6 +75,21 @@ def canonica(com):
         if normalizar(original) in com_norm:
             return correcto
     return com_norm
+
+
+_NOMBRES_RENOMBRADOS = frozenset(RENOMBRES_PRESENTACION.values())
+
+
+def nombre_publico(com):
+    """Nombre con el que la comunidad se muestra al cliente.
+
+    Devuelve el nombre tal cual viene del campo salvo que tenga un renombre
+    explícito. NO canoniza el resto: si lo hiciera, todas las comunidades
+    perderían sus acentos ('SAN JOSÉ' -> 'SAN JOSE') y dejarían de coincidir
+    con las constantes del frontend.
+    """
+    c = canonica(com)
+    return c if c in _NOMBRES_RENOMBRADOS else (com or '').strip()
 
 
 # Alias histórico: generar_capas_sectores_comunidades.py llamaba así a canonica().

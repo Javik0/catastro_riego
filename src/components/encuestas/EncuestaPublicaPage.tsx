@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { submitEncuestaPublica } from '../../lib/firestoreService';
-import { NIVELES_INSTRUCCION, TIPOS_CULTIVO, ESPECIES_ANIMALES, MATERIALES_CONSTRUCCION, PROJECT_SUBTITLE, LOGO_PICHINCHA, LOGO_CONSORCIO, PARROQUIAS, COMUNIDADES_POR_SECTOR } from '../../lib/constants';
+import { NIVELES_INSTRUCCION, TIPOS_CULTIVO, ESPECIES_ANIMALES, MATERIALES_CONSTRUCCION, PROJECT_SUBTITLE, LOGO_PICHINCHA, LOGO_CONSORCIO, PARROQUIAS, COMUNIDADES_POR_SECTOR_FILTRO } from '../../lib/constants';
 import { 
   User, Home, Sprout, Map, 
   ArrowRight, ArrowLeft, Plus, Trash2, CheckCircle2, AlertCircle, Loader2
@@ -476,7 +476,7 @@ export default function EncuestaPublicaPage() {
                       className="w-full bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl px-3 py-2 text-sm focus:outline-none transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <option value="">{sectorInv ? 'Seleccione su comunidad' : 'Seleccione primero su sector'}</option>
-                      {sectorInv && (COMUNIDADES_POR_SECTOR[sectorInv] || []).map(c => <option key={c} value={c}>{c}</option>)}
+                      {sectorInv && (COMUNIDADES_POR_SECTOR_FILTRO[sectorInv] || []).map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div>
