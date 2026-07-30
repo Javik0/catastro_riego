@@ -63,8 +63,10 @@ TECNICOS = {
     'u0_a362': 'Martha Simbaña', 'u0_a335': 'Martha Simbaña', 'jvk-editor4': 'Martha Simbaña',
     'u0_a2': 'JVK-DIGITALIZACION', 'jvk-digitalizacion': 'JVK-DIGITALIZACION',
     'u0_a302': 'Dylan Chavez', 'jvk-editor3': 'Dylan Chavez',
-    'u0_a200': 'Melanie2', 'jvk-corp': 'Melany Recalde',
-    'AUTO-SECCION7': 'Generada desde la Sección 7',
+    # Melany Recalde usa dos cuentas (jvk-corp en Pambamarca, u0_a200 en San Antonio)
+    'u0_a200': 'Melany Recalde', 'jvk-corp': 'Melany Recalde',
+    # No se mapea 'AUTO-SECCION7': esas fichas heredan el técnico de su ficha
+    # madre en tecnico_de(), porque el trabajo es de quien levantó al regante.
 }
 
 _tr = Transformer.from_crs("EPSG:4326", "EPSG:32717", always_xy=True)
@@ -638,6 +640,20 @@ def main():
         return ("https://firebasestorage.googleapis.com/v0/b/{}/o/fotos_predios%2F{}?alt=media"
                 .format(BUCKET, base.replace(' ', '%20')))
 
+    def tecnico_de(f, madre):
+        """Técnico al que pertenece la ficha (misma regla que la web).
+
+        Una adicional generada por script queda con creado_por='AUTO-SECCION7',
+        que no es ningún técnico. El trabajo es de quien levantó al regante, así
+        que se hereda de la ficha madre: completado_por -> madre -> propio.
+        Sin esto el entregable mostraba 2.404 fichas como "Generada desde la
+        Sección 7" en vez del técnico real.
+        """
+        u = (txt(f.get('completado_por')) if es_hija(f) else None) \
+            or (txt(madre.get('creado_por')) if madre else None) \
+            or txt(f.get('creado_por'))
+        return TECNICOS.get(u, u)
+
     ins_f = "INSERT INTO fichas (geom,{}) VALUES ({})".format(
         ",".join(c for c, _ in CAMPOS_FICHA), ",".join('?' * (len(CAMPOS_FICHA) + 1)))
     bbf = [1e18, -1e18, 1e18, -1e18]
@@ -667,7 +683,7 @@ def main():
             num(f.get('valor_tarifa')), txt(f.get('tipo_tarifa')), txt(f.get('tiene_reservorio')),
             txt(f.get('agua_consumo')), txt(f.get('energia_electrica')), txt(f.get('material_construccion')),
             num(f.get('cota_msnm')), txt(f.get('org_riego')), txt(f.get('actividad_productiva')),
-            txt(f.get('observaciones')), TECNICOS.get(txt(f.get('creado_por')), txt(f.get('creado_por'))),
+            txt(f.get('observaciones')), tecnico_de(f, madre),
             txt(f.get('fecha_creacion')), foto_url(f)))
     registrar_capa(cur, 'fichas', 'POINT', 'Fichas de empadronamiento',
                    'Una fila por ficha. Se enlaza al predio por la clave catastral.', bbf)
