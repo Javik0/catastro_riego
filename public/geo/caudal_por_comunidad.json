@@ -1,0 +1,242 @@
+{
+  "nota": "El caudal es por COMUNIDAD (los tecnicos anotaron en cada ficha el caudal que recibe su comunidad). Para totales use este archivo: NO sume caudal_valor ficha a ficha.",
+  "regla": "moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta",
+  "comunidades": {
+    "LARCACHACA": {
+      "caudal_ls": 28.6,
+      "fichas": 226,
+      "origen": "moda (204 de 226 fichas)"
+    },
+    "CHAMBITOLA": {
+      "caudal_ls": 32.5,
+      "fichas": 156,
+      "origen": "moda (81 de 156 fichas)"
+    },
+    "LA LIBERTAD": {
+      "caudal_ls": 31.5,
+      "fichas": 151,
+      "origen": "moda (104 de 151 fichas)"
+    },
+    "CARRERA": {
+      "caudal_ls": 0.8,
+      "fichas": 939,
+      "origen": "moda (412 de 939 fichas)"
+    },
+    "SAN ANTONIO": {
+      "caudal_ls": 34.32,
+      "fichas": 160,
+      "origen": "moda (84 de 160 fichas)"
+    },
+    "COMUNA IZACATA": {
+      "caudal_ls": 9.0,
+      "fichas": 80,
+      "origen": "moda (76 de 80 fichas)"
+    },
+    "SAN JOSE": {
+      "caudal_ls": 12.38,
+      "fichas": 190,
+      "origen": "moda (124 de 190 fichas)"
+    },
+    "MILAGRO": {
+      "caudal_ls": 4.16,
+      "fichas": 74,
+      "origen": "moda (53 de 74 fichas)"
+    },
+    "ASOCIACION 17 DE JUNIO": {
+      "caudal_ls": 37.5,
+      "fichas": 31,
+      "origen": "moda (30 de 31 fichas)"
+    },
+    "COMUNA POROTOG": {
+      "caudal_ls": 0.54,
+      "fichas": 228,
+      "origen": "moda (216 de 228 fichas)"
+    },
+    "LA CANDELARIA": {
+      "caudal_ls": 42.55,
+      "fichas": 314,
+      "origen": "moda (188 de 314 fichas)"
+    },
+    "COCHAPAMBA": {
+      "caudal_ls": 37.0,
+      "fichas": 354,
+      "origen": "moda (326 de 354 fichas)"
+    },
+    "SAN JACINTO": {
+      "caudal_ls": 2.17,
+      "fichas": 6,
+      "origen": "moda (6 de 6 fichas)"
+    },
+    "LOMA GORDA": {
+      "caudal_ls": 7.2,
+      "fichas": 58,
+      "origen": "moda (57 de 58 fichas)"
+    },
+    "JESUS GRAN PODER": {
+      "caudal_ls": 15.0,
+      "fichas": 51,
+      "origen": "moda (48 de 51 fichas)"
+    },
+    "SANTA BARBARA": {
+      "caudal_ls": 12.35,
+      "fichas": 10,
+      "origen": "moda (10 de 10 fichas)"
+    },
+    "ASOCIACION POROTOG": {
+      "caudal_ls": 1.08,
+      "fichas": 69,
+      "origen": "moda (43 de 69 fichas)"
+    },
+    "CORDILLERAS DE LOS ANDES": {
+      "caudal_ls": 5.9,
+      "fichas": 53,
+      "origen": "moda (53 de 53 fichas)"
+    },
+    "IZACATA": {
+      "caudal_ls": 10.34,
+      "fichas": 44,
+      "origen": "moda (44 de 44 fichas)"
+    },
+    "LOS ANDES IZACATA": {
+      "caudal_ls": 9.51,
+      "fichas": 106,
+      "origen": "moda (79 de 106 fichas)"
+    },
+    "SANTA ROSA DE PINGULMI": {
+      "caudal_ls": 12.0,
+      "fichas": 119,
+      "origen": "moda (94 de 119 fichas)"
+    },
+    "CUARTO LOTE": {
+      "caudal_ls": 7.0,
+      "fichas": 65,
+      "origen": "moda (62 de 65 fichas)"
+    },
+    "ASOC. SAN VICENTE BAJO": {
+      "caudal_ls": 28.0,
+      "fichas": 150,
+      "origen": "moda (150 de 150 fichas)"
+    },
+    "ASOC. SAN VICENTE ALTO": {
+      "caudal_ls": 3.0,
+      "fichas": 95,
+      "origen": "moda (82 de 95 fichas)"
+    },
+    "ASOCIACION ROSALIA": {
+      "caudal_ls": 17.99,
+      "fichas": 47,
+      "origen": "moda (47 de 47 fichas)"
+    },
+    "SANTA ROSA DE PACCHA": {
+      "caudal_ls": 6.5,
+      "fichas": 95,
+      "origen": "moda (93 de 95 fichas)"
+    },
+    "PUCARA": {
+      "caudal_ls": 18.0,
+      "fichas": 349,
+      "origen": "moda (344 de 349 fichas)"
+    },
+    "ASOCIACION SAN PEDRO": {
+      "caudal_ls": 4.0,
+      "fichas": 45,
+      "origen": "moda (45 de 45 fichas)"
+    },
+    "PITANA ALTO": {
+      "caudal_ls": 23.75,
+      "fichas": 133,
+      "origen": "moda (85 de 133 fichas)"
+    },
+    "ASOC. PITANA BAJO": {
+      "caudal_ls": 16.0,
+      "fichas": 75,
+      "origen": "moda (73 de 75 fichas)"
+    },
+    "PROMEJ. PITANA BAJO": {
+      "caudal_ls": 10.97,
+      "fichas": 188,
+      "origen": "moda (119 de 188 fichas)"
+    },
+    "SANTA MARIANITA DE PINGULMI": {
+      "caudal_ls": 24.0,
+      "fichas": 326,
+      "origen": "moda (309 de 326 fichas)"
+    },
+    "PAMBAMARCA": {
+      "caudal_ls": 11.33,
+      "fichas": 110,
+      "origen": "moda (87 de 110 fichas)"
+    },
+    "PAMBAMARQUITO": {
+      "caudal_ls": 17.0,
+      "fichas": 70,
+      "origen": "moda (70 de 70 fichas)"
+    },
+    "OTONCITO": {
+      "caudal_ls": 11.2,
+      "fichas": 79,
+      "origen": "moda (77 de 79 fichas)"
+    },
+    "PUEBLO DE OTON": {
+      "caudal_ls": 29.6,
+      "fichas": 195,
+      "origen": "moda (190 de 195 fichas)"
+    },
+    "CHAUPIESTANCIA": {
+      "caudal_ls": 17.0,
+      "fichas": 191,
+      "origen": "moda (117 de 191 fichas)"
+    },
+    "MONTESERRIN ALTO": {
+      "caudal_ls": 13.01,
+      "fichas": 64,
+      "origen": "moda (61 de 64 fichas)"
+    },
+    "CHINCHINLOMA": {
+      "caudal_ls": 22.0,
+      "fichas": 130,
+      "origen": "moda (128 de 130 fichas)"
+    },
+    "CANGAHUA PUNGO": {
+      "caudal_ls": 33.0,
+      "fichas": 159,
+      "origen": "moda (153 de 159 fichas)"
+    },
+    "JUNTA SAN LUIS": {
+      "caudal_ls": 7.7,
+      "fichas": 47,
+      "origen": "moda (29 de 47 fichas)"
+    },
+    "MONTESERIN BAJO": {
+      "caudal_ls": 14.65,
+      "fichas": 120,
+      "origen": "acta de campo"
+    },
+    "EL MANZANO": {
+      "caudal_ls": 9.11,
+      "fichas": 20,
+      "origen": "moda (15 de 20 fichas)"
+    },
+    "HDA. GUANGUILQUI": {
+      "caudal_ls": 18.0,
+      "fichas": 4,
+      "origen": "moda (4 de 4 fichas)"
+    },
+    "PUEBLO DE ASCAZUBI": {
+      "caudal_ls": 5.0,
+      "fichas": 2,
+      "origen": "moda (1 de 2 fichas)"
+    },
+    "ALPAKA": {
+      "caudal_ls": 18.5,
+      "fichas": 492,
+      "origen": "acta de campo"
+    }
+  },
+  "totales": {
+    "caudal_comunidades_ls": 732.71,
+    "caudal_individual_ls": 216.65,
+    "fichas_individuales": 110,
+    "caudal_sistema_ls": 949.36
+  }
+}

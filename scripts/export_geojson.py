@@ -1109,6 +1109,96 @@ def export_stats(fichas):
     print(f"  ✓ {stats['fichas']} fichas principales + {stats['fichas_hijas']} hijas, {stats['predios']} predios, {stats['tecnicos']} técnicos → stats.json")
 
 
+# ══════════════════════════════════════════════════════════════
+# Caudal por comunidad — FUENTE ÚNICA DE VERDAD
+# ══════════════════════════════════════════════════════════════
+# El sistema entrega el agua A LAS COMUNIDADES, no a cada regante. Los técnicos
+# anotaron en cada ficha el caudal QUE RECIBE LA COMUNIDAD, así que ese valor
+# está repetido en todas las fichas de la comunidad. Sumarlo ficha a ficha
+# multiplica el mismo dato: el padrón "sumaba" 166.495 l/s, físicamente
+# imposible. El caudal real de una comunidad es UN valor, no la suma.
+#
+# Regla acordada con el cliente (2026-07-30): el caudal de la comunidad es la
+# MODA de lo declarado en sus fichas (el valor que más se repite). Las fichas
+# 'Recibe individual' sí se suman aparte, porque ahí cada regante tiene su
+# propia concesión.
+#
+# Dos comunidades llevan el valor del acta en vez de la moda: en ALPAKA y en
+# MONTESERÍN BAJO repartimos el caudal comunal entre las fichas (0,03 l/s por
+# lote y 65/35 respectivamente), así que su moda ya no representa la llave
+# comunal.
+#
+# Las claves van en NOMBRE CANÓNICO (ver scripts/comunidades_canon.py): sin
+# acentos y ya corregidas, para que coincidan con las capas de comunidades y
+# sectores. Si no coinciden, el caudal de esa comunidad se pierde en silencio.
+CAUDAL_ACTA = {
+    'ALPAKA': 18.5,
+    'MONTESERIN BAJO': 14.65,
+}
+
+# Nombre canónico compartido con generar_capas_sectores_comunidades.py y
+# generar_gpkg_cliente.py. Nunca normalizar la comunidad por cuenta propia.
+import sys  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from comunidades_canon import canonica as _norm_com  # noqa: E402
+
+
+def calcular_caudal_por_comunidad(fichas):
+    """[{properties}] → dict con el caudal oficial de cada comunidad y los totales."""
+    from collections import Counter, defaultdict
+    por_com = defaultdict(list)
+    individual_total = 0.0
+    individual_n = 0
+    for f in fichas:
+        p = f['properties'] if 'properties' in f else f
+        v = p.get('caudal_valor')
+        if not v or v <= 0:
+            continue
+        if (p.get('caudal_tipo') or '') == 'Recibe individual':
+            individual_total += v
+            individual_n += 1
+        else:
+            por_com[_norm_com(p.get('comunidad')) or '(SIN COMUNIDAD)'].append(round(v, 2))
+
+    comunidades = {}
+    for com, vals in por_com.items():
+        if com in CAUDAL_ACTA:
+            comunidades[com] = {'caudal_ls': CAUDAL_ACTA[com], 'fichas': len(vals),
+                                'origen': 'acta de campo'}
+        else:
+            moda, veces = Counter(vals).most_common(1)[0]
+            comunidades[com] = {'caudal_ls': round(moda, 4), 'fichas': len(vals),
+                                'origen': 'moda ({} de {} fichas)'.format(veces, len(vals))}
+
+    suma_com = round(sum(c['caudal_ls'] for c in comunidades.values()), 2)
+    return {
+        'nota': ('El caudal es por COMUNIDAD (los tecnicos anotaron en cada ficha el '
+                 'caudal que recibe su comunidad). Para totales use este archivo: NO '
+                 'sume caudal_valor ficha a ficha.'),
+        'regla': 'moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta',
+        'comunidades': comunidades,
+        'totales': {
+            'caudal_comunidades_ls': suma_com,
+            'caudal_individual_ls': round(individual_total, 2),
+            'fichas_individuales': individual_n,
+            'caudal_sistema_ls': round(suma_com + individual_total, 2),
+        },
+    }
+
+
+def export_caudal_por_comunidad(fichas):
+    print("\n💧 Calculando caudal por comunidad (una vez por comunidad, no por ficha)...")
+    data = calcular_caudal_por_comunidad(fichas)
+    path = os.path.join(OUTPUT_DIR, 'caudal_por_comunidad.json')
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+    t = data['totales']
+    print(f"  ✓ {len(data['comunidades'])} comunidades → {t['caudal_comunidades_ls']:,.2f} l/s")
+    print(f"  ✓ {t['fichas_individuales']} fichas 'Recibe individual' → {t['caudal_individual_ls']:,.2f} l/s")
+    print(f"  ✓ CAUDAL DEL SISTEMA: {t['caudal_sistema_ls']:,.2f} l/s → caudal_por_comunidad.json")
+    return data
+
+
 def export_auditoria_fichas_hijas(fichas):
     """Control de fichas hijas por sector/estado/técnico → auditoria_fichas_hijas.json"""
     print("\n📋 Generando auditoría de fichas hijas...")
@@ -1200,6 +1290,7 @@ if __name__ == '__main__':
     export_ramales()
     export_tablas_hijas()
     export_stats(fichas)
+    export_caudal_por_comunidad(fichas)
     export_auditoria_fichas_hijas(fichas)
 
     # Escribir reporte histórico de depuración en logs_depuracion/

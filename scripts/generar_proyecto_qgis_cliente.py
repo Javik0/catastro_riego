@@ -98,7 +98,7 @@ GRUPOS_PREDIO = [
     ('Fichas levantadas', 4,
      ['total_fichas', 'fichas_principales', 'fichas_adicionales', 'adicionales_pendientes']),
     ('Superficies y caudal', 2,
-     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_ls']),
+     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_comunidad_ls']),
     ('Producción declarada', 1, ['cultivos_predio', 'animales_predio']),
 ]
 

@@ -37,6 +37,9 @@ import struct
 import sys
 from datetime import datetime, timezone
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from comunidades_canon import canonica  # noqa: E402
+
 from pyproj import Transformer
 
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -424,6 +427,29 @@ def main():
         len(fichas), len(catastro), len(poligonos)))
     print("      cultivos {:,} | animales {:,}".format(len(cultivos), len(animales)))
 
+    # ── caudal oficial por comunidad (una vez, nunca sumado por ficha) ──
+    # El nombre se canoniza con scripts/comunidades_canon.py, igual que en
+    # export_geojson.py y en las capas de comunidades/sectores. Si aqui se
+    # normalizara de otra forma, comunidades con acento ("SAN JOSE") o mal
+    # escritas quedarian sin caudal en el entregable.
+    try:
+        _cau = cargar('caudal_por_comunidad.json')
+        CAUDAL_COM = {canonica(k): v.get('caudal_ls', 0)
+                      for k, v in _cau.get('comunidades', {}).items()}
+        print("      caudal: {} comunidades | sistema {:,.2f} l/s".format(
+            len(CAUDAL_COM), _cau.get('totales', {}).get('caudal_sistema_ls', 0)))
+    except Exception:
+        CAUDAL_COM = {}
+        print("      [aviso] falta caudal_por_comunidad.json; el caudal quedara vacio")
+
+    _sin_caudal = set()
+
+    def caudal_comunal(comunidad):
+        clave = canonica(comunidad)
+        if clave and clave not in CAUDAL_COM:
+            _sin_caudal.add(clave)
+        return CAUDAL_COM.get(clave)
+
     # ── estado de cada predio ──
     print("\n[2/6] Clasificando predios...")
     por_clave = {}
@@ -454,7 +480,8 @@ def main():
         ('propietario_catastro', 'TEXT'), ('area_catastro_m2', 'REAL'),
         ('total_fichas', 'INTEGER'), ('fichas_principales', 'INTEGER'),
         ('fichas_adicionales', 'INTEGER'), ('adicionales_pendientes', 'INTEGER'),
-        ('area_declarada_m2', 'REAL'), ('area_riego_m2', 'REAL'), ('caudal_ls', 'REAL'),
+        ('area_declarada_m2', 'REAL'), ('area_riego_m2', 'REAL'),
+        ('caudal_comunidad_ls', 'REAL'),
         ('cultivos_predio', 'TEXT'), ('animales_predio', 'TEXT'),
     ]
     crear_tabla(cur, 'predios_investigados', cols_predios)
@@ -506,7 +533,9 @@ def main():
                 len(fs), len(ppal), len(adic), sum(1 for x in adic if pendiente(x)),
                 num(sum(x.get('area_total') or 0 for x in fs)),
                 num(sum(x.get('area_riego') or 0 for x in fs)),
-                num(sum(x.get('caudal_valor') or 0 for x in fs)),
+                # El caudal es de la COMUNIDAD, no del predio: se toma su valor
+                # oficial (una vez), nunca la suma de las fichas del predio.
+                num(caudal_comunal(fs[0].get('comunidad')) if fs else None),
                 cultivos_txt, animales_txt)
         cur.execute("INSERT INTO predios_investigados (geom,{}) VALUES ({})".format(
             ",".join(c for c, _ in cols_predios), ",".join('?' * (len(cols_predios) + 1))), vals)
@@ -514,6 +543,9 @@ def main():
         bbox[0] = min(bbox[0], e[0]); bbox[1] = max(bbox[1], e[1])
         bbox[2] = min(bbox[2], e[2]); bbox[3] = max(bbox[3], e[3])
         n += 1
+    if _sin_caudal:
+        print("      [aviso] {} comunidades sin caudal oficial (quedan vacias): {}".format(
+            len(_sin_caudal), ", ".join(sorted(_sin_caudal)[:8])))
     registrar_capa(cur, 'predios_investigados', 'MULTIPOLYGON',
                    'Predios investigados',
                    'Predios con ficha de empadronamiento. El color indica el estado.', bbox)

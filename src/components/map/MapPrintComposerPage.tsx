@@ -125,6 +125,18 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
   const navigate = useNavigate();
 
   // ── Estados de Configuración Cartográfica ──
+  // Caudal del sistema: NO es la suma de las fichas. Los técnicos anotaron en
+  // cada ficha el caudal que recibe SU COMUNIDAD, así que sumarlas repite el
+  // mismo dato (daba 166.495 l/s). El valor correcto lo calcula
+  // export_geojson.py una vez por comunidad → caudal_por_comunidad.json.
+  const [caudalSistemaLs, setCaudalSistemaLs] = useState<number>(0);
+  useEffect(() => {
+    fetch(`/geo/caudal_por_comunidad.json?t=${Date.now()}`)
+      .then((r) => r.json())
+      .then((d) => setCaudalSistemaLs(Number(d?.totales?.caudal_sistema_ls) || 0))
+      .catch(() => {});
+  }, []);
+
   const [formato, setFormato] = useState<'A3' | 'A1'>('A3');
   const [modo, setModo] = useState<'general' | 'sector' | 'comunidad'>('general');
   const [selectedSector, setSelectedSector] = useState<string>('Sector 1');
@@ -601,7 +613,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         : Number(comunidadActualProperties?.area_riego_ha || 0).toFixed(1);
     const caudalVal =
       modo === 'general'
-        ? fichas.reduce((a, f) => a + (f.caudal_valor || 0), 0).toFixed(1)
+        ? caudalSistemaLs.toFixed(1)
         : modo === 'sector'
         ? Number(sectorActualProperties?.caudal_total_ls || 0).toFixed(1)
         : Number(comunidadActualProperties?.caudal_total_ls || 0).toFixed(1);
@@ -1673,7 +1685,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
                         <span className="text-slate-500">Caudal:</span>
                         <span className="font-bold text-right">
                           {modo === 'general'
-                            ? fichas.reduce((a, f) => a + (f.caudal_valor || 0), 0).toFixed(1)
+                            ? caudalSistemaLs.toFixed(1)
                             : modo === 'sector' ? Number(sectorActualProperties?.caudal_total_ls || 0).toFixed(1)
                             : Number(comunidadActualProperties?.caudal_total_ls || 0).toFixed(1)} l/s
                         </span>

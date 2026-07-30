@@ -82,38 +82,18 @@ for sec, coms in COMUNIDADES_POR_SECTOR.items():
     for c in coms:
         COM_A_SECTOR[c] = sec
 
-CORRECCIONES_COM = {
-    'LARCACOCHA': 'LARCACHACA',
-    'LARCACOHA': 'LARCACHACA',
-    'INSACATA': 'IZACATA',
-    'CARRERA- ACEROLOMA': 'CARRERA',
-    'CARRERA-ACEROLOMA': 'CARRERA',
-    'CACHICUNGA': 'CARRERA',
-    'PANBAMAQUITO': 'PAMBAMARQUITO',
-    'PAMBAMAQUITO': 'PAMBAMARQUITO',
-    'PANBAMARQUITO': 'PAMBAMARQUITO',
-}
-
-
 # ─── Utilidades ────────────────────────────────────────────────────────────────
 
-def normalizar(texto):
-    if not texto:
-        return ""
-    texto = texto.upper().strip()
-    texto = unicodedata.normalize('NFD', texto)
-    texto = ''.join(c for c in texto if unicodedata.category(c) != 'Mn')
-    import re
-    texto = re.sub(r'\s+', ' ', texto)
-    return texto
-
-
-def aplicar_correcciones(com):
-    com_norm = normalizar(com)
-    for original, correcto in CORRECCIONES_COM.items():
-        if normalizar(original) in com_norm:
-            return correcto
-    return com_norm
+# El nombre de comunidad se canoniza en UN solo lugar: scripts/comunidades_canon.py.
+# Antes cada script tenía su propia copia y las claves no coincidían con
+# caudal_por_comunidad.json, así que el caudal de Monteserrín Bajo e Izacata se
+# perdía y quedaba en 0 l/s. Para corregir una escritura, editar ese módulo.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from comunidades_canon import (  # noqa: E402
+    CORRECCIONES_COM,
+    normalizar,
+    aplicar_correcciones,
+)
 
 
 # ─── Parseo de geometría GeoPackage (WKB) ─────────────────────────────────────
@@ -335,6 +315,11 @@ def calcular_area_utm_m2(geom_utm):
 
 # ─── Leer fichas ──────────────────────────────────────────────────────────────
 
+# Todas las fichas del data.gpkg, tal como se leyeron. Lo usa el cuadre de
+# caudal para explicar qué quedó fuera de la capa.
+FICHAS_LEIDAS = []
+
+
 def leer_fichas():
     print("\n📂 Leyendo fichas desde data.gpkg...")
     conn = sqlite3.connect(DATA_GPKG)
@@ -366,6 +351,8 @@ def leer_fichas():
         fichas.append(d)
 
     print(f"  ✓ {len(fichas)} fichas cargadas")
+    global FICHAS_LEIDAS
+    FICHAS_LEIDAS = fichas
     return fichas
 
 
@@ -482,6 +469,58 @@ def agrupar_fichas(fichas, ids_excluir):
     return dict(por_comunidad), dict(por_sector)
 
 
+# ─── Caudal: una vez por comunidad, nunca sumado ficha a ficha ───────────────
+
+def _cargar_caudal_oficial():
+    """Lee caudal_por_comunidad.json (lo genera export_geojson.py).
+
+    El JSON viene con el nombre CRUDO de la comunidad (con acentos y sin las
+    correcciones de nombre), mientras las capas agrupan por `_com_corr`. Se
+    reindexa con aplicar_correcciones() para que ambos lados coincidan; si dos
+    nombres crudos colapsan en la misma comunidad se conserva el del grupo con
+    mas fichas, que es el mas representativo.
+    """
+    ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        '..', 'public', 'geo', 'caudal_por_comunidad.json')
+    try:
+        with open(os.path.abspath(ruta), encoding='utf-8') as f:
+            d = json.load(f)
+    except Exception as e:
+        print(f"  ⚠ No se pudo leer caudal_por_comunidad.json ({e}).")
+        print(f"    Ejecuta antes scripts/export_geojson.py. El caudal quedara en 0.")
+        return {}
+
+    oficial, respaldo = {}, {}
+    for crudo, v in d.get('comunidades', {}).items():
+        clave = aplicar_correcciones(crudo)
+        n = v.get('fichas', 0) or 0
+        if clave in oficial and respaldo[clave] >= n:
+            print(f"    · '{crudo}' colapsa en '{clave}'; se mantiene el caudal "
+                  f"del grupo mayor ({respaldo[clave]} fichas)")
+            continue
+        oficial[clave] = v.get('caudal_ls', 0)
+        respaldo[clave] = n
+    return oficial
+
+
+def _caudal_de_grupo(caudal_oficial, nombre_campo, grupo, fichas_lista):
+    """Caudal de una comunidad = su valor oficial.
+    Caudal de un sector = suma de los valores de LAS COMUNIDADES que lo componen
+    (una vez cada una), mas las fichas 'Recibe individual' de ese sector."""
+    individual = sum(f.get('caudal_valor', 0) or 0 for f in fichas_lista
+                     if (f.get('caudal_tipo') or '') == 'Recibe individual')
+    if nombre_campo == 'comunidad':
+        clave = aplicar_correcciones(grupo)
+        if clave not in caudal_oficial and individual == 0:
+            print(f"    ⚠ '{grupo}' no tiene caudal oficial en "
+                  f"caudal_por_comunidad.json; queda en 0")
+        return round(caudal_oficial.get(clave, 0.0) + individual, 2)
+    coms = {aplicar_correcciones(f.get('_com_corr') or f.get('comunidad') or '')
+            for f in fichas_lista
+            if (f.get('caudal_tipo') or '') != 'Recibe individual'}
+    return round(sum(caudal_oficial.get(c, 0.0) for c in coms if c) + individual, 2)
+
+
 # ─── Generar GeoJSON de capa ──────────────────────────────────────────────────
 
 def generar_capa(agrupacion, geoms_por_clave, fichas_totales_por_grupo,
@@ -498,17 +537,22 @@ def generar_capa(agrupacion, geoms_por_clave, fichas_totales_por_grupo,
                                           'area_riego_m2': 0.0, 'caudal_ls': 0.0,
                                           'sin_clave': 0, 'con_clave': 0, 'con_geom': 0})
 
+    # El caudal NO se suma ficha a ficha: los tecnicos anotaron en cada ficha el
+    # caudal que recibe SU COMUNIDAD, asi que el valor esta repetido. Se toma de
+    # caudal_por_comunidad.json, que lo calcula una sola vez por comunidad.
+    caudal_oficial = _cargar_caudal_oficial()
+
     for grupo, fichas_lista in agrupacion.items():
         s = stats_totales[grupo]
         s['fichas_validas'] = len(fichas_lista)
         for f in fichas_lista:
             s['area_riego_m2'] += f.get('area_riego', 0) or 0
-            s['caudal_ls']     += f.get('caudal_valor', 0) or 0
             clave = str(f.get('clave_catastral', '') or '').strip()
             if clave:
                 s['con_clave'] += 1
             else:
                 s['sin_clave'] += 1
+        s['caudal_ls'] = _caudal_de_grupo(caudal_oficial, nombre_campo, grupo, fichas_lista)
 
     # Incluir fichas excluidas en el conteo total (para metadatos informativos)
     for grupo, total in fichas_totales_por_grupo.items():
@@ -575,7 +619,50 @@ def generar_capa(agrupacion, geoms_por_clave, fichas_totales_por_grupo,
 
     fc = {'type': 'FeatureCollection', 'features': features}
     print(f"  ✓ {len(features)} polígonos generados ({sin_geom} grupos sin geometría)")
+    auditar_cuadre_caudal(fc, nombre_capa, agrupacion, caudal_oficial)
     return fc
+
+
+def auditar_cuadre_caudal(fc, nombre_capa, agrupacion, caudal_oficial):
+    """Compara el caudal de la capa contra el total del sistema y explica la
+    diferencia. La capa solo puede representar fichas con comunidad y con predio
+    catastral concordante, asi que un descuadre pequeño es normal — lo que no es
+    aceptable es que sea inexplicable, por eso se detalla en cada corrida."""
+    ruta = os.path.join(GEO_DIR, 'caudal_por_comunidad.json')
+    try:
+        with open(ruta, encoding='utf-8') as f:
+            totales = json.load(f).get('totales', {})
+    except Exception:
+        return
+    sistema = totales.get('caudal_sistema_ls')
+    if not sistema:
+        return
+
+    en_capa = round(sum(ft['properties'].get('caudal_total_ls', 0) or 0
+                        for ft in fc['features']), 2)
+    dif = round(en_capa - sistema, 2)
+    print(f"  🔎 Cuadre de caudal en {nombre_capa}: {en_capa:,.2f} de "
+          f"{sistema:,.2f} l/s del sistema (diferencia {dif:+,.2f})")
+
+    if abs(dif) >= 0.01:
+        ids_en_capa = {id(f) for lista in agrupacion.values() for f in lista}
+        fuera = [f for lista_todas in [FICHAS_LEIDAS] for f in lista_todas
+                 if id(f) not in ids_en_capa
+                 and (f.get('caudal_tipo') or '') == 'Recibe individual'
+                 and (f.get('caudal_valor') or 0) > 0]
+        sin_com = [f for f in fuera if not (f.get('_com_corr') or '').strip()]
+        discrep = [f for f in fuera if f not in sin_com]
+        print(f"     · {len(discrep)} fichas 'Recibe individual' descartadas por "
+              f"discrepancia con el catastro: "
+              f"{sum(f['caudal_valor'] for f in discrep):,.2f} l/s")
+        print(f"     · {len(sin_com)} fichas 'Recibe individual' sin comunidad "
+              f"asignada: {sum(f['caudal_valor'] for f in sin_com):,.2f} l/s")
+        faltan = [k for k in caudal_oficial if k not in
+                  {aplicar_correcciones(ft['properties'].get('comunidad'))
+                   for ft in fc['features']}]
+        if faltan and nombre_capa.lower().startswith('comunidad'):
+            print(f"     ⚠ {len(faltan)} comunidades con caudal oficial sin "
+                  f"polígono en la capa: {', '.join(sorted(faltan)[:6])}")
 
 
 # ─── Guardar GeoJSON ──────────────────────────────────────────────────────────

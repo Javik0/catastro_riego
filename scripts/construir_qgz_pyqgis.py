@@ -74,7 +74,7 @@ GRUPOS_PREDIO = [
     ('Fichas levantadas', 4,
      ['total_fichas', 'fichas_principales', 'fichas_adicionales', 'adicionales_pendientes']),
     ('Superficies y caudal', 2,
-     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_ls']),
+     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_comunidad_ls']),
     # 'cultivos_predio' / 'animales_predio' (texto resumido) quedan en la tabla de
     # atributos para consulta rápida, pero en el formulario se reemplazan por las
     # pestañas "Cultivos del predio" / "Animales del predio" (tabla real, con
@@ -105,7 +105,13 @@ ALIAS = {
     'sector_riego': 'Sector de riego', 'propietario_catastro': 'Propietario según catastro',
     'area_catastro_m2': 'Área catastro (m²)', 'area_declarada_m2': 'Área declarada (m²)',
     'area_riego_m2': 'Área con riego (m²)', 'area_sin_riego_m2': 'Área sin riego (m²)',
-    'area_total_m2': 'Área total (m²)', 'caudal_ls': 'Caudal (l/s)',
+    'area_total_m2': 'Área total (m²)',
+    # En la ficha el técnico anotó el caudal que recibe SU COMUNIDAD, así que el
+    # mismo valor se repite en todas las fichas de esa comunidad y NO debe
+    # sumarse. El alias lo dice explícitamente para que nadie lo agregue.
+    'caudal_ls': 'Caudal declarado (l/s) — es el de la comunidad, no sumar',
+    'caudal_comunidad_ls': 'Caudal de la comunidad (l/s)',
+    'caudal_total_ls': 'Caudal de la comunidad (l/s)',
     'total_fichas': 'Total de fichas', 'fichas_principales': 'Fichas principales',
     'fichas_adicionales': 'Fichas adicionales', 'adicionales_pendientes': 'Adicionales pendientes',
     'cultivos_predio': 'Cultivos del predio', 'animales_predio': 'Animales del predio',
@@ -273,7 +279,7 @@ def main():
     tabla_atributos_ordenada(predios, [
         'clave_catastral', 'estado_predio', 'comunidad', 'sector_riego', 'parroquia',
         'propietarios', 'total_fichas', 'area_catastro_m2', 'area_declarada_m2',
-        'area_riego_m2', 'caudal_ls', 'cultivos_predio', 'animales_predio'])
+        'area_riego_m2', 'caudal_comunidad_ls', 'cultivos_predio', 'animales_predio'])
     tabla_atributos_ordenada(fichas, [
         'apellidos', 'nombres', 'cedula', 'tipo_ficha', 'estado_investigacion',
         'clave_catastral', 'comunidad', 'parroquia', 'area_total_m2', 'area_riego_m2',
