@@ -57927,36 +57927,6 @@
     "es_autoconsumo": 1
   },
   {
-    "id_animal": "{1bdd4da5-6e02-4e67-9216-23490f102594}",
-    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
-    "especie": "Equinos",
-    "cantidad": 12,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{72c8af53-9c60-4bea-a34f-2b2605a7054a}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "especie": "Gallinas de campo",
-    "cantidad": 120,
-    "es_autoconsumo": 1,
-    "es_mercado": 1
-  },
-  {
-    "id_animal": "{41f31aa4-cc96-4d3b-88f0-78ac7db5eb7d}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "especie": "Porcino (Chanchos)",
-    "cantidad": 100,
-    "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{61c796f9-47ee-48e7-bc44-3d0828cad01c}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "especie": "Vacas en producción",
-    "cantidad": 40,
-    "es_autoconsumo": 1,
-    "es_mercado": 1
-  },
-  {
     "id_animal": "{74b1e594-6c6f-4ccd-827d-e5c864a86731}",
     "ficha_id": "{25284732-7c30-4136-beee-30fe6888a825}",
     "especie": "Vacas en producción",
@@ -70720,6 +70690,41 @@
     "ficha_id": "{6d1cb9eb-4198-4a1d-9fc3-5780b5840317}",
     "especie": "Terneros",
     "cantidad": 3,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{c6c9ff1f-00f7-418b-a71c-d210d2f61879}",
+    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
+    "especie": "Equinos",
+    "cantidad": 12,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{d78b1042-bb9f-4990-9bce-9dd5fbe15b69}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "especie": "Vacas en producción",
+    "cantidad": 30,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{f051cf60-40b6-4e23-b518-2a783cc1cfa0}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "especie": "Cuyes / Conejos",
+    "cantidad": 1000,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{ad4110b2-821c-4c70-a064-3cfe47887603}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 100,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{00222bf0-b160-4993-a2a1-64c2e8c8b736}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "especie": "Gallinas de campo",
+    "cantidad": 1200,
     "es_autoconsumo": 1
   }
 ]

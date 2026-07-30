@@ -1,13 +1,13 @@
 {
-  "total": 2404,
+  "total": 2522,
   "pendientes": 725,
-  "completadas": 1678,
+  "completadas": 1796,
   "en_revision": 1,
   "por_sector": {
     "Sector 3": {
-      "total": 267,
+      "total": 385,
       "pendientes": 247,
-      "completadas": 20,
+      "completadas": 138,
       "en_revision": 0
     },
     "Sector 1": {
@@ -30,6 +30,7 @@
     }
   },
   "completadas_por_tecnico": {
+    "Huguito Ipial": 239,
     "Pablo Barrionuevo": 284,
     "Mayra Benavides": 311,
     "Melany Recalde": 275,
@@ -38,7 +39,6 @@
     "Dylan Chavez": 170,
     "Sin asignar": 6,
     "Martha Simbaña": 219,
-    "Huguito Ipial": 121,
     "Melany Jara": 29
   }
 }

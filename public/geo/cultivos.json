@@ -59921,48 +59921,6 @@
     "ref_area_predio": 175175.64
   },
   {
-    "id_cultivo": "{d556fdd9-72fa-40d5-9a44-f51ddfd95c0b}",
-    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
-    "tipo_cultivo": "Frutales",
-    "superficie_m2": 30.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 8093825.23
-  },
-  {
-    "id_cultivo": "{e8292b3f-1b46-41fa-a01f-2dea17e8dab2}",
-    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
-    "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 8093795.23,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 8093825.23
-  },
-  {
-    "id_cultivo": "{231840d7-014e-4a70-975c-49e57c0426c8}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "tipo_cultivo": "Flores",
-    "superficie_m2": 10000.0,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 8093825.23
-  },
-  {
-    "id_cultivo": "{291ff03c-85a1-464f-9f7e-1db577255b8a}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "tipo_cultivo": "Maíz",
-    "superficie_m2": 80000.0,
-    "es_principal": 1,
-    "ref_area_predio": 8093825.23
-  },
-  {
-    "id_cultivo": "{c07d38a1-ff9d-4430-9620-67a944fc81a2}",
-    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
-    "tipo_cultivo": "Hortalizas",
-    "superficie_m2": 10000.0,
-    "es_principal": 1,
-    "es_autoconsumo": 1,
-    "ref_area_predio": 8093825.23
-  },
-  {
     "id_cultivo": "{0072230f-03c1-4ea2-8ca2-3b5a878307ab}",
     "ficha_id": "{25284732-7c30-4136-beee-30fe6888a825}",
     "tipo_cultivo": "Flores",
@@ -106931,5 +106889,54 @@
     "es_principal": 1,
     "es_autoconsumo": 0,
     "ref_area_predio": 13443.71
+  },
+  {
+    "id_cultivo": "{85dfa455-ee75-41f4-bb9e-40b451d7c1f1}",
+    "ficha_id": "{a5f8a3f5-ae26-47bd-90f3-53169bf2315b}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 300000.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_cultivo": "{5c7f0690-3306-4d72-9282-901d7b07c80a}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 262500.0,
+    "es_principal": 1,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_cultivo": "{b832bab8-11f4-426d-9b92-568183cb1d53}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "tipo_cultivo": "Otros",
+    "superficie_m2": 262500.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1,
+    "tipo_cultivo_otro": "Arveja"
+  },
+  {
+    "id_cultivo": "{015df28c-19a7-4353-8c7f-fff1f9ad4cc7}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "tipo_cultivo": "Papas",
+    "superficie_m2": 262500.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_cultivo": "{2e75bcb5-35a0-43f2-bedc-0a3ed9530276}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 262500.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_cultivo": "{2a72640d-f2ed-4256-abae-5090c2c95b15}",
+    "ficha_id": "{320f6d78-f3a7-4560-8e31-9c0f8a73813e}",
+    "tipo_cultivo": "Flores",
+    "superficie_m2": 150000.0,
+    "es_principal": 0,
+    "es_autoconsumo": 1
   }
 ]
