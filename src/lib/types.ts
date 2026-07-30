@@ -129,6 +129,27 @@ export function esHijaCompletada(f: FichaPredio): boolean {
   return esFichaHija(f) && f.estado_investigacion === 'completada';
 }
 
+/**
+ * Usuario al que pertenece una ficha (v4.7).
+ *
+ * La ficha es del técnico que la levantó, aunque después se edite desde la
+ * oficina. En las adicionales se resuelve en cascada:
+ *   1. quien completó la Sección 4
+ *   2. el técnico de su FICHA MADRE — las adicionales generadas por script
+ *      quedan con creado_por='AUTO-SECCION7', que no es ningún técnico
+ *   3. quien creó la ficha
+ *
+ * Vive aquí y no en el mapa porque el color del punto y el filtro de la leyenda
+ * DEBEN coincidir: si cada uno resuelve el autor por su cuenta, un punto se
+ * apaga con un técnico y se pinta con el color de otro.
+ */
+export function usuarioDeFicha(f: FichaPredio, madre?: FichaPredio): string {
+  if (esFichaHija(f)) {
+    return f.completado_por || madre?.creado_por || f.creado_por;
+  }
+  return f.creado_por;
+}
+
 // ── Lote de fraccionamiento (v4.6) ──
 // Los 490 lotes de ALPAKA se digitalizaron desde el plano de fraccionamiento
 // comunal, no de una entrevista en campo: su Sección 4 fue asignada por criterio

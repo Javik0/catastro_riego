@@ -7,7 +7,7 @@ import L from 'leaflet';
 import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X, Download } from 'lucide-react';
-import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento } from '../../lib/types';
+import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento, usuarioDeFicha } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
 import PredioPopupCard from './PredioPopupCard';
 import FichaDetailModal from '../fichas/FichaDetailModal';
@@ -659,9 +659,9 @@ function FichaMarker({ ficha, coords, madre, hijas, onIrAFicha }: {
   // completada = color del técnico que llenó la S4, con borde azul.
   const hijaPendiente = esHijaPendiente(ficha);
   const hijaCompletada = esFichaHija(ficha) && !hijaPendiente;
-  const color = hijaPendiente
-    ? '#ffffff'
-    : getColorTecnico((hijaCompletada && ficha.completado_por) || ficha.creado_por);
+  // Mismo criterio de autoría que usa la leyenda para apagar técnicos, si no
+  // el punto se apagaría con uno y se pintaría con el color de otro.
+  const color = hijaPendiente ? '#ffffff' : getColorTecnico(usuarioDeFicha(ficha, madre));
   const lat = coords[0];
   const lng = coords[1];
   const utm = wgs84ToUtm17S(lat, lng);
@@ -1107,9 +1107,12 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
       : new Set(Object.values(TECNICOS).map((t) => t.nombre)));
   }, []);
 
-  // El color del punto sigue al técnico que completó la S4 en las hijas
-  const tecnicoDeFicha = useCallback((f: FichaPredio) =>
-    getNombreTecnico((esFichaHija(f) && f.completado_por) || f.creado_por), []);
+  // La ficha es del técnico que la levantó (ver usuarioDeFicha en lib/types).
+  // Sin la herencia de la ficha madre, las 732 adicionales generadas por script
+  // caían en un autor fantasma 'AUTO-SECCION7' que la leyenda no podía apagar.
+  const tecnicoDeFicha = useCallback((f: FichaPredio) => getNombreTecnico(
+    usuarioDeFicha(f, f.ficha_madre_id ? fichasPorId.get(f.ficha_madre_id) : undefined)
+  ), [fichasPorId]);
 
   const conteoPorTecnico = useMemo(() => {
     const m = new Map<string, number>();

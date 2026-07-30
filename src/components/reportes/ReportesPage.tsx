@@ -6,7 +6,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -401,7 +401,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         let grandTotalComunidades = 0;
         
         const generalRows = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
-          const comunidadesSector = (COMUNIDADES_POR_SECTOR[sectorName] || []).filter((com) => {
+          const comunidadesSector = (COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || []).filter((com) => {
             const count = allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
             return count > 0;
           });
@@ -462,7 +462,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           doc.addPage();
           await drawHeader(`CUADRO COMPARATIVO DE AVANCE - ${sectorName.toUpperCase()}`);
           
-          const comunidadesSector = (COMUNIDADES_POR_SECTOR[sectorName] || []).filter((com) => {
+          const comunidadesSector = (COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || []).filter((com) => {
             const count = allFichas.filter(f => (f.comunidad || '').trim() === com && f.sector_investigacion === sectorName).length;
             return count > 0;
           });
@@ -578,7 +578,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         let grandTotalComunidades = 0;
         
         const generalRows = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
-          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          const comunidadesSector = COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || [];
           let totalMeta = 0;
           let totalLevantado = 0;
           comunidadesSector.forEach((com) => {
@@ -612,7 +612,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         XLSX.utils.book_append_sheet(wb, wsGeneral, 'Consolidado Global');
         
         ['Sector 1', 'Sector 2', 'Sector 3'].forEach((sectorName) => {
-          const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+          const comunidadesSector = COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || [];
           let totalMeta = 0;
           let totalLevantado = 0;
           
@@ -897,7 +897,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           {/* Cuadro Resumen General de Avance Consolidado */}
           {(() => {
             const sectoresInfo = ['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
-              const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+              const comunidadesSector = COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || [];
               let planificado = 0;
               let levantado = 0;
               comunidadesSector.forEach((com) => {
@@ -975,7 +975,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
 
           <div className="grid grid-cols-1 gap-6">
             {['Sector 1', 'Sector 2', 'Sector 3'].map((sectorName) => {
-              const comunidadesSector = COMUNIDADES_POR_SECTOR[sectorName] || [];
+              const comunidadesSector = COMUNIDADES_POR_SECTOR_FILTRO[sectorName] || [];
               
               let totalMetaSector = 0;
               let totalFichasSector = 0;

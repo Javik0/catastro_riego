@@ -31,10 +31,11 @@ export const TECNICOS: Record<string, { nombre: string; color: string }> = {
   'u0_a302': { nombre: 'Dylan Chavez', color: '#111111' },
   'jvk-editor3': { nombre: 'Dylan Chavez', color: '#111111' },
   
-  'u0_a200': { nombre: 'Melanie2', color: '#a855f7' },
-
-  // Melany Recalde — cuenta jvk-corp (antes caía en "Otro / Sin asignar")
+  // Melany Recalde — usa dos cuentas: jvk-corp en PAMBAMARCA y u0_a200 (que
+  // figuraba como "Melanie2") en SAN ANTONIO. Confirmado por JAVIKO que es la
+  // misma persona, así que sus 42 + 17 fichas se le acreditan juntas.
   'jvk-corp': { nombre: 'Melany Recalde', color: '#FF00FF' },
+  'u0_a200': { nombre: 'Melany Recalde', color: '#FF00FF' },
 };
 
 export function getNombreTecnico(username: string): string {
@@ -184,11 +185,12 @@ export const LOGO_PICHINCHA = '/logo-izq.png';
 export const LOGO_CONSORCIO = '/logo-der.png';
 
 // ── Comunidades que quedaron fuera de la investigación ──
-// No corresponden al sistema o no se llegó a levantar ninguna ficha en ellas,
-// así que no tiene sentido ofrecerlas en los selectores de filtro (JAVIKO,
-// 2026-07-30). SIGUEN contando en META_COMUNEROS y en COMUNIDADES_POR_SECTOR
-// porque el avance se mide contra el padrón oficial completo: sacarlas del
-// denominador subiría el porcentaje de cobertura sin haber levantado una ficha.
+// No correspondían al sistema y no se levantó ninguna ficha en ellas, así que
+// JAVIKO decidió (2026-07-30) sacarlas TAMBIÉN del avance: quedaron fuera del
+// alcance del contrato, de modo que sus 470 comuneros no deben pesar en el
+// denominador. Salen de los selectores y de los cálculos de cobertura.
+// Sus metas siguen declaradas en META_COMUNEROS como referencia histórica,
+// pero nadie las suma porque los reportes iteran COMUNIDADES_POR_SECTOR_FILTRO.
 export const COMUNIDADES_SIN_INVESTIGAR: ReadonlySet<string> = new Set([
   'AVELLANEDA',
   'MATÍAS IMBAGO',
@@ -267,9 +269,10 @@ export const COMUNIDADES: readonly string[] = COMUNIDADES_TODAS.filter(
 );
 
 // ── Mapeo oficial de Comunidades por Sector de Investigación (QField) ──
-// Es el PADRÓN OFICIAL: alimenta las metas de cobertura y decide a qué sector
-// pertenece cada ficha, así que incluye comunidades sin investigar a propósito.
-// Para los selectores usar COMUNIDADES_POR_SECTOR_FILTRO.
+// Es el PADRÓN OFICIAL COMPLETO: incluye a propósito las comunidades sin
+// investigar, porque App.tsx lo usa para decidir a qué sector pertenece cada
+// ficha y ahí sí hacen falta todas. Los selectores y los cálculos de cobertura
+// usan COMUNIDADES_POR_SECTOR_FILTRO, que las excluye.
 //
 // Una comunidad NO debe repetirse en dos sectores: App.tsx los recorre en orden
 // y se queda con el primero, así que la duplicada quedaba asignada al sector
@@ -305,8 +308,9 @@ export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
   ]
 };
 
-// Lo que se ofrece en los SELECTORES: el padrón oficial menos las comunidades
-// donde no se levantó ninguna ficha. Nunca usar para calcular metas o cobertura.
+// El padrón oficial menos las comunidades fuera de alcance. Lo usan TANTO los
+// selectores COMO los cálculos de meta y cobertura, para que el porcentaje se
+// mida solo contra lo que de verdad había que investigar.
 export const COMUNIDADES_POR_SECTOR_FILTRO: Record<string, string[]> =
   Object.fromEntries(
     Object.entries(COMUNIDADES_POR_SECTOR).map(([sector, comunidades]) => [
@@ -365,10 +369,11 @@ export const META_COMUNEROS: Record<string, number> = {
   "CHINCHINLOMA": 80,
   "ASOCIACIÓN ROSALÍA": 41,
   "SR. COLOMA": 16,
-  // 118 comuneros del acta. Sobre el mismo polígono hay además 4 fichas
-  // principales (hacienda, comunidad, bosque productivo y páramo), así que el
-  // levantado da 122 y la cobertura pasa del 100%.
-  "SR. COLOMA MONTESERRIN BAJO": 118,
+  // 118 comuneros del acta + las 4 fichas principales que se levantaron sobre
+  // el mismo polígono (hacienda, comunidad, bosque productivo y páramo).
+  // JAVIKO fijó la meta en 122 para que la comunidad cierre al 100% y no en
+  // 103,4% (2026-07-30).
+  "SR. COLOMA MONTESERRIN BAJO": 122,
   "HDA. GUANGUILQUI": 15,
   "PUEBLO DE ASCÁZUBI": 16,
   "EL MANZANO": 19,
