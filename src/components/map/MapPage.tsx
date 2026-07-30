@@ -384,7 +384,11 @@ function FlyToSearch(
 }
 
 // ── Buscador de predios catastrales ──────────────────────────
+// v4.7: colapsado a un ícono por defecto — desplegado tapaba los popups de los
+// predios. Se expande al tocarlo y se repliega al cerrar o al perder el foco
+// sin texto.
 function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void }) {
+  const [abierto, setAbierto] = useState(false);
   const [query, setQuery] = useState('');
   const [data, setData] = useState<CatastroBusqueda[]>([]);
   const [focused, setFocused] = useState(false);
@@ -397,6 +401,10 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
       .then((d: CatastroBusqueda[]) => { setData(d); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (abierto) inputRef.current?.focus();
+  }, [abierto]);
 
   const results = useMemo(() => {
     if (!query || query.length < 2) return [];
@@ -428,8 +436,25 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
   const clearSearch = useCallback(() => {
     setQuery('');
     setFocused(false);
+    setAbierto(false);
     inputRef.current?.blur();
   }, []);
+
+  // Colapsado: solo el ícono de lupa
+  if (!abierto) {
+    return (
+      <div className="absolute top-3 left-14 z-[1000]">
+        <button
+          onClick={() => setAbierto(true)}
+          className="p-2.5 rounded-lg border shadow-lg backdrop-blur-md cursor-pointer hover:brightness-110 transition-all"
+          style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}
+          title="Buscar predio por nombre, cédula o clave catastral"
+        >
+          <Search className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -440,6 +465,8 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
         setTimeout(() => {
           if (!e.currentTarget.contains(document.activeElement)) {
             setFocused(false);
+            // sin texto ni resultado activo, volver al ícono para no tapar el mapa
+            if (!inputRef.current?.value) setAbierto(false);
           }
         }, 200);
       }}
@@ -874,6 +901,21 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     return m;
   }, [fichasBase]);
 
+  // v4.7: los filtros de la barra (sector, comunidad, técnico, fechas) también
+  // apagan los POLÍGONOS, no solo los puntos. Si no hay filtro activo se
+  // muestra el catastro completo.
+  const clavesFiltradas = useMemo(() => {
+    if (fichas.length === fichasBase.length) return null;   // sin filtros
+    const s = new Set<string>();
+    for (const f of fichas) {
+      for (const c of [f.clave_catastral, f.cod_poligono]) {
+        const k = String(c || '').trim();
+        if (k) s.add(k);
+      }
+    }
+    return s;
+  }, [fichas, fichasBase]);
+
   const cultivosPorFicha = useMemo(() => {
     const m = new Map<string, any[]>();
     for (const c of cultivosData) {
@@ -940,6 +982,17 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
   const [sectoresData, setSectoresData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
+
+  // v4.7: catastro que se dibuja = catastro cargado ∩ filtros activos
+  const catastroVisible = useMemo<FeatureCollection | null>(() => {
+    if (!catastroData) return null;
+    if (!clavesFiltradas) return catastroData;
+    return {
+      type: 'FeatureCollection',
+      features: catastroData.features.filter((f) =>
+        clavesFiltradas.has(String(f.properties?.clave_cata || '').trim())),
+    } as FeatureCollection;
+  }, [catastroData, clavesFiltradas]);
 
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
@@ -1101,7 +1154,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         {layerInfo.catastro > 0 && (
           <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
             <div className="w-2 h-2 rounded-sm border border-orange-400" style={{ background: 'rgba(249,115,22,0.2)' }} />
-            {layerInfo.catastro} polígonos en mapa
+            {(catastroVisible?.features.length ?? layerInfo.catastro).toLocaleString('es-EC')} polígonos en mapa
           </div>
         )}
 
@@ -1142,12 +1195,12 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
             />
           </LayersControl.BaseLayer>
 
-          {/* ── Overlay: Catastro ── */}
-          {catastroData && catastroData.features.length > 0 && (
+          {/* ── Overlay: Catastro (respeta los filtros de la barra) ── */}
+          {catastroVisible && catastroVisible.features.length > 0 && (
             <LayersControl.Overlay checked name="Catastro Rural">
               <GeoJSON
-                key={`catastro-${estadoPorClave.size}`}
-                data={catastroData}
+                key={`catastro-${estadoPorClave.size}-${catastroVisible.features.length}`}
+                data={catastroVisible}
                 style={(feature) => {
                   const isHighlighted = searchTarget &&
                     feature?.properties?.clave_cata === searchTarget.clave_cata;

@@ -457,12 +457,15 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    // z-[3000]: por encima del mapa Leaflet (panes ~400-700) y de sus controles
+    // flotantes (leyenda, buscador, popups: z-[1000]). Con z-50 el modal quedaba
+    // DETRÁS del mapa al abrirse desde la Tarjeta de Predio.
+    <div className="fixed inset-0 z-[3000] flex items-center justify-center p-4">
       {/* Overlay con blur fino */}
       <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={onClose} />
- 
+
       {/* Modal con Glassmorphism Premium */}
-      <div className="relative bg-slate-950/95 backdrop-blur-xl rounded-2xl border border-slate-800/80 shadow-2xl shadow-blue-500/5 w-full max-w-2xl max-h-[85vh] flex flex-col transition-all duration-300">
+      <div className="relative bg-slate-950/95 backdrop-blur-xl rounded-2xl border border-slate-800/80 shadow-2xl shadow-blue-500/5 w-full max-w-4xl max-h-[90vh] flex flex-col transition-all duration-300">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800/60 bg-slate-900/10">
           <div>

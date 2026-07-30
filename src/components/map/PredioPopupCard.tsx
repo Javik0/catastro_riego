@@ -291,21 +291,38 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
             </div>
           )}
 
-          {/* Animales como chips */}
-          {animales.length > 0 && (
-            <div className="mb-2">
-              <div className="flex items-center gap-1 opacity-70 mb-1">
-                <PawPrint className="w-3 h-3 text-pink-600" /> Animales
+          {/* Especies pecuarias — mismo tratamiento visual que los cultivos:
+              ordenadas por cantidad, con mini-barra proporcional */}
+          {animales.length > 0 && (() => {
+            const ordenados = animales.slice().sort((a, b) => (b.cantidad || 0) - (a.cantidad || 0));
+            const maxAnimal = Math.max(...ordenados.map((a) => a.cantidad || 0), 1);
+            return (
+              <div className="mb-2">
+                <div className="flex items-center gap-1 opacity-70 mb-1">
+                  <PawPrint className="w-3 h-3 text-pink-600" /> Especies pecuarias
+                </div>
+                <div className="space-y-1">
+                  {ordenados.slice(0, 6).map((a, i) => (
+                    <div key={i} className="grid items-center gap-1.5" style={{ gridTemplateColumns: '85px 1fr 58px' }}>
+                      <span className="truncate" title={a.especie || a.especie_otro || undefined}>
+                        {a.especie || a.especie_otro || '—'}
+                      </span>
+                      <div className="h-1.5 rounded-full bg-gray-200 overflow-hidden">
+                        <div className="h-full rounded-full bg-pink-500"
+                          style={{ width: `${Math.max(((a.cantidad || 0) / maxAnimal) * 100, 4)}%` }} />
+                      </div>
+                      <span className="text-right text-[10px] opacity-70">
+                        {(a.cantidad ?? 0).toLocaleString('es-EC')} {(a.cantidad ?? 0) === 1 ? 'cabeza' : 'cabezas'}
+                      </span>
+                    </div>
+                  ))}
+                  {ordenados.length > 6 && (
+                    <div className="text-[9px] opacity-60 text-right">+ {ordenados.length - 6} especie(s) más en la ficha</div>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-1">
-                {animales.map((a, i) => (
-                  <span key={i} className="px-1.5 py-0.5 rounded-full border border-gray-300 bg-gray-50 text-[10px]">
-                    {(a.especie || a.especie_otro || '—')} · {a.cantidad ?? '—'}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+            );
+          })()}
 
           {cultivos.length === 0 && animales.length === 0 && (
             <div className="rounded-lg border border-dashed border-gray-300 px-2 py-1.5 mb-2 text-[10px] text-gray-500 text-center">
