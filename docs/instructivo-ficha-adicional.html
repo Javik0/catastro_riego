@@ -9,6 +9,7 @@
   body {
     font-family: "Segoe UI", Roboto, Arial, sans-serif;
     color: #1a1a1a; margin: 0; line-height: 1.45; font-size: 10.5pt;
+    background: #fff; /* legible también con el navegador en tema oscuro */
   }
   header {
     border-bottom: 3px solid #1e4d8c; padding-bottom: 8px; margin-bottom: 14px;
@@ -89,7 +90,7 @@
   <div class="meta">
     Padrón Guanguilquí–Porotog<br>
     Consorcio Cayambe SPT<br>
-    Julio 2026 · v1
+    Julio 2026 · v2
   </div>
 </header>
 
@@ -100,12 +101,6 @@
 </div>
 
 <ol class="pasos">
-
-  <li>
-    <span class="titulo-paso">Verifica la comunidad</span>
-    La lista de reganes solo muestra los de <b>la misma comunidad</b> de la ficha que estás creando.
-    Usa la comunidad del <b>regante principal</b>.
-  </li>
 
   <li>
     <span class="titulo-paso">Crea la ficha sobre el predio nuevo</span>
@@ -119,20 +114,26 @@
     <span class="titulo-paso">Llena los datos básicos</span>
     Propietario, cédula, comunidad, <b>clave catastral del predio nuevo</b> y área.
     Los mismos campos de siempre.
+    <div class="aviso"><b>La sección 5. ENCUESTA ya viene llena</b> con las respuestas más comunes
+    del sistema (presa, directiva, años, km, capacitación). Solo <b>corrobórala</b>: si el regante
+    responde distinto, corrige el dato — lo que tú escribas es lo que queda guardado.</div>
   </li>
 
   <li>
-    <span class="titulo-paso">Marca que es ficha adicional</span>
-    Activa la casilla <span class="campo clave">Es Ficha Hija</span>.
-    <div class="aviso"><b>Este paso es el más importante.</b> Si no lo marcas, la ficha se cuenta
-    como principal y el regante aparece dos veces en el padrón.</div>
+    <span class="titulo-paso">Abre la pestaña <span class="campo clave">➕ PREDIO ADICIONAL</span></span>
+    Es la segunda pestaña del formulario, junto a los datos del propietario,
+    y activa la casilla <span class="campo clave">¿Es Ficha Hija?</span>.
+    <div class="aviso"><b>Este paso es el más importante.</b> Si no marcas la casilla, la ficha se cuenta
+    como principal y el regante aparece dos veces en el padrón. Al marcarla se abre el grupo
+    <b>«Vincular al regante principal»</b> ahí mismo.</div>
   </li>
 
   <li>
     <span class="titulo-paso">Elige al regante principal</span>
     En el campo <span class="campo clave">ID de Ficha Madre</span> toca el desplegable.
     Aparece la lista como <span class="campo">APELLIDOS NOMBRES — CI 1712345678</span>.
-    Puedes <b>escribir para filtrar</b> por apellido o cédula. Selecciona al regante.
+    Puedes <b>escribir para filtrar</b> por apellido o cédula. La lista muestra a
+    <b>todos los regantes principales del sistema</b>, de cualquier comunidad.
   </li>
 
   <li>
@@ -164,7 +165,7 @@
     <tr>
       <td><span class="dot d-mal"></span></td>
       <td><b>Tu color con borde negro</b></td>
-      <td>Quedó como ficha <b>principal</b> → vuelve al paso 4.</td>
+      <td>Quedó como ficha <b>principal</b> → vuelve al paso 3 y marca la casilla.</td>
     </tr>
   </table>
 </div>
@@ -173,13 +174,18 @@
   <h2>Si algo no sale</h2>
   <dl>
     <dt>El regante no aparece en la lista</dt>
-    <dd>Su ficha está registrada en otra comunidad. Anota el caso y repórtalo; no fuerces el dato.</dd>
+    <dd>La lista solo muestra fichas <b>principales</b>. Si su ficha es a su vez adicional, o todavía
+    no se ha sincronizado desde otra tablet, no va a salir. Anota el caso y repórtalo; no fuerces el dato.</dd>
 
     <dt>El punto se queda blanco aunque cargué los cultivos</dt>
     <dd>Ya está corregido en esta versión del proyecto. Si vuelve a pasar, avisa indicando el código de la ficha.</dd>
 
-    <dt>No veo el campo “ID de Ficha Madre”</dt>
+    <dt>No veo la pestaña “➕ PREDIO ADICIONAL”</dt>
     <dd>Estás con el proyecto anterior. Sincroniza con QFieldCloud para recibir la versión nueva.</dd>
+
+    <dt>La encuesta salió llena con datos que no dijo el regante</dt>
+    <dd>Son los valores precargados del sistema. Corrige los que difieran: tu dato siempre
+    reemplaza al precargado y no se vuelve a sobrescribir.</dd>
   </dl>
 </div>
 
