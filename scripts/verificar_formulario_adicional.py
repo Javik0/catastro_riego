@@ -90,9 +90,12 @@ ESPERADOS = {
     'km_canal': ('63', False),
     'recibio_capacitacion': ("'Sí'", False),
     'le_gustaria_cap': ("'Sí'", False),
-    # los upper() conservan applyOnUpdate=1 pero con coalesce que respeta el dato
-    'nom_presidente': ("upper(coalesce(nullif(trim(\"nom_presidente\"), ''), 'JOSE JOAQUIN TIPANLUISA'))", True),
-    'temas_capacitacion': ("upper(coalesce(nullif(trim(\"temas_capacitacion\"), ''), 'RIEGO'))", True),
+    # los upper() conservan applyOnUpdate=1, pero el CASE solo rellena el vacío:
+    # con dato, devuelve upper("campo") tal cual — sin trim, sin alterar nada más
+    'nom_presidente': ("CASE WHEN trim(coalesce(\"nom_presidente\", '')) = '' "
+                       "THEN 'JOSE JOAQUIN TIPANLUISA' ELSE upper(\"nom_presidente\") END", True),
+    'temas_capacitacion': ("CASE WHEN trim(coalesce(\"temas_capacitacion\", '')) = '' "
+                           "THEN 'RIEGO' ELSE upper(\"temas_capacitacion\") END", True),
 }
 for nombre, (expr_esp, upd_esp) in ESPERADOS.items():
     idx = capa.fields().indexOf(nombre)

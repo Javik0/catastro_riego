@@ -161,9 +161,14 @@ def main():
         viejo = (f'<default applyOnUpdate="1" expression="upper(&quot;{f_}&quot;)" field="{f_}"/>')
         if s.count(viejo) != 1:
             raise SystemExit(f"ABORTADO: la expresión upper() de {f_} no está como se esperaba")
-        expr = (f"upper(coalesce(nullif(trim(&quot;{f_}&quot;), ''), '{valor}'))")
+        # El trim() solo DETECTA el vacío; el valor guardado sale de upper("campo")
+        # tal cual, sin recortar. Una versión anterior aplicaba trim al valor y
+        # le comía el espacio final al nombre — eso ya es alterar el dato del
+        # técnico, que es justo lo que JAVIKO pidió no hacer.
+        expr = (f"CASE WHEN trim(coalesce(&quot;{f_}&quot;, '')) = '' "
+                f"THEN '{valor}' ELSE upper(&quot;{f_}&quot;) END")
         s = s.replace(viejo, f'<default applyOnUpdate="1" expression="{expr}" field="{f_}"/>', 1)
-        print(f"  ✓ default {f_} = '{valor}' si está vacío; si no, upper(lo del técnico) como antes")
+        print(f"  ✓ default {f_} = '{valor}' solo si está vacío; si no, upper(lo del técnico) sin tocar nada más")
 
     # ── resumen y escritura ──
     print(f"\n  {len(original):,} → {len(s):,} bytes ({len(s)-len(original):+,})")
