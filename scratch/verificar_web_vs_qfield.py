@@ -61,7 +61,20 @@ alp = [p for p in props if str(p.get("comunidad") or "").upper().strip() == "ALP
 claves = {str((f.get("properties") or {}).get("clave_cata") or "").strip()
           for f in cat if f.get("geometry")}
 alp_con_pol = sum(1 for p in alp if str(p.get("clave_catastral") or "").strip() in claves)
+# Una hija sin ficha_madre_id solo es un problema si su madre EXISTE en el
+# padron (vinculo perdido, p.ej. por un widget que lo borra al guardar). Si la
+# madre fue eliminada en campo, el vinculo vacio refleja la realidad.
+ids_fichas = {p.get("id") for p in props}
+madres_ref = {p.get("ficha_madre_id") for p in hijas if p.get("ficha_madre_id")}
 sin_madre = sum(1 for p in hijas if not p.get("ficha_madre_id"))
+# recuperable = alguna declaracion de Seccion 7 apunta a esta hija
+adic = bajar("predios_adicionales.json")
+mapa_pa = {a.get("ficha_hija_generada_id"): a.get("ficha_id")
+           for a in adic if a.get("ficha_hija_generada_id")}
+sin_madre_recuperable = sum(
+    1 for p in hijas
+    if not p.get("ficha_madre_id")
+    and mapa_pa.get(p.get("id")) in ids_fichas)
 
 g = del_gpkg()
 print()
@@ -82,12 +95,13 @@ for nom, a, b in filas:
 print()
 print("Poligonos servidos             :", len(cat))
 print("ALPAKA con poligono en el mapa : {} de {}".format(alp_con_pol, len(alp)))
-print("Adicionales sin ficha madre    :", sin_madre)
+print("Adicionales sin ficha madre    : {} ({} recuperables — el resto tiene "
+      "la madre eliminada en campo)".format(sin_madre, sin_madre_recuperable))
 
 if alp_con_pol != len(alp):
     fallos.append("poligonos de ALPAKA")
-if sin_madre:
-    fallos.append("vinculo madre-hija")
+if sin_madre_recuperable:
+    fallos.append("vinculo madre-hija (correr scratch/restaurar_ficha_madre.py)")
 
 print()
 if fallos:
