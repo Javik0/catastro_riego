@@ -352,7 +352,10 @@ export const META_COMUNEROS: Record<string, number> = {
   "PUCARÁ": 231,
   "ASOCIACIÓN SAN PEDRO": 24,
   "PITANA ALTO": 99,
-  "ALPAKA": 15,
+  // 15 era el catastro ANTES del fraccionamiento. Hoy ALPAKA son 492 lotes
+  // (374 propietarios distintos), todos levantados. Con la meta vieja la
+  // comunidad marcaba 3.280% y descuadraba todo el reporte de avance.
+  "ALPAKA": 492,
   "ASOC. PITANA BAJO": 42,
   "PROMEJ. PITANA BAJO": 180,
   "SANTA ROSA DE PINGULMI": 117,

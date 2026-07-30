@@ -22,13 +22,16 @@ contra las fichas y se muestra como pista.
 
 Cada clave encontrada se clasifica:
 
-  VINCULABLE  la clave tiene 13 dígitos, existe en el catastro, NO tiene ya una
-              ficha propia, y la observación menciona una sola clave
-  DUPLICADA   la clave ya tiene ficha levantada: no hay que crear nada, quizá
-              solo vincularla como adicional
+  VINCULABLE  la clave existe en el catastro, NO tiene ya una ficha propia, y
+              la observación menciona una sola clave
+  MARCABLE    el predio ya tiene ficha Y es del MISMO regante que lo declaró:
+              basta marcar esa ficha como adicional, sin crear nada
+  DE_TERCERO  el predio ya tiene ficha pero es de OTRA persona (o de la comuna).
+              NO se marca: el regante suele estar señalando el predio comunal
+              donde tiene su lote, no un predio suyo. Atribuírselo sería un error
   DUDOSA      varias claves en la misma observación, o texto ambiguo: necesita
               criterio humano
-  INVALIDA    la clave no tiene 13 dígitos (truncada) o no existe en el catastro
+  INVALIDA    la clave está truncada o no existe en el catastro
 
 Uso:  python scripts/analizar_observaciones_con_clave.py
 """
@@ -122,9 +125,25 @@ def main():
                  ''')
     filas = cur.fetchall()
 
-    cur.execute(f'SELECT clave_catastral FROM "{T_FICHAS}" WHERE clave_catastral IS NOT NULL')
-    con_ficha = Counter(str(r[0]).strip() for r in cur.fetchall())
+    # Quién es el dueño de cada predio ya levantado: hace falta para saber si el
+    # regante está declarando un predio SUYO o señalando el de un tercero.
+    cur.execute(f'''SELECT clave_catastral, apellidos, nombres, cedula
+                    FROM "{T_FICHAS}" WHERE clave_catastral IS NOT NULL''')
+    duenos = {}
+    con_ficha = Counter()
+    for clave, ape, nom, ced in cur.fetchall():
+        k = str(clave).strip()
+        con_ficha[k] += 1
+        duenos.setdefault(k, []).append((f"{ape or ''} {nom or ''}".strip(), (ced or '').strip()))
     con.close()
+
+    def mismo_regante(clave, regante, cedula):
+        """¿El predio ya levantado es de quien lo declaró en observaciones?"""
+        r = ' '.join((regante or '').upper().split())
+        for dueno, ced in duenos.get(clave, []):
+            if (cedula and ced and ced == cedula) or ' '.join(dueno.upper().split()) == r:
+                return True, dueno
+        return False, (duenos.get(clave, [('—', '')])[0][0])
 
     # cédula -> regante, para resolver las cédulas anotadas en observaciones
     cur2 = sqlite3.connect(GPKG).cursor()
@@ -133,7 +152,8 @@ def main():
     por_cedula = {str(c).strip(): f"{a or ''} {n or ''}".strip()
                   for c, a, n in cur2.fetchall() if c}
 
-    grupos = {'VINCULABLE': [], 'DUPLICADA': [], 'DUDOSA': [], 'INVALIDA': []}
+    grupos = {'VINCULABLE': [], 'MARCABLE': [], 'DE_TERCERO': [],
+              'DUDOSA': [], 'INVALIDA': []}
 
     for (fid, cod, ape, nom, ced, com, clave_propia, obs,
          creado, es_hija, madre) in filas:
@@ -176,8 +196,14 @@ def main():
         for clave in claves:
             caso = dict(base, clave_obs=clave)
             if con_ficha.get(clave):
-                caso['motivo'] = f'ya tiene {con_ficha[clave]} ficha(s) levantada(s)'
-                grupos['DUPLICADA'].append(caso)
+                propio, dueno = mismo_regante(clave, regante, (ced or '').strip())
+                caso['dueno'] = dueno
+                if propio:
+                    caso['motivo'] = 'ya levantado y ES del mismo regante'
+                    grupos['MARCABLE'].append(caso)
+                else:
+                    caso['motivo'] = f'ya levantado, pero es de: {dueno[:34]}'
+                    grupos['DE_TERCERO'].append(caso)
             elif len(claves) > 1 or ruidosa:
                 caso['motivo'] = ('la observación menciona varias claves'
                                   if len(claves) > 1
@@ -194,66 +220,122 @@ def main():
                 motivo='solo se anotó la cédula del regante, sin clave del predio'))
 
     # ── informe ──
+    ORDEN = ('VINCULABLE', 'MARCABLE', 'DUDOSA', 'DE_TERCERO', 'INVALIDA')
+    total = sum(len(v) for v in grupos.values())
+    tecnicos = sorted({c['creado_por'] for g in grupos.values() for c in g if c['creado_por']})
+
     L = []
-    L.append('# Observaciones con clave catastral — revisión')
+    L.append('# Predios anotados en observaciones — revisión de campo')
     L.append('')
-    L.append('Fichas donde el técnico anotó una clave catastral en el campo de')
-    L.append('observaciones, porque el formulario de QField todavía no tenía la casilla')
-    L.append('para marcar un predio adicional. **Este informe no modifica nada**: sirve')
-    L.append('para decidir cuáles se convierten en ficha adicional vinculada a su regante.')
+    L.append('## Por qué existe esta lista')
     L.append('')
-    L.append(f'Generado desde `data.gpkg` · {sum(len(v) for v in grupos.values())} claves '
-             f'encontradas en {len(filas):,} fichas con observaciones.')
+    L.append('Cuando un regante mencionaba **otro predio suyo**, el formulario de QField')
+    L.append('todavía no tenía la casilla para registrarlo como predio adicional. Los')
+    L.append('técnicos hicieron lo correcto: anotaron la clave catastral (y a veces la')
+    L.append('cédula) en el campo de **observaciones** para no perder el dato.')
     L.append('')
-    L.append('| Grupo | Claves | Qué hacer |')
-    L.append('|---|---|---|')
-    L.append(f'| Vinculables | {len(grupos["VINCULABLE"])} | crear la ficha adicional y vincularla |')
-    L.append(f'| Ya existentes | {len(grupos["DUPLICADA"])} | no crear nada; revisar si hay que vincularla |')
-    L.append(f'| Dudosas | {len(grupos["DUDOSA"])} | **decide el técnico** |')
-    L.append(f'| Inválidas | {len(grupos["INVALIDA"])} | clave truncada o inexistente; volver a campo |')
+    L.append('Ahora el formulario ya tiene la pestaña **➕ PREDIO ADICIONAL**, así que esos')
+    L.append('casos se pueden regularizar. Esta lista dice qué hacer con cada uno.')
+    L.append('')
+    L.append(f'`{total}` claves encontradas en `{len(filas):,}` fichas con observaciones · '
+             f'{len(tecnicos)} técnicos involucrados.')
+    L.append('')
+    L.append('## Resumen')
+    L.append('')
+    L.append('| Grupo | Casos | Quién lo resuelve | Acción |')
+    L.append('|---|---|---|---|')
+    L.append(f'| 1. Crear la ficha | {len(grupos["VINCULABLE"])} | **técnico en campo** | levantar el predio y vincularlo al regante |')
+    L.append(f'| 2. Solo marcar | {len(grupos["MARCABLE"])} | oficina | la ficha ya existe y es del mismo regante |')
+    L.append(f'| 3. Revisar | {len(grupos["DUDOSA"])} | **técnico en campo** | el texto no deja claro qué es |')
+    L.append(f'| 4. No tocar | {len(grupos["DE_TERCERO"])} | — | el predio es de otra persona o de la comuna |')
+    L.append(f'| 5. Confirmar clave | {len(grupos["INVALIDA"])} | **técnico en campo** | la clave está mal escrita |')
+    L.append('')
+    L.append('> **Importante para el grupo 4:** cuando el regante señala un predio que ya')
+    L.append('> está a nombre de otra persona o de la comuna, casi siempre está indicando')
+    L.append('> *dónde está su lote dentro de ese predio*, no que el predio sea suyo. No')
+    L.append('> hay que marcarlo como predio adicional: se le atribuiría el predio entero.')
+    L.append('')
+    L.append('## Cómo registrar un predio adicional')
+    L.append('')
+    L.append('1. Crear la ficha **sobre el predio nuevo**, no sobre el del regante principal.')
+    L.append('2. Abrir la pestaña **➕ PREDIO ADICIONAL** y marcar **¿Es Ficha Hija?**.')
+    L.append('3. En **ID de Ficha Madre**, elegir al regante (se busca por apellido o cédula).')
+    L.append('4. Dejar el estado en **⚪ Pendiente Producción (S4)** si los cultivos se levantan después.')
+    L.append('')
+    L.append('El instructivo completo está en `instructivo-ficha-adicional.html`.')
     L.append('')
 
     titulos = {
-        'VINCULABLE': ('Vinculables — listas para crear',
-                       'La clave existe en el catastro, no tiene ficha propia y la '
-                       'observación menciona una sola clave.'),
-        'DUPLICADA': ('Ya tienen ficha levantada',
-                      'El predio ya está registrado. No hay que crear nada: como mucho, '
-                      'marcar esa ficha como adicional del regante que la declaró.'),
-        'DUDOSA': ('Dudosas — requieren criterio del técnico',
-                   'Varias claves en la misma observación, o el texto sugiere que se '
-                   'habla de un vecino, un lindero o una aclaración, no de otro predio '
-                   'del mismo regante.'),
-        'INVALIDA': ('Inválidas — clave truncada o inexistente',
-                     'No se puede resolver desde la oficina: hay que confirmar la clave '
-                     'en campo.'),
+        'VINCULABLE': ('1. Crear la ficha del predio',
+                       'La clave existe en el catastro, nadie la ha levantado y la '
+                       'observación menciona un solo predio. **Hay que ir a campo**, '
+                       'levantar la ficha y vincularla al regante que aparece aquí.'),
+        'MARCABLE': ('2. Solo marcar — ya está levantado y es del mismo regante',
+                     'El predio ya tiene ficha y está a nombre de la misma persona que lo '
+                     'declaró. No hay que ir a campo: basta marcar esa ficha como adicional '
+                     'y vincularla. Lo hace la oficina.'),
+        'DUDOSA': ('3. Revisar con el regante',
+                   'La observación menciona varias claves, o el texto habla de herederos, '
+                   'linderos o vecinos. **El técnico decide** si corresponde crear un predio '
+                   'adicional y a nombre de quién.'),
+        'DE_TERCERO': ('4. No tocar — el predio es de otra persona',
+                       'El predio ya está levantado a nombre de alguien más (a menudo la '
+                       'comuna). El regante lo anotó como referencia de dónde está su lote. '
+                       '**No marcar como predio adicional.** Se listan solo para dejar '
+                       'constancia de que se revisaron.'),
+        'INVALIDA': ('5. Confirmar la clave en campo',
+                     'La clave anotada no existe en el catastro o está incompleta. No se '
+                     'puede resolver desde la oficina: hay que verificarla con el regante.'),
     }
 
-    for g in ('VINCULABLE', 'DUPLICADA', 'DUDOSA', 'INVALIDA'):
+    for g in ORDEN:
         titulo, ayuda = titulos[g]
-        L.append(f'## {titulo} ({len(grupos[g])})')
+        L.append(f'## {titulo}  ({len(grupos[g])})')
         L.append('')
         L.append(ayuda)
         L.append('')
         if not grupos[g]:
-            L.append('_Ninguna._')
+            L.append('_Ninguno._')
             L.append('')
             continue
-        L.append('| # | Regante | Comunidad | Clave en observaciones | Pista de cédula | Motivo | Observación |')
-        L.append('|---|---|---|---|---|---|---|')
-        for i, c in enumerate(sorted(grupos[g], key=lambda x: (x['comunidad'] or '', x['regante'])), 1):
-            obs = c['obs'][:150].replace('|', '/')
-            L.append('| {} | {} | {} | `{}` | {} | {} | {} |'.format(
-                i, c['regante'][:34] or '—', (c['comunidad'] or '—')[:24],
-                c['clave_obs'], c['pistas'] or '—', c['motivo'], obs))
-        L.append('')
+
+        # Agrupado por comunidad: así el técnico recorre una comunidad a la vez
+        por_com = {}
+        for c in grupos[g]:
+            por_com.setdefault(c['comunidad'] or '(sin comunidad)', []).append(c)
+
+        for com in sorted(por_com):
+            casos = sorted(por_com[com], key=lambda x: x['regante'])
+            L.append(f'### {com}  ({len(casos)})')
+            L.append('')
+            if g == 'DE_TERCERO':
+                L.append('| # | Regante que lo anotó | Clave | Está a nombre de | Observación |')
+                L.append('|---|---|---|---|---|')
+                for i, c in enumerate(casos, 1):
+                    L.append('| {} | {} | `{}` | {} | {} |'.format(
+                        i, c['regante'][:32] or '—', c['clave_obs'],
+                        (c.get('dueno') or '—')[:32], c['obs'][:110].replace('|', '/')))
+            else:
+                L.append('| # | Regante principal | Cédula | Clave del predio | Pista | Observación del técnico | ✔ |')
+                L.append('|---|---|---|---|---|---|---|')
+                for i, c in enumerate(casos, 1):
+                    L.append('| {} | {} | {} | `{}` | {} | {} | ☐ |'.format(
+                        i, c['regante'][:32] or '—', c['cedula'] or '—',
+                        c['clave_obs'], c['pistas'] or '—',
+                        c['obs'][:130].replace('|', '/')))
+            L.append('')
+
+    L.append('---')
+    L.append('')
+    L.append('_Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog_  ')
+    L.append('_Marca la casilla ☐ de cada fila cuando la resuelvas._')
 
     os.makedirs(os.path.dirname(os.path.abspath(SALIDA)), exist_ok=True)
     with open(os.path.abspath(SALIDA), 'w', encoding='utf-8') as f:
         f.write('\n'.join(L))
 
     print(f"  claves encontradas: {sum(len(v) for v in grupos.values())}")
-    for g in ('VINCULABLE', 'DUPLICADA', 'DUDOSA', 'INVALIDA'):
+    for g in ORDEN:
         print(f"     {g:<12} {len(grupos[g]):>4}")
     print(f"\n  informe: {os.path.abspath(SALIDA)}")
 
