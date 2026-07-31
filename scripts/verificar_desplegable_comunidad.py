@@ -36,22 +36,19 @@ check('current_value' not in (cfg.get('FilterExpression') or ''),
       'el filtro ya no usa current_value — es lo que borraba la comunidad')
 check(not (cfg.get('FilterExpression') or '').strip(),
       f"sin filtro dinámico: [{cfg.get('FilterExpression')}]")
-check('n' in (cfg.get('Value') or ''),
-      f"el texto incluye el número: {cfg.get('Value')}")
+# QField NO evalúa expresiones en Value (mostraba 'Sector 3' repetido): debe ser
+# el NOMBRE de una columna real de la tabla de referencia.
+check(cfg.get('Value') == 'etiqueta',
+      f"Value es la columna real `etiqueta`, sin expresiones: [{cfg.get('Value')}]")
 
 # ── lo que verá el técnico ──
 ref = next((l for l in proj.mapLayers().values()
             if l.name().startswith('Comunidades_Sectores')), None)
 check(ref is not None, 'la tabla Comunidades_Sectores está en el proyecto')
 if ref:
-    e = QgsExpression(cfg['Value'])
-    ctx = QgsExpressionContext()
-    ctx.appendScopes(QgsExpressionContextUtils.globalProjectLayerScopes(ref))
-    e.prepare(ctx)
-    opciones = []
-    for f in ref.getFeatures(QgsFeatureRequest()):
-        ctx.setFeature(f)
-        opciones.append(e.evaluate(ctx))
+    check(ref.fields().indexOf(cfg['Value']) >= 0,
+          f"la columna `{cfg['Value']}` existe en la tabla de referencia")
+    opciones = [f[cfg['Value']] for f in ref.getFeatures(QgsFeatureRequest())]
     check(len(opciones) == 50, f'ofrece {len(opciones)} comunidades (deben ser 50)')
     check(all(o and o[:2].isdigit() for o in opciones),
           'todas llevan el número delante')
