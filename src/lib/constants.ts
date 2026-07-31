@@ -184,140 +184,144 @@ export const PROJECT_LOCATION = 'Provincia Pichincha — Cantón Cayambe';
 export const LOGO_PICHINCHA = '/logo-izq.png';
 export const LOGO_CONSORCIO = '/logo-der.png';
 
-// ── Comunidades que quedaron fuera de la investigación ──
-// No correspondían al sistema y no se levantó ninguna ficha en ellas, así que
-// JAVIKO decidió (2026-07-30) sacarlas TAMBIÉN del avance: quedaron fuera del
-// alcance del contrato, de modo que sus 470 comuneros no deben pesar en el
-// denominador. Salen de los selectores y de los cálculos de cobertura.
-// Sus metas siguen declaradas en META_COMUNEROS como referencia histórica,
-// pero nadie las suma porque los reportes iteran COMUNIDADES_POR_SECTOR_FILTRO.
-export const COMUNIDADES_SIN_INVESTIGAR: ReadonlySet<string> = new Set([
-  'AVELLANEDA',
-  'MATÍAS IMBAGO',
-  'SAN VICENTE DE GUAYLLABAMBA',
-  'SR. COLOMA',
-  'SR. HERNÁN TIMPE',
-  'HDA. SAN FRANSISCO',
-]);
+// ── Catálogo oficial de comunidades del sistema ──
+// Fuente: "GUANGUILQUI - POROTOG · SECTORES Y COMUNIDADES", listado que envió
+// Armando el 2026-07-31. Ese documento fija el ORDEN y la NUMERACIÓN oficiales
+// del sistema de riego, que no son alfabéticos sino de recorrido del canal.
+//
+// Cada entrada lleva dos nombres, y la distinción importa:
+//   · `oficial` — como aparece en el documento de Armando. Es lo que se MUESTRA.
+//   · `datos`   — como está escrito en el campo `comunidad` del data.gpkg. Es lo
+//                 que se COMPARA. Nunca cambiarlo sin migrar las fichas.
+//
+// SAN VICENTE DE GUAYLLABAMBA (51) queda oculta: figura en el listado pero
+// JAVIKO confirmó con Armando que no se investiga (2026-07-31), así que se
+// muestran 50 de las 51. SR. COLOMA se eliminó del catálogo porque no aparece
+// en el listado oficial y no tenía ninguna ficha levantada.
+export interface Comunidad {
+  /** Número oficial en el listado del sistema (1-51). */
+  n: number;
+  sector: string;
+  /** Nombre del listado oficial — el que ve el usuario. */
+  oficial: string;
+  /** Nombre en el campo `comunidad` del data.gpkg — el que se compara. */
+  datos: string;
+  /** true = no se investiga; sale de selectores y del cálculo de avance. */
+  oculta?: boolean;
+}
 
-// ── Comunidades Unificadas Oficiales (Depuradas de QField) ──
-// Catálogo COMPLETO del padrón. Los selectores no lo usan directamente: usan
-// COMUNIDADES, que se deriva quitando las sin investigar. Mantener dos listas a
-// mano es cómo SAN VICENTE DE GUAYLLABAMBA se quedó en el selector cuando ya se
-// había depurado del resto.
-export const COMUNIDADES_TODAS = [
-  'ALPAKA',
-  'ASOC. PITANA BAJO',
-  'ASOC. SAN VICENTE ALTO',
-  'ASOC. SAN VICENTE BAJO',
-  'ASOCIACIÓN 17 DE JUNIO',
-  'ASOCIACIÓN POROTOG',
-  'ASOCIACIÓN ROSALÍA',
-  'ASOCIACIÓN SAN PEDRO',
-  'AVELLANEDA',
-  'CANGAHUA PUNGO',
-  'CARRERA',
-  'CHAMBITOLA',
-  'CHAUPIESTANCIA',
-  'CHINCHINLOMA',
-  'COCHAPAMBA',
-  'COMUNA IZACATA',
-  'COMUNA POROTOG',
-  'CORDILLERAS DE LOS ANDES',
-  'CUARTO LOTE',
-  'EL MANZANO',
-  'HDA. GUANGUILQUI',
-  'HDA. SAN FRANSISCO',
-  'IZACATA GRANDE',
-  'JESÚS GRAN PODER',
-  'JUNTA SAN LUIS',
-  'LA CANDELARIA',
-  'LA LIBERTAD',
-  'LARCACHACA',
-  'LOMA GORDA',
-  'LOS ANDES IZACATA',
-  'MATÍAS IMBAGO',
-  'MILAGRO',
-  'MONTESERRÍN ALTO',
-  'OTONCITO',
-  'PAMBAMARCA',
-  'PAMBAMARQUITO',
-  'PITANA ALTO',
-  'PROMEJ. PITANA BAJO',
-  'PUCARÁ',
-  'PUEBLO DE ASCÁZUBI',
-  'PUEBLO DE OTÓN',
-  'SAN ANTONIO',
-  'SAN JACINTO',
-  'SAN JOSÉ',
-  'SAN VICENTE DE GUAYLLABAMBA',
-  'SANTA BÁRBARA',
-  'SANTA MARIANITA DE PINGULMI',
-  'SANTA ROSA DE PACCHA',
-  'SANTA ROSA DE PINGULMI',
-  'SR. COLOMA',
-  // Renombrada desde 'MONTESERÍN BAJO' (JAVIKO, 2026-07-30). Ver
-  // RENOMBRES_PRESENTACION en scripts/comunidades_canon.py: el dato de campo
-  // conserva el nombre original, solo cambia lo que se muestra.
-  'SR. COLOMA MONTESERRIN BAJO',
-  'SR. HERNÁN TIMPE',
-] as const;
+export const CATALOGO_COMUNIDADES: readonly Comunidad[] = [
+  { n: 1, sector: 'Sector 1', oficial: 'LARCACHACA', datos: 'LARCACHACA' },
+  { n: 2, sector: 'Sector 1', oficial: 'LA LIBERTAD', datos: 'LA LIBERTAD' },
+  { n: 3, sector: 'Sector 1', oficial: 'SAN ANTONIO', datos: 'SAN ANTONIO' },
+  { n: 4, sector: 'Sector 1', oficial: 'SAN JOSE', datos: 'SAN JOSÉ' },
+  { n: 5, sector: 'Sector 1', oficial: 'MILAGRO', datos: 'MILAGRO' },
+  { n: 6, sector: 'Sector 1', oficial: 'CHAMBITOLA', datos: 'CHAMBITOLA' },
+  { n: 7, sector: 'Sector 1', oficial: 'LA CANDELARIA', datos: 'LA CANDELARIA' },
+  { n: 8, sector: 'Sector 1', oficial: 'CARRERA', datos: 'CARRERA' },
+  { n: 9, sector: 'Sector 1', oficial: 'COCHAPAMBA', datos: 'COCHAPAMBA' },
+  { n: 10, sector: 'Sector 1', oficial: 'JESUS DE GRAN PODER', datos: 'JESÚS GRAN PODER' },
+  { n: 11, sector: 'Sector 1', oficial: 'AS. SANTA BARBARA', datos: 'SANTA BÁRBARA' },
+  { n: 12, sector: 'Sector 1', oficial: 'ASO. POROTOG', datos: 'ASOCIACIÓN POROTOG' },
+  { n: 13, sector: 'Sector 1', oficial: 'COMUNA POROTOG', datos: 'COMUNA POROTOG' },
+  { n: 14, sector: 'Sector 1', oficial: 'ASO. 17 DE JUNIO', datos: 'ASOCIACIÓN 17 DE JUNIO' },
+  { n: 15, sector: 'Sector 1', oficial: 'ELIOT AVELLANEDA', datos: 'AVELLANEDA' },
+  { n: 16, sector: 'Sector 1', oficial: 'CORDILLERA LOS ANDES', datos: 'CORDILLERAS DE LOS ANDES' },
+  { n: 17, sector: 'Sector 1', oficial: 'COMUNA JURIDICA IZACATA', datos: 'COMUNA IZACATA' },
+  { n: 18, sector: 'Sector 1', oficial: 'IZACATA GRANDE', datos: 'IZACATA GRANDE' },
+  { n: 19, sector: 'Sector 1', oficial: 'LOS ANDES IZACTA', datos: 'LOS ANDES IZACATA' },
+  { n: 20, sector: 'Sector 1', oficial: 'ASO. LOMA GORDA', datos: 'LOMA GORDA' },
+  { n: 21, sector: 'Sector 1', oficial: 'ASO. SAN JACINTO', datos: 'SAN JACINTO' },
+  { n: 22, sector: 'Sector 1', oficial: 'MATIAS IMBAGO', datos: 'MATÍAS IMBAGO' },
 
-/** Lo que se ofrece en los selectores: el catálogo menos las sin investigar. */
-export const COMUNIDADES: readonly string[] = COMUNIDADES_TODAS.filter(
-  (c) => !COMUNIDADES_SIN_INVESTIGAR.has(c)
+  { n: 23, sector: 'Sector 2', oficial: 'CUARTO LOTE', datos: 'CUARTO LOTE' },
+  { n: 24, sector: 'Sector 2', oficial: 'ASO. SAN VICENTE BAJO', datos: 'ASOC. SAN VICENTE BAJO' },
+  { n: 25, sector: 'Sector 2', oficial: 'STA. ROSA DE PACCHA', datos: 'SANTA ROSA DE PACCHA' },
+  { n: 26, sector: 'Sector 2', oficial: 'ASO. SAN VICENTE ALTO', datos: 'ASOC. SAN VICENTE ALTO' },
+  { n: 27, sector: 'Sector 2', oficial: 'PUCARA', datos: 'PUCARÁ' },
+  { n: 28, sector: 'Sector 2', oficial: 'ASO. SAN PEDRO', datos: 'ASOCIACIÓN SAN PEDRO' },
+  { n: 29, sector: 'Sector 2', oficial: 'PITANA ALTO', datos: 'PITANA ALTO' },
+  { n: 30, sector: 'Sector 2', oficial: 'ALPAKA', datos: 'ALPAKA' },
+  { n: 31, sector: 'Sector 2', oficial: 'ASO. PITANA BAJO', datos: 'ASOC. PITANA BAJO' },
+  { n: 32, sector: 'Sector 2', oficial: 'PRO MEJORAS PITANA BAJO', datos: 'PROMEJ. PITANA BAJO' },
+  { n: 33, sector: 'Sector 2', oficial: 'STA. ROSA DE PINGULMI', datos: 'SANTA ROSA DE PINGULMI' },
+  { n: 34, sector: 'Sector 2', oficial: 'STA. MARIANITA DE PINGULMI', datos: 'SANTA MARIANITA DE PINGULMI' },
+  { n: 35, sector: 'Sector 2', oficial: 'PAMBAMARCA', datos: 'PAMBAMARCA' },
+
+  { n: 36, sector: 'Sector 3', oficial: 'OTONCITO', datos: 'OTONCITO' },
+  { n: 37, sector: 'Sector 3', oficial: 'PAMBAMARQUITO', datos: 'PAMBAMARQUITO' },
+  { n: 38, sector: 'Sector 3', oficial: 'HERNAN TIMPE', datos: 'SR. HERNÁN TIMPE' },
+  { n: 39, sector: 'Sector 3', oficial: 'HDA. SAN FRANCISCO', datos: 'HDA. SAN FRANSISCO' },
+  { n: 40, sector: 'Sector 3', oficial: 'MONTESERRIN ALTO', datos: 'MONTESERRÍN ALTO' },
+  { n: 41, sector: 'Sector 3', oficial: 'CHAUPIESTANCIA', datos: 'CHAUPIESTANCIA' },
+  { n: 42, sector: 'Sector 3', oficial: 'PUEBLO DE OTON', datos: 'PUEBLO DE OTÓN' },
+  { n: 43, sector: 'Sector 3', oficial: 'CANGAHUAPUNGO', datos: 'CANGAHUA PUNGO' },
+  { n: 44, sector: 'Sector 3', oficial: 'CHINCHIN LOMA', datos: 'CHINCHINLOMA' },
+  { n: 45, sector: 'Sector 3', oficial: 'ASO. ROSALIA', datos: 'ASOCIACIÓN ROSALÍA' },
+  { n: 46, sector: 'Sector 3', oficial: 'SR. COLOMA MONT. BAJO', datos: 'SR. COLOMA MONTESERRIN BAJO' },
+  { n: 47, sector: 'Sector 3', oficial: 'HDA. GUANGULQUI', datos: 'HDA. GUANGUILQUI' },
+  { n: 48, sector: 'Sector 3', oficial: 'PUEBLO DE ASCAZUBI', datos: 'PUEBLO DE ASCÁZUBI' },
+  { n: 49, sector: 'Sector 3', oficial: 'ASO. EL MANZANO', datos: 'EL MANZANO' },
+  { n: 50, sector: 'Sector 3', oficial: 'JUNTA ADMISIS. RIEGO SAN LUIS', datos: 'JUNTA SAN LUIS' },
+  { n: 51, sector: 'Sector 3', oficial: 'SAN VICENTE DE GUAYLLABAMBA', datos: 'SAN VICENTE DE GUAYLLABAMBA', oculta: true },
+];
+
+/** Las que se investigan: 50 de las 51 del listado oficial. */
+export const COMUNIDADES_VISIBLES: readonly Comunidad[] =
+  CATALOGO_COMUNIDADES.filter((c) => !c.oculta);
+
+const POR_DATOS = new Map(CATALOGO_COMUNIDADES.map((c) => [c.datos, c]));
+
+/** "15. ELIOT AVELLANEDA" — número y nombre oficial para mostrar al usuario. */
+export function etiquetaComunidad(nombreEnDatos: string): string {
+  const c = POR_DATOS.get((nombreEnDatos || '').trim());
+  return c ? `${c.n}. ${c.oficial}` : (nombreEnDatos || '');
+}
+
+/** Número oficial de una comunidad, para ordenar. 999 si no está catalogada. */
+export function ordenComunidad(nombreEnDatos: string): number {
+  return POR_DATOS.get((nombreEnDatos || '').trim())?.n ?? 999;
+}
+
+// ── Derivados: los nombres tal como están en los datos ──
+// Se conservan estos nombres de constante porque son los que ya consumen el
+// mapa, los reportes y la encuesta pública.
+
+/** Comunidades que se ofrecen en los SELECTORES, en el orden oficial. */
+export const COMUNIDADES: readonly string[] = COMUNIDADES_VISIBLES.map((c) => c.datos);
+
+/** Catálogo COMPLETO, incluidas las que no se investigan. */
+export const COMUNIDADES_TODAS: readonly string[] = CATALOGO_COMUNIDADES.map((c) => c.datos);
+
+export const COMUNIDADES_SIN_INVESTIGAR: ReadonlySet<string> = new Set(
+  CATALOGO_COMUNIDADES.filter((c) => c.oculta).map((c) => c.datos)
 );
 
-// ── Mapeo oficial de Comunidades por Sector de Investigación (QField) ──
-// Es el PADRÓN OFICIAL COMPLETO: incluye a propósito las comunidades sin
-// investigar, porque App.tsx lo usa para decidir a qué sector pertenece cada
-// ficha y ahí sí hacen falta todas. Los selectores y los cálculos de cobertura
-// usan COMUNIDADES_POR_SECTOR_FILTRO, que las excluye.
-//
-// Una comunidad NO debe repetirse en dos sectores: App.tsx los recorre en orden
-// y se queda con el primero, así que la duplicada quedaba asignada al sector
-// equivocado y su meta se contaba dos veces en el total global. Le pasaba a
-// ASOCIACIÓN ROSALÍA, que estaba en Sector 2 y Sector 3 y mandaba sus 47 fichas
-// al Sector 2 cuando en campo son del Sector 3.
-export const COMUNIDADES_POR_SECTOR: Record<string, string[]> = {
-  'Sector 1': [
-    "ASOCIACIÓN 17 DE JUNIO", "ASOCIACIÓN POROTOG", "AVELLANEDA",
-    "CARRERA", "CHAMBITOLA", "COCHAPAMBA", "COMUNA IZACATA",
-    "COMUNA POROTOG", "CORDILLERAS DE LOS ANDES", "IZACATA GRANDE",
-    "JESÚS GRAN PODER", "LA CANDELARIA", "LA LIBERTAD",
-    "LARCACHACA", "LOMA GORDA", "LOS ANDES IZACATA",
-    "MATÍAS IMBAGO", "MILAGRO", "SAN ANTONIO", "SAN JACINTO",
-    "SAN JOSÉ", "SANTA BÁRBARA"
-  ],
-  'Sector 2': [
-    // ASOCIACIÓN ROSALÍA salió de aquí: no correspondía al Sector 2 y no se
-    // investigó (JAVIKO, 2026-07-30). Sus 47 fichas son del Sector 3.
-    "ALPAKA", "ASOC. PITANA BAJO", "ASOC. SAN VICENTE ALTO",
-    "ASOC. SAN VICENTE BAJO", "ASOCIACIÓN SAN PEDRO",
-    "CUARTO LOTE", "PAMBAMARCA", "PITANA ALTO", "PROMEJ. PITANA BAJO",
-    "PUCARÁ", "SANTA MARIANITA DE PINGULMI", "SANTA ROSA DE PACCHA",
-    "SANTA ROSA DE PINGULMI"
-  ],
-  'Sector 3': [
-    "ASOCIACIÓN ROSALÍA", "CANGAHUA PUNGO", "CHAUPIESTANCIA",
-    "CHINCHINLOMA", "EL MANZANO", "HDA. GUANGUILQUI",
-    "HDA. SAN FRANSISCO", "JUNTA SAN LUIS",
-    "MONTESERRÍN ALTO", "OTONCITO", "PAMBAMARQUITO", "PUEBLO DE ASCÁZUBI",
-    "PUEBLO DE OTÓN", "SAN VICENTE DE GUAYLLABAMBA", "SR. COLOMA",
-    "SR. COLOMA MONTESERRIN BAJO", "SR. HERNÁN TIMPE"
-  ]
-};
+/**
+ * Padrón oficial COMPLETO por sector. App.tsx lo usa para decidir a qué sector
+ * pertenece cada ficha, y ahí hacen falta todas.
+ *
+ * Una comunidad NO debe repetirse en dos sectores: App.tsx los recorre en orden
+ * y se queda con el primero, así que la duplicada quedaba asignada al sector
+ * equivocado y su meta se contaba dos veces. Le pasaba a ASOCIACIÓN ROSALÍA,
+ * que estaba en Sector 2 y Sector 3 y mandaba sus 47 fichas al Sector 2 cuando
+ * en campo son del Sector 3.
+ */
+export const COMUNIDADES_POR_SECTOR: Record<string, string[]> =
+  CATALOGO_COMUNIDADES.reduce((acc, c) => {
+    (acc[c.sector] ||= []).push(c.datos);
+    return acc;
+  }, {} as Record<string, string[]>);
 
-// El padrón oficial menos las comunidades fuera de alcance. Lo usan TANTO los
-// selectores COMO los cálculos de meta y cobertura, para que el porcentaje se
-// mida solo contra lo que de verdad había que investigar.
+/**
+ * Lo que se ofrece en los SELECTORES y lo que se mide en el AVANCE: el padrón
+ * oficial menos las comunidades que no se investigan, en el orden del sistema.
+ */
 export const COMUNIDADES_POR_SECTOR_FILTRO: Record<string, string[]> =
-  Object.fromEntries(
-    Object.entries(COMUNIDADES_POR_SECTOR).map(([sector, comunidades]) => [
-      sector,
-      comunidades.filter((c) => !COMUNIDADES_SIN_INVESTIGAR.has(c)),
-    ])
-  );
+  COMUNIDADES_VISIBLES.reduce((acc, c) => {
+    (acc[c.sector] ||= []).push(c.datos);
+    return acc;
+  }, {} as Record<string, string[]>);
 
 // ── Meta de comuneros planificados por comunidad (Catastro Oficial) ──
 export const META_COMUNEROS: Record<string, number> = {

@@ -1,4 +1,4 @@
-import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO } from '../../lib/constants';
+import { LOGO_PICHINCHA, LOGO_CONSORCIO, PROJECT_SUBTITLE, PARROQUIAS, TECNICOS, SECTORES, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO, etiquetaComunidad } from '../../lib/constants';
 import { useFiltros } from '../../hooks/useFiltros';
 import { useTheme } from '../../hooks/useTheme';
 import { useAuth } from '../../hooks/useAuth';
@@ -150,8 +150,11 @@ export default function Header({ onMobileMenuOpen }: Props) {
             ? (COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || [])
             : COMUNIDADES
           ).map((c) => {
+            // Se muestra el número y el nombre del listado oficial de Armando
+            // ("15. ELIOT AVELLANEDA"), pero el valor sigue siendo el nombre
+            // que está en los datos, que es con el que se filtra.
             const hasFichas = comunidadesConFichas.has(c.trim().toUpperCase());
-            const label = hasFichas ? c : `${c} (Sin investigar)`;
+            const label = etiquetaComunidad(c) + (hasFichas ? '' : ' (Sin investigar)');
             return <option key={c} value={c}>{label}</option>;
           })}
         </select>

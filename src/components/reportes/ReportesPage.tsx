@@ -6,7 +6,7 @@ import {
   CheckCircle2, Clock, Layers, Building2,
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
-import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS } from '../../lib/constants';
+import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS, etiquetaComunidad, ordenComunidad } from '../../lib/constants';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -511,7 +511,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             totalLevantado += fichasCount;
             const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
             return [
-              comunidad,
+              etiquetaComunidad(comunidad),
               meta > 0 ? meta.toLocaleString('es-EC') : '-',
               fichasCount.toLocaleString('es-EC'),
               `${pct.toFixed(0)}%`
@@ -658,7 +658,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             totalLevantado += fichasCount;
             const pct = meta > 0 ? (fichasCount / meta) * 100 : 0;
             return {
-              'Comunidad': comunidad,
+              'Comunidad': etiquetaComunidad(comunidad),
               'Catastro Base (Planificado)': meta,
               'Encuestas Realizadas (Levantado)': fichasCount,
               'Avance (%)': `${pct.toFixed(0)}%`
@@ -1030,7 +1030,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   fichasCount,
                   pct
                 };
-              }).sort((a, b) => b.fichasCount - a.fichasCount);
+              }).sort((a, b) => ordenComunidad(a.comunidad) - ordenComunidad(b.comunidad));
               
               const pctSector = totalMetaSector > 0 ? (totalFichasSector / totalMetaSector) * 100 : 0;
               
@@ -1087,7 +1087,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                             className="border-b transition-colors hover:bg-black/5 dark:hover:bg-white/5"
                             style={{ borderColor: 'var(--border-color)' }}
                           >
-                            <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{r.comunidad}</td>
+                            <td className="py-2.5 font-medium" style={{ color: 'var(--text-primary)' }}>{etiquetaComunidad(r.comunidad)}</td>
                             <td className="py-2.5 text-center font-semibold" style={{ color: 'var(--text-secondary)' }}>
                               {r.meta > 0 ? r.meta.toLocaleString('es-EC') : '-'}
                             </td>
@@ -1156,7 +1156,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   {(filtros.sectorInv
                     ? (COMUNIDADES_POR_SECTOR_FILTRO[filtros.sectorInv] || [])
                     : COMUNIDADES
-                  ).map((c) => <option key={c} value={c}>{c}</option>)}
+                  ).map((c) => <option key={c} value={c}>{etiquetaComunidad(c)}</option>)}
                 </select>
               )}
               {reportType === 'tecnico' && (
