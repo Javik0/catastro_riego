@@ -49,6 +49,9 @@ import sqlite3
 import sys
 import time
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from respaldo_seguro import respaldar  # noqa: E402
+
 QFIELD = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline"
 GPKG = os.path.join(QFIELD, 'data.gpkg')
 QGS = os.path.join(QFIELD, 'POROTOG LEVANTAMIENTO_qfield_cloud.qgs')
@@ -137,8 +140,7 @@ def main():
         return
 
     # ── escribir gpkg ──
-    copia = GPKG + time.strftime('.bak-%Y%m%d-%H%M')
-    shutil.copy2(GPKG, copia)
+    copia = respaldar(GPKG)
     print(f"\n   respaldo: {os.path.basename(copia)}")
     if not tiene_n:
         cur.execute("ALTER TABLE Comunidades_Sectores ADD COLUMN n INTEGER")
@@ -154,7 +156,7 @@ def main():
 
     # ── escribir qgs ──
     if ok_filtro or ok_valor:
-        shutil.copy2(QGS, QGS + time.strftime('.bak-%Y%m%d-%H%M'))
+        respaldar(QGS)
         s = s.replace(FILTRO_VIEJO, FILTRO_NUEVO, 1).replace(VALOR_VIEJO, VALOR_NUEVO, 1)
         open(QGS, 'w', encoding='utf-8', newline='\r\n').write(s)
         print("   ✓ widget actualizado en el proyecto")

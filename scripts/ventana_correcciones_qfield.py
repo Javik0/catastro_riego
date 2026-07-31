@@ -36,6 +36,9 @@ import sqlite3
 import sys
 import time
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from respaldo_seguro import respaldar  # noqa: E402
+
 QFIELD = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline"
 GPKG = os.path.join(QFIELD, 'data.gpkg')
 QGS = os.path.join(QFIELD, 'POROTOG LEVANTAMIENTO_qfield_cloud.qgs')
@@ -107,12 +110,10 @@ def main():
             print(f"    ({len(triggers)} triggers espaciales retirados y recreados)")
 
     if aplicar:
-        respaldo = GPKG + time.strftime('.bak-%Y%m%d-%H%M')
         con.commit()
         cur.execute("PRAGMA wal_checkpoint(TRUNCATE)")
         con.close()
-        shutil.copy2(GPKG, respaldo)
-        print(f"    ✓ respaldo: {os.path.basename(respaldo)}")
+        print(f"    ✓ respaldo: {os.path.basename(respaldar(GPKG))}")
         # verificación releyendo del disco
         c2 = sqlite3.connect(GPKG); k = c2.cursor()
         k.execute("SELECT sector_investigacion, COUNT(*) FROM Comunidades_Sectores GROUP BY 1")
@@ -133,7 +134,7 @@ def main():
     else:
         print("    se añade la clave catastral para poder buscar también por predio")
         if aplicar:
-            shutil.copy2(QGS, QGS + time.strftime('.bak-%Y%m%d-%H%M'))
+            respaldar(QGS)
             open(QGS, 'w', encoding='utf-8', newline='\r\n').write(
                 s.replace(VALOR_VIEJO, VALOR_NUEVO, 1))
             print("    ✓ escrito")

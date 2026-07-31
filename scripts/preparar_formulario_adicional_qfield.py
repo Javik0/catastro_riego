@@ -45,10 +45,14 @@ Tras aplicar: subir el proyecto a QFieldCloud en ventana coordinada (QFieldSync
 reemplaza archivos completos) y que los técnicos sincronicen.
 """
 
+import os
 import re
 import shutil
 import sys
 import time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from respaldo_seguro import respaldar  # noqa: E402
 
 QGS = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\POROTOG LEVANTAMIENTO_qfield_cloud.qgs"
 
@@ -175,8 +179,7 @@ def main():
     if not aplicar:
         print("\n  SIMULACIÓN — nada se escribió. Ejecuta con --aplicar para escribir.")
         return
-    respaldo = QGS + time.strftime('.bak-%Y%m%d-%H%M')
-    shutil.copy2(QGS, respaldo)
+    respaldo = respaldar(QGS)
     print(f"  ✓ respaldo: {respaldo}")
     # El .qgs original es 100% CRLF; newline='\r\n' lo mantiene uniforme.
     with open(QGS, 'w', encoding='utf-8', newline='\r\n') as f:

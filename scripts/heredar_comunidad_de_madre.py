@@ -27,6 +27,9 @@ import sqlite3
 import sys
 import time
 from collections import Counter
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from respaldo_seguro import respaldar  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -89,8 +92,7 @@ def main():
         con.close()
         return
 
-    copia = GPKG + time.strftime('.bak-%Y%m%d-%H%M')
-    shutil.copy2(GPKG, copia)
+    copia = respaldar(GPKG)
     print(f"\n   respaldo previo: {os.path.basename(copia)}")
 
     # Los triggers del índice espacial usan ST_IsEmpty, que SQLite puro no trae.

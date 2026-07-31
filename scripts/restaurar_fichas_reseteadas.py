@@ -37,6 +37,9 @@ import sqlite3
 import sys
 import time
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from respaldo_seguro import respaldar  # noqa: E402
+
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 RESPALDO = (r"C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO"
             r"\respaldos_qgs\data_ANTES_de_descargar_20260730.gpkg")
@@ -111,8 +114,7 @@ def main():
         print("\nSIMULACIÓN — nada se escribió. Ejecuta con --aplicar.")
         return
 
-    copia = GPKG + time.strftime('.bak-%Y%m%d-%H%M')
-    shutil.copy2(GPKG, copia)
+    copia = respaldar(GPKG)
     print(f"\n   respaldo previo: {os.path.basename(copia)}")
 
     # El GeoPackage tiene triggers de índice espacial que llaman a ST_IsEmpty,
