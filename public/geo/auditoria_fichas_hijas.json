@@ -1,44 +1,44 @@
 {
   "total": 2522,
-  "pendientes": 725,
-  "completadas": 1796,
+  "pendientes": 577,
+  "completadas": 1944,
   "en_revision": 1,
   "por_sector": {
     "Sector 3": {
-      "total": 385,
-      "pendientes": 247,
-      "completadas": 138,
+      "total": 384,
+      "pendientes": 181,
+      "completadas": 203,
       "en_revision": 0
     },
     "Sector 1": {
-      "total": 1059,
-      "pendientes": 79,
-      "completadas": 980,
+      "total": 1060,
+      "pendientes": 38,
+      "completadas": 1022,
       "en_revision": 0
     },
     "Sector 2": {
       "total": 516,
-      "pendientes": 371,
-      "completadas": 144,
+      "pendientes": 344,
+      "completadas": 171,
       "en_revision": 1
     },
     "Sin sector": {
       "total": 562,
-      "pendientes": 28,
-      "completadas": 534,
+      "pendientes": 14,
+      "completadas": 548,
       "en_revision": 0
     }
   },
   "completadas_por_tecnico": {
     "Huguito Ipial": 239,
-    "Pablo Barrionuevo": 284,
-    "Mayra Benavides": 311,
-    "Melany Recalde": 275,
+    "Melany Jara": 45,
+    "Martha Simbaña": 249,
+    "Adriana Cuascota": 169,
+    "Pablo Barrionuevo": 296,
+    "Mayra Benavides": 328,
+    "Melany Recalde": 299,
     "JVK-DIGITALIZACION": 103,
-    "Adriana Cuascota": 160,
-    "Dylan Chavez": 170,
-    "Sin asignar": 6,
-    "Martha Simbaña": 219,
-    "Melany Jara": 29
+    "Dylan Chavez": 210,
+    "Sin asignar": 6
   }
 }

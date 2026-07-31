@@ -1,6 +1,6 @@
 {
   "nota": "El caudal es por COMUNIDAD (los tecnicos anotaron en cada ficha el caudal que recibe su comunidad). Para totales use este archivo: NO sume caudal_valor ficha a ficha.",
-  "regla": "moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta",
+  "regla": "moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta; las comunidades de menos de 3 fichas cuyo caudal coincide con el de otra NO se suman, porque es la misma llave",
   "comunidades": {
     "LARCACHACA": {
       "caudal_ls": 28.6,
@@ -8,59 +8,70 @@
       "origen": "moda (204 de 226 fichas)"
     },
     "CHAMBITOLA": {
-      "caudal_ls": 32.5,
-      "fichas": 156,
-      "origen": "moda (81 de 156 fichas)"
+      "caudal_ls": 32.59,
+      "fichas": 248,
+      "origen": "moda (116 de 248 fichas)"
     },
     "LA LIBERTAD": {
       "caudal_ls": 31.5,
-      "fichas": 151,
-      "origen": "moda (104 de 151 fichas)"
+      "fichas": 152,
+      "origen": "moda (105 de 152 fichas)"
     },
     "CARRERA": {
       "caudal_ls": 0.8,
-      "fichas": 939,
-      "origen": "moda (412 de 939 fichas)"
+      "fichas": 418,
+      "origen": "moda (406 de 418 fichas)"
     },
     "SAN ANTONIO": {
       "caudal_ls": 34.32,
-      "fichas": 160,
-      "origen": "moda (84 de 160 fichas)"
+      "fichas": 176,
+      "origen": "moda (96 de 176 fichas)"
     },
     "COMUNA IZACATA": {
       "caudal_ls": 9.0,
-      "fichas": 80,
-      "origen": "moda (76 de 80 fichas)"
+      "fichas": 144,
+      "origen": "moda (139 de 144 fichas)"
     },
     "SAN JOSE": {
       "caudal_ls": 12.38,
-      "fichas": 190,
-      "origen": "moda (124 de 190 fichas)"
+      "fichas": 192,
+      "origen": "moda (126 de 192 fichas)"
     },
     "MILAGRO": {
       "caudal_ls": 4.16,
-      "fichas": 74,
-      "origen": "moda (53 de 74 fichas)"
+      "fichas": 80,
+      "origen": "moda (56 de 80 fichas)"
     },
     "ASOCIACION 17 DE JUNIO": {
       "caudal_ls": 37.5,
-      "fichas": 31,
-      "origen": "moda (30 de 31 fichas)"
+      "fichas": 33,
+      "origen": "moda (32 de 33 fichas)"
     },
     "COMUNA POROTOG": {
       "caudal_ls": 0.54,
-      "fichas": 228,
-      "origen": "moda (216 de 228 fichas)"
+      "fichas": 231,
+      "origen": "moda (219 de 231 fichas)"
+    },
+    "AVELLANEDA": {
+      "caudal_ls": 37.5,
+      "fichas": 1,
+      "origen": "mismo caudal que ASOCIACION 17 DE JUNIO (33 fichas): es la misma llave, no se suma aparte",
+      "caudal_heredado_de": "ASOCIACION 17 DE JUNIO"
     },
     "LA CANDELARIA": {
       "caudal_ls": 42.55,
-      "fichas": 314,
-      "origen": "moda (188 de 314 fichas)"
+      "fichas": 317,
+      "origen": "moda (190 de 317 fichas)"
+    },
+    "MATIAS IMBAGO": {
+      "caudal_ls": 0.8,
+      "fichas": 6,
+      "origen": "moda (6 de 6 fichas)"
     },
     "COCHAPAMBA": {
       "caudal_ls": 37.0,
-      "fichas": 354,
-      "origen": "moda (326 de 354 fichas)"
+      "fichas": 508,
+      "origen": "moda (447 de 508 fichas)"
     },
     "SAN JACINTO": {
       "caudal_ls": 2.17,
@@ -74,8 +85,8 @@
     },
     "JESUS GRAN PODER": {
       "caudal_ls": 15.0,
-      "fichas": 51,
-      "origen": "moda (48 de 51 fichas)"
+      "fichas": 105,
+      "origen": "moda (102 de 105 fichas)"
     },
     "SANTA BARBARA": {
       "caudal_ls": 12.35,
@@ -84,8 +95,8 @@
     },
     "ASOCIACION POROTOG": {
       "caudal_ls": 1.08,
-      "fichas": 69,
-      "origen": "moda (43 de 69 fichas)"
+      "fichas": 115,
+      "origen": "moda (72 de 115 fichas)"
     },
     "CORDILLERAS DE LOS ANDES": {
       "caudal_ls": 5.9,
@@ -94,13 +105,13 @@
     },
     "IZACATA": {
       "caudal_ls": 10.34,
-      "fichas": 44,
-      "origen": "moda (44 de 44 fichas)"
+      "fichas": 109,
+      "origen": "moda (109 de 109 fichas)"
     },
     "LOS ANDES IZACATA": {
       "caudal_ls": 9.51,
-      "fichas": 106,
-      "origen": "moda (79 de 106 fichas)"
+      "fichas": 108,
+      "origen": "moda (81 de 108 fichas)"
     },
     "SANTA ROSA DE PINGULMI": {
       "caudal_ls": 12.0,
@@ -114,8 +125,8 @@
     },
     "ASOC. SAN VICENTE BAJO": {
       "caudal_ls": 28.0,
-      "fichas": 150,
-      "origen": "moda (150 de 150 fichas)"
+      "fichas": 153,
+      "origen": "moda (153 de 153 fichas)"
     },
     "ASOC. SAN VICENTE ALTO": {
       "caudal_ls": 3.0,
@@ -164,18 +175,30 @@
     },
     "PAMBAMARCA": {
       "caudal_ls": 11.33,
-      "fichas": 110,
-      "origen": "moda (87 de 110 fichas)"
+      "fichas": 105,
+      "origen": "moda (98 de 105 fichas)"
     },
     "PAMBAMARQUITO": {
       "caudal_ls": 17.0,
-      "fichas": 70,
-      "origen": "moda (70 de 70 fichas)"
+      "fichas": 72,
+      "origen": "moda (68 de 72 fichas)"
+    },
+    "SR. HERNAN TIMPE": {
+      "caudal_ls": 17.0,
+      "fichas": 1,
+      "origen": "mismo caudal que CHAUPIESTANCIA (191 fichas): es la misma llave, no se suma aparte",
+      "caudal_heredado_de": "CHAUPIESTANCIA"
+    },
+    "HDA. SAN FRANSISCO": {
+      "caudal_ls": 17.0,
+      "fichas": 1,
+      "origen": "mismo caudal que CHAUPIESTANCIA (191 fichas): es la misma llave, no se suma aparte",
+      "caudal_heredado_de": "CHAUPIESTANCIA"
     },
     "OTONCITO": {
       "caudal_ls": 11.2,
-      "fichas": 79,
-      "origen": "moda (77 de 79 fichas)"
+      "fichas": 104,
+      "origen": "moda (77 de 104 fichas)"
     },
     "PUEBLO DE OTON": {
       "caudal_ls": 29.6,
@@ -199,8 +222,8 @@
     },
     "CANGAHUA PUNGO": {
       "caudal_ls": 33.0,
-      "fichas": 159,
-      "origen": "moda (153 de 159 fichas)"
+      "fichas": 166,
+      "origen": "moda (160 de 166 fichas)"
     },
     "JUNTA SAN LUIS": {
       "caudal_ls": 7.7,
@@ -209,7 +232,7 @@
     },
     "SR. COLOMA MONTESERRIN BAJO": {
       "caudal_ls": 14.65,
-      "fichas": 120,
+      "fichas": 122,
       "origen": "acta de campo"
     },
     "EL MANZANO": {
@@ -233,10 +256,15 @@
       "origen": "acta de campo"
     }
   },
+  "caudal_heredado": {
+    "AVELLANEDA": "ASOCIACION 17 DE JUNIO",
+    "SR. HERNAN TIMPE": "CHAUPIESTANCIA",
+    "HDA. SAN FRANSISCO": "CHAUPIESTANCIA"
+  },
   "totales": {
-    "caudal_comunidades_ls": 732.71,
+    "caudal_comunidades_ls": 733.6,
     "caudal_individual_ls": 216.65,
     "fichas_individuales": 110,
-    "caudal_sistema_ls": 949.36
+    "caudal_sistema_ls": 950.25
   }
 }

@@ -492,6 +492,13 @@ def _cargar_caudal_oficial():
 
     oficial, respaldo = {}, {}
     for crudo, v in d.get('comunidades', {}).items():
+        # Las comunidades con caudal HEREDADO no tienen llave propia: su valor
+        # es el de otra comunidad, que el técnico anotó en la ficha. Se muestran
+        # con caudal 0 para no contar dos veces el mismo derecho de agua.
+        if v.get('caudal_heredado_de'):
+            print(f"    · '{crudo}' hereda el caudal de "
+                  f"'{v['caudal_heredado_de']}'; no suma aparte")
+            continue
         clave = aplicar_correcciones(crudo)
         n = v.get('fichas', 0) or 0
         if clave in oficial and respaldo[clave] >= n:

@@ -1191,13 +1191,44 @@ def calcular_caudal_por_comunidad(fichas):
             comunidades[com] = {'caudal_ls': round(moda, 4), 'fichas': len(vals),
                                 'origen': 'moda ({} de {} fichas)'.format(veces, len(vals))}
 
-    suma_com = round(sum(c['caudal_ls'] for c in comunidades.values()), 2)
+    # ── Caudal heredado: no se cuenta dos veces la misma llave ──
+    # Hay usuarios individuales grandes (una hacienda, un regante con nombre
+    # propio) que figuran como "comunidad" de una o dos fichas. Su caudal no es
+    # una llave adicional: es el de la comunidad a la que pertenecen, que el
+    # técnico anotó en la ficha. Se detecta porque el valor COINCIDE EXACTO con
+    # el de otra comunidad de muchas fichas.
+    #
+    # Caso real (2026-07-31): los técnicos reclasificaron 3 fichas y el sistema
+    # saltó de 949 a 1.021 l/s sin que entrara ni una llave nueva —
+    # AVELLANEDA (1 ficha, 37,5) = ASOCIACIÓN 17 DE JUNIO (33 fichas, 37,5),
+    # SR. HERNÁN TIMPE y HDA. SAN FRANSISCO (1 ficha, 17) = PAMBAMARQUITO (72, 17).
+    MIN_FICHAS_LLAVE_PROPIA = 3
+    grandes = {c['caudal_ls']: com for com, c in comunidades.items()
+               if c['fichas'] >= MIN_FICHAS_LLAVE_PROPIA}
+    for com, c in comunidades.items():
+        origen = grandes.get(c['caudal_ls'])
+        if c['fichas'] < MIN_FICHAS_LLAVE_PROPIA and origen and origen != com:
+            c['caudal_heredado_de'] = origen
+            c['origen'] = ('mismo caudal que {} ({} fichas): es la misma llave, '
+                           'no se suma aparte'.format(origen, comunidades[origen]['fichas']))
+
+    suma_com = round(sum(c['caudal_ls'] for c in comunidades.values()
+                         if 'caudal_heredado_de' not in c), 2)
+    heredadas = {k: v['caudal_heredado_de'] for k, v in comunidades.items()
+                 if 'caudal_heredado_de' in v}
+    if heredadas:
+        print("  ⚠ {} comunidades con caudal heredado (no se suman): {}".format(
+            len(heredadas), ', '.join(f'{k} ← {v}' for k, v in heredadas.items())))
+
     return {
         'nota': ('El caudal es por COMUNIDAD (los tecnicos anotaron en cada ficha el '
                  'caudal que recibe su comunidad). Para totales use este archivo: NO '
                  'sume caudal_valor ficha a ficha.'),
-        'regla': 'moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta',
+        'regla': ('moda de las fichas de la comunidad; ALPAKA y MONTESERIN BAJO por acta; '
+                  'las comunidades de menos de {} fichas cuyo caudal coincide con el de '
+                  'otra NO se suman, porque es la misma llave'.format(MIN_FICHAS_LLAVE_PROPIA)),
         'comunidades': comunidades,
+        'caudal_heredado': heredadas,
         'totales': {
             'caudal_comunidades_ls': suma_com,
             'caudal_individual_ls': round(individual_total, 2),
