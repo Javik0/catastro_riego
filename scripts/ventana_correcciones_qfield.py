@@ -90,8 +90,21 @@ def main():
     n_fichas = cur.fetchone()[0]
     print(f"    {n_fichas:>3} ficha(s) · {VIEJO_MB} → {NUEVO_MB}")
     if aplicar and n_fichas:
-        cur.execute(f'UPDATE "{T_FICHAS}" SET comunidad = ? WHERE comunidad = ?',
-                    (NUEVO_MB, VIEJO_MB))
+        # Los triggers del índice espacial llaman a ST_IsEmpty, que SQLite puro
+        # no trae. Se retiran mientras dura el UPDATE y se recrean tal cual.
+        cur.execute("SELECT name, sql FROM sqlite_master "
+                    "WHERE type='trigger' AND tbl_name=?", (T_FICHAS,))
+        triggers = cur.fetchall()
+        for nombre, _ in triggers:
+            cur.execute(f'DROP TRIGGER IF EXISTS "{nombre}"')
+        try:
+            cur.execute(f'UPDATE "{T_FICHAS}" SET comunidad = ? WHERE comunidad = ?',
+                        (NUEVO_MB, VIEJO_MB))
+        finally:
+            for _, sql in triggers:
+                if sql:
+                    cur.execute(sql)
+            print(f"    ({len(triggers)} triggers espaciales retirados y recreados)")
 
     if aplicar:
         respaldo = GPKG + time.strftime('.bak-%Y%m%d-%H%M')

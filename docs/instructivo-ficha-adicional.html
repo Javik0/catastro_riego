@@ -52,6 +52,14 @@
   }
   .aviso b { color: #8a6100; }
 
+  /* Cambios de esta versión: se destacan en verde para que el técnico que ya
+     conocía el instructivo vea de un vistazo qué es distinto. */
+  .nuevo {
+    background: #eefbf0; border-left: 4px solid #2e9e4f;
+    padding: 6px 10px; margin-top: 6px; font-size: 9.5pt;
+  }
+  .nuevo b { color: #1d6b35; }
+
   .verificar {
     margin-top: 16px; border: 2px solid #1e4d8c; border-radius: 6px; padding: 10px 14px;
     break-inside: avoid;
@@ -90,7 +98,7 @@
   <div class="meta">
     Padrón Guanguilquí–Porotog<br>
     Consorcio Cayambe SPT<br>
-    Julio 2026 · v2
+    Julio 2026 · v3
   </div>
 </header>
 
@@ -114,6 +122,13 @@
     <span class="titulo-paso">Llena los datos básicos</span>
     Propietario, cédula, comunidad, <b>clave catastral del predio nuevo</b> y área.
     Los mismos campos de siempre.
+    <div class="nuevo"><b>NUEVO — la comunidad ahora sale numerada.</b>
+    El desplegable muestra las 50 comunidades en el orden oficial del sistema:
+    <span class="campo">01. LARCACHACA</span>, <span class="campo">36. OTONCITO</span>,
+    <span class="campo">50. JUNTA SAN LUIS</span>… Ya no se filtra por sector, así que las verás
+    todas: escribe el número o parte del nombre para encontrar la tuya rápido.
+    Los del <b>Sector 1</b> son del 01 al 22, los del <b>Sector 2</b> del 23 al 35 y
+    los del <b>Sector 3</b> del 36 al 50.</div>
     <div class="aviso"><b>La sección 5. ENCUESTA ya viene llena</b> con las respuestas más comunes
     del sistema (presa, directiva, años, km, capacitación). Solo <b>corrobórala</b>: si el regante
     responde distinto, corrige el dato — lo que tú escribas es lo que queda guardado.</div>
@@ -131,9 +146,22 @@
   <li>
     <span class="titulo-paso">Elige al regante principal</span>
     En el campo <span class="campo clave">ID de Ficha Madre</span> toca el desplegable.
-    Aparece la lista como <span class="campo">APELLIDOS NOMBRES — CI 1712345678</span>.
-    Puedes <b>escribir para filtrar</b> por apellido o cédula. La lista muestra a
-    <b>todos los regantes principales del sistema</b>, de cualquier comunidad.
+    Aparece la lista como
+    <span class="campo">APELLIDOS NOMBRES — CI 1712345678 — 1702520999999</span>.
+    La lista muestra a <b>todos los regantes principales del sistema</b>, de cualquier comunidad.
+    <div class="nuevo"><b>NUEVO — ahora puedes buscar de tres formas:</b> escribiendo el
+    <b>apellido</b>, la <b>cédula</b> o la <b>clave catastral</b> de su predio. Antes solo
+    servían las dos primeras.</div>
+  </li>
+
+  <li>
+    <span class="titulo-paso">Si el regante que acabas de crear no aparece</span>
+    Cuando creas la ficha principal y de inmediato la adicional, el regante nuevo
+    <b>puede no salir todavía</b> en la lista: QField arma el listado al abrir el proyecto
+    y no lo actualiza solo.
+    <div class="aviso"><b>Solución:</b> guarda la ficha, <b>cierra el proyecto y vuelve a abrirlo</b>
+    en QField. Al reabrir, el regante ya aparece y puedes vincular la adicional con normalidad.
+    <b>No es un error tuyo ni se perdió la ficha.</b></div>
   </li>
 
   <li>
@@ -182,6 +210,14 @@
 
     <dt>No veo la pestaña “➕ PREDIO ADICIONAL”</dt>
     <dd>Estás con el proyecto anterior. Sincroniza con QFieldCloud para recibir la versión nueva.</dd>
+
+    <dt>La comunidad me sale sin número, o solo veo las de mi sector</dt>
+    <dd>Estás con el proyecto anterior. Sincroniza para recibir el listado numerado del 01 al 50.</dd>
+
+    <dt>Guardé la ficha y quedó sin comunidad</dt>
+    <dd>Era una falla del proyecto anterior: al guardar se borraba sola. Ya está corregida y las
+    fichas afectadas se recuperaron. Si te vuelve a pasar con el proyecto nuevo, avísanos con el
+    código de la ficha.</dd>
 
     <dt>La encuesta salió llena con datos que no dijo el regante</dt>
     <dd>Son los valores precargados del sistema. Corrige los que difieran: tu dato siempre
