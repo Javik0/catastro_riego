@@ -38,8 +38,8 @@ Respondieron **4,125 de 4,301** regantes (95.9%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 471 | 82 | 85.2% |
-| Sector 1 | 1,074 | 135 | 88.8% |
+| (sin sector) | 22 | 3 | 88.0% |
+| Sector 1 | 1,523 | 214 | 87.7% |
 | Sector 2 | 1,450 | 185 | 88.7% |
 | Sector 3 | 605 | 123 | 83.1% |
 
@@ -95,25 +95,25 @@ Respondieron 4,128 regantes. **3,667 (88.8%) identifican a José Joaquín Tipanl
 
 Respondieron 4,104 regantes (95.4%). El operador varía por sector; los más nombrados en cada uno:
 
-**(sin sector)** (554 respuestas):
+**(sin sector)** (25 respuestas):
 
 | Operador | Menciones | % del sector |
 |---|---|---|
-| Edison Acero | 81 | 14.6% |
-| Elias Imbago | 57 | 10.3% |
-| Ramon Lanchimba | 55 | 9.9% |
-| Cesar Maldonado | 52 | 9.4% |
-| Ramiro Morales | 43 | 7.8% |
+| Elias Imbago | 6 | 24.0% |
+| Edison Acero | 6 | 24.0% |
+| Sergio Ascanta | 2 | 8.0% |
+| Maria Elbia Chimarro Lincango | 2 | 8.0% |
+| Jose Elias Imbago | 2 | 8.0% |
 
-**Sector 1** (1,207 respuestas):
+**Sector 1** (1,736 respuestas):
 
 | Operador | Menciones | % del sector |
 |---|---|---|
-| Enrique Quishpe | 252 | 20.9% |
-| Edison Acero | 125 | 10.4% |
-| Roberto Aigaje | 105 | 8.7% |
-| Clemente Quinatoa | 83 | 6.9% |
-| Guillermo Sopalo | 82 | 6.8% |
+| Enrique Quishpe | 278 | 16.0% |
+| Edison Acero | 200 | 11.5% |
+| Roberto Aigaje | 128 | 7.4% |
+| Cesar Maldonado | 98 | 5.6% |
+| Clemente Quinatoa | 88 | 5.1% |
 
 **Sector 2** (1,630 respuestas):
 
@@ -184,8 +184,8 @@ Respondieron **4,103 de 4,301** regantes (95.4%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 371 | 178 | 67.6% |
-| Sector 1 | 952 | 256 | 78.8% |
+| (sin sector) | 19 | 6 | 76.0% |
+| Sector 1 | 1,304 | 428 | 75.3% |
 | Sector 2 | 1,358 | 262 | 83.8% |
 | Sector 3 | 498 | 228 | 68.6% |
 
@@ -213,8 +213,8 @@ Respondieron **4,031 de 4,301** regantes (93.7%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 525 | 20 | 96.3% |
-| Sector 1 | 1,128 | 76 | 93.7% |
+| (sin sector) | 23 | 1 | 95.8% |
+| Sector 1 | 1,630 | 95 | 94.5% |
 | Sector 2 | 1,398 | 158 | 89.8% |
 | Sector 3 | 623 | 103 | 85.8% |
 

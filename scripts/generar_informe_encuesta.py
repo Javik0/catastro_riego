@@ -51,6 +51,7 @@ T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 MD = os.path.join(BASE, 'docs', 'INFORME-ENCUESTA-conocimiento-junta.md')
 XLSX = os.path.join(BASE, 'build_entrega', 'Encuesta_Conocimiento_Junta.xlsx')
+HTML = os.path.join(BASE, 'docs', 'CAPITULO-conocimiento-y-gobernanza.html')
 
 # La precarga de la encuesta entró al formulario el 30/07/2026: las fichas
 # creadas desde entonces traen respuestas por defecto salvo corrección del
@@ -114,8 +115,16 @@ def cargar():
     for k, c in vistos.items():
         validas = [(nom, n) for nom, n in c.most_common() if normalizar(nom) == k]
         display[k] = validas[0][0] if validas else k
+
+    # El sector se deriva de la COMUNIDAD cuando el campo viene vacío: 553 fichas
+    # perdieron sector_investigacion en campo, y un informe formal no puede
+    # mostrar una fila "(sin sector)" con el 13% de las entrevistas. Es el mismo
+    # criterio que usa la web (App.tsx): la comunidad manda sobre el sector.
+    from generar_capas_sectores_comunidades import COM_A_SECTOR
     for p in pri:
         p['_com'] = display[p['_comk']]
+        if p['_sec'] in ('', '(sin sector)', 'None'):
+            p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
     return pri
 
 
@@ -413,6 +422,86 @@ def main():
     with open(MD, 'w', encoding='utf-8') as f:
         f.write('\n'.join(L))
     print(f'  informe : {os.path.relpath(MD, BASE)}')
+
+    # ── capítulo del informe técnico (HTML imprimible) ──
+    # El levantamiento sigue en curso: la fecha de corte es la de la última
+    # actividad registrada en campo, no la del día en que se genera el archivo.
+    con = sqlite3.connect(GPKG)
+    k = con.cursor()
+    k.execute(f'SELECT MAX(fecha_creacion), MAX(fecha_completado) FROM "{T}"')
+    f_creada, f_completada = k.fetchone()
+    k.execute(f'SELECT COUNT(*) FROM "{T}" WHERE es_ficha_hija = 1 AND '
+              f'coalesce(estado_investigacion, "pendiente_produccion") != "completada"')
+    pendientes_s4 = k.fetchone()[0]
+    con.close()
+    corte = max(str(f_creada or '')[:10], str(f_completada or '')[:10])
+    MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
+             'octubre noviembre diciembre').split()
+    corte_texto = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
+                   if corte else 'la fecha de generación')
+
+    # personas que solo existen como predio adicional de otro titular
+    con = sqlite3.connect(GPKG)
+    con.row_factory = sqlite3.Row
+    k = con.cursor()
+    k.execute(f'SELECT id, cedula, apellidos, nombres, es_ficha_hija, ficha_madre_id FROM "{T}"')
+    todas = [dict(r) for r in k.fetchall()]
+    con.close()
+    por_id = {f['id']: f for f in todas}
+    ident = lambda f: ((f.get('cedula') or '').strip()
+                       or norm(f"{f.get('apellidos') or ''} {f.get('nombres') or ''}"))
+    ids_pri = {ident(f) for f in todas if f.get('es_ficha_hija') not in (1, True)}
+    solo_adic = {ident(f) for f in todas
+                 if f.get('es_ficha_hija') in (1, True)
+                 and por_id.get(f.get('ficha_madre_id'))
+                 and ident(f) != ident(por_id[f['ficha_madre_id']])
+                 and ident(f) not in ids_pri}
+    con_adicionales = len({f['ficha_madre_id'] for f in todas
+                           if f.get('es_ficha_hija') in (1, True) and f.get('ficha_madre_id')})
+
+    bajas = []
+    por_com_presa = defaultdict(lambda: [0, 0])
+    for p in pri:
+        if lleno(p.get('conoce_presa')):
+            por_com_presa[p['_com']][0 if str(p['conoce_presa']).strip() == 'Sí' else 1] += 1
+    for com, (s, n) in por_com_presa.items():
+        if s + n >= 20:
+            bajas.append((com, s, n, pct(s, s + n)))
+    bajas.sort(key=lambda x: x[3])
+
+    operadores = []
+    for sec in sorted({p['_sec'] for p in resp_o}):
+        ops = Counter(norm(p['operador_sector']) for p in resp_o if p['_sec'] == sec)
+        nom, n = ops.most_common(1)[0]
+        operadores.append((sec, nom.title(), n, pct(n, sum(ops.values()))))
+
+    import capitulo_encuesta_html as cap_html
+    datos = {
+        'corte_texto': corte_texto, 'total': total, 'pendientes_s4': pendientes_s4,
+        'con_adicionales': con_adicionales, 'solo_adicionales': len(solo_adic),
+        'padron_personas': total + len(solo_adic),
+        'pct_presa': pct(presa['si'], presa['respondieron']),
+        'presa_si': presa['si'], 'presa_resp': presa['respondieron'],
+        'presa_sector': presa['por_sector'], 'presa_bajas': bajas,
+        'pct_asamblea': pct(c.get('Asamblea general', 0), len(resp)),
+        'pct_presidente': pct(correcto, len(resp_p)),
+        'presidente': 'José Joaquín Tipanluisa',
+        'operadores': operadores,
+        'anios_moda': anios_c.most_common(1)[0][0],
+        'anios_pct': pct(anios_c.most_common(1)[0][1], len(anios)),
+        'anios_mediana': med,
+        'km_moda': moda_km, 'km_pct': pct(n_moda, len(kms)),
+        'pct_recibio_cap': pct(cap['si'], cap['respondieron']),
+        'pct_quiere_cap': pct(gusta['si'], gusta['respondieron']),
+        'demanda_no_atendida': no_pero_quiere, 'pct_demanda': pct(no_pero_quiere, len(ambos)),
+        'cap_si_y_quiere': si_y_quiere, 'pct_si_quiere': pct(si_y_quiere, len(ambos)),
+        'cap_no_quiere': len(ambos) - no_pero_quiere - si_y_quiere,
+        'pct_no_quiere': pct(len(ambos) - no_pero_quiere - si_y_quiere, len(ambos)),
+        'temas': [(k_, n_, pct(n_, len(temas))) for k_, n_ in cat.most_common()],
+    }
+    with open(HTML, 'w', encoding='utf-8') as f:
+        f.write(cap_html.construir(datos))
+    print(f'  capítulo: {os.path.relpath(HTML, BASE)}  (corte: {corte_texto})')
 
     # ── Excel ──
     from openpyxl import Workbook
