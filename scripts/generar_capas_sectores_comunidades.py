@@ -77,10 +77,11 @@ COMUNIDADES_POR_SECTOR = {
     ]
 }
 
-COM_A_SECTOR = {}
-for sec, coms in COMUNIDADES_POR_SECTOR.items():
-    for c in coms:
-        COM_A_SECTOR[c] = sec
+# COM_A_SECTOR se construye MÁS ABAJO, después de importar el canon: sus claves
+# deben ser los nombres CANÓNICOS, porque se consulta con `_com_corr` (que ya
+# viene canonizado). Con las claves crudas, 'IZACATA' no encontraba a
+# 'IZACATA GRANDE' y las 108 fichas de Izacata (sector vacío en el gpkg) se
+# caían de la capa de Sectores con sus 10,34 l/s.
 
 # ─── Utilidades ────────────────────────────────────────────────────────────────
 
@@ -94,6 +95,12 @@ from comunidades_canon import (  # noqa: E402
     normalizar,
     aplicar_correcciones,
 )
+
+# comunidad canónica → sector. Si una comunidad aparece en dos sectores, gana el
+# último (Rosalía figura en el 2 histórico y en el 3 oficial: queda Sector 3).
+COM_A_SECTOR = {aplicar_correcciones(c): sec
+                for sec, coms in COMUNIDADES_POR_SECTOR.items()
+                for c in coms}
 
 
 # ─── Parseo de geometría GeoPackage (WKB) ─────────────────────────────────────

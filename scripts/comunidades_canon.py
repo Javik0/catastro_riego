@@ -41,11 +41,16 @@ RENOMBRES_PRESENTACION = {
 }
 
 # Escrituras erróneas detectadas en campo → nombre correcto.
-# La comparación es por subcadena sobre el nombre ya normalizado, así que
-# 'INSACATA' captura también 'INSACATA GRANDE'.
+# La comparación es por subcadena sobre el nombre ya normalizado y GANA LA
+# PRIMERA COINCIDENCIA, así que las reglas específicas van ANTES que las
+# genéricas: sin ese orden, 'INSACATA' capturaba a 'COMUNA INSACATA' y fusionaba
+# la Comuna Jurídica Izacata (#17 del listado) con Izacata Grande (#18), que son
+# comunidades distintas.
 CORRECCIONES_COM = {
     'LARCACOCHA': 'LARCACHACA',
     'LARCACOHA': 'LARCACHACA',
+    'COMUNA INSACATA': 'COMUNA IZACATA',
+    'LOS ANDES INSACATA': 'LOS ANDES IZACATA',
     'INSACATA': 'IZACATA',
     'IZACATA GRANDE': 'IZACATA',
     'CARRERA- ACEROLOMA': 'CARRERA',
