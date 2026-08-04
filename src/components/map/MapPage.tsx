@@ -12,6 +12,7 @@ import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants
 import PredioPopupCard from './PredioPopupCard';
 import FichaDetailModal from '../fichas/FichaDetailModal';
 import { useMapNav } from '../../hooks/useMapNav';
+import { useFiltros } from '../../hooks/useFiltros';
 import { wgs84ToUtm17S, type CRS } from '../../lib/utm';
 import 'leaflet/dist/leaflet.css';
 
@@ -832,6 +833,7 @@ function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
 
 export default function MapPage({ fichas, loading, allFichas, cultivosData = [], animalesData = [] }: Props) {
   const { selectedFichaMap, navigateToFichaMap, clearMapSelection } = useMapNav();
+  const { filtros } = useFiltros();
 
   // ── v4.4: Índices en memoria para la Tarjeta de Predio ──
   // Se calculan una sola vez por cambio de datos; el clic sobre cualquiera de
@@ -993,6 +995,19 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         clavesFiltradas.has(String(f.properties?.clave_cata || '').trim())),
     } as FeatureCollection;
   }, [catastroData, clavesFiltradas]);
+
+  // Reutiliza el filtro "Comunidad" de la barra: si hay una comunidad elegida,
+  // la capa de polígonos de Comunidades muestra solo esa (en vez de un único
+  // interruptor todo-o-nada para las 50).
+  const comunidadesVisible = useMemo<FeatureCollection | null>(() => {
+    if (!comunidadesData) return null;
+    if (!filtros.comunidad) return comunidadesData;
+    return {
+      type: 'FeatureCollection',
+      features: comunidadesData.features.filter((f) =>
+        String(f.properties?.comunidad || '').trim() === filtros.comunidad),
+    } as FeatureCollection;
+  }, [comunidadesData, filtros.comunidad]);
 
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
@@ -1326,12 +1341,12 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
             </LayersControl.Overlay>
           )}
 
-          {/* ── Overlay: Comunidades ── */}
-          {comunidadesData && comunidadesData.features.length > 0 && (
+          {/* ── Overlay: Comunidades (respeta el filtro "Comunidad" de la barra) ── */}
+          {comunidadesVisible && comunidadesVisible.features.length > 0 && (
             <LayersControl.Overlay name="Comunidades">
               <GeoJSON
-                key="comunidades-layer"
-                data={comunidadesData}
+                key={`comunidades-${filtros.comunidad || 'todas'}`}
+                data={comunidadesVisible}
                 style={(feature) => {
                   const sectorColors: Record<string, string> = {
                     'Sector 1': '#f59e0b',
@@ -1388,8 +1403,11 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
           if (currentZoom < 13 && selectedFichaMap?.id !== ficha.id) return null;
           if (!showHijasPendientes && esHijaPendiente(ficha) && selectedFichaMap?.id !== ficha.id) return null;
-          // v4.6: técnico apagado en la leyenda (la ficha seleccionada siempre se ve)
-          if (tecnicosOcultos.has(tecnicoDeFicha(ficha)) && selectedFichaMap?.id !== ficha.id) return null;
+          // v4.6: técnico apagado en la leyenda (la ficha seleccionada siempre se ve).
+          // Las pendientes (punto blanco) tienen su propio interruptor separado
+          // ("Fichas adicionales pendientes") y deben seguir visibles aunque se
+          // apague el técnico que las levantó.
+          if (!esHijaPendiente(ficha) && tecnicosOcultos.has(tecnicoDeFicha(ficha)) && selectedFichaMap?.id !== ficha.id) return null;
           const madre = esFichaHija(ficha) && ficha.ficha_madre_id
             ? fichasPorId.get(ficha.ficha_madre_id)
             : undefined;
