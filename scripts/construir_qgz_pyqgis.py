@@ -256,6 +256,7 @@ def main():
     # orden del panel = orden de carga
     predios = cargar('predios_investigados', 'Predios investigados', True, expandida=True)
     comunidades = cargar('comunidades', 'Comunidades', False)
+    comunas_ofi = cargar('comunas_oficiales', 'Límites de comunas (oficial)', False)
     sectores = cargar('sectores', 'Sectores de investigación', False)
     canales = cargar('canales_riego', 'Canales de riego', True)
     fichas = cargar('fichas', 'Fichas de empadronamiento (detalle)', False)
@@ -266,6 +267,10 @@ def main():
     # ── simbología ────────────────────────────────────────────────────
     simbologia_predios(predios)
     simbologia_categorizada(comunidades, 'comunidad', opacidad=0.30)
+    # Una categoría por comuna: así se prende y apaga cada una por separado
+    # desde el panel de Capas. Va tenue porque es límite de referencia, no el
+    # ámbito investigado (para eso está "Comunidades").
+    simbologia_categorizada(comunas_ofi, 'comuna', opacidad=0.18, borde_grueso=True)
     simbologia_categorizada(sectores, 'sector', COLOR_SECTOR, opacidad=0.25, borde_grueso=True)
     catastro.setRenderer(QgsSingleSymbolRenderer(
         relleno('#e2e8f0', '#94a3b8', 0.18, 0.16)))

@@ -51,6 +51,7 @@ UTM17S_WKT = ('PROJCRS["WGS 84 / UTM zone 17S",BASEGEOGCRS["WGS 84",'
 CAPAS = [
     ('predios_investigados', 'predios_lyr', 'Predios investigados', True),
     ('comunidades', 'comunidades_lyr', 'Comunidades', False),
+    ('comunas_oficiales', 'comunas_ofi_lyr', 'Límites de comunas (oficial)', False),
     ('sectores', 'sectores_lyr', 'Sectores de investigación', False),
     ('canales_riego', 'canales_lyr', 'Canales de riego', True),
     ('catastro_completo', 'catastro_lyr', 'Catastro rural completo', False),
@@ -388,6 +389,13 @@ QUÉ CONTIENE
    Catastro rural completo   universo catastral de referencia
    Comunidades / Sectores    ámbito territorial del estudio
    Canales de riego          red de conducción
+   Límites de comunas        límite comunal oficial entregado por el contratante
+      (oficial)              Es distinto de "Comunidades": aquella se genera de
+                             los predios investigados y esta es el límite
+                             territorial de la comuna, por lo que una misma
+                             comuna puede abarcar varias comunidades de riego
+                             (p. ej. Monteserrín, o Izacata antes de dividirse).
+                             Los nombres se conservan tal como vinieron.
 
    Fichas de empadronamiento, Cultivos y Especies pecuarias son las capas de
    detalle. No hace falta abrirlas: alimentan las pestañas del formulario del

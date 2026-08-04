@@ -983,6 +983,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
   const [sectoresData, setSectoresData] = useState<FeatureCollection | null>(null);
+  const [comunasOficialesData, setComunasOficialesData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
 
   // v4.7: catastro que se dibuja = catastro cargado ∩ filtros activos
@@ -1084,6 +1085,17 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
       .then((data: FeatureCollection) => {
         const valid = data.features?.filter((f) => f.geometry != null) || [];
         setSectoresData({ type: 'FeatureCollection', features: valid });
+      }).catch(() => {});
+
+    // Límite comunal oficial entregado por el contratante. Es OTRA cosa que
+    // "Comunidades": ahí el polígono sale del dissolve de los predios
+    // investigados; aquí es el límite territorial de la comuna, y una sola
+    // comuna puede contener varias de nuestras organizaciones de riego.
+    fetch(`/geo/comunas_oficiales.geojson?t=${timestamp}`)
+      .then((r) => r.json())
+      .then((data: FeatureCollection) => {
+        const valid = data.features?.filter((f) => f.geometry != null) || [];
+        setComunasOficialesData({ type: 'FeatureCollection', features: valid });
       }).catch(() => {});
 
     // Cargar polígonos catastrales en background (lazy, ~4MB gzip)
@@ -1410,6 +1422,43 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                       (e.target as any).setStyle({ fillOpacity: 0.08, weight: 1.8 });
                     });
                   }
+                }}
+              />
+            </LayersControl.Overlay>
+          )}
+
+          {/* ── Overlay: Límites de comunas (capa oficial del contratante) ── */}
+          {comunasOficialesData && comunasOficialesData.features.length > 0 && (
+            <LayersControl.Overlay name="Límites de comunas (oficial)">
+              <GeoJSON
+                key="comunas-oficiales-layer"
+                data={comunasOficialesData}
+                style={{
+                  color: '#facc15',
+                  weight: 2,
+                  fillColor: '#facc15',
+                  fillOpacity: 0.05,
+                  opacity: 0.9,
+                  dashArray: '8 4',
+                }}
+                onEachFeature={(feature, layer) => {
+                  const p = feature.properties;
+                  if (!p) return;
+                  const area = Number(p.area_comuna_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                  const dentro = Number(p.area_dentro_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
+                  layer.bindTooltip(
+                    `<b style="font-size:13px">${p.comuna || '—'}</b><br/>
+                     <span style="color:#9ca3af">Límite comunal oficial</span><br/>
+                     <span style="color:#9ca3af">Área de la comuna:</span> <b>${area} ha</b><br/>
+                     <span style="color:#9ca3af">Dentro del sistema:</span> <b>${dentro} ha (${p.pct_dentro ?? '—'}%)</b>`,
+                    { sticky: true, opacity: 0.97 }
+                  );
+                  layer.on('mouseover', function (e: any) {
+                    (e.target as any).setStyle({ fillOpacity: 0.18, weight: 3 });
+                  });
+                  layer.on('mouseout', function (e: any) {
+                    (e.target as any).setStyle({ fillOpacity: 0.05, weight: 2 });
+                  });
                 }}
               />
             </LayersControl.Overlay>

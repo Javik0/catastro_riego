@@ -800,6 +800,22 @@ def main():
                      '236,72,153,200,rgb:0.925,0.282,0.600,0.784', '0.5'),
                      '[% "comunidad" %]'))
 
+    # Límite comunal OFICIAL del contratante, recortado al ámbito del sistema
+    # (scripts/generar_capa_comunas_oficiales.py). No sustituye a 'comunidades':
+    # aquel es la huella de lo investigado, este es el límite territorial, y una
+    # comuna puede contener varias de nuestras organizaciones de riego.
+    capa_geojson('comunas_oficiales.geojson', 'comunas_oficiales',
+                 [('comuna', 'TEXT'), ('area_comuna_ha', 'REAL'),
+                  ('area_dentro_ha', 'REAL'), ('pct_dentro', 'REAL'),
+                  ('fuente', 'TEXT')],
+                 'Límites de comunas (oficial)',
+                 'Límite comunal entregado por el contratante (comunas_cy.shp), '
+                 'recortado a las comunas que tocan el sistema.',
+                 lambda cs: qml_simple(cs, _simbolo_relleno(
+                     '0', '250,204,21,15,rgb:0.980,0.800,0.082,0.059',
+                     '250,204,21,220,rgb:0.980,0.800,0.082,0.863', '0.6'),
+                     '[% "comuna" %]'))
+
     capa_geojson('sectores.geojson', 'sectores',
                  [('sector', 'TEXT'), ('total_fichas', 'TEXT'), ('predios_catastro', 'TEXT'),
                   ('area_dissolve_ha', 'REAL'), ('area_riego_ha', 'REAL'), ('caudal_total_ls', 'REAL')],
