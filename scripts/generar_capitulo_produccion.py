@@ -202,6 +202,14 @@ def main():
             continue
         por_sector[f['_sec']]['cab'] += n
 
+    # La acuicultura no es hato ganadero: se declara aparte para no llamar
+    # "cabezas" a los peces ni mezclar dos actividades distintas.
+    ACUICOLA = ('trucha', 'tilapia', 'pez', 'peces')
+    acuicola = {e: n for e, n in cabezas.items()
+                if any(k in e.lower() for k in ACUICOLA)}
+    cab_acui = sum(acuicola.values())
+    total_pec = total_cab - cab_acui
+
     # ── documento ──
     B = []
     A = B.append
@@ -213,7 +221,7 @@ def main():
     A(E.kpis([
         (f'{sup_total / 10000:,.0f} ha', 'superficie cultivada'),
         (f'{len(sup):,}', 'cultivos distintos'),
-        (f'{total_cab:,}', 'cabezas de ganado'),
+        (f'{total_pec:,}', 'animales de granja'),
         (f'{pct(destino_c["Autoconsumo"], sum(destino_c.values())):.0f}%', 'destino autoconsumo'),
     ]))
 
@@ -245,14 +253,6 @@ def main():
         A(f'<tr><td>{t}</td><td class="n">{s / 10000:,.1f}</td>'
           f'<td class="n">{frec[t]:,}</td><td class="n">{s / frec[t]:,.0f}</td></tr>')
     A('</table>')
-
-    # La acuicultura no es hato ganadero: se declara aparte para no llamar
-    # "cabezas" a los peces ni mezclar dos actividades distintas.
-    ACUICOLA = ('trucha', 'tilapia', 'pez', 'peces')
-    acuicola = {e: n for e, n in cabezas.items()
-                if any(k in e.lower() for k in ACUICOLA)}
-    cab_acui = sum(acuicola.values())
-    total_pec = total_cab - cab_acui
 
     A('<h2>3. Ganadería</h2>')
     A(f'<p>Se contabilizan <b>{total_pec:,} animales</b> en {predios_a:,} predios. '
