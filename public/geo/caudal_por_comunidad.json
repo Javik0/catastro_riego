@@ -170,8 +170,8 @@
     },
     "SANTA MARIANITA DE PINGULMI": {
       "caudal_ls": 24.0,
-      "fichas": 326,
-      "origen": "moda (309 de 326 fichas)"
+      "fichas": 327,
+      "origen": "moda (308 de 327 fichas)"
     },
     "PAMBAMARCA": {
       "caudal_ls": 11.33,
@@ -186,13 +186,13 @@
     "SR. HERNAN TIMPE": {
       "caudal_ls": 17.0,
       "fichas": 1,
-      "origen": "mismo caudal que CHAUPIESTANCIA (191 fichas): es la misma llave, no se suma aparte",
+      "origen": "mismo caudal que CHAUPIESTANCIA (192 fichas): es la misma llave, no se suma aparte",
       "caudal_heredado_de": "CHAUPIESTANCIA"
     },
     "HDA. SAN FRANSISCO": {
       "caudal_ls": 17.0,
       "fichas": 1,
-      "origen": "mismo caudal que CHAUPIESTANCIA (191 fichas): es la misma llave, no se suma aparte",
+      "origen": "mismo caudal que CHAUPIESTANCIA (192 fichas): es la misma llave, no se suma aparte",
       "caudal_heredado_de": "CHAUPIESTANCIA"
     },
     "OTONCITO": {
@@ -202,13 +202,13 @@
     },
     "PUEBLO DE OTON": {
       "caudal_ls": 29.6,
-      "fichas": 195,
-      "origen": "moda (190 de 195 fichas)"
+      "fichas": 193,
+      "origen": "moda (188 de 193 fichas)"
     },
     "CHAUPIESTANCIA": {
       "caudal_ls": 17.0,
-      "fichas": 191,
-      "origen": "moda (117 de 191 fichas)"
+      "fichas": 192,
+      "origen": "moda (117 de 192 fichas)"
     },
     "MONTESERRIN ALTO": {
       "caudal_ls": 13.01,
@@ -222,8 +222,8 @@
     },
     "CANGAHUA PUNGO": {
       "caudal_ls": 33.0,
-      "fichas": 166,
-      "origen": "moda (160 de 166 fichas)"
+      "fichas": 168,
+      "origen": "moda (162 de 168 fichas)"
     },
     "JUNTA SAN LUIS": {
       "caudal_ls": 7.7,

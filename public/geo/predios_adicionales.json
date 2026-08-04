@@ -22673,16 +22673,6 @@
     "ficha_hija_generada_id": "{23e6073b-f500-4185-bd87-d77dd641ce9f}"
   },
   {
-    "fid": 2087,
-    "id_adicional": "{e6b77238-9378-473c-a9ab-8f9b09394b38}",
-    "ficha_id": "{ee089324-0c22-4051-bdb3-96568bf8e920}",
-    "clave_catastral_otro": "1702520850041",
-    "area_total_otro": 1552.96,
-    "area_riego_otro": 1552.96,
-    "area_sin_riego_otro": -1552.96,
-    "area_lote_asignado_otro": 1552.96
-  },
-  {
     "fid": 2088,
     "id_adicional": "{4ee24637-80fd-46bc-aaf1-8d5ae6675322}",
     "ficha_id": "{ee089324-0c22-4051-bdb3-96568bf8e920}",
@@ -22804,18 +22794,6 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 611.03,
     "ficha_hija_generada_id": "{03d8b732-43fc-4f1f-a219-41bb5a490b00}"
-  },
-  {
-    "fid": 2099,
-    "id_adicional": "{99581698-c813-4447-b0fc-cf93d95a7890}",
-    "ficha_id": "{c0e146cd-6702-47c7-87bb-30bfd89fc35a}",
-    "clave_catastral_otro": "1702520840028",
-    "area_total_otro": 383.11,
-    "area_riego_otro": 383.11,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 383.11,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "No tiene riego"
   },
   {
     "fid": 2100,
@@ -23031,16 +23009,6 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 3609.81,
     "ficha_hija_generada_id": "{46f3db75-c8f7-44ad-83dc-ca8218568a83}"
-  },
-  {
-    "fid": 2118,
-    "id_adicional": "{c57fe63a-330e-47c1-a4e5-894181bd3496}",
-    "ficha_id": "{740d810b-369a-42b1-ab8d-67fe76557ff6}",
-    "clave_catastral_otro": "1702520840011",
-    "area_total_otro": 3073.59,
-    "area_riego_otro": 1500.0,
-    "area_sin_riego_otro": -1500.0,
-    "area_lote_asignado_otro": 3073.59
   },
   {
     "fid": 2119,
@@ -26999,18 +26967,6 @@
     "ficha_hija_generada_id": "{a02911de-3a15-4f4f-a88a-39199b64af31}"
   },
   {
-    "fid": 2473,
-    "id_adicional": "{2c0d6dc6-8705-4aed-983f-e534dab52f80}",
-    "ficha_id": "{469fb128-d616-4ce7-80fa-1d82aad11c18}",
-    "clave_catastral_otro": "1702540160155",
-    "area_total_otro": 6474.77,
-    "area_riego_otro": 6474.77,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 1294.354,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Otón. El predio pertenece a cinco herederos el Área de Lote Asignada al Regate: 1294.354 m² aprox., Lote: 3"
-  },
-  {
     "fid": 2474,
     "id_adicional": "{ab31f465-4d7c-43a6-984a-dd52dde7932d}",
     "ficha_id": "{87fec05f-d119-4f1f-9a32-b8a06af9ab2d}",
@@ -27557,17 +27513,6 @@
     "ficha_hija_generada_id": "{3a6639ff-190f-4c33-99d9-59d4ecf1a418}"
   },
   {
-    "fid": 2520,
-    "id_adicional": "{8260c8f8-4226-437b-82df-6213971e11d6}",
-    "ficha_id": "{f598a600-bebd-4ce2-8d29-a3daebe4b04f}",
-    "area_total_otro": 0.0,
-    "area_riego_otro": 0.0,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 0.0,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "Sector: Otón. Impuesto Urbano. En proceso de escrituras, el predio pertenece a cinco herederos el Área de Lote Asignada al Regate: 150 m² aprox., Lote: 1, no tienen riego. 17025401700300100150000"
-  },
-  {
     "fid": 2521,
     "id_adicional": "{82123208-a360-4b80-9c3e-7fab335c94d3}",
     "ficha_id": "{d69e9df8-d738-4d25-b736-eaf717edd93a}",
@@ -28095,18 +28040,6 @@
     "tiene_observaciones": 1,
     "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA ESPOSA. ",
     "ficha_hija_generada_id": "{5cb9869e-7515-4815-93a0-21f4fa68359e}"
-  },
-  {
-    "fid": 2564,
-    "id_adicional": "{4f25620a-444f-4727-91fa-40b75d78e3aa}",
-    "ficha_id": "{dd9455a2-f156-4925-a121-dbe24f39d11c}",
-    "clave_catastral_otro": "1702540100033",
-    "area_total_otro": 14994.41,
-    "area_riego_otro": 1500.0,
-    "area_sin_riego_otro": -1500.0,
-    "area_lote_asignado_otro": 2998.882,
-    "tiene_observaciones": 1,
-    "observaciones_otro": "EL COMUNERO REGANTE NO POSEE ESCRITURAS EL PREDIO ESTA A NOMBRE DE LA MAMA Y SOLO LE CORRESPONDE UN AREA TOTAL DE RIEGO DE 2998.882 MTS CUADRADOS."
   },
   {
     "fid": 2565,
@@ -29212,16 +29145,6 @@
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 7337.09,
     "ficha_hija_generada_id": "{4e59ae16-c82a-4aec-b6c9-15c9a17d2302}"
-  },
-  {
-    "fid": 2665,
-    "id_adicional": "{1384e65f-b7d0-4274-af8a-2d5193c211fd}",
-    "ficha_id": "{32cb1780-4acf-44cd-b059-07effc8475cd}",
-    "clave_catastral_otro": "1702510080120",
-    "area_total_otro": 3717.54,
-    "area_riego_otro": 3717.54,
-    "area_sin_riego_otro": -3717.54,
-    "area_lote_asignado_otro": 3717.54
   },
   {
     "fid": 2666,
@@ -31725,17 +31648,6 @@
     "tiene_observaciones": 1,
     "observaciones_otro": "Siembra papas y cebolla ",
     "ficha_hija_generada_id": "{be540d25-671b-4c15-97b1-d6a0b102bb6b}"
-  },
-  {
-    "fid": 2897,
-    "id_adicional": "{20db5bb5-59c0-4a8b-bb96-fccfebef52db}",
-    "ficha_id": "{cf88c111-9e6c-4135-a669-300637bc371c}",
-    "clave_catastral_otro": "1702540170030",
-    "area_total_otro": 881.72,
-    "area_riego_otro": 881.72,
-    "area_sin_riego_otro": 0.0,
-    "area_lote_asignado_otro": 881.72,
-    "ficha_hija_generada_id": "{8fa66c2f-a731-48bb-a794-b5900db02d80}"
   },
   {
     "fid": 2898,
