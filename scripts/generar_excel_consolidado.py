@@ -160,6 +160,18 @@ def main():
             print(f"  Fichas adicionales excluidas del padrón (van como lotes adicionales): {_excluidas}")
     print(f"Cargados {len(df_fichas)} predios depurados.")
 
+    # Dos fichas con el mismo 'id' de QField (colisión de UUID, no error de este
+    # script): sin depurar esto, .set_index('id') deja de ser único y el lookup
+    # devuelve un DataFrame en vez de una fila, rompiendo la escritura en Excel.
+    # Se avisa cada vez porque la corrección real es en el origen (data.gpkg),
+    # no aquí; mientras tanto se conserva solo la primera fila de cada id.
+    _dup_ids = df_fichas['id'][df_fichas['id'].duplicated(keep=False)].unique()
+    if len(_dup_ids):
+        print(f"  ⚠ {len(_dup_ids)} id(s) de ficha duplicados en el origen (data.gpkg) — se usa solo la primera fila de cada uno:")
+        for _did in _dup_ids:
+            for _, _r in df_fichas[df_fichas['id'] == _did].iterrows():
+                print(f"      {_did}  cédula={_r.get('cedula')}  {_r.get('nombres')} {_r.get('apellidos')}  clave={_r.get('clave_catastral')}")
+
     # 2. Cargar cultivos
     df_cultivos = pd.read_json(CULTIVOS_JSON)
     print(f"Cargados {len(df_cultivos)} cultivos depurados.")
@@ -426,7 +438,7 @@ def main():
     r_idx = 2
     
     print("Escribiendo pestaña de Cultivos...")
-    df_fichas_lookup = df_fichas.set_index('id')
+    df_fichas_lookup = df_fichas.drop_duplicates(subset='id', keep='first').set_index('id')
     
     for idx, row in df_cultivos.iterrows():
         f_id = row['ficha_id']
