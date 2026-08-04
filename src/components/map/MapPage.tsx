@@ -833,7 +833,7 @@ function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
 
 export default function MapPage({ fichas, loading, allFichas, cultivosData = [], animalesData = [] }: Props) {
   const { selectedFichaMap, navigateToFichaMap, clearMapSelection } = useMapNav();
-  const { filtros } = useFiltros();
+  const { filtros, hasActiveFilters } = useFiltros();
 
   // ── v4.4: Índices en memoria para la Tarjeta de Predio ──
   // Se calculan una sola vez por cambio de datos; el clic sobre cualquiera de
@@ -1038,8 +1038,13 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   const [searchPolygonGeo, setSearchPolygonGeo] = useState<FeatureCollection | null>(null);
   const [showAllCatastro, setShowAllCatastro] = useState(false);
   const [showHijasPendientes, setShowHijasPendientes] = useState(true); // Fichas hijas ⚪ visibles por defecto
-  // v4.6: técnicos apagados desde la leyenda (por nombre, no por usuario)
-  const [tecnicosOcultos, setTecnicosOcultos] = useState<Set<string>>(new Set());
+  // v4.6: técnicos apagados desde la leyenda (por nombre, no por usuario).
+  // Arrancan TODOS apagados: al entrar, el mapa se lee por los polígonos de
+  // predios y no por la nube de puntos de autoría, que satura la vista. Quien
+  // necesite ver quién levantó cada ficha los enciende desde la leyenda.
+  const [tecnicosOcultos, setTecnicosOcultos] = useState<Set<string>>(
+    () => new Set(Object.values(TECNICOS).map((t) => t.nombre))
+  );
   const [currentZoom, setCurrentZoom] = useState(13);
 
   // FeatureCollection memoizado de TODOS los polígonos (para capa Canvas)
@@ -1172,6 +1177,23 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     return m;
   }, [fichas, tecnicoDeFicha]);
 
+  // Desglose para la tarjeta de resumen: "6.826 fichas" solo no dice mucho — el
+  // padrón lista regantes (fichas principales) y sus predios adicionales por
+  // separado, y son universos que NO se suman entre sí al analizar.
+  // Va aquí arriba a propósito: debajo hay un `return` por loading y un hook
+  // después de ese return rompe las reglas de hooks (deja la página en blanco).
+  const resumenFichas = useMemo(() => {
+    let principales = 0, adicionales = 0, pendientes = 0;
+    for (const f of fichas) {
+      if (!(f.geo?.lat || f._geojson?.coordinates)) continue;
+      if (esFichaHija(f)) {
+        adicionales++;
+        if (esHijaPendiente(f)) pendientes++;
+      } else principales++;
+    }
+    return { principales, adicionales, pendientes };
+  }, [fichas]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-180px)]">
@@ -1191,22 +1213,47 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     <div className="relative rounded-xl overflow-hidden border"
       style={{ height: 'calc(100vh - 180px)', borderColor: 'var(--border-color)' }}>
 
-      {/* Stats overlay — dos bloques visuales separados para evitar confusión */}
-      <div className="absolute top-16 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm"
+      {/* Resumen de lo que se está viendo. Va en top-24 y no en top-16: los
+          botones de zoom de Leaflet llegan hasta ~70 px y se pisaban. */}
+      <div className="absolute top-24 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm max-w-[215px]"
         style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
 
-        {/* ── Bloque 1: Catastro investigado ── */}
-        <p className="text-[9px] font-semibold uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>
-          Catastro investigado
+        <p className="text-[9px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>
+          {hasActiveFilters ? 'Resultado del filtro' : 'Padrón levantado'}
         </p>
-        <div className="flex items-center gap-2 text-xs">
-          <MapPin className="w-4 h-4 text-blue-400" />
-          <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{fichasConGeo.length} fichas</span>
+
+        {/* ── Fichas: el total y de qué se compone ── */}
+        <div className="flex items-baseline gap-1.5" title="Cada ficha es una encuesta levantada en campo con su punto GPS.">
+          <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 self-center" />
+          <span className="text-sm font-bold leading-none" style={{ color: 'var(--text-primary)' }}>
+            {fichasConGeo.length.toLocaleString('es-EC')}
+          </span>
+          <span className="text-[10px] leading-none" style={{ color: 'var(--text-secondary)' }}>
+            fichas en el mapa
+          </span>
         </div>
+        <div className="text-[10px] mt-1 pl-5 leading-snug" style={{ color: 'var(--text-muted)' }}
+          title="Los regantes se cuentan por ficha principal. Los predios adicionales son otros lotes del mismo regante: no son personas nuevas y no se suman a las principales.">
+          <span style={{ color: 'var(--text-secondary)' }}>{resumenFichas.principales.toLocaleString('es-EC')}</span> de regantes
+          {' · '}
+          <span style={{ color: 'var(--text-secondary)' }}>{resumenFichas.adicionales.toLocaleString('es-EC')}</span> de predios adicionales
+          {resumenFichas.pendientes > 0 && (
+            <><br /><span className="inline-block w-1.5 h-1.5 rounded-full bg-white mr-1 align-middle" />
+            {resumenFichas.pendientes.toLocaleString('es-EC')} sin producción registrada</>
+          )}
+        </div>
+
+        {/* ── Predios dibujados ── */}
         {layerInfo.catastro > 0 && (
-          <div className="flex items-center gap-1.5 text-[10px] mt-1" style={{ color: 'var(--text-muted)' }}>
-            <div className="w-2 h-2 rounded-sm border border-orange-400" style={{ background: 'rgba(249,115,22,0.2)' }} />
-            {(catastroVisible?.features.length ?? layerInfo.catastro).toLocaleString('es-EC')} polígonos en mapa
+          <div className="flex items-baseline gap-1.5 mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}
+            title="Lotes del catastro con al menos una ficha levantada. Son menos que las fichas porque un mismo predio puede tener varias.">
+            <div className="w-2.5 h-2.5 rounded-sm border border-orange-400 shrink-0 self-center" style={{ background: 'rgba(249,115,22,0.2)' }} />
+            <span className="text-sm font-bold leading-none" style={{ color: 'var(--text-primary)' }}>
+              {(catastroVisible?.features.length ?? layerInfo.catastro).toLocaleString('es-EC')}
+            </span>
+            <span className="text-[10px] leading-none" style={{ color: 'var(--text-secondary)' }}>
+              predios dibujados
+            </span>
           </div>
         )}
 
