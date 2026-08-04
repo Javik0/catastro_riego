@@ -1,0 +1,119 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Estructura del padrón — Padrón Guanguilquí–Porotog</title><style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #1a1a1a;
+         margin: 0; line-height: 1.5; font-size: 10.5pt; background: #fff; }
+  header { border-bottom: 3px solid #1e4d8c; padding-bottom: 10px; margin-bottom: 6px;
+           display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+  h1 { font-size: 17pt; margin: 0 0 3px; color: #1e4d8c; }
+  .sub { font-size: 9.5pt; color: #555; margin: 0; }
+  .meta { font-size: 8pt; color: #777; text-align: right; white-space: nowrap; }
+  h2 { font-size: 13pt; color: #1e4d8c; margin: 22px 0 8px;
+       border-bottom: 1px solid #dbe3ee; padding-bottom: 4px; }
+  h3 { font-size: 11pt; margin: 16px 0 6px; color: #24405e; }
+  p { margin: 7px 0; text-align: justify; }
+
+  .corte { background: #fff8e6; border: 1px solid #e0a800; border-left: 5px solid #e0a800;
+           padding: 9px 13px; margin: 12px 0 18px; font-size: 9.5pt; border-radius: 4px; }
+  .corte b { color: #8a6100; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 14px 0; }
+  .kpi { border: 1px solid #dbe3ee; border-radius: 7px; padding: 9px 11px; background: #f8fafc; }
+  .kpi .n { font-size: 17pt; font-weight: 700; color: #1e4d8c; line-height: 1.1; }
+  .kpi .t { font-size: 8pt; color: #556; margin-top: 3px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 9px 0 14px; }
+  th { background: #1e4d8c; color: #fff; text-align: left; padding: 5px 8px; font-weight: 600; }
+  td { padding: 4px 8px; border-bottom: 1px solid #e8edf3; }
+  tr:nth-child(even) td { background: #fafbfd; }
+  td.n, th.n { text-align: right; }
+  .dest { background: #eefbf0 !important; font-weight: 600; }
+
+  .barra { background: #eef2f7; border-radius: 3px; height: 13px; position: relative; min-width: 90px; }
+  .barra span { display: block; height: 100%; border-radius: 3px; background: #2e7d4f; }
+  .barra i { position: absolute; right: 5px; top: -1px; font-size: 8pt; font-style: normal; color: #24405e; }
+
+  .nota { background: #f0f6ff; border-left: 4px solid #1e4d8c; padding: 8px 12px;
+          margin: 12px 0; font-size: 9.5pt; }
+  .hallazgo { background: #f4fbf6; border: 1px solid #bfe3cc; border-radius: 6px;
+              padding: 10px 14px; margin: 14px 0; }
+  .hallazgo b { color: #1d6b35; }
+  .alerta { background: #fff5f5; border: 1px solid #f0c2c2; border-radius: 6px;
+            padding: 10px 14px; margin: 14px 0; }
+  .alerta b { color: #a03030; }
+  ul { margin: 6px 0 6px 18px; padding: 0; }
+  li { margin: 4px 0; }
+  footer { margin-top: 22px; padding-top: 8px; border-top: 1px solid #ccc;
+           font-size: 8pt; color: #777; display: flex; justify-content: space-between; }
+  .evitar-corte { break-inside: avoid; }
+  @media print { body { font-size: 10pt; } }
+</style></head><body>
+<header><div><h1>Estructura del padrón</h1><p class="sub">Personas, predios y fichas · Capítulo del informe técnico</p></div><div class="meta">Padrón de Usuarios<br>Sistema de Riego Comunitario Guanguilquí–Porotog<br>Consorcio Cayambe SPT</div></header>
+<div class="corte"><b>Datos de avance al 31 de julio de 2026.</b> El levantamiento del padrón <b>sigue en curso</b>: a la fecha de corte se registran <b>4,301 fichas de regante</b> y quedan <b>577 predios adicionales</b> por completar. Las cifras de este capítulo son parciales y se recalculan en cada actualización; deben citarse siempre acompañadas de su fecha de corte.</div>
+<div class="kpis">
+<div class="kpi"><div class="n">6,823</div><div class="t">fichas de predio</div></div>
+<div class="kpi"><div class="n">4,301</div><div class="t">regantes entrevistados</div></div>
+<div class="kpi"><div class="n">4,082</div><div class="t">personas en el padrón</div></div>
+<div class="kpi"><div class="n">35%</div><div class="t">con más de un predio</div></div>
+</div>
+<h2>1. Tres cifras que no son lo mismo</h2>
+<p>El padrón maneja tres números distintos que responden a preguntas diferentes. Confundirlos produce contradicciones entre capítulos, de modo que conviene fijarlos:</p>
+<table class="evitar-corte"><tr><th>Cifra</th><th class="n">Valor</th><th>Qué responde</th></tr>
+<tr><td><b>Fichas de predio</b></td><td class="n">6,823</td><td>¿Cuántas parcelas se levantaron? Es la unidad de la producción y del catastro</td></tr>
+<tr class="dest"><td><b>Regantes entrevistados</b></td><td class="n">4,301</td><td>¿A cuántas personas se aplicó la encuesta? Es la unidad de los capítulos sociales</td></tr>
+<tr><td><b>Personas del padrón</b></td><td class="n">4,082</td><td>¿Cuántos titulares distintos hay? Incluye a quienes solo constan como predio adicional</td></tr>
+</table>
+<p>La diferencia entre las dos primeras se explica por los <b>2,522 predios adicionales</b>: un mismo regante puede tener varias parcelas y se le entrevista una sola vez. La tercera cifra incorpora además <b>111 personas</b> que figuran únicamente como titulares de un predio adicional declarado por otro y que no tienen ficha propia.</p>
+<div class="nota"><b>Regla de uso.</b> Para hablar de <i>personas</i> (escolaridad, conocimiento, capacitación) se usan las fichas principales. Para hablar de <i>territorio o producción</i> (superficie, cultivos, ganado) se usan todas las fichas, porque cada predio produce. Nunca deben sumarse ambos universos.</div>
+<h2>2. Cuántos predios tiene cada regante</h2>
+<table class="evitar-corte"><tr><th>Predios por titular</th><th class="n">Titulares</th><th>Peso</th></tr>
+<tr><td>1 predio</td><td class="n">2,647</td><td><div class="barra"><span style="width:65%"></span><i>64.8%</i></div></td></tr>
+<tr><td>2 predios</td><td class="n">769</td><td><div class="barra"><span style="width:19%"></span><i>18.8%</i></div></td></tr>
+<tr><td>3 predios</td><td class="n">344</td><td><div class="barra"><span style="width:8%"></span><i>8.4%</i></div></td></tr>
+<tr><td>4 predios</td><td class="n">176</td><td><div class="barra"><span style="width:4%"></span><i>4.3%</i></div></td></tr>
+<tr><td>5 predios</td><td class="n">74</td><td><div class="barra"><span style="width:2%"></span><i>1.8%</i></div></td></tr>
+<tr><td>6 predios</td><td class="n">37</td><td><div class="barra"><span style="width:1%"></span><i>0.9%</i></div></td></tr>
+<tr><td>7 o más</td><td class="n">35</td><td><div class="barra"><span style="width:1%"></span><i>0.9%</i></div></td></tr>
+</table>
+<p>El <b>64.8 % de los titulares tiene un solo predio</b>. El resto —1,435 personas— posee dos o más parcelas, con un máximo de 17 predios en un mismo titular. Esta dispersión explica por qué el número de fichas supera al de regantes y por qué el registro de predios adicionales fue necesario.</p>
+<h2>3. Distribución de la tierra</h2>
+<div class="nota"><b>Advertencia de lectura.</b> Los mayores tenedores del padrón <b>no son personas acumulando tierra</b>: son la propia comunidad de Monteserrín Bajo, comités pro mejoras, comunas y una empresa. Presentar la concentración sin separarlos sugeriría un acaparamiento privado que no existe. Por eso se calculan por separado.</div>
+<h3>Titulares colectivos</h3>
+<p><b>163 titulares</b> del padrón son organizaciones —comunas, comités, asociaciones, haciendas o empresas— y reúnen <b>2,459.7 ha, el 23.9 % de la superficie</b>:</p>
+<table class="evitar-corte"><tr><th>Titular colectivo</th><th class="n">Superficie (ha)</th></tr>
+<tr><td>SR. COLOMA MONTESERRIN BAJO COMUNIDAD</td><td class="n">729.4</td></tr>
+<tr><td>HIDALGO E HIDALGO S.A</td><td class="n">601.4</td></tr>
+<tr><td>COMITE PRO MEJORAS DE LA COMUNA BUENA ESPERANZA PITA</td><td class="n">288.1</td></tr>
+<tr><td>COMUNA CANGAHUAPUNGO</td><td class="n">181.1</td></tr>
+<tr><td>COMUNA SAN ANTONIO</td><td class="n">126.5</td></tr>
+<tr><td>COMITÉ PROMEJORAS DE  PITANÁ BAJO</td><td class="n">118.9</td></tr>
+</table>
+<h3>Personas naturales</h3>
+<p>Excluidos los titulares colectivos, quedan <b>3,919 personas naturales</b> con <b>7,836.7 ha</b>. Su distribución:</p>
+<table class="evitar-corte"><tr><th>Tramo</th><th class="n">Personas</th><th>Superficie que concentran</th></tr>
+<tr><td>El 1 % con más tierra</td><td class="n">39</td><td><div class="barra"><span style="width:24%"></span><i>23.7%</i></div></td></tr>
+<tr><td>El 5 % con más tierra</td><td class="n">195</td><td><div class="barra"><span style="width:40%"></span><i>40.0%</i></div></td></tr>
+<tr><td>El 10 % con más tierra</td><td class="n">391</td><td><div class="barra"><span style="width:52%"></span><i>52.0%</i></div></td></tr>
+<tr><td>El 25 % con más tierra</td><td class="n">979</td><td><div class="barra"><span style="width:72%"></span><i>72.1%</i></div></td></tr>
+<tr><td>El 50 % con más tierra</td><td class="n">1,959</td><td><div class="barra"><span style="width:90%"></span><i style="color:#fff">89.7%</i></div></td></tr>
+</table>
+<p>Entre personas naturales la concentración sigue siendo alta: el <b>10 % con más tierra reúne el 52.0 %</b> de la superficie privada. Coherente con el minifundio descrito en el capítulo del predio: la mayoría de los regantes trabaja parcelas pequeñas mientras unos pocos concentran las extensiones mayores.</p>
+<h2>4. Estado del levantamiento</h2>
+<p>De los <b>2,522 predios adicionales</b> registrados:</p>
+<table class="evitar-corte"><tr><th>Estado</th><th class="n">Predios</th><th>Peso</th></tr>
+<tr><td>Con producción levantada</td><td class="n">1,944</td><td><div class="barra"><span style="width:77%"></span><i>77.1%</i></div></td></tr>
+<tr><td>Pendiente de levantar la producción</td><td class="n">577</td><td><div class="barra"><span style="width:23%"></span><i>22.9%</i></div></td></tr>
+<tr><td>En revisión</td><td class="n">1</td><td><div class="barra"><span style="width:0%"></span><i>0.0%</i></div></td></tr>
+</table>
+<p>Quedan <b>577 predios adicionales</b> por completar (22.9 % de los adicionales). Es el trabajo de campo pendiente a la fecha de corte y la razón por la que las cifras de este informe son provisionales.</p>
+<p>Adicionalmente, <b>1,499 fichas</b> incluyen observaciones escritas por el técnico, una fuente cualitativa que documenta casos particulares del levantamiento.</p>
+<h2>5. Conclusiones</h2>
+<ul>
+<li>El padrón registra <b>6,823 predios</b> pertenecientes a <b>4,082 titulares</b>, de los cuales 4,301 fueron entrevistados.</li>
+<li><b>35 % de los titulares posee más de un predio</b>, lo que hace imprescindible distinguir entre contar personas y contar parcelas.</li>
+<li><b>163 titulares colectivos</b> (comunas, comités, haciendas) concentran el 23.9 % de la superficie: la propiedad colectiva es una característica estructural del sistema, no una anomalía.</li>
+<li>Entre personas naturales, el 10 % mayor reúne el 52 % de la tierra privada.</li>
+<li>Restan <b>577 predios adicionales</b> por completar para cerrar el levantamiento.</li>
+</ul>
+<footer><span>Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog</span><span>Corte: 31 de julio de 2026</span></footer>
+</body></html>
