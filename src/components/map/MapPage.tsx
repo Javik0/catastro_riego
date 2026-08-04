@@ -4,7 +4,7 @@ import {
   LayersControl, useMap, Tooltip, Marker,
 } from 'react-leaflet';
 import L from 'leaflet';
-import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
+import type { CircleMarker as LeafletCircleMarker, GeoJSON as LeafletGeoJSON, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X, Download } from 'lucide-react';
 import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento, usuarioDeFicha } from '../../lib/types';
@@ -999,15 +999,37 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   // Reutiliza el filtro "Comunidad" de la barra: si hay una comunidad elegida,
   // la capa de polígonos de Comunidades muestra solo esa (en vez de un único
   // interruptor todo-o-nada para las 50).
+  //
+  // El contenido se recarga con clearLayers()+addData() sobre la MISMA capa
+  // (ver comunidadesRef abajo). No se usa `key` para forzar el remonte: eso
+  // hacía que LayersControl la registrara como capa nueva y la casilla
+  // "Comunidades" se apagara sola cada vez que se cambiaba de comunidad.
   const comunidadesVisible = useMemo<FeatureCollection | null>(() => {
     if (!comunidadesData) return null;
     if (!filtros.comunidad) return comunidadesData;
+    // El desplegable trae el nombre con tildes ("PUCARÁ") y la capa viene del
+    // dissolve, que las escribe sin tilde ("PUCARA"): se comparan normalizados,
+    // con el mismo criterio que usa App.tsx para el sector de investigación.
+    const norm = (t: string) => t.toUpperCase().trim()
+      .replace(/Á/g, 'A').replace(/É/g, 'E').replace(/Í/g, 'I')
+      .replace(/Ó/g, 'O').replace(/Ú/g, 'U').replace(/Ñ/g, 'N');
+    const buscada = norm(filtros.comunidad);
     return {
       type: 'FeatureCollection',
       features: comunidadesData.features.filter((f) =>
-        String(f.properties?.comunidad || '').trim() === filtros.comunidad),
+        norm(String(f.properties?.comunidad || '')) === buscada),
     } as FeatureCollection;
   }, [comunidadesData, filtros.comunidad]);
+
+  // Recarga en sitio el contenido de la capa de Comunidades cuando cambia el
+  // filtro, conservando su estado (encendida/apagada) en el control de capas.
+  const comunidadesRef = useRef<LeafletGeoJSON | null>(null);
+  useEffect(() => {
+    const capa = comunidadesRef.current;
+    if (!capa || !comunidadesVisible) return;
+    capa.clearLayers();
+    capa.addData(comunidadesVisible as any);
+  }, [comunidadesVisible]);
 
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
@@ -1342,11 +1364,12 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           )}
 
           {/* ── Overlay: Comunidades (respeta el filtro "Comunidad" de la barra) ── */}
-          {comunidadesVisible && comunidadesVisible.features.length > 0 && (
+          {comunidadesData && comunidadesData.features.length > 0 && (
             <LayersControl.Overlay name="Comunidades">
               <GeoJSON
-                key={`comunidades-${filtros.comunidad || 'todas'}`}
-                data={comunidadesVisible}
+                key="comunidades-layer"
+                ref={comunidadesRef}
+                data={comunidadesVisible ?? comunidadesData}
                 style={(feature) => {
                   const sectorColors: Record<string, string> = {
                     'Sector 1': '#f59e0b',
