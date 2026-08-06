@@ -1,7 +1,7 @@
 # Encuesta a los regantes — conocimiento de la Junta y del sistema
 
 **Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog**  
-Generado el 04/08/2026 desde el `data.gpkg` de campo.
+Generado el 05/08/2026 desde el `data.gpkg` de campo.
 
 Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta de Agua"** de la ficha de papel (pestaña "5. ENCUESTA" en QField).
 
@@ -75,11 +75,11 @@ La elección por **asamblea general** es prácticamente unánime (99.3%): la Jun
 
 ### ¿Cómo se llama el Presidente de la Junta de Agua?
 
-Respondieron 4,133 regantes. **3,672 (88.8%) identifican a José Joaquín Tipanluisa** (agrupando todas las escrituras del apellido).
+Respondieron 4,134 regantes. **3,673 (88.8%) identifican a José Joaquín Tipanluisa** (agrupando todas las escrituras del apellido).
 
 | Nombre respondido (agrupado) | Regantes | % |
 |---|---|---|
-| Jose Joaquin Tipanluisa | 2,671 | 64.6% |
+| Jose Joaquin Tipanluisa | 2,672 | 64.6% |
 | Joaquin Tipanluisa | 631 | 15.3% |
 | Cesar Humberto Quishpe | 236 | 5.7% |
 | Juaquin Tipanluisa | 209 | 5.1% |
@@ -230,11 +230,11 @@ Respondieron **4,036 de 4,305** regantes (93.8%).
 
 ### Temas solicitados
 
-3,700 regantes indicaron temas (texto libre, agrupado por palabra clave):
+3,701 regantes indicaron temas (texto libre, agrupado por palabra clave):
 
 | Categoría | Menciones | % |
 |---|---|---|
-| Riego y su manejo | 3,504 | 94.7% |
+| Riego y su manejo | 3,505 | 94.7% |
 | Otros temas | 87 | 2.4% |
 | Agricultura y cultivos | 85 | 2.3% |
 | Ganadería | 24 | 0.6% |
@@ -245,7 +245,7 @@ Las 10 respuestas literales más frecuentes:
 |---|---|
 | Sistema de riego | 1,063 |
 | Manejo de sistemas de riego para la produccion de nuevos cul | 1,026 |
-| Riego | 323 |
+| Riego | 324 |
 | Riegos | 236 |
 | Uso del agua | 93 |
 | Mejoramiento de riego | 82 |
@@ -262,12 +262,12 @@ Las 10 respuestas literales más frecuentes:
 |---|---|---|
 | Conoce la presa | 4,130 | 95.9% |
 | Cómo se elige la directiva | 4,133 | 96.0% |
-| Nombre del presidente | 4,133 | 96.0% |
+| Nombre del presidente | 4,134 | 96.0% |
 | Operador del sector | 4,108 | 95.4% |
 | Años del sistema | 4,109 | 95.4% |
 | Km del canal | 4,106 | 95.4% |
 | Recibió capacitación | 4,108 | 95.4% |
 | Le gustaría capacitación | 4,036 | 93.8% |
-| Temas deseados | 3,700 | 85.9% |
+| Temas deseados | 3,701 | 86.0% |
 
 La tasa de respuesta supera el 93% en todas las preguntas cerradas; solo los temas de capacitación (texto libre y opcional) bajan al 86%.

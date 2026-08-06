@@ -1,40 +1,40 @@
 {
-  "total": 2521,
-  "pendientes": 115,
-  "completadas": 2406,
+  "total": 2520,
+  "pendientes": 0,
+  "completadas": 2520,
   "en_revision": 0,
   "por_sector": {
     "Sector 3": {
       "total": 383,
-      "pendientes": 15,
-      "completadas": 368,
+      "pendientes": 0,
+      "completadas": 383,
       "en_revision": 0
     },
     "Sector 1": {
-      "total": 1060,
-      "pendientes": 37,
-      "completadas": 1023,
+      "total": 1059,
+      "pendientes": 0,
+      "completadas": 1059,
       "en_revision": 0
     },
     "Sector 2": {
       "total": 516,
-      "pendientes": 49,
-      "completadas": 467,
+      "pendientes": 0,
+      "completadas": 516,
       "en_revision": 0
     },
     "Sin sector": {
       "total": 562,
-      "pendientes": 14,
-      "completadas": 548,
+      "pendientes": 0,
+      "completadas": 562,
       "en_revision": 0
     }
   },
   "completadas_por_tecnico": {
     "Huguito Ipial": 289,
+    "Pablo Barrionuevo": 468,
     "Melany Jara": 96,
     "Martha Simbaña": 249,
     "Adriana Cuascota": 169,
-    "Pablo Barrionuevo": 354,
     "Dylan Chavez": 252,
     "Mayra Benavides": 353,
     "Sin asignar": 8,
