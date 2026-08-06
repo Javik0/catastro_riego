@@ -98,7 +98,7 @@
   <div class="meta">
     Padrón Guanguilquí–Porotog<br>
     Consorcio Cayambe SPT<br>
-    Julio 2026 · v4
+    Agosto 2026 · v5
   </div>
 </header>
 
@@ -146,12 +146,19 @@
   <li>
     <span class="titulo-paso">Elige al regante principal</span>
     En el campo <span class="campo clave">ID de Ficha Madre</span> toca el desplegable.
-    Aparece la lista como
-    <span class="campo">APELLIDOS NOMBRES — CI 1712345678 — 1702520999999</span>.
-    La lista muestra a <b>todos los regantes principales del sistema</b>, de cualquier comunidad.
-    <div class="nuevo"><b>NUEVO — ahora puedes buscar de tres formas:</b> escribiendo el
-    <b>apellido</b>, la <b>cédula</b> o la <b>clave catastral</b> de su predio. Antes solo
-    servían las dos primeras.</div>
+    La lista muestra la <b>cédula</b> de cada regante:
+    <span class="campo">1712345678</span>, <span class="campo">1704653409</span>…
+    Están <b>todos los regantes principales del sistema</b>, de cualquier comunidad.
+    <div class="nuevo"><b>NUEVO — la lista ahora muestra la CÉDULA, no el nombre.</b>
+    Escribe la cédula del regante en el buscador del desplegable y lo encuentras.
+    Si acabas de crear su ficha, es la misma cédula que digitaste hace un momento.</div>
+    <div class="aviso"><b>Por qué cambió:</b> antes la lista decía
+    <span class="campo">APELLIDOS NOMBRES — CI …</span>, pero ese texto solo se veía en la
+    computadora: <b>en la tablet salía en blanco</b>, y por eso no encontrabas a nadie —
+    ni al regante que acababas de crear. La cédula sí se ve en QField y además no se repite,
+    mientras que hay 36 regantes que se apellidan igual («LANCHIMBA LANCHIMBA»).</div>
+    <div class="aviso"><b>Consejo:</b> antes de crear la ficha adicional, <b>anota la cédula</b>
+    del regante principal. Es lo único que necesitas para vincularla.</div>
   </li>
 
   <li>
@@ -206,9 +213,21 @@
 <div class="problemas">
   <h2>Si algo no sale</h2>
   <dl>
+    <dt>La lista de ficha madre me muestra números y no nombres</dt>
+    <dd>Es lo correcto desde esta versión: son las <b>cédulas</b> de los regantes principales.
+    Busca por cédula. Si la lista te sale <b>vacía o en blanco</b>, estás con el proyecto anterior:
+    sincroniza con QFieldCloud.</dd>
+
     <dt>El regante no aparece en la lista</dt>
     <dd>La lista solo muestra fichas <b>principales</b>. Si su ficha es a su vez adicional, o todavía
-    no se ha sincronizado desde otra tablet, no va a salir. Anota el caso y repórtalo; no fuerces el dato.</dd>
+    no se ha sincronizado desde otra tablet, no va a salir. Anota el caso y repórtalo; no fuerces el dato.
+    <b>Si acabas de crearla en esta misma tablet</b>, es lo del paso 5: guarda, cierra el proyecto
+    y vuelve a abrirlo.</dd>
+
+    <dt>El regante no tiene cédula registrada</dt>
+    <dd>Son pocos casos (63 de 4.305) y en la lista aparecen sin etiqueta. Anota el código de la
+    ficha del regante y repórtalo a coordinación para vincular la adicional desde la oficina.
+    No adivines cuál es.</dd>
 
     <dt>El punto se queda blanco aunque cargué los cultivos</dt>
     <dd>Ya está corregido en esta versión del proyecto. Si vuelve a pasar, avisa indicando el código de la ficha.</dd>
