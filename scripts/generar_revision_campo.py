@@ -157,8 +157,13 @@ def main():
     w("---\n")
     w("## Cómo usar esta lista\n")
     w("1. Busca tu comunidad en la tabla de abajo y mira cuánto queda pendiente ahí.")
-    w("2. En el detalle de cada comunidad tienes las fichas con su **código** y el "
-      "nombre del regante: búscalas en QField por ese código.")
+    w("2. En el detalle de cada comunidad tienes las fichas por **clave catastral** "
+      "y nombre del regante: búscalas en QField por la clave catastral.")
+    w("")
+    w("> ⚠️ **No busques por el «código» de la ficha.** El campo `codigo_final` no "
+      "identifica nada: vale `S-C-P001` en 5.529 de las 6.831 fichas, porque es el "
+      "valor por defecto del formulario y casi nunca se cambió. La clave catastral "
+      "sí está en todas las fichas y es la que sirve para encontrarlas.\n")
     w("3. Completa lo que falte **en la ficha existente**. No crees una ficha nueva: "
       "se duplicaría el predio.")
     w("4. Si el dato no se puede obtener (el regante no está, no quiere darlo, el "
@@ -197,15 +202,15 @@ def main():
 
         filas = consultar(ds,
             "SELECT COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com, "
-            "COALESCE(codigo_final,'') cod, "
+            "COALESCE(clave_catastral,'') clave, "
             "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')) nombre, "
-            "COALESCE(clave_catastral,'') clave, COALESCE(creado_por,'') tec "
-            "FROM {} WHERE {} AND {} ORDER BY com, cod"
+            "COALESCE(cedula,'') ced, COALESCE(creado_por,'') tec "
+            "FROM {} WHERE {} AND {} ORDER BY com, clave"
             .format(t, cond, PRINCIPALES))
 
         por_com = {}
-        for com, cod, nombre, clave, tec in filas:
-            por_com.setdefault(com, []).append((cod, nombre, clave, tec))
+        for com, clave, nombre, ced, tec in filas:
+            por_com.setdefault(com, []).append((clave, nombre, ced, tec))
 
         for com in sorted(por_com):
             fichas = por_com[com]
@@ -218,11 +223,11 @@ def main():
                 # hay que verla, o alguien sale a buscar fichas que no son encuestas
                 w("> ⚠️ {}. Consultar con dirección antes de intervenirlas.\n"
                   .format(aviso[0].upper() + aviso[1:]))
-            w("| Código | Regante | Clave catastral | Levantó |")
+            w("| Clave catastral | Regante | Cédula | Levantó |")
             w("|---|---|---|---|")
-            for cod, nombre, clave, tec in fichas[:LIMITE_LISTADO]:
-                w("| {} | {} | {} | {} |".format(cod or '—', nombre or '—',
-                                                 clave or '—', tec or '—'))
+            for clave, nombre, ced, tec in fichas[:LIMITE_LISTADO]:
+                w("| {} | {} | {} | {} |".format(clave or '—', nombre or '—',
+                                                 ced or '—', tec or '—'))
             if len(fichas) > LIMITE_LISTADO:
                 w("| … | _y {} fichas más en esta comunidad_ | | |"
                   .format(num(len(fichas) - LIMITE_LISTADO)))
