@@ -10,7 +10,7 @@ cédula) en el campo de **observaciones** para no perder el dato.
 Ahora el formulario ya tiene la pestaña **➕ PREDIO ADICIONAL**, así que esos
 casos se pueden regularizar. Esta lista dice qué hacer con cada uno.
 
-`213` claves encontradas en `1,494` fichas con observaciones · 17 técnicos involucrados.
+`214` claves encontradas en `1,507` fichas con observaciones · 17 técnicos involucrados.
 
 ## Resumen
 
@@ -18,7 +18,7 @@ casos se pueden regularizar. Esta lista dice qué hacer con cada uno.
 |---|---|---|---|
 | 1. Crear la ficha | 31 | **técnico en campo** | levantar el predio y vincularlo al regante |
 | 2. Solo marcar | 17 | oficina | la ficha ya existe y es del mismo regante |
-| 3. Revisar | 78 | **técnico en campo** | el texto no deja claro qué es |
+| 3. Revisar | 79 | **técnico en campo** | el texto no deja claro qué es |
 | 4. No tocar | 59 | — | el predio es de otra persona o de la comuna |
 | 5. Confirmar clave | 28 | **técnico en campo** | la clave está mal escrita |
 
@@ -167,9 +167,15 @@ El predio ya tiene ficha y está a nombre de la misma persona que lo declaró. N
 | 3 | LANCHIMBA AIGAJE LUIS ALFREDO | 1725966939 | `1702520550069` | — | Clave: 1702520560046 Sector: San José Central Regante el Sr. del Predio de Luz María Pilca Clave: 1702520560043 Sector: San José C | ☐ |
 | 4 | SALAZAR UMAQUINGA  JOSE RAMON | 1704081650 | `1702520700060` | CI 1714248372 = SALAZAR UMAQUINGA JOSE RAMON | Predio adicional a la clave catastral 1702520700060 está a nombre del señor SALAZAR UMAQUINGA JOSÉ RAMÓN CI. 1714248372 | ☐ |
 
-## 3. Revisar con el regante  (78)
+## 3. Revisar con el regante  (79)
 
 La observación menciona varias claves, o el texto habla de herederos, linderos o vecinos. **El técnico decide** si corresponde crear un predio adicional y a nombre de quién.
+
+### CANGAHUA PUNGO  (1)
+
+| # | Regante principal | Cédula | Clave del predio | Pista | Observación del técnico | ✔ |
+|---|---|---|---|---|---|---|
+| 1 | SALCEDO PINEDA CLAUDIO BAYARDO | 1726169202 | `—` | CI 1726169202 = SALCEDO PINEDA CLAUDIO BAYARDO | El comunero regante es el señor Salcedo Pineda Claudio Bayardo CI 1726169202 no tiene animales | ☐ |
 
 ### CARRERA  (1)
 
