@@ -1,9 +1,7 @@
 # Cartografía de la represa de Porotog — estado y solicitud de información
 
-**Proyecto:** Estudio definitivo de la presa del río Porotog para los sistemas de
-riego Guanguilquí y Porotog · Parroquia Cangahua, cantón Cayambe
-**Asunto:** Resultado del procesamiento de la cartografía entregada y pedido de
-un archivo faltante
+**Proyecto:** Estudio definitivo de la presa del río Porotog para los sistemas de riego Guanguilquí y Porotog · Parroquia Cangahua, cantón Cayambe  
+**Asunto:** Resultado del procesamiento de la cartografía entregada y pedido de un archivo faltante  
 **Fecha:** 9 de agosto de 2026
 
 ---
