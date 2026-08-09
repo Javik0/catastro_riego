@@ -1,0 +1,32 @@
+{
+"type": "FeatureCollection",
+"name": "rotulos_obra",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"nombre":"PANTANO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135947452075371,-0.141768002955397]}},
+{"type":"Feature","properties":{"nombre":"PANTANO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.134430033046527,-0.141199639871832]}},
+{"type":"Feature","properties":{"nombre":"PANTANO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.13910697684058,-0.144613407208848]}},
+{"type":"Feature","properties":{"nombre":"PANTANO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135606899853087,-0.137569695415245]}},
+{"type":"Feature","properties":{"nombre":"PANTANO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.133268940940212,-0.136999145478409]}},
+{"type":"Feature","properties":{"nombre":"CANAL","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.137355844702086,-0.138223613300753]}},
+{"type":"Feature","properties":{"nombre":"CANAL","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.137822233694152,-0.140999790386268]}},
+{"type":"Feature","properties":{"nombre":"CANAL","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.138680097059336,-0.142097803419722]}},
+{"type":"Feature","properties":{"nombre":"RÍO POROTOG","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.134957304734513,-0.138885673470175]}},
+{"type":"Feature","properties":{"nombre":"RÍO POROTOG","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135121131402443,-0.144304377868825]}},
+{"type":"Feature","properties":{"nombre":"RÍO POROTOG","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135475958792,-0.147398459129811]}},
+{"type":"Feature","properties":{"nombre":"RÍO POROTOG","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.137698082262943,-0.143889899697792]}},
+{"type":"Feature","properties":{"nombre":"Inicio Túnel","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135949539679558,-0.140144906060353]}},
+{"type":"Feature","properties":{"nombre":"Captación","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135874392824604,-0.140142622499824]}},
+{"type":"Feature","properties":{"nombre":"Tanque Disipador","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.135941793841923,-0.138829770768966]}},
+{"type":"Feature","properties":{"nombre":"Fin Túnel","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.136312965588544,-0.138771649212932]}},
+{"type":"Feature","properties":{"nombre":"Canal","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.13550527728917,-0.138331584737551]}},
+{"type":"Feature","properties":{"nombre":"Vertedero de Excesos","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.132620942608639,-0.138962370821456]}},
+{"type":"Feature","properties":{"nombre":"Disipador","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.134768876104246,-0.137352008914254]}},
+{"type":"Feature","properties":{"nombre":"Rápida","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.133375375255625,-0.138393739247845]}},
+{"type":"Feature","properties":{"nombre":"EJE DE PRESA","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.13723458519425,-0.139823801317967]}},
+{"type":"Feature","properties":{"nombre":"BANCO DE MATERIALES 1","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.13646606203163,-0.143277177963866]}},
+{"type":"Feature","properties":{"nombre":"BANCO DE MATERIALES 2","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.136805678248592,-0.146074001999302]}},
+{"type":"Feature","properties":{"nombre":"BANCO DE MATERIALES 3","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.133488435626134,-0.144591129261461]}},
+{"type":"Feature","properties":{"nombre":"LIMITE DE PROYECTO","fuente":"rotulo del plano 1000"},"geometry":{"type":"Point","coordinates":[-78.137524713963799,-0.141264228730769]}}
+]
+}

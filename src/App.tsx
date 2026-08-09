@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useAuth } from './hooks/useAuth';
 import { FiltrosProvider, useFiltros } from './hooks/useFiltros';
 import { ThemeProvider } from './hooks/useTheme';
@@ -18,6 +18,11 @@ import ReportesPage from './components/reportes/ReportesPage';
 import EncuestaPublicaPage from './components/encuestas/EncuestaPublicaPage';
 import AdminEncuestasPage from './components/encuestas/AdminEncuestasPage';
 import AdminAuditoriaFichasHijas from './components/fichas/AdminAuditoriaFichasHijas';
+
+// La cartografía de la represa se carga aparte: arrastra Three.js (~600 KB) y
+// solo la usan admin y técnico. Importándola aquí de forma normal, ese peso lo
+// descargaría también el cliente, que ni siquiera puede entrar a esa pantalla.
+const RepresaPage = lazy(() => import('./components/represa/RepresaPage'));
 
 // ── Data Loader: lee los GeoJSON exportados ──
 function useLocalData() {
@@ -328,6 +333,23 @@ export default function App() {
                           />
                         )}
                       </FilteredDataProvider>
+                    </RoleProtectedRoute>
+                  }
+                />
+                {/* Cartografía de la represa: planos del consorcio
+                    georreferenciados. Herramienta de consultoría, el cliente no
+                    accede (misma restricción que Reportes) */}
+                <Route
+                  path="represa"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
+                      <Suspense fallback={
+                        <div className="flex items-center justify-center py-20">
+                          <div className="w-7 h-7 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                        </div>
+                      }>
+                        <RepresaPage />
+                      </Suspense>
                     </RoleProtectedRoute>
                   }
                 />

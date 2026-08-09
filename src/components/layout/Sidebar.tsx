@@ -2,17 +2,23 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import {
   LayoutDashboard, Map, ClipboardList, FileText, ClipboardCheck,
-  LogOut, ChevronLeft, ChevronRight, Menu, X, GitBranch,
+  LogOut, ChevronLeft, ChevronRight, Menu, X, GitBranch, Mountain,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { path: '/', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { path: '/mapa', icon: Map, label: 'Mapa', end: false },
   { path: '/fichas', icon: ClipboardList, label: 'Fichas', end: false },
+  { path: '/represa', icon: Mountain, label: 'Represa', end: false },
   { path: '/reportes', icon: FileText, label: 'Reportes', end: false },
   { path: '/encuestas', icon: ClipboardCheck, label: 'Encuestas', end: false },
   { path: '/auditoria-hijas', icon: GitBranch, label: 'Fichas Adicionales', end: false },
 ];
+
+// Rutas de trabajo interno: el cliente (Consorcio) no las ve ni entra por URL
+// (la restricción real está en App.tsx con RoleProtectedRoute; esto solo evita
+// mostrarle un enlace que le daría error).
+const SOLO_EQUIPO = ['/reportes', '/encuestas', '/auditoria-hijas', '/represa'];
 
 interface Props {
   collapsed: boolean;
@@ -26,11 +32,11 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
   const filteredNavItems = NAV_ITEMS.filter((item) => {
     if (isTecnico) {
-      return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas' || item.path === '/auditoria-hijas';
+      return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas'
+        || item.path === '/auditoria-hijas' || item.path === '/represa';
     }
     // El cliente (Consorcio) solo consulta: Dashboard, Mapa y Fichas.
-    // Reportes, encuestas y el panel de fichas adicionales son de trabajo interno.
-    if (item.path === '/reportes' || item.path === '/encuestas' || item.path === '/auditoria-hijas') {
+    if (SOLO_EQUIPO.includes(item.path)) {
       return isAdmin;
     }
     return true;

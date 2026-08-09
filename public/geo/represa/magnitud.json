@@ -1,0 +1,24 @@
+{
+  "represa_ha": 63.59,
+  "riego_ha": 6081.1,
+  "huella_ha": 6826.3,
+  "predios": 6825,
+  "ha_regadas_por_ha_de_represa": 95.6,
+  "sectores": [
+    {
+      "sector": "Sector 1",
+      "predios": 3326,
+      "area_riego_ha": 3019.4
+    },
+    {
+      "sector": "Sector 2",
+      "predios": 2270,
+      "area_riego_ha": 1555.2
+    },
+    {
+      "sector": "Sector 3",
+      "predios": 1154,
+      "area_riego_ha": 1506.5
+    }
+  ]
+}
