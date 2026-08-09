@@ -50,6 +50,7 @@ PYTHONUTF8=1 /c/OSGeo4W/bin/python-qgis.bat -X utf8 scripts/represa/05_modelo_te
 | `04_generar_capas.py` | Aplica la transformación y exporta las capas | `public/geo/represa/*.geojson` + `represa_utm.gpkg` |
 | `05_modelo_terreno.py` | Interpola el modelo de terreno y la malla 3D | `dem_represa.tif` + `terreno.json` |
 | `06_capas_padron.py` | Predios por sector y huella, para dar la escala | `predios_por_sector.geojson` + `sectores_huella.geojson` + `magnitud.json` |
+| `07_validar_contra_consorcio.py` | Contrasta nuestra reconstrucción contra la geometría oficial | informe por consola |
 
 Los intermedios van a `CARTOGRAFIA REPRESA/procesado/` (fuera del repo).
 
@@ -79,6 +80,57 @@ plano tiene dos escalas o de que hay puntos mal emparejados. No es el caso
 El emparejamiento de puntos de control es **robusto a errores** (RANSAC
 exhaustivo sobre las 351 parejas posibles). Hizo falta: con mínimos cuadrados a
 secas, un solo rótulo mal identificado llevaba el RMS de centímetros a 201 m.
+
+---
+
+## El GeoPackage del consorcio (`GIS POROTOG.gpkg`, recibido el 7-ago-2026)
+
+**Llegó incompleto.** El archivo pesa 17 MB pero casi todo es un proyecto QGIS
+embebido: define **50 capas CAD** y todas apuntan a un `./POROTOG.gpkg` **que no
+vino**. De datos propios trae 43 geometrías sueltas.
+
+Aun así sirvió para lo más importante que se podía hacer con él:
+
+### Validación contra la geometría oficial
+
+Dos de esas capas (`01-01-CAPTACION$0$CA-0.05` y `03-01-TANQUE$0$CH-0.05`)
+también las reconstruimos nosotros desde el PDF, y vienen en UTM real. Comparadas
+vértice a vértice (`07_validar_contra_consorcio.py`):
+
+| | |
+|---|---|
+| Vértices comparados | **431** |
+| Distancia mediana | **0,144 m** |
+| Media | 0,196 m |
+| Percentil 90 | 0,475 m |
+| Máxima | 0,695 m |
+
+Es la comprobación más fuerte de todas las que se hicieron, porque contrasta
+contra la geometría original salida del CAD del consorcio, no contra el plano.
+**Confirma el RMS de 0,216 m** obtenido por otra vía: la reconstrucción desde PDF
+es correcta a nivel de centímetros.
+
+### Lo que falta pedir: `POROTOG.gpkg`
+
+Es el archivo con los datos de esas 50 capas. Lo que resolvería:
+
+1. **Las cotas de las curvas de nivel.** El proyecto define
+   `C3D-Superficie_cotas` como capa de **textos** y las geometrías del archivo
+   son **3D**. Es decir: allí la altura sí es un dato, no un rótulo dibujado.
+   Eso desbloquea el modelo de terreno con precisión de obra, que es la
+   limitación principal de todo este trabajo.
+2. **Dieciséis capas que no están en los tres PDF que recibimos**, algunas con
+   peso ambiental y de obra:
+   `LIMITE DE ESCOMBRERA`, `TOP-AREA CAMPAMENTO`, `TOP-CAPTACION`, `TOP-CAUCE`,
+   `TOP-AGUA`, `TOP-OJO DE AGUA`, `TOP-ALCANTARILLA`, `TOP-TANQUE`,
+   `TOP-TUBO AGUA`, `TOP-PISCINA`, `TOP-CAJA`, `TOP-BORDILLO`,
+   `TOP-LIND CERCA VIVA`, `TOP-POSTE DE LUZ`, `TOP-PUENTE`, `TOP-CONSTRUCCIÓN`.
+3. **Georreferenciación de origen** (EPSG:32717), sin pasar por nuestra
+   reconstrucción.
+
+Detalle menor pero conviene decírselo: en su proyecto los nombres de capa con
+tilde están mal codificados (`TOP-CONSTRUCCIÃ“N` en vez de `TOP-CONSTRUCCIÓN`),
+un UTF-8 leído como latin-1 en algún paso de la conversión desde AutoCAD.
 
 ---
 
