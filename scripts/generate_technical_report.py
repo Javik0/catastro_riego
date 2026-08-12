@@ -112,7 +112,10 @@ def generate_riego_secano_svg(data_sectores, output_path):
     chart_height = height - margin['top'] - margin['bottom']
     
     sectors = ['Sector 1', 'Sector 2', 'Sector 3']
-    categories = ['Riego', 'Secano']
+    # Etiquetas de la leyenda. «Secano» se retiró de todo lo que ve el usuario
+    # por pedido del cliente (12-ago-2026); la clave interna del diccionario
+    # sigue siendo 'Secano' y no debe tocarse sin cambiar también quien lo llena.
+    categories = ['Riego', 'Sin riego']
     cat_colors = ['#3b82f6', '#f59e0b']
     
     svg = []
@@ -129,7 +132,7 @@ def generate_riego_secano_svg(data_sectores, output_path):
     </style>
     """)
     svg.append(f'<rect width="{width}" height="{height}" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>')
-    svg.append(f'<text x="24" y="32" class="title">Cobertura de Suelo: Riego vs Secano por Sector</text>')
+    svg.append(f'<text x="24" y="32" class="title">Cobertura de Suelo: Riego vs Sin riego por Sector</text>')
     svg.append(f'<text x="24" y="48" class="subtitle">Distribución porcentual de la superficie total (Horizontal 100%)</text>')
     
     for i in range(5):
@@ -1646,17 +1649,17 @@ La siguiente tabla compara las áreas cultivadas y las superficies bajo riego pr
 | **Área Total Promedio por Predio** | {sector_stats_report[0]['avg_total']:,.2f} m² ({sector_stats_report[0]['avg_total']/10000:.3f} ha) | {sector_stats_report[1]['avg_total']:,.2f} m² ({sector_stats_report[1]['avg_total']/10000:.3f} ha) | {sector_stats_report[2]['avg_total']:,.2f} m² ({sector_stats_report[2]['avg_total']/10000:.3f} ha) |
 | **Área con Riego Declarada** | {sector_stats_report[0]['sum_riego']:,.2f} m² | {sector_stats_report[1]['sum_riego']:,.2f} m² | {sector_stats_report[2]['sum_riego']:,.2f} m² |
 | **Área con Riego Promedio por Predio** | {sector_stats_report[0]['avg_riego']:,.2f} m² ({sector_stats_report[0]['avg_riego']/10000:.3f} ha) | {sector_stats_report[1]['avg_riego']:,.2f} m² ({sector_stats_report[1]['avg_riego']/10000:.3f} ha) | {sector_stats_report[2]['avg_riego']:,.2f} m² ({sector_stats_report[2]['avg_riego']/10000:.3f} ha) |
-| **Área sin Riego Declarada (Secano)** | {sin_riego_por_sector['Sector 1']:,.2f} m² ({sin_riego_por_sector['Sector 1']/10000:.2f} ha) | {sin_riego_por_sector['Sector 2']:,.2f} m² ({sin_riego_por_sector['Sector 2']/10000:.2f} ha) | {sin_riego_por_sector['Sector 3']:,.2f} m² ({sin_riego_por_sector['Sector 3']/10000:.2f} ha) |
+| **Área sin Riego Declarada** | {sin_riego_por_sector['Sector 1']:,.2f} m² ({sin_riego_por_sector['Sector 1']/10000:.2f} ha) | {sin_riego_por_sector['Sector 2']:,.2f} m² ({sin_riego_por_sector['Sector 2']/10000:.2f} ha) | {sin_riego_por_sector['Sector 3']:,.2f} m² ({sin_riego_por_sector['Sector 3']/10000:.2f} ha) |
 | **Cultivos en el Sector (% del total)** | {cultivos_por_sector['Sector 1']:,} ({cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 2']:,} ({cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%) | {cultivos_por_sector['Sector 3']:,} ({cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%) |
 | **Animales en el Sector (% del total)** | {animales_por_sector['Sector 1']:,} ({animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 2']:,} ({animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%) | {animales_por_sector['Sector 3']:,} ({animales_por_sector['Sector 3']/max(total_animales, 1)*100:.1f}%) |
 
 ### Análisis de Cobertura y Uso Sectorial:
 El análisis de superficies revela una distribución productiva y de acceso al recurso hídrico altamente contrastante entre los tres sectores de investigación:
-* **Sector 1:** Concentra el **{cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%** de la producción agrícola y el **{animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%** de las especies pecuarias del sistema. A pesar de ser el motor agropecuario principal del proyecto, registra **{sin_riego_por_sector['Sector 1']/10000:.2f} ha** de tierras en condiciones de secano (sin riego), lo que limita su capacidad de diversificación.
-* **Sector 2:** Representa una zona de producción intermedia estable, concentrando el **{cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%** de los cultivos y el **{animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%** del ganado. Este sector mantiene una superficie de secano de **{sin_riego_por_sector['Sector 2']/10000:.2f} ha**, sustentada principalmente en minifundios de explotación familiar.
-* **Sector 3:** Al ubicarse en las zonas de mayor dispersión y altitud desfavorable, presenta la mayor superficie de secano declarada del sistema con **{sin_riego_por_sector['Sector 3']/10000:.2f} ha** (el **{sin_riego_por_sector['Sector 3']/max(sum(sin_riego_por_sector.values()), 1)*100:.1f}%** del secano total). Esta carencia crítica de cobertura de riego restringe su producción agrícola al **{cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%** del total, reflejando la necesidad prioritaria de implementar reservorios comunitarios y extensiones de ramales de riego en este sector.
+* **Sector 1:** Concentra el **{cultivos_por_sector['Sector 1']/max(total_cultivos, 1)*100:.1f}%** de la producción agrícola y el **{animales_por_sector['Sector 1']/max(total_animales, 1)*100:.1f}%** de las especies pecuarias del sistema. A pesar de ser el motor agropecuario principal del proyecto, registra **{sin_riego_por_sector['Sector 1']/10000:.2f} ha** de tierras sin riego, lo que limita su capacidad de diversificación.
+* **Sector 2:** Representa una zona de producción intermedia estable, concentrando el **{cultivos_por_sector['Sector 2']/max(total_cultivos, 1)*100:.1f}%** de los cultivos y el **{animales_por_sector['Sector 2']/max(total_animales, 1)*100:.1f}%** del ganado. Este sector mantiene una superficie sin riego de **{sin_riego_por_sector['Sector 2']/10000:.2f} ha**, sustentada principalmente en minifundios de explotación familiar.
+* **Sector 3:** Al ubicarse en las zonas de mayor dispersión y altitud desfavorable, presenta la mayor superficie sin riego declarada del sistema con **{sin_riego_por_sector['Sector 3']/10000:.2f} ha** (el **{sin_riego_por_sector['Sector 3']/max(sum(sin_riego_por_sector.values()), 1)*100:.1f}%** del total sin riego). Esta carencia crítica de cobertura de riego restringe su producción agrícola al **{cultivos_por_sector['Sector 3']/max(total_cultivos, 1)*100:.1f}%** del total, reflejando la necesidad prioritaria de implementar reservorios comunitarios y extensiones de ramales de riego en este sector.
 
-### Gráfico de Cobertura de Riego vs Secano por Sector (ha):
+### Gráfico de Cobertura de Riego vs Sin riego por Sector (ha):
 ![Cobertura de Riego](informe_graficos/chart_riego_secano.svg)
 
 ---

@@ -191,7 +191,9 @@ def main():
     A(f'<p>Los <b>{N:,} predios</b> registrados hasta el corte suman '
       f'<b>{ha_t:,.1f} hectáreas</b>, de las cuales <b>{ha_r:,.1f} ha '
       f'({pct(a_riego, a_total):.1f} %) cuentan con riego</b>. La quinta parte '
-      'restante corresponde a áreas sin dotación: pastos de secano, bosque o '
+      # «secano» se retiró de toda la interfaz web por pedido del cliente
+      # (12-ago-2026) y los informes usan el mismo término: «sin riego».
+      'restante corresponde a áreas sin dotación: pastos sin riego, bosque o '
       'terreno no cultivable dentro del mismo predio.</p>')
     A(f'<p>El predio tiene una superficie <b>mediana de {med_area:,.0f} m²</b>. '
       'La distribución muestra una estructura de <b>minifundio</b>:</p>')
