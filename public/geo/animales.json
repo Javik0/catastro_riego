@@ -71075,5 +71075,19 @@
     "especie": "Vacas en producción",
     "cantidad": 4,
     "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{8950f386-21c4-403d-91c9-eb92beecfb77}",
+    "ficha_id": "{230df8d1-b44d-4fdf-9a7b-970c641d480a}",
+    "especie": "Ovejas / Cabras",
+    "cantidad": 2,
+    "es_autoconsumo": 1
+  },
+  {
+    "id_animal": "{03bd2f58-b148-4986-b36b-0354602517ab}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "especie": "Gallinas de campo",
+    "cantidad": 15,
+    "es_autoconsumo": 1
   }
 ]

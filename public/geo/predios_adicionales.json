@@ -32051,5 +32051,65 @@
     "area_riego_otro": 973.73,
     "area_sin_riego_otro": 0.0,
     "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2938,
+    "id_adicional": "{3ae56a69-fce2-4187-9e0d-d912d3b630e8}",
+    "ficha_id": "{230df8d1-b44d-4fdf-9a7b-970c641d480a}",
+    "clave_catastral_otro": "1702540050093",
+    "area_total_otro": 973.73,
+    "area_riego_otro": 973.73,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2939,
+    "id_adicional": "{2fb21dfe-aeec-4e70-aa25-d9e1c65ed457}",
+    "ficha_id": "{27493b35-7d44-4e51-a903-971f7d51e26f}",
+    "clave_catastral_otro": "1702540140049",
+    "area_total_otro": 5851.78,
+    "area_riego_otro": 5851.78,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2940,
+    "id_adicional": "{79a18b42-cd8a-40e0-9f8a-1314c22779fe}",
+    "ficha_id": "{4b7cfceb-a6a1-4db9-befd-ffeedda6202d}",
+    "clave_catastral_otro": "1702540050084",
+    "area_total_otro": 1757.65,
+    "area_riego_otro": 1757.65,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2941,
+    "id_adicional": "{d1ccf5cf-aafe-4244-950f-fea380f903c1}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "clave_catastral_otro": "1702540050089",
+    "area_total_otro": 399.21,
+    "area_riego_otro": 399.21,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2942,
+    "id_adicional": "{5f4a58d8-5962-4860-a19f-04189d5afa1c}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "clave_catastral_otro": "1702540050127",
+    "area_total_otro": 11740.01,
+    "area_riego_otro": 11740.01,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
+  },
+  {
+    "fid": 2943,
+    "id_adicional": "{d0aaae40-ee4e-4ccf-8c9f-fde2e9069786}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "clave_catastral_otro": "1702540050098",
+    "area_total_otro": 17530.05,
+    "area_riego_otro": 17530.05,
+    "area_sin_riego_otro": 0.0,
+    "area_lote_asignado_otro": 1458.75
   }
 ]

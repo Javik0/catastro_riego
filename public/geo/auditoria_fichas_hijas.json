@@ -1,13 +1,13 @@
 {
-  "total": 2520,
+  "total": 2524,
   "pendientes": 0,
-  "completadas": 2520,
+  "completadas": 2524,
   "en_revision": 0,
   "por_sector": {
     "Sector 3": {
-      "total": 383,
+      "total": 387,
       "pendientes": 0,
-      "completadas": 383,
+      "completadas": 387,
       "en_revision": 0
     },
     "Sector 1": {
@@ -30,8 +30,8 @@
     }
   },
   "completadas_por_tecnico": {
+    "Pablo Barrionuevo": 472,
     "Huguito Ipial": 289,
-    "Pablo Barrionuevo": 468,
     "Melany Jara": 96,
     "Martha Simbaña": 249,
     "Adriana Cuascota": 169,

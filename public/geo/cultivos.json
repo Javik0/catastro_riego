@@ -117385,5 +117385,92 @@
     "superficie_m2": 799.59,
     "es_autoconsumo": 1,
     "ref_area_predio": 5299.59
+  },
+  {
+    "id_cultivo": "{02ad8905-afac-4d32-aeb0-76003254394a}",
+    "ficha_id": "{230df8d1-b44d-4fdf-9a7b-970c641d480a}",
+    "tipo_cultivo": "Trigo",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1023.87
+  },
+  {
+    "id_cultivo": "{54d0705c-df29-404a-ac30-fe6833df1764}",
+    "ficha_id": "{230df8d1-b44d-4fdf-9a7b-970c641d480a}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 523.87,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1023.87
+  },
+  {
+    "id_cultivo": "{1e89bc83-f571-482e-9c54-25a7dd6e0363}",
+    "ficha_id": "{90575da1-d318-4029-9d24-9ea3dd64f374}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 973.73,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 973.73
+  },
+  {
+    "id_cultivo": "{1d4b3af8-0031-4751-a8d6-9be13a740da0}",
+    "ficha_id": "{0430ac87-a466-4022-b9f5-3844b8236f8a}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 1813.41,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 1813.41
+  },
+  {
+    "id_cultivo": "{266f2576-725b-4036-8b8d-0e9c29939054}",
+    "ficha_id": "{4b7cfceb-a6a1-4db9-befd-ffeedda6202d}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 1000.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2006.57
+  },
+  {
+    "id_cultivo": "{b9c6adbf-8525-41ee-ae9a-f9abcf649c5b}",
+    "ficha_id": "{4b7cfceb-a6a1-4db9-befd-ffeedda6202d}",
+    "tipo_cultivo": "Pasto mejorado",
+    "superficie_m2": 500.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2006.57
+  },
+  {
+    "id_cultivo": "{1638c820-cab2-42a3-8739-0795c1eacb33}",
+    "ficha_id": "{4b7cfceb-a6a1-4db9-befd-ffeedda6202d}",
+    "tipo_cultivo": "Hortalizas",
+    "superficie_m2": 506.57,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 2006.57
+  },
+  {
+    "id_cultivo": "{c9b5eb5d-2db9-424b-88e7-96119ee1a49f}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 200.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 460.96
+  },
+  {
+    "id_cultivo": "{daa1be49-61d8-4a77-9d94-138179117b0a}",
+    "ficha_id": "{28a8869a-a4e8-4e2e-9326-6b6d92830d59}",
+    "tipo_cultivo": "Pasto no mejorado",
+    "superficie_m2": 260.96,
+    "ref_area_predio": 460.96
+  },
+  {
+    "id_cultivo": "{3f9faf75-456a-46e0-a8c4-af606462c26d}",
+    "ficha_id": "{e941248d-dff3-41ad-85d2-d2c06da4e1ef}",
+    "tipo_cultivo": "Maíz",
+    "superficie_m2": 150.0,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 399.21
+  },
+  {
+    "id_cultivo": "{c28fd391-bcce-403a-bea5-d3a69684c934}",
+    "ficha_id": "{e941248d-dff3-41ad-85d2-d2c06da4e1ef}",
+    "tipo_cultivo": "Frutales",
+    "superficie_m2": 249.21,
+    "es_autoconsumo": 1,
+    "ref_area_predio": 399.21
   }
 ]
