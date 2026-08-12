@@ -487,6 +487,9 @@ def export_fichas():
 
     # 4. Imputar vacíos en caliente sobre props
     imputadas_count = 0
+    # Fichas con el área repetida tres veces, que el cuadre deja sin tocar a
+    # propósito porque falta decidir si esos predios se riegan (ver más abajo).
+    areas_sin_cuadrar = 0
     global IMPUTACIONES_LOG
     IMPUTACIONES_LOG = []
     for f in fichas_list:
@@ -578,18 +581,57 @@ def export_fichas():
         if 'change_made' in locals() and change_made:
             cambio = True
         
-        # Regla de área con riego: si está en 0 o vacía, asumimos todo el predio con riego
-        if not props.get('area_riego') or props['area_riego'] == 0:
-            props['area_riego'] = props.get('area_total') or 0.0
-            props['area_sin_riego'] = 0.0
-            cambios_detalles.append(f"area_riego -> {props['area_riego']} (vacío/cero)")
+        # ── Cuadre de áreas (regla acordada con JAVIKO el 12-ago-2026) ──
+        #
+        # El área con riego y la que no lo tiene son partes del predio: juntas no
+        # pueden pasarse del área total. Manda el campo que el técnico declaró y
+        # el otro se ajusta al hueco que queda.
+        #
+        # Sustituye a la regla anterior, que si `area_riego` venía vacía le
+        # asignaba TODO el predio y además borraba el `area_sin_riego` que el
+        # técnico sí había declarado. Sobre las 6.831 fichas eso publicaba
+        # 1.209 ha de riego que nadie declaró, y contradecía la regla que el
+        # cliente aprobó el 9-ago para la revisión de campo (un predio con el
+        # área sin riego medida es un predio que no se riega).
+        #
+        # Medido: con este cuadre el padrón cierra en 0,00 ha de descuadre y solo
+        # se tocan 91 fichas de 6.831.
+        at = props.get('area_total') or 0.0
+        ar = props.get('area_riego') or 0.0
+        asr = props.get('area_sin_riego') or 0.0
+
+        if at > 0 and abs(at - ar) < 0.5 and abs(at - asr) < 0.5:
+            # El mismo número tres veces: son 54 fichas de una misma semana y un
+            # mismo técnico. NO se cuadran aquí. Cuadrarlas exigiría decidir si
+            # el predio se riega o no —y de eso dependen 56,38 ha— cuando el 98 %
+            # de ellas no declara ninguna señal de riego y el resto del padrón sí.
+            # Esa decisión se toma en el data.gpkg, con la respuesta de quien las
+            # levantó: scripts/corregir_areas_sin_riego.py.
+            areas_sin_cuadrar += 1
+        elif ar > 0:
+            nuevo = max(0.0, at - min(ar, at))
+            if abs(nuevo - asr) > 0.5:
+                props['area_sin_riego'] = nuevo
+                cambios_detalles.append(f"area_sin_riego: {asr} -> {nuevo} (cuadre)")
+                cambio = True
+            if ar > at:
+                props['area_riego'] = at
+                cambios_detalles.append(f"area_riego: {ar} -> {at} (excedía area_total)")
+                cambio = True
+        elif asr > 0:
+            # Sin área de riego declarada pero con área sin riego medida: el
+            # riego es lo que sobra del predio, que puede ser cero.
+            nuevo = max(0.0, at - min(asr, at))
+            props['area_riego'] = nuevo
+            props['area_sin_riego'] = min(asr, at)
+            cambios_detalles.append(f"area_riego -> {nuevo} (resto del predio)")
             cambio = True
-        # CORRECCIÓN VIRTUAL: Si el área con riego excede el área total o el área sin riego es negativa
-        elif (props.get('area_riego') or 0.0) > (props.get('area_total') or 0.0) or (props.get('area_sin_riego') or 0.0) < 0:
-            old_riego = props.get('area_riego')
-            props['area_riego'] = props.get('area_total') or 0.0
+        elif at > 0:
+            # No declaró ninguno de los dos: se mantiene el criterio anterior de
+            # dar el predio por regado, que es lo que ya reflejan los informes.
+            props['area_riego'] = at
             props['area_sin_riego'] = 0.0
-            cambios_detalles.append(f"area_riego: {old_riego} -> {props['area_riego']} (excedía area_total)")
+            cambios_detalles.append(f"area_riego -> {at} (sin dato de riego)")
             cambio = True
         
         if cambio:
@@ -604,6 +646,11 @@ def export_fichas():
             })
 
     print(f"  ✓ {imputadas_count} fichas con campos vacíos corregidas mediante imputación inteligente.")
+    if areas_sin_cuadrar:
+        print(f"  ⚠ {areas_sin_cuadrar} fichas traen el área repetida tres veces y NO se cuadran:")
+        print(f"    falta decidir si esos predios se riegan. Se corrigen en el data.gpkg")
+        print(f"    con scripts/corregir_areas_sin_riego.py. Hasta entonces la superficie")
+        print(f"    publicada seguirá descuadrada en lo que aporten esas fichas.")
 
     # 5. Generar las GeoJSON features — TODAS las fichas, incluyendo las que no tienen GPS
     # Las fichas sin geometría válida se exportan con geometry: null para que sumen

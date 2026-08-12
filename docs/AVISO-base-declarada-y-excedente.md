@@ -71,12 +71,30 @@ informes que están hoy en la carpeta de entrega **ya se generaron con 6.831**
 sincronización), de modo que reflejan el padrón con el excedente incluido.
 
 **b) Las 54 fichas con las áreas mal capturadas.** Todas de Pablo Barrionuevo,
-del 24 al 30 de julio, en Pambamarca (32), Chaupiestancia (19), Pucará (2) y
-Chinchinloma (1). En las 54 se repite el mismo número tres veces: área total,
-área con riego y área sin riego son idénticas. El polígono del catastro confirma
-el área total en 52 de las 54, así que lo que sobra es el campo de área sin
-riego. Corregirlo —ponerlo en cero— quita **56,38 ha** duplicadas. **Falta que
-Pablo Barrionuevo lo confirme** antes de tocar el dato.
+del 24 al 30 de julio, en Pambamarca, Chaupiestancia, Pucará y Chinchinloma. En
+las 54 se repite el mismo número tres veces: área total, área con riego y área
+sin riego son idénticas. Es imposible: un predio no puede estar entero con riego
+y entero sin riego a la vez. Son **56,38 ha contadas dos veces**, y son la
+**única** fuente de descuadre del padrón —las otras 6.774 fichas cuadran.
+
+El polígono del catastro confirma el área total en las 54 (52 directamente; las
+2 restantes son un mismo predio con dos copropietarios que declaran 2,82 ha cada
+uno sobre 5,63 ha, o sea que también cuadra). **Así que el área del predio está
+bien y lo que sobra es uno de los otros dos campos.**
+
+**Cuál de los dos es lo que hay que preguntarle a Pablo Barrionuevo**, y no es un
+detalle: de eso depende en qué columna van esas 56,38 ha. Los demás campos de la
+ficha apuntan a que esos predios **no se riegan**:
+
+| Señales de riego declaradas (frecuencia, canal, turno, método, caudal, tarifa) | |
+|---|---:|
+| En estas 54 fichas | **1 de 54** |
+| En el resto del padrón | 6.731 de 6.777 (99 %) |
+
+Pero eso admite dos lecturas opuestas: o esos predios de verdad no se riegan, o
+esa semana la sección de riego quedó sin llenar. **Solo quien hizo el
+levantamiento puede decirlo.** Hasta entonces la corrección está preparada pero
+bloqueada: el programa se niega a escribir si no se le indica la dirección.
 
 **c) Tres predios adicionales quedaron sin ficha madre**, dos de ellos entre las
 6 del 5 de agosto (1702540140044 y 1702540050089). No es descuido del técnico:
@@ -94,22 +112,36 @@ vincular** por este defecto.
 
 ## 4. Dos cosas más que conviene tener presentes
 
-**La superficie bajo riego que se publica no es la suma directa de las fichas.**
-El proceso que alimenta la web y los informes aplica una regla: cuando una ficha
-no declara área con riego, le asigna toda el área del predio. El efecto es
-grande —**1.209 ha** de diferencia— y va en un solo sentido:
+**La superficie bajo riego baja 1.279,60 ha al cuadrar las áreas.** Es el cambio
+de cifra más importante de esta nota y conviene entender de dónde sale.
 
-| | Fichas de campo | Publicado en la web |
+Hasta ahora, el proceso que alimenta la web y los informes hacía dos cosas
+cuando una ficha no declaraba área con riego: le asignaba **todo** el predio como
+regado y, además, **borraba el área sin riego que el técnico sí había medido**.
+Eso publicaba como regadas 1.209 ha que nadie declaró, y contradecía el criterio
+acordado el 9 de agosto para la revisión de campo, donde se decidió justo lo
+contrario: que un predio con el área sin riego medida es un predio que no se
+riega.
+
+La regla nueva es la que pidió la coordinación técnica: **el área con riego y la
+que no lo tiene son partes del predio y no pueden sumar más que el total.** Manda
+el dato que el técnico declaró y el otro se ajusta a lo que queda.
+
+| | Publicado hasta hoy | Con las áreas cuadradas |
 |---|---:|---:|
 | Superficie total | 10.294,99 ha | 10.294,99 ha |
-| Con riego | 7.769,71 ha | 8.978,86 ha |
-| Sin riego | 2.579,44 ha | 1.372,50 ha |
+| **Con riego** | **8.978,86 ha** | **7.699,26 ha** |
+| Sin riego | 1.372,50 ha | 2.652,10 ha |
 
-Esa regla **contradice** el criterio que se acordó el 9 de agosto para la
-revisión de campo, donde se decidió lo contrario: que un predio con el área sin
-riego medida es un predio que no se riega. Conviene unificar el criterio antes
-de que las dos cifras se citen en documentos distintos. **No se ha modificado
-nada**: cambiarlo afecta a la web publicada y a todos los informes.
+Solo se modifican 37 fichas de 6.831, y ninguna pierde el dato que declaró el
+técnico. La superficie total del padrón no cambia: lo que cambia es el reparto
+entre regada y no regada, que hasta ahora estaba inclinado hacia el riego por
+una regla automática y no por lo que se levantó en campo.
+
+**Las 54 fichas del punto b siguen sin cuadrar a propósito.** El programa las deja
+fuera del ajuste porque cuadrarlas exigiría decidir por Pablo Barrionuevo. Ese es
+el motivo de que la suma siga excediendo el total en 56,38 ha: es un recordatorio
+visible de que falta esa respuesta, y desaparece solo en cuanto se corrija.
 
 **El trabajo de campo pendiente bajó de 9.220 a 801 datos** al aplicar las
 reglas de «no aplica» acordadas el 9 de agosto. Aparte quedan 67 fichas sin

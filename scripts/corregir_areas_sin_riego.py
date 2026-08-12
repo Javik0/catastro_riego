@@ -21,12 +21,28 @@ de los dos campos (2,22 ha, caso distinto que este script no toca).
 
 Qué hace y por qué así
 ----------------------
-Pone `area_sin_riego = 0` en esas fichas, dejando intactos `area_total` y
-`area_riego`. La dirección de la corrección no es arbitraria: el polígono del
-catastro confirma el área total, así que el dato que sobra es el del área sin
-riego. El script vuelve a comprobar ese cruce y avisa de las fichas en las que
-el catastro **no** respalda el área declarada, para que se revisen aparte —en
-esas el problema puede ser el área total, que es otro asunto.
+Deja `area_total` intacta —el polígono del catastro la confirma— y pone en cero
+**uno** de los otros dos campos. Cuál de los dos es la única decisión de fondo, y
+el script no la toma solo: hay que pasarla con `--direccion`.
+
+    --direccion sin-riego   el predio SE RIEGA entero  → area_sin_riego = 0
+    --direccion riego       el predio NO se riega      → area_riego = 0
+
+**Por qué no se decide sola.** El catastro confirma cuánto mide el predio, pero
+no dice si se riega. Y los demás campos de la ficha apuntan a que NO:
+
+    señales de riego (frecuencia, canal, días de turno, método, caudal,
+    reservorio o tarifa) presentes en...
+        las 54 fichas      →   1 de 54   (1,9 %)
+        el resto del padrón → 6.731 de 6.777 (99 %)
+
+Un predio del sistema sin ningún dato de riego es raro; 53 seguidos, del mismo
+técnico y la misma semana, no son 53 casos raros. Pero eso admite dos lecturas
+opuestas: o esos predios de verdad no se riegan, o en esa semana la sección de
+riego quedó sin llenar. **Solo quien hizo el levantamiento puede decirlo**, y de
+ahí depende en qué columna van 56,38 ha.
+
+Mientras no se aclare, el script se niega a escribir.
 
 Lo que NO hace
 --------------
@@ -47,7 +63,8 @@ pendiente— y deja el respaldo fuera de la carpeta que sincroniza QFieldCloud.
 
 Antes de correrlo con --aplicar
 -------------------------------
-1. Que Pablo Barrionuevo confirme el patrón: es su levantamiento.
+1. Que Pablo Barrionuevo diga si esos 54 predios se riegan o no. De su respuesta
+   sale el `--direccion`, y sin eso la corrección es una moneda al aire.
 2. Que Armando lo apruebe: mueve una cifra de superficie, y pidió aprobar
    cualquier cambio sobre la base declarada al Consejo Provincial.
 3. Ventana coordinada: que nadie esté sincronizando desde una tablet.
@@ -128,6 +145,10 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--aplicar', action='store_true',
                     help='escribe en el data.gpkg (sin esto solo simula)')
+    ap.add_argument('--direccion', choices=('sin-riego', 'riego'),
+                    help='que campo se pone en cero. sin-riego = el predio se '
+                         'riega entero; riego = el predio no se riega. Lo tiene '
+                         'que confirmar quien hizo el levantamiento.')
     args = ap.parse_args()
 
     print("=" * 78)
@@ -202,12 +223,40 @@ def main():
     for tec, n, d1, d2 in cur.fetchall():
         print("     {:<16} {:>3} fichas   del {} al {}".format(tec, n, d1, d2))
 
+    # ── ¿esos predios se riegan? lo dicen los demás campos de la ficha ──
+    V = "({0} IS NOT NULL AND TRIM(CAST({0} AS TEXT)) NOT IN ('','None','NULL'))"
+    NZ = "({0} IS NOT NULL AND CAST({0} AS REAL) <> 0)"
+    RIEGA = "({} OR {} OR {} OR {} OR {} OR {} OR {})".format(
+        V.format('frecuencia_riego'), V.format('canal'), NZ.format('dias_riego'),
+        NZ.format('caudal_valor'), NZ.format('metodo_gravedad_pct'),
+        NZ.format('metodo_aspersion_pct'), NZ.format('valor_tarifa'))
+    cur.execute("SELECT COUNT(*) FROM {} WHERE {} AND {}".format(t, PATRON, RIEGA))
+    con_señal = cur.fetchone()[0]
+    cur.execute("SELECT COUNT(*), SUM(CASE WHEN {} THEN 1 ELSE 0 END) FROM {} "
+                "WHERE NOT ({})".format(RIEGA, t, PATRON))
+    n_resto, señal_resto = cur.fetchone()
+
+    print("\n  ¿ESTOS PREDIOS SE RIEGAN? (frecuencia, canal, dias de turno,")
+    print("  caudal, metodo, tarifa — cualquier senal sirve)")
+    print("     estas {} fichas    : {:>5} con alguna senal  ({:.1f} %)"
+          .format(len(fichas), con_señal, 100.0 * con_señal / len(fichas)))
+    print("     resto del padron   : {:>5} de {:,}          ({:.0f} %)"
+          .format(señal_resto, n_resto, 100.0 * señal_resto / n_resto))
+    print("     -> el padron entero declara riego y estas no. Eso APUNTA a que no")
+    print("        se riegan, pero tambien puede ser que la seccion quedara sin")
+    print("        llenar esa semana. Son lecturas opuestas y deciden donde van")
+    print("        {} ha. Por eso hace falta --direccion.".format(ha(sum(f[5] for f in fichas))))
+
     sobra = sum(f[5] for f in fichas)
-    print("\n  EFECTO DE LA CORRECCION (area_sin_riego = 0 en esas fichas):")
-    print("     sin riego : {} ha  ->  {} ha".format(ha(s_sin), ha(s_sin - sobra)))
-    print("     con riego : {} ha  ->  {} ha   (no cambia)".format(ha(s_rie), ha(s_rie)))
-    print("     suma      : {} ha  ->  {} ha   (cuadra con el area total)"
-          .format(ha(s_rie + s_sin), ha(s_rie + s_sin - sobra)))
+    print("\n  EFECTO SEGUN LA DIRECCION QUE SE ELIJA:")
+    print("     --direccion sin-riego  (se riegan enteros)")
+    print("        con riego {} ha (igual) · sin riego {} -> {} ha"
+          .format(ha(s_rie), ha(s_sin), ha(s_sin - sobra)))
+    print("     --direccion riego      (no se riegan)")
+    print("        con riego {} -> {} ha · sin riego {} ha (igual)"
+          .format(ha(s_rie), ha(s_rie - sobra), ha(s_sin)))
+    print("     en los dos casos la suma queda en {} ha y cuadra con el area total"
+          .format(ha(s_rie + s_sin - sobra)))
 
     if dudosas:
         # Antes de mandar a nadie a revisar: cuando varias fichas comparten la
@@ -247,20 +296,27 @@ def main():
             print("     en riego y el sin riego se ajusta. El area_total dudosa es un")
             print("     problema distinto, que no arregla este script.")
 
-    if not args.aplicar:
+    if not args.aplicar or not args.direccion:
         print("\n  " + "=" * 74)
-        print("  SIMULACION: no se escribio nada.")
-        print("  Para aplicarlo, repetir el comando con --aplicar.")
-        print("  Antes: confirmacion de Pablo, aprobacion de Armando y que nadie")
-        print("  este sincronizando desde una tablet.")
+        if args.aplicar and not args.direccion:
+            print("  NO SE ESCRIBIO NADA: falta --direccion.")
+            print("  Sin saber si esos predios se riegan, la correccion seria una")
+            print("  moneda al aire entre dos columnas. Preguntar a Pablo primero.")
+        else:
+            print("  SIMULACION: no se escribio nada.")
+            print("  Para aplicarlo: --aplicar --direccion {sin-riego|riego}")
+            print("  Antes: respuesta de Pablo sobre si esos predios se riegan,")
+            print("  aprobacion de Armando y que nadie este sincronizando.")
         print("  " + "=" * 74)
         con.close()
-        return 0
+        return 0 if not args.aplicar else 2
 
     # ── aplicar ──
+    campo = 'area_sin_riego' if args.direccion == 'sin-riego' else 'area_riego'
+    print("\n  direccion elegida: {}  ->  {} = 0".format(args.direccion, campo))
     con.close()
     print("\n  respaldando antes de tocar nada...")
-    destino = respaldo_sqlite(GPKG, 'antes-areas-sin-riego')
+    destino = respaldo_sqlite(GPKG, 'antes-areas-' + args.direccion)
     print("     {}".format(destino))
 
     con = sqlite3.connect(GPKG)
@@ -273,7 +329,7 @@ def main():
     for nombre, _ in triggers:
         cur.execute('DROP TRIGGER IF EXISTS "{}"'.format(nombre))
     try:
-        cur.execute("UPDATE {} SET area_sin_riego = 0 WHERE {}".format(t, PATRON))
+        cur.execute("UPDATE {} SET {} = 0 WHERE {}".format(t, campo, PATRON))
         tocadas = cur.rowcount
     finally:
         for _, sql in triggers:
