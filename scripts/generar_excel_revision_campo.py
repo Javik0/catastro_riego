@@ -484,6 +484,10 @@ def main():
     ws.freeze_panes = 'A2'
 
     wb.save(SALIDA)
+    # Sin este parche, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan aunque estén escritos. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(SALIDA)
 
     with open(HISTORICO, 'w', encoding='utf-8') as f:
         json.dump({'esquema_claves': ESQUEMA, 'generado': hoy, 'corte': corte,

@@ -139,6 +139,10 @@ for texto, tipo in lineas:
     rr += 1
 
 wb.save(SALIDA)
-print("guardado: {}".format(SALIDA))
+# Sin este parche, hay builds de Excel que heredan «sin relleno» del estilo
+# base y los colores no se pintan aunque estén escritos. Ver excel_compat.py.
+from excel_compat import aplicar_formatos
+n = aplicar_formatos(SALIDA)
+print("guardado: {}  ({} estilos con applyFill)".format(SALIDA, n))
 print("   {} fichas · {} sobre el canal · {} bajo el canal".format(
     len(filas), n_sobre, n_bajo))
