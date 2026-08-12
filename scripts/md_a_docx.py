@@ -22,8 +22,11 @@ Tablas muy largas
 -----------------
 `--max-filas N` corta las tablas que pasen de N filas y deja una nota en su
 lugar. Hace falta para el documento de revisión de campo: sus listados suman
-más de 9.000 filas y en Word darían cientos de páginas que nadie va a leer.
+cientos de filas y en Word darían decenas de páginas que nadie va a leer.
 Ese detalle se trabaja en el Excel; el Word es para entender y decidir.
+
+Una tabla que sea el **resumen** del documento y no un listado se exime del
+recorte poniendo `<!-- tabla-completa -->` en la línea anterior, en el Markdown.
 
 Uso
 ---
@@ -45,6 +48,14 @@ from docx.shared import Cm, Pt, RGBColor
 
 AZUL = RGBColor(0x1F, 0x4E, 0x79)
 GRIS = RGBColor(0x59, 0x59, 0x59)
+
+# Una tabla precedida por esta marca no se recorta, aunque pase de `--max-filas`.
+# Hace falta para las tablas que son el resumen del documento y no un listado: en
+# la revisión de campo, la tabla de «dónde se concentra el trabajo» tiene una
+# fila por comunidad y es justo con la que se arma la ruta — recortarla a 12
+# deja el Word sin lo único que se usa para decidir. En el Markdown la marca no
+# se ve: es un comentario HTML.
+MARCA_COMPLETA = '<!-- tabla-completa -->'
 
 
 def sombrear(celda, color_hex):
@@ -164,10 +175,17 @@ def convertir(ruta_md, ruta_docx, max_filas=0):
 
     i = 0
     tablas_cortadas = 0
+    sin_recorte = False
     while i < len(lineas):
         linea = lineas[i].rstrip()
 
         if not linea.strip():
+            i += 1
+            continue
+
+        # ── marca de «no recortar la tabla que viene» ──
+        if linea.strip() == MARCA_COMPLETA:
+            sin_recorte = True
             i += 1
             continue
 
@@ -217,10 +235,11 @@ def convertir(ruta_md, ruta_docx, max_filas=0):
                 j += 1
 
             recortada = False
-            if max_filas and len(filas) > max_filas:
+            if max_filas and not sin_recorte and len(filas) > max_filas:
                 filas = filas[:max_filas]
                 recortada = True
                 tablas_cortadas += 1
+            sin_recorte = False
 
             tabla = doc.add_table(rows=1, cols=len(encabezados))
             tabla.style = 'Table Grid'

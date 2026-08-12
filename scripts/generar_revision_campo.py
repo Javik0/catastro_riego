@@ -19,25 +19,41 @@ necesita antes de una salida: **qué campos están vacíos, en qué fichas, y en
 comunidad están**. Eso es lo que arma este documento, leyendo el `data.gpkg` de
 QField en el momento en que se ejecuta.
 
+Un campo vacío NO es siempre un pendiente
+-----------------------------------------
+Es la corrección de fondo del 9 de agosto de 2026. La primera versión contaba
+como pendiente todo campo vacío y salían **9.220** filas, cuando el trabajo real
+de campo es **801**. La diferencia no era trabajo: eran respuestas legítimas
+contadas como omisiones, y con eso se planificaban salidas que no hacían falta.
+
+Las reglas que distinguen «falta preguntar» de «no aplica» las decidió el
+cliente (Armando, coordinación) el 9 de agosto de 2026 y están en `REGLAS`, más
+abajo. **No se cambian sin consultarle**: cada una tiene detrás una razón de
+terreno, no un criterio técnico.
+
 Cómo se organiza y por qué
 --------------------------
 Por **comunidad**, no por técnico ni por fecha: las salidas de campo se planifican
 por zona, y lo que decide si vale la pena ir a un sitio es cuánto queda pendiente
 allí. Dentro de cada comunidad van las fichas concretas con su código.
 
-Los pendientes se separan en dos clases, porque no cuestan lo mismo:
+Lo que este documento separa del trabajo de campo
+-------------------------------------------------
+* **Oficina** — lo que se resuelve sin salir: las fichas sin comunidad se
+  asignan por traslape espacial, porque todas tienen coordenadas.
+* **En espera** — lo que depende de una decisión de dirección: la tenencia del
+  predio y las fichas de ALPAKA, que no son encuestas.
+* **Nunca llenado** — `informante`, `consentimiento`: vacíos en el 100 % de las
+  fichas. Un campo que nadie llenó nunca no es trabajo de campo pendiente.
 
-* **Puntuales** (comunidad, cédula, caudal, tenencia…): son pocos y se arreglan
-  ficha por ficha. Van listados uno a uno, con nombre y código.
-* **Masivos** (servicios básicos): son miles y listarlos no ayudaría a nadie. Van
-  como recuento por comunidad, que es lo que sirve para decidir la ruta.
+Cómo se ejecuta
+---------------
+Necesita `osgeo`, que en esta máquina solo está en el Python de OSGeo4W::
 
-Lo que este documento NO pide
------------------------------
-Hay campos vacíos en el 100 % de las fichas (`informante`, `consentimiento`).
-Un campo que nadie llenó nunca no es trabajo de campo pendiente: es un campo que
-no está en el formulario o que se decidió no usar. Aparece señalado como
-pregunta para la dirección del proyecto, no como tarea para los técnicos.
+    "C:\\OSGeo4W\\bin\\python-qgis.bat" -X utf8 scripts/generar_revision_campo.py
+
+(El Python del PATH no trae `osgeo`; el de OSGeo4W no trae `python-docx`. Por eso
+`md_a_docx.py` se corre con el otro.)
 
 Salida
 ------
@@ -71,31 +87,168 @@ def vacio_num(campo):
     return "({0} IS NULL OR CAST({0} AS REAL)=0)".format(campo)
 
 
+def lleno(campo):
+    return "NOT " + VACIO.format(campo)
+
+
+def lleno_num(campo):
+    """Lo contrario de `vacio_num`: para un número, 0 no es dato.
+
+    Ojo: no vale usar `lleno()` con un campo numérico. Un 0.0 pasa el filtro de
+    texto (`CAST(0.0 AS TEXT)` es '0.0', que no está vacío) y contaría como si
+    tuviera dato.
+    """
+    return "({0} IS NOT NULL AND CAST({0} AS REAL)<>0)".format(campo)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  REGLAS DE «NO APLICA» — decididas por el cliente el 9 de agosto de 2026
+#  ═══════════════════════════════════════════════════════════════════════
+#  NO CAMBIAR NINGUNA SIN CONSULTAR CON EL CLIENTE. Cada una responde a algo
+#  que pasa en terreno, y quitarla vuelve a inflar el trabajo de campo con
+#  fichas que están bien.
+#
+#  1. FOTO DEL PREDIO — fuera del reporte. «Esa condición se eliminó desde el
+#     inicio» (textual). Eran 3.413 pendientes que nunca existieron.
+#
+#  2. VIVIENDA (agua, luz, material) — si `material_construccion` está vacío,
+#     NO HAY CONSTRUCCIÓN, y entonces los tres campos vacíos son la respuesta
+#     correcta. Solo es pendiente la ficha «a medias»: material declarado pero
+#     sin agua o sin luz.
+#     Por qué el material y no un «tiene_construccion»: ese campo existe en la
+#     ficha web (Firestore) pero NO en el `data.gpkg` ni en el `.qgs` de QField,
+#     que es de donde sale este documento. Se comprobó que sirve de indicador:
+#     de las 1.559 principales sin material, NINGUNA tiene `material_constr_otro`
+#     lleno, así que no hay construcciones escondidas en el campo «otro».
+#
+#  3. ÁREA DE RIEGO en 0 — no es pendiente si `area_sin_riego` tiene valor: el
+#     predio existe y está medido, simplemente no se riega. De 141, hay 137 así.
+#
+#  4. CAUDAL vacío — no es pendiente de campo si la ficha tiene comunidad: el
+#     caudal se hereda de la comuna, no se mide ficha a ficha
+#     (ver `docs/METODOLOGIA-CAUDAL.md`). De 168, hay 138 con comunidad.
+#
+#  5. COMUNIDAD vacía — no es trabajo de campo: se resuelve en oficina por
+#     traslape espacial. Va en su propia sección.
+#
+#  6. CÉDULA y TELÉFONO — se mantienen como pendientes. «Dejar el dato que se
+#     reporta que falta, para cédula y otros campos que no se pudo obtener»
+#     (textual).
+#
+#  7. TENENCIA del predio — en espera: el cliente la revisa después de la
+#     depuración. Va en su propia sección, no en la ruta de campo.
+# ─────────────────────────────────────────────────────────────────────────────
+
+CON_CONSTRUCCION = lleno('material_construccion')
+
 # (campo, etiqueta, condicion, ¿se lista ficha por ficha?)
+#
+# Las etiquetas son parte del contrato con el Excel: la nota que escribe el
+# revisor se guarda como «id|etiqueta». Cambiar un texto de aquí le borra las
+# notas a ese bloque en la siguiente regeneración.
 PENDIENTES = [
-    ('comunidad', 'Sin comunidad asignada', VACIO.format('comunidad'), True),
     ('cedula', 'Sin cédula', VACIO.format('cedula'), True),
-    ('caudal_valor', 'Sin caudal registrado', vacio_num('caudal_valor'), True),
-    ('tenencia_predio', 'Sin tenencia del predio', VACIO.format('tenencia_predio'), True),
-    ('nivel_instruccion', 'Sin nivel de instrucción', VACIO.format('nivel_instruccion'), True),
-    ('area_riego', 'Sin área de riego', vacio_num('area_riego'), True),
-    ('agua_consumo', 'Sin agua de consumo', VACIO.format('agua_consumo'), False),
-    ('energia_electrica', 'Sin energía eléctrica', VACIO.format('energia_electrica'), False),
-    ('material_construccion', 'Sin material de construcción',
-     VACIO.format('material_construccion'), False),
-    ('telefono_celular', 'Sin teléfono', VACIO.format('telefono_celular'), False),
-    ('foto_predio', 'Sin foto del predio', VACIO.format('foto_predio'), False),
+    ('telefono_celular', 'Sin teléfono', VACIO.format('telefono_celular'), True),
+    ('nivel_instruccion', 'Sin nivel de instrucción',
+     VACIO.format('nivel_instruccion'), True),
+    # regla 4: solo si tampoco hay comunidad de la que heredarlo
+    ('caudal_valor', 'Sin caudal registrado',
+     '{} AND {}'.format(vacio_num('caudal_valor'), VACIO.format('comunidad')), True),
+    # regla 3: solo si tampoco está medida el área sin riego
+    ('area_riego', 'Sin área de riego',
+     '{} AND {}'.format(vacio_num('area_riego'), vacio_num('area_sin_riego')), True),
+    # regla 2: solo las fichas «a medias», con construcción declarada
+    ('agua_consumo', 'Sin agua de consumo',
+     '{} AND {}'.format(CON_CONSTRUCCION, VACIO.format('agua_consumo')), True),
+    ('energia_electrica', 'Sin energía eléctrica',
+     '{} AND {}'.format(CON_CONSTRUCCION, VACIO.format('energia_electrica')), True),
 ]
+
+# Cómo se contaba antes del 9-ago-2026: todo campo vacío era un pendiente.
+# Se conserva para poder explicar la diferencia en el propio documento. Sin
+# esto, la caída de 9.220 a 801 parece que alguien borró trabajo.
+CRITERIO_ANTERIOR = [
+    VACIO.format('comunidad'), VACIO.format('cedula'),
+    vacio_num('caudal_valor'), VACIO.format('tenencia_predio'),
+    VACIO.format('nivel_instruccion'), vacio_num('area_riego'),
+    VACIO.format('agua_consumo'), VACIO.format('energia_electrica'),
+    VACIO.format('material_construccion'), VACIO.format('telefono_celular'),
+    VACIO.format('foto_predio'),
+]
+
+# El descuento de cada regla, en datos (no en fichas): una ficha a la que se le
+# dejaron de pedir dos cosas descuenta dos. Así la resta cuadra con el total
+# anterior, y `main()` lo comprueba en cada ejecución.
+DESCUENTOS = [
+    ('Foto del predio', 'regla 1',
+     [VACIO.format('foto_predio')],
+     'La condición se eliminó desde el inicio del levantamiento.'),
+    ('Predios sin construcción', 'regla 2',
+     [VACIO.format('material_construccion'),
+      '{} AND {}'.format(VACIO.format('material_construccion'),
+                         VACIO.format('agua_consumo')),
+      '{} AND {}'.format(VACIO.format('material_construccion'),
+                         VACIO.format('energia_electrica'))],
+     'Sin material de construcción no hay vivienda: agua y luz vacías son la '
+     'respuesta correcta, no una omisión. El material deja de pedirse porque '
+     'es el indicador, no un dato faltante.'),
+    ('Predio medido que no se riega', 'regla 3',
+     ['{} AND {}'.format(vacio_num('area_riego'), lleno_num('area_sin_riego'))],
+     'El área sin riego está medida: el predio existe y no se riega. No falta '
+     'ir a medirlo.'),
+    ('Caudal heredado de la comuna', 'regla 4',
+     ['{} AND {}'.format(vacio_num('caudal_valor'), lleno('comunidad'))],
+     'El caudal no se mide ficha por ficha, se hereda de la comuna '
+     '(`METODOLOGIA-CAUDAL.md`).'),
+    ('Comunidad — se resuelve en oficina', 'regla 5',
+     [VACIO.format('comunidad')],
+     'Se asigna por traslape espacial; todas tienen coordenadas.'),
+    ('Tenencia — en espera del cliente', 'regla 7',
+     [VACIO.format('tenencia_predio')],
+     'La coordinación las revisa después de la depuración.'),
+]
+
+# Lo que sí falta pero no lo resuelve el técnico en campo.
+OFICINA = ('comunidad', 'Sin comunidad asignada', VACIO.format('comunidad'))
+EN_ESPERA = ('tenencia_predio', 'Sin tenencia del predio',
+             VACIO.format('tenencia_predio'))
+
+# Aclaraciones que van bajo el título de un bloque, cuando el nombre del campo
+# se presta a que alguien haga el trabajo equivocado.
+NOTA_BLOQUE = {
+    'caudal_valor':
+        'No hay que ir a medir ningún caudal. Son las mismas fichas de «Se '
+        'resuelve en oficina»: al asignarles comunidad heredan el caudal de la '
+        'comuna y este bloque se vacía solo.',
+    'agua_consumo':
+        'Solo las fichas con material de construcción declarado. Donde no hay '
+        'construcción, el campo vacío es la respuesta correcta.',
+    'energia_electrica':
+        'Solo las fichas con material de construcción declarado. Donde no hay '
+        'construcción, el campo vacío es la respuesta correcta.',
+    'area_riego':
+        'Solo las que tampoco tienen medida el área sin riego. Si el predio '
+        'está medido y no se riega, ya está completo.',
+}
 
 LIMITE_LISTADO = 60      # fichas por bloque antes de cortar el listado
 
 # Comunidades cuyas fichas NO son encuestas de campo. Mandar a alguien a
 # «completarlas» seria trabajo perdido, y es justo lo que sugeriria una lista de
 # campos vacios: aparecen al 100 % en todo porque nunca fueron una entrevista.
+# Desde el 9-ago-2026 no se cuentan como pendiente de campo (decision de JAVIKO):
+# quedan registradas aparte, a la espera de que la direccion decida que se hace.
 NO_SON_ENCUESTAS = {
     'ALPAKA': ('son lotes de fraccionamiento cargados en bloque, no fichas '
                'levantadas en campo (ver REPORTE-PENDIENTES.md)'),
 }
+
+# Filtro SQL que deja fuera esas comunidades.
+ES_ENCUESTA = "UPPER(TRIM(COALESCE(comunidad,''))) NOT IN ({})".format(
+    ', '.join("'{}'".format(c) for c in sorted(NO_SON_ENCUESTAS)))
+
+# El universo del trabajo de campo: fichas principales que además son encuestas.
+DE_CAMPO = '{} AND {}'.format(PRINCIPALES, ES_ENCUESTA)
 
 
 def num(n):
@@ -108,6 +261,22 @@ def consultar(ds, sql):
     filas = [[ft.GetField(i) for i in range(ft.GetFieldCount())] for ft in res]
     ds.ReleaseResultSet(res)
     return filas
+
+
+def contar(ds, t, cond, universo=None):
+    return consultar(ds, "SELECT COUNT(*) FROM {} WHERE {} AND {}"
+                     .format(t, cond, universo or DE_CAMPO))[0][0]
+
+
+def fichas_de(ds, t, cond, universo=None, extra=''):
+    """Las fichas que cumplen una condición, ordenadas por comunidad y clave."""
+    return consultar(ds,
+        "SELECT COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com, "
+        "COALESCE(clave_catastral,'') clave, "
+        "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')) nombre, "
+        "COALESCE(cedula,'') ced, COALESCE(creado_por,'') tec{extra} "
+        "FROM {t} WHERE {cond} AND {uni} ORDER BY com, clave"
+        .format(t=t, cond=cond, uni=universo or DE_CAMPO, extra=extra))
 
 
 def main():
@@ -129,6 +298,8 @@ def main():
     principales = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {}"
                             .format(t, PRINCIPALES))[0][0]
     hijas = total - principales
+    encuestas = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {}"
+                          .format(t, DE_CAMPO))[0][0]
     corte = consultar(ds, "SELECT MAX(fecha_creacion) FROM {}".format(t))[0][0]
     corte = (corte or '')[:10]
 
@@ -144,6 +315,12 @@ def main():
     w("Este documento sale de leer el `data.gpkg` de QField tal como está hoy. "
       "Dice qué campos quedaron vacíos, en qué fichas y en qué comunidad, para "
       "poder planificar la salida por zona.\n")
+    w("> **Un campo vacío no siempre es un pendiente.** Desde el 9 de agosto de "
+      "2026 este documento aplica las reglas de «no aplica» que acordó la "
+      "coordinación del proyecto: un predio sin construcción no tiene por qué "
+      "declarar agua ni luz, un predio medido y sin riego no tiene área de "
+      "riego, y el caudal se hereda de la comuna. Lo que dejó de contarse y por "
+      "qué está al final, en «Qué ya no se cuenta como pendiente».\n")
     w("No repite lo que ya está en otros documentos. Antes de salir a campo, "
       "revisar también:\n")
     w("| Documento | Qué contiene |")
@@ -171,58 +348,52 @@ def main():
       "campo vacío no distingue entre «falta preguntar» y «no aplica»; una nota sí.\n")
     w("---\n")
     w("## Resumen\n")
-    w("| Qué falta | En todas las fichas | Solo principales | Cómo se aborda |")
-    w("|---|---:|---:|---|")
+    w("Sobre las **{} fichas principales** que son encuestas de campo "
+      "(de {} fichas en total: {} son hijas de la Sección 7 y {} son de ALPAKA, "
+      "que no son encuestas).\n"
+      .format(num(encuestas), num(total), num(hijas), num(principales - encuestas)))
+    w("| Qué falta | Fichas | Cómo se aborda |")
+    w("|---|---:|---|")
 
     conteos = {}
+    total_campo = 0
     for campo, etq, cond, listar in PENDIENTES:
-        n_t = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {}".format(t, cond))[0][0]
-        n_p = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {} AND {}"
-                        .format(t, cond, PRINCIPALES))[0][0]
-        conteos[campo] = (n_t, n_p)
-        modo = 'ficha por ficha' if listar else 'por comunidad'
-        if n_t:
-            w("| {} | {} | {} | {} |".format(etq, num(n_t), num(n_p), modo))
-        print("      {:32s} {:5,} ({:,} principales)".format(etq, n_t, n_p))
+        n_p = contar(ds, t, cond)
+        conteos[campo] = n_p
+        total_campo += n_p
+        if n_p:
+            w("| {} | {} | ficha por ficha |".format(etq, num(n_p)))
+        print("      {:32s} {:5,}".format(etq, n_p))
 
+    w("| **Total de trabajo de campo** | **{}** | |".format(num(total_campo)))
     w("")
+    w("Cada fila de la tabla es un dato faltante, no una ficha: una misma ficha "
+      "puede aparecer en dos bloques.\n")
     w("> Las **fichas hijas** son los predios adicionales de la Sección 7: heredan "
       "los datos del predio madre, así que a ellas no se les exige la encuesta "
-      "completa. Por eso importa sobre todo la columna de principales.\n")
+      "completa. Por eso este documento mira solo las principales.\n")
     w("---\n")
 
     # ── pendientes puntuales, por comunidad ──
-    w("## Pendientes puntuales\n")
-    w("Son pocos y se resuelven ficha por ficha. Van agrupados por comunidad.\n")
+    w("## Pendientes de campo\n")
+    w("Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para "
+      "poder armar la ruta.\n")
 
     for campo, etq, cond, listar in PENDIENTES:
-        if not listar or not conteos[campo][1]:
+        if not listar or not conteos[campo]:
             continue
-        w("### {} — {} fichas principales\n".format(etq, num(conteos[campo][1])))
-
-        filas = consultar(ds,
-            "SELECT COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com, "
-            "COALESCE(clave_catastral,'') clave, "
-            "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')) nombre, "
-            "COALESCE(cedula,'') ced, COALESCE(creado_por,'') tec "
-            "FROM {} WHERE {} AND {} ORDER BY com, clave"
-            .format(t, cond, PRINCIPALES))
+        w("### {} — {} fichas\n".format(etq, num(conteos[campo])))
+        if campo in NOTA_BLOQUE:
+            w("> {}\n".format(NOTA_BLOQUE[campo]))
 
         por_com = {}
-        for com, clave, nombre, ced, tec in filas:
+        for com, clave, nombre, ced, tec in fichas_de(ds, t, cond):
             por_com.setdefault(com, []).append((clave, nombre, ced, tec))
 
         for com in sorted(por_com):
             fichas = por_com[com]
-            aviso = NO_SON_ENCUESTAS.get(com.strip().upper())
-            w("**{}**{} — {} ficha{}\n".format(
-                com, ' ⚠️' if aviso else '', num(len(fichas)),
-                's' if len(fichas) != 1 else ''))
-            if aviso:
-                # la misma advertencia que en la tabla por comunidad: aquí también
-                # hay que verla, o alguien sale a buscar fichas que no son encuestas
-                w("> ⚠️ {}. Consultar con dirección antes de intervenirlas.\n"
-                  .format(aviso[0].upper() + aviso[1:]))
+            w("**{}** — {} ficha{}\n".format(
+                com, num(len(fichas)), 's' if len(fichas) != 1 else ''))
             w("| Clave catastral | Regante | Cédula | Levantó |")
             w("|---|---|---|---|")
             for clave, nombre, ced, tec in fichas[:LIMITE_LISTADO]:
@@ -234,54 +405,183 @@ def main():
             w("")
         w("---\n")
 
-    # ── pendientes masivos: recuento por comunidad ──
-    w("## Encuesta incompleta, por comunidad\n")
-    w("Los servicios básicos y la foto del predio faltan en miles de fichas: "
-      "listarlas una a una no ayudaría a planificar. Lo que sirve es saber "
-      "**dónde** se concentran.\n")
-    w("La columna que manda es la última: si en una comunidad falta mucho de "
-      "todo, conviene una visita completa; si falta poco y disperso, se resuelve "
-      "aprovechando otra salida.\n")
+    # ── dónde se concentra el trabajo ──
+    n_ofi = contar(ds, t, OFICINA[2], PRINCIPALES)
+    w("## Dónde se concentra el trabajo\n")
+    w("Para decidir la ruta: qué comunidades justifican una salida y cuáles se "
+      "resuelven aprovechando otra.\n")
 
-    filas = consultar(ds,
-        "SELECT COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com, "
-        "COUNT(*) total, "
-        "SUM(CASE WHEN {} THEN 1 ELSE 0 END) agua, "
-        "SUM(CASE WHEN {} THEN 1 ELSE 0 END) luz, "
-        "SUM(CASE WHEN {} THEN 1 ELSE 0 END) material, "
-        "SUM(CASE WHEN {} THEN 1 ELSE 0 END) foto "
-        "FROM {} WHERE {} GROUP BY com ORDER BY agua DESC, total DESC"
-        .format(VACIO.format('agua_consumo'), VACIO.format('energia_electrica'),
-                VACIO.format('material_construccion'), VACIO.format('foto_predio'),
-                t, PRINCIPALES))
+    columnas = [
+        ('Contacto', ['cedula', 'telefono_celular']),
+        ('Encuesta', ['nivel_instruccion', 'caudal_valor', 'area_riego']),
+        ('Vivienda', ['agua_consumo', 'energia_electrica']),
+    ]
+    campo_a_cond = {c: cond for c, _, cond, _ in PENDIENTES}
 
-    w("| Comunidad | Fichas | Sin agua | Sin luz | Sin material | Sin foto | Pendiente |")
+    def suma_datos(condiciones):
+        """Cuenta datos faltantes, no fichas: una ficha a la que le faltan dos
+        cosas suma dos. Así las tres columnas suman exactamente el total."""
+        return ' + '.join("SUM(CASE WHEN {} THEN 1 ELSE 0 END)".format(c)
+                          for c in condiciones)
+
+    sel = ["COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com",
+           "COUNT(*) total"]
+    for _, campos in columnas:
+        sel.append(suma_datos([campo_a_cond[c] for c in campos]))
+    # fichas con al menos un pendiente: aquí sí se cuentan fichas
+    cualquiera = ' OR '.join(cond for _, _, cond, _ in PENDIENTES)
+    sel.append("SUM(CASE WHEN {} THEN 1 ELSE 0 END)".format(cualquiera))
+    sel.append(suma_datos([cond for _, _, cond, _ in PENDIENTES]))
+
+    filas = consultar(ds, "SELECT {} FROM {} WHERE {} GROUP BY com "
+                          "ORDER BY 7 DESC, 2 DESC".format(', '.join(sel), t, DE_CAMPO))
+
+    # Esta tabla es con la que se arma la ruta: en el Word tiene que salir
+    # entera aunque se pase de `--max-filas` (ver `md_a_docx.py`).
+    w("<!-- tabla-completa -->")
+    w("| Comunidad | Fichas | Con pendientes | Contacto | Encuesta | Vivienda | Datos por completar |")
     w("|---|---:|---:|---:|---:|---:|---:|")
-    avisos = []
-    for com, tot, agua, luz, mat, foto in filas:
-        if not (agua or luz or mat or foto):
+    for com, tot, contacto, enc, viv, con_pend, datos in filas:
+        if not datos:
             continue
-        pct = 100.0 * (agua + luz + mat) / (3.0 * tot) if tot else 0
-        clave = com.strip().upper()
-        if clave in NO_SON_ENCUESTAS:
-            avisos.append((com, tot, NO_SON_ENCUESTAS[clave]))
-            w("| {} ⚠️ | {} | {} | {} | {} | {} | _ver nota_ |"
-              .format(com, num(tot), num(agua), num(luz), num(mat), num(foto)))
-            continue
-        marca = '🔴' if pct >= 66 else ('🟠' if pct >= 33 else '🟡')
-        w("| {} | {} | {} | {} | {} | {} | {} {:.0f} % |"
-          .format(com, num(tot), num(agua), num(luz), num(mat), num(foto), marca, pct))
+        pct = 100.0 * con_pend / tot if tot else 0
+        marca = '🔴' if pct >= 50 else ('🟠' if pct >= 20 else '🟡')
+        w("| {} | {} | {} {} ({:.0f} %) | {} | {} | {} | {} |"
+          .format(com, num(tot), marca, num(con_pend), pct,
+                  num(contacto), num(enc), num(viv), num(datos)))
+    w("")
+    w("«Fichas» es cuántas hay en la comunidad y «con pendientes» a cuántas les "
+      "falta algo; las dos son **fichas**. Contacto, Encuesta y Vivienda cuentan "
+      "**datos** —una ficha a la que le faltan dos cosas suma dos— y por eso "
+      "suman exactamente la última columna.\n")
+    w("> La fila **(sin comunidad)** son las {} fichas de la sección siguiente. "
+      "Todavía no se pueden asignar a ninguna ruta: primero hay que resolverlas "
+      "en oficina. Al hacerlo se caen solos los {} pendientes de caudal, porque "
+      "el caudal se hereda de la comuna.\n".format(num(n_ofi), num(conteos['caudal_valor'])))
+    w("---\n")
+
+    # ── oficina ──
+    con_coord = contar(ds, t, "{} AND coord_x_utm IS NOT NULL AND coord_x_utm <> 0"
+                       .format(OFICINA[2]), PRINCIPALES)
+    w("## Se resuelve en oficina, no en campo\n")
+    w("**{} fichas principales sin comunidad asignada.** No hay que ir a "
+      "preguntarle a nadie: **{} de las {} tienen coordenadas**, así que la "
+      "comunidad sale de un cruce espacial — el punto de la ficha dentro del "
+      "polígono de la capa de comunidades.\n"
+      .format(num(n_ofi), num(con_coord), num(n_ofi)))
+    w("El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` "
+      "hace exactamente eso (punto dentro de polígono de `sectores.geojson`) y "
+      "sirve de referencia para asignarlas.\n")
+    w("> ⚠️ El cruce tiene que ser **espacial, nunca por nombre**. Hay nombres "
+      "iguales que designan sitios distintos: la comuna «Asociación Porotog» del "
+      "shapefile oficial corresponde a nuestra *Asociación 17 de Junio*, mientras "
+      "que nuestra *Asociación Porotog* cae en «San Vicente de Porotog».\n")
+
+    filas = fichas_de(ds, t, OFICINA[2], PRINCIPALES,
+                      extra=", COALESCE(coord_x_utm,0) x, COALESCE(coord_y_utm,0) y")
+    w("| Clave catastral | Regante | Cédula | Levantó | X (UTM 17S) | Y (UTM 17S) |")
+    w("|---|---|---|---|---:|---:|")
+    for _com, clave, nombre, ced, tec, x, y in filas[:LIMITE_LISTADO]:
+        w("| {} | {} | {} | {} | {} | {} |"
+          .format(clave or '—', nombre or '—', ced or '—', tec or '—',
+                  '{:,.0f}'.format(x).replace(',', '.') if x else '— sin coordenada',
+                  '{:,.0f}'.format(y).replace(',', '.') if y else '—'))
+    if len(filas) > LIMITE_LISTADO:
+        w("| … | _y {} fichas más_ | | | | |"
+          .format(num(len(filas) - LIMITE_LISTADO)))
+    w("")
+    w("---\n")
+
+    # ── en espera de una decisión ──
+    w("## En espera de una decisión\n")
+    w("No entran en la ruta de campo hasta que la coordinación del proyecto "
+      "resuelva qué hacer con ellas.\n")
+
+    n_ten = contar(ds, t, EN_ESPERA[2], PRINCIPALES)
+    w("### Tenencia del predio — {} fichas\n".format(num(n_ten)))
+    w("Los datos de escritura quedan en espera: el cliente los revisa **después** "
+      "de la depuración, para no mandar a preguntar dos veces.\n")
+
+    for com, mot in sorted(NO_SON_ENCUESTAS.items()):
+        n_f = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {} AND "
+                            "UPPER(TRIM(COALESCE(comunidad,'')))='{}'"
+                        .format(t, PRINCIPALES, com))[0][0]
+        detalle = []
+        n_datos = 0
+        for campo, etq, cond, _ in PENDIENTES:
+            n_c = consultar(ds, "SELECT COUNT(*) FROM {} WHERE {} AND {} AND "
+                                "UPPER(TRIM(COALESCE(comunidad,'')))='{}'"
+                            .format(t, cond, PRINCIPALES, com))[0][0]
+            if n_c:
+                detalle.append((etq, n_c))
+                n_datos += n_c
+        w("### {} — {} fichas, {} datos vacíos\n"
+          .format(com, num(n_f), num(n_datos)))
+        w("**No salir a completarlas.** No están vacías por descuido: {}. Contarlas "
+          "como pendiente de campo mandaría a los técnicos a levantar encuestas "
+          "que nunca existieron, así que desde el 9 de agosto de 2026 quedan fuera "
+          "del conteo y registradas aquí.\n".format(mot))
+        if detalle:
+            w("| Qué está vacío | Fichas |")
+            w("|---|---:|")
+            for etq, n_c in detalle:
+                w("| {} | {} |".format(etq, num(n_c)))
+            w("")
+        w("Antes de tocarlas hace falta una decisión de dirección sobre qué se "
+          "hace con ellas.\n")
+
+    w("---\n")
+
+    # ── qué ya no se cuenta ──
+    anterior = sum(contar(ds, t, c, PRINCIPALES) for c in CRITERIO_ANTERIOR)
+    w("## Qué ya no se cuenta como pendiente\n")
+    w("Las reglas las decidió la coordinación del proyecto el **9 de agosto de "
+      "2026**. Esta tabla existe para que quede claro de dónde sale la "
+      "diferencia con las versiones anteriores del documento, que contaban como "
+      "pendiente todo campo vacío. Cada línea es un descuento en **datos**: una "
+      "ficha a la que se le dejaron de pedir dos cosas descuenta dos.\n")
+    w("| | Datos | Por qué |")
+    w("|---|---:|---|")
+    w("| **Como se contaba antes** | **{}** | Todo campo vacío era un pendiente |"
+      .format(num(anterior)))
+    quitado = 0
+    for etq, regla, condiciones, motivo in DESCUENTOS:
+        n_q = sum(contar(ds, t, c, PRINCIPALES) for c in condiciones)
+        quitado += n_q
+        w("| − {} _({})_ | −{} | {} |".format(etq, regla, num(n_q), motivo))
+    n_alpaka = sum(
+        consultar(ds, "SELECT COUNT(*) FROM {} WHERE {} AND {} AND NOT {}"
+                  .format(t, cond, PRINCIPALES, ES_ENCUESTA))[0][0]
+        for _, _, cond, _ in PENDIENTES)
+    quitado += n_alpaka
+    w("| − ALPAKA — en espera de dirección | −{} | No son encuestas: lotes de "
+      "fraccionamiento cargados en bloque |".format(num(n_alpaka)))
+    w("| **Trabajo de campo real** | **{}** | Lo que sí hay que ir a preguntar |"
+      .format(num(total_campo)))
     w("")
 
-    # Aviso destacado: sin esto, la tabla manda a completar fichas que nunca
-    # fueron una entrevista, y son cientos.
-    for com, tot, motivo in avisos:
-        w("> ⚠️ **{}: no salir a completar estas {} fichas.** No están vacías por "
-          "descuido — {}. Aparecen aquí porque el criterio de este documento es "
-          "«campo vacío», y en su caso ese criterio no significa trabajo "
-          "pendiente. Antes de tocarlas hace falta una decisión de dirección "
-          "sobre qué se hace con ellas.\n".format(com, num(tot), motivo))
+    # Red de seguridad: si mañana alguien toca una regla y la resta deja de
+    # cuadrar, el documento estaría explicando una diferencia que no existe.
+    if anterior - quitado != total_campo:
+        w("> ⚠️ **Aviso para quien mantiene este documento:** la resta no cuadra "
+          "({} − {} = {}, pero el trabajo de campo da {}). Alguna regla cambió "
+          "sin actualizar la tabla de descuentos en `generar_revision_campo.py`.\n"
+          .format(num(anterior), num(quitado), num(anterior - quitado),
+                  num(total_campo)))
+        print("\n  *** AVISO: la reconciliacion no cuadra: {} - {} = {} != {}"
+              .format(anterior, quitado, anterior - quitado, total_campo))
 
+    w("Ninguna ficha se borró ni se dio por buena: lo que cambió es qué cuenta "
+      "como pendiente. Los datos descontados siguen vacíos en el `data.gpkg`, y "
+      "los que dependen de una decisión están listados arriba, en «Se resuelve "
+      "en oficina» y «En espera de una decisión».\n")
+    w("> Antes de aplicar la regla 2 se comprobó que el material de construcción "
+      "sirve de indicador: de las fichas principales sin material, **ninguna** "
+      "tiene lleno el campo `material_constr_otro`. No hay viviendas escondidas "
+      "detrás de un «otro material».\n")
+    w("**Cédula y teléfono se mantienen** como pendientes aunque muchos no se "
+      "puedan obtener: la coordinación pidió expresamente dejar constancia del "
+      "dato que falta.\n")
     w("---\n")
 
     # ── campos que nadie llenó nunca ──
@@ -328,6 +628,10 @@ def main():
     with open(SALIDA, 'w', encoding='utf-8') as f:
         f.write('\n'.join(L))
 
+    print("\n  trabajo de campo        : {:,} datos".format(total_campo))
+    print("  se resuelve en oficina  : {:,} fichas sin comunidad".format(n_ofi))
+    print("  en espera de decision   : {:,} de tenencia".format(n_ten))
+    print("  ya no cuenta como pendiente: {:,} datos".format(quitado))
     print("\n  guardado: {} ({:,.0f} KB)"
           .format(os.path.relpath(SALIDA, BASE), os.path.getsize(SALIDA) / 1024))
     print("=" * 74)
