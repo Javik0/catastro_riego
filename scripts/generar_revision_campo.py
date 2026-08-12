@@ -256,6 +256,15 @@ def num(n):
     return '{:,}'.format(int(n)).replace(',', '.')
 
 
+def dec(n, d=2):
+    """Decimal en español: 56,38 y 1.234,50.
+
+    Ojo: aplicar el intercambio de comas y puntos sobre una frase entera le
+    cambia la puntuación al texto. Por eso vive aquí y recibe solo el número.
+    """
+    return ('{:,.%df}' % d).format(n).replace(',', 'X').replace('.', ',').replace('X', '.')
+
+
 def consultar(ds, sql):
     res = ds.ExecuteSQL(sql, dialect='SQLITE')
     filas = [[ft.GetField(i) for i in range(ft.GetFieldCount())] for ft in res]
@@ -323,14 +332,21 @@ def main():
       "qué está al final, en «Qué ya no se cuenta como pendiente».\n")
     w("No repite lo que ya está en otros documentos. Antes de salir a campo, "
       "revisar también:\n")
-    w("| Documento | Qué contiene |")
-    w("|---|---|")
+    w("| Documento | Qué contiene | Corte |")
+    w("|---|---|---|")
     w("| `REVISION-observaciones-con-clave.md` | Predios que el regante mencionó "
-      "en observaciones: 31 por levantar, 78 por revisar, 28 con la clave mal escrita |")
+      "en observaciones: 31 por levantar, 78 por revisar, 28 con la clave mal "
+      "escrita | 9-ago-2026 |")
     w("| `REVISION-AREAS-fichas-a-verificar.md` | 148 fichas cuya área declarada "
-      "no cuadra con el polígono del catastro |")
-    w("| `REPORTE-PENDIENTES.md` | Todo lo abierto del proyecto, por responsable |")
+      "no cuadra con el polígono del catastro | **29-jul-2026** |")
+    w("| `REPORTE-PENDIENTES.md` | Todo lo abierto del proyecto, por responsable "
+      "| **4-ago-2026** |")
     w("")
+    w("> Los dos últimos son **anteriores a la depuración**: se escribieron a mano y "
+      "no se regeneran solos, así que sus cifras de fichas no coinciden con las de "
+      "aquí. Sus listados siguen sirviendo —se comprobó que 265 de las 266 claves "
+      "citadas en el de áreas siguen en el padrón—, pero los totales hay que "
+      "leerlos con su fecha.\n")
     w("---\n")
     w("## Cómo usar esta lista\n")
     w("1. Busca tu comunidad en la tabla de abajo y mira cuánto queda pendiente ahí.")
@@ -606,13 +622,50 @@ def main():
         w("_Sin campos en esta situación._\n")
 
     w("---\n")
-    w("## Casos que no se arreglan llenando un campo\n")
-    w("Están documentados en `REPORTE-PENDIENTES.md`; se repiten aquí porque "
-      "tocan trabajo de campo:\n")
-    w("- **Dos fichas con el mismo identificador de QField** (José Rafael Coyago "
+
+    # ── inconsistencias de datos, con su estado ──
+    # Van juntas y con estado porque el destinatario de este documento es la
+    # coordinación: lo que necesita ver es qué está resuelto, qué espera una
+    # decisión suya y qué no lo arregla nadie yendo a campo.
+    w("## Inconsistencias de datos y en qué va cada una\n")
+    w("No son campos vacíos: son datos que están, pero no pueden ser ciertos. "
+      "Se listan con su estado porque varias esperan una decisión.\n")
+
+    c54 = ("area_total IS NOT NULL AND area_total <> 0 "
+           "AND ABS(area_total - COALESCE(area_riego,0)) < 0.5 "
+           "AND ABS(area_total - COALESCE(area_sin_riego,0)) < 0.5")
+    n54 = contar(ds, t, c54, PRINCIPALES)
+    ha54 = consultar(ds, "SELECT SUM(COALESCE(area_sin_riego,0))/10000.0 FROM {} "
+                         "WHERE {} AND {}".format(t, c54, PRINCIPALES))[0][0] or 0
+    sin_madre = consultar(ds, "SELECT COUNT(*) FROM {} WHERE NOT ({}) AND "
+                              "(ficha_madre_id IS NULL OR "
+                              "TRIM(CAST(ficha_madre_id AS TEXT))='')"
+                          .format(t, PRINCIPALES))[0][0]
+
+    w("| Qué pasa | Cuántas | Estado |")
+    w("|---|---:|---|")
+    w("| **El área se repite tres veces**: total, con riego y sin riego traen el "
+      "mismo número, así que el predio se cuenta dos veces ({} ha de más) "
+      "| {} fichas | Clasificadas por su posición respecto al canal; **esperan "
+      "validación** antes de corregir. Ver `REVISION-54-areas-sobre-el-canal.xlsx` |"
+      .format(dec(ha54), num(n54)))
+    w("| **Predios adicionales sin ficha madre**: quedaron sueltos por un defecto "
+      "del formulario de QField | {} predios | El formulario ya está corregido; "
+      "**falta que llegue a las tablets**. Mientras tanto se siguen produciendo |"
+      .format(sin_madre))
+    w("| **Dos fichas comparten el identificador de QField**: José Rafael Coyago "
       "Chicaiza y Marco Rafael Coyago Alquinga, mismo predio en Santa Marianita "
-      "de Pingulmí). Hay que confirmar en campo si son dos copropietarios o una "
-      "ficha duplicada, y cuál queda.")
+      "de Pingulmí | 2 fichas | Hay un parche que evita que fallen los informes, "
+      "pero **el dato sigue mal**. Falta confirmar si son copropietarios o una "
+      "ficha duplicada |")
+    w("| **Áreas que no cuadran con el polígono del catastro** | 148 fichas | "
+      "Listadas en `REVISION-AREAS-fichas-a-verificar.md` (corte 29-jul). Es un "
+      "problema **distinto** del de arriba: solo 1 ficha coincide entre las dos "
+      "listas |")
+    w("")
+    w("---\n")
+    w("## Casos que no se arreglan llenando un campo\n")
+    w("Dependen de una decisión, no de volver a preguntar:\n")
     w("- **491 fichas de ALPAKA** con tarifas de 672 y 308 USD mensuales, cuando "
       "la mediana del sistema es 3 USD. Están excluidas de los informes hasta "
       "que se confirme si es error de digitación o el dato es real.")

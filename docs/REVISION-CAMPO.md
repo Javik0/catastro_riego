@@ -10,11 +10,13 @@ Este documento sale de leer el `data.gpkg` de QField tal como está hoy. Dice qu
 
 No repite lo que ya está en otros documentos. Antes de salir a campo, revisar también:
 
-| Documento | Qué contiene |
-|---|---|
-| `REVISION-observaciones-con-clave.md` | Predios que el regante mencionó en observaciones: 31 por levantar, 78 por revisar, 28 con la clave mal escrita |
-| `REVISION-AREAS-fichas-a-verificar.md` | 148 fichas cuya área declarada no cuadra con el polígono del catastro |
-| `REPORTE-PENDIENTES.md` | Todo lo abierto del proyecto, por responsable |
+| Documento | Qué contiene | Corte |
+|---|---|---|
+| `REVISION-observaciones-con-clave.md` | Predios que el regante mencionó en observaciones: 31 por levantar, 78 por revisar, 28 con la clave mal escrita | 9-ago-2026 |
+| `REVISION-AREAS-fichas-a-verificar.md` | 148 fichas cuya área declarada no cuadra con el polígono del catastro | **29-jul-2026** |
+| `REPORTE-PENDIENTES.md` | Todo lo abierto del proyecto, por responsable | **4-ago-2026** |
+
+> Los dos últimos son **anteriores a la depuración**: se escribieron a mano y no se regeneran solos, así que sus cifras de fichas no coinciden con las de aquí. Sus listados siguen sirviendo —se comprobó que 265 de las 266 claves citadas en el de áreas siguen en el padrón—, pero los totales hay que leerlos con su fecha.
 
 ---
 
@@ -1820,11 +1822,23 @@ Un campo que no se llenó ni una sola vez no es trabajo pendiente de campo: o no
 
 ---
 
+## Inconsistencias de datos y en qué va cada una
+
+No son campos vacíos: son datos que están, pero no pueden ser ciertos. Se listan con su estado porque varias esperan una decisión.
+
+| Qué pasa | Cuántas | Estado |
+|---|---:|---|
+| **El área se repite tres veces**: total, con riego y sin riego traen el mismo número, así que el predio se cuenta dos veces (56,38 ha de más) | 54 fichas | Clasificadas por su posición respecto al canal; **esperan validación** antes de corregir. Ver `REVISION-54-areas-sobre-el-canal.xlsx` |
+| **Predios adicionales sin ficha madre**: quedaron sueltos por un defecto del formulario de QField | 5 predios | El formulario ya está corregido; **falta que llegue a las tablets**. Mientras tanto se siguen produciendo |
+| **Dos fichas comparten el identificador de QField**: José Rafael Coyago Chicaiza y Marco Rafael Coyago Alquinga, mismo predio en Santa Marianita de Pingulmí | 2 fichas | Hay un parche que evita que fallen los informes, pero **el dato sigue mal**. Falta confirmar si son copropietarios o una ficha duplicada |
+| **Áreas que no cuadran con el polígono del catastro** | 148 fichas | Listadas en `REVISION-AREAS-fichas-a-verificar.md` (corte 29-jul). Es un problema **distinto** del de arriba: solo 1 ficha coincide entre las dos listas |
+
+---
+
 ## Casos que no se arreglan llenando un campo
 
-Están documentados en `REPORTE-PENDIENTES.md`; se repiten aquí porque tocan trabajo de campo:
+Dependen de una decisión, no de volver a preguntar:
 
-- **Dos fichas con el mismo identificador de QField** (José Rafael Coyago Chicaiza y Marco Rafael Coyago Alquinga, mismo predio en Santa Marianita de Pingulmí). Hay que confirmar en campo si son dos copropietarios o una ficha duplicada, y cuál queda.
 - **491 fichas de ALPAKA** con tarifas de 672 y 308 USD mensuales, cuando la mediana del sistema es 3 USD. Están excluidas de los informes hasta que se confirme si es error de digitación o el dato es real.
 - **Granja avícola de Asociación Rosalía**: seis titulares declaran 10.000 gallinas cada uno sobre el mismo predio. 60.000 aves excluidas.
 - **Avellaneda, Hernán Timpe y Hacienda San Francisco**: su caudal coincide exacto con el de su comunidad de origen. Si tuvieran llave propia, el sistema pasaría de 950 a 1.021 l/s.
