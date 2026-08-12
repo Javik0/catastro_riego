@@ -1,0 +1,313 @@
+# -*- coding: utf-8 -*-
+"""
+Corrige las fichas donde el área sin riego repite el área total del predio.
+
+Qué problema resuelve
+---------------------
+Hay 54 fichas en las que `area_total`, `area_riego` y `area_sin_riego` traen
+**el mismo número tres veces**. Todas son del mismo técnico (`jvk-editor5`) y de
+la misma semana (24 al 30 de julio de 2026): es un patrón de captura, no 54
+predios raros.
+
+El efecto es que el predio se cuenta dos veces —entero con riego y entero sin
+riego— y la superficie del padrón deja de cuadrar:
+
+    area_riego + area_sin_riego = 10.349,15 ha
+    area_total                  = 10.294,99 ha   →  56,38 ha de más
+
+Se midió sobre las 6.831 fichas: **estas 54 son la única fuente de descuadre del
+padrón**. Las otras 6.774 cuadran, y 3 más quedan cortas por no declarar ninguno
+de los dos campos (2,22 ha, caso distinto que este script no toca).
+
+Qué hace y por qué así
+----------------------
+Pone `area_sin_riego = 0` en esas fichas, dejando intactos `area_total` y
+`area_riego`. La dirección de la corrección no es arbitraria: el polígono del
+catastro confirma el área total, así que el dato que sobra es el del área sin
+riego. El script vuelve a comprobar ese cruce y avisa de las fichas en las que
+el catastro **no** respalda el área declarada, para que se revisen aparte —en
+esas el problema puede ser el área total, que es otro asunto.
+
+Lo que NO hace
+--------------
+No toca la regla de exportación. Si además se cambia `export_geojson.py:582`
+por la regla de cuadre, el resultado publicado es el mismo; pero esta corrección
+hace falta igual, porque el `data.gpkg` es lo que viaja al cliente en el
+GeoPackage y lo que ven los técnicos en QField.
+
+Uso
+---
+    "C:\\OSGeo4W\\bin\\python-qgis.bat" -X utf8 scripts/corregir_areas_sin_riego.py
+    "C:\\OSGeo4W\\bin\\python-qgis.bat" -X utf8 scripts/corregir_areas_sin_riego.py --aplicar
+
+Sin `--aplicar` **no escribe nada**: lista las fichas y muestra el efecto (regla
+7 del proyecto). Con `--aplicar` respalda antes de tocar nada, usando la API de
+backup de SQLite —no una copia plana, que sale incompleta si hay `-wal`
+pendiente— y deja el respaldo fuera de la carpeta que sincroniza QFieldCloud.
+
+Antes de correrlo con --aplicar
+-------------------------------
+1. Que Pablo Barrionuevo confirme el patrón: es su levantamiento.
+2. Que Armando lo apruebe: mueve una cifra de superficie, y pidió aprobar
+   cualquier cambio sobre la base declarada al Consejo Provincial.
+3. Ventana coordinada: que nadie esté sincronizando desde una tablet.
+"""
+import argparse
+import json
+import os
+import sqlite3
+import sys
+import time
+
+BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+GPKG = os.path.join(os.path.expanduser('~'), 'QField', 'cloud',
+                    'porotog_levantamiento_offline', 'data.gpkg')
+CATASTRO = os.path.join(BASE, 'public', 'geo', 'catastro_geo.geojson')
+RAIZ_RESPALDOS = (r"C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO"
+                  r"\respaldos_qgs")
+
+TABLA = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
+
+# El patrón: los tres campos con el mismo valor, y ese valor distinto de cero.
+# Se compara con tolerancia de medio metro porque son reales, no enteros.
+PATRON = ("area_total IS NOT NULL AND area_total <> 0 "
+          "AND ABS(area_total - COALESCE(area_riego,0)) < 0.5 "
+          "AND ABS(area_total - COALESCE(area_sin_riego,0)) < 0.5")
+
+TOLERANCIA_CATASTRO = 0.20   # 20 % de diferencia contra el polígono
+
+
+def ha(m2):
+    return '{:,.2f}'.format(m2 / 10000.0).replace(',', 'X').replace('.', ',').replace('X', '.')
+
+
+def respaldo_sqlite(origen, etiqueta):
+    """Copia consistente con la API de backup de SQLite, fuera de QFieldCloud."""
+    carpeta = os.path.join(RAIZ_RESPALDOS, time.strftime('%Y-%m-%d'))
+    os.makedirs(carpeta, exist_ok=True)
+    destino = os.path.join(carpeta, '{}.{}-{}.bak'.format(
+        os.path.basename(origen), time.strftime('%H%M'), etiqueta))
+    src = sqlite3.connect(origen)
+    dst = sqlite3.connect(destino)
+    with dst:
+        src.backup(dst)
+    dst.close()
+    src.close()
+    return destino
+
+
+def areas_del_catastro():
+    """Área del polígono por clave catastral, si el archivo está disponible."""
+    if not os.path.exists(CATASTRO):
+        return {}
+    try:
+        with open(CATASTRO, encoding='utf-8') as f:
+            datos = json.load(f)
+    except Exception as e:
+        print("   aviso: no se pudo leer el catastro ({})".format(e))
+        return {}
+    # El geojson del catastro trae los nombres recortados a 10 caracteres, como
+    # los deja la conversión desde shapefile: `clave_cata` y `area_predi`.
+    areas = {}
+    for ft in datos.get('features', []):
+        p = ft.get('properties') or {}
+        clave = str(p.get('clave_cata') or p.get('clave_catastral') or '').strip()
+        if not clave:
+            continue
+        for campo in ('area_predi', 'area_m2', 'area', 'Shape_Area'):
+            if p.get(campo):
+                try:
+                    areas[clave] = float(p[campo])
+                except (TypeError, ValueError):
+                    pass
+                break
+    return areas
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--aplicar', action='store_true',
+                    help='escribe en el data.gpkg (sin esto solo simula)')
+    args = ap.parse_args()
+
+    print("=" * 78)
+    print(" CORRECCION DE AREA SIN RIEGO DUPLICADA" +
+          ("  [APLICAR]" if args.aplicar else "  [SIMULACION - no escribe nada]"))
+    print("=" * 78)
+
+    if not os.path.exists(GPKG):
+        print("ERROR: no se encuentra el data.gpkg:\n  {}".format(GPKG))
+        return 1
+
+    con = sqlite3.connect(GPKG)
+    cur = con.cursor()
+    t = '"{}"'.format(TABLA)
+
+    # ── estado del padrón antes ──
+    cur.execute("SELECT COUNT(*), SUM(COALESCE(area_total,0)), "
+                "SUM(COALESCE(area_riego,0)), SUM(COALESCE(area_sin_riego,0)) "
+                "FROM {}".format(t))
+    n_all, s_tot, s_rie, s_sin = cur.fetchone()
+    print("\n  padron: {:,} fichas".format(n_all))
+    print("     area total declarada : {:>10} ha".format(ha(s_tot)))
+    print("     con riego            : {:>10} ha".format(ha(s_rie)))
+    print("     sin riego            : {:>10} ha".format(ha(s_sin)))
+    print("     riego + sin riego    : {:>10} ha   <-- excede el total en {} ha"
+          .format(ha(s_rie + s_sin), ha(s_rie + s_sin - s_tot)))
+
+    # ── las fichas afectadas ──
+    cur.execute(
+        "SELECT COALESCE(clave_catastral,''), "
+        "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')), "
+        "COALESCE(comunidad,'(sin comunidad)'), COALESCE(creado_por,''), "
+        "SUBSTR(CAST(fecha_creacion AS TEXT),1,10), COALESCE(area_total,0) "
+        "FROM {} WHERE {} ORDER BY 3, 1".format(t, PATRON))
+    fichas = cur.fetchall()
+
+    if not fichas:
+        print("\n  No hay fichas con este patron. Nada que corregir.")
+        con.close()
+        return 0
+
+    catastro = areas_del_catastro()
+    print("\n  {} fichas con el area repetida tres veces".format(len(fichas)))
+    print("  cruce contra el catastro: {}".format(
+        "{:,} claves con area de poligono".format(len(catastro)) if catastro
+        else "no disponible (no se pudo leer catastro_geo.geojson)"))
+
+    dudosas = []
+    print("\n  {:<15} {:<30} {:<18} {:>10}  {}".format(
+        'CLAVE', 'REGANTE', 'COMUNIDAD', 'AREA (ha)', 'CATASTRO'))
+    print("  " + "-" * 92)
+    for clave, nombre, com, tec, fecha, area in fichas:
+        marca = ''
+        if catastro:
+            ref = catastro.get(clave.strip())
+            if ref is None:
+                marca = 'sin poligono'
+            elif area > 0 and abs(ref - area) / area > TOLERANCIA_CATASTRO:
+                marca = 'NO CONFIRMA ({} ha)'.format(ha(ref))
+                dudosas.append((clave, nombre, area, ref))
+            else:
+                marca = 'ok'
+        print("  {:<15} {:<30} {:<18} {:>10}  {}".format(
+            clave or '—', (nombre or '—')[:30], com[:18], ha(area), marca))
+
+    # ── quién y cuándo, para que Pablo lo reconozca ──
+    cur.execute("SELECT COALESCE(creado_por,'(vacio)'), COUNT(*), "
+                "MIN(SUBSTR(CAST(fecha_creacion AS TEXT),1,10)), "
+                "MAX(SUBSTR(CAST(fecha_creacion AS TEXT),1,10)) "
+                "FROM {} WHERE {} GROUP BY 1".format(t, PATRON))
+    print("\n  quien las levanto:")
+    for tec, n, d1, d2 in cur.fetchall():
+        print("     {:<16} {:>3} fichas   del {} al {}".format(tec, n, d1, d2))
+
+    sobra = sum(f[5] for f in fichas)
+    print("\n  EFECTO DE LA CORRECCION (area_sin_riego = 0 en esas fichas):")
+    print("     sin riego : {} ha  ->  {} ha".format(ha(s_sin), ha(s_sin - sobra)))
+    print("     con riego : {} ha  ->  {} ha   (no cambia)".format(ha(s_rie), ha(s_rie)))
+    print("     suma      : {} ha  ->  {} ha   (cuadra con el area total)"
+          .format(ha(s_rie + s_sin), ha(s_rie + s_sin - sobra)))
+
+    if dudosas:
+        # Antes de mandar a nadie a revisar: cuando varias fichas comparten la
+        # misma clave son copropietarios, y cada uno declara SU parte del
+        # predio. Si las partes suman el poligono, no hay nada que revisar.
+        por_clave = {}
+        for clave, nombre, area, ref in dudosas:
+            d = por_clave.setdefault(clave, {'suma': 0.0, 'ref': ref, 'quienes': []})
+            d['suma'] += area
+            d['quienes'].append(nombre)
+        compartidos, revisar = [], []
+        for clave, d in por_clave.items():
+            if len(d['quienes']) > 1 and d['ref'] > 0 and \
+                    abs(d['suma'] - d['ref']) / d['ref'] <= TOLERANCIA_CATASTRO:
+                compartidos.append((clave, d))
+            else:
+                revisar.append((clave, d))
+
+        for clave, d in compartidos:
+            print("\n  El catastro no cuadra con una ficha suelta de {}, pero si con "
+                  "la suma:".format(clave))
+            print("     {} fichas declaran {} ha entre todas y el poligono mide {} ha."
+                  .format(len(d['quienes']), ha(d['suma']), ha(d['ref'])))
+            print("     Son copropietarios repartiendose el predio: {}."
+                  .format(', '.join(n[:28] for n in d['quienes'])))
+            print("     No hay nada que revisar aqui; la correccion les aplica igual.")
+
+        if revisar:
+            print("\n  !! {} ficha(s) que el catastro NO respalda: revisar aparte."
+                  .format(sum(len(d['quienes']) for _, d in revisar)))
+            print("     En estas el problema puede ser el area_total, no el sin riego.")
+            for clave, d in revisar:
+                print("     - {} {} · declara {} ha · poligono {} ha"
+                      .format(clave, ', '.join(n[:28] for n in d['quienes']),
+                              ha(d['suma']), ha(d['ref'])))
+            print("     Aun asi el cuadre las corrige igual: se respeta lo declarado")
+            print("     en riego y el sin riego se ajusta. El area_total dudosa es un")
+            print("     problema distinto, que no arregla este script.")
+
+    if not args.aplicar:
+        print("\n  " + "=" * 74)
+        print("  SIMULACION: no se escribio nada.")
+        print("  Para aplicarlo, repetir el comando con --aplicar.")
+        print("  Antes: confirmacion de Pablo, aprobacion de Armando y que nadie")
+        print("  este sincronizando desde una tablet.")
+        print("  " + "=" * 74)
+        con.close()
+        return 0
+
+    # ── aplicar ──
+    con.close()
+    print("\n  respaldando antes de tocar nada...")
+    destino = respaldo_sqlite(GPKG, 'antes-areas-sin-riego')
+    print("     {}".format(destino))
+
+    con = sqlite3.connect(GPKG)
+    cur = con.cursor()
+    # Los triggers del índice espacial llaman a ST_IsEmpty, que SQLite puro no
+    # trae. Se retiran mientras dura el UPDATE y se recrean tal cual.
+    cur.execute("SELECT name, sql FROM sqlite_master "
+                "WHERE type='trigger' AND tbl_name=?", (TABLA,))
+    triggers = cur.fetchall()
+    for nombre, _ in triggers:
+        cur.execute('DROP TRIGGER IF EXISTS "{}"'.format(nombre))
+    try:
+        cur.execute("UPDATE {} SET area_sin_riego = 0 WHERE {}".format(t, PATRON))
+        tocadas = cur.rowcount
+    finally:
+        for _, sql in triggers:
+            if sql:
+                cur.execute(sql)
+    con.commit()
+    cur.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+    con.close()
+    print("     {} fichas actualizadas · {} triggers espaciales recreados"
+          .format(tocadas, len(triggers)))
+
+    # ── verificación releyendo del disco ──
+    con = sqlite3.connect(GPKG)
+    cur = con.cursor()
+    cur.execute("SELECT COUNT(*) FROM {} WHERE {}".format(t, PATRON))
+    quedan = cur.fetchone()[0]
+    cur.execute("SELECT SUM(COALESCE(area_total,0)), SUM(COALESCE(area_riego,0)), "
+                "SUM(COALESCE(area_sin_riego,0)) FROM {}".format(t))
+    v_tot, v_rie, v_sin = cur.fetchone()
+    con.close()
+
+    print("\n  VERIFICACION (releyendo del disco):")
+    print("     fichas con el patron    : {}".format(quedan))
+    print("     area total              : {} ha".format(ha(v_tot)))
+    print("     con riego + sin riego   : {} ha".format(ha(v_rie + v_sin)))
+    print("     descuadre               : {} ha".format(ha(v_rie + v_sin - v_tot)))
+    ok = quedan == 0 and abs((v_rie + v_sin) - v_tot) < 10000
+    print("\n  {}".format("CORRECCION APLICADA Y VERIFICADA" if ok
+                          else "!! REVISAR: el resultado no es el esperado"))
+    print("\n  Siguiente paso: regenerar y publicar (npm run build + firebase deploy)")
+    print("  para que la web y los informes recojan el cambio.")
+    print("=" * 78)
+    return 0 if ok else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())
