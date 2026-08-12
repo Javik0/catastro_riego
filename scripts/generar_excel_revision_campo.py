@@ -91,11 +91,22 @@ FINA = Side(style='thin', color='FFBFBFBF')
 BORDE = Border(left=FINA, right=FINA, top=FINA, bottom=FINA)
 
 
+def relleno(color):
+    """Relleno sólido que se ve en cualquier visor.
+
+    Con solo fgColor, el bgColor queda en negro-transparente y hay versiones
+    de Excel/WPS que resuelven el sólido contra el fondo: la celda sale
+    blanca aunque el color esté escrito. Fijar los dos colores lo pinta en
+    todos.
+    """
+    return PatternFill(fill_type='solid', start_color=color, end_color=color)
+
+
 def cabecera(ws, fila, titulos, anchos):
     for i, (t, a) in enumerate(zip(titulos, anchos), start=1):
         c = ws.cell(row=fila, column=i, value=t)
         c.font = Font(bold=True, color='FFFFFFFF', size=10)
-        c.fill = PatternFill('solid', fgColor=AZUL)
+        c.fill = relleno(AZUL)
         c.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
         c.border = BORDE
         ws.column_dimensions[get_column_letter(i)].width = a
@@ -356,7 +367,7 @@ def main():
         c.alignment = Alignment(wrap_text=True, vertical='center')
         if nota:
             for col in range(1, 5):
-                ws.cell(row=r, column=col).fill = PatternFill('solid', fgColor=AMBAR)
+                ws.cell(row=r, column=col).fill = relleno(AMBAR)
         r += 1
 
     # Las comunidades que no son encuestas ya no cuentan como pendiente, pero
@@ -381,7 +392,7 @@ def main():
         c.border = BORDE
         c.alignment = Alignment(wrap_text=True, vertical='center')
         for col in range(1, 5):
-            ws.cell(row=r, column=col).fill = PatternFill('solid', fgColor=ROJO)
+            ws.cell(row=r, column=col).fill = relleno(ROJO)
         r += 1
 
     ws.auto_filter.ref = 'A1:D{}'.format(r - 1)
@@ -404,9 +415,9 @@ def main():
             c.border = BORDE
             c.font = Font(size=10)
             if i in (7, 8, 9):
-                c.fill = PatternFill('solid', fgColor=GRIS)
+                c.fill = relleno(GRIS)
         if estado and estado != 'Pendiente':
-            ws.cell(row=r, column=7).fill = PatternFill('solid', fgColor=VERDE)
+            ws.cell(row=r, column=7).fill = relleno(VERDE)
         r += 1
 
     dv = DataValidation(type='list', formula1='"{}"'.format(','.join(ESTADOS)),
@@ -440,7 +451,7 @@ def main():
             c.border = BORDE
             c.font = Font(size=10)
             if i in (1, 10):
-                c.fill = PatternFill('solid', fgColor=color)
+                c.fill = relleno(color)
                 c.alignment = Alignment(wrap_text=True, vertical='center')
             if i in (8, 9) and v:
                 c.number_format = '#,##0'
@@ -461,7 +472,7 @@ def main():
         for i, v in enumerate([cod, falta, resueltos[k]], start=1):
             c = ws.cell(row=r, column=i, value=v)
             c.border = BORDE
-            c.fill = PatternFill('solid', fgColor=VERDE)
+            c.fill = relleno(VERDE)
             c.font = Font(size=10)
         r += 1
     if r == 2:
