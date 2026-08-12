@@ -196,6 +196,10 @@ def main():
             10, min(46, max(len(str(c.value or '')) for c in col) + 2))
     os.makedirs(os.path.dirname(XLSX), exist_ok=True)
     wb.save(XLSX)
+    # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(XLSX)
     print(f'  excel : {os.path.relpath(XLSX, BASE)}')
     print(f'\n  {len(filas_out)} comunidades | '
           f'{len({r[3] for r in filas_out if r[4]})} operadores | '

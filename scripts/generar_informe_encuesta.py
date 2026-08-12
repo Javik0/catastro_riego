@@ -583,6 +583,10 @@ def main():
     del wb['Sheet']
     os.makedirs(os.path.dirname(XLSX), exist_ok=True)
     wb.save(XLSX)
+    # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
     print(f'\n  {total:,} regantes | presa {pct(presa["si"], presa["respondieron"]):.1f}% | '
           f'presidente {pct(correcto, len(resp_p)):.1f}% | '

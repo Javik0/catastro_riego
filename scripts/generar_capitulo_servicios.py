@@ -255,6 +255,10 @@ def main():
     del wb['Sheet']
     os.makedirs(os.path.dirname(XLSX), exist_ok=True)
     wb.save(XLSX)
+    # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
     print(f'\n  registro {pct(registrado, N):.0f}% | agua {pct(con_agua, len(agua)):.1f}% | '
           f'energía {pct(con_ener, len(ener)):.1f}% (sobre registrados)')

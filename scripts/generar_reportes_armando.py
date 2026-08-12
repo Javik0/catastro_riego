@@ -371,6 +371,10 @@ def main():
 
         px = os.path.join(BASE, 'build_entrega', 'Reportes_Armando_5ago.xlsx')
         wb.save(px)
+        # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+        # base y los colores no se pintan. Ver excel_compat.py.
+        from excel_compat import aplicar_formatos
+        aplicar_formatos(px)
         print('\n[3] Excel (3 hojas)               ->', os.path.relpath(px, BASE))
     except Exception as e:
         print('\n[aviso] no se pudo generar el Excel:', e)

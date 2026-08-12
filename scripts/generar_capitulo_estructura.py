@@ -314,6 +314,10 @@ def main():
     del wb['Sheet']
     os.makedirs(os.path.dirname(XLSX), exist_ok=True)
     wb.save(XLSX)
+    # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
     print(f'\n  {N:,} fichas | {personas:,} personas | {pct(multi, personas):.0f}% multi-predio | '
           f'{len(colectivos)} titulares colectivos ({pct(sup_col, sup_tot):.1f}% del área)')

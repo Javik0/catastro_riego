@@ -389,6 +389,10 @@ def main():
     del wb['Sheet']
     os.makedirs(os.path.dirname(XLSX), exist_ok=True)
     wb.save(XLSX)
+    # Sin esto, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
     print(f'\n  {sup_total / 10000:,.0f} ha cultivadas | {total_cab:,} cabezas | '
           f'autoconsumo {pct(destino_c["Autoconsumo"], tot_dc):.0f}% | '

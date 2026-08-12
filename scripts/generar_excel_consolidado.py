@@ -657,32 +657,30 @@ def main():
 
     saved_desktop = False
     saved_downloads = False
-    
-    try:
-        wb.save(OUTPUT_XLSX_DESKTOP)
-        print(f"  ✓ Guardado en Escritorio: {OUTPUT_XLSX_DESKTOP}")
-        saved_desktop = True
-    except PermissionError:
-        alt_path = OUTPUT_XLSX_DESKTOP.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
+
+    # Sin este parche, hay builds de Excel que heredan «sin relleno» del estilo
+    # base y los colores no se pintan aunque estén escritos. Ver excel_compat.py.
+    from excel_compat import aplicar_formatos
+
+    def guardar(destino, etiqueta):
         try:
-            wb.save(alt_path)
-            print(f"  ⚠️ Escritorio bloqueado. Guardado alternativo en: {alt_path}")
-            saved_desktop = True
-        except Exception as e:
-            print(f"  ❌ Error: {e}")
-            
-    try:
-        wb.save(OUTPUT_XLSX_DOWNLOADS)
-        print(f"  ✓ Guardado en Descargas: {OUTPUT_XLSX_DOWNLOADS}")
-        saved_downloads = True
-    except PermissionError:
-        alt_path = OUTPUT_XLSX_DOWNLOADS.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
-        try:
-            wb.save(alt_path)
-            print(f"  ⚠️ Descargas bloqueado. Guardado alternativo en: {alt_path}")
-            saved_downloads = True
-        except Exception as e:
-            print(f"  ❌ Error: {e}")
+            wb.save(destino)
+            aplicar_formatos(destino)
+            print(f"  ✓ Guardado en {etiqueta}: {destino}")
+            return True
+        except PermissionError:
+            alt_path = destino.replace(".xlsx", "_CERRAR_EXCEL_Y_RENOMBRAR.xlsx")
+            try:
+                wb.save(alt_path)
+                aplicar_formatos(alt_path)
+                print(f"  ⚠️ {etiqueta} bloqueado. Guardado alternativo en: {alt_path}")
+                return True
+            except Exception as e:
+                print(f"  ❌ Error: {e}")
+                return False
+
+    saved_desktop = guardar(OUTPUT_XLSX_DESKTOP, "Escritorio")
+    saved_downloads = guardar(OUTPUT_XLSX_DOWNLOADS, "Descargas")
 
     if saved_desktop or saved_downloads:
         print(f"\n[OK] Excel catastral premium generado con éxito.")
