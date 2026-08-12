@@ -22,27 +22,54 @@ de los dos campos (2,22 ha, caso distinto que este script no toca).
 Qué hace y por qué así
 ----------------------
 Deja `area_total` intacta —el polígono del catastro la confirma— y pone en cero
-**uno** de los otros dos campos. Cuál de los dos es la única decisión de fondo, y
-el script no la toma solo: hay que pasarla con `--direccion`.
+**uno** de los otros dos campos:
 
-    --direccion sin-riego   el predio SE RIEGA entero  → area_sin_riego = 0
     --direccion riego       el predio NO se riega      → area_riego = 0
+    --direccion sin-riego   el predio SE RIEGA entero  → area_sin_riego = 0
+    --direccion auto        decide ficha por ficha, según el canal (ver abajo)
 
-**Por qué no se decide sola.** El catastro confirma cuánto mide el predio, pero
-no dice si se riega. Y los demás campos de la ficha apuntan a que NO:
+Cuál de los dos era la única duda de fondo, y **la resolvió Armando el 12 de
+agosto de 2026** mirando las fichas en el mapa:
+
+    PAMBAMARCA     — «casi todos los adicionales están SOBRE el canal,
+                      no tienen riego»
+    CHAUPIESTANCIA — «todos están BAJO el canal, deben tener riego»
+
+O sea que no hay una respuesta única para las 54: depende de dónde caiga el
+predio respecto al canal Guanguilquí. El canal riega por gravedad, así que lo
+que queda por encima de su cota no recibe agua por mucho que esté al lado.
+
+Cómo lo decide `--direccion auto`
+---------------------------------
+Para cada ficha busca las `--vecinos` fichas más cercanas que **sí declaran
+riego** y compara su cota con la mediana de esas vecinas. Si está más de
+`--umbral` metros por encima, es que quedó sobre el canal.
+
+No se usa la cota del canal directamente porque la capa `ramales_riego.geojson`
+es 2D: no trae cotas. Los regantes vecinos son una referencia mejor, porque son
+predios que de hecho reciben agua en ese punto del sistema.
+
+El resultado reproduce lo que dijo Armando sin habérselo dicho al programa:
+
+    PAMBAMARCA      22 sobre  ·  8 bajo     («casi todos»)
+    CHAUPIESTANCIA   1 sobre  · 17 bajo     («todos»)
+
+y el corte sale limpio: en Pambamarca las de arriba están a +40 m o más de sus
+vecinas regantes y las de abajo a +25 m o menos, sin casos en la franja del
+medio. Aun así el script imprime la diferencia de cada ficha para que se pueda
+revisar, y marca las que quedan cerca del umbral.
+
+Por qué hacía falta preguntar
+-----------------------------
+Los demás campos de la ficha apuntaban a que ninguna se riega:
 
     señales de riego (frecuencia, canal, días de turno, método, caudal,
     reservorio o tarifa) presentes en...
-        las 54 fichas      →   1 de 54   (1,9 %)
+        las 54 fichas       →     1 de 54   (1,9 %)
         el resto del padrón → 6.731 de 6.777 (99 %)
 
-Un predio del sistema sin ningún dato de riego es raro; 53 seguidos, del mismo
-técnico y la misma semana, no son 53 casos raros. Pero eso admite dos lecturas
-opuestas: o esos predios de verdad no se riegan, o en esa semana la sección de
-riego quedó sin llenar. **Solo quien hizo el levantamiento puede decirlo**, y de
-ahí depende en qué columna van 56,38 ha.
-
-Mientras no se aclare, el script se niega a escribir.
+Pero eso admitía dos lecturas opuestas —que no se rieguen, o que esa semana la
+sección quedara sin llenar— y la respuesta resultó ser «depende de cuál».
 
 Lo que NO hace
 --------------
@@ -63,8 +90,8 @@ pendiente— y deja el respaldo fuera de la carpeta que sincroniza QFieldCloud.
 
 Antes de correrlo con --aplicar
 -------------------------------
-1. Que Pablo Barrionuevo diga si esos 54 predios se riegan o no. De su respuesta
-   sale el `--direccion`, y sin eso la corrección es una moneda al aire.
+1. Que Armando o Pablo validen en el mapa la lista que imprime `--direccion
+   auto`, sobre todo las fichas marcadas como límite.
 2. Que Armando lo apruebe: mueve una cifra de superficie, y pidió aprobar
    cualquier cambio sobre la base declarada al Consejo Provincial.
 3. Ventana coordinada: que nadie esté sincronizando desde una tablet.
@@ -113,6 +140,46 @@ def respaldo_sqlite(origen, etiqueta):
     return destino
 
 
+def mediana(v):
+    v = sorted(v)
+    n = len(v)
+    return v[n // 2] if n % 2 else (v[n // 2 - 1] + v[n // 2]) / 2.0
+
+
+def clasificar_por_canal(cur, t, umbral, k):
+    """Sobre o bajo el canal, comparando con las fichas regantes de al lado.
+
+    Devuelve {clave_catastral: (veredicto, cota, cota_vecinas, diferencia)}.
+    El canal riega por gravedad: lo que queda por encima de su cota no recibe
+    agua. Como la capa del canal no trae cotas, se usan de referencia los
+    predios vecinos que sí declaran riego, que es una referencia mejor: son
+    predios que de hecho reciben agua en ese punto del sistema.
+    """
+    V = "({0} IS NOT NULL AND TRIM(CAST({0} AS TEXT)) NOT IN ('','None','NULL'))"
+    NZ = "({0} IS NOT NULL AND CAST({0} AS REAL) <> 0)"
+    riega = "({} OR {} OR {} OR {} OR {})".format(
+        V.format('frecuencia_riego'), V.format('canal'), NZ.format('dias_riego'),
+        NZ.format('caudal_valor'), NZ.format('metodo_gravedad_pct'))
+    sel = ("SELECT COALESCE(clave_catastral,''), COALESCE(cota_msnm,0), "
+           "COALESCE(coord_x_utm,0), COALESCE(coord_y_utm,0) FROM {}")
+
+    cur.execute((sel + " WHERE {} AND NOT ({})").format(t, riega, PATRON))
+    regantes = [r for r in cur.fetchall() if r[1] and r[2] and r[3]]
+    cur.execute((sel + " WHERE {}").format(t, PATRON))
+    objetivo = [r for r in cur.fetchall() if r[1] and r[2] and r[3]]
+
+    fallo = {}
+    for clave, cota, x, y in objetivo:
+        cerca = sorted(((x - r[2]) ** 2 + (y - r[3]) ** 2, r[1])
+                       for r in regantes)[:k]
+        if not cerca:
+            continue
+        ref = mediana([c for _, c in cerca])
+        dif = cota - ref
+        fallo[clave] = ('riego' if dif > umbral else 'sin-riego', cota, ref, dif)
+    return fallo, len(regantes)
+
+
 def areas_del_catastro():
     """Área del polígono por clave catastral, si el archivo está disponible."""
     if not os.path.exists(CATASTRO):
@@ -145,10 +212,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--aplicar', action='store_true',
                     help='escribe en el data.gpkg (sin esto solo simula)')
-    ap.add_argument('--direccion', choices=('sin-riego', 'riego'),
-                    help='que campo se pone en cero. sin-riego = el predio se '
-                         'riega entero; riego = el predio no se riega. Lo tiene '
-                         'que confirmar quien hizo el levantamiento.')
+    ap.add_argument('--direccion', choices=('sin-riego', 'riego', 'auto'),
+                    help='que campo se pone en cero. riego = el predio no se '
+                         'riega; sin-riego = se riega entero; auto = decide por '
+                         'ficha segun quede sobre o bajo el canal.')
+    ap.add_argument('--umbral', type=float, default=25.0,
+                    help='metros por encima de las vecinas regantes para darlo '
+                         'por sobre el canal (por defecto 25)')
+    ap.add_argument('--vecinos', type=int, default=15,
+                    help='cuantas fichas regantes cercanas se usan de referencia')
     args = ap.parse_args()
 
     print("=" * 78)
@@ -248,15 +320,57 @@ def main():
     print("        {} ha. Por eso hace falta --direccion.".format(ha(sum(f[5] for f in fichas))))
 
     sobra = sum(f[5] for f in fichas)
-    print("\n  EFECTO SEGUN LA DIRECCION QUE SE ELIJA:")
-    print("     --direccion sin-riego  (se riegan enteros)")
-    print("        con riego {} ha (igual) · sin riego {} -> {} ha"
-          .format(ha(s_rie), ha(s_sin), ha(s_sin - sobra)))
-    print("     --direccion riego      (no se riegan)")
-    print("        con riego {} -> {} ha · sin riego {} ha (igual)"
-          .format(ha(s_rie), ha(s_rie - sobra), ha(s_sin)))
-    print("     en los dos casos la suma queda en {} ha y cuadra con el area total"
-          .format(ha(s_rie + s_sin - sobra)))
+
+    # ── clasificación por el canal (lo que resolvió Armando) ──
+    fallo, n_reg = clasificar_por_canal(cur, t, args.umbral, args.vecinos)
+    print("\n  SOBRE O BAJO EL CANAL (referencia: {:,} fichas regantes; "
+          "{} vecinas por ficha, umbral {:.0f} m)".format(n_reg, args.vecinos, args.umbral))
+    print("     Armando, 12-ago: Pambamarca «casi todos SOBRE el canal, no tienen")
+    print("     riego»; Chaupiestancia «todos BAJO el canal, deben tener riego».\n")
+    print("     {:<15} {:<16} {:>6} {:>8} {:>7}  {}".format(
+        'CLAVE', 'COMUNIDAD', 'COTA', 'VECINAS', 'DIF', 'VEREDICTO'))
+    print("     " + "-" * 74)
+    resumen, limite = {}, []
+    ha_riego = ha_sin = 0.0
+    for clave, nombre, com, tec, fecha, area in fichas:
+        v = fallo.get(clave.strip())
+        if not v:
+            print("     {:<15} {:<16} {:>6} {:>8} {:>7}  sin cota o sin coordenadas"
+                  .format(clave, com[:16], '—', '—', '—'))
+            continue
+        direccion, cota, ref, dif = v
+        etq = 'SOBRE -> no riega' if direccion == 'riego' else 'BAJO  -> si riega'
+        cerca = abs(dif - args.umbral) <= 10
+        resumen[etq] = resumen.get(etq, 0) + 1
+        if direccion == 'riego':
+            ha_riego += area
+        else:
+            ha_sin += area
+        if cerca:
+            limite.append((clave, com, dif, etq))
+        print("     {:<15} {:<16} {:>6.0f} {:>8.0f} {:>+7.0f}  {}{}"
+              .format(clave, com[:16], cota, ref, dif, etq,
+                      '  <-- al limite' if cerca else ''))
+
+    print("\n     reparto: " + " · ".join("{} {}".format(v, k)
+                                          for k, v in sorted(resumen.items())))
+
+    print("\n  EFECTO DE LA CORRECCION:")
+    print("     --direccion auto   (lo que dijo Armando, ficha por ficha)")
+    print("        con riego {} -> {} ha".format(ha(s_rie), ha(s_rie - ha_riego)))
+    print("        sin riego {} -> {} ha".format(ha(s_sin), ha(s_sin - ha_sin)))
+    print("        suma      {} -> {} ha   (cuadra con el area total)"
+          .format(ha(s_rie + s_sin), ha(s_rie + s_sin - sobra)))
+    print("     --direccion riego      todas sin riego : con riego {} ha"
+          .format(ha(s_rie - sobra)))
+    print("     --direccion sin-riego  todas regadas   : sin riego {} ha"
+          .format(ha(s_sin - sobra)))
+
+    if limite:
+        print("\n  {} ficha(s) cerca del umbral, conviene mirarlas en el mapa:"
+              .format(len(limite)))
+        for clave, com, dif, etq in limite:
+            print("     - {} ({}) {:+.0f} m -> {}".format(clave, com[:16], dif, etq))
 
     if dudosas:
         # Antes de mandar a nadie a revisar: cuando varias fichas comparten la
@@ -304,16 +418,35 @@ def main():
             print("  moneda al aire entre dos columnas. Preguntar a Pablo primero.")
         else:
             print("  SIMULACION: no se escribio nada.")
-            print("  Para aplicarlo: --aplicar --direccion {sin-riego|riego}")
-            print("  Antes: respuesta de Pablo sobre si esos predios se riegan,")
-            print("  aprobacion de Armando y que nadie este sincronizando.")
+            print("  Para aplicarlo:  --aplicar --direccion auto")
+            print("  Antes: que Armando valide en el mapa las fichas marcadas al")
+            print("  limite, apruebe el cambio de superficie, y que nadie este")
+            print("  sincronizando desde una tablet.")
         print("  " + "=" * 74)
         con.close()
         return 0 if not args.aplicar else 2
 
     # ── aplicar ──
-    campo = 'area_sin_riego' if args.direccion == 'sin-riego' else 'area_riego'
-    print("\n  direccion elegida: {}  ->  {} = 0".format(args.direccion, campo))
+    # En `auto` cada ficha lleva su propia direccion; en los otros modos, todas
+    # la misma.
+    if args.direccion == 'auto':
+        plan = {c: v[0] for c, v in fallo.items()}
+        faltan = [f[0] for f in fichas if f[0].strip() not in plan]
+        if faltan:
+            print("\n  NO SE ESCRIBIO NADA: {} ficha(s) sin cota o sin coordenadas, "
+                  "que 'auto' no puede clasificar.".format(len(faltan)))
+            print("  Resolverlas a mano o usar una direccion explicita: {}"
+                  .format(', '.join(faltan)))
+            con.close()
+            return 2
+        print("\n  direccion: auto — {} sin riego, {} regadas"
+              .format(sum(1 for d in plan.values() if d == 'riego'),
+                      sum(1 for d in plan.values() if d == 'sin-riego')))
+    else:
+        plan = {f[0].strip(): args.direccion for f in fichas}
+        campo = 'area_sin_riego' if args.direccion == 'sin-riego' else 'area_riego'
+        print("\n  direccion: {} para las {} ->  {} = 0"
+              .format(args.direccion, len(fichas), campo))
     con.close()
     print("\n  respaldando antes de tocar nada...")
     destino = respaldo_sqlite(GPKG, 'antes-areas-' + args.direccion)
@@ -329,8 +462,12 @@ def main():
     for nombre, _ in triggers:
         cur.execute('DROP TRIGGER IF EXISTS "{}"'.format(nombre))
     try:
-        cur.execute("UPDATE {} SET {} = 0 WHERE {}".format(t, campo, PATRON))
-        tocadas = cur.rowcount
+        tocadas = 0
+        for clave, direccion in plan.items():
+            col = 'area_sin_riego' if direccion == 'sin-riego' else 'area_riego'
+            cur.execute("UPDATE {} SET {} = 0 WHERE {} AND TRIM(COALESCE("
+                        "clave_catastral,'')) = ?".format(t, col, PATRON), (clave,))
+            tocadas += cur.rowcount
     finally:
         for _, sql in triggers:
             if sql:
