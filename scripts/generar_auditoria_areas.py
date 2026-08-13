@@ -361,9 +361,26 @@ def main():
     # fichas con el triple valor, estén en el caso que estén
     n_triple = sum(c.get('triple', 0) for c in casos)
 
+    # ── lo que ya está bien ──
+    # Sin esto la pantalla solo enseña lo que falta y parece que no se avanza.
+    # Se cuenta de las filas que ya se leyeron del gpkg, así que si mañana se
+    # revierte algo el número baja solo.
+    con_com = sum(1 for f in filas if (f[7] or '').strip())
+    fichas_clave_mala = sum(len(d['fichas']) for d in claves_malas.values())
+    cuadran_area = sum(1 for f in filas
+                       if (f[1] or 0) > 0
+                       and abs((f[2] or 0) + (f[3] or 0) - f[1]) < 1)
+    corregido = {
+        'total_fichas': len(filas),
+        'con_comunidad': con_com,
+        'clave_valida': len(filas) - fichas_clave_mala,
+        'area_cuadra': cuadran_area,
+    }
+
     salida = {
         'generado': datetime.now().strftime('%Y-%m-%d %H:%M'),
         'corte': corte,
+        'corregido': corregido,
         'resumen': {
             'fichas': len(filas),
             'exceso': cuenta['exceso'], 'dividido': cuenta['dividido'],

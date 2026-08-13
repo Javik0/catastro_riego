@@ -9,7 +9,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [stats, setStats] = useState({ fichas: '777+', predios: '640', tecnicos: '9' });
+  // Se muestran en blanco hasta que llegan los de verdad: unos valores por
+  // defecto del arranque del proyecto (777 fichas, 640 predios) se quedaron
+  // meses en pantalla y no se distinguían de los reales.
+  const [stats, setStats] = useState({ fichas: '—', predios: '—', tecnicos: '—' });
 
   useEffect(() => {
     fetch(`/geo/stats.json?t=${Date.now()}`)
@@ -17,8 +20,9 @@ export default function LoginPage() {
       .then((data) => {
         if (data && data.fichas && data.predios && data.tecnicos) {
           setStats({
-            fichas: `${data.fichas}+`,
-            predios: String(data.predios),
+            // sin «+»: son cifras exactas del último corte, no un mínimo
+            fichas: Number(data.fichas).toLocaleString('es-EC'),
+            predios: Number(data.predios).toLocaleString('es-EC'),
             tecnicos: String(data.tecnicos),
           });
         }
@@ -88,7 +92,10 @@ export default function LoginPage() {
           {/* Stats cards */}
           <div className="grid grid-cols-3 gap-3 mb-10">
             {[
-              { value: stats.fichas, label: 'Fichas', color: '#38bdf8' },
+              // «Fichas» confundía: stats.fichas son las PRINCIPALES (una por
+              // regante) y el padrón tiene 6.831 fichas contando los predios
+              // adicionales. Se etiqueta por lo que de verdad cuenta cada cifra.
+              { value: stats.fichas, label: 'Regantes', color: '#38bdf8' },
               { value: stats.predios, label: 'Predios', color: '#10b981' },
               { value: stats.tecnicos, label: 'Técnicos', color: '#f59e0b' },
             ].map(({ value, label, color }) => (

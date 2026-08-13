@@ -719,47 +719,89 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           'Observaciones': f.observaciones,
         });
 
-        // Predios Adicionales
+        // ── Predios adicionales ──
+        // Un predio adicional es OTRO PREDIO DEL MISMO REGANTE, no otra
+        // persona. Sus filas salían casi vacías —sin propietario, sin cédula y
+        // sin la columna de celular siquiera— y quien recibía el Excel no podía
+        // saber de quién era el lote. Ahora heredan los datos de contacto del
+        // titular y toman del gpkg lo que la ficha adicional tenga propio.
         const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
-          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
+          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional)
+            || (pa.ficha_hija_generada_id
+                ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
+                : undefined);
+          const propio = fichaAdicionalFisica;   // lo que la ficha hija sí trae
 
           fichasRows.push({
             'Código': '  ↳ Predio Adic.',
-            'Propietario': '',
-            'Cédula': '',
-            'Parroquia': fichaAdicionalFisica?.parroquia || '',
-            'Sector': fichaAdicionalFisica?.sector || '',
-            'Comunidad': (fichaAdicionalFisica?.comunidad || '').trim(),
-            'Sector Comunidad': '',
-            'Clave Catastral': pa.clave_catastral_otro || '',
+            'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
+            'Cédula': f.cedula,
+            'Celular': f.telefono_celular || '',
+            'Parroquia': propio?.parroquia || f.parroquia,
+            'Sector': propio?.sector || f.sector,
+            'Comunidad': (propio?.comunidad || f.comunidad || '').trim(),
+            'Sector Comunidad': propio?.sector_comunidad || f.sector_comunidad || '',
+            'Clave Catastral': pa.clave_catastral_otro || propio?.clave_catastral || '',
             'Área Total (m²)': pa.area_total_otro || pa.area_lote_asignado_otro || 0,
             'Área Riego (m²)': pa.area_riego_otro || 0,
             'Área Sin Riego (m²)': pa.area_sin_riego_otro || 0,
-            'Caudal (l/s)': '',
-            'Tipo Caudal': '',
-            'Frecuencia Riego': '',
-            'Gravedad (%)': '',
-            'Aspersión (%)': '',
-            'Goteo (%)': '',
-            'COTA (msnm)': '',
-            'X (UTM)': '',
-            'Y (UTM)': '',
-            'Técnico': '',
-            'Fecha': '',
-            'Tenencia': '',
-            'Material Construcción': '',
-            'Observaciones': pa.observaciones_otro || '',
+            'Caudal (l/s)': propio?.caudal_valor ?? '',
+            'Tipo Caudal': propio?.caudal_tipo || '',
+            'Frecuencia Riego': propio?.frecuencia_riego || f.frecuencia_riego || '',
+            'Gravedad (%)': propio?.metodo_gravedad_pct ?? '',
+            'Aspersión (%)': propio?.metodo_aspersion_pct ?? '',
+            'Goteo (%)': propio?.metodo_goteo_pct ?? '',
+            'COTA (msnm)': propio?.cota_msnm ?? '',
+            'X (UTM)': propio?.coord_x_utm ?? '',
+            'Y (UTM)': propio?.coord_y_utm ?? '',
+            'Técnico': getNombreTecnico(propio?.creado_por || f.creado_por),
+            'Fecha': propio?.fecha_creacion
+              ? safeToDate(propio.fecha_creacion).toLocaleDateString('es-EC')
+              : '',
+            'Tenencia': propio?.tenencia_predio || f.tenencia_predio || '',
+            'Material Construcción': propio?.material_construccion || '',
+            'Observaciones': pa.observaciones_otro || propio?.observaciones || '',
           });
         });
       });
       XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(fichasRows), 'Fichas');
 
-      const fichaIds = new Set(data.map((f) => f.id));
-      const cultivosF = cultivosData.filter((c) => fichaIds.has(c.ficha_id));
+      // ── Cultivos y animales ──
+      // Se filtraban solo por las fichas principales, así que al pedir una
+      // comunidad se perdía lo sembrado en sus predios adicionales. Y las hojas
+      // salían con `ficha_id` a secas: imposible saber de quién era cada
+      // cultivo. Ahora se incluye lo de las adicionales y cada fila dice a qué
+      // regante y a qué predio pertenece.
+      const titularDe = new Map<string, typeof data[number]>();
+      data.forEach((f) => {
+        titularDe.set(f.id, f);
+        adicionalesDe(f.id).forEach((pa) => {
+          const hijaId = pa.ficha_hija_generada_id || pa.id_adicional;
+          if (hijaId) titularDe.set(hijaId, f);
+        });
+      });
+
+      const conTitular = (r: { ficha_id: string }) => {
+        const f = titularDe.get(r.ficha_id);
+        const esAdicional = f ? f.id !== r.ficha_id : false;
+        const propia = esAdicional ? allFichas.find((x) => x.id === r.ficha_id) : f;
+        return {
+          'Regante': f ? (f.propietario || `${f.apellidos} ${f.nombres}`) : '',
+          'Cédula': f?.cedula || '',
+          'Comunidad': (f?.comunidad || '').trim(),
+          'Predio': esAdicional ? 'Adicional' : 'Principal',
+          'Clave Catastral': propia?.clave_catastral || '',
+          ...r,
+        };
+      };
+
+      const cultivosF = cultivosData
+        .filter((c) => titularDe.has(c.ficha_id)).map(conTitular);
       if (cultivosF.length > 0) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(cultivosF), 'Cultivos');
 
-      const animalesF = animalesData.filter((a) => fichaIds.has(a.ficha_id));
+      const animalesF = animalesData
+        .filter((a) => titularDe.has(a.ficha_id)).map(conTitular);
       if (animalesF.length > 0) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(animalesF), 'Animales');
 
       const resumenRows: { Métrica: string; Valor: string | number }[] = [

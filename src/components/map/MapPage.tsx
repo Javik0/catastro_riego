@@ -1243,16 +1243,21 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           )}
         </div>
 
-        {/* ── Predios dibujados ── */}
+        {/* ── Leyenda del catastro investigado ──
+            Aquí iba el conteo de polígonos dibujados. Se retiró (9-ago, pedido
+            del contratante: «no cuadra con nada»): contaba LOTES mientras todo
+            el resto del panel cuenta FICHAS, y sin esa aclaración el número
+            parecía descuadrado. Son 6.825 fichas repartidas en 6.003 claves
+            catastrales — 432 claves tienen más de una ficha —, de las que 5.994
+            tienen polígono en el catastro. Explicarlo dentro del recuadro
+            confundía más que el propio número, así que queda solo la leyenda
+            del color. */}
         {layerInfo.catastro > 0 && (
-          <div className="flex items-baseline gap-1.5 mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}
-            title="Lotes del catastro con al menos una ficha levantada. Son menos que las fichas porque un mismo predio puede tener varias.">
-            <div className="w-2.5 h-2.5 rounded-sm border border-orange-400 shrink-0 self-center" style={{ background: 'rgba(249,115,22,0.2)' }} />
-            <span className="text-sm font-bold leading-none" style={{ color: 'var(--text-primary)' }}>
-              {(catastroVisible?.features.length ?? layerInfo.catastro).toLocaleString('es-EC')}
-            </span>
+          <div className="flex items-center gap-1.5 mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}
+            title="En naranja, los lotes del catastro que tienen al menos una ficha levantada.">
+            <div className="w-2.5 h-2.5 rounded-sm border border-orange-400 shrink-0" style={{ background: 'rgba(249,115,22,0.2)' }} />
             <span className="text-[10px] leading-none" style={{ color: 'var(--text-secondary)' }}>
-              predios dibujados
+              Predios con ficha levantada
             </span>
           </div>
         )}

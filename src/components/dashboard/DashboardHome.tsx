@@ -5,9 +5,10 @@ import {
 } from 'recharts';
 import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
-  Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin
+  Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin,
+  GraduationCap, Baby, Lightbulb
 } from 'lucide-react';
-import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente } from '../../lib/types';
+import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente, safeToDate } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
 import { getColorTecnico, TECNICOS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -73,6 +74,11 @@ function LinkCard({ title, url, badgeText, badgeColor }: { title: string; url: s
 function KPICard({ icon: Icon, label, value, color, sub }: {
   icon: React.ElementType; label: string; value: string | number; color: string; sub?: string;
 }) {
+  // El área total en m² son 11 caracteres («102.949.873») y a text-2xl se salía
+  // de la tarjeta. El tamaño baja según el largo del número en vez de recortarlo:
+  // en un dashboard de superficies, un dígito escondido es un dato equivocado.
+  const textoValor = typeof value === 'number' ? value.toLocaleString('es-EC') : value;
+  const tamanoValor = textoValor.length > 10 ? 'text-lg' : textoValor.length > 7 ? 'text-xl' : 'text-2xl';
   return (
     <div
       className="rounded-xl border p-4 transition-all group hover:border-blue-500/30"
@@ -85,7 +91,7 @@ function KPICard({ icon: Icon, label, value, color, sub }: {
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>{label}</p>
-          <p className="text-2xl font-bold" style={{ color: 'var(--text-heading)' }}>{typeof value === 'number' ? value.toLocaleString('es-EC') : value}</p>
+          <p className={`${tamanoValor} font-bold leading-tight`} style={{ color: 'var(--text-heading)' }}>{textoValor}</p>
           {sub && <p className="text-[11px] font-medium mt-1" style={{ color: 'var(--text-secondary)' }}>{sub}</p>}
         </div>
         <div className="w-10 h-10 rounded-lg flex items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity"
@@ -112,7 +118,10 @@ interface Props {
 
 export default function DashboardHome({ fichas, loading, cultivosData, animalesData = [], prediosAdicionalesData = [] }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
-  const { isAdmin } = useAuth();
+  const { isAdmin, isTecnico } = useAuth();
+  // Los gráficos de seguimiento del equipo (por técnico y por día) son de uso
+  // interno: el contratante ve el padrón, no cómo se reparte el trabajo.
+  const esInterno = isAdmin || isTecnico;
 
   useEffect(() => {
     if (fichas.length > 0) {
@@ -196,9 +205,42 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
     .sort((a, b) => b.value - a.value)
     .slice(0, 12);
 
-  const fichasPorFecha = Object.entries(stats.fichasPorFecha)
-    .map(([fecha, count]) => ({ fecha, count }))
-    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+  // ── Avance diario (v4.8) ──
+  // No se usa stats.fichasPorFecha: mete en el mismo saco el levantamiento de
+  // campo y la generación automática de la Sección 7, y esta última se creó en
+  // bloque (2.400 fichas el 19-jul con AUTO-SECCION7, 118 más el 23-jun). Ese
+  // pico aplastaba la escala — el mejor día real de campo son 497 fichas — y
+  // hacía leer como trabajo de un día lo que fue una operación de escritorio.
+  //
+  // Se separan las dos cosas que sí son trabajo de campo:
+  //   · lo levantado con la ficha nueva  → fecha_creacion
+  //   · la Sección 4 de las adicionales  → fecha_completado (julio y agosto)
+  // Sin esa segunda serie el gráfico quedaría plano desde el 30 de junio, como
+  // si el equipo hubiera dejado de trabajar.
+  const diaDe = (v: unknown) => safeToDate(v).toISOString().split('T')[0];
+  const generadaEnBloque = (f: FichaPredio) => esFichaHija(f) || f.creado_por === 'AUTO-SECCION7';
+
+  const avanceMap = new Map<string, { fecha: string; campo: number; completadas: number }>();
+  const diaSlot = (fecha: string) => {
+    let d = avanceMap.get(fecha);
+    if (!d) { d = { fecha, campo: 0, completadas: 0 }; avanceMap.set(fecha, d); }
+    return d;
+  };
+  for (const f of fichas) {
+    if (generadaEnBloque(f)) continue;
+    if (!f.fecha_creacion) continue;
+    diaSlot(diaDe(f.fecha_creacion)).campo++;
+  }
+  for (const f of fichas) {
+    // Solo las adicionales llevan fecha_completado: es el día en que el técnico
+    // fue a campo a levantar la producción de ese lote.
+    if (!esFichaHija(f) || !f.fecha_completado) continue;
+    diaSlot(diaDe(f.fecha_completado)).completadas++;
+  }
+  const avancePorDia = Array.from(avanceMap.values()).sort((a, b) => a.fecha.localeCompare(b.fecha));
+  const totalCampoDiario = avancePorDia.reduce((acc, d) => acc + d.campo, 0);
+  const totalCompletadasDiario = avancePorDia.reduce((acc, d) => acc + d.completadas, 0);
+  const generadasEnBloque = fichas.filter(generadaEnBloque).length;
 
   const fichasPorParroquia = Object.entries(stats.fichasPorParroquia)
     .map(([name, value]) => ({ name, value }))
@@ -211,9 +253,11 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   const areaRiegoHa = areaRiegoTotalM2 / 10000;
   const areaSinRiegoHa = areaSinRiegoTotalM2 / 10000;
 
+  // «Secano» se cambió por «Sin riego» en toda la pantalla (pedido de JAVIKO,
+  // 12-ago): es el término que entiende cualquier lector, no solo el técnico.
   const coberturaRiegoData = [
-    { name: 'Con Riego', value: Number(areaRiegoHa.toFixed(2)), color: '#3b82f6' },
-    { name: 'Secano (Sin Riego)', value: Number(areaSinRiegoHa.toFixed(2)), color: '#f59e0b' }
+    { name: 'Con riego', value: Number(areaRiegoHa.toFixed(2)), color: '#3b82f6' },
+    { name: 'Sin riego', value: Number(areaSinRiegoHa.toFixed(2)), color: '#f59e0b' }
   ].filter(item => item.value > 0);
 
   // 2. Distribución de Especies Pecuarias (Animales)
@@ -248,6 +292,81 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
     { name: 'Agroindustria', value: agroindustriaCount, color: '#8b5cf6' },
     { name: 'Exportación', value: exportacionCount, color: '#ec4899' }
   ].filter(item => item.value > 0);
+
+  // ── Perfil de las familias del padrón (v4.8) ──
+  // Regla 6 del proyecto: personas ≠ predios. Escolaridad, hijos y las
+  // preguntas de la encuesta comunitaria salen SOLO de las fichas principales.
+  // Las adicionales son otros lotes del mismo regante: sumarlas contaría a la
+  // misma familia tantas veces como predios tenga.
+  const fichasPersonas = fichas.filter((f) => !esFichaHija(f));
+
+  // Escala de escolaridad en orden pedagógico, no por cantidad: así se lee de
+  // menor a mayor instrucción aunque cambien los conteos.
+  const NIVELES_INSTRUCCION = ['Ninguno', 'Alfabetizado', 'Primaria', 'Secundaria', 'Superior'];
+  const COLORES_INSTRUCCION: Record<string, string> = {
+    'Ninguno': '#94a3b8', 'Alfabetizado': '#22d3ee', 'Primaria': '#3b82f6',
+    'Secundaria': '#6366f1', 'Superior': '#8b5cf6',
+  };
+  const instruccionCount: Record<string, number> = {};
+  let sinDatoInstruccion = 0;
+  for (const f of fichasPersonas) {
+    const nivel = (f.nivel_instruccion || '').trim();
+    if (!nivel) { sinDatoInstruccion++; continue; }
+    instruccionCount[nivel] = (instruccionCount[nivel] || 0) + 1;
+  }
+  const instruccionData = [
+    ...NIVELES_INSTRUCCION.filter((n) => instruccionCount[n] > 0)
+      .map((name) => ({ name, value: instruccionCount[name] })),
+    // Cualquier valor que no esté en la escala (erratas de digitación) se
+    // muestra igual al final: es preferible verlo que perderlo en silencio.
+    ...Object.entries(instruccionCount)
+      .filter(([name]) => !NIVELES_INSTRUCCION.includes(name))
+      .map(([name, value]) => ({ name, value })),
+  ];
+  const conDatoInstruccion = fichasPersonas.length - sinDatoInstruccion;
+
+  // Hijos declarados. Una familia puede tener dato en un solo campo (dos hijos
+  // hombres y ninguna mujer se registra como 2 y vacío), así que basta con que
+  // uno de los dos venga lleno para contarla.
+  let hijosHombres = 0, hijosMujeres = 0, familiasConDatoHijos = 0;
+  for (const f of fichasPersonas) {
+    const tieneDato = f.hijos_hombres != null || f.hijos_mujeres != null;
+    if (!tieneDato) continue;
+    familiasConDatoHijos++;
+    hijosHombres += Number(f.hijos_hombres) || 0;
+    hijosMujeres += Number(f.hijos_mujeres) || 0;
+  }
+  const hijosData = [
+    { name: 'Hombres', value: hijosHombres, color: '#3b82f6' },
+    { name: 'Mujeres', value: hijosMujeres, color: '#ec4899' },
+  ];
+  const totalHijos = hijosHombres + hijosMujeres;
+  const promedioHijos = familiasConDatoHijos > 0 ? totalHijos / familiasConDatoHijos : 0;
+
+  // Preguntas Sí/No de la encuesta comunitaria. El campo llega como texto
+  // ('Sí', 'No'), con y sin tilde según el dispositivo.
+  const contarSiNo = (campo: keyof FichaPredio) => {
+    let si = 0, no = 0;
+    for (const f of fichasPersonas) {
+      const v = String(f[campo] ?? '').trim().toUpperCase();
+      if (!v) continue;
+      if (v.startsWith('S')) si++;
+      else if (v.startsWith('N')) no++;
+    }
+    return { si, no };
+  };
+  const presa = contarSiNo('conoce_presa');
+  const capacitado = contarSiNo('recibio_capacitacion');
+  const quiereCap = contarSiNo('le_gustaria_cap');
+  const comunitariaData = [
+    { name: 'Conoce la represa', si: presa.si, no: presa.no },
+    { name: 'Recibió capacitación', si: capacitado.si, no: capacitado.no },
+    { name: 'Quiere capacitarse', si: quiereCap.si, no: quiereCap.no },
+  ].filter((d) => d.si + d.no > 0);
+
+  // Superficies en hectáreas: es la unidad en la que trabaja el contratante.
+  // Los m² se conservan porque son el dato crudo de la ficha.
+  const areaTotalHa = stats.areaTotal / 10000;
 
   return (
     <div className="space-y-6">
@@ -324,7 +443,13 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           />
         )}
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
-        <KPICard icon={TrendingUp} label="Área Total (m²)" value={Math.round(stats.areaTotal).toLocaleString('es-EC')} color="#f59e0b" />
+        <KPICard
+          icon={TrendingUp}
+          label="Área Total (m²)"
+          value={Math.round(stats.areaTotal).toLocaleString('es-EC')}
+          color="#f59e0b"
+          sub={`${areaTotalHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha`}
+        />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
         <KPICard icon={Sprout} label="Cultivos Registrados" value={stats.totalCultivos} color="#22c55e" />
         <KPICard icon={PawPrint} label="Animales Registrados" value={totalAnimales} color="#ec4899" sub={`${filteredAnimales.length} registros`} />
@@ -336,7 +461,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           <TrendingUp className="w-4 h-4" />
           Análisis del Sector Seleccionado
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
           {/* Tarjeta % Cultivos */}
           <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-emerald-500/30"
                style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
@@ -379,15 +504,41 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             </div>
           </div>
 
+          {/* Tarjeta ha CON Riego — pedida por el contratante el 9-ago: la
+              pantalla mostraba solo la superficie sin riego, y el dato que le
+              interesa es cuánta tierra riega hoy el sistema. */}
+          <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-blue-500/30"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie con Riego</p>
+                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>
+                  {areaRiegoHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                </h4>
+                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  Equivalente a {Math.round(areaRiegoTotalM2).toLocaleString('es-EC')} m² bajo riego en este sector
+                </p>
+              </div>
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-500 shrink-0">
+                <Droplets className="w-5 h-5" />
+              </div>
+            </div>
+            <div className="text-[10px] mt-4 font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+              <span>Hectáreas regadas registradas en fichas</span>
+            </div>
+          </div>
+
           {/* Tarjeta ha Sin Riego */}
           <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-amber-500/30"
                style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie Sin Riego</p>
-                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>{(fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0) / 10000).toFixed(2)} ha</h4>
+                <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>
+                  {areaSinRiegoHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                </h4>
                 <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
-                  Equivalente a {(fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0)).toLocaleString('es-EC')} m² de secano en este sector
+                  Equivalente a {Math.round(areaSinRiegoTotalM2).toLocaleString('es-EC')} m² sin riego en este sector
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 shrink-0">
@@ -396,7 +547,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             </div>
             {/* Mensaje informativo */}
             <div className="text-[10px] mt-4 font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-              <span>Hectáreas de secano registradas en fichas</span>
+              <span>Hectáreas sin riego registradas en fichas</span>
             </div>
           </div>
         </div>
@@ -409,7 +560,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
              style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
           <h4 className="text-xs font-bold uppercase tracking-wider text-blue-500 mb-4 flex items-center gap-2">
             <Droplets className="w-4 h-4 text-blue-500" />
-            Uso del Suelo: Riego vs Secano (ha)
+            Uso del Suelo: Con Riego vs Sin Riego (ha)
           </h4>
           <div className="h-[180px] flex items-center justify-center">
             {coberturaRiegoData.length > 0 ? (
@@ -423,13 +574,13 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                     outerRadius={70}
                     paddingAngle={3}
                     dataKey="value"
-                    label={({ name, value }) => `${name}: ${value} ha`}
                   >
                     {coberturaRiegoData.map((entry, index) => (
                       <Cell key={index} fill={entry.color} />
                     ))}
                   </Pie>
                   <Tooltip
+                    formatter={(v: any) => `${Number(v).toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha`}
                     contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
                     itemStyle={{ color: 'var(--text-primary)' }}
                   />
@@ -438,6 +589,19 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             ) : (
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin datos de área</span>
             )}
+          </div>
+          {/* La cifra va debajo y no como etiqueta del anillo: en una columna
+              de un tercio de ancho, «Con riego: 8.978,86 ha» se salía del
+              recuadro y aparecía cortada. */}
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-2">
+            {coberturaRiegoData.map((entry) => (
+              <span key={entry.name} className="text-[11px] flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
+                <span className="w-2 h-2 rounded-sm shrink-0" style={{ background: entry.color }} />
+                {entry.name}: <strong style={{ color: 'var(--text-primary)' }}>
+                  {entry.value.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                </strong>
+              </span>
+            ))}
           </div>
         </div>
 
@@ -510,38 +674,140 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         </div>
       </div>
 
+      {/* ── Perfil de las Familias del Padrón (v4.8) ──
+          Ocupa el lugar que antes tenía «Fichas por Técnico» en la vista del
+          contratante: en vez de cómo se repartió el trabajo, qué población
+          quedó registrada. Todas las cifras salen de las fichas principales. */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-bold tracking-wide uppercase text-indigo-500 flex items-center gap-2">
+          <Users className="w-4 h-4" />
+          Perfil de las Familias del Padrón
+        </h3>
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+          {/* Nivel de instrucción */}
+          <div className="rounded-xl border p-4 flex flex-col"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-500 mb-4 flex items-center gap-2">
+              <GraduationCap className="w-4 h-4 text-indigo-500" />
+              Nivel de Instrucción
+            </h4>
+            <div className="h-[200px]">
+              {instruccionData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={instruccionData} layout="vertical" margin={{ left: 10, right: 45, top: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                    <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                    <YAxis type="category" dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} width={82} />
+                    <Tooltip
+                      contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      labelStyle={{ color: 'var(--text-primary)' }}
+                    />
+                    <Bar dataKey="value" name="Regantes" radius={[0, 4, 4, 0]}>
+                      {instruccionData.map((entry, index) => (
+                        <Cell key={index} fill={COLORES_INSTRUCCION[entry.name] || PIE_COLORS[index % PIE_COLORS.length]} />
+                      ))}
+                      {/* La etiqueta va FUERA de la barra: «Superior» y
+                          «Alfabetizado» son barras cortas y el número quedaba
+                          cortado por dentro. */}
+                      <LabelList dataKey="value" position="right" fill="var(--text-secondary)" fontSize={10} fontWeight="bold" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin datos de instrucción</span>
+                </div>
+              )}
+            </div>
+            <p className="text-[10px] mt-3 leading-normal" style={{ color: 'var(--text-muted)' }}>
+              {conDatoInstruccion.toLocaleString('es-EC')} de {fichasPersonas.length.toLocaleString('es-EC')} regantes con el dato registrado
+            </p>
+          </div>
+
+          {/* Hijos declarados */}
+          <div className="rounded-xl border p-4 flex flex-col"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-pink-500 mb-4 flex items-center gap-2">
+              <Baby className="w-4 h-4 text-pink-500" />
+              Hijos por Familia
+            </h4>
+            <div className="h-[200px]">
+              {totalHijos > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={hijosData} margin={{ left: 10, right: 10, top: 5, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                    <XAxis dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+                    <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                    <Tooltip
+                      contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      labelStyle={{ color: 'var(--text-primary)' }}
+                    />
+                    <Bar dataKey="value" name="Hijos" radius={[4, 4, 0, 0]}>
+                      {hijosData.map((entry, index) => (
+                        <Cell key={index} fill={entry.color} />
+                      ))}
+                      <LabelList dataKey="value" position="insideTop" fill="#ffffff" fontSize={11} fontWeight="bold" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin datos de hijos</span>
+                </div>
+              )}
+            </div>
+            <p className="text-[10px] mt-3 leading-normal" style={{ color: 'var(--text-muted)' }}>
+              {totalHijos.toLocaleString('es-EC')} hijos declarados por {familiasConDatoHijos.toLocaleString('es-EC')} familias
+              {familiasConDatoHijos > 0 && ` · promedio ${promedioHijos.toLocaleString('es-EC', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} por familia`}
+            </p>
+          </div>
+
+          {/* Encuesta comunitaria */}
+          <div className="rounded-xl border p-4 flex flex-col"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-500 mb-4 flex items-center gap-2">
+              <Lightbulb className="w-4 h-4 text-amber-500" />
+              Represa y Capacitación
+            </h4>
+            <div className="h-[200px]">
+              {comunitariaData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  {/* En horizontal: los tres rótulos ("Conoce la represa"…) se
+                      encimaban en el eje X y quedaban ilegibles. */}
+                  <BarChart data={comunitariaData} layout="vertical" margin={{ left: 10, right: 40, top: 5, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                    <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                    <YAxis type="category" dataKey="name" tick={{ fill: 'var(--text-secondary)', fontSize: 9 }} width={98} interval={0} />
+                    <Tooltip
+                      contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                      itemStyle={{ color: 'var(--text-primary)' }}
+                      labelStyle={{ color: 'var(--text-primary)' }}
+                    />
+                    <Bar dataKey="si" name="Sí" fill="#10b981" radius={[0, 4, 4, 0]}>
+                      <LabelList dataKey="si" position="right" fill="var(--text-secondary)" fontSize={9} fontWeight="bold" />
+                    </Bar>
+                    <Bar dataKey="no" name="No" fill="#ef4444" radius={[0, 4, 4, 0]}>
+                      <LabelList dataKey="no" position="right" fill="var(--text-secondary)" fontSize={9} fontWeight="bold" />
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="h-full flex items-center justify-center">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Sin respuestas registradas</span>
+                </div>
+              )}
+            </div>
+            <p className="text-[10px] mt-3 leading-normal" style={{ color: 'var(--text-muted)' }}>
+              Respuestas de los regantes encuestados · verde Sí, rojo No
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Fichas por Técnico */}
-        <div
-          className="rounded-xl border p-4"
-          style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
-        >
-          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-            <Users className="w-4 h-4 text-blue-400" />
-            Fichas por Técnico
-          </h3>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={fichasPorTecnico} layout="vertical" margin={{ left: 80, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-              <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
-              <YAxis type="category" dataKey="nombre" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} width={80} />
-              <Tooltip
-                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
-                itemStyle={{ color: 'var(--text-primary)' }}
-                labelStyle={{ color: 'var(--text-primary)' }}
-              />
-              <Bar dataKey="principales" name="Fichas Investigadas" radius={[0, 4, 4, 0]}>
-                {fichasPorTecnico.map((entry, index) => {
-                  const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
-                  return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
-                })}
-                <LabelList dataKey="principales" position="insideRight" fill="#ffffff" fontSize={11} fontWeight="bold" />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Método de Riego */}
         <div
           className="rounded-xl border p-4"
@@ -574,34 +840,6 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             </PieChart>
           </ResponsiveContainer>
         </div>
-      </div>
-
-      {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Progreso temporal */}
-        <div
-          className="rounded-xl border p-4"
-          style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
-        >
-          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-            <TrendingUp className="w-4 h-4 text-green-400" />
-            Fichas Investigadas por Día
-          </h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={fichasPorFecha} margin={{ left: 10, right: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
-              <XAxis dataKey="fecha" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
-              <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
-              <Tooltip
-                contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
-                itemStyle={{ color: 'var(--text-primary)' }}
-                labelStyle={{ color: 'var(--text-primary)' }}
-              />
-              <Line type="monotone" dataKey="count" stroke="#10b981" strokeWidth={2} dot={{ r: 4, fill: '#10b981' }} name="Fichas" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
         {/* Cultivos más frecuentes */}
         <div
           className="rounded-xl border p-4"
@@ -630,6 +868,90 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           </ResponsiveContainer>
         </div>
       </div>
+
+      {/* ── Seguimiento interno del equipo (v4.8) ──
+          Los dos gráficos que miden al equipo — quién levantó cada ficha y el
+          avance día a día — quedan fuera de la vista del contratante por
+          pedido suyo del 9-ago. Es ocultamiento de pantalla, no de datos: el
+          GeoJSON completo lo sigue descargando cualquier usuario con sesión,
+          igual que antes. Si algún día hiciera falta que el cliente no pueda
+          ni reconstruirlo, hay que filtrar en el export, no aquí. */}
+      {esInterno && (
+        <div className="space-y-3">
+          <h3 className="text-sm font-bold tracking-wide uppercase text-slate-400 flex items-center gap-2">
+            <Users className="w-4 h-4" />
+            Seguimiento del Equipo
+            <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-400 border border-slate-500/20 normal-case tracking-normal">
+              Solo equipo consultor
+            </span>
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Fichas por Técnico */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
+            >
+              <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <Users className="w-4 h-4 text-blue-400" />
+                Fichas por Técnico
+              </h3>
+              <ResponsiveContainer width="100%" height={280}>
+                <BarChart data={fichasPorTecnico} layout="vertical" margin={{ left: 80, right: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis type="number" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+                  <YAxis type="category" dataKey="nombre" tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} width={80} />
+                  <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                    labelStyle={{ color: 'var(--text-primary)' }}
+                  />
+                  <Bar dataKey="principales" name="Fichas Investigadas" radius={[0, 4, 4, 0]}>
+                    {fichasPorTecnico.map((entry, index) => {
+                      const tecKey = Object.entries(TECNICOS).find(([, v]) => v.nombre === entry.nombre)?.[0];
+                      return <Cell key={index} fill={tecKey ? getColorTecnico(tecKey) : PIE_COLORS[index % PIE_COLORS.length]} />;
+                    })}
+                    <LabelList dataKey="principales" position="insideRight" fill="#ffffff" fontSize={11} fontWeight="bold" />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
+            {/* Progreso temporal */}
+            <div
+              className="rounded-xl border p-4"
+              style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}
+            >
+              <h3 className="text-sm font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <TrendingUp className="w-4 h-4 text-green-400" />
+                Fichas Investigadas por Día
+              </h3>
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart data={avancePorDia} margin={{ left: 10, right: 10 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border-color)" />
+                  <XAxis dataKey="fecha" tick={{ fill: 'var(--text-secondary)', fontSize: 10 }} />
+                  <YAxis tick={{ fill: 'var(--text-secondary)', fontSize: 11 }} />
+                  <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
+                    itemStyle={{ color: 'var(--text-primary)' }}
+                    labelStyle={{ color: 'var(--text-primary)' }}
+                  />
+                  <Line type="monotone" dataKey="campo" stroke="#10b981" strokeWidth={2} dot={{ r: 3, fill: '#10b981' }} name="Fichas levantadas en campo" />
+                  <Line type="monotone" dataKey="completadas" stroke="#06b6d4" strokeWidth={2} dot={{ r: 3, fill: '#06b6d4' }} name="Predios adicionales investigados" />
+                </LineChart>
+              </ResponsiveContainer>
+              <p className="text-[10px] mt-2 leading-normal" style={{ color: 'var(--text-muted)' }}>
+                <span style={{ color: '#10b981' }}>■</span> {totalCampoDiario.toLocaleString('es-EC')} fichas levantadas en campo
+                {' · '}
+                <span style={{ color: '#06b6d4' }}>■</span> {totalCompletadasDiario.toLocaleString('es-EC')} predios adicionales investigados, por su fecha de investigación
+                {generadasEnBloque > 0 && (
+                  <><br />Las {generadasEnBloque.toLocaleString('es-EC')} fichas adicionales de la Sección 7 no se cuentan en su fecha de creación — se generaron por script en un solo día —, sino en el día en que se investigó el predio.
+                  {generadasEnBloque - totalCompletadasDiario > 0 && ` Quedan fuera del gráfico ${(generadasEnBloque - totalCompletadasDiario).toLocaleString('es-EC')} sin esa fecha registrada.`}</>
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Charts Row 3 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

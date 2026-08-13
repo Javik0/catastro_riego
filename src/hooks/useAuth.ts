@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════
 // Hook de Autenticación — Firebase Auth
-// Con auto-logout por inactividad (10 minutos)
+// Con auto-logout por inactividad (30 minutos)
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useEffect, useCallback, useRef } from 'react';
@@ -14,7 +14,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../lib/firebaseConfig';
 import type { UserProfile, UserRole } from '../lib/types';
 
-const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000; // 10 minutos
+const INACTIVITY_TIMEOUT_MS = 1_800_000; // 30 minutos
 
 interface AuthState {
   user: User | null;

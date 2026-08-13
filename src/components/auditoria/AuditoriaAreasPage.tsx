@@ -60,6 +60,10 @@ type Caso = {
 };
 type Datos = {
   generado: string; corte: string;
+  corregido?: {
+    total_fichas: number; con_comunidad: number;
+    clave_valida: number; area_cuadra: number;
+  };
   resumen: {
     fichas: number; exceso: number; dividido: number; triple: number;
     triple_solo: number; clave_mala: number; exc_ha: number;
@@ -224,6 +228,38 @@ export default function AuditoriaAreasPage() {
             </div>
           </div>
         </div>
+
+        {/* Cuánto del padrón está ya en regla. Sin esto la pantalla solo
+            enseña lo que falta y no se ve el avance. */}
+        {datos.corregido && (
+          <div className="mt-3 flex flex-wrap gap-x-8 gap-y-2 border-t border-gray-100 pt-2.5">
+            {([
+              ['Con comunidad', datos.corregido.con_comunidad],
+              ['Clave en el catastro', datos.corregido.clave_valida],
+              ['Área que cuadra', datos.corregido.area_cuadra],
+            ] as [string, number][]).map(([et, v]) => {
+              const total = datos.corregido!.total_fichas;
+              const pct = (100 * v) / total;
+              return (
+                <div key={et} className="min-w-[170px] flex-1">
+                  <div className="flex items-baseline justify-between text-xs">
+                    <span className="text-gray-600">{et}</span>
+                    <span className="tabular-nums text-gray-500">
+                      <b className="text-gray-800">{v.toLocaleString('es-EC')}</b>
+                      {' / '}{total.toLocaleString('es-EC')}
+                    </span>
+                  </div>
+                  <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-gray-200">
+                    <div
+                      className={`h-full rounded-full ${pct >= 99 ? 'bg-green-500' : 'bg-blue-500'}`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
