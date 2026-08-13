@@ -99,6 +99,90 @@ def diferencia(escrita, real):
     return 'coincide en {} de {} dígitos'.format(iguales, max(len(escrita), len(real)))
 
 
+def analizar(gpkg=None, catastro=None):
+    """Clasifica las fichas de clave inexistente. Sin efectos secundarios.
+
+    Devuelve (proponibles, con_obs, sin_resolver). Lo usa tanto este script
+    como `generar_auditoria_areas.py`, para que la pantalla web muestre la
+    misma propuesta que se aplicaría y no haya dos criterios distintos.
+    """
+    gpkg = gpkg or GPKG
+    catastro = catastro or CATASTRO
+
+    geo = osr.SpatialReference(); geo.ImportFromEPSG(4326)
+    utm = osr.SpatialReference(); utm.ImportFromEPSG(32717)
+    geo.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+    utm.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+    tr = osr.CoordinateTransformation(geo, utm)
+
+    with open(catastro, encoding='utf-8') as f:
+        datos = json.load(f)
+    predios, validas = [], set()
+    for ft in datos.get('features', []):
+        p = ft.get('properties') or {}
+        clave = str(p.get('clave_cata') or '').strip()
+        if not clave:
+            continue
+        validas.add(clave)
+        g = ogr.CreateGeometryFromJson(json.dumps(ft['geometry']))
+        if g is None:
+            continue
+        g.Transform(tr)
+        predios.append((clave, float(p.get('area_predi') or 0), g))
+
+    con = sqlite3.connect(gpkg)
+    cur = con.cursor()
+    cur.execute(
+        "SELECT COALESCE(id,''), TRIM(COALESCE(clave_catastral,'')), "
+        "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')), "
+        "COALESCE(comunidad,''), COALESCE(coord_x_utm,0), COALESCE(coord_y_utm,0), "
+        "COALESCE(observaciones,''), COALESCE(area_total,0), COALESCE(creado_por,'') "
+        'FROM "{}" WHERE TRIM(COALESCE(clave_catastral,\'\')) <> \'\''.format(TABLA))
+    malas = [f for f in cur.fetchall() if f[1] not in validas]
+    con.close()
+
+    proponibles, con_obs, sin_resolver = [], [], []
+    for uid, clave, nombre, com, x, y, obs, area, tec in malas:
+        item = {'uid': uid, 'clave': clave, 'nombre': nombre, 'com': com,
+                'obs': (obs or '').strip(), 'area': area, 'tec': tec,
+                'digitos': len(clave)}
+        dentro, cerca = [], None
+        if x and y:
+            p = ogr.Geometry(ogr.wkbPoint); p.AddPoint_2D(x, y)
+            for ck, ca, g in predios:
+                if g.Contains(p):
+                    dentro.append((ck, ca))
+            if not dentro:
+                d = sorted((p.Distance(g), ck, ca) for ck, ca, g in predios)
+                if d and d[0][0] <= BORDE_M:
+                    cerca = d[0]
+        item['dentro'] = dentro
+        item['cerca'] = cerca
+
+        if item['obs']:
+            # Ocho de estas dicen que la clave es del DMQ: no es una errata.
+            item['dmq'] = 'DMQ' in item['obs'].upper() or 'QUITO' in item['obs'].upper()
+            con_obs.append(item)
+        elif len(dentro) == 1:
+            item['propuesta'], item['area_pol'] = dentro[0]
+            item['dif'] = diferencia(clave, dentro[0][0])
+            item['area_confirma'] = (
+                item['area_pol'] > 0
+                and abs(area - item['area_pol']) / item['area_pol'] <= COINCIDE_AREA)
+            proponibles.append(item)
+        elif cerca:
+            item['motivo'] = 'a {:.0f} m del predio {}'.format(cerca[0], cerca[1])
+            sin_resolver.append(item)
+        elif len(dentro) > 1:
+            item['motivo'] = 'cae en {} predios a la vez'.format(len(dentro))
+            sin_resolver.append(item)
+        else:
+            item['motivo'] = ('sin coordenadas' if not (x and y)
+                              else 'no cae en ningún predio del catastro')
+            sin_resolver.append(item)
+    return proponibles, con_obs, sin_resolver
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--aplicar', action='store_true',
@@ -115,81 +199,9 @@ def main():
             print("ERROR: no se encuentra {}:\n  {}".format(que, ruta))
             return 1
 
-    # ── catastro en UTM, para medir en metros ──
-    geo = osr.SpatialReference(); geo.ImportFromEPSG(4326)
-    utm = osr.SpatialReference(); utm.ImportFromEPSG(32717)
-    geo.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
-    utm.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
-    tr = osr.CoordinateTransformation(geo, utm)
-
-    with open(CATASTRO, encoding='utf-8') as f:
-        datos = json.load(f)
-    predios = []
-    validas = set()
-    for ft in datos.get('features', []):
-        p = ft.get('properties') or {}
-        clave = str(p.get('clave_cata') or '').strip()
-        if not clave:
-            continue
-        validas.add(clave)
-        g = ogr.CreateGeometryFromJson(json.dumps(ft['geometry']))
-        if g is None:
-            continue
-        g.Transform(tr)
-        predios.append((clave, float(p.get('area_predi') or 0), g))
-    print("\n  catastro: {:,} predios".format(len(predios)))
-
-    con = sqlite3.connect(GPKG)
-    cur = con.cursor()
-    t = '"{}"'.format(TABLA)
-    cur.execute(
-        "SELECT COALESCE(id,''), TRIM(COALESCE(clave_catastral,'')), "
-        "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')), "
-        "COALESCE(comunidad,''), COALESCE(coord_x_utm,0), COALESCE(coord_y_utm,0), "
-        "COALESCE(observaciones,''), COALESCE(area_total,0), COALESCE(creado_por,'') "
-        "FROM {} WHERE TRIM(COALESCE(clave_catastral,'')) <> ''".format(t))
-    todas = cur.fetchall()
-    malas = [f for f in todas if f[1] not in validas]
-    print("  fichas con clave inexistente: {} ({} claves distintas)"
-          .format(len(malas), len({f[1] for f in malas})))
-
-    proponibles, con_obs, sin_resolver = [], [], []
-    for uid, clave, nombre, com, x, y, obs, area, tec in malas:
-        item = {'uid': uid, 'clave': clave, 'nombre': nombre, 'com': com,
-                'obs': (obs or '').strip(), 'area': area, 'tec': tec,
-                'digitos': len(clave)}
-
-        dentro, cerca = [], None
-        if x and y:
-            p = ogr.Geometry(ogr.wkbPoint); p.AddPoint_2D(x, y)
-            for ck, ca, g in predios:
-                if g.Contains(p):
-                    dentro.append((ck, ca))
-            if not dentro:
-                d = sorted((p.Distance(g), ck, ca) for ck, ca, g in predios)
-                if d and d[0][0] <= BORDE_M:
-                    cerca = d[0]
-        item['dentro'] = dentro
-        item['cerca'] = cerca
-
-        if item['obs']:
-            con_obs.append(item)
-        elif len(dentro) == 1:
-            item['propuesta'] = dentro[0][0]
-            item['area_pol'] = dentro[0][1]
-            item['dif'] = diferencia(clave, dentro[0][0])
-            proponibles.append(item)
-        elif cerca:
-            item['motivo'] = 'a {:.0f} m del predio {}'.format(cerca[0], cerca[1])
-            sin_resolver.append(item)
-        elif len(dentro) > 1:
-            item['motivo'] = 'cae en {} predios a la vez'.format(len(dentro))
-            sin_resolver.append(item)
-        else:
-            item['motivo'] = ('sin coordenadas' if not (x and y)
-                              else 'no cae en ningún predio del catastro')
-            sin_resolver.append(item)
-
+    proponibles, con_obs, sin_resolver = analizar()
+    print("\n  fichas con clave inexistente: {}"
+          .format(len(proponibles) + len(con_obs) + len(sin_resolver)))
     # ── 1. las que tienen observación: las mira una persona ──
     print("\n" + "-" * 80)
     print(" CON OBSERVACION DEL TECNICO — no se tocan, la observación manda")
@@ -222,14 +234,11 @@ def main():
             print("   {:<20} {:>4}  {:<15} {:<26} {}".format(
                 i['clave'], i['digitos'], i['propuesta'], i['dif'], i['nombre'][:26]))
         print("\n   comprobación independiente — el área declarada contra la del polígono:")
-        confirmadas = 0
+        confirmadas = sum(1 for i in proponibles if i['area_confirma'])
         for i in proponibles:
-            ok = (i['area_pol'] > 0
-                  and abs(i['area'] - i['area_pol']) / i['area_pol'] <= COINCIDE_AREA)
-            confirmadas += 1 if ok else 0
             print("      {} · declara {:>9,.0f} m² · polígono {:>9,.0f} m²  {}"
                   .format(i['propuesta'], i['area'], i['area_pol'],
-                          'COINCIDE' if ok else '(no coincide)'))
+                          'COINCIDE' if i['area_confirma'] else '(no coincide)'))
         print("\n   {} de {} quedan confirmadas por el área: el técnico copió bien la"
               .format(confirmadas, len(proponibles)))
         print("   superficie del catastro y se equivocó solo al teclear la clave.")
@@ -253,15 +262,12 @@ def main():
         print("\n  SIMULACION: no se escribió nada.")
         print("  Para aplicar solo las corregibles, repetir con --aplicar.")
         print("=" * 80)
-        con.close()
         return 0
 
     if not proponibles:
         print("\n  Nada que aplicar.")
-        con.close()
         return 0
 
-    con.close()
     print("\n  respaldando antes de tocar nada...")
     print("     {}".format(respaldo_sqlite(GPKG, 'antes-claves-catastrales')))
 
@@ -287,17 +293,18 @@ def main():
     con.close()
     print("     {} fichas actualizadas · {} triggers recreados".format(n, len(triggers)))
 
-    con = sqlite3.connect(GPKG)
-    cur = con.cursor()
-    cur.execute("SELECT COUNT(*) FROM {} WHERE TRIM(COALESCE(clave_catastral,'')) <> ''"
-                .format(t))
-    con.close()
-    quedan = len(con_obs) + len(sin_resolver)
-    print("\n  VERIFICACION: deberían quedar {} fichas con clave inexistente"
-          .format(quedan))
-    print("  (las que tienen observación y las que no se pudieron ubicar)")
+    # verificación releyendo del disco: se vuelve a clasificar desde cero
+    p2, o2, s2 = analizar()
+    esperado = len(con_obs) + len(sin_resolver)
+    quedan = len(p2) + len(o2) + len(s2)
+    print("\n  VERIFICACION (releyendo del disco):")
+    print("     fichas con clave inexistente: {} · se esperaban {}"
+          .format(quedan, esperado))
+    print("     (las que tienen observación y las que no se pudieron ubicar)")
+    print("\n  {}".format('CORRECCION APLICADA Y VERIFICADA' if quedan == esperado
+                          else '!! REVISAR: no coincide con lo previsto'))
     print("=" * 80)
-    return 0
+    return 0 if quedan == esperado else 1
 
 
 if __name__ == '__main__':

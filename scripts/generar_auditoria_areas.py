@@ -245,16 +245,43 @@ def main():
                 and abs(sum(obs_areas) - pol) / pol <= MARGEN_DIVIDIDO)
         casos.append(caso)
 
+    # La propuesta de corrección la calcula `resolver_claves_catastrales`, el
+    # mismo módulo que la aplicaría. Así la pantalla enseña exactamente lo que
+    # se va a escribir, y no hay dos criterios que puedan separarse con el
+    # tiempo.
+    try:
+        from resolver_claves_catastrales import analizar as analizar_claves
+        prop, con_obs_cl, sin_res = analizar_claves()
+        estado_clave = {}
+        for i in prop:
+            estado_clave[i['clave']] = {
+                'estado': 'propuesta', 'propuesta': i['propuesta'],
+                'dif': i['dif'], 'area_confirma': bool(i['area_confirma']),
+                'area_pol': round(i['area_pol']),
+            }
+        for i in con_obs_cl:
+            estado_clave[i['clave']] = {
+                'estado': 'del DMQ' if i.get('dmq') else 'lo explica la observación',
+                'nota': i['obs'][:200],
+            }
+        for i in sin_res:
+            estado_clave[i['clave']] = {'estado': 'sin resolver', 'nota': i['motivo']}
+    except Exception as e:                      # nunca debe tumbar la pantalla
+        print("  aviso: no se pudo calcular la propuesta de claves ({})".format(e))
+        estado_clave = {}
+
     for clave, d in claves_malas.items():
         if not clave:
             continue
-        casos.append({
+        caso = {
             'clave': clave, 'tipo': 'clave_mala',
             'com': d['com'] or '(sin comunidad)', 'sec': d['sec'] or '',
             'pol': 0, 'dec': round(sum(f['a'] for f in d['fichas'])),
             'exc': 0, 'nf': len(d['fichas']), 'fichas': d['fichas'],
             'digitos': len(clave),
-        })
+        }
+        caso.update(estado_clave.get(clave, {'estado': 'sin analizar'}))
+        casos.append(caso)
 
     orden = {'exceso': 0, 'triple': 1, 'clave_mala': 2, 'dividido': 3}
     casos.sort(key=lambda c: (orden[c['tipo']], -c['exc'], -c['nf']))
@@ -304,6 +331,12 @@ def main():
     print("  área repetida tres veces: {:>4} fichas ({} en predios que además "
           "tienen otro problema)".format(n_triple, n_triple - cuenta['triple']))
     print("  clave inexistente       : {:>4}".format(cuenta['clave_mala']))
+    est = {}
+    for c in casos:
+        if c['tipo'] == 'clave_mala':
+            est[c.get('estado', '?')] = est.get(c.get('estado', '?'), 0) + 1
+    for e, n in sorted(est.items(), key=lambda x: -x[1]):
+        print("     {:<34} {:>3}".format(e, n))
     print("\n  guardado: {} ({:,.0f} KB)"
           .format(os.path.relpath(SALIDA, BASE), os.path.getsize(SALIDA) / 1024))
     print("=" * 74)

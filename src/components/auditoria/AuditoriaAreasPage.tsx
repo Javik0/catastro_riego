@@ -52,6 +52,9 @@ type Caso = {
   triple?: number;
   obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean;
   digitos?: number;
+  // solo en las de clave inexistente: en qué quedó su análisis
+  estado?: string; propuesta?: string; dif?: string;
+  area_confirma?: boolean; area_pol?: number; nota?: string;
 };
 type Datos = {
   generado: string; corte: string;
@@ -123,6 +126,15 @@ export default function AuditoriaAreasPage() {
         || c.fichas.some((f) => f.n.toLowerCase().includes(q) || f.ced.includes(q));
     });
   }, [datos, filtro, busca]);
+
+  // Al cambiar de filtro o de búsqueda, el mapa seguía en el caso anterior
+  // aunque ya no estuviera en la lista. Se salta al primero de lo que se ve.
+  useEffect(() => {
+    if (!lista.length) return;
+    if (!sel || !lista.some((c) => c.clave === sel.clave && c.tipo === sel.tipo)) {
+      setSel(lista[0]);
+    }
+  }, [lista, sel]);
 
   if (error) {
     return (
@@ -261,7 +273,11 @@ export default function AuditoriaAreasPage() {
                       <span className="text-[10px] text-amber-700">{c.triple} fic.</span>
                     )}
                     {c.tipo === 'clave_mala' && (
-                      <span className="text-[10px] text-violet-700">{c.digitos} díg.</span>
+                      c.estado === 'propuesta'
+                        ? <span className="text-[10px] font-medium text-green-700">propuesta</span>
+                        : c.estado === 'del DMQ'
+                          ? <span className="text-[10px] text-violet-700">del DMQ</span>
+                          : <span className="text-[10px] text-gray-500">{c.digitos} díg.</span>
                     )}
                     {c.resuelto_por_obs && (
                       <span className="mt-0.5 block text-[9px] font-medium text-green-700">
@@ -370,10 +386,39 @@ export default function AuditoriaAreasPage() {
                   </p>
                 )}
                 {sel.tipo === 'clave_mala' && (
-                  <p className="mt-1 text-xs text-gray-700">
-                    Esta clave tiene <b>{sel.digitos} dígitos</b> y no existe en el catastro;
-                    las válidas tienen 13. Probablemente esté mal escrita.
-                  </p>
+                  <>
+                    <p className="mt-1 text-xs text-gray-700">
+                      Clave de <b>{sel.digitos} dígitos</b> que no existe en el catastro
+                      de Cayambe.
+                    </p>
+                    {sel.estado === 'propuesta' && (
+                      <p className="mt-1.5 rounded bg-green-50 px-2 py-1 text-xs text-green-800">
+                        <CheckCircle2 className="mr-1 inline h-3 w-3" />
+                        Debería ser <b className="font-mono">{sel.propuesta}</b>: es el predio
+                        donde cae el punto y {sel.dif}.
+                        {sel.area_confirma && (
+                          <> El área declarada coincide con la del polígono, lo que lo confirma.</>
+                        )}
+                      </p>
+                    )}
+                    {sel.estado === 'del DMQ' && (
+                      <p className="mt-1.5 rounded bg-violet-50 px-2 py-1 text-xs text-violet-800">
+                        <b>No es una errata.</b> El técnico anotó que el predio pertenece al
+                        Distrito Metropolitano de Quito: la clave es correcta, de otro catastro.
+                      </p>
+                    )}
+                    {sel.estado === 'lo explica la observación' && (
+                      <p className="mt-1.5 rounded bg-amber-50 px-2 py-1 text-xs text-amber-800">
+                        La observación del técnico explica el caso; hay que leerla antes de
+                        tocar nada.
+                      </p>
+                    )}
+                    {sel.estado === 'sin resolver' && (
+                      <p className="mt-1.5 rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">
+                        Sin propuesta automática: {sel.nota}
+                      </p>
+                    )}
+                  </>
                 )}
                 {sel.resuelto_por_obs && (
                   <p className="mt-1.5 rounded bg-green-50 px-2 py-1 text-xs text-green-800">
