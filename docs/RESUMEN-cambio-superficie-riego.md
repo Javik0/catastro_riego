@@ -5,12 +5,27 @@ Corte de datos: 5 de agosto de 2026 · Documento del 13 de agosto de 2026
 
 ---
 
+## Primero, cuál es la cifra que cambió
+
+El padrón maneja dos superficies distintas y conviene no confundirlas, porque
+solo una de las dos se movió:
+
+| | Antes | Ahora | |
+|---|---:|---:|---|
+| **Superficie total empadronada** | 10.294,99 ha | 10.196,51 ha | prácticamente igual |
+| **Superficie bajo riego** | 8.978,86 ha | 7.633,76 ha | **es la que cambió** |
+
+La **superficie total** es todo el terreno registrado en el padrón: 10.294,99
+hectáreas antes, 10.196,51 ahora. Baja 98,48 ha y por un motivo concreto que se
+explica más abajo: unos predios que se estaban contando más de una vez.
+
+La **superficie bajo riego** es la parte de ese terreno que recibe agua del
+sistema. Es la que baja de forma apreciable, y este documento explica por qué.
+
 ## En una frase
 
-La superficie bajo riego que aparece en la plataforma bajó de **8.978,86 a
-7.633,76 hectáreas**. No se perdió información ni se borró ningún predio: se
-dejó de dar por regada la superficie que los técnicos **no** habían registrado
-como tal.
+No se perdió información ni se borró ningún predio: **se dejó de dar por regada
+la superficie que los técnicos no habían registrado como tal**.
 
 ---
 

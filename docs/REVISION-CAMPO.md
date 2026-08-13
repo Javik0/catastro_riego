@@ -339,7 +339,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521730040 | VALVERDE FARINANGO ROSA MERCEDES | 1714380183 | mayralisseth201 |
 | 1702521730052 | VALVERDE FARINANGO GALO | 1713504676 | jvk-editor2 |
 
-**COMUNA INSACATA** — 6 fichas
+**COMUNA IZACATA** — 7 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -348,13 +348,8 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520970020 | SALAZAR FARINANGO MARIA VERÓNICA | 1722053301 | jvk-editor4 |
 | 1702520970040 | PILCA PARION MANUEL MARÍA | 1705995098 | mayralisseth201 |
 | 1702521110051 | LANCHIMBA PILCA BERTHA ELISA | 1715101935 | mayralisseth201 |
-| 1702521580093 | CHOLANGO SALAZAR MARIA ISABEL | 1709156986 | jvk-editor3 |
-
-**COMUNA IZACATA** — 1 ficha
-
-| Clave catastral | Regante | Cédula | Levantó |
-|---|---|---|---|
 | 1702521580014 | AULES TUTILLO ESTEBAN | 1708978315 | u0_a70 |
+| 1702521580093 | CHOLANGO SALAZAR MARIA ISABEL | 1709156986 | jvk-editor3 |
 
 **COMUNA POROTOG** — 8 fichas
 
@@ -394,7 +389,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702510090011 | LANCHIMBA CHOLANGO RAFAEL | 1705557013 | jvk-editor3 |
 
-**INSACATA GRANDE** — 7 fichas
+**IZACATA GRANDE** — 7 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -485,14 +480,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520920065 | TOAPANTA FARINANGO SEGUNDO | 1709634792 | mayralisseth201 |
 | 1702520920077 | PILATAXI TUGULINAGO GEOVANI DIONICIO | 1724299480 | jvk-editor |
 
-**LOS ANDES INSACATA** — 2 fichas
-
-| Clave catastral | Regante | Cédula | Levantó |
-|---|---|---|---|
-| 1702521580063 | TIPANLUISA LANCHIMBA MARIA ROSA ELENA | 1704573201 | jvk-editor6 |
-| 1702521580075 | LANCHIMBA SALAZAR RAMON | 1703987287 | jvk-editor6 |
-
-**LOS ANDES IZACATA** — 10 fichas
+**LOS ANDES IZACATA** — 12 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -503,6 +491,8 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521100098 | TIPANLUISA LANCHIMBA MARIA HORTENCIA | 1709058414 | mayralisseth201 |
 | 1702521100102 | TIPANLUISA LANCHIMBA SILVIA GLORIA | 1717872137 | jvk-editor4 |
 | 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
+| 1702521580063 | TIPANLUISA LANCHIMBA MARIA ROSA ELENA | 1704573201 | jvk-editor6 |
+| 1702521580075 | LANCHIMBA SALAZAR RAMON | 1703987287 | jvk-editor6 |
 | 1702521580080 | AULES AULES SEGUNDO | 1705130464 | jvk-editor6 |
 | 1702521580083 | CHOLANGO ULCUANGO MARIA LUISA | 1716827041 | jvk-editor3 |
 | 1702521580090 | TUTILLO TIPANLUISA MARIA DELIA | 1711263937 | jvk-editor4 |
@@ -561,7 +551,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521570040 | CHURACO TIPANLUISA SEGUNDO | 1712652781 | jvk-editor5 |
 | 1702521750057 | CHURACO USHIÑA PEDRO RAMIRO | 1725229478 | jvk-editor5 |
 
-**PANBAMAQUITO** — 5 fichas
+**PAMBAMARQUITO** — 5 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -794,7 +784,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
 | 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 
-**COMUNA INSACATA** — 1 ficha
+**COMUNA IZACATA** — 1 ficha
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -1334,7 +1324,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520940061 | FARINAGO QUIMBIULCO SEGUNDO JAIME | 1717938441 | jvk-editor5 |
 | 1702521130080 | AULES TIPANLUISA  SONIA LIZBETH | 1754339164 | jvk-editor6 |
 
-**COMUNA INSACATA** — 3 fichas
+**COMUNA IZACATA** — 3 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -1371,7 +1361,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702510090003 | LANCHIMBA CHOLANGO NICOLAS | 1711871614 | jvk-editor |
 
-**INSACATA GRANDE** — 1 ficha
+**IZACATA GRANDE** — 1 ficha
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -1619,7 +1609,7 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | CARRERA | 290 | 🟡 39 (13 %) | 21 | 3 | 22 | 46 |
 | PUCARÁ | 198 | 🟡 30 (15 %) | 16 | 0 | 20 | 36 |
 | SAN JOSÉ | 109 | 🟠 27 (25 %) | 12 | 5 | 18 | 35 |
-| LARCACHACA | 147 | 🟡 29 (20 %) | 16 | 3 | 15 | 34 |
+| LARCACHACA | 149 | 🟡 29 (19 %) | 16 | 3 | 15 | 34 |
 | LOMA GORDA | 44 | 🔴 25 (57 %) | 7 | 1 | 25 | 33 |
 | PITANA ALTO | 117 | 🟡 22 (19 %) | 11 | 1 | 18 | 30 |
 | ASOC. SAN VICENTE BAJO | 108 | 🟠 26 (24 %) | 11 | 1 | 18 | 30 |
@@ -1632,8 +1622,8 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | SANTA MARIANITA DE PINGULMI | 208 | 🟡 15 (7 %) | 6 | 1 | 14 | 21 |
 | PUEBLO DE OTÓN | 153 | 🟡 20 (13 %) | 17 | 1 | 2 | 20 |
 | PROMEJ. PITANA BAJO | 158 | 🟡 13 (8 %) | 7 | 2 | 9 | 18 |
+| LOS ANDES IZACATA | 49 | 🟠 13 (27 %) | 12 | 1 | 4 | 17 |
 | ASOC. PITANA BAJO | 60 | 🟠 12 (20 %) | 2 | 0 | 14 | 16 |
-| LOS ANDES IZACATA | 47 | 🟠 11 (23 %) | 10 | 1 | 4 | 15 |
 | ASOCIACIÓN ROSALÍA | 39 | 🟠 11 (28 %) | 4 | 0 | 11 | 15 |
 | COMUNA POROTOG | 79 | 🟡 12 (15 %) | 8 | 0 | 5 | 13 |
 | ASOCIACIÓN POROTOG | 43 | 🟠 12 (28 %) | 10 | 0 | 3 | 13 |
@@ -1641,24 +1631,22 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | (sin comunidad) | 8 | 🔴 4 (50 %) | 4 | 8 | 0 | 12 |
 | CANGAHUA PUNGO | 131 | 🟡 10 (8 %) | 7 | 3 | 1 | 11 |
 | OTONCITO | 78 | 🟡 10 (13 %) | 10 | 1 | 0 | 11 |
+| COMUNA IZACATA | 66 | 🟡 11 (17 %) | 7 | 1 | 3 | 11 |
 | MILAGRO | 46 | 🟠 11 (24 %) | 6 | 0 | 5 | 11 |
-| COMUNA INSACATA | 60 | 🟡 10 (17 %) | 6 | 1 | 3 | 10 |
 | JESÚS GRAN PODER | 45 | 🟡 8 (18 %) | 6 | 0 | 4 | 10 |
 | ASOCIACIÓN SAN PEDRO | 33 | 🟠 8 (24 %) | 3 | 1 | 6 | 10 |
 | CUARTO LOTE | 47 | 🟡 9 (19 %) | 6 | 0 | 3 | 9 |
 | ASOC. SAN VICENTE ALTO | 68 | 🟡 7 (10 %) | 3 | 0 | 5 | 8 |
-| INSACATA GRANDE | 42 | 🟡 7 (17 %) | 7 | 0 | 1 | 8 |
+| IZACATA GRANDE | 42 | 🟡 7 (17 %) | 7 | 0 | 1 | 8 |
 | CORDILLERAS DE LOS ANDES | 39 | 🟡 7 (18 %) | 3 | 0 | 5 | 8 |
 | JUNTA SAN LUIS | 40 | 🟡 5 (12 %) | 2 | 0 | 5 | 7 |
 | MONTESERRÍN ALTO | 28 | 🟡 5 (18 %) | 4 | 0 | 3 | 7 |
 | SANTA ROSA DE PINGULMI | 86 | 🟡 5 (6 %) | 3 | 0 | 2 | 5 |
-| PANBAMAQUITO | 66 | 🟡 5 (8 %) | 5 | 0 | 0 | 5 |
+| PAMBAMARQUITO | 66 | 🟡 5 (8 %) | 5 | 0 | 0 | 5 |
 | ASOCIACIÓN 17 DE JUNIO | 28 | 🟡 4 (14 %) | 3 | 1 | 0 | 4 |
 | SANTA ROSA DE PACCHA | 56 | 🟡 3 (5 %) | 1 | 0 | 2 | 3 |
 | EL MANZANO | 18 | 🟡 2 (11 %) | 1 | 0 | 2 | 3 |
-| LOS ANDES INSACATA | 2 | 🔴 2 (100 %) | 2 | 0 | 0 | 2 |
 | PUEBLO DE ASCÁZUBI | 2 | 🔴 2 (100 %) | 0 | 1 | 1 | 2 |
-| COMUNA IZACATA | 6 | 🟡 1 (17 %) | 1 | 0 | 0 | 1 |
 | HDA. SAN FRANSISCO | 1 | 🔴 1 (100 %) | 0 | 0 | 1 | 1 |
 | SR. HERNÁN TIMPE | 1 | 🔴 1 (100 %) | 0 | 0 | 1 | 1 |
 
