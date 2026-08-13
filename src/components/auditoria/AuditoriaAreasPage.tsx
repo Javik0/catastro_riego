@@ -334,12 +334,13 @@ export default function AuditoriaAreasPage() {
               <Encuadrar caso={sel} />
             </MapContainer>
 
-            {/* plegar la lista para dejarle el mapa entero */}
+            {/* Plegar la lista para dejarle el mapa entero. Va bajo el control
+                de zoom de Leaflet, que ocupa la esquina superior izquierda. */}
             <button
               onClick={() => setPanel((v) => !v)}
               title={panel ? 'Ocultar la lista' : 'Mostrar la lista'}
               aria-label={panel ? 'Ocultar la lista de predios' : 'Mostrar la lista de predios'}
-              className="absolute left-3 top-3 z-[1001] hidden rounded-md border border-gray-300
+              className="absolute left-3 top-[84px] z-[1001] hidden rounded-md border border-gray-300
                          bg-white/95 p-1.5 text-gray-600 shadow backdrop-blur
                          transition hover:bg-gray-50 hover:text-gray-900 lg:block"
             >
@@ -347,9 +348,9 @@ export default function AuditoriaAreasPage() {
             </button>
 
             {sel && (
-              <div className={`pointer-events-none absolute top-3 z-[1000] max-w-sm rounded-lg
-                              border border-gray-200 bg-white/95 p-3 shadow-lg backdrop-blur
-                              ${panel ? 'left-3 lg:left-14' : 'left-14'}`}>
+              <div className="pointer-events-none absolute left-14 top-3 z-[1000] max-w-sm
+                              rounded-lg border border-gray-200 bg-white/95 p-3 shadow-lg
+                              backdrop-blur">
                 <div className="flex items-center gap-2">
                   <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium
                                     ${TIPOS[sel.tipo].bg} ${TIPOS[sel.tipo].tx}`}>
