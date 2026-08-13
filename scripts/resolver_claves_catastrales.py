@@ -271,6 +271,7 @@ def main():
     print("\n  respaldando antes de tocar nada...")
     print("     {}".format(respaldo_sqlite(GPKG, 'antes-claves-catastrales')))
 
+    t = '"{}"'.format(TABLA)
     con = sqlite3.connect(GPKG)
     cur = con.cursor()
     cur.execute("SELECT name, sql FROM sqlite_master "

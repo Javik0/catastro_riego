@@ -41,11 +41,11 @@ Sobre las **3.815 fichas principales** que son encuestas de campo (de 6.831 fich
 | Sin cédula | 7 | ficha por ficha |
 | Sin teléfono | 390 | ficha por ficha |
 | Sin nivel de instrucción | 51 | ficha por ficha |
-| Sin caudal registrado | 30 | ficha por ficha |
+| Sin caudal registrado | 4 | ficha por ficha |
 | Sin área de riego | 4 | ficha por ficha |
 | Sin agua de consumo | 103 | ficha por ficha |
 | Sin energía eléctrica | 216 | ficha por ficha |
-| **Total de trabajo de campo** | **801** | |
+| **Total de trabajo de campo** | **775** | |
 
 Cada fila de la tabla es un dato faltante, no una ficha: una misma ficha puede aparecer en dos bloques.
 
@@ -105,33 +105,14 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ### Sin teléfono — 390 fichas
 
-**(sin comunidad)** — 23 fichas
+**(sin comunidad)** — 4 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
-| 1702520660061 | LANCHIMBA LANCHIMBA MARIA MERCEDES | 1712953452 | u0_a302 |
-| 1702520680054 | ASERO CHIMARRO ESTHER MARIA | 1003050471 | u0_a70 |
-| 1702520720034  | CHOLANGO FARINANGO  GLADYS NATALY | 1728529561 | jvk-editor3 |
-| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
-| 1702520800049 | Lopez Churaco Rosa Virginia | 1722490313 | jvk-corp |
-| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 |
-| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
-| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 | 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp |
-| 1702540120254 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
-| 1702540120255 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
 
 **ASOC. PITANA BAJO** — 2 fichas
 
@@ -240,12 +221,13 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521090034 | QUINATOA UMAQUINGA FERNANDO | 1703987618 | u0_a302 |
 | 1702521490069 | UMAQUINGA IMBAGO JOSE LINO | 1705920633 | mayralisseth201 |
 
-**CHAMBITOLA** — 11 fichas
+**CHAMBITOLA** — 12 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520540067 | CASCO PERACHIMBA PETRONA | 1716485865 | jvk-editor3 |
 | 1702520570081 | AIGAJE LANCHIMBA TRINE | 1711307056 | u0_a330 |
+| 1702520660061 | LANCHIMBA LANCHIMBA MARIA MERCEDES | 1712953452 | u0_a302 |
 | 1702520660112 | UMAQUINGA ANDRANGO JUAN CRUZ | 1713994638 | mayralisseth201 |
 | 1702520670006 | AIGAJE SOPALO MARIA ROSALIA | 1714030507 | u0_a504 |
 | 1702520670040 | AIGAJE LANCHIMBA MARIA MERCEDES | 1708769862 | u0_a330 |
@@ -256,7 +238,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521030020 | LANCHIMBA TANDAYAMO ISMAEL SEBASTIAN | 1723977011 | u0_a302 |
 | 1702521030021 | TANDAYAMO IMBAQUINGO MARIA MERCEDES | 1711583854 | u0_a319 |
 
-**CHAUPIESTANCIA** — 17 fichas
+**CHAUPIESTANCIA** — 19 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -268,6 +250,8 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702540120014 | CARRILLO FLORES INES MARLENE | 1722735345 | mayralisseth201 |
 | 1702540120134 | CUZCO OÑA ANGEL TOVIAS | 1708451081 | jvk-editor6 |
 | 1702540120228 | CUASCOTA CUASCOTA ROSARIO | 1707703037 | mayralisseth201 |
+| 1702540120254 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
+| 1702540120255 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
 | 1702540140109 | COBACANGO GARCIA JOSE | 1704894078 | jvk-editor5 |
 | 1702540170007 | CARRILLO JITALA LUZ MARIA | 1704563012 | mayralisseth201 |
 | 1702540170016 | QUIMBIULCO JITALA VICENTE | 1709071631 | mayralisseth201 |
@@ -291,15 +275,17 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702550330046 | PEREZ QUINCHOANGO ALEJANDRO | 1702684133 | mayralisseth201 |
 | 1702550330074 | PINEDA CEPEDA JOSE ALFREDO | 1714624556 | jvk-editor2 |
 
-**COCHAPAMBA** — 49 fichas
+**COCHAPAMBA** — 59 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520510079 | AIGAJE SALAZAR Virgilio | 1791330218001 | jvk-editor3 |
 | 1702520720034  | CHOLANGO FARINANGO  PACHA TAMIA | 1727461731 | jvk-editor3 |
 | 1702520720034  | CHOLANGO FARINANGO JESSICA LUZMILA | 1755084512 | jvk-editor3 |
+| 1702520720034  | CHOLANGO FARINANGO  GLADYS NATALY | 1728529561 | jvk-editor3 |
 | 1702520720045 | TUTILLO ACERO CARLOS | 1707700843 | jvk-editor3 |
 | 1702520720046 | ULCUANGO PILATAXI  JESSICA PIEDAD | 1754416533 | jvk-editor3 |
+| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702520720077 | ULCUANGO ACERO ASCENCIO DAMIAN | 1711307973 | jvk-editor5 |
 | 1702520720116 | ULCUANGO FARINANGO ALEGRIA | 1711077733 | jvk-editor4 |
 | 1702520720146 | ULCUANGO PILATAXI MANUEL RENE | 1725640260 | jvk-editor3 |
@@ -308,11 +294,15 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520720195 | AULES ULCUANGO LUIS ANIBAL | 1717935298 | jvk-editor3 |
 | 1702520720196 | QUIMBIULCO PILATAXI ROSA JULIANA | 1708136229 | jvk-editor6 |
 | 1702520720201 | COMUNIDAD COCHAPAMBA | 1791330218 | mayralisseth201 |
+| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
 | 1702520720240 | AULES PILCA JOSE MIGUEL | 1711306702 | jvk-editor6 |
 | 1702520720248 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor6 |
 | 1702520720274 | ASERO ULCUANGO AIDA LUCILA | 1717937898 | jvk-editor2 |
+| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
 | 1702520720298 | VALVERDE CAMPOS JOSE | 1702821057 | jvk-editor6 |
+| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702520940023 | AULES TANDAYAMO ANA LUCIA | 1726100173 | jvk-editor5 |
+| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 |
 | 1702520940081 | CHOLANGO FARINANGO VICTOR MANUEL | 1705556072 | mayralisseth201 |
 | 1702520950038 | PILATAXI CHOLANGO MARÍA LAURA | 1704774668 | jvk-editor6 |
 | 1702520950040 | ACERO TUGULINAGO BLANCA ALEJANDRINA | 1722942115 | jvk-editor3 |
@@ -325,11 +315,15 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520960051 | TANDAYAMO QUILUMBAQUIN JUAN LUIS | 1703958494 | jvk-editor3 |
 | 1702520960056 | TANDAYAMO TUTILLO JOSE MIGUEL | 1714765466 | jvk-editor3 |
 | 1702520980001 | ACERO TIPANLUISA MIGUEL | 1703989150 | jvk-editor6 |
-| 170252110083 | PILATAXI IMBAQUINGO  JORGE ROBERTO | 1720212396 | jvk-editor3 |
+| 1702521110083 | PILATAXI IMBAQUINGO  JORGE ROBERTO | 1720212396 | jvk-editor3 |
 | 1702521110110 | FARINANGO PILCA JAIME PATRICIO | 1727238964 | jvk-editor3 |
 | 1702521110111 | FARINANGO PILCA SEGUNDO CARLOS | 1726802976 | jvk-editor3 |
+| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
 | 1702521130024 | CACHIMUEL CACHIMUEL JOSE MANUEL | 1704328671 | jvk-editor2 |
 | 1702521130047 | FARINANGO ULCUANGO JOSE MARIA | 1711603710 | jvk-editor5 |
+| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
+| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
+| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702521130129 | FARINANGO CHOLANGO MARIA DOLORES | 1711801926 | jvk-editor4 |
 | 1702521130129 | PILATAXI FARINANGO  AVELINA | 1004364416 | jvk-editor4 |
 | 1702521130129 | PILATAXI FARINANGO  JESSICA | 1728291772 | jvk-editor4 |
@@ -498,7 +492,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521580063 | TIPANLUISA LANCHIMBA MARIA ROSA ELENA | 1704573201 | jvk-editor6 |
 | 1702521580075 | LANCHIMBA SALAZAR RAMON | 1703987287 | jvk-editor6 |
 
-**LOS ANDES IZACATA** — 9 fichas
+**LOS ANDES IZACATA** — 10 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -508,6 +502,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521100059 | CHIQUIMBA AULES SEGUNDO TOMAS | 1712045408 | jvk-editor4 |
 | 1702521100098 | TIPANLUISA LANCHIMBA MARIA HORTENCIA | 1709058414 | mayralisseth201 |
 | 1702521100102 | TIPANLUISA LANCHIMBA SILVIA GLORIA | 1717872137 | jvk-editor4 |
+| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
 | 1702521580080 | AULES AULES SEGUNDO | 1705130464 | jvk-editor6 |
 | 1702521580083 | CHOLANGO ULCUANGO MARIA LUISA | 1716827041 | jvk-editor3 |
 | 1702521580090 | TUTILLO TIPANLUISA MARIA DELIA | 1711263937 | jvk-editor4 |
@@ -531,7 +526,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702510060083 | LEON TUGUNILAGO CARLOS | 1704030244 | jvk-editor3 |
 | 1702510130031 | COMUNA JURIDICA MONTESERRIN | — | jvk-editor3 |
 
-**OTONCITO** — 9 fichas
+**OTONCITO** — 10 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -539,13 +534,14 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702540050009 | LIMAICO IMBAQUINGO ELVIA FABIOLA | 1726969783 | jvk-editor3 |
 | 1702540050009 | LIMAICO IMBAQUINGO LUIS RAMIRO | 1722956834 | jvk-editor3 |
 | 1702540050013 | ECHESI GARCIA LUZ MARIA | 1707703177 | jvk-editor3 |
+| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp |
 | 1702540050097 | IMBAQUINGO QUISHPE LUIS ALBERTO | 1702581750 | jvk-editor3 |
 | 1702540230011 | LIMAICO GUALAVISI SILVIA ALEXANDRA | 1711055846 | jvk-editor3 |
 | 1702540230018 | LIMAICO PAILLACHO JUAN JOSE | 1704237799 | jvk-editor3 |
 | 1702540230049 | LIMAICO LIMAICO LUIS ALFONSO | 1704719838 | jvk-editor3 |
 | 1702540230050 | LIMAICO LIMAICO MARIA CLEMENCIA | 1704963667 | jvk-editor3 |
 
-**PAMBAMARCA** — 12 fichas
+**PAMBAMARCA** — 15 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -553,11 +549,14 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520800006 | COYAGO PACHECO ROSA CRISTINA | 1725963373 | jvk-editor2 |
 | 1702520800008 | COYAGO PACHECO FELIX | 1707852404 | jvk-editor2 |
 | 1702520800043 | FARINANGO PACHECO VICENTE MARCELO | 1712450335 | jvk-corp |
+| 1702520800049 | Lopez Churaco Rosa Virginia | 1722490313 | jvk-corp |
 | 1702520800069 | CHURACO TIPANLUISA SEGUNDO | 1712652781 | jvk-editor5 |
+| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
 | 1702520800135 | LOPEZ LIMAICO MANUEL | 1705083143 | jvk-corp |
 | 1702520810010 | FARINANGO PACHECO DANIEL JORGE | 1717908972 | jvk-corp |
 | 1702520810031 | CAHUEÑAS CHURACO ROSA MARIA | 1712652518 | jvk-editor5 |
 | 1702520810082 | TIPAN TUGULINAGO JOSE MIGUEL | 1713347472 | jvk-corp |
+| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
 | 1702520820107 | PACHECO GARCIA LUIS AGUISTIN | 1720504032 | jvk-editor5 |
 | 1702521570040 | CHURACO TIPANLUISA SEGUNDO | 1712652781 | jvk-editor5 |
 | 1702521750057 | CHURACO USHIÑA PEDRO RAMIRO | 1725229478 | jvk-editor5 |
@@ -642,7 +641,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702540160097 | CHASI CHIQUIMBA PATRICIA CARMELA | 1712953825 | mayralisseth201 |
 | 1702540160156 | JITALA CABASCANGO MIGUEL | 1707758395 | mayralisseth201 |
 
-**SAN ANTONIO** — 21 fichas
+**SAN ANTONIO** — 22 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -657,6 +656,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520680033 | ULCUANGO ACERO JOSE DOMINGO | 1702667880 | u0_a302 |
 | 1702520680037 | ASERO CUMBAL ASCIENCIO | 1704001245 | u0_a330 |
 | 1702520680046 | ULCUANGO QUINATOA MARIA ASUNCION | 1704001963 | u0_a200 |
+| 1702520680054 | ASERO CHIMARRO ESTHER MARIA | 1003050471 | u0_a70 |
 | 1702520680082 | PILCA TIPANLUISA JOSE JOAQUIN | 1709986473 | u0_a200 |
 | 1702520680088 | ASCANTA AIGAJE FRANCISCO | 1702662147 | u0_a302 |
 | 1702520680101 | PILCA ASERO ROSA MARIA | 1705419610 | u0_a200 |
@@ -714,29 +714,14 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ### Sin nivel de instrucción — 51 fichas
 
-**(sin comunidad)** — 19 fichas
+**(sin comunidad)** — 4 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
-| 1702520680054 | ASERO CHIMARRO ESTHER MARIA | 1003050471 | u0_a70 |
-| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 |
-| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
-| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 | 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp |
-| 1702540120254 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
-| 1702540120255 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
 
 **ASOC. SAN VICENTE BAJO** — 1 ficha
 
@@ -780,11 +765,13 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520660013 | TANDAYAMO LANCHIMBA MARIA CECILIA | 1726298910 | u0_a70 |
 | 1702520660051 | LANCHIMBA AIGAJE JOSE | 1720190360 | u0_a279 |
 
-**CHAUPIESTANCIA** — 2 fichas
+**CHAUPIESTANCIA** — 4 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702540110151 | SANCHEZ CORO MARIA SALVADORA | 1710484831 | mayralisseth201 |
+| 1702540120254 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
+| 1702540120255 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
 | 1702540220002 | COMUNA JURIDICA CHAUPIESTANCIA | 1790713385001 | jvk-editor6 |
 
 **CHINCHINLOMA** — 1 ficha
@@ -793,11 +780,19 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702550330074 | PINEDA CEPEDA JOSE ALFREDO | 1714624556 | jvk-editor2 |
 
-**COCHAPAMBA** — 1 ficha
+**COCHAPAMBA** — 9 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
+| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
+| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
+| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
+| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 |
+| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
 | 1702521130047 | FARINANGO ULCUANGO JOSE MARIA | 1711603710 | jvk-editor5 |
+| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
+| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
+| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 
 **COMUNA INSACATA** — 1 ficha
 
@@ -826,11 +821,25 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702520920083 | AULES CACHIGUANGO ENRIQUE | 1704059763 | jvk-editor2 |
 
-**PAMBAMARCA** — 1 ficha
+**LOS ANDES IZACATA** — 1 ficha
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
+| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
+
+**OTONCITO** — 1 ficha
+
+| Clave catastral | Regante | Cédula | Levantó |
+|---|---|---|---|
+| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp |
+
+**PAMBAMARCA** — 3 fichas
+
+| Clave catastral | Regante | Cédula | Levantó |
+|---|---|---|---|
+| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
 | 1702520810015 | COYAGO PACHECO JOSE VICENTE | 1714068762 | jvk-editor5 |
+| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
 
 **PITANA ALTO** — 1 ficha
 
@@ -851,11 +860,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 17025101000401100080000 | GOBIERNO AUTONOMO DESCENTRALIZADO INTERCULTURAL   Y PLURINACIONAL DEL MUNICIPIO DE CAYAMBE | 1711703718 | jvk-editor4 |
 
-**SAN ANTONIO** — 1 ficha
+**SAN ANTONIO** — 2 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520680037 | ASERO CUMBAL ASCIENCIO | 1704001245 | u0_a330 |
+| 1702520680054 | ASERO CHIMARRO ESTHER MARIA | 1003050471 | u0_a70 |
 
 **SAN JOSÉ** — 2 fichas
 
@@ -872,44 +882,18 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ---
 
-### Sin caudal registrado — 30 fichas
+### Sin caudal registrado — 4 fichas
 
 > No hay que ir a medir ningún caudal. Son las mismas fichas de «Se resuelve en oficina»: al asignarles comunidad heredan el caudal de la comuna y este bloque se vacía solo.
 
-**(sin comunidad)** — 30 fichas
+**(sin comunidad)** — 4 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
-| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 |
-| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
-| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 |
-| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp |
-| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 |
-| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 |
-| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 |
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 | 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702521750032 | LOPEZ CHURACO LUZ MARIA | 1719888149 | jvk-editor5 |
-| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp |
-| 1702540050087 | IMBAQUINGO ECHESI María Cristina | 1712572955 | jvk-corp |
-| 1702540050103 | GARCIA Gualaguisi Jessica Jimena | 1715499610 | jvk-corp |
-| 1702540050103 | GARCIA Gualaguisi Eriza Lorena | 1715499610 | jvk-corp |
-| 1702540050107 | ECHESI LIMAICO SEGUNDO FRANCISCO | 1711498657 | jvk-corp |
-| 1702540050114 | ECHESI LIMAICO JUAN JOSE | 1710845387 | jvk-corp |
-| 1702540050179 | SALAZAR CHICAIZA LUIS EDUARDO | 1716369309 | jvk-corp |
-| 1702540060022 | ROJAS COBACANGO PEDRO JOSE | 1716037930 | jvk-corp |
-| 1702540060070 | Sanchez cobacango Germán David | 1727592766 | jvk-corp |
-| 1702540120254 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
-| 1702540120255 | FARINANGO CARRILLO SEGUNDO SALVADOR | 1705068623 | jvk-editor5 |
-| 1702540140092 | COBACANGO COBACANGO JOSE SILVIO | 1713361788 | jvk-corp |
-| 1702540230008 | Limaico cuascota Segundo Elias | 1702587906 | jvk-corp |
-| 1702540230043 | LIMAICO LIMAICO María Aurora | 1712855061 | jvk-corp |
 
 ---
 
@@ -936,14 +920,6 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 ### Sin agua de consumo — 103 fichas
 
 > Solo las fichas con material de construcción declarado. Donde no hay construcción, el campo vacío es la respuesta correcta.
-
-**(sin comunidad)** — 3 fichas
-
-| Clave catastral | Regante | Cédula | Levantó |
-|---|---|---|---|
-| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
-| 1702520800030 | TIPAN Churaco Holger Eduardo | 1726324252 | jvk-corp |
-| 1702520800034 | TOAPANTA CHURACO JOSE SEGUNDO | 1715732283 | jvk-corp |
 
 **ASOC. PITANA BAJO** — 4 fichas
 
@@ -1028,12 +1004,13 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702550080131 | TONTAG QUISHPE SEGUNDO OSWALDO | 1709740250 | jvk-editor2 |
 | 1702550170064 | ABALCO GUAYTARILLA DELIA MARIA | 1703171759 | jvk-editor3 |
 
-**COCHAPAMBA** — 4 fichas
+**COCHAPAMBA** — 5 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520720163 | TANDAYAMO AULES CESAR MANUEL | 1711054187 | jvk-editor3 |
 | 1702520720173 | PILCA FARINANGO JUAN MANUEL | 1726117391 | jvk-editor3 |
+| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
 | 1702520940018 | QUILUMBAQUIN TUTILLO MARIA TERESA | 1711073757 | jvk-editor6 |
 | 1702520950074 | LINCANGO PILATAXI SEGUNDO DANIEL | 1719342147 | jvk-editor2 |
 
@@ -1125,10 +1102,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702540220010 | CUASCOTA CRIOLLO JOSE | 1705506069 | jvk-editor3 |
 
-**PAMBAMARCA** — 3 fichas
+**PAMBAMARCA** — 5 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
+| 1702520800030 | TIPAN Churaco Holger Eduardo | 1726324252 | jvk-corp |
+| 1702520800034 | TOAPANTA CHURACO JOSE SEGUNDO | 1715732283 | jvk-corp |
 | 1702520800147 | COYAGO PACHECO MARIA ISOLINA | 1722143284 | jvk-editor5 |
 | 1702521570089 | CHURACO TIPANLUISA AURORA | 1706542170 | jvk-editor5 |
 | 1702521750047 | LÓPEZ CHURACO FERMIN GEOVANI | 1751805837 | jvk-corp |
@@ -1220,16 +1199,6 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 ### Sin energía eléctrica — 216 fichas
 
 > Solo las fichas con material de construcción declarado. Donde no hay construcción, el campo vacío es la respuesta correcta.
-
-**(sin comunidad)** — 5 fichas
-
-| Clave catastral | Regante | Cédula | Levantó |
-|---|---|---|---|
-| 1702520540033 | ASCANTA SOPALO FRANCISCO | 1703633378 | u0_a279 |
-| 1702520660061 | LANCHIMBA LANCHIMBA MARIA MERCEDES | 1712953452 | u0_a302 |
-| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
-| 1702520800030 | TIPAN Churaco Holger Eduardo | 1726324252 | jvk-corp |
-| 1702520800034 | TOAPANTA CHURACO JOSE SEGUNDO | 1715732283 | jvk-corp |
 
 **ASOC. PITANA BAJO** — 10 fichas
 
@@ -1325,7 +1294,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702521090011 | LANCHIMBA FARINANGO JHON GERARDO | 1727464347 | jvk-editor4 |
 | 1702521490069 | UMAQUINGA IMBAGO JOSE LINO | 1705920633 | mayralisseth201 |
 
-**CHAMBITOLA** — 8 fichas
+**CHAMBITOLA** — 9 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
@@ -1333,6 +1302,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520660051 | LANCHIMBA AIGAJE JOSE | 1720190360 | u0_a279 |
 | 1702520660058 | LANCHIMBA LANCHIMBA MARIA JUANA | 1717304818 | u0_a319 |
 | 1702520660060 | LANCHIMBA LANCHIMBA JOSE LINO | 1720088549 | jvk-editor2 |
+| 1702520660061 | LANCHIMBA LANCHIMBA MARIA MERCEDES | 1712953452 | u0_a302 |
 | 1702520670001 | LANCHIMBA ACERO  SEGUNDO MANUEL | 1710973122 | u0_a319 |
 | 1702520670067 | AIGAJE LANCHIMBA MARIA REGINA | 1706994330 | u0_a504 |
 | 1702521030032 | LANCHIMBA LANCHIMBA ROSA CELIA | 1715785091 | u0_a335 |
@@ -1351,13 +1321,14 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 1702550080131 | TONTAG QUISHPE SEGUNDO OSWALDO | 1709740250 | jvk-editor2 |
 
-**COCHAPAMBA** — 7 fichas
+**COCHAPAMBA** — 8 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520720048 | PILATAXI TUTILLO SEGUNDO FERNANDO | 1710842210 | jvk-editor5 |
 | 1702520720160 | PILATAXI TUTILLO SEGUNDO REMIGIO | 1711532257 | jvk-editor3 |
 | 1702520720173 | PILCA FARINANGO JUAN MANUEL | 1726117391 | jvk-editor3 |
+| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 |
 | 1702520940018 | QUILUMBAQUIN TUTILLO MARIA TERESA | 1711073757 | jvk-editor6 |
 | 1702520940032 | FARINANGO ULCUANGO MARIA DELIA | 1711114361 | jvk-editor3 |
 | 1702520940061 | FARINAGO QUIMBIULCO SEGUNDO JAIME | 1717938441 | jvk-editor5 |
@@ -1522,10 +1493,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702510040144 | CARRILLO COBACANGO CRISTIAN HUMBERTO | 0502972474 | jvk-editor3 |
 | 1702540220010 | CUASCOTA CRIOLLO JOSE | 1705506069 | jvk-editor3 |
 
-**PAMBAMARCA** — 2 fichas
+**PAMBAMARCA** — 4 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
+| 1702520800030 | TIPAN Churaco Holger Eduardo | 1726324252 | jvk-corp |
+| 1702520800034 | TOAPANTA CHURACO JOSE SEGUNDO | 1715732283 | jvk-corp |
 | 1702520800147 | COYAGO PACHECO MARIA ISOLINA | 1722143284 | jvk-editor5 |
 | 1702521750047 | LÓPEZ CHURACO FERMIN GEOVANI | 1751805837 | jvk-corp |
 
@@ -1581,11 +1554,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 |---|---|---|---|
 | 17025401700200100070000 | LIGA DEPORTIVA   PARROQUIAL OTÓN | 1724645377 | jvk-editor2 |
 
-**SAN ANTONIO** — 2 fichas
+**SAN ANTONIO** — 3 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702520510035 | SOPALO SOPALO MARTINA | 1709372211 | u0_a200 |
+| 1702520540033 | ASCANTA SOPALO FRANCISCO | 1703633378 | u0_a279 |
 | 1702521010115 | TANDAYAMO ULCUANGO RAUL PATRICIO | 1003051586 | u0_a330 |
 
 **SAN JOSÉ** — 13 fichas
@@ -1641,45 +1615,45 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 <!-- tabla-completa -->
 | Comunidad | Fichas | Con pendientes | Contacto | Encuesta | Vivienda | Datos por completar |
 |---|---:|---:|---:|---:|---:|---:|
-| (sin comunidad) | 67 | 🔴 38 (57 %) | 23 | 49 | 8 | 80 |
-| COCHAPAMBA | 220 | 🟠 58 (26 %) | 49 | 1 | 11 | 61 |
+| COCHAPAMBA | 236 | 🟠 68 (29 %) | 59 | 9 | 13 | 81 |
 | CARRERA | 290 | 🟡 39 (13 %) | 21 | 3 | 22 | 46 |
 | PUCARÁ | 198 | 🟡 30 (15 %) | 16 | 0 | 20 | 36 |
-| SAN JOSÉ | 108 | 🟠 27 (25 %) | 12 | 5 | 18 | 35 |
-| LARCACHACA | 146 | 🟡 29 (20 %) | 16 | 3 | 15 | 34 |
+| SAN JOSÉ | 109 | 🟠 27 (25 %) | 12 | 5 | 18 | 35 |
+| LARCACHACA | 147 | 🟡 29 (20 %) | 16 | 3 | 15 | 34 |
 | LOMA GORDA | 44 | 🔴 25 (57 %) | 7 | 1 | 25 | 33 |
 | PITANA ALTO | 117 | 🟡 22 (19 %) | 11 | 1 | 18 | 30 |
 | ASOC. SAN VICENTE BAJO | 108 | 🟠 26 (24 %) | 11 | 1 | 18 | 30 |
-| LA LIBERTAD | 117 | 🟡 22 (19 %) | 9 | 0 | 18 | 27 |
-| CHAMBITOLA | 109 | 🟡 20 (18 %) | 11 | 3 | 12 | 26 |
-| SAN ANTONIO | 95 | 🟠 22 (23 %) | 21 | 1 | 3 | 25 |
-| LA CANDELARIA | 170 | 🟡 22 (13 %) | 12 | 2 | 8 | 22 |
-| CHAUPIESTANCIA | 137 | 🟡 19 (14 %) | 17 | 2 | 3 | 22 |
+| CHAMBITOLA | 114 | 🟡 21 (18 %) | 12 | 3 | 13 | 28 |
+| SAN ANTONIO | 100 | 🟠 24 (24 %) | 22 | 2 | 4 | 28 |
+| LA LIBERTAD | 118 | 🟡 22 (19 %) | 9 | 0 | 18 | 27 |
+| PAMBAMARCA | 96 | 🟠 21 (22 %) | 15 | 3 | 9 | 27 |
+| CHAUPIESTANCIA | 139 | 🟡 21 (15 %) | 19 | 4 | 3 | 26 |
+| LA CANDELARIA | 171 | 🟡 22 (13 %) | 12 | 2 | 8 | 22 |
 | SANTA MARIANITA DE PINGULMI | 208 | 🟡 15 (7 %) | 6 | 1 | 14 | 21 |
 | PUEBLO DE OTÓN | 153 | 🟡 20 (13 %) | 17 | 1 | 2 | 20 |
 | PROMEJ. PITANA BAJO | 158 | 🟡 13 (8 %) | 7 | 2 | 9 | 18 |
-| PAMBAMARCA | 90 | 🟡 16 (18 %) | 12 | 1 | 5 | 18 |
 | ASOC. PITANA BAJO | 60 | 🟠 12 (20 %) | 2 | 0 | 14 | 16 |
+| LOS ANDES IZACATA | 47 | 🟠 11 (23 %) | 10 | 1 | 4 | 15 |
 | ASOCIACIÓN ROSALÍA | 39 | 🟠 11 (28 %) | 4 | 0 | 11 | 15 |
 | COMUNA POROTOG | 79 | 🟡 12 (15 %) | 8 | 0 | 5 | 13 |
-| LOS ANDES IZACATA | 46 | 🟠 10 (22 %) | 9 | 0 | 4 | 13 |
 | ASOCIACIÓN POROTOG | 43 | 🟠 12 (28 %) | 10 | 0 | 3 | 13 |
 | CHINCHINLOMA | 88 | 🟡 9 (10 %) | 8 | 1 | 3 | 12 |
+| (sin comunidad) | 8 | 🔴 4 (50 %) | 4 | 8 | 0 | 12 |
 | CANGAHUA PUNGO | 131 | 🟡 10 (8 %) | 7 | 3 | 1 | 11 |
+| OTONCITO | 78 | 🟡 10 (13 %) | 10 | 1 | 0 | 11 |
 | MILAGRO | 46 | 🟠 11 (24 %) | 6 | 0 | 5 | 11 |
 | COMUNA INSACATA | 60 | 🟡 10 (17 %) | 6 | 1 | 3 | 10 |
 | JESÚS GRAN PODER | 45 | 🟡 8 (18 %) | 6 | 0 | 4 | 10 |
 | ASOCIACIÓN SAN PEDRO | 33 | 🟠 8 (24 %) | 3 | 1 | 6 | 10 |
-| OTONCITO | 66 | 🟡 9 (14 %) | 9 | 0 | 0 | 9 |
-| CUARTO LOTE | 46 | 🟡 9 (20 %) | 6 | 0 | 3 | 9 |
+| CUARTO LOTE | 47 | 🟡 9 (19 %) | 6 | 0 | 3 | 9 |
 | ASOC. SAN VICENTE ALTO | 68 | 🟡 7 (10 %) | 3 | 0 | 5 | 8 |
 | INSACATA GRANDE | 42 | 🟡 7 (17 %) | 7 | 0 | 1 | 8 |
 | CORDILLERAS DE LOS ANDES | 39 | 🟡 7 (18 %) | 3 | 0 | 5 | 8 |
 | JUNTA SAN LUIS | 40 | 🟡 5 (12 %) | 2 | 0 | 5 | 7 |
 | MONTESERRÍN ALTO | 28 | 🟡 5 (18 %) | 4 | 0 | 3 | 7 |
-| SANTA ROSA DE PINGULMI | 84 | 🟡 5 (6 %) | 3 | 0 | 2 | 5 |
-| PANBAMAQUITO | 62 | 🟡 5 (8 %) | 5 | 0 | 0 | 5 |
-| ASOCIACIÓN 17 DE JUNIO | 27 | 🟡 4 (15 %) | 3 | 1 | 0 | 4 |
+| SANTA ROSA DE PINGULMI | 86 | 🟡 5 (6 %) | 3 | 0 | 2 | 5 |
+| PANBAMAQUITO | 66 | 🟡 5 (8 %) | 5 | 0 | 0 | 5 |
+| ASOCIACIÓN 17 DE JUNIO | 28 | 🟡 4 (14 %) | 3 | 1 | 0 | 4 |
 | SANTA ROSA DE PACCHA | 56 | 🟡 3 (5 %) | 1 | 0 | 2 | 3 |
 | EL MANZANO | 18 | 🟡 2 (11 %) | 1 | 0 | 2 | 3 |
 | LOS ANDES INSACATA | 2 | 🔴 2 (100 %) | 2 | 0 | 0 | 2 |
@@ -1690,13 +1664,13 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 
 «Fichas» es cuántas hay en la comunidad y «con pendientes» a cuántas les falta algo; las dos son **fichas**. Contacto, Encuesta y Vivienda cuentan **datos** —una ficha a la que le faltan dos cosas suma dos— y por eso suman exactamente la última columna.
 
-> La fila **(sin comunidad)** son las 67 fichas de la sección siguiente. Todavía no se pueden asignar a ninguna ruta: primero hay que resolverlas en oficina. Al hacerlo se caen solos los 30 pendientes de caudal, porque el caudal se hereda de la comuna.
+> La fila **(sin comunidad)** son las 8 fichas de la sección siguiente. Todavía no se pueden asignar a ninguna ruta: primero hay que resolverlas en oficina. Al hacerlo se caen solos los 4 pendientes de caudal, porque el caudal se hereda de la comuna.
 
 ---
 
 ## Se resuelve en oficina, no en campo
 
-**67 fichas principales sin comunidad asignada.** No hay que ir a preguntarle a nadie: **67 de las 67 tienen coordenadas**, así que la comunidad sale de un cruce espacial — el punto de la ficha dentro del polígono de la capa de comunidades.
+**8 fichas principales sin comunidad asignada.** No hay que ir a preguntarle a nadie: **8 de las 8 tienen coordenadas**, así que la comunidad sale de un cruce espacial — el punto de la ficha dentro del polígono de la capa de comunidades.
 
 El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` hace exactamente eso (punto dentro de polígono de `sectores.geojson`) y sirve de referencia para asignarlas.
 
@@ -1704,67 +1678,14 @@ El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` hace
 
 | Clave catastral | Regante | Cédula | Levantó | X (UTM 17S) | Y (UTM 17S) |
 |---|---|---|---|---:|---:|
-| 1702520200019 | CALUGUILLIN CRIOLLO HECTOR BLADIMIR | 1755160403 | jvk-editor3 | 809.983 | 10.000.805 |
-| 1702520210178 | TUTILLO QUISHPE LUIS ALBERTO | 1715046544 | jvk-editor3 | 810.252 | 10.000.924 |
-| 1702520510059 | ULCUANGO QUILUMBAQUIN JOSE MANUEL | 1708039183 | u0_a279 | 816.919 | 9.993.409 |
-| 1702520540033 | ASCANTA SOPALO FRANCISCO | 1703633378 | u0_a279 | 818.094 | 9.992.857 |
 | 1702520570096 | LANCHIMBA SOPALO MARIA MERCEDES | 1003280391 | u0_a504 | 819.499 | 9.992.156 |
-| 1702520660061 | LANCHIMBA LANCHIMBA MARIA MERCEDES | 1712953452 | u0_a302 | 819.925 | 9.991.519 |
-| 1702520670005 | AIGAJE SOPALO JOSE CLEMENTE | 1715830871 | u0_a335 | 819.067 | 9.990.902 |
-| 1702520670052 | LANCHIMBA AIGAJE SEGUNDO MANUEL | 1709254484 | u0_a279 | 819.254 | 9.991.220 |
-| 1702520670064 | LANCHIMBA LANCHIMBA CIPRIANO | 1709170938 | u0_a302 | 819.618 | 9.991.347 |
-| 1702520680007 | ASCANTA LANCHIMBA JUAN VICENTE | 1003051115 | u0_a279 | 818.879 | 9.991.273 |
-| 1702520680040 | ACERO CUMBAL MARIA MERCEDES | 1715123426 | u0_a330 | 818.965 | 9.991.467 |
-| 1702520680054 | ASERO CHIMARRO ESTHER MARIA | 1003050471 | u0_a70 | 819.086 | 9.991.867 |
-| 1702520720034  | CHOLANGO FARINANGO  GLADYS NATALY | 1728529561 | jvk-editor3 | 817.560 | 9.991.900 |
-| 1702520720040 | AIGAJE SALAZAR  CAMILO PASCUAL | 0914057583 | jvk-editor3 | 817.249 | 9.990.722 |
-| 1702520720056 | ULCUANGO FARINANGO ROSA JULIANA | 1711077832 | jvk-editor2 | 817.104 | 9.991.434 |
-| 1702520720075 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 | 817.042 | 9.991.254 |
-| 1702520720184 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | mayralisseth201 | 817.033 | 9.991.698 |
-| 1702520720203 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 | 816.757 | 9.991.904 |
-| 1702520720267 | CHOLANGO ULCUANGO MARIA LUISA | 1716827041 | jvk-editor3 | 817.123 | 9.990.739 |
-| 1702520720293 | ACERO CHIQUIMBA SEGUNDO JUAN | 1705672580 | jvk-editor6 | 817.483 | 9.991.513 |
-| 1702520800030 | TIPAN Churaco Holger Eduardo | 1726324252 | jvk-corp | 810.289 | 9.994.528 |
-| 1702520800034 | TOAPANTA CHURACO JOSE SEGUNDO | 1715732283 | jvk-corp | 810.676 | 9.993.866 |
-| 1702520800049 | Lopez Churaco Rosa Virginia | 1722490313 | jvk-corp | 810.711 | 9.993.164 |
-| 1702520800129 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 | 811.200 | 9.993.784 |
-| 1702520820039 | PACHECO TIPAN JOSE PABLO | 1711093649 | jvk-editor5 | 811.098 | 9.993.238 |
-| 1702520910031 | FARINANGO CHIQUIMBA ZOILA | 1706539234 | jvk-editor2 | 813.888 | 9.989.732 |
-| 1702520940016 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 | 816.415 | 9.990.419 |
-| 1702520940052 | ASERO ULCUANGO SEGUNDO ANDRES | 1715112619 | jvk-editor5 | 817.027 | 9.990.007 |
-| 1702520940063 | ULCUANGO FARINANGO RICARDO | 1709261844 | mayralisseth201 | 816.848 | 9.990.164 |
 | 1702520980050 | CHIMARRO LINCANGO MARIA ELBIA | 1714943956 | u0_a330 | 818.121 | 9.990.135 |
-| 1702521030047 | LANCHIMBA LANCHIMBA JOSE RICARDO | 1726807538 | u0_a504 | 819.166 | 9.990.547 |
 | 1702521030056 | SOPALO LANCHIMBA SEGUNDO JULIAN | 1717859894 | u0_a504 | 818.964 | 9.990.120 |
-| 1702521050001 | IMBAQUINGO SOPALO MARIA MARTINA | 1714112339 | u0_a504 | 820.635 | 9.989.365 |
-| 1702521100134 | CHOLANGO TIPANLUISA MILTON RODRIGO | 1716784887 | jvk-corp | 818.011 | 9.989.373 |
-| 1702521120051 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | jvk-editor5 | 816.227 | 9.987.794 |
-| 1702521130061 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 | 815.899 | 9.988.464 |
-| 1702521130069 | FARINANGO CACHIGUANGO JUAN ELOY | 1710047745 | jvk-editor5 | 815.962 | 9.988.453 |
-| 1702521130074 | QUILUMBAQUIN FARINANGO SEGUNDO ISAIAS | 1000752145 | jvk-editor5 | 816.032 | 9.988.954 |
-| 1702521400056 | SOPALO REINOSO NINA GEOVANNA | 1724672751 | u0_a330 | 819.510 | 9.990.221 |
-| 1702521400074 | COYAGO IMBAQUINGO MARIA ORFELINA | 1712768678 | u0_a70 | 820.219 | 9.990.021 |
-| 1702521430172 | IMBAQUINGO SOPALO JOSE LEONARDO | 1714068960 | u0_a279 | 818.379 | 9.994.241 |
-| 1702521440019 | QUISHPE FARINANGO JOSE LUIS | 1715758031 | mayralisseth201 | 817.146 | 9.990.060 |
 | 1702521490030 | AIGAJE SOPALO PATRICIO MIGUEL | 1714030515 | u0_a335 | 820.502 | 9.988.815 |
-| 1702521540004 | ACERO COLLAGO MARÍA JESUSA | 1712315322 | jvk-editor3 | 818.518 | 9.988.451 |
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 | 810.827 | 9.987.029 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 | 811.049 | 9.986.935 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 | 811.425 | 9.986.633 |
 | 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 | 815.533 | 9.989.947 |
-| 1702521750032 | LOPEZ CHURACO LUZ MARIA | 1719888149 | jvk-editor5 | 808.609 | 9.993.455 |
-| 1702540050084 | SANCHEZ TANDAYAMO MARIA CLEMENCIA | 1708392533 | jvk-corp | 808.223 | 9.998.006 |
-| 1702540050087 | IMBAQUINGO ECHESI María Cristina | 1712572955 | jvk-corp | 808.250 | 9.998.169 |
-| 1702540050092 | SANCHEZ TANDAYAMO SEGUNDO VICTOR | 1712038817 | jvk-corp | 808.260 | 9.998.058 |
-| 1702540050103 | GARCIA Gualaguisi Jessica Jimena | 1715499610 | jvk-corp | 808.255 | 9.997.951 |
-| 1702540050103 | GARCIA Gualaguisi Eriza Lorena | 1715499610 | jvk-corp | 808.252 | 9.997.948 |
-| 1702540050107 | ECHESI LIMAICO SEGUNDO FRANCISCO | 1711498657 | jvk-corp | 808.485 | 9.997.324 |
-| 1702540050114 | ECHESI LIMAICO JUAN JOSE | 1710845387 | jvk-corp | 808.429 | 9.997.343 |
-| 1702540050119 | Tandayamo anchaguano MARIA Adelaida | 1713783957 | jvk-corp | 807.705 | 9.997.956 |
-| 1702540050119 | Tandayamos Anchaguano CARLOS Armando | 1701973553 | jvk-corp | 807.724 | 9.997.885 |
-| 1702540050179 | SALAZAR CHICAIZA LUIS EDUARDO | 1716369309 | jvk-corp | 808.109 | 9.998.346 |
-| 1702540060022 | ROJAS COBACANGO PEDRO JOSE | 1716037930 | jvk-corp | 807.318 | 9.996.398 |
-| … | _y 7 fichas más_ | | | | |
 
 ---
 
@@ -1796,15 +1717,15 @@ Las reglas las decidió la coordinación del proyecto el **9 de agosto de 2026**
 
 | | Datos | Por qué |
 |---|---:|---|
-| **Como se contaba antes** | **9.220** | Todo campo vacío era un pendiente |
+| **Como se contaba antes** | **9.161** | Todo campo vacío era un pendiente |
 | − Foto del predio _(regla 1)_ | −3.413 | La condición se eliminó desde el inicio del levantamiento. |
 | − Predios sin construcción _(regla 2)_ | −4.414 | Sin material de construcción no hay vivienda: agua y luz vacías son la respuesta correcta, no una omisión. El material deja de pedirse porque es el indicador, no un dato faltante. |
 | − Predio medido que no se riega _(regla 3)_ | −137 | El área sin riego está medida: el predio existe y no se riega. No falta ir a medirlo. |
-| − Caudal heredado de la comuna _(regla 4)_ | −138 | El caudal no se mide ficha por ficha, se hereda de la comuna (`METODOLOGIA-CAUDAL.md`). |
-| − Comunidad — se resuelve en oficina _(regla 5)_ | −67 | Se asigna por traslape espacial; todas tienen coordenadas. |
+| − Caudal heredado de la comuna _(regla 4)_ | −164 | El caudal no se mide ficha por ficha, se hereda de la comuna (`METODOLOGIA-CAUDAL.md`). |
+| − Comunidad — se resuelve en oficina _(regla 5)_ | −8 | Se asigna por traslape espacial; todas tienen coordenadas. |
 | − Tenencia — en espera del cliente _(regla 7)_ | −38 | La coordinación las revisa después de la depuración. |
 | − ALPAKA — en espera de dirección | −212 | No son encuestas: lotes de fraccionamiento cargados en bloque |
-| **Trabajo de campo real** | **801** | Lo que sí hay que ir a preguntar |
+| **Trabajo de campo real** | **775** | Lo que sí hay que ir a preguntar |
 
 Ninguna ficha se borró ni se dio por buena: lo que cambió es qué cuenta como pendiente. Los datos descontados siguen vacíos en el `data.gpkg`, y los que dependen de una decisión están listados arriba, en «Se resuelve en oficina» y «En espera de una decisión».
 
