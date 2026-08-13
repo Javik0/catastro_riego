@@ -1717,10 +1717,10 @@ Las reglas las decidió la coordinación del proyecto el **9 de agosto de 2026**
 
 | | Datos | Por qué |
 |---|---:|---|
-| **Como se contaba antes** | **9.161** | Todo campo vacío era un pendiente |
+| **Como se contaba antes** | **9.188** | Todo campo vacío era un pendiente |
 | − Foto del predio _(regla 1)_ | −3.413 | La condición se eliminó desde el inicio del levantamiento. |
 | − Predios sin construcción _(regla 2)_ | −4.414 | Sin material de construcción no hay vivienda: agua y luz vacías son la respuesta correcta, no una omisión. El material deja de pedirse porque es el indicador, no un dato faltante. |
-| − Predio medido que no se riega _(regla 3)_ | −137 | El área sin riego está medida: el predio existe y no se riega. No falta ir a medirlo. |
+| − Predio medido que no se riega _(regla 3)_ | −164 | El área sin riego está medida: el predio existe y no se riega. No falta ir a medirlo. |
 | − Caudal heredado de la comuna _(regla 4)_ | −164 | El caudal no se mide ficha por ficha, se hereda de la comuna (`METODOLOGIA-CAUDAL.md`). |
 | − Comunidad — se resuelve en oficina _(regla 5)_ | −8 | Se asigna por traslape espacial; todas tienen coordenadas. |
 | − Tenencia — en espera del cliente _(regla 7)_ | −38 | La coordinación las revisa después de la depuración. |
@@ -1749,7 +1749,7 @@ No son campos vacíos: son datos que están, pero no pueden ser ciertos. Se list
 
 | Qué pasa | Cuántas | Estado |
 |---|---:|---|
-| **El área se repite tres veces**: total, con riego y sin riego traen el mismo número, así que el predio se cuenta dos veces (56,38 ha de más) | 54 fichas | Clasificadas por su posición respecto al canal; **esperan validación** antes de corregir. Ver `REVISION-54-areas-sobre-el-canal.xlsx` |
+| **El área se repite tres veces**: total, con riego y sin riego traen el mismo número, así que el predio se cuenta dos veces (0,00 ha de más) | 0 fichas | Clasificadas por su posición respecto al canal; **esperan validación** antes de corregir. Ver `REVISION-54-areas-sobre-el-canal.xlsx` |
 | **Predios adicionales sin ficha madre**: quedaron sueltos por un defecto del formulario de QField | 5 predios | El formulario ya está corregido; **falta que llegue a las tablets**. Mientras tanto se siguen produciendo |
 | **Dos fichas comparten el identificador de QField**: José Rafael Coyago Chicaiza y Marco Rafael Coyago Alquinga, mismo predio en Santa Marianita de Pingulmí | 2 fichas | Hay un parche que evita que fallen los informes, pero **el dato sigue mal**. Falta confirmar si son copropietarios o una ficha duplicada |
 | **Áreas que no cuadran con el polígono del catastro** | 148 fichas | Listadas en `REVISION-AREAS-fichas-a-verificar.md` (corte 29-jul). Es un problema **distinto** del de arriba: solo 1 ficha coincide entre las dos listas |

@@ -1,7 +1,7 @@
 # Encuesta a los regantes — conocimiento de la Junta y del sistema
 
 **Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog**  
-Generado el 12/08/2026 desde el `data.gpkg` de campo.
+Generado el 13/08/2026 desde el `data.gpkg` de campo.
 
 Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta de Agua"** de la ficha de papel (pestaña "5. ENCUESTA" en QField).
 
@@ -38,8 +38,8 @@ Respondieron **4,132 de 4,307** regantes (95.9%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 22 | 3 | 88.0% |
-| Sector 1 | 1,523 | 214 | 87.7% |
+| (sin sector) | 4 | 0 | 100.0% |
+| Sector 1 | 1,541 | 217 | 87.7% |
 | Sector 2 | 1,452 | 185 | 88.7% |
 | Sector 3 | 610 | 123 | 83.2% |
 
@@ -47,12 +47,12 @@ Comunidades con el **menor** porcentaje de "Sí" (20+ entrevistados — donde en
 
 | Comunidad | Sí | No | % Sí |
 |---|---|---|---|
-| OTONCITO | 26 | 38 | 40.6% |
-| CUARTO LOTE | 27 | 19 | 58.7% |
-| SANTA ROSA DE PINGULMI | 53 | 31 | 63.1% |
+| OTONCITO | 28 | 38 | 42.4% |
+| CUARTO LOTE | 27 | 20 | 57.4% |
+| SANTA ROSA DE PINGULMI | 55 | 31 | 64.0% |
 | CANGAHUA PUNGO | 85 | 46 | 64.9% |
 | LOMA GORDA | 31 | 13 | 70.5% |
-| COCHAPAMBA | 170 | 47 | 78.3% |
+| COCHAPAMBA | 175 | 50 | 77.8% |
 | IZACATA | 33 | 9 | 78.6% |
 | PUCARÁ | 152 | 41 | 78.8% |
 
@@ -95,25 +95,23 @@ Respondieron 4,136 regantes. **3,675 (88.9%) identifican a José Joaquín Tipanl
 
 Respondieron 4,107 regantes (95.4%). El operador varía por sector; los más nombrados en cada uno:
 
-**(sin sector)** (25 respuestas):
+**(sin sector)** (4 respuestas):
 
 | Operador | Menciones | % del sector |
 |---|---|---|
-| Elias Imbago | 6 | 24.0% |
-| Edison Acero | 6 | 24.0% |
-| Sergio Ascanta | 2 | 8.0% |
-| Maria Elbia Chimarro Lincango | 2 | 8.0% |
-| Jose Elias Imbago | 2 | 8.0% |
+| Elias Imbago | 2 | 50.0% |
+| Maria Elbia Chimarro Lincango | 1 | 25.0% |
+| Jose Elias Imbago | 1 | 25.0% |
 
-**Sector 1** (1,736 respuestas):
+**Sector 1** (1,757 respuestas):
 
 | Operador | Menciones | % del sector |
 |---|---|---|
-| Enrique Quishpe | 278 | 16.0% |
-| Edison Acero | 200 | 11.5% |
-| Roberto Aigaje | 128 | 7.4% |
-| Cesar Maldonado | 98 | 5.6% |
-| Clemente Quinatoa | 88 | 5.1% |
+| Enrique Quishpe | 278 | 15.8% |
+| Edison Acero | 206 | 11.7% |
+| Roberto Aigaje | 129 | 7.3% |
+| Cesar Maldonado | 99 | 5.6% |
+| Clemente Quinatoa | 88 | 5.0% |
 
 **Sector 2** (1,631 respuestas):
 
@@ -184,8 +182,8 @@ Respondieron **4,110 de 4,307** regantes (95.4%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 19 | 6 | 76.0% |
-| Sector 1 | 1,304 | 428 | 75.3% |
+| (sin sector) | 4 | 0 | 100.0% |
+| Sector 1 | 1,319 | 434 | 75.2% |
 | Sector 2 | 1,359 | 263 | 83.8% |
 | Sector 3 | 503 | 228 | 68.8% |
 
@@ -197,10 +195,10 @@ Comunidades con el **menor** porcentaje de "Sí" (20+ entrevistados — donde en
 | MONTESERRÍN ALTO | 13 | 15 | 46.4% |
 | COMUNA IZACATA | 33 | 33 | 50.0% |
 | MILAGRO | 23 | 23 | 50.0% |
-| OTONCITO | 32 | 32 | 50.0% |
-| CUARTO LOTE | 25 | 21 | 54.3% |
+| OTONCITO | 34 | 32 | 51.5% |
 | CHINCHINLOMA | 47 | 39 | 54.7% |
-| PAMBAMARQUITO | 34 | 28 | 54.8% |
+| CUARTO LOTE | 26 | 21 | 55.3% |
+| PAMBAMARQUITO | 35 | 28 | 55.6% |
 
 ### ¿Le gustaría recibir capacitación?
 
@@ -213,8 +211,8 @@ Respondieron **4,038 de 4,307** regantes (93.8%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 23 | 1 | 95.8% |
-| Sector 1 | 1,630 | 95 | 94.5% |
+| (sin sector) | 4 | 0 | 100.0% |
+| Sector 1 | 1,649 | 96 | 94.5% |
 | Sector 2 | 1,400 | 158 | 89.9% |
 | Sector 3 | 630 | 101 | 86.2% |
 

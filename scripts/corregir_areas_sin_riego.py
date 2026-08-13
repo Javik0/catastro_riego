@@ -488,12 +488,31 @@ def main():
     v_tot, v_rie, v_sin = cur.fetchone()
     con.close()
 
+    # El descuadre no llega a cero y no debe: hay fichas que no declaran
+    # ninguna de las dos áreas, así que su superficie no está repartida entre
+    # riego y sin riego. Es un caso distinto, no un resto de esta corrección.
+    con = sqlite3.connect(GPKG)
+    cur = con.cursor()
+    cur.execute("SELECT COUNT(*), SUM(COALESCE(area_total,0)) FROM {} WHERE "
+                "area_total > 0 AND COALESCE(area_riego,0) = 0 "
+                "AND COALESCE(area_sin_riego,0) = 0".format(t))
+    n_sin_repartir, ha_sin_repartir = cur.fetchone()
+    con.close()
+    ha_sin_repartir = ha_sin_repartir or 0
+
+    descuadre = (v_rie + v_sin) - v_tot
     print("\n  VERIFICACION (releyendo del disco):")
     print("     fichas con el patron    : {}".format(quedan))
     print("     area total              : {} ha".format(ha(v_tot)))
     print("     con riego + sin riego   : {} ha".format(ha(v_rie + v_sin)))
-    print("     descuadre               : {} ha".format(ha(v_rie + v_sin - v_tot)))
-    ok = quedan == 0 and abs((v_rie + v_sin) - v_tot) < 10000
+    print("     descuadre               : {} ha".format(ha(descuadre)))
+    if n_sin_repartir:
+        print("        de los cuales {} ha son de {} ficha(s) que no declaran "
+              "ni riego ni sin riego".format(ha(ha_sin_repartir), n_sin_repartir))
+    # lo que esta corrección tenía que lograr es que no quede ninguna ficha con
+    # el patrón; el resto del descuadre tiene dueño conocido
+    resto = abs(descuadre) - ha_sin_repartir
+    ok = quedan == 0 and resto < 10000
     print("\n  {}".format("CORRECCION APLICADA Y VERIFICADA" if ok
                           else "!! REVISAR: el resultado no es el esperado"))
     print("\n  Siguiente paso: regenerar y publicar (npm run build + firebase deploy)")
