@@ -23,6 +23,9 @@ import AdminAuditoriaFichasHijas from './components/fichas/AdminAuditoriaFichasH
 // solo la usan admin y técnico. Importándola aquí de forma normal, ese peso lo
 // descargaría también el cliente, que ni siquiera puede entrar a esa pantalla.
 const RepresaPage = lazy(() => import('./components/represa/RepresaPage'));
+// Auditoría de áreas: lleva su propio JSON de ~780 KB y Leaflet, así que se
+// carga solo cuando se entra (igual que Represa).
+const AuditoriaAreasPage = lazy(() => import('./components/auditoria/AuditoriaAreasPage'));
 
 // ── Data Loader: lee los GeoJSON exportados ──
 function useLocalData() {
@@ -349,6 +352,23 @@ export default function App() {
                         </div>
                       }>
                         <RepresaPage />
+                      </Suspense>
+                    </RoleProtectedRoute>
+                  }
+                />
+                {/* Auditoría de áreas: dónde la superficie declarada no cuadra
+                    con el catastro del GADM. Trabajo de depuración interno, el
+                    cliente no accede (misma restricción que Reportes) */}
+                <Route
+                  path="auditoria-areas"
+                  element={
+                    <RoleProtectedRoute allowedRoles={['admin', 'tecnico']}>
+                      <Suspense fallback={
+                        <div className="flex items-center justify-center py-20">
+                          <div className="w-7 h-7 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                        </div>
+                      }>
+                        <AuditoriaAreasPage />
                       </Suspense>
                     </RoleProtectedRoute>
                   }

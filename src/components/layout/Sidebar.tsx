@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import {
   LayoutDashboard, Map, ClipboardList, FileText, ClipboardCheck,
-  LogOut, ChevronLeft, ChevronRight, Menu, X, GitBranch, Mountain,
+  LogOut, ChevronLeft, ChevronRight, Menu, X, GitBranch, Mountain, Ruler,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -13,12 +13,14 @@ const NAV_ITEMS = [
   { path: '/reportes', icon: FileText, label: 'Reportes', end: false },
   { path: '/encuestas', icon: ClipboardCheck, label: 'Encuestas', end: false },
   { path: '/auditoria-hijas', icon: GitBranch, label: 'Fichas Adicionales', end: false },
+  { path: '/auditoria-areas', icon: Ruler, label: 'Auditoría de Áreas', end: false },
 ];
 
 // Rutas de trabajo interno: el cliente (Consorcio) no las ve ni entra por URL
 // (la restricción real está en App.tsx con RoleProtectedRoute; esto solo evita
 // mostrarle un enlace que le daría error).
-const SOLO_EQUIPO = ['/reportes', '/encuestas', '/auditoria-hijas', '/represa'];
+const SOLO_EQUIPO = ['/reportes', '/encuestas', '/auditoria-hijas', '/represa',
+                     '/auditoria-areas'];
 
 interface Props {
   collapsed: boolean;
@@ -33,7 +35,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
   const filteredNavItems = NAV_ITEMS.filter((item) => {
     if (isTecnico) {
       return item.path === '/' || item.path === '/mapa' || item.path === '/encuestas'
-        || item.path === '/auditoria-hijas' || item.path === '/represa';
+        || item.path === '/auditoria-hijas' || item.path === '/represa'
+        || item.path === '/auditoria-areas';
     }
     // El cliente (Consorcio) solo consulta: Dashboard, Mapa y Fichas.
     if (SOLO_EQUIPO.includes(item.path)) {
