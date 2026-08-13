@@ -235,14 +235,22 @@ def main():
             caso['triple'] = len(triple)
         if clave in contorno:
             caso['geo'] = redondear(contorno[clave])
-        # ¿lo resuelven las observaciones?
+        # ¿lo resuelven las observaciones? Y si no, por qué no: es lo que hace
+        # falta para saber qué le falta a cada predio sin abrirlo uno a uno.
         obs_areas = [f['oa'] for f in fichas if f.get('oa')]
-        if tipo == 'exceso' and obs_areas:
+        if tipo == 'exceso':
             caso['obs_n'] = len(obs_areas)
             caso['obs_suma'] = sum(obs_areas)
-            caso['resuelto_por_obs'] = (
-                len(obs_areas) == len(fichas) and pol > 0
-                and abs(sum(obs_areas) - pol) / pol <= MARGEN_DIVIDIDO)
+            if not obs_areas:
+                caso['falta'] = 'nadie anotó su parte'
+            elif len(obs_areas) < len(fichas):
+                caso['falta'] = 'faltan {} de {} fichas por anotar'.format(
+                    len(fichas) - len(obs_areas), len(fichas))
+            elif pol > 0 and abs(sum(obs_areas) - pol) / pol > MARGEN_DIVIDIDO:
+                caso['falta'] = ('lo anotado suma {:,.0f} m² sobre un predio de '
+                                 '{:,.0f}'.format(sum(obs_areas), pol))
+            else:
+                caso['resuelto_por_obs'] = True
         casos.append(caso)
 
     # La propuesta de corrección la calcula `resolver_claves_catastrales`, el

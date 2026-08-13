@@ -51,7 +51,7 @@ type Caso = {
   fichas: Ficha[];
   geo?: [number, number][];
   triple?: number;
-  obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean;
+  obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean; falta?: string;
   digitos?: number;
   // en qué quedó su análisis (claves inexistentes y fichas sin comunidad)
   estado?: string; propuesta?: string; dif?: string;
@@ -332,6 +332,11 @@ export default function AuditoriaAreasPage() {
                         ✓ en obs.
                       </span>
                     )}
+                    {c.tipo === 'exceso' && !c.resuelto_por_obs && (c.obs_n || 0) > 0 && (
+                      <span className="mt-0.5 block text-[9px] text-blue-600">
+                        {c.obs_n} anotada{c.obs_n !== 1 ? 's' : ''}
+                      </span>
+                    )}
                   </span>
                 </button>
               );
@@ -516,6 +521,11 @@ export default function AuditoriaAreasPage() {
                   <p className="mt-1.5 rounded bg-green-50 px-2 py-1 text-xs text-green-800">
                     <CheckCircle2 className="mr-1 inline h-3 w-3" />
                     Las observaciones traen las áreas y suman el polígono: se resuelve copiándolas.
+                  </p>
+                )}
+                {sel.falta && (
+                  <p className="mt-1.5 rounded bg-amber-50 px-2 py-1 text-xs text-amber-800">
+                    <b>Qué falta para cerrarlo:</b> {sel.falta}.
                   </p>
                 )}
               </div>

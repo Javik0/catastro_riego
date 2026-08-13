@@ -1,7 +1,7 @@
 # Revisión de campo — Padrón Guanguilquí–Porotog
 
 **Última ficha registrada:** 2026-08-05  
-**Documento generado:** 12/08/2026  
+**Documento generado:** 13/08/2026  
 **Para:** equipo técnico de campo
 
 Este documento sale de leer el `data.gpkg` de QField tal como está hoy. Dice qué campos quedaron vacíos, en qué fichas y en qué comunidad, para poder planificar la salida por zona.
@@ -1691,7 +1691,7 @@ El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` hace
 
 ## En espera de una decisión
 
-No entran en la ruta de campo hasta que la coordinación del proyecto resuelva qué hacer con ellas.
+No entran en la ruta de campo mientras esté por decidir qué se hace con ellas.
 
 ### Tenencia del predio — 38 fichas
 
@@ -1707,7 +1707,7 @@ Los datos de escritura quedan en espera: el cliente los revisa **después** de l
 | Sin teléfono | 1 |
 | Sin nivel de instrucción | 155 |
 
-Antes de tocarlas hace falta una decisión de dirección sobre qué se hace con ellas.
+Queda por decidir qué se hace con ellas.
 
 ---
 
@@ -1731,15 +1731,15 @@ Ninguna ficha se borró ni se dio por buena: lo que cambió es qué cuenta como 
 
 > Antes de aplicar la regla 2 se comprobó que el material de construcción sirve de indicador: de las fichas principales sin material, **ninguna** tiene lleno el campo `material_constr_otro`. No hay viviendas escondidas detrás de un «otro material».
 
-**Cédula y teléfono se mantienen** como pendientes aunque muchos no se puedan obtener: la coordinación pidió expresamente dejar constancia del dato que falta.
+**Cédula y teléfono se mantienen** como pendientes aunque muchos no se puedan obtener: se pidió expresamente dejar constancia del dato que falta.
 
 ---
 
-## Para la dirección del proyecto, no para campo
+## Por decidir, no es trabajo de campo
 
 Estos campos están vacíos en **las 6.831 fichas, sin excepción**: `Informante`, `Consentimiento informado`.
 
-Un campo que no se llenó ni una sola vez no es trabajo pendiente de campo: o no está en el formulario de QField, o se decidió no usarlo. Pedir que se completen ahora significaría volver a visitar a los 4.307 regantes. **Es una decisión de dirección**, y conviene tomarla antes de que alguien los dé por perdidos en el informe.
+Un campo que no se llenó ni una sola vez no es trabajo pendiente de campo: o no está en el formulario de QField, o se decidió no usarlo. Pedir que se completen ahora significaría volver a visitar a los 4.307 regantes. **Está por decidir**, y conviene hacerlo antes de que alguien los dé por perdidos en el informe.
 
 ---
 

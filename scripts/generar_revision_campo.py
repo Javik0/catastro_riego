@@ -41,8 +41,8 @@ Lo que este documento separa del trabajo de campo
 -------------------------------------------------
 * **Oficina** — lo que se resuelve sin salir: las fichas sin comunidad se
   asignan por traslape espacial, porque todas tienen coordenadas.
-* **En espera** — lo que depende de una decisión de dirección: la tenencia del
-  predio y las fichas de ALPAKA, que no son encuestas.
+* **En espera** — lo que está por decidir: la tenencia del predio y las fichas
+  de ALPAKA, que no son encuestas.
 * **Nunca llenado** — `informante`, `consentimiento`: vacíos en el 100 % de las
   fichas. Un campo que nadie llenó nunca no es trabajo de campo pendiente.
 
@@ -510,8 +510,8 @@ def main():
 
     # ── en espera de una decisión ──
     w("## En espera de una decisión\n")
-    w("No entran en la ruta de campo hasta que la coordinación del proyecto "
-      "resuelva qué hacer con ellas.\n")
+    w("No entran en la ruta de campo mientras esté por decidir qué se hace "
+      "con ellas.\n")
 
     n_ten = contar(ds, t, EN_ESPERA[2], PRINCIPALES)
     w("### Tenencia del predio — {} fichas\n".format(num(n_ten)))
@@ -543,8 +543,7 @@ def main():
             for etq, n_c in detalle:
                 w("| {} | {} |".format(etq, num(n_c)))
             w("")
-        w("Antes de tocarlas hace falta una decisión de dirección sobre qué se "
-          "hace con ellas.\n")
+        w("Queda por decidir qué se hace con ellas.\n")
 
     w("---\n")
 
@@ -596,12 +595,12 @@ def main():
       "tiene lleno el campo `material_constr_otro`. No hay viviendas escondidas "
       "detrás de un «otro material».\n")
     w("**Cédula y teléfono se mantienen** como pendientes aunque muchos no se "
-      "puedan obtener: la coordinación pidió expresamente dejar constancia del "
-      "dato que falta.\n")
+      "puedan obtener: se pidió expresamente dejar constancia del dato que "
+      "falta.\n")
     w("---\n")
 
     # ── campos que nadie llenó nunca ──
-    w("## Para la dirección del proyecto, no para campo\n")
+    w("## Por decidir, no es trabajo de campo\n")
     nunca = []
     for campo, etq in [('informante', 'Informante'),
                        ('consentimiento_inform', 'Consentimiento informado')]:
@@ -615,9 +614,8 @@ def main():
         w("Un campo que no se llenó ni una sola vez no es trabajo pendiente de "
           "campo: o no está en el formulario de QField, o se decidió no usarlo. "
           "Pedir que se completen ahora significaría volver a visitar a los "
-          "{} regantes. **Es una decisión de dirección**, y conviene tomarla "
-          "antes de que alguien los dé por perdidos en el informe.\n"
-          .format(num(principales)))
+          "{} regantes. **Está por decidir**, y conviene hacerlo antes de que "
+          "alguien los dé por perdidos en el informe.\n".format(num(principales)))
     else:
         w("_Sin campos en esta situación._\n")
 

@@ -40,8 +40,7 @@ Uso
 
 Sin `--aplicar` no escribe nada (regla 7).
 
-⚠ Esto **cambia la superficie del padrón**, que es cifra publicada. Requiere el
-visto bueno de la coordinación antes de aplicarse.
+⚠ Esto **cambia la superficie del padrón**, que es cifra publicada.
 """
 import argparse
 import json
@@ -182,7 +181,8 @@ def main():
 
     if not args.aplicar:
         print("\n  SIMULACION: no se escribió nada.")
-        print("  Cambia la superficie del padrón: requiere visto bueno antes de aplicar.")
+        print("  Ojo: al aplicarlo cambia la superficie del padrón, que es cifra")
+        print("  publicada. Conviene regenerar informes y web después.")
         print("=" * 80)
         return 0
 
