@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { type FichaPredio, type PredioAdicional, safeToDate, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico, PARROQUIAS, TECNICOS, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_LOCATION, COMUNIDADES, COMUNIDADES_POR_SECTOR_FILTRO, META_COMUNEROS, etiquetaComunidad, ordenComunidad } from '../../lib/constants';
+import { pdfSafe } from '../../lib/pdfTexto';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
@@ -193,14 +194,16 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
       } catch {}
 
       doc.setFontSize(10); doc.setFont('helvetica', 'bold');
-      doc.text(PROJECT_TITLE, pageWidth / 2, 12, { align: 'center' });
+      doc.text(pdfSafe(PROJECT_TITLE), pageWidth / 2, 12, { align: 'center' });
       doc.setFontSize(8);
-      doc.text(PROJECT_SUBTITLE, pageWidth / 2, 17, { align: 'center' });
+      // pdfSafe porque jsPDF no dibuja el guion largo y el título salía como
+      // «GUANGUILQUÍPOROTOG», pegado y sin separador.
+      doc.text(pdfSafe(PROJECT_SUBTITLE), pageWidth / 2, 17, { align: 'center' });
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
-      doc.text(PROJECT_LOCATION, pageWidth / 2, 21, { align: 'center' });
+      doc.text(pdfSafe(PROJECT_LOCATION), pageWidth / 2, 21, { align: 'center' });
 
       doc.setFontSize(8); doc.setFont('helvetica', 'bold');
-      doc.text(subtitleText, pageWidth / 2, 26, { align: 'center' });
+      doc.text(pdfSafe(subtitleText), pageWidth / 2, 26, { align: 'center' });
       doc.setFont('helvetica', 'normal');
       doc.text(`Total de registros: ${dataToRender.length} | Generado: ${new Date().toLocaleDateString('es-EC')}`, pageWidth / 2, 30, { align: 'center' });
 
@@ -385,7 +388,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           const pc = doc.getNumberOfPages();
           doc.setFontSize(6); doc.setTextColor(128);
           doc.text(
-            `Página ${d.pageNumber} de ${pc} | Consorcio Cayambe SPT — Prefectura de Pichincha`,
+            pdfSafe(`Página ${d.pageNumber} de ${pc} | Consorcio Cayambe SPT — Prefectura de Pichincha`),
             pageWidth / 2, doc.internal.pageSize.getHeight() - 5, { align: 'center' }
           );
         },
