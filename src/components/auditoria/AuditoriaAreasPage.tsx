@@ -42,9 +42,10 @@ type Ficha = {
   lon: number | null; lat: number | null;
   obs?: string; oa?: number;
 };
+type Vecina = { com: string; lon: number; lat: number; d: number };
 type Caso = {
   clave: string;
-  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala';
+  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala' | 'sin_comunidad';
   com: string; sec: string;
   pol: number; dec: number; exc: number; nf: number;
   fichas: Ficha[];
@@ -52,9 +53,10 @@ type Caso = {
   triple?: number;
   obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean;
   digitos?: number;
-  // solo en las de clave inexistente: en qué quedó su análisis
+  // en qué quedó su análisis (claves inexistentes y fichas sin comunidad)
   estado?: string; propuesta?: string; dif?: string;
   area_confirma?: boolean; area_pol?: number; nota?: string;
+  via?: string; vecinas?: Vecina[]; uid?: string;
 };
 type Datos = {
   generado: string; corte: string;
@@ -62,10 +64,15 @@ type Datos = {
     fichas: number; exceso: number; dividido: number; triple: number;
     triple_solo: number; clave_mala: number; exc_ha: number;
     con_obs: number; resueltos_por_obs: number;
+    sin_comunidad: number; com_propuesta: number; com_revisar: number;
   };
   casos: Caso[];
   canal: [number, number][][];
 };
+
+/** Identifica un caso sin ambigüedad: la clave no basta cuando el caso es una
+ *  ficha suelta y hay varias sobre el mismo predio. */
+const idCaso = (c?: Caso | null) => (c ? (c.uid || `${c.clave}|${c.tipo}`) : '');
 
 const m2 = (v: number) => v.toLocaleString('es-EC') + ' m²';
 const ha = (v: number) =>
@@ -76,8 +83,25 @@ const TIPOS = {
   exceso: { et: 'Exceso de área', corto: 'Exceso', color: '#dc2626', bg: 'bg-red-50', tx: 'text-red-700' },
   triple: { et: 'Área triplicada', corto: 'Triplicada', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700' },
   clave_mala: { et: 'Clave inexistente', corto: 'Clave mala', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
+  sin_comunidad: { et: 'Sin comunidad', corto: 'Sin comunidad', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
 } as const;
+
+// Los filtros van agrupados por lo que hay que hacer con cada cosa, no por
+// tipo de dato: mezclar «sin comunidad» con «exceso de área» en una sola fila
+// obliga a recordar cuál era cuál.
+const GRUPOS: { titulo: string; pie: string; tipos: (keyof typeof TIPOS)[] }[] = [
+  {
+    titulo: 'Afectan a la superficie',
+    pie: 'Cuánto mide el padrón',
+    tipos: ['exceso', 'triple', 'clave_mala', 'dividido'],
+  },
+  {
+    titulo: 'Datos por completar',
+    pie: 'No cambian la superficie',
+    tipos: ['sin_comunidad'],
+  },
+];
 
 /** Lleva el mapa al caso elegido. */
 function Encuadrar({ caso }: { caso: Caso | null }) {
@@ -87,6 +111,7 @@ function Encuadrar({ caso }: { caso: Caso | null }) {
     const pts: LatLngExpression[] = [];
     caso.geo?.forEach(([lon, lat]) => pts.push([lat, lon]));
     caso.fichas.forEach((f) => { if (f.lat && f.lon) pts.push([f.lat, f.lon]); });
+    caso.vecinas?.forEach((v) => pts.push([v.lat, v.lon]));
     if (pts.length === 1) map.setView(pts[0], 18);
     else if (pts.length) map.fitBounds(pts as [number, number][], { padding: [60, 60], maxZoom: 18 });
   }, [caso, map]);
@@ -131,7 +156,7 @@ export default function AuditoriaAreasPage() {
   // aunque ya no estuviera en la lista. Se salta al primero de lo que se ve.
   useEffect(() => {
     if (!lista.length) return;
-    if (!sel || !lista.some((c) => c.clave === sel.clave && c.tipo === sel.tipo)) {
+    if (!sel || !lista.some((c) => idCaso(c) === idCaso(sel))) {
       setSel(lista[0]);
     }
   }, [lista, sel]);
@@ -159,7 +184,8 @@ export default function AuditoriaAreasPage() {
 
   const R = datos.resumen;
   const conteo = {
-    exceso: R.exceso, triple: R.triple, clave_mala: R.clave_mala, dividido: R.dividido,
+    exceso: R.exceso, triple: R.triple, clave_mala: R.clave_mala,
+    sin_comunidad: R.sin_comunidad, dividido: R.dividido,
   };
 
   return (
@@ -218,22 +244,33 @@ export default function AuditoriaAreasPage() {
                            focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
-            <div className="flex flex-wrap gap-1">
-              {(Object.keys(TIPOS) as (keyof typeof TIPOS)[]).map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setFiltro(t)}
-                  aria-pressed={filtro === t}
-                  title={TIPOS[t].et}
-                  className={`rounded-full border px-2 py-0.5 text-[11px] transition
-                    ${filtro === t
-                      ? 'border-gray-900 bg-gray-900 text-white'
-                      : 'border-gray-300 text-gray-600 hover:bg-gray-50'}`}
-                >
-                  {TIPOS[t].corto} <span className="tabular-nums opacity-70">{conteo[t]}</span>
-                </button>
-              ))}
-            </div>
+            {GRUPOS.map((g) => (
+              <div key={g.titulo}>
+                <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-gray-400">
+                  {g.titulo}
+                  <span className="ml-1 font-normal normal-case tracking-normal text-gray-400">
+                    · {g.pie}
+                  </span>
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  {g.tipos.map((t) => (
+                    <button
+                      key={t}
+                      onClick={() => setFiltro(t)}
+                      aria-pressed={filtro === t}
+                      title={TIPOS[t].et}
+                      className={`rounded-full border px-2 py-0.5 text-[11px] transition
+                        ${filtro === t
+                          ? 'border-gray-900 bg-gray-900 text-white'
+                          : 'border-gray-300 text-gray-600 hover:bg-gray-50'}`}
+                    >
+                      {TIPOS[t].corto}{' '}
+                      <span className="tabular-nums opacity-70">{conteo[t]}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto">
@@ -242,10 +279,13 @@ export default function AuditoriaAreasPage() {
             )}
             {lista.map((c) => {
               const T = TIPOS[c.tipo];
-              const activo = sel?.clave === c.clave && sel?.tipo === c.tipo;
+              // Los casos de superficie son un predio (la clave los identifica),
+              // pero los de comunidad son una FICHA, y dos fichas pueden estar
+              // sobre el mismo predio. Por eso manda el uid cuando lo hay.
+              const activo = idCaso(sel) === idCaso(c);
               return (
                 <button
-                  key={c.clave + c.tipo}
+                  key={idCaso(c)}
                   onClick={() => setSel(c)}
                   title={`${c.clave} · ${c.com}${c.sec ? ' · ' + c.sec : ''}`}
                   className={`flex w-full items-center gap-2 border-b border-gray-100 px-2 py-2
@@ -256,7 +296,9 @@ export default function AuditoriaAreasPage() {
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-mono text-[11px] text-gray-900">{c.clave}</span>
                     <span className="block truncate text-[11px] text-gray-500">
-                      {c.com} · {c.nf} ficha{c.nf !== 1 ? 's' : ''}
+                      {c.tipo === 'sin_comunidad'
+                        ? (c.fichas[0]?.n || '—')
+                        : `${c.com} · ${c.nf} ficha${c.nf !== 1 ? 's' : ''}`}
                     </span>
                   </span>
                   <span className="shrink-0 text-right">
@@ -269,6 +311,12 @@ export default function AuditoriaAreasPage() {
                       </>
                     )}
                     {c.tipo === 'dividido' && <CheckCircle2 className="h-4 w-4 text-green-600" />}
+                    {c.tipo === 'sin_comunidad' && (
+                      c.estado === 'propuesta'
+                        ? <span className="block max-w-[92px] truncate text-[10px] font-medium text-green-700"
+                                title={c.propuesta}>{c.propuesta}</span>
+                        : <span className="text-[10px] text-gray-500">revisar</span>
+                    )}
                     {c.tipo === 'triple' && (
                       <span className="text-[10px] text-amber-700">{c.triple} fic.</span>
                     )}
@@ -328,6 +376,27 @@ export default function AuditoriaAreasPage() {
                   </Tooltip>
                 </Polygon>
               )}
+              {/* Las vecinas que sustentan la propuesta de comunidad. Verlas
+                  alrededor es lo que hace evidente de dónde sale. */}
+              {sel?.vecinas?.map((v, i) => {
+                const apoya = v.com === sel.propuesta;
+                return (
+                  <CircleMarker
+                    key={`v${i}`}
+                    center={[v.lat, v.lon]}
+                    radius={4}
+                    pathOptions={{
+                      color: apoya ? '#0891b2' : '#94a3b8', weight: 1.5,
+                      fillColor: apoya ? '#0891b2' : '#cbd5e1',
+                      fillOpacity: apoya ? 0.8 : 0.5,
+                    }}
+                  >
+                    <Tooltip direction="top" offset={[0, -6]}>
+                      {v.com} · a {v.d} m
+                    </Tooltip>
+                  </CircleMarker>
+                );
+              })}
               {sel?.fichas.map((f, i) =>
                 f.lat && f.lon ? (
                   <CircleMarker
@@ -378,7 +447,30 @@ export default function AuditoriaAreasPage() {
                   <MapPin className="mr-1 inline h-3 w-3" />
                   {sel.com}{sel.sec ? ` · ${sel.sec}` : ''}
                 </p>
-                {sel.tipo !== 'clave_mala' && (
+                {sel.tipo === 'sin_comunidad' && (
+                  <>
+                    <p className="mt-1 text-xs text-gray-700">
+                      {sel.fichas[0]?.n} — la ficha no dice a qué comunidad pertenece.
+                    </p>
+                    {sel.estado === 'propuesta' ? (
+                      <p className="mt-1.5 rounded bg-green-50 px-2 py-1 text-xs text-green-800">
+                        <CheckCircle2 className="mr-1 inline h-3 w-3" />
+                        Es de <b>{sel.propuesta}</b>, según {sel.via}.
+                      </p>
+                    ) : (
+                      <p className="mt-1.5 rounded bg-gray-100 px-2 py-1 text-xs text-gray-700">
+                        Sin propuesta automática: {sel.nota}
+                      </p>
+                    )}
+                    {sel.vecinas?.length ? (
+                      <p className="mt-1 text-[11px] text-gray-500">
+                        Los puntos pequeños del mapa son las fichas vecinas que ya tienen
+                        comunidad; el grande es esta.
+                      </p>
+                    ) : null}
+                  </>
+                )}
+                {sel.tipo !== 'clave_mala' && sel.tipo !== 'sin_comunidad' && (
                   <p className="mt-1 text-xs text-gray-700">
                     {sel.nf} ficha{sel.nf !== 1 ? 's' : ''} declaran <b>{m2(sel.dec)}</b> sobre un
                     polígono de <b>{m2(sel.pol)}</b>

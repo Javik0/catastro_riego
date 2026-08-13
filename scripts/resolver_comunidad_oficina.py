@@ -117,36 +117,21 @@ def cargar_comunidades():
     return salida
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--aplicar', action='store_true',
-                    help='escribe en el data.gpkg (sin esto solo simula)')
-    ap.add_argument('--vecinos', type=int, default=12,
-                    help='fichas con comunidad que se consultan alrededor')
-    ap.add_argument('--consenso', type=float, default=0.7,
-                    help='proporción de esos vecinos que debe coincidir (0-1)')
-    ap.add_argument('--radio', type=float, default=400,
-                    help='metros máximos hasta el vecino más lejano consultado')
-    args = ap.parse_args()
+def analizar(n_vecinos=12, consenso=0.7, radio=400.0, con_vecinos=False):
+    """Deduce la comunidad de cada ficha que no la tiene. Sin efectos.
 
-    print("=" * 78)
-    print(" COMUNIDAD POR UBICACION" +
-          ("  [APLICAR]" if args.aplicar else "  [SIMULACION - no escribe nada]"))
-    print("=" * 78)
+    Devuelve (resueltas, revisar, avisos). Lo usa este script y también
+    `generar_auditoria_areas.py`, para que la pantalla web enseñe exactamente
+    la misma propuesta que se aplicaría.
 
-    for ruta, que in ((GPKG, 'data.gpkg'), (COMUNIDADES, 'comunidades.geojson')):
-        if not os.path.exists(ruta):
-            print("ERROR: no se encuentra {}:\n  {}".format(que, ruta))
-            return 1
-
+    Con `con_vecinos=True` cada resultado incluye las vecinas que sustentan la
+    propuesta, para poder dibujarlas en un mapa.
+    """
     comunidades = cargar_comunidades()
-    print("\n  capa de comunidades: {} polígonos".format(len(comunidades)))
-
     con = sqlite3.connect(GPKG)
     cur = con.cursor()
     t = '"{}"'.format(TABLA)
 
-    # comunidad conocida por clave catastral (vía 1)
     cur.execute("SELECT TRIM(COALESCE(clave_catastral,'')), TRIM(comunidad), COUNT(*) "
                 "FROM {} WHERE NOT {} AND TRIM(COALESCE(clave_catastral,'')) <> '' "
                 "GROUP BY 1, 2".format(t, VACIA))
@@ -154,42 +139,20 @@ def main():
     for clave, com, n in cur.fetchall():
         d = por_predio.setdefault(clave, {})
         d[com] = d.get(com, 0) + n
-    # si un predio tiene varias comunidades distintas, no sirve de referencia
     por_predio = {k: max(v, key=v.get) for k, v in por_predio.items() if len(v) == 1}
 
-    # fichas que SÍ tienen comunidad y sirven de vecinas (vía 3)
     cur.execute("SELECT TRIM(comunidad), COALESCE(coord_x_utm,0), COALESCE(coord_y_utm,0) "
                 "FROM {} WHERE NOT {} AND coord_x_utm IS NOT NULL "
                 "AND coord_x_utm <> 0".format(t, VACIA))
     vecinas = cur.fetchall()
-    print("  fichas con comunidad que sirven de referencia: {:,}".format(len(vecinas)))
 
-    # Cómo se escribe cada comunidad. Los técnicos teclean el nombre a mano y
-    # hay erratas sueltas (PANBAMAQUITO por PAMBAMARQUITO): copiar el nombre del
-    # vecino más cercano propagaría la errata. Se escribe la forma que el padrón
-    # ya usa mayoritariamente para esa comunidad canónica; la normalización
-    # sigue viviendo solo en comunidades_canon.py (regla 4).
     cur.execute("SELECT TRIM(comunidad), COUNT(*) FROM {} WHERE NOT {} GROUP BY 1"
                 .format(t, VACIA))
     variantes = {}
     for nom, n in cur.fetchall():
         variantes.setdefault(canonica(nom) or nom, []).append((n, nom))
     forma_usual = {k: max(v)[1] for k, v in variantes.items()}
-    print("  comunidades en el padrón: {}".format(len(forma_usual)))
-
-    # Algunas conviven con dos grafías y en varias la minoritaria es la buena
-    # (PAMBAMARQUITO 1 contra PANBAMAQUITO 71). Se escribe igualmente la
-    # mayoritaria para no introducir una tercera variante: el export ya las
-    # canoniza al publicar. Unificar los nombres del gpkg es otro trabajo, y
-    # conviene hacerlo de una vez para todas las fichas, no aquí.
     dobles = {k: sorted(v, reverse=True) for k, v in variantes.items() if len(v) > 1}
-    if dobles:
-        print("  ojo: {} comunidades se escriben de dos maneras en el gpkg"
-              .format(len(dobles)))
-        for k, v in sorted(dobles.items()):
-            print("     {:<20} se usará «{}» ({}), convive con {}"
-                  .format(k, v[0][1], v[0][0],
-                          ' y '.join('«{}» ({})'.format(nom, n) for n, nom in v[1:])))
 
     cur.execute(
         "SELECT COALESCE(id,''), TRIM(COALESCE(clave_catastral,'')), "
@@ -197,27 +160,26 @@ def main():
         "COALESCE(coord_x_utm,0), COALESCE(coord_y_utm,0), "
         "COALESCE(sector_investigacion,''), "
         "CASE WHEN es_ficha_hija IS NULL OR es_ficha_hija NOT IN "
-        "('1','true','SI','Si','si') THEN 1 ELSE 0 END "
+        "('1','true','SI','Si','si') THEN 1 ELSE 0 END, "
+        "COALESCE(cedula,''), COALESCE(telefono_celular,''), "
+        "COALESCE(creado_por,''), COALESCE(observaciones,'') "
         "FROM {} WHERE {}".format(t, VACIA))
     fichas = cur.fetchall()
-    print("  fichas sin comunidad: {} ({} principales)"
-          .format(len(fichas), sum(f[6] for f in fichas)))
+    con.close()
 
     def mismas(a, b):
-        """Dos nombres de comunidad que designan lo mismo (regla 4)."""
         return a and b and canonica(a) == canonica(b)
 
     resueltas, revisar = [], []
-    for uid, clave, nombre, x, y, sector, pri in fichas:
+    for (uid, clave, nombre, x, y, sector, pri, ced, tel, tec, obs) in fichas:
         por_cl = por_predio.get(clave)
-        por_geo = None
-        por_vec = None
+        por_geo = por_vec = None
         detalle_vec = ''
         cerca = None
+        soporte = []
 
         if x and y:
-            p = ogr.Geometry(ogr.wkbPoint)
-            p.AddPoint_2D(x, y)
+            p = ogr.Geometry(ogr.wkbPoint); p.AddPoint_2D(x, y)
             for com, _sec, g in comunidades:
                 if g.Contains(p):
                     por_geo = com
@@ -227,24 +189,27 @@ def main():
                 if d and d[0][0] <= CERCA_MAX_M:
                     cerca = d[0]
 
-            # vecindad: las más cercanas dentro del radio
-            cand = sorted(((x - vx) ** 2 + (y - vy) ** 2, com)
-                          for com, vx, vy in vecinas)[:args.vecinos]
-            cand = [(d2, c) for d2, c in cand if d2 <= args.radio ** 2]
+            cand = sorted(((x - vx) ** 2 + (y - vy) ** 2, com, vx, vy)
+                          for com, vx, vy in vecinas)[:n_vecinos]
+            cand = [c for c in cand if c[0] <= radio ** 2]
             if cand:
                 votos = {}
-                for _d2, c in cand:
+                for _d2, c, _vx, _vy in cand:
                     k = canonica(c) or c
                     votos.setdefault(k, [0, c])
                     votos[k][0] += 1
                 ganador = max(votos.values(), key=lambda v: v[0])
-                if ganador[0] / len(cand) >= args.consenso:
+                if ganador[0] / len(cand) >= consenso:
                     por_vec = ganador[1]
                     detalle_vec = '{} de {} vecinas'.format(ganador[0], len(cand))
+                if con_vecinos:
+                    soporte = [{'com': c, 'x': vx, 'y': vy, 'd': round(d2 ** 0.5)}
+                               for d2, c, vx, vy in cand]
 
-        item = {'uid': uid, 'clave': clave, 'nombre': nombre, 'pri': pri}
+        item = {'uid': uid, 'clave': clave, 'nombre': nombre, 'pri': pri,
+                'x': x, 'y': y, 'sec': sector, 'ced': ced, 'tel': tel,
+                'tec': tec, 'obs': (obs or '').strip(), 'vecinas': soporte}
         propuestas = [v for v in (por_cl, por_geo, por_vec) if v]
-        # ¿se contradicen entre sí?
         chocan = any(not mismas(a, b)
                      for i, a in enumerate(propuestas) for b in propuestas[i + 1:])
 
@@ -275,6 +240,44 @@ def main():
                                     .format(*cerca) if cerca
                                     else 'aislada, fuera de toda comunidad'))
             revisar.append(item)
+    return resueltas, revisar, {'dobles': dobles, 'n_comunidades': len(comunidades)}
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--aplicar', action='store_true',
+                    help='escribe en el data.gpkg (sin esto solo simula)')
+    ap.add_argument('--vecinos', type=int, default=12,
+                    help='fichas con comunidad que se consultan alrededor')
+    ap.add_argument('--consenso', type=float, default=0.7,
+                    help='proporción de esos vecinos que debe coincidir (0-1)')
+    ap.add_argument('--radio', type=float, default=400,
+                    help='metros máximos hasta el vecino más lejano consultado')
+    args = ap.parse_args()
+
+    print("=" * 78)
+    print(" COMUNIDAD POR UBICACION" +
+          ("  [APLICAR]" if args.aplicar else "  [SIMULACION - no escribe nada]"))
+    print("=" * 78)
+
+    for ruta, que in ((GPKG, 'data.gpkg'), (COMUNIDADES, 'comunidades.geojson')):
+        if not os.path.exists(ruta):
+            print("ERROR: no se encuentra {}:\n  {}".format(que, ruta))
+            return 1
+
+    resueltas, revisar, avisos = analizar(args.vecinos, args.consenso, args.radio)
+    print("\n  capa de comunidades: {} polígonos".format(avisos['n_comunidades']))
+    if avisos['dobles']:
+        print("  ojo: {} comunidades se escriben de dos maneras en el gpkg"
+              .format(len(avisos['dobles'])))
+        for k, v in sorted(avisos['dobles'].items()):
+            print("     {:<20} se usará «{}» ({}), convive con {}"
+                  .format(k, v[0][1], v[0][0],
+                          ' y '.join('«{}» ({})'.format(nom, n) for n, nom in v[1:])))
+    print("  fichas sin comunidad: {} ({} principales)"
+          .format(len(resueltas) + len(revisar),
+                  sum(r['pri'] for r in resueltas + revisar)))
+
 
     print("\n  {:<52} {:>5}".format('RESUELTAS', len(resueltas)))
     print("     confirmadas por más de una vía: {}"
@@ -308,15 +311,12 @@ def main():
         print("  SIMULACION: no se escribió nada.")
         print("  Para aplicarlo, repetir con --aplicar (respalda antes).")
         print("  " + "=" * 74)
-        con.close()
         return 0
 
     if not resueltas:
         print("\n  Nada que aplicar.")
-        con.close()
         return 0
 
-    con.close()
     print("\n  respaldando antes de tocar nada...")
     print("     {}".format(respaldo_sqlite(GPKG, 'antes-comunidad-oficina')))
 

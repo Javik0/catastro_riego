@@ -283,7 +283,55 @@ def main():
         caso.update(estado_clave.get(clave, {'estado': 'sin analizar'}))
         casos.append(caso)
 
-    orden = {'exceso': 0, 'triple': 1, 'clave_mala': 2, 'dividido': 3}
+    # ── fichas sin comunidad ──
+    # No afectan al área, pero son el otro trabajo de oficina pendiente y
+    # conviene verlas en el mismo sitio. La propuesta la calcula el módulo que
+    # la aplicaría, igual que con las claves.
+    try:
+        from resolver_comunidad_oficina import analizar as analizar_com
+        res_com, rev_com, _avisos = analizar_com(con_vecinos=True)
+
+        def caso_comunidad(r, estado):
+            lon = lat = None
+            if r['x'] and r['y']:
+                lon, lat, _ = a_geo.TransformPoint(r['x'], r['y'])
+                lon, lat = round(lon, 6), round(lat, 6)
+            f = {'n': r['nombre'] or '—', 'ced': r['ced'], 'tel': r['tel'],
+                 'a': 0, 'ar': 0, 'asr': 0, 'tec': r['tec'], 'f': '',
+                 'p': r['pri'], 'lon': lon, 'lat': lat}
+            if r['obs']:
+                f['obs'] = r['obs'][:400]
+            c = {'clave': r['clave'] or '(sin clave)', 'tipo': 'sin_comunidad',
+                 'com': '(sin comunidad)', 'sec': r['sec'] or '',
+                 'pol': 0, 'dec': 0, 'exc': 0, 'nf': 1, 'fichas': [f],
+                 'estado': estado, 'uid': r['uid']}
+            if estado == 'propuesta':
+                c['propuesta'] = r['com']
+                c['via'] = r['via']
+            else:
+                c['nota'] = r.get('motivo', '')
+            # las vecinas que sustentan la propuesta, para dibujarlas
+            vec = []
+            for v in (r.get('vecinas') or [])[:12]:
+                vlon, vlat, _ = a_geo.TransformPoint(v['x'], v['y'])
+                vec.append({'com': v['com'], 'lon': round(vlon, 6),
+                            'lat': round(vlat, 6), 'd': v['d']})
+            if vec:
+                c['vecinas'] = vec
+            if r['clave'] in contorno:
+                c['geo'] = redondear(contorno[r['clave']])
+            return c
+
+        for r in res_com:
+            casos.append(caso_comunidad(r, 'propuesta'))
+        for r in rev_com:
+            casos.append(caso_comunidad(r, 'revisar'))
+    except Exception as e:
+        print("  aviso: no se pudieron calcular las comunidades ({})".format(e))
+        res_com, rev_com = [], []
+
+    orden = {'exceso': 0, 'triple': 1, 'clave_mala': 2,
+             'sin_comunidad': 3, 'dividido': 4}
     casos.sort(key=lambda c: (orden[c['tipo']], -c['exc'], -c['nf']))
 
     # ── canal, como referencia en el mapa ──
@@ -313,6 +361,8 @@ def main():
             'exceso': cuenta['exceso'], 'dividido': cuenta['dividido'],
             'triple': n_triple, 'triple_solo': cuenta['triple'],
             'clave_mala': cuenta['clave_mala'],
+            'sin_comunidad': cuenta['sin_comunidad'],
+            'com_propuesta': len(res_com), 'com_revisar': len(rev_com),
             'exc_ha': round(exc_total / 10000.0, 2),
             'con_obs': con_obs, 'resueltos_por_obs': resueltos,
         },
@@ -337,6 +387,9 @@ def main():
             est[c.get('estado', '?')] = est.get(c.get('estado', '?'), 0) + 1
     for e, n in sorted(est.items(), key=lambda x: -x[1]):
         print("     {:<34} {:>3}".format(e, n))
+    print("  sin comunidad           : {:>4} fichas".format(cuenta['sin_comunidad']))
+    print("     con propuesta                     {:>3}".format(len(res_com)))
+    print("     para revisar                      {:>3}".format(len(rev_com)))
     print("\n  guardado: {} ({:,.0f} KB)"
           .format(os.path.relpath(SALIDA, BASE), os.path.getsize(SALIDA) / 1024))
     print("=" * 74)
