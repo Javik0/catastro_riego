@@ -32,6 +32,7 @@ import type { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';   // cada pantalla con mapa lo importa (igual que MapPage)
 import {
   AlertTriangle, CheckCircle2, Layers, MapPin, Phone, Ruler, Search, FileText,
+  PanelLeftClose, PanelLeftOpen,
 } from 'lucide-react';
 
 type Ficha = {
@@ -67,11 +68,12 @@ const m2 = (v: number) => v.toLocaleString('es-EC') + ' m²';
 const ha = (v: number) =>
   (v / 10000).toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
+// `corto` es para los chips del panel estrecho; `et` para el resto.
 const TIPOS = {
-  exceso: { et: 'Exceso de área', color: '#dc2626', bg: 'bg-red-50', tx: 'text-red-700', bd: 'border-red-200' },
-  triple: { et: 'Área triplicada', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700', bd: 'border-amber-200' },
-  clave_mala: { et: 'Clave inexistente', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700', bd: 'border-violet-200' },
-  dividido: { et: 'Bien dividido', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700', bd: 'border-green-200' },
+  exceso: { et: 'Exceso de área', corto: 'Exceso', color: '#dc2626', bg: 'bg-red-50', tx: 'text-red-700' },
+  triple: { et: 'Área triplicada', corto: 'Triplicada', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700' },
+  clave_mala: { et: 'Clave inexistente', corto: 'Clave mala', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
+  dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
 } as const;
 
 /** Lleva el mapa al caso elegido. */
@@ -94,6 +96,9 @@ export default function AuditoriaAreasPage() {
   const [filtro, setFiltro] = useState<keyof typeof TIPOS>('exceso');
   const [busca, setBusca] = useState('');
   const [sel, setSel] = useState<Caso | null>(null);
+  // El panel se pliega para revisar el mapa a pantalla completa, que es como
+  // se mira un predio en reunión.
+  const [panel, setPanel] = useState(true);
 
   useEffect(() => {
     fetch('/geo/auditoria_areas.json')
@@ -185,30 +190,35 @@ export default function AuditoriaAreasPage() {
 
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         {/* ── lista ── */}
-        <aside className="flex w-full min-h-0 flex-col border-r border-gray-200 bg-white lg:w-96">
-          <div className="space-y-2 border-b border-gray-200 p-3">
+        <aside
+          className={`flex min-h-0 flex-col border-r border-gray-200 bg-white
+                      transition-[width] duration-200
+                      ${panel ? 'w-full lg:w-72' : 'w-full lg:w-0 lg:overflow-hidden lg:border-r-0'}`}
+        >
+          <div className="space-y-2 border-b border-gray-200 p-2.5">
             <div className="relative">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-2 top-2 h-3.5 w-3.5 text-gray-400" />
               <input
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
-                placeholder="Clave, comunidad, regante o cédula"
-                className="w-full rounded-md border border-gray-300 py-2 pl-8 pr-3 text-sm
+                placeholder="Clave, comunidad, regante…"
+                className="w-full rounded-md border border-gray-300 py-1.5 pl-7 pr-2 text-xs
                            focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
             </div>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-1">
               {(Object.keys(TIPOS) as (keyof typeof TIPOS)[]).map((t) => (
                 <button
                   key={t}
                   onClick={() => setFiltro(t)}
                   aria-pressed={filtro === t}
-                  className={`rounded-full border px-2.5 py-1 text-xs transition
+                  title={TIPOS[t].et}
+                  className={`rounded-full border px-2 py-0.5 text-[11px] transition
                     ${filtro === t
                       ? 'border-gray-900 bg-gray-900 text-white'
                       : 'border-gray-300 text-gray-600 hover:bg-gray-50'}`}
                 >
-                  {TIPOS[t].et} <span className="tabular-nums opacity-70">{conteo[t]}</span>
+                  {TIPOS[t].corto} <span className="tabular-nums opacity-70">{conteo[t]}</span>
                 </button>
               ))}
             </div>
@@ -225,36 +235,37 @@ export default function AuditoriaAreasPage() {
                 <button
                   key={c.clave + c.tipo}
                   onClick={() => setSel(c)}
-                  className={`flex w-full items-center gap-3 border-b border-gray-100 px-3 py-2.5
+                  title={`${c.clave} · ${c.com}${c.sec ? ' · ' + c.sec : ''}`}
+                  className={`flex w-full items-center gap-2 border-b border-gray-100 px-2 py-2
                               text-left transition hover:bg-blue-50/60
                               ${activo ? 'bg-blue-50' : ''}`}
                 >
-                  <span className="h-9 w-1 shrink-0 rounded" style={{ background: T.color }} />
+                  <span className="h-8 w-1 shrink-0 rounded" style={{ background: T.color }} />
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate font-mono text-xs text-gray-900">{c.clave}</span>
-                    <span className="block truncate text-xs text-gray-500">
-                      {c.com}{c.sec ? ` · ${c.sec}` : ''} · {c.nf} ficha{c.nf !== 1 ? 's' : ''}
+                    <span className="block truncate font-mono text-[11px] text-gray-900">{c.clave}</span>
+                    <span className="block truncate text-[11px] text-gray-500">
+                      {c.com} · {c.nf} ficha{c.nf !== 1 ? 's' : ''}
                     </span>
                   </span>
                   <span className="shrink-0 text-right">
                     {c.tipo === 'exceso' && (
                       <>
-                        <span className="block text-sm font-semibold tabular-nums text-red-600">
+                        <span className="block text-xs font-semibold tabular-nums text-red-600">
                           +{ha(c.exc)}
                         </span>
-                        <span className="text-[10px] text-gray-500">ha de más</span>
+                        <span className="text-[9px] text-gray-500">ha</span>
                       </>
                     )}
                     {c.tipo === 'dividido' && <CheckCircle2 className="h-4 w-4 text-green-600" />}
                     {c.tipo === 'triple' && (
-                      <span className="text-[10px] text-amber-700">{c.triple} ficha(s)</span>
+                      <span className="text-[10px] text-amber-700">{c.triple} fic.</span>
                     )}
                     {c.tipo === 'clave_mala' && (
-                      <span className="text-[10px] text-violet-700">{c.digitos} dígitos</span>
+                      <span className="text-[10px] text-violet-700">{c.digitos} díg.</span>
                     )}
                     {c.resuelto_por_obs && (
-                      <span className="mt-0.5 block text-[10px] font-medium text-green-700">
-                        ✓ en observaciones
+                      <span className="mt-0.5 block text-[9px] font-medium text-green-700">
+                        ✓ en obs.
                       </span>
                     )}
                   </span>
@@ -323,9 +334,22 @@ export default function AuditoriaAreasPage() {
               <Encuadrar caso={sel} />
             </MapContainer>
 
+            {/* plegar la lista para dejarle el mapa entero */}
+            <button
+              onClick={() => setPanel((v) => !v)}
+              title={panel ? 'Ocultar la lista' : 'Mostrar la lista'}
+              aria-label={panel ? 'Ocultar la lista de predios' : 'Mostrar la lista de predios'}
+              className="absolute left-3 top-3 z-[1001] hidden rounded-md border border-gray-300
+                         bg-white/95 p-1.5 text-gray-600 shadow backdrop-blur
+                         transition hover:bg-gray-50 hover:text-gray-900 lg:block"
+            >
+              {panel ? <PanelLeftClose className="h-4 w-4" /> : <PanelLeftOpen className="h-4 w-4" />}
+            </button>
+
             {sel && (
-              <div className="pointer-events-none absolute left-3 top-3 z-[1000] max-w-sm rounded-lg
-                              border border-gray-200 bg-white/95 p-3 shadow-lg backdrop-blur">
+              <div className={`pointer-events-none absolute top-3 z-[1000] max-w-sm rounded-lg
+                              border border-gray-200 bg-white/95 p-3 shadow-lg backdrop-blur
+                              ${panel ? 'left-3 lg:left-14' : 'left-14'}`}>
                 <div className="flex items-center gap-2">
                   <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium
                                     ${TIPOS[sel.tipo].bg} ${TIPOS[sel.tipo].tx}`}>
