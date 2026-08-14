@@ -1,7 +1,7 @@
 {
-  "total": 2524,
+  "total": 2523,
   "pendientes": 0,
-  "completadas": 2524,
+  "completadas": 2523,
   "en_revision": 0,
   "por_sector": {
     "Sector 3": {
@@ -11,9 +11,9 @@
       "en_revision": 0
     },
     "Sector 1": {
-      "total": 1059,
+      "total": 1058,
       "pendientes": 0,
-      "completadas": 1059,
+      "completadas": 1058,
       "en_revision": 0
     },
     "Sector 2": {
@@ -39,6 +39,6 @@
     "Mayra Benavides": 353,
     "Sin asignar": 8,
     "Melany Recalde": 533,
-    "JVK-DIGITALIZACION": 103
+    "JVK-DIGITALIZACION": 102
   }
 }

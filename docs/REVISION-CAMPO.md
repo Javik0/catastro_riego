@@ -1,7 +1,7 @@
 # Revisión de campo — Padrón Guanguilquí–Porotog
 
 **Última ficha registrada:** 2026-08-05  
-**Documento generado:** 13/08/2026  
+**Documento generado:** 14/08/2026  
 **Para:** equipo técnico de campo
 
 Este documento sale de leer el `data.gpkg` de QField tal como está hoy. Dice qué campos quedaron vacíos, en qué fichas y en qué comunidad, para poder planificar la salida por zona.
@@ -34,7 +34,7 @@ No repite lo que ya está en otros documentos. Antes de salir a campo, revisar t
 
 ## Resumen
 
-Sobre las **3.815 fichas principales** que son encuestas de campo (de 6.831 fichas en total: 2.524 son hijas de la Sección 7 y 492 son de ALPAKA, que no son encuestas).
+Sobre las **3.815 fichas principales** que son encuestas de campo (de 6.830 fichas en total: 2.523 son hijas de la Sección 7 y 492 son de ALPAKA, que no son encuestas).
 
 | Qué falta | Fichas | Cómo se aborda |
 |---|---:|---|
@@ -1725,7 +1725,7 @@ Ninguna ficha se borró ni se dio por buena: lo que cambió es qué cuenta como 
 
 ## Por decidir, no es trabajo de campo
 
-Estos campos están vacíos en **las 6.831 fichas, sin excepción**: `Informante`, `Consentimiento informado`.
+Estos campos están vacíos en **las 6.830 fichas, sin excepción**: `Informante`, `Consentimiento informado`.
 
 Un campo que no se llenó ni una sola vez no es trabajo pendiente de campo: o no está en el formulario de QField, o se decidió no usarlo. Pedir que se completen ahora significaría volver a visitar a los 4.307 regantes. **Está por decidir**, y conviene hacerlo antes de que alguien los dé por perdidos en el informe.
 
