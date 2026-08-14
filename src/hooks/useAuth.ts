@@ -16,6 +16,32 @@ import type { UserProfile, UserRole } from '../lib/types';
 
 const INACTIVITY_TIMEOUT_MS = 1_800_000; // 30 minutos
 
+// ── Sesión simulada para desarrollo ──────────────────────────────────────────
+//
+// Trabajar en local obligaba a escribir las credenciales reales cada vez que se
+// reiniciaba el servidor. Con `VITE_DEV_LOGIN=1` en `.env.local` la aplicación
+// arranca ya dentro, sin tocar Firebase, y `VITE_DEV_ROL` permite ver la
+// aplicación como la ve cada rol — la única forma cómoda de comprobar que el
+// cliente no llega a Represa ni a Reportes.
+//
+// Por qué esto NO llega a producción: `import.meta.env.DEV` es una constante que
+// Vite sustituye por `false` al compilar, así que la condición entera se elimina
+// del bundle. Aun así se comprueba también la variable, que vive en `.env.local`
+// y no está en el repositorio. En un `npm run build` no queda ni el rastro.
+//
+// No sustituye a probar el login de verdad: para eso, apagar la variable.
+const DEV_LOGIN = import.meta.env.DEV && import.meta.env.VITE_DEV_LOGIN === '1';
+
+const perfilDeDesarrollo = (): UserProfile => {
+  const rol = (import.meta.env.VITE_DEV_ROL || 'admin') as UserRole;
+  return {
+    uid: 'dev-local',
+    email: `dev-${rol}@local`,
+    nombre: `Desarrollo (${rol})`,
+    rol,
+  };
+};
+
 interface AuthState {
   user: User | null;
   userProfile: UserProfile | null;
@@ -35,6 +61,20 @@ export function useAuth() {
 
   // ── Listener de autenticación ──
   useEffect(() => {
+    if (DEV_LOGIN) {
+      // sesión simulada: ni se abre el listener de Firebase
+      const perfil = perfilDeDesarrollo();
+      console.info(`[dev] sesión simulada como ${perfil.rol}. ` +
+                   'Apaga VITE_DEV_LOGIN en .env.local para probar el login real.');
+      setState({
+        user: { uid: perfil.uid, email: perfil.email } as User,
+        userProfile: perfil,
+        loading: false,
+        error: null,
+      });
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
@@ -89,7 +129,9 @@ export function useAuth() {
   // ── Auto-logout por inactividad ──
   const resetInactivityTimer = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (!state.user) return;
+    // en la sesión simulada no hay nada que expirar, y hacerlo dejaría la
+    // pantalla pidiendo un login que en local no queremos
+    if (!state.user || DEV_LOGIN) return;
 
     timeoutRef.current = setTimeout(async () => {
       try {
@@ -138,6 +180,12 @@ export function useAuth() {
 
   const logout = useCallback(async () => {
     setSessionExpired(false);
+    if (DEV_LOGIN) {
+      // Firebase no tiene ninguna sesión que cerrar: se vacía el estado para
+      // poder ver la pantalla de login. Recargar vuelve a entrar.
+      setState({ user: null, userProfile: null, loading: false, error: null });
+      return;
+    }
     await signOut(auth);
   }, []);
 
