@@ -20,6 +20,16 @@ Qué detecta
   número. No afecta al total del padrón pero rompe el reparto riego/sin riego.
 * **clave_mala** — la clave catastral no existe en el catastro del GADM. Casi
   siempre está mal escrita (le sobran o faltan dígitos).
+* **cultivo** — la superficie sembrada no cabe en el predio. Es la única de las
+  cinco que no mira áreas de predio sino la tabla de cultivos, y por eso hacía
+  falta: en agosto de 2026 una ficha declaraba 876.733 m² de pasto en un predio
+  de 8.767,33 m² —el área del predio con el punto decimal corrido— y ningún
+  control de áreas podía verla, porque sus áreas cuadraban perfectamente.
+
+  Ojo al leerla: **un cultivo mayor que el predio no siempre es un error**.
+  Sembrar en terreno arrendado fuera del predio propio es práctica corriente en
+  la zona. Lo que la pantalla ofrece es el caso ordenado por cuánto se pasa, con
+  el detalle de sus cultivos, para decidirlo uno a uno.
 
 El área escondida en las observaciones
 --------------------------------------
@@ -68,6 +78,12 @@ CAPA = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 TOLERANCIA_M2 = 1000
 # Y un predio se considera «bien dividido» si la suma cae dentro de este margen.
 MARGEN_DIVIDIDO = 0.15
+
+# Cuánto tiene que pasarse la superficie sembrada del predio para listarla. El
+# 10 % deja fuera el redondeo de quien declara «todo el predio» en cifras
+# redondas; los 200 m² evitan que un huerto mal medido llene la pantalla.
+MARGEN_CULTIVO = 1.10
+EXCESO_CULTIVO_M2 = 200
 
 # Números con pinta de superficie dentro de un texto libre. Los técnicos lo
 # escriben de muchas maneras y todas estas aparecen en el padrón:
@@ -163,19 +179,40 @@ def main():
         "COALESCE(observaciones,''), COALESCE(coord_x_utm,0), "
         "COALESCE(coord_y_utm,0), "
         "CASE WHEN es_ficha_hija IS NULL OR es_ficha_hija NOT IN "
-        "('1','true','SI','Si','si') THEN 1 ELSE 0 END "
+        "('1','true','SI','Si','si') THEN 1 ELSE 0 END, "
+        "COALESCE(id,'') "
         "FROM \"{}\"".format(CAPA), dialect='SQLITE')
-    filas = [[ft.GetField(i) for i in range(15)] for ft in res]
+    filas = [[ft.GetField(i) for i in range(16)] for ft in res]
     ds.ReleaseResultSet(res)
     corte = max((f[10] or '') for f in filas)
+
+    # ── lo sembrado, por ficha ──
+    # La capa se busca por nombre en vez de fijarla como constante porque su
+    # sufijo cambia si el proyecto de QField se regenera.
+    capa_cult = next((ds.GetLayer(i).GetName() for i in range(ds.GetLayerCount())
+                      if 'Cultivos_Agricolas' in ds.GetLayer(i).GetName()), None)
+    cultivos_por_ficha = {}
+    if capa_cult:
+        res = ds.ExecuteSQL(
+            "SELECT COALESCE(ficha_id,''), COALESCE(tipo_cultivo,''), "
+            "COALESCE(superficie_m2,0) FROM \"{}\" WHERE COALESCE(superficie_m2,0) > 0"
+            .format(capa_cult), dialect='SQLITE')
+        for ft in res:
+            fid, tipo, sup = ft.GetField(0), ft.GetField(1), ft.GetField(2)
+            cultivos_por_ficha.setdefault(fid, []).append((tipo or '—', float(sup)))
+        ds.ReleaseResultSet(res)
+        print("  cultivos: {:,} fichas con siembra registrada".format(len(cultivos_por_ficha)))
+    else:
+        print("  aviso: no se encontro la capa de cultivos; no se audita la produccion")
     ds = None
     print("  padrón  : {:,} fichas · corte {}".format(len(filas), corte))
 
     # ── una entrada por ficha, ya en coordenadas geográficas ──
     por_clave = {}
     claves_malas = {}
+    fichas_por_id = {}
     for (clave, at, ar, asr, nom, ced, tel, com, sec, tec, fecha, obs,
-         x, y, pri) in filas:
+         x, y, pri, fid) in filas:
         clave = (clave or '').strip()
         lon = lat = None
         if x and y:
@@ -196,6 +233,10 @@ def main():
         destino[clave]['fichas'].append(f)
         if com and not destino[clave]['com']:
             destino[clave]['com'] = com
+        # se guarda aparte para cruzar con los cultivos, que van por ficha y no
+        # por predio: dos fichas del mismo predio siembran cosas distintas
+        if fid:
+            fichas_por_id[fid] = {'f': f, 'clave': clave, 'com': com, 'sec': sec}
 
     # ── clasificar ──
     casos = []
@@ -377,6 +418,45 @@ def main():
         'area_cuadra': cuadran_area,
     }
 
+    # ── la producción que no cabe en el predio ──
+    #
+    # Va por ficha y no por predio: dos fichas del mismo predio siembran cosas
+    # distintas, y lo que se audita es lo que declaró cada regante.
+    casos_cultivo = []
+    for fid, dat in fichas_por_id.items():
+        items = cultivos_por_ficha.get(fid)
+        f = dat['f']
+        if not items or f['a'] <= 0:
+            continue
+        sembrado = sum(s for _, s in items)
+        if sembrado < f['a'] * MARGEN_CULTIVO or sembrado - f['a'] < EXCESO_CULTIVO_M2:
+            continue
+        clave = dat['clave']
+        caso = {
+            'clave': clave or '(sin clave)', 'tipo': 'cultivo',
+            'com': dat['com'] or '(sin comunidad)', 'sec': dat['sec'] or '',
+            'pol': round(areas_cat.get(clave, 0)), 'dec': round(f['a']),
+            'exc': round(sembrado - f['a']), 'nf': 1, 'fichas': [f],
+            'cul': round(sembrado), 'factor': round(sembrado / f['a'], 1),
+            'items': [{'t': t, 'm2': round(s, 2)}
+                      for t, s in sorted(items, key=lambda x: -x[1])],
+            'uid': 'cul|' + fid,
+        }
+        if clave in contorno:
+            caso['geo'] = redondear(contorno[clave])
+        casos_cultivo.append(caso)
+
+    # de mayor a menor desborde: por ahí se empieza a revisar
+    casos_cultivo.sort(key=lambda c: -c['factor'])
+    casos.extend(casos_cultivo)
+    exc_cultivo = sum(c['exc'] for c in casos_cultivo)
+    print("\n  la produccion no cabe en el predio: {:,} fichas · {:,.2f} ha sembradas de mas"
+          .format(len(casos_cultivo), exc_cultivo / 10000.0))
+    for c in casos_cultivo[:5]:
+        print("      {:<15} {:<30} x{:.1f}   predio {:>10,} m2   sembrado {:>12,} m2"
+              .format(c['clave'], c['fichas'][0]['n'][:30], c['factor'],
+                      c['dec'], c['cul']))
+
     salida = {
         'generado': datetime.now().strftime('%Y-%m-%d %H:%M'),
         'corte': corte,
@@ -390,6 +470,8 @@ def main():
             'com_propuesta': len(res_com), 'com_revisar': len(rev_com),
             'exc_ha': round(exc_total / 10000.0, 2),
             'con_obs': con_obs, 'resueltos_por_obs': resueltos,
+            'cultivo': len(casos_cultivo),
+            'cultivo_exc_ha': round(exc_cultivo / 10000.0, 2),
         },
         'casos': casos,
         'canal': canal,

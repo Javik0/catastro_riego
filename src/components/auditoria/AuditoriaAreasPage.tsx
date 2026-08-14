@@ -45,10 +45,12 @@ type Ficha = {
 type Vecina = { com: string; lon: number; lat: number; d: number };
 type Caso = {
   clave: string;
-  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala' | 'sin_comunidad';
+  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala' | 'sin_comunidad' | 'cultivo';
   com: string; sec: string;
   pol: number; dec: number; exc: number; nf: number;
   fichas: Ficha[];
+  // solo en los casos de producción: lo sembrado, cuántas veces el predio y qué
+  cul?: number; factor?: number; items?: { t: string; m2: number }[];
   geo?: [number, number][];
   triple?: number;
   obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean; falta?: string;
@@ -69,6 +71,7 @@ type Datos = {
     triple_solo: number; clave_mala: number; exc_ha: number;
     con_obs: number; resueltos_por_obs: number;
     sin_comunidad: number; com_propuesta: number; com_revisar: number;
+    cultivo?: number; cultivo_exc_ha?: number;
   };
   casos: Caso[];
   canal: [number, number][][];
@@ -89,6 +92,7 @@ const TIPOS = {
   clave_mala: { et: 'Clave inexistente', corto: 'Clave mala', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
   sin_comunidad: { et: 'Sin comunidad', corto: 'Sin comunidad', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
+  cultivo: { et: 'Siembra más de lo que mide', corto: 'Producción', color: '#65a30d', bg: 'bg-lime-50', tx: 'text-lime-700' },
 } as const;
 
 // Los filtros van agrupados por lo que hay que hacer con cada cosa, no por
@@ -104,6 +108,14 @@ const GRUPOS: { titulo: string; pie: string; tipos: (keyof typeof TIPOS)[] }[] =
     titulo: 'Datos por completar',
     pie: 'No cambian la superficie',
     tipos: ['sin_comunidad'],
+  },
+  {
+    // Va en su propio grupo porque no mira el predio sino lo sembrado, y
+    // porque aquí lo raro no es necesariamente un error: sembrar en terreno
+    // arrendado fuera del predio es corriente en la zona.
+    titulo: 'La producción no cabe en el predio',
+    pie: 'Cultivos, no superficie del predio',
+    tipos: ['cultivo'],
   },
 ];
 
@@ -190,6 +202,7 @@ export default function AuditoriaAreasPage() {
   const conteo = {
     exceso: R.exceso, triple: R.triple, clave_mala: R.clave_mala,
     sin_comunidad: R.sin_comunidad, dividido: R.dividido,
+    cultivo: R.cultivo ?? 0,
   };
 
   return (
@@ -332,7 +345,7 @@ export default function AuditoriaAreasPage() {
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-mono text-[11px] text-gray-900">{c.clave}</span>
                     <span className="block truncate text-[11px] text-gray-500">
-                      {c.tipo === 'sin_comunidad'
+                      {c.tipo === 'sin_comunidad' || c.tipo === 'cultivo'
                         ? (c.fichas[0]?.n || '—')
                         : `${c.com} · ${c.nf} ficha${c.nf !== 1 ? 's' : ''}`}
                     </span>
@@ -347,6 +360,14 @@ export default function AuditoriaAreasPage() {
                       </>
                     )}
                     {c.tipo === 'dividido' && <CheckCircle2 className="h-4 w-4 text-green-600" />}
+                    {c.tipo === 'cultivo' && (
+                      <>
+                        <span className="block text-xs font-semibold tabular-nums text-lime-700">
+                          ×{c.factor}
+                        </span>
+                        <span className="text-[9px] text-gray-500">del predio</span>
+                      </>
+                    )}
                     {c.tipo === 'sin_comunidad' && (
                       c.estado === 'propuesta'
                         ? <span className="block max-w-[92px] truncate text-[10px] font-medium text-green-700"
@@ -511,12 +532,46 @@ export default function AuditoriaAreasPage() {
                     ) : null}
                   </>
                 )}
-                {sel.tipo !== 'clave_mala' && sel.tipo !== 'sin_comunidad' && (
+                {sel.tipo !== 'clave_mala' && sel.tipo !== 'sin_comunidad'
+                  && sel.tipo !== 'cultivo' && (
                   <p className="mt-1 text-xs text-gray-700">
                     {sel.nf} ficha{sel.nf !== 1 ? 's' : ''} declaran <b>{m2(sel.dec)}</b> sobre un
                     polígono de <b>{m2(sel.pol)}</b>
                     {sel.exc > 0 && <> · sobran <b className="text-red-600">{ha(sel.exc)} ha</b></>}
                   </p>
+                )}
+                {sel.tipo === 'cultivo' && (
+                  <>
+                    <p className="mt-1 text-xs text-gray-700">
+                      {sel.fichas[0]?.n} declara <b className="text-lime-700">{m2(sel.cul || 0)}</b>
+                      {' '}sembrados en un predio de <b>{m2(sel.dec)}</b> —
+                      {' '}<b>{sel.factor} veces</b> su terreno.
+                    </p>
+                    {sel.items?.length ? (
+                      <div className="mt-1.5 rounded border border-lime-200 bg-lime-50 px-2 py-1.5">
+                        <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-lime-800">
+                          Lo que declaró sembrado
+                        </p>
+                        {sel.items.map((it, i) => (
+                          <div key={i} className="flex justify-between gap-3 text-[11px] text-gray-700">
+                            <span className="truncate">{it.t}</span>
+                            <span className="shrink-0 tabular-nums font-medium">{m2(it.m2)}</span>
+                          </div>
+                        ))}
+                        <div className="mt-1 flex justify-between gap-3 border-t border-lime-200 pt-1
+                                        text-[11px] font-semibold text-gray-900">
+                          <span>Predio según el catastro</span>
+                          <span className="tabular-nums">{m2(sel.pol)}</span>
+                        </div>
+                      </div>
+                    ) : null}
+                    <p className="mt-1.5 rounded bg-gray-100 px-2 py-1 text-[11px] text-gray-700">
+                      <b>No siempre es un error.</b> Sembrar en terreno arrendado fuera del predio
+                      propio es corriente aquí. Lo que hay que mirar es si la cifra tiene sentido:
+                      un factor redondo (×10, ×100) suele ser el punto decimal; un factor pequeño,
+                      terreno de fuera.
+                    </p>
+                  </>
                 )}
                 {sel.tipo === 'clave_mala' && (
                   <>
