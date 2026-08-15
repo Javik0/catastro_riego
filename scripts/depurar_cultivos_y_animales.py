@@ -23,14 +23,22 @@ Qué hace con cada caso
   que es la regla del cliente. Los totales del padrón no se mueven: lo que
   cambia es el número de registros, no la superficie.
 
-* **Repetido con el MISMO valor y decimales** (`OTROS ×2 de 24.399,98 m²`) →
-  copia. Nadie mide dos parcelas iguales al centímetro. Se deja un registro.
+* **Repetido con el MISMO valor** (`OTROS ×2 de 24.399,98 m²`, `CEBOLLA ×2 de
+  5.000 m²`, `CUYES ×2 de 200`) → copia: se deja un registro.
 
-* **Repetido con el MISMO valor redondo** (`CEBOLLA ×2 de 5.000 m²`) → **no se
-  toca**. Puede ser copia o dos lotes iguales de verdad, y el riesgo es
-  simétrico: sumar infla, borrar pierde. Se listan al final para decidirlos.
-  Lo mismo con los animales, donde las cantidades son enteras y no hay
-  decimales que delaten la copia.
+  Al principio solo se retiraban los que traían decimales —nadie mide dos
+  parcelas iguales al centímetro— y los de cifra redonda se dejaban por si eran
+  dos lotes de verdad. Al revisarlos con el cliente (15-ago-2026) se decidió
+  retirarlos también, y los datos lo respaldan: **se concentran en unos pocos
+  técnicos** (uno solo acumula el 41 % de los casos de animales, cuando son 17
+  los que levantaron fichas) y en **24 fichas está repetida la lista entera**,
+  que es la firma de un formulario guardado dos veces. Si fueran parcelas
+  reales se repartirían al azar entre todos.
+
+  Además, la instrucción de campo era registrar el mismo cultivo una sola vez
+  con la superficie sumada: dos registros idénticos no deberían existir.
+
+  Con `--conservar-iguales` se vuelve al comportamiento anterior.
 
 Uso
 ---
@@ -93,7 +101,7 @@ def tabla(cur, clave):
                  and not any(x in t[0] for x in ('rtree_', 'log_', 'gpkg_'))), None)
 
 
-def analizar(cur, t, col_id, col_tipo, col_valor, flags, entero):
+def analizar(cur, t, col_id, col_tipo, col_valor, flags, entero, conservar_iguales=False):
     """Devuelve (renombres, fusiones, copias, ambiguos) sin tocar nada."""
     cur.execute('SELECT {}, ficha_id, {}, COALESCE({},0), {} FROM "{}"'
                 .format(col_id, col_tipo, col_valor,
@@ -121,10 +129,10 @@ def analizar(cur, t, col_id, col_tipo, col_valor, flags, entero):
             vals = [round(float(r[3]), 2) for r in rs]
             if len(set(vals)) > 1:
                 fusiones.append((clave, rs, sum(vals)))       # regla del cliente
-            elif not entero and abs(vals[0] - round(vals[0])) > 0.001:
-                copias.append((clave, rs, vals[0]))           # copia evidente
+            elif not conservar_iguales or (not entero and abs(vals[0] - round(vals[0])) > 0.001):
+                copias.append((clave, rs, vals[0]))           # el mismo dato dos veces
             else:
-                ambiguos.append((clave, rs, vals[0]))         # decide una persona
+                ambiguos.append((clave, rs, vals[0]))         # solo con --conservar-iguales
     return renombres, fusiones, copias, ambiguos
 
 
@@ -181,6 +189,9 @@ def main():
     ap = argparse.ArgumentParser(description='Unifica escritura y consolida repetidos')
     ap.add_argument('--aplicar', action='store_true',
                     help='escribe en el data.gpkg (sin esto solo simula)')
+    ap.add_argument('--conservar-iguales', action='store_true',
+                    help='no retira los repetidos de cifra redonda (comportamiento previo '
+                         'al 15-ago-2026; solo se retiraban los que traian decimales)')
     args = ap.parse_args()
 
     print('=' * 78)
@@ -193,9 +204,9 @@ def main():
     t_cult, t_anim = tabla(cur, 'Cultivos_Agricolas'), tabla(cur, 'Animales_Especies')
 
     c = analizar(cur, t_cult, 'id_cultivo', 'tipo_cultivo', 'superficie_m2',
-                 FLAGS_CULT, entero=False)
+                 FLAGS_CULT, entero=False, conservar_iguales=args.conservar_iguales)
     a = analizar(cur, t_anim, 'id_animal', 'especie', 'cantidad',
-                 FLAGS_ANIM, entero=True)
+                 FLAGS_ANIM, entero=True, conservar_iguales=args.conservar_iguales)
     quita_c = informe('CULTIVOS', *c, unidad='m²')
     quita_a = informe('ANIMALES', *a, unidad='cabezas')
 

@@ -1,5 +1,5 @@
 {
- "generado": "2026-08-15 02:13",
+ "generado": "2026-08-15 02:26",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
