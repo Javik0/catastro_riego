@@ -95,29 +95,69 @@ AREA_EN_TEXTO = re.compile(
     r'\s*(?:CUADRADOS?|CUADRADAS?)?', re.IGNORECASE)
 
 
-def num_del_texto(txt):
-    """El área que menciona una observación, o None.
+# Cuando el técnico escribe a quién le toca qué, el número que importa es el
+# que va DESPUÉS de estas expresiones, no el primero del texto: «El terreno
+# area total 29632.85m² se divide para dos personas, le corresponde 14816m²».
+PERTENENCIA = re.compile(
+    r'(?:LE\s+)?(?:CORRESPONDE[N]?|PERTENECE[N]?|ASIGNAD[AO]|ES\s+DUE[NÑ][AO]\s+DE|'
+    r'POSEE|TIENE\s+DERECHO\s+A|POR\s+CADA|CADA\s+UNO)', re.IGNORECASE)
 
-    Los técnicos escriben tanto «23654.79» como «2.000» y «1,247.42», así que
-    hay que decidir si el punto separa decimales o miles.
+
+def _a_numero(crudo):
+    """Interpreta «3407.335», «1.247,42», «2.000» o «12500» como metros.
+
+    La regla dura es la posición del separador, no su forma: los miles se
+    agrupan de tres en tres, así que un punto con **cuatro o más dígitos
+    delante** no puede separar miles y solo puede ser decimal. Antes se miraba
+    si había uno o dos decimales, y «3407.335 m²» —que los técnicos escriben a
+    menudo— se leía como 3.407.335 m², mil veces más grande.
+
+    >>> _a_numero('3407.335')      # 4 dígitos delante: decimal
+    3407.335
+    >>> _a_numero('2.000')         # miles
+    2000.0
+    >>> _a_numero('1.247,42')      # coma decimal, punto de miles
+    1247.42
+    >>> _a_numero('1,247.42')      # al revés, como lo escribe una calculadora
+    1247.42
     """
+    crudo = crudo.strip().rstrip('.,')
+    if ',' in crudo and '.' in crudo:
+        # manda el último separador: es el decimal
+        dec, mil = (',', '.') if crudo.rfind(',') > crudo.rfind('.') else ('.', ',')
+        crudo = crudo.replace(mil, '').replace(dec, '.')
+        return float(crudo)
+    for sep in ('.', ','):
+        if sep in crudo:
+            ent, _, frac = crudo.partition(sep)
+            # cuatro dígitos delante ⇒ no son miles; tres decimales justos y
+            # pocos dígitos delante ⇒ sí lo son («2.000», «12.500»)
+            if len(ent) >= 4 or len(frac) != 3:
+                return float(crudo.replace(sep, '.'))
+            return float(ent + frac)
+    return float(crudo)
+
+
+def num_del_texto(txt):
+    """El área que menciona una observación, o None."""
     if not txt:
         return None
-    m = AREA_EN_TEXTO.search(txt)
-    if not m:
+    coincidencias = list(AREA_EN_TEXTO.finditer(txt))
+    if not coincidencias:
         return None
-    crudo = m.group(1).strip().rstrip('.,')
+    # si el texto dice a quién le toca, el número bueno es el que viene después
+    marca = PERTENENCIA.search(txt)
+    elegida = coincidencias[0]
+    if marca:
+        posteriores = [m for m in coincidencias if m.start() > marca.start()]
+        if posteriores:
+            elegida = posteriores[0]
     try:
-        if ',' in crudo and '.' in crudo:          # 1,247.42
-            v = float(crudo.replace(',', ''))
-        elif re.search(r'[.,]\d{1,2}$', crudo):    # 23654.79  ·  1247,42
-            v = float(crudo.replace(',', '.'))
-        else:                                       # 2.000  ·  2000
-            v = float(crudo.replace('.', '').replace(',', ''))
+        v = _a_numero(elegida.group(1))
     except ValueError:
         return None
     # si venía en hectáreas, a metros
-    if re.search(r'HAS?\b|HECTAREAS?\b', m.group(0), re.IGNORECASE):
+    if re.search(r'HAS?\b|HECTAREAS?\b', elegida.group(0), re.IGNORECASE):
         v *= 10000
     # descartar lo que no puede ser la superficie de un predio
     return round(v) if 10 <= v <= 5_000_000 else None

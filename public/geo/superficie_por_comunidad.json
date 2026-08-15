@@ -1,13 +1,13 @@
 {
- "generado": "2026-08-15 01:29",
+ "generado": "2026-08-15 02:13",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
   "regantes": 4307,
   "predios_catastrales": 5984,
   "superficie_catastral_ha": 8092.45,
-  "superficie_declarada_ha": 9872.77,
-  "riego_declarado_ha": 7310.02,
+  "superficie_declarada_ha": 9779.89,
+  "riego_declarado_ha": 7295.81,
   "riego_ajustado_ha": 6130.18,
   "fichas_sin_poligono": 13,
   "predios_compartidos": 435
@@ -18,8 +18,8 @@
    "regantes": 1789.0,
    "predios_catastrales": 3092.0,
    "superficie_catastral_ha": 3287.23,
-   "superficie_declarada_ha": 4426.41,
-   "riego_declarado_ha": 3552.15,
+   "superficie_declarada_ha": 4419.14,
+   "riego_declarado_ha": 3549.24,
    "riego_ajustado_ha": 2768.42
   },
   "Sector 2": {
@@ -27,8 +27,8 @@
    "regantes": 1768.0,
    "predios_catastrales": 1982.0,
    "superficie_catastral_ha": 2349.84,
-   "superficie_declarada_ha": 2992.19,
-   "riego_declarado_ha": 2151.95,
+   "superficie_declarada_ha": 2911.15,
+   "riego_declarado_ha": 2142.17,
    "riego_ajustado_ha": 1796.46
   },
   "Sector 3": {
@@ -36,8 +36,8 @@
    "regantes": 750.0,
    "predios_catastrales": 910.0,
    "superficie_catastral_ha": 2455.38,
-   "superficie_declarada_ha": 2454.19,
-   "riego_declarado_ha": 1605.92,
+   "superficie_declarada_ha": 2449.62,
+   "riego_declarado_ha": 1604.39,
    "riego_ajustado_ha": 1565.3
   }
  },
@@ -102,8 +102,8 @@
    "predios_adicionales": 206,
    "predios_catastrales": 449,
    "superficie_catastral_ha": 416.67,
-   "superficie_declarada_ha": 1178.99,
-   "riego_declarado_ha": 859.82,
+   "superficie_declarada_ha": 1178.4,
+   "riego_declarado_ha": 859.23,
    "riego_ajustado_ha": 326.47,
    "sin_riego_declarado_ha": 319.17
   },
@@ -128,10 +128,10 @@
    "predios_adicionales": 146,
    "predios_catastrales": 279,
    "superficie_catastral_ha": 253.84,
-   "superficie_declarada_ha": 296.33,
-   "riego_declarado_ha": 247.09,
+   "superficie_declarada_ha": 295.46,
+   "riego_declarado_ha": 246.65,
    "riego_ajustado_ha": 211.39,
-   "sin_riego_declarado_ha": 49.25
+   "sin_riego_declarado_ha": 48.81
   },
   {
    "comunidad": "SAN ANTONIO",
@@ -141,10 +141,10 @@
    "predios_adicionales": 81,
    "predios_catastrales": 173,
    "superficie_catastral_ha": 248.47,
-   "superficie_declarada_ha": 259.4,
-   "riego_declarado_ha": 258.12,
+   "superficie_declarada_ha": 258.54,
+   "riego_declarado_ha": 257.69,
    "riego_ajustado_ha": 246.88,
-   "sin_riego_declarado_ha": 1.28
+   "sin_riego_declarado_ha": 0.85
   },
   {
    "comunidad": "ASOCIACION POROTOG",
@@ -206,10 +206,10 @@
    "predios_adicionales": 90,
    "predios_catastrales": 194,
    "superficie_catastral_ha": 162.38,
-   "superficie_declarada_ha": 165.36,
-   "riego_declarado_ha": 154.58,
+   "superficie_declarada_ha": 164.5,
+   "riego_declarado_ha": 154.15,
    "riego_ajustado_ha": 152.5,
-   "sin_riego_declarado_ha": 10.79
+   "sin_riego_declarado_ha": 10.36
   },
   {
    "comunidad": "PUCARA",
@@ -323,10 +323,10 @@
    "predios_adicionales": 30,
    "predios_catastrales": 115,
    "superficie_catastral_ha": 119.45,
-   "superficie_declarada_ha": 527.48,
-   "riego_declarado_ha": 204.5,
+   "superficie_declarada_ha": 450.62,
+   "riego_declarado_ha": 196.82,
    "riego_ajustado_ha": 98.73,
-   "sin_riego_declarado_ha": 322.97
+   "sin_riego_declarado_ha": 253.8
   },
   {
    "comunidad": "CHINCHINLOMA",
@@ -336,10 +336,10 @@
    "predios_adicionales": 42,
    "predios_catastrales": 125,
    "superficie_catastral_ha": 109.96,
-   "superficie_declarada_ha": 127.23,
-   "riego_declarado_ha": 76.31,
+   "superficie_declarada_ha": 122.66,
+   "riego_declarado_ha": 74.78,
    "riego_ajustado_ha": 68.4,
-   "sin_riego_declarado_ha": 50.92
+   "sin_riego_declarado_ha": 47.87
   },
   {
    "comunidad": "ASOCIACION 17 DE JUNIO",
@@ -414,10 +414,10 @@
    "predios_adicionales": 77,
    "predios_catastrales": 165,
    "superficie_catastral_ha": 88.18,
-   "superficie_declarada_ha": 133.72,
-   "riego_declarado_ha": 128.61,
+   "superficie_declarada_ha": 129.63,
+   "riego_declarado_ha": 127.59,
    "riego_ajustado_ha": 86.65,
-   "sin_riego_declarado_ha": 5.11
+   "sin_riego_declarado_ha": 2.04
   },
   {
    "comunidad": "ASOC. PITANA BAJO",
@@ -440,10 +440,10 @@
    "predios_adicionales": 19,
    "predios_catastrales": 57,
    "superficie_catastral_ha": 84.7,
-   "superficie_declarada_ha": 86.01,
-   "riego_declarado_ha": 55.63,
+   "superficie_declarada_ha": 83.93,
+   "riego_declarado_ha": 54.59,
    "riego_ajustado_ha": 50.98,
-   "sin_riego_declarado_ha": 30.38
+   "sin_riego_declarado_ha": 29.34
   },
   {
    "comunidad": "LOS ANDES IZACATA",
@@ -518,10 +518,10 @@
    "predios_adicionales": 39,
    "predios_catastrales": 92,
    "superficie_catastral_ha": 58.29,
-   "superficie_declarada_ha": 55.32,
-   "riego_declarado_ha": 49.98,
+   "superficie_declarada_ha": 53.22,
+   "riego_declarado_ha": 48.92,
    "riego_ajustado_ha": 46.88,
-   "sin_riego_declarado_ha": 5.35
+   "sin_riego_declarado_ha": 4.29
   },
   {
    "comunidad": "LOMA GORDA",
@@ -700,7 +700,6 @@
   "1702521470022": 0.5,
   "1702521470024": 0.25,
   "1702521040143": 0.5,
-  "1702521050026": 0.25,
   "1702521450004": 0.5,
   "1702521450007": 0.5,
   "1702521010019": 0.500001,
@@ -720,7 +719,6 @@
   "1702521090034": 0.5,
   "1702520530040": 0.333333,
   "1702520510008": 0.5,
-  "1702520980044": 0.5,
   "1702521540014": 0.99562,
   "1702520490039": 0.5,
   "1702520680015": 0.5,
@@ -746,7 +744,6 @@
   "1702521430094": 0.333333,
   "1702520580140": 0.5,
   "1702520580189": 0.5,
-  "1702521430143": 0.5,
   "1702521430120": 0.5,
   "1702520380023": 0.5,
   "1702520370016": 0.5,
@@ -779,7 +776,6 @@
   "1702521000143": 0.501879,
   "1702521070010": 0.5,
   "1702520260052": 0.5,
-  "1702520990048": 0.5,
   "1702521440058": 0.25,
   "1702520940017": 0.787524,
   "1702520960050": 0.333333,
@@ -836,7 +832,6 @@
   "1702520150006": 0.5,
   "1702520890082": 0.5,
   "1702520750021": 0.5,
-  "1702520910064": 0.5,
   "1702520740149": 0.5,
   "1702520830061": 0.666667,
   "1702550220015": 0.2,
@@ -939,7 +934,7 @@
   "1702520280010": 0.500001,
   "1702520280039": 0.142857,
   "1702520280011": 0.333333,
-  "1702520280044": 0.1,
+  "1702520280044": 0.909077,
   "1702520220104": 0.5,
   "1702520200004": 0.481871,
   "1702520200009": 0.25,
@@ -1002,7 +997,6 @@
   "1702540080021": 0.5,
   "1702540110021": 0.5,
   "1702550330040": 0.5,
-  "1702550330042": 0.333333,
   "1702550320080": 0.5,
   "1702550140016": 0.833334,
   "1702550130001": 0.088858,
@@ -1039,7 +1033,6 @@
   "1702520180038": 0.500001,
   "1702550330074": 0.5,
   "1702520720146": 0.5,
-  "1702521500007": 0.5,
   "1702510110001": 0.333333,
   "1702520290469": 0.49998,
   "1702520290462": 0.499995,
