@@ -108,6 +108,26 @@ def main():
             votos[canonica(x.get('comunidad') or '')] += 1
         dueno[clave] = sorted(votos.items(), key=lambda v: (-v[1], v[0]))[0][0]
 
+    # Cómo se escribe cada comunidad de cara al lector.
+    #
+    # Se agrupa por el nombre canónico —que va sin tildes, para poder comparar—
+    # pero publicarlo así dejaría «SAN JOSE» y «JESUS GRAN PODER» en documentos
+    # que leen los propios comuneros. Se recupera la forma con la que la
+    # escribieron los técnicos, prefiriendo la acentuada cuando existe.
+    escrituras = defaultdict(lambda: defaultdict(int))
+    for p in fichas:
+        bruto = ' '.join(str(p.get('comunidad') or '').split())
+        if bruto:
+            escrituras[canonica(bruto)][bruto] += 1
+
+    def como_se_escribe(com):
+        formas = escrituras.get(com)
+        if not formas:
+            return nombre_publico(com)
+        con_tilde = {k: v for k, v in formas.items() if canonica(k) != k.upper()}
+        elegidas = con_tilde or formas
+        return nombre_publico(max(elegidas.items(), key=lambda x: x[1])[0])
+
     filas = defaultdict(lambda: {
         'fichas': 0, 'regantes': 0, 'adicionales': 0, 'predios': 0,
         'declarada': 0.0, 'catastral': 0.0, 'riego_dec': 0.0, 'riego_aj': 0.0,
@@ -134,7 +154,7 @@ def main():
     comunidades = []
     for com, r in sorted(filas.items(), key=lambda x: -x[1]['catastral']):
         comunidades.append({
-            'comunidad': nombre_publico(com),
+            'comunidad': como_se_escribe(com),
             'sector': SECTOR_DE.get(com, 'Sin asignar'),
             'fichas': r['fichas'], 'regantes': r['regantes'],
             'predios_adicionales': r['adicionales'],

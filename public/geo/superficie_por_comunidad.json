@@ -1,5 +1,5 @@
 {
- "generado": "2026-08-15 02:35",
+ "generado": "2026-08-15 02:50",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
@@ -147,7 +147,7 @@
    "sin_riego_declarado_ha": 0.85
   },
   {
-   "comunidad": "ASOCIACION POROTOG",
+   "comunidad": "ASOCIACIÓN POROTOG",
    "sector": "Sector 1",
    "fichas": 115,
    "regantes": 43,
@@ -199,7 +199,7 @@
    "sin_riego_declarado_ha": 26.66
   },
   {
-   "comunidad": "SAN JOSE",
+   "comunidad": "SAN JOSÉ",
    "sector": "Sector 1",
    "fichas": 200,
    "regantes": 110,
@@ -212,7 +212,7 @@
    "sin_riego_declarado_ha": 10.36
   },
   {
-   "comunidad": "PUCARA",
+   "comunidad": "PUCARÁ",
    "sector": "Sector 2",
    "fichas": 349,
    "regantes": 198,
@@ -277,7 +277,7 @@
    "sin_riego_declarado_ha": 2.55
   },
   {
-   "comunidad": "JESUS GRAN PODER",
+   "comunidad": "JESÚS GRAN PODER",
    "sector": "Sector 1",
    "fichas": 104,
    "regantes": 45,
@@ -342,7 +342,7 @@
    "sin_riego_declarado_ha": 47.87
   },
   {
-   "comunidad": "ASOCIACION 17 DE JUNIO",
+   "comunidad": "ASOCIACIÓN 17 DE JUNIO",
    "sector": "Sector 1",
    "fichas": 34,
    "regantes": 28,
@@ -355,7 +355,7 @@
    "sin_riego_declarado_ha": 4.6
   },
   {
-   "comunidad": "PUEBLO DE OTON",
+   "comunidad": "PUEBLO DE OTÓN",
    "sector": "Sector 3",
    "fichas": 193,
    "regantes": 153,
@@ -381,7 +381,7 @@
    "sin_riego_declarado_ha": 47.24
   },
   {
-   "comunidad": "IZACATA",
+   "comunidad": "IZACATA GRANDE",
    "sector": "Sector 1",
    "fichas": 109,
    "regantes": 42,
@@ -472,7 +472,7 @@
    "sin_riego_declarado_ha": 14.26
   },
   {
-   "comunidad": "SANTA BARBARA",
+   "comunidad": "SANTA BÁRBARA",
    "sector": "Sector 1",
    "fichas": 10,
    "regantes": 7,
@@ -498,7 +498,7 @@
    "sin_riego_declarado_ha": 36.19
   },
   {
-   "comunidad": "MONTESERRIN ALTO",
+   "comunidad": "MONTESERRÍN ALTO",
    "sector": "Sector 3",
    "fichas": 64,
    "regantes": 28,
@@ -550,7 +550,7 @@
    "sin_riego_declarado_ha": 17.28
   },
   {
-   "comunidad": "SR. HERNAN TIMPE",
+   "comunidad": "SR. HERNÁN TIMPE",
    "sector": "Sector 3",
    "fichas": 1,
    "regantes": 1,
@@ -576,7 +576,7 @@
    "sin_riego_declarado_ha": 18.58
   },
   {
-   "comunidad": "ASOCIACION ROSALIA",
+   "comunidad": "ASOCIACIÓN ROSALÍA",
    "sector": "Sector 2",
    "fichas": 47,
    "regantes": 39,
@@ -602,7 +602,7 @@
    "sin_riego_declarado_ha": 4.97
   },
   {
-   "comunidad": "ASOCIACION SAN PEDRO",
+   "comunidad": "ASOCIACIÓN SAN PEDRO",
    "sector": "Sector 2",
    "fichas": 45,
    "regantes": 33,
@@ -654,7 +654,7 @@
    "sin_riego_declarado_ha": 0.77
   },
   {
-   "comunidad": "MATIAS IMBAGO",
+   "comunidad": "MATÍAS IMBAGO",
    "sector": "Sector 1",
    "fichas": 6,
    "regantes": 1,
@@ -680,7 +680,7 @@
    "sin_riego_declarado_ha": 0.0
   },
   {
-   "comunidad": "PUEBLO DE ASCAZUBI",
+   "comunidad": "PUEBLO DE ASCÁZUBI",
    "sector": "Sector 3",
    "fichas": 2,
    "regantes": 2,
