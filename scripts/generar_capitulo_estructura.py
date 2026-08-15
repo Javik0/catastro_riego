@@ -26,6 +26,7 @@ SALIDAS
   build_entrega/Estructura_del_Padron.xlsx
 """
 
+import json
 import os
 import re
 import sqlite3
@@ -40,6 +41,8 @@ import informe_estilo as E  # noqa: E402
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+# Fuente única de superficie (ver `generar_superficie_por_comunidad.py`)
+SUPERFICIE_JSON = os.path.join(BASE, 'public', 'geo', 'superficie_por_comunidad.json')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-estructura-del-padron.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Estructura_del_Padron.xlsx')
 MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
@@ -120,7 +123,22 @@ def main():
                  and ident(f) not in ids_pri}
 
     # ── concentración, separando titulares colectivos ──
-    sup_por_titular = {k: sum(num(f, 'area_total') for f in v) for k, v in grupos.items()}
+    #
+    # La superficie de cada titular se recorta con el mismo criterio que la del
+    # sistema: en un predio de herederos, donde los cinco declaran el terreno
+    # familiar completo, contar a cada uno con el predio entero multiplicaría
+    # por cinco la tierra que hay y falsearía la concentración hacia arriba.
+    # El factor por predio lo publica `generar_superficie_por_comunidad.py`.
+    factores = {}
+    if os.path.exists(SUPERFICIE_JSON):
+        with open(SUPERFICIE_JSON, encoding='utf-8') as f:
+            factores = json.load(f).get('factor_por_predio', {})
+
+    def area_ajustada(f):
+        clave = str(f.get('clave_catastral') or '').strip()
+        return num(f, 'area_total') * factores.get(clave, 1.0)
+
+    sup_por_titular = {k: sum(area_ajustada(f) for f in v) for k, v in grupos.items()}
     colectivos = {k for k, v in grupos.items() if es_colectivo(v[0])}
     sup_col = sum(s for k, s in sup_por_titular.items() if k in colectivos)
     sup_tot = sum(sup_por_titular.values())

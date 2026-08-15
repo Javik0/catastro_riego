@@ -197,6 +197,43 @@ Están listadas para revisarlas con calma.
 
 ---
 
+## El cambio de fondo: cada hectárea se cuenta una vez
+
+Las correcciones anteriores arreglaban datos equivocados. Esta es distinta: **no
+hay ningún dato mal, pero la forma de sumarlos estaba inflando el sistema**.
+
+En un predio de herederos, cada hermano declara el terreno familiar completo —y
+hace bien, porque es lo que considera suyo—. Al sumar fichas para obtener la
+superficie del sistema, ese terreno se contaba tantas veces como herederos
+tuviera. Con **435 predios** en esa situación, la diferencia es de **1.780 ha**.
+
+Desde ahora la superficie del sistema se mide **sumando los polígonos del
+catastro municipal, contando cada predio una sola vez**:
+
+| | |
+|---|---:|
+| Predios catastrales distintos | **5.984** |
+| **Superficie del sistema** | **8.092,45 ha** |
+| Superficie que declaran los regantes | 9.872,77 ha |
+| **Superficie bajo riego** | **6.130,18 ha** (75,8 %) |
+| Riego declarado en las fichas | 7.310,02 ha |
+
+**Lo declarado no se borró ni se corrigió.** Sigue en la base de datos, ficha por
+ficha, y los informes lo muestran junto a la cifra del territorio. No es un
+error: es lo que cada familia considera suyo, y como tal es material de análisis
+social. Lo que no puede es servir para medir cuánta tierra hay.
+
+Un efecto que conviene conocer: al contar cada predio una vez, **la concentración
+de la tierra baja del 50,4 % al 45,8 %** —es la proporción de superficie que
+reúne el 10 % de personas naturales con más tierra—. La cifra anterior estaba
+inflada por los predios contados varias veces.
+
+Las dos cifras se publican en `superficie_por_comunidad.json`, que es de donde
+las toman la web y los informes: ningún documento las vuelve a calcular por su
+cuenta.
+
+---
+
 ## Lo que no cambió
 
 - **El número de regantes**: 4.307. No se eliminó ni se añadió ninguna persona.

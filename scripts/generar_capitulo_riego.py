@@ -43,6 +43,8 @@ BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-predio-y-agua.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Predio_y_Agua.xlsx')
 CAUDAL_JSON = os.path.join(BASE, 'public', 'geo', 'caudal_por_comunidad.json')
+# Fuente única de superficie: la del territorio y la que declararon los regantes
+SUPERFICIE_JSON = os.path.join(BASE, 'public', 'geo', 'superficie_por_comunidad.json')
 
 # Comunidad cuyas tarifas no son comparables (ver encabezado).
 TARIFA_ANOMALA = 'ALPAKA'
@@ -111,10 +113,27 @@ def main():
     pri, corte_txt, pendientes = cargar()
     N = len(pri)
 
-    # ── superficies ──
-    a_total = sum(num(p, 'area_total') for p in pri)
-    a_riego = sum(num(p, 'area_riego') for p in pri)
-    ha_t, ha_r = a_total / 10000, a_riego / 10000
+    # ── superficies (fuente única: superficie_por_comunidad.json) ──
+    #
+    # La superficie del sistema NO se obtiene sumando fichas. En los predios de
+    # herederos cada titular declara el predio familiar completo, así que sumar
+    # fichas cuenta ese terreno tantas veces como titulares tenga: 1.780 ha de
+    # más sobre 435 predios. Se mide sumando polígonos catastrales distintos.
+    #
+    # Lo declarado se conserva y se publica al lado, porque no es un error: es
+    # lo que cada regante considera suyo, y eso es material de análisis.
+    # Decisión del proyecto del 14-ago-2026.
+    with open(SUPERFICIE_JSON, encoding='utf-8') as f:
+        SUP = json.load(f)['total']
+    ha_t = SUP['superficie_catastral_ha']       # la del territorio
+    ha_dec = SUP['superficie_declarada_ha']     # la de las fichas
+    ha_r = SUP['riego_ajustado_ha']             # riego que cabe en el polígono
+    ha_r_dec = SUP['riego_declarado_ha']
+    a_total, a_riego = ha_t * 10000, ha_r * 10000
+    # El riego declarado arrastra la misma duplicación que la superficie, así
+    # que las superficies por método —que salen de las fichas— se expresan
+    # sobre el riego ajustado, repartiendo el recorte en proporción.
+    AJUSTE = (ha_r / ha_r_dec) if ha_r_dec else 1.0
     areas = sorted(num(p, 'area_total') for p in pri if num(p, 'area_total') > 0)
     med_area = st.median(areas)
     tramos = [('Menos de 1.000 m²', 0, 1000), ('1.000 – 5.000 m²', 1000, 5000),
@@ -144,6 +163,10 @@ def main():
                           ('metodo_aspersion_pct', 'Aspersión'),
                           ('metodo_goteo_pct', 'Goteo')):
             sup_met[et] += a * num(p, campo) / 100
+    # al venir de las fichas arrastran la duplicación de los predios de
+    # herederos: se llevan a la misma escala que el riego del sistema
+    for et in sup_met:
+        sup_met[et] *= AJUSTE
     sup_total_met = sum(sup_met.values())
 
     tecnificada = sup_met['Aspersión'] + sup_met['Goteo']
@@ -157,7 +180,8 @@ def main():
         s_tot = sum(num(p, 'area_riego') * (num(p, 'metodo_gravedad_pct')
                                             + num(p, 'metodo_aspersion_pct')
                                             + num(p, 'metodo_goteo_pct')) / 100 for p in ps)
-        tec_sector[sec] = (s_tec / 10000, s_tot / 10000, pct(s_tec, s_tot))
+        tec_sector[sec] = (s_tec * AJUSTE / 10000, s_tot * AJUSTE / 10000,
+                           pct(s_tec, s_tot))
 
     # ── tarifas (excluye la comunidad con valores no comparables) ──
     def tarifa(tipo, excluir_anomala=True):
@@ -182,19 +206,32 @@ def main():
     A(E.aviso_corte(corte_txt, N, pendientes))
     A(E.kpis([
         (f'{ha_r:,.0f} ha', 'bajo riego'),
-        (f'{pct(a_riego, a_total):.1f}%', 'del área empadronada'),
+        (f'{pct(a_riego, a_total):.1f}%', 'del área del sistema'),
         (f'{tot_c["caudal_sistema_ls"]:,.0f} l/s', 'caudal del sistema'),
         (f'{pct(tecnificada, sup_total_met):.1f}%', 'superficie tecnificada'),
     ]))
 
-    A('<h2>1. Superficie empadronada y superficie bajo riego</h2>')
-    A(f'<p>Los <b>{N:,} predios</b> registrados hasta el corte suman '
-      f'<b>{ha_t:,.1f} hectáreas</b>, de las cuales <b>{ha_r:,.1f} ha '
-      f'({pct(a_riego, a_total):.1f} %) cuentan con riego</b>. La quinta parte '
+    A('<h2>1. Superficie del sistema y superficie bajo riego</h2>')
+    A(f'<p>El padrón cubre <b>{SUP["predios_catastrales"]:,} predios</b> que '
+      f'suman <b>{ha_t:,.1f} hectáreas</b>, de las cuales <b>{ha_r:,.1f} ha '
+      f'({pct(a_riego, a_total):.1f} %) cuentan con riego</b>. El resto '
       # «secano» se retiró de toda la interfaz web por pedido del cliente
       # (12-ago-2026) y los informes usan el mismo término: «sin riego».
-      'restante corresponde a áreas sin dotación: pastos sin riego, bosque o '
-      'terreno no cultivable dentro del mismo predio.</p>')
+      'corresponde a áreas sin dotación: pastos sin riego, bosque o terreno no '
+      'cultivable dentro del mismo predio.</p>')
+    A('<div class="nota"><p><b>Cómo se mide esta superficie.</b> Sumando la '
+      'superficie de cada predio <b>una sola vez</b>, según el polígono del '
+      'catastro municipal. No sumando lo que declara cada ficha: en los predios '
+      f'de herederos —{SUP["predios_compartidos"]} predios del padrón tienen '
+      'varias fichas— cada titular declara el terreno familiar completo, y al '
+      'sumar fichas ese terreno se contaría tantas veces como herederos '
+      'tenga.</p>'
+      f'<p>Lo que los regantes declaran suma <b>{ha_dec:,.1f} ha</b>, '
+      f'{ha_dec - ha_t:,.0f} más que la superficie real del territorio. Esa '
+      'diferencia no es un error de nadie y no se ha corregido: es lo que cada '
+      'familia considera suyo, y como tal se conserva en la base de datos para '
+      'el análisis social. Para medir el sistema, en cambio, cada hectárea debe '
+      'contarse una vez.</p></div>')
     A(f'<p>El predio tiene una superficie <b>mediana de {med_area:,.0f} m²</b>. '
       'La distribución muestra una estructura de <b>minifundio</b>:</p>')
     A('<table class="evitar-corte"><tr><th>Tamaño del predio</th>'
