@@ -116,8 +116,30 @@ interface Props {
   prediosAdicionalesData?: any[];
 }
 
+/** Cifras de superficie del sistema (`generar_superficie_por_comunidad.py`). */
+interface Superficie {
+  total: {
+    fichas: number;
+    predios_catastrales: number;
+    superficie_catastral_ha: number;
+    superficie_declarada_ha: number;
+    riego_declarado_ha: number;
+    riego_ajustado_ha: number;
+    predios_compartidos: number;
+  };
+}
+
 export default function DashboardHome({ fichas, loading, cultivosData, animalesData = [], prediosAdicionalesData = [] }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
+  // Fuente única de superficie: ningún cálculo de hectáreas se rehace aquí.
+  const [superficie, setSuperficie] = useState<Superficie | null>(null);
+
+  useEffect(() => {
+    fetch('/geo/superficie_por_comunidad.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setSuperficie)
+      .catch(() => setSuperficie(null));
+  }, []);
   const { isAdmin, isTecnico } = useAuth();
   // Los gráficos de seguimiento del equipo (por técnico y por día) son de uso
   // interno: el contratante ve el padrón, no cómo se reparte el trabajo.
@@ -135,9 +157,24 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
       const fIds = new Set(fichas.map(f => f.id));
       const fCultivos = cultivosData.filter((c: any) => fIds.has(c.ficha_id));
 
+      // Se agrupa por el nombre normalizado, igual que los informes: el padrón
+      // traía «Cebolla» y «CEBOLLA» como si fueran cultivos distintos y el
+      // Dashboard los pintaba en dos filas. El dato ya se unificó en origen
+      // (`depurar_cultivos_y_animales.py`), pero esto lo deja a prueba de que
+      // una sincronización futura vuelva a traer las dos escrituras.
+      const etiquetas: Record<string, string> = {};
       for (const c of fCultivos) {
-        const tipo = c.tipo_cultivo || 'Sin dato';
-        cultivoCount[tipo] = (cultivoCount[tipo] || 0) + 1;
+        const bruto = String(c.tipo_cultivo || 'Sin dato').trim().replace(/\s+/g, ' ');
+        const clave = bruto.toLocaleUpperCase('es-EC');
+        // la primera forma que aparece manda, salvo que sea toda en mayúsculas
+        if (!etiquetas[clave] || etiquetas[clave] === clave) etiquetas[clave] = bruto;
+        cultivoCount[clave] = (cultivoCount[clave] || 0) + 1;
+      }
+      for (const [clave, etiqueta] of Object.entries(etiquetas)) {
+        if (etiqueta !== clave) {
+          cultivoCount[etiqueta] = cultivoCount[clave];
+          delete cultivoCount[clave];
+        }
       }
       s.cultivosFrecuentes = cultivoCount;
       s.totalCultivos = fCultivos.length;
@@ -248,6 +285,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
   // ── Cálculos dinámicos sectoriales para los gráficos Recharts ──
   // 1. Cobertura de Riego (Riego vs Secano en ha)
+  // Con la barra de filtros puesta, las cifras del sistema (que son del total)
+  // ya no describen lo que se está viendo y hay que volver a lo declarado.
+  const hayFiltro = !!superficie && fichas.length < superficie.total.fichas;
   const areaRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_riego) || 0), 0);
   const areaSinRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0);
   const areaRiegoHa = areaRiegoTotalM2 / 10000;
@@ -443,12 +483,21 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           />
         )}
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
+        {/* La superficie del sistema se mide contando cada predio UNA vez (su
+            polígono del catastro). Sumar el área de las fichas cuenta varias
+            veces los predios de herederos —1.780 ha de más—; ese dato sigue
+            visible debajo porque es lo que declara la gente, no un error. */}
         <KPICard
           icon={TrendingUp}
-          label="Área Total (m²)"
-          value={Math.round(stats.areaTotal).toLocaleString('es-EC')}
+          label="Superficie del sistema"
+          value={superficie
+            ? `${superficie.total.superficie_catastral_ha.toLocaleString('es-EC',
+                { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha`
+            : `${areaTotalHa.toLocaleString('es-EC', { maximumFractionDigits: 2 })} ha`}
           color="#f59e0b"
-          sub={`${areaTotalHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha`}
+          sub={superficie
+            ? `${superficie.total.predios_catastrales.toLocaleString('es-EC')} predios · los regantes declaran ${superficie.total.superficie_declarada_ha.toLocaleString('es-EC', { maximumFractionDigits: 0 })} ha`
+            : `${Math.round(stats.areaTotal).toLocaleString('es-EC')} m² declarados`}
         />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
         <KPICard icon={Sprout} label="Cultivos Registrados" value={stats.totalCultivos} color="#22c55e" />
@@ -512,11 +561,21 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie con Riego</p>
+                {/* Sin filtros manda la cifra del sistema, la misma que los
+                    informes: el riego declarado arrastra la duplicación de los
+                    predios de herederos y por eso sale más alto. Con un filtro
+                    puesto no se puede usar —el JSON es del total— y se muestra
+                    lo declarado, diciéndolo. */}
                 <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>
-                  {areaRiegoHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                  {(superficie && !hayFiltro
+                    ? superficie.total.riego_ajustado_ha
+                    : areaRiegoHa
+                  ).toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
                 </h4>
                 <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
-                  Equivalente a {Math.round(areaRiegoTotalM2).toLocaleString('es-EC')} m² bajo riego en este sector
+                  {superficie && !hayFiltro
+                    ? `Cada predio contado una vez · los regantes declaran ${superficie.total.riego_declarado_ha.toLocaleString('es-EC', { maximumFractionDigits: 0 })} ha`
+                    : `Equivalente a ${Math.round(areaRiegoTotalM2).toLocaleString('es-EC')} m² bajo riego en este sector`}
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-500 shrink-0">
@@ -524,7 +583,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
               </div>
             </div>
             <div className="text-[10px] mt-4 font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1">
-              <span>Hectáreas regadas registradas en fichas</span>
+              <span>{superficie && !hayFiltro
+                ? 'Hectáreas regadas del sistema'
+                : 'Hectáreas regadas registradas en fichas'}</span>
             </div>
           </div>
 
