@@ -128,7 +128,16 @@ def analizar(cur, t, col_id, col_tipo, col_valor, flags, entero, conservar_igual
                 continue
             vals = [round(float(r[3]), 2) for r in rs]
             if len(set(vals)) > 1:
-                fusiones.append((clave, rs, sum(vals)))       # regla del cliente
+                # Se suman los valores DISTINTOS, no todos. Una ficha puede
+                # traer «papas 500», «PAPAS 500» y «papas 200»: hay una copia
+                # dentro de un grupo que además tiene otro valor, y sumar los
+                # tres daría 1.200 donde el regante siembra 700. Primero se
+                # quita la copia, después se suma.
+                unicos = []
+                for v in vals:
+                    if v not in unicos:
+                        unicos.append(v)
+                fusiones.append((clave, rs, sum(unicos)))     # regla del cliente
             elif not conservar_iguales or (not entero and abs(vals[0] - round(vals[0])) > 0.001):
                 copias.append((clave, rs, vals[0]))           # el mismo dato dos veces
             else:

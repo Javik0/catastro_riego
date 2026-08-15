@@ -48,7 +48,7 @@
     "id_cultivo": "{d8f4c48b-8fe8-4605-bd4b-48cb269eb572}",
     "ficha_id": "{7b889d03-e951-4379-bc6e-a8510ac38d2b}",
     "tipo_cultivo": "Cebolla",
-    "superficie_m2": 1900.0,
+    "superficie_m2": 1600.0,
     "es_principal": 1,
     "es_mercado": 1
   },
@@ -56,7 +56,7 @@
     "id_cultivo": "{8b096ddc-d233-4ee6-a905-71c4a83ec2a5}",
     "ficha_id": "{7b889d03-e951-4379-bc6e-a8510ac38d2b}",
     "tipo_cultivo": "Pasto mejorado",
-    "superficie_m2": 2900.0,
+    "superficie_m2": 2700.0,
     "es_autoconsumo": 1
   },
   {
@@ -361,7 +361,7 @@
     "id_cultivo": "{5a75685f-2ab5-4296-baa7-096a0ad92dcc}",
     "ficha_id": "{2aa14b73-7321-402e-8af1-dad0088a74c0}",
     "tipo_cultivo": "Papas",
-    "superficie_m2": 2400.0,
+    "superficie_m2": 2200.0,
     "es_principal": 0,
     "es_autoconsumo": 1
   },
@@ -1599,7 +1599,7 @@
     "id_cultivo": "{bfdad578-1e52-41ff-8bcc-619f65c52c86}",
     "ficha_id": "{3cbba515-e8a7-4307-ac96-a6543178f28b}",
     "tipo_cultivo": "Cebolla",
-    "superficie_m2": 11100.0,
+    "superficie_m2": 8100.0,
     "es_principal": 1,
     "es_exportacion": 1,
     "es_mercado": 1
@@ -2200,7 +2200,7 @@
     "id_cultivo": "{4e0b5f8c-d7c5-429b-82a2-44db4a4cbc3f}",
     "ficha_id": "{8c01fc48-990a-446c-b73a-6fa0a0afbb32}",
     "tipo_cultivo": "Pasto no mejorado",
-    "superficie_m2": 28929.09,
+    "superficie_m2": 22130.92,
     "es_principal": 1,
     "es_autoconsumo": 1,
     "ref_area_predio": 9869.36
@@ -3447,7 +3447,7 @@
     "id_cultivo": "{1e72a90d-e4aa-4c61-b224-1833965f68d6}",
     "ficha_id": "{f4b8a49a-db1f-47ae-b96f-3e08e77126cd}",
     "tipo_cultivo": "Cebolla",
-    "superficie_m2": 11000.0,
+    "superficie_m2": 7000.0,
     "es_principal": 1,
     "es_mercado": 1,
     "ref_area_predio": 8140.37
@@ -12275,7 +12275,7 @@
     "id_cultivo": "{9a2f7f29-b4b5-411f-9553-ce6ea804cf65}",
     "ficha_id": "{074d13a3-2810-4697-aee9-f4be11fc7b9f}",
     "tipo_cultivo": "Otros",
-    "superficie_m2": 900.0,
+    "superficie_m2": 700.0,
     "es_principal": 0,
     "es_mercado": 1,
     "tipo_cultivo_otro": "Alfalfa",
