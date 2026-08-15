@@ -87,8 +87,8 @@ const ha = (v: number) =>
 
 // `corto` es para los chips del panel estrecho; `et` para el resto.
 const TIPOS = {
-  exceso: { et: 'Exceso de área', corto: 'Exceso', color: '#dc2626', bg: 'bg-red-50', tx: 'text-red-700' },
-  triple: { et: 'Área triplicada', corto: 'Triplicada', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700' },
+  exceso: { et: 'Declaran más que el predio', corto: 'Declarado de más', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700' },
+  triple: { et: 'Área triplicada', corto: 'Triplicada', color: '#b45309', bg: 'bg-orange-50', tx: 'text-orange-800' },
   clave_mala: { et: 'Clave inexistente', corto: 'Clave mala', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
   sin_comunidad: { et: 'Sin comunidad', corto: 'Sin comunidad', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
@@ -100,8 +100,12 @@ const TIPOS = {
 // obliga a recordar cuál era cuál.
 const GRUPOS: { titulo: string; pie: string; tipos: (keyof typeof TIPOS)[] }[] = [
   {
-    titulo: 'Afectan a la superficie',
-    pie: 'Cuánto mide el padrón',
+    // Hasta el 15-ago-2026 este grupo se llamaba «Afectan a la superficie»,
+    // porque el padrón sumaba fichas y estos predios inflaban el total. Desde
+    // que la superficie se mide por polígonos únicos ya no afectan a ninguna
+    // cifra: lo que queda es la calidad de lo que se declaró en campo.
+    titulo: 'Superficie declarada',
+    pie: 'Calidad del dato de campo',
     tipos: ['exceso', 'triple', 'clave_mala', 'dividido'],
   },
   {
@@ -216,30 +220,46 @@ export default function AuditoriaAreasPage() {
               Auditoría de áreas
             </h1>
             <p className="mt-0.5 text-xs text-gray-500">
-              Predios cuya superficie no cuadra con el catastro del GADM ·
-              corte {datos.corte} · datos generados {datos.generado}
+              Calidad de lo que declararon los regantes, contra el catastro del
+              GADM · corte {datos.corte} · datos generados {datos.generado}
             </p>
           </div>
           <div className="flex flex-wrap gap-5 text-sm">
             <div>
-              <div className="text-xl font-semibold tabular-nums text-red-600">{R.exceso}</div>
-              <div className="text-xs text-gray-500">predios con exceso</div>
+              {/* Ya no en rojo: desde que la superficie del sistema se mide por
+                  polígonos, estos predios no distorsionan ninguna cifra
+                  publicada. Pintarlos de alarma haría pensar lo contrario. */}
+              <div className="text-xl font-semibold tabular-nums text-amber-600">{R.exceso}</div>
+              <div className="text-xs text-gray-500">predios por depurar</div>
             </div>
             <div>
-              <div className="text-xl font-semibold tabular-nums text-red-600">
+              <div className="text-xl font-semibold tabular-nums text-amber-600">
                 {R.exc_ha.toLocaleString('es-EC', { minimumFractionDigits: 2 })}
               </div>
-              <div className="text-xs text-gray-500">hectáreas de más</div>
+              <div className="text-xs text-gray-500">ha declaradas de más</div>
             </div>
             <div>
               <div className="text-xl font-semibold tabular-nums text-blue-600">{R.con_obs}</div>
               <div className="text-xs text-gray-500">con área en observaciones</div>
             </div>
             <div>
-              <div className="text-xl font-semibold tabular-nums text-green-600">{R.resueltos_por_obs}</div>
-              <div className="text-xs text-gray-500">se resuelven copiando</div>
+              <div className="text-xl font-semibold tabular-nums text-lime-700">{R.cultivo ?? 0}</div>
+              <div className="text-xs text-gray-500">siembran más de lo que miden</div>
             </div>
           </div>
+        </div>
+
+        {/* Qué significa hoy este exceso. Sin esta línea, las 1.859 ha de
+            arriba se leen como un error pendiente en las cifras publicadas, y
+            desde el 15-ago-2026 ya no lo son. */}
+        <div className="mt-2.5 rounded border border-blue-100 bg-blue-50 px-3 py-2 text-xs text-blue-900">
+          <b>Esto ya no afecta a la superficie del sistema.</b> El padrón mide sus{' '}
+          hectáreas sumando <b>polígonos del catastro, cada predio una vez</b>, así
+          que lo que se declara de más aquí no infla ninguna cifra publicada. Lo
+          que esta pantalla muestra es <b>dónde el levantamiento no capturó el
+          reparto real</b> entre coherederos: sirve para depurar el dato declarado
+          y para saber a qué predios hay que volver, no para corregir la
+          superficie.
         </div>
 
         {/* Cuánto del padrón está ya en regla. Sin esto la pantalla solo
@@ -353,7 +373,7 @@ export default function AuditoriaAreasPage() {
                   <span className="shrink-0 text-right">
                     {c.tipo === 'exceso' && (
                       <>
-                        <span className="block text-xs font-semibold tabular-nums text-red-600">
+                        <span className="block text-xs font-semibold tabular-nums text-amber-700">
                           +{ha(c.exc)}
                         </span>
                         <span className="text-[9px] text-gray-500">ha</span>
@@ -537,7 +557,7 @@ export default function AuditoriaAreasPage() {
                   <p className="mt-1 text-xs text-gray-700">
                     {sel.nf} ficha{sel.nf !== 1 ? 's' : ''} declaran <b>{m2(sel.dec)}</b> sobre un
                     polígono de <b>{m2(sel.pol)}</b>
-                    {sel.exc > 0 && <> · sobran <b className="text-red-600">{ha(sel.exc)} ha</b></>}
+                    {sel.exc > 0 && <> · declaran <b className="text-amber-700">{ha(sel.exc)} ha</b> de más</>}
                   </p>
                 )}
                 {sel.tipo === 'cultivo' && (
