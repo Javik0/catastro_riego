@@ -1,7 +1,7 @@
 # Revisión de campo — Padrón Guanguilquí–Porotog
 
 **Última ficha registrada:** 2026-08-05  
-**Documento generado:** 14/08/2026  
+**Documento generado:** 18/08/2026  
 **Para:** equipo técnico de campo
 
 Este documento sale de leer el `data.gpkg` de QField tal como está hoy. Dice qué campos quedaron vacíos, en qué fichas y en qué comunidad, para poder planificar la salida por zona.
@@ -41,11 +41,11 @@ Sobre las **3.815 fichas principales** que son encuestas de campo (de 6.830 fich
 | Sin cédula | 7 | ficha por ficha |
 | Sin teléfono | 390 | ficha por ficha |
 | Sin nivel de instrucción | 51 | ficha por ficha |
-| Sin caudal registrado | 4 | ficha por ficha |
+| Sin caudal registrado | 3 | ficha por ficha |
 | Sin área de riego | 4 | ficha por ficha |
 | Sin agua de consumo | 103 | ficha por ficha |
 | Sin energía eléctrica | 216 | ficha por ficha |
-| **Total de trabajo de campo** | **775** | |
+| **Total de trabajo de campo** | **774** | |
 
 Cada fila de la tabla es un dato faltante, no una ficha: una misma ficha puede aparecer en dos bloques.
 
@@ -105,14 +105,13 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ### Sin teléfono — 390 fichas
 
-**(sin comunidad)** — 4 fichas
+**(sin comunidad)** — 3 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 
 **ASOC. PITANA BAJO** — 2 fichas
 
@@ -675,6 +674,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520980070 | LANCHIMBA ACERO PASCUAL | 1707701700 | u0_a330 |
 | 1702521480001 | COMUNA SAN JOSE | 1792333334 | u0_a319 |
 
+**SANTA BÁRBARA** — 1 ficha
+
+| Clave catastral | Regante | Cédula | Levantó |
+|---|---|---|---|
+| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
+
 **SANTA MARIANITA DE PINGULMI** — 6 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
@@ -704,14 +709,13 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ### Sin nivel de instrucción — 51 fichas
 
-**(sin comunidad)** — 4 fichas
+**(sin comunidad)** — 3 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 
 **ASOC. SAN VICENTE BAJO** — 1 ficha
 
@@ -864,6 +868,12 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 | 1702520680122 | ASERO CHIMARRO MARIA ENCARNACION | 1003050455 | u0_a279 |
 | 1702521480001 | COMUNA SAN JOSE | 1792333334 | u0_a319 |
 
+**SANTA BÁRBARA** — 1 ficha
+
+| Clave catastral | Regante | Cédula | Levantó |
+|---|---|---|---|
+| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
+
 **SANTA MARIANITA DE PINGULMI** — 1 ficha
 
 | Clave catastral | Regante | Cédula | Levantó |
@@ -872,18 +882,17 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 ---
 
-### Sin caudal registrado — 4 fichas
+### Sin caudal registrado — 3 fichas
 
 > No hay que ir a medir ningún caudal. Son las mismas fichas de «Se resuelve en oficina»: al asignarles comunidad heredan el caudal de la comuna y este bloque se vacía solo.
 
-**(sin comunidad)** — 4 fichas
+**(sin comunidad)** — 3 fichas
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
-| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 |
 
 ---
 
@@ -895,7 +904,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
-| 17010100400 | PINANJOTA GUAÑA  EDGAR SIXTO | 1715732341 | jvk-editor4 |
+| 17025401700100100040000 | PINANJOTA GUAÑA  EDGAR SIXTO | 1715732341 | jvk-editor4 |
 
 **SAN JOSÉ** — 3 fichas
 
@@ -1143,7 +1152,7 @@ Se resuelven ficha por ficha, en QField. Van agrupados por comunidad para poder 
 
 | Clave catastral | Regante | Cédula | Levantó |
 |---|---|---|---|
-| 1702540170020030002 | CARRILLO PINEDA JOSÉ LUIS | 1711999142 | jvk-editor |
+| 17025401700200300020000 | CARRILLO PINEDA JOSÉ LUIS | 1711999142 | jvk-editor |
 
 **SAN ANTONIO** — 1 ficha
 
@@ -1606,14 +1615,14 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | Comunidad | Fichas | Con pendientes | Contacto | Encuesta | Vivienda | Datos por completar |
 |---|---:|---:|---:|---:|---:|---:|
 | COCHAPAMBA | 236 | 🟠 68 (29 %) | 59 | 9 | 13 | 81 |
-| CARRERA | 290 | 🟡 39 (13 %) | 21 | 3 | 22 | 46 |
+| CARRERA | 291 | 🟡 39 (13 %) | 21 | 3 | 22 | 46 |
 | PUCARÁ | 198 | 🟡 30 (15 %) | 16 | 0 | 20 | 36 |
-| SAN JOSÉ | 109 | 🟠 27 (25 %) | 12 | 5 | 18 | 35 |
+| SAN JOSÉ | 110 | 🟠 27 (25 %) | 12 | 5 | 18 | 35 |
 | LARCACHACA | 149 | 🟡 29 (19 %) | 16 | 3 | 15 | 34 |
 | LOMA GORDA | 44 | 🔴 25 (57 %) | 7 | 1 | 25 | 33 |
 | PITANA ALTO | 117 | 🟡 22 (19 %) | 11 | 1 | 18 | 30 |
 | ASOC. SAN VICENTE BAJO | 108 | 🟠 26 (24 %) | 11 | 1 | 18 | 30 |
-| CHAMBITOLA | 114 | 🟡 21 (18 %) | 12 | 3 | 13 | 28 |
+| CHAMBITOLA | 116 | 🟡 21 (18 %) | 12 | 3 | 13 | 28 |
 | SAN ANTONIO | 100 | 🟠 24 (24 %) | 22 | 2 | 4 | 28 |
 | LA LIBERTAD | 118 | 🟡 22 (19 %) | 9 | 0 | 18 | 27 |
 | PAMBAMARCA | 96 | 🟠 21 (22 %) | 15 | 3 | 9 | 27 |
@@ -1628,7 +1637,6 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | COMUNA POROTOG | 79 | 🟡 12 (15 %) | 8 | 0 | 5 | 13 |
 | ASOCIACIÓN POROTOG | 43 | 🟠 12 (28 %) | 10 | 0 | 3 | 13 |
 | CHINCHINLOMA | 88 | 🟡 9 (10 %) | 8 | 1 | 3 | 12 |
-| (sin comunidad) | 8 | 🔴 4 (50 %) | 4 | 8 | 0 | 12 |
 | CANGAHUA PUNGO | 131 | 🟡 10 (8 %) | 7 | 3 | 1 | 11 |
 | OTONCITO | 78 | 🟡 10 (13 %) | 10 | 1 | 0 | 11 |
 | COMUNA IZACATA | 66 | 🟡 11 (17 %) | 7 | 1 | 3 | 11 |
@@ -1636,6 +1644,7 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | JESÚS GRAN PODER | 45 | 🟡 8 (18 %) | 6 | 0 | 4 | 10 |
 | ASOCIACIÓN SAN PEDRO | 33 | 🟠 8 (24 %) | 3 | 1 | 6 | 10 |
 | CUARTO LOTE | 47 | 🟡 9 (19 %) | 6 | 0 | 3 | 9 |
+| (sin comunidad) | 3 | 🔴 3 (100 %) | 3 | 6 | 0 | 9 |
 | ASOC. SAN VICENTE ALTO | 68 | 🟡 7 (10 %) | 3 | 0 | 5 | 8 |
 | IZACATA GRANDE | 42 | 🟡 7 (17 %) | 7 | 0 | 1 | 8 |
 | CORDILLERAS DE LOS ANDES | 39 | 🟡 7 (18 %) | 3 | 0 | 5 | 8 |
@@ -1646,19 +1655,20 @@ Para decidir la ruta: qué comunidades justifican una salida y cuáles se resuel
 | ASOCIACIÓN 17 DE JUNIO | 28 | 🟡 4 (14 %) | 3 | 1 | 0 | 4 |
 | SANTA ROSA DE PACCHA | 56 | 🟡 3 (5 %) | 1 | 0 | 2 | 3 |
 | EL MANZANO | 18 | 🟡 2 (11 %) | 1 | 0 | 2 | 3 |
+| SANTA BÁRBARA | 8 | 🟡 1 (12 %) | 1 | 1 | 0 | 2 |
 | PUEBLO DE ASCÁZUBI | 2 | 🔴 2 (100 %) | 0 | 1 | 1 | 2 |
 | HDA. SAN FRANSISCO | 1 | 🔴 1 (100 %) | 0 | 0 | 1 | 1 |
 | SR. HERNÁN TIMPE | 1 | 🔴 1 (100 %) | 0 | 0 | 1 | 1 |
 
 «Fichas» es cuántas hay en la comunidad y «con pendientes» a cuántas les falta algo; las dos son **fichas**. Contacto, Encuesta y Vivienda cuentan **datos** —una ficha a la que le faltan dos cosas suma dos— y por eso suman exactamente la última columna.
 
-> La fila **(sin comunidad)** son las 8 fichas de la sección siguiente. Todavía no se pueden asignar a ninguna ruta: primero hay que resolverlas en oficina. Al hacerlo se caen solos los 4 pendientes de caudal, porque el caudal se hereda de la comuna.
+> La fila **(sin comunidad)** son las 3 fichas de la sección siguiente. Todavía no se pueden asignar a ninguna ruta: primero hay que resolverlas en oficina. Al hacerlo se caen solos los 3 pendientes de caudal, porque el caudal se hereda de la comuna.
 
 ---
 
 ## Se resuelve en oficina, no en campo
 
-**8 fichas principales sin comunidad asignada.** No hay que ir a preguntarle a nadie: **8 de las 8 tienen coordenadas**, así que la comunidad sale de un cruce espacial — el punto de la ficha dentro del polígono de la capa de comunidades.
+**3 fichas principales sin comunidad asignada.** No hay que ir a preguntarle a nadie: **3 de las 3 tienen coordenadas**, así que la comunidad sale de un cruce espacial — el punto de la ficha dentro del polígono de la capa de comunidades.
 
 El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` hace exactamente eso (punto dentro de polígono de `sectores.geojson`) y sirve de referencia para asignarlas.
 
@@ -1666,14 +1676,9 @@ El cruce ya está resuelto en código: `scripts/represa/06_capas_padron.py` hace
 
 | Clave catastral | Regante | Cédula | Levantó | X (UTM 17S) | Y (UTM 17S) |
 |---|---|---|---|---:|---:|
-| 1702520570096 | LANCHIMBA SOPALO MARIA MERCEDES | 1003280391 | u0_a504 | 819.499 | 9.992.156 |
-| 1702520980050 | CHIMARRO LINCANGO MARIA ELBIA | 1714943956 | u0_a330 | 818.121 | 9.990.135 |
-| 1702521030056 | SOPALO LANCHIMBA SEGUNDO JULIAN | 1717859894 | u0_a504 | 818.964 | 9.990.120 |
-| 1702521490030 | AIGAJE SOPALO PATRICIO MIGUEL | 1714030515 | u0_a335 | 820.502 | 9.988.815 |
 | 1702521660058 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 | 810.827 | 9.987.029 |
 | 1702521700003 | FARINANGO TANDAYAMO JOSE MIGUEL | 1708272073 | jvk-editor5 | 811.049 | 9.986.935 |
 | 1702521700004 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 | 811.425 | 9.986.633 |
-| 1702521730011 | ACERO FARINANGO JUAN MIGUEL | 1708067259 | jvk-editor5 | 815.533 | 9.989.947 |
 
 ---
 
@@ -1705,15 +1710,15 @@ Las reglas las decidió la coordinación del proyecto el **9 de agosto de 2026**
 
 | | Datos | Por qué |
 |---|---:|---|
-| **Como se contaba antes** | **9.188** | Todo campo vacío era un pendiente |
+| **Como se contaba antes** | **9.184** | Todo campo vacío era un pendiente |
 | − Foto del predio _(regla 1)_ | −3.413 | La condición se eliminó desde el inicio del levantamiento. |
-| − Predios sin construcción _(regla 2)_ | −4.414 | Sin material de construcción no hay vivienda: agua y luz vacías son la respuesta correcta, no una omisión. El material deja de pedirse porque es el indicador, no un dato faltante. |
+| − Predios sin construcción _(regla 2)_ | −4.415 | Sin material de construcción no hay vivienda: agua y luz vacías son la respuesta correcta, no una omisión. El material deja de pedirse porque es el indicador, no un dato faltante. |
 | − Predio medido que no se riega _(regla 3)_ | −164 | El área sin riego está medida: el predio existe y no se riega. No falta ir a medirlo. |
-| − Caudal heredado de la comuna _(regla 4)_ | −164 | El caudal no se mide ficha por ficha, se hereda de la comuna (`METODOLOGIA-CAUDAL.md`). |
-| − Comunidad — se resuelve en oficina _(regla 5)_ | −8 | Se asigna por traslape espacial; todas tienen coordenadas. |
+| − Caudal heredado de la comuna _(regla 4)_ | −165 | El caudal no se mide ficha por ficha, se hereda de la comuna (`METODOLOGIA-CAUDAL.md`). |
+| − Comunidad — se resuelve en oficina _(regla 5)_ | −3 | Se asigna por traslape espacial; todas tienen coordenadas. |
 | − Tenencia — en espera del cliente _(regla 7)_ | −38 | La coordinación las revisa después de la depuración. |
 | − ALPAKA — en espera de dirección | −212 | No son encuestas: lotes de fraccionamiento cargados en bloque |
-| **Trabajo de campo real** | **775** | Lo que sí hay que ir a preguntar |
+| **Trabajo de campo real** | **774** | Lo que sí hay que ir a preguntar |
 
 Ninguna ficha se borró ni se dio por buena: lo que cambió es qué cuenta como pendiente. Los datos descontados siguen vacíos en el `data.gpkg`, y los que dependen de una decisión están listados arriba, en «Se resuelve en oficina» y «En espera de una decisión».
 

@@ -1,8 +1,8 @@
 {
  "esquema_claves": "id|falta|reglas-2026-08-09",
- "generado": "13/08/2026",
+ "generado": "18/08/2026",
  "corte": "2026-08-05",
- "total_fichas": 6831,
+ "total_fichas": 6830,
  "pendientes": [
   "{0041fbb2-4f9b-47f3-9d64-7e6e6f4e54f7}|teléfono",
   "{009a825d-499b-4db2-99c3-038f87cac62d}|teléfono",
@@ -461,7 +461,6 @@
   "{92b785c2-e783-469e-bf30-cdba840e1aa0}|energía eléctrica",
   "{93258fe5-fa0d-4a38-9e96-28690aa2efcb}|teléfono",
   "{93a9878e-c7a3-479f-8ef4-899e0915edbd}|área de riego",
-  "{93fd3e92-4ee3-47f2-ac74-d7837f8f2389}|caudal registrado",
   "{93fd3e92-4ee3-47f2-ac74-d7837f8f2389}|nivel de instrucción",
   "{93fd3e92-4ee3-47f2-ac74-d7837f8f2389}|teléfono",
   "{94d81ec7-fff6-4839-879e-1f4b69ca14ff}|teléfono",
@@ -806,6 +805,7 @@
   "{825a14e1-3284-462e-b51b-60d2a76da0d6}|caudal registrado": "12/08/2026",
   "{790e4da6-0c17-4c0a-b9dc-de4bffc0d242}|caudal registrado": "12/08/2026",
   "{ba77887a-9441-4499-8ad4-9cb5f593a696}|caudal registrado": "12/08/2026",
-  "{2622e877-ed2e-4bc0-b165-19b25405ca4b}|caudal registrado": "12/08/2026"
+  "{2622e877-ed2e-4bc0-b165-19b25405ca4b}|caudal registrado": "12/08/2026",
+  "{93fd3e92-4ee3-47f2-ac74-d7837f8f2389}|caudal registrado": "18/08/2026"
  }
 }
