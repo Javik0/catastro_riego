@@ -472,16 +472,26 @@ def main():
         if sembrado < f['a'] * MARGEN_CULTIVO or sembrado - f['a'] < EXCESO_CULTIVO_M2:
             continue
         clave = dat['clave']
+        pol_m2 = areas_cat.get(clave, 0)
+        # Una fila de cultivo que vale casi exacto el poligono catastral no es
+        # "sembro de mas": es el mismo default de QField que en area_total,
+        # pero en el campo de cultivo. No se corrige (no hay con que
+        # reemplazarlo), pero se distingue del caso "terreno arrendado" para
+        # no sugerir una explicacion que no aplica.
+        coincide_poligono = pol_m2 > 0 and any(
+            abs(s - pol_m2) / pol_m2 <= 0.02 for _, s in items)
         caso = {
             'clave': clave or '(sin clave)', 'tipo': 'cultivo',
             'com': dat['com'] or '(sin comunidad)', 'sec': dat['sec'] or '',
-            'pol': round(areas_cat.get(clave, 0)), 'dec': round(f['a']),
+            'pol': round(pol_m2), 'dec': round(f['a']),
             'exc': round(sembrado - f['a']), 'nf': 1, 'fichas': [f],
             'cul': round(sembrado), 'factor': round(sembrado / f['a'], 1),
             'items': [{'t': t, 'm2': round(s, 2)}
                       for t, s in sorted(items, key=lambda x: -x[1])],
             'uid': 'cul|' + fid,
         }
+        if coincide_poligono:
+            caso['coincide_poligono'] = True
         if clave in contorno:
             caso['geo'] = redondear(contorno[clave])
         casos_cultivo.append(caso)
@@ -490,8 +500,11 @@ def main():
     casos_cultivo.sort(key=lambda c: -c['factor'])
     casos.extend(casos_cultivo)
     exc_cultivo = sum(c['exc'] for c in casos_cultivo)
+    n_coincide_pol = sum(1 for c in casos_cultivo if c.get('coincide_poligono'))
     print("\n  la produccion no cabe en el predio: {:,} fichas · {:,.2f} ha sembradas de mas"
           .format(len(casos_cultivo), exc_cultivo / 10000.0))
+    print("     de esas, con un cultivo que coincide con el poligono (sospechoso, "
+          "no es terreno arrendado): {:,}".format(n_coincide_pol))
     for c in casos_cultivo[:5]:
         print("      {:<15} {:<30} x{:.1f}   predio {:>10,} m2   sembrado {:>12,} m2"
               .format(c['clave'], c['fichas'][0]['n'][:30], c['factor'],
@@ -512,6 +525,7 @@ def main():
             'con_obs': con_obs, 'resueltos_por_obs': resueltos,
             'cultivo': len(casos_cultivo),
             'cultivo_exc_ha': round(exc_cultivo / 10000.0, 2),
+            'cultivo_coincide_poligono': n_coincide_pol,
         },
         'casos': casos,
         'canal': canal,

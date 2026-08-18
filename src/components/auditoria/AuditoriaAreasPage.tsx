@@ -51,6 +51,9 @@ type Caso = {
   fichas: Ficha[];
   // solo en los casos de producción: lo sembrado, cuántas veces el predio y qué
   cul?: number; factor?: number; items?: { t: string; m2: number }[];
+  /** Un cultivo vale casi exacto el polígono catastral: mismo default de
+   * QField que en area_total, no terreno arrendado. Ver generar_auditoria_areas.py. */
+  coincide_poligono?: boolean;
   geo?: [number, number][];
   triple?: number;
   obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean; falta?: string;
@@ -382,10 +385,13 @@ export default function AuditoriaAreasPage() {
                     {c.tipo === 'dividido' && <CheckCircle2 className="h-4 w-4 text-green-600" />}
                     {c.tipo === 'cultivo' && (
                       <>
-                        <span className="block text-xs font-semibold tabular-nums text-lime-700">
+                        <span className={`block text-xs font-semibold tabular-nums ${
+                          c.coincide_poligono ? 'text-amber-700' : 'text-lime-700'}`}>
                           ×{c.factor}
                         </span>
-                        <span className="text-[9px] text-gray-500">del predio</span>
+                        <span className="text-[9px] text-gray-500">
+                          {c.coincide_poligono ? 'sin verificar' : 'del predio'}
+                        </span>
                       </>
                     )}
                     {c.tipo === 'sin_comunidad' && (
@@ -567,6 +573,16 @@ export default function AuditoriaAreasPage() {
                       {' '}sembrados en un predio de <b>{m2(sel.dec)}</b> —
                       {' '}<b>{sel.factor} veces</b> su terreno.
                     </p>
+                    {sel.coincide_poligono && (
+                      <p className="mt-1.5 rounded bg-amber-50 border border-amber-200 px-2 py-1.5 text-[11px] text-amber-900">
+                        <b>⚠ Sin verificar, no es terreno arrendado.</b> Esta cifra de cultivo
+                        coincide con el polígono catastral del predio ({m2(sel.pol)}), no con
+                        nada que se haya medido en campo — el mismo dato por defecto que traía
+                        el área del predio, aquí en la superficie sembrada. No hay una cifra
+                        alternativa con la que corregirlo: por eso se deja igual, marcado como
+                        pendiente de comprobar.
+                      </p>
+                    )}
                     {sel.items?.length ? (
                       <div className="mt-1.5 rounded border border-lime-200 bg-lime-50 px-2 py-1.5">
                         <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-lime-800">
@@ -585,12 +601,14 @@ export default function AuditoriaAreasPage() {
                         </div>
                       </div>
                     ) : null}
-                    <p className="mt-1.5 rounded bg-gray-100 px-2 py-1 text-[11px] text-gray-700">
-                      <b>No siempre es un error.</b> Sembrar en terreno arrendado fuera del predio
-                      propio es corriente aquí. Lo que hay que mirar es si la cifra tiene sentido:
-                      un factor redondo (×10, ×100) suele ser el punto decimal; un factor pequeño,
-                      terreno de fuera.
-                    </p>
+                    {!sel.coincide_poligono && (
+                      <p className="mt-1.5 rounded bg-gray-100 px-2 py-1 text-[11px] text-gray-700">
+                        <b>No siempre es un error.</b> Sembrar en terreno arrendado fuera del predio
+                        propio es corriente aquí. Lo que hay que mirar es si la cifra tiene sentido:
+                        un factor redondo (×10, ×100) suele ser el punto decimal; un factor pequeño,
+                        terreno de fuera.
+                      </p>
+                    )}
                   </>
                 )}
                 {sel.tipo === 'clave_mala' && (
