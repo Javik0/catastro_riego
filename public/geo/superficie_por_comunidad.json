@@ -1,5 +1,5 @@
 {
- "generado": "2026-08-15 02:50",
+ "generado": "2026-08-17 23:21",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
@@ -9,8 +9,10 @@
   "superficie_declarada_ha": 9779.89,
   "riego_declarado_ha": 7295.81,
   "riego_ajustado_ha": 6130.18,
+  "sin_riego_declarado_ha": 2484.08,
   "fichas_sin_poligono": 13,
-  "predios_compartidos": 435
+  "predios_compartidos": 435,
+  "sin_riego_catastral_ha": 1962.27
  },
  "sectores": {
   "Sector 1": {
@@ -20,7 +22,9 @@
    "superficie_catastral_ha": 3287.23,
    "superficie_declarada_ha": 4419.14,
    "riego_declarado_ha": 3549.24,
-   "riego_ajustado_ha": 2768.42
+   "riego_ajustado_ha": 2768.42,
+   "sin_riego_catastral_ha": 518.81,
+   "sin_riego_declarado_ha": 869.91
   },
   "Sector 2": {
    "fichas": 2292.0,
@@ -29,7 +33,9 @@
    "superficie_catastral_ha": 2349.84,
    "superficie_declarada_ha": 2911.15,
    "riego_declarado_ha": 2142.17,
-   "riego_ajustado_ha": 1796.46
+   "riego_ajustado_ha": 1796.46,
+   "sin_riego_catastral_ha": 553.38,
+   "sin_riego_declarado_ha": 768.97
   },
   "Sector 3": {
    "fichas": 1129.0,
@@ -38,7 +44,9 @@
    "superficie_catastral_ha": 2455.38,
    "superficie_declarada_ha": 2449.62,
    "riego_declarado_ha": 1604.39,
-   "riego_ajustado_ha": 1565.3
+   "riego_ajustado_ha": 1565.3,
+   "sin_riego_catastral_ha": 898.08,
+   "sin_riego_declarado_ha": 845.2
   }
  },
  "comunidades": [
@@ -53,6 +61,7 @@
    "superficie_declarada_ha": 961.11,
    "riego_declarado_ha": 961.11,
    "riego_ajustado_ha": 883.96,
+   "sin_riego_catastral_ha": 101.38,
    "sin_riego_declarado_ha": 0.0
   },
   {
@@ -66,6 +75,7 @@
    "superficie_declarada_ha": 809.38,
    "riego_declarado_ha": 200.0,
    "riego_ajustado_ha": 200.0,
+   "sin_riego_catastral_ha": 609.38,
    "sin_riego_declarado_ha": 609.38
   },
   {
@@ -79,6 +89,7 @@
    "superficie_declarada_ha": 601.45,
    "riego_declarado_ha": 601.45,
    "riego_ajustado_ha": 601.45,
+   "sin_riego_catastral_ha": 0.0,
    "sin_riego_declarado_ha": 0.0
   },
   {
@@ -92,6 +103,7 @@
    "superficie_declarada_ha": 515.66,
    "riego_declarado_ha": 369.79,
    "riego_ajustado_ha": 355.08,
+   "sin_riego_catastral_ha": 96.33,
    "sin_riego_declarado_ha": 145.87
   },
   {
@@ -105,6 +117,7 @@
    "superficie_declarada_ha": 1178.4,
    "riego_declarado_ha": 859.23,
    "riego_ajustado_ha": 326.47,
+   "sin_riego_catastral_ha": 90.2,
    "sin_riego_declarado_ha": 319.17
   },
   {
@@ -118,6 +131,7 @@
    "superficie_declarada_ha": 342.77,
    "riego_declarado_ha": 307.19,
    "riego_ajustado_ha": 290.58,
+   "sin_riego_catastral_ha": 41.14,
    "sin_riego_declarado_ha": 35.58
   },
   {
@@ -131,6 +145,7 @@
    "superficie_declarada_ha": 295.46,
    "riego_declarado_ha": 246.65,
    "riego_ajustado_ha": 211.39,
+   "sin_riego_catastral_ha": 42.45,
    "sin_riego_declarado_ha": 48.81
   },
   {
@@ -144,6 +159,7 @@
    "superficie_declarada_ha": 258.54,
    "riego_declarado_ha": 257.69,
    "riego_ajustado_ha": 246.88,
+   "sin_riego_catastral_ha": 1.59,
    "sin_riego_declarado_ha": 0.85
   },
   {
@@ -157,6 +173,7 @@
    "superficie_declarada_ha": 246.26,
    "riego_declarado_ha": 208.54,
    "riego_ajustado_ha": 199.07,
+   "sin_riego_catastral_ha": 38.2,
    "sin_riego_declarado_ha": 37.72
   },
   {
@@ -170,6 +187,7 @@
    "superficie_declarada_ha": 238.43,
    "riego_declarado_ha": 219.67,
    "riego_ajustado_ha": 215.97,
+   "sin_riego_catastral_ha": 17.79,
    "sin_riego_declarado_ha": 18.76
   },
   {
@@ -183,6 +201,7 @@
    "superficie_declarada_ha": 228.83,
    "riego_declarado_ha": 123.56,
    "riego_ajustado_ha": 110.75,
+   "sin_riego_catastral_ha": 91.73,
    "sin_riego_declarado_ha": 105.27
   },
   {
@@ -196,6 +215,7 @@
    "superficie_declarada_ha": 192.48,
    "riego_declarado_ha": 165.82,
    "riego_ajustado_ha": 151.88,
+   "sin_riego_catastral_ha": 28.65,
    "sin_riego_declarado_ha": 26.66
   },
   {
@@ -209,6 +229,7 @@
    "superficie_declarada_ha": 164.5,
    "riego_declarado_ha": 154.15,
    "riego_ajustado_ha": 152.5,
+   "sin_riego_catastral_ha": 9.88,
    "sin_riego_declarado_ha": 10.36
   },
   {
@@ -222,6 +243,7 @@
    "superficie_declarada_ha": 188.28,
    "riego_declarado_ha": 122.81,
    "riego_ajustado_ha": 98.42,
+   "sin_riego_catastral_ha": 62.96,
    "sin_riego_declarado_ha": 65.47
   },
   {
@@ -235,6 +257,7 @@
    "superficie_declarada_ha": 184.05,
    "riego_declarado_ha": 169.28,
    "riego_ajustado_ha": 154.47,
+   "sin_riego_catastral_ha": 5.09,
    "sin_riego_declarado_ha": 14.77
   },
   {
@@ -248,6 +271,7 @@
    "superficie_declarada_ha": 233.95,
    "riego_declarado_ha": 115.1,
    "riego_ajustado_ha": 91.48,
+   "sin_riego_catastral_ha": 64.7,
    "sin_riego_declarado_ha": 118.84
   },
   {
@@ -261,6 +285,7 @@
    "superficie_declarada_ha": 83.63,
    "riego_declarado_ha": 39.47,
    "riego_ajustado_ha": 36.23,
+   "sin_riego_catastral_ha": 118.96,
    "sin_riego_declarado_ha": 44.16
   },
   {
@@ -274,6 +299,7 @@
    "superficie_declarada_ha": 152.63,
    "riego_declarado_ha": 150.08,
    "riego_ajustado_ha": 150.08,
+   "sin_riego_catastral_ha": 2.55,
    "sin_riego_declarado_ha": 2.55
   },
   {
@@ -287,6 +313,7 @@
    "superficie_declarada_ha": 167.89,
    "riego_declarado_ha": 139.55,
    "riego_ajustado_ha": 121.77,
+   "sin_riego_catastral_ha": 25.79,
    "sin_riego_declarado_ha": 28.33
   },
   {
@@ -300,6 +327,7 @@
    "superficie_declarada_ha": 130.23,
    "riego_declarado_ha": 76.93,
    "riego_ajustado_ha": 73.61,
+   "sin_riego_catastral_ha": 53.35,
    "sin_riego_declarado_ha": 53.3
   },
   {
@@ -313,6 +341,7 @@
    "superficie_declarada_ha": 119.43,
    "riego_declarado_ha": 103.33,
    "riego_ajustado_ha": 101.1,
+   "sin_riego_catastral_ha": 21.5,
    "sin_riego_declarado_ha": 16.11
   },
   {
@@ -326,6 +355,7 @@
    "superficie_declarada_ha": 450.62,
    "riego_declarado_ha": 196.82,
    "riego_ajustado_ha": 98.73,
+   "sin_riego_catastral_ha": 20.72,
    "sin_riego_declarado_ha": 253.8
   },
   {
@@ -339,6 +369,7 @@
    "superficie_declarada_ha": 122.66,
    "riego_declarado_ha": 74.78,
    "riego_ajustado_ha": 68.4,
+   "sin_riego_catastral_ha": 41.56,
    "sin_riego_declarado_ha": 47.87
   },
   {
@@ -352,6 +383,7 @@
    "superficie_declarada_ha": 122.63,
    "riego_declarado_ha": 118.03,
    "riego_ajustado_ha": 105.96,
+   "sin_riego_catastral_ha": 3.67,
    "sin_riego_declarado_ha": 4.6
   },
   {
@@ -365,6 +397,7 @@
    "superficie_declarada_ha": 105.04,
    "riego_declarado_ha": 92.12,
    "riego_ajustado_ha": 86.59,
+   "sin_riego_catastral_ha": 15.03,
    "sin_riego_declarado_ha": 12.91
   },
   {
@@ -378,6 +411,7 @@
    "superficie_declarada_ha": 191.08,
    "riego_declarado_ha": 143.84,
    "riego_ajustado_ha": 71.15,
+   "sin_riego_catastral_ha": 28.81,
    "sin_riego_declarado_ha": 47.24
   },
   {
@@ -391,6 +425,7 @@
    "superficie_declarada_ha": 110.33,
    "riego_declarado_ha": 72.17,
    "riego_ajustado_ha": 64.0,
+   "sin_riego_catastral_ha": 33.03,
    "sin_riego_declarado_ha": 38.16
   },
   {
@@ -404,6 +439,7 @@
    "superficie_declarada_ha": 90.87,
    "riego_declarado_ha": 42.5,
    "riego_ajustado_ha": 41.13,
+   "sin_riego_catastral_ha": 49.83,
    "sin_riego_declarado_ha": 48.38
   },
   {
@@ -417,6 +453,7 @@
    "superficie_declarada_ha": 129.63,
    "riego_declarado_ha": 127.59,
    "riego_ajustado_ha": 86.65,
+   "sin_riego_catastral_ha": 1.53,
    "sin_riego_declarado_ha": 2.04
   },
   {
@@ -430,6 +467,7 @@
    "superficie_declarada_ha": 124.0,
    "riego_declarado_ha": 75.5,
    "riego_ajustado_ha": 55.33,
+   "sin_riego_catastral_ha": 32.21,
    "sin_riego_declarado_ha": 48.49
   },
   {
@@ -443,6 +481,7 @@
    "superficie_declarada_ha": 83.93,
    "riego_declarado_ha": 54.59,
    "riego_ajustado_ha": 50.98,
+   "sin_riego_catastral_ha": 33.72,
    "sin_riego_declarado_ha": 29.34
   },
   {
@@ -456,6 +495,7 @@
    "superficie_declarada_ha": 91.59,
    "riego_declarado_ha": 71.48,
    "riego_ajustado_ha": 66.4,
+   "sin_riego_catastral_ha": 16.3,
    "sin_riego_declarado_ha": 20.11
   },
   {
@@ -469,6 +509,7 @@
    "superficie_declarada_ha": 76.72,
    "riego_declarado_ha": 62.46,
    "riego_ajustado_ha": 56.96,
+   "sin_riego_catastral_ha": 11.93,
    "sin_riego_declarado_ha": 14.26
   },
   {
@@ -482,6 +523,7 @@
    "superficie_declarada_ha": 77.55,
    "riego_declarado_ha": 75.55,
    "riego_ajustado_ha": 61.45,
+   "sin_riego_catastral_ha": 1.0,
    "sin_riego_declarado_ha": 2.0
   },
   {
@@ -495,6 +537,7 @@
    "superficie_declarada_ha": 81.3,
    "riego_declarado_ha": 45.1,
    "riego_ajustado_ha": 36.1,
+   "sin_riego_catastral_ha": 22.69,
    "sin_riego_declarado_ha": 36.19
   },
   {
@@ -508,6 +551,7 @@
    "superficie_declarada_ha": 58.16,
    "riego_declarado_ha": 55.57,
    "riego_ajustado_ha": 55.57,
+   "sin_riego_catastral_ha": 2.93,
    "sin_riego_declarado_ha": 2.59
   },
   {
@@ -521,6 +565,7 @@
    "superficie_declarada_ha": 53.22,
    "riego_declarado_ha": 48.92,
    "riego_ajustado_ha": 46.88,
+   "sin_riego_catastral_ha": 11.41,
    "sin_riego_declarado_ha": 4.29
   },
   {
@@ -534,6 +579,7 @@
    "superficie_declarada_ha": 50.13,
    "riego_declarado_ha": 42.89,
    "riego_ajustado_ha": 42.88,
+   "sin_riego_catastral_ha": 7.24,
    "sin_riego_declarado_ha": 7.24
   },
   {
@@ -547,6 +593,7 @@
    "superficie_declarada_ha": 50.13,
    "riego_declarado_ha": 32.85,
    "riego_ajustado_ha": 30.87,
+   "sin_riego_catastral_ha": 17.41,
    "sin_riego_declarado_ha": 17.28
   },
   {
@@ -560,6 +607,7 @@
    "superficie_declarada_ha": 47.81,
    "riego_declarado_ha": 35.0,
    "riego_ajustado_ha": 35.0,
+   "sin_riego_catastral_ha": 12.81,
    "sin_riego_declarado_ha": 12.81
   },
   {
@@ -573,6 +621,7 @@
    "superficie_declarada_ha": 49.73,
    "riego_declarado_ha": 31.16,
    "riego_ajustado_ha": 29.02,
+   "sin_riego_catastral_ha": 18.75,
    "sin_riego_declarado_ha": 18.58
   },
   {
@@ -586,6 +635,7 @@
    "superficie_declarada_ha": 78.91,
    "riego_declarado_ha": 30.64,
    "riego_ajustado_ha": 24.97,
+   "sin_riego_catastral_ha": 18.45,
    "sin_riego_declarado_ha": 48.27
   },
   {
@@ -599,6 +649,7 @@
    "superficie_declarada_ha": 45.41,
    "riego_declarado_ha": 40.44,
    "riego_ajustado_ha": 39.18,
+   "sin_riego_catastral_ha": 2.76,
    "sin_riego_declarado_ha": 4.97
   },
   {
@@ -612,6 +663,7 @@
    "superficie_declarada_ha": 60.87,
    "riego_declarado_ha": 36.67,
    "riego_ajustado_ha": 31.71,
+   "sin_riego_catastral_ha": 8.23,
    "sin_riego_declarado_ha": 24.2
   },
   {
@@ -625,6 +677,7 @@
    "superficie_declarada_ha": 35.71,
    "riego_declarado_ha": 1.5,
    "riego_ajustado_ha": 1.5,
+   "sin_riego_catastral_ha": 34.21,
    "sin_riego_declarado_ha": 34.21
   },
   {
@@ -638,6 +691,7 @@
    "superficie_declarada_ha": 24.9,
    "riego_declarado_ha": 24.9,
    "riego_ajustado_ha": 24.9,
+   "sin_riego_catastral_ha": 0.0,
    "sin_riego_declarado_ha": 0.0
   },
   {
@@ -651,6 +705,7 @@
    "superficie_declarada_ha": 41.69,
    "riego_declarado_ha": 40.92,
    "riego_ajustado_ha": 23.06,
+   "sin_riego_catastral_ha": 0.42,
    "sin_riego_declarado_ha": 0.77
   },
   {
@@ -664,6 +719,7 @@
    "superficie_declarada_ha": 9.34,
    "riego_declarado_ha": 9.34,
    "riego_ajustado_ha": 9.34,
+   "sin_riego_catastral_ha": 0.0,
    "sin_riego_declarado_ha": 0.0
   },
   {
@@ -677,6 +733,7 @@
    "superficie_declarada_ha": 4.71,
    "riego_declarado_ha": 4.71,
    "riego_ajustado_ha": 3.97,
+   "sin_riego_catastral_ha": 0.0,
    "sin_riego_declarado_ha": 0.0
   },
   {
@@ -690,6 +747,7 @@
    "superficie_declarada_ha": 17.88,
    "riego_declarado_ha": 16.36,
    "riego_ajustado_ha": 8.36,
+   "sin_riego_catastral_ha": 0.0,
    "sin_riego_declarado_ha": 1.52
   }
  ],

@@ -22,13 +22,23 @@ se conserva intacto porque es material de análisis para el sociólogo. Este
 script publica ambas para que ningún informe tenga que recalcularlas por su
 cuenta —que es como se pierden los datos en silencio (regla 4).
 
-Las cuatro cifras
------------------
+Las cifras
+----------
     superficie_declarada_ha   suma de `area_total` de las fichas
     superficie_catastral_ha   suma de los polígonos distintos del GADM
     riego_declarado_ha        suma de `area_riego` de las fichas
     riego_ajustado_ha         el riego declarado recortado a lo que cabe en el
                               polígono, en proporción a lo que declaró cada uno
+    sin_riego_catastral_ha    el resto del polígono: catastral − riego ajustado
+    sin_riego_declarado_ha    suma de `area_sin_riego` de las fichas
+
+**Las dos cifras de "sin riego" no son intercambiables** y confundirlas fue lo
+que descuadró el Dashboard (17-ago-2026): la pantalla mostraba el riego medido
+por polígono junto al sin-riego declarado, y las tarjetas no sumaban la
+superficie del sistema. Cada bloque usa una sola familia:
+
+    catastral:  8.092,45 = 6.130,18 con riego + 1.962,27 sin riego
+    declarado:  9.779,89 = 7.295,81 con riego + 2.484,08 sin riego
 
 Sobre el riego ajustado: cuando las fichas de un predio declaran más superficie
 que la que el predio mide, su riego se reduce en la misma proporción. No inventa
@@ -153,16 +163,22 @@ def main():
 
     comunidades = []
     for com, r in sorted(filas.items(), key=lambda x: -x[1]['catastral']):
+        catastral_ha, riego_aj_ha = ha(r['catastral']), ha(r['riego_aj'])
         comunidades.append({
             'comunidad': como_se_escribe(com),
             'sector': SECTOR_DE.get(com, 'Sin asignar'),
             'fichas': r['fichas'], 'regantes': r['regantes'],
             'predios_adicionales': r['adicionales'],
             'predios_catastrales': r['predios'],
-            'superficie_catastral_ha': ha(r['catastral']),
+            'superficie_catastral_ha': catastral_ha,
             'superficie_declarada_ha': ha(r['declarada']),
             'riego_declarado_ha': ha(r['riego_dec']),
-            'riego_ajustado_ha': ha(r['riego_aj']),
+            'riego_ajustado_ha': riego_aj_ha,
+            # El resto del poligono catastral: lo que la pantalla muestra como
+            # "sin riego" al lado de "con riego", para que las dos sumen la
+            # superficie del sistema. NO es sin_riego_declarado_ha, que viene de
+            # las fichas y arrastra la duplicacion de los predios de herederos.
+            'sin_riego_catastral_ha': round(max(catastral_ha - riego_aj_ha, 0.0), 2),
             'sin_riego_declarado_ha': ha(r['sin_riego']),
         })
 
@@ -172,7 +188,8 @@ def main():
         for k in ('fichas', 'regantes', 'predios_catastrales'):
             s[k] += c[k]
         for k in ('superficie_catastral_ha', 'superficie_declarada_ha',
-                  'riego_declarado_ha', 'riego_ajustado_ha'):
+                  'riego_declarado_ha', 'riego_ajustado_ha',
+                  'sin_riego_catastral_ha', 'sin_riego_declarado_ha'):
             s[k] += c[k]
 
     total = {
@@ -183,9 +200,15 @@ def main():
         'superficie_declarada_ha': ha(sum(float(p.get('area_total') or 0) for p in fichas)),
         'riego_declarado_ha': ha(sum(float(p.get('area_riego') or 0) for p in fichas)),
         'riego_ajustado_ha': ha(sum(c['riego_ajustado_ha'] for c in comunidades) * 10000),
+        'sin_riego_declarado_ha': ha(sum(float(p.get('area_sin_riego') or 0) for p in fichas)),
         'fichas_sin_poligono': len(sin_poligono),
         'predios_compartidos': sum(1 for v in por_predio.values() if len(v) > 1),
     }
+    # El complemento del riego dentro del poligono. Se calcula del total y no
+    # sumando comunidades para que "con riego + sin riego" cierre EXACTO contra
+    # la superficie del sistema, que es lo que el lector comprueba a ojo.
+    total['sin_riego_catastral_ha'] = round(
+        max(total['superficie_catastral_ha'] - total['riego_ajustado_ha'], 0.0), 2)
 
     # Los predios donde lo declarado no cabe en el polígono, con cuánto hay que
     # recortar. Lo publica para que cualquier análisis por titular —quién tiene
@@ -216,6 +239,7 @@ def main():
     print('     superficie declarada          {:>12,.2f} ha'.format(total['superficie_declarada_ha']))
     print('     riego declarado               {:>12,.2f} ha'.format(total['riego_declarado_ha']))
     print('     riego ajustado al poligono    {:>12,.2f} ha'.format(total['riego_ajustado_ha']))
+    print('     sin riego (resto del poligono){:>12,.2f} ha'.format(total['sin_riego_catastral_ha']))
     print('     predios con varias fichas     {:>12,}'.format(total['predios_compartidos']))
     if total['fichas_sin_poligono']:
         print('     fichas sin poligono           {:>12,}  (no suman superficie catastral)'

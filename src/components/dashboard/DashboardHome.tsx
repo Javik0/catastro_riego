@@ -125,6 +125,10 @@ interface Superficie {
     superficie_declarada_ha: number;
     riego_declarado_ha: number;
     riego_ajustado_ha: number;
+    /** Resto del polígono: catastral − riego ajustado. Cierra con las otras dos. */
+    sin_riego_catastral_ha: number;
+    /** Suma de `area_sin_riego` de las fichas. NO cierra con la catastral. */
+    sin_riego_declarado_ha: number;
     predios_compartidos: number;
   };
 }
@@ -293,11 +297,34 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   const areaRiegoHa = areaRiegoTotalM2 / 10000;
   const areaSinRiegoHa = areaSinRiegoTotalM2 / 10000;
 
+  // ── Las dos mediciones NUNCA se mezclan ──────────────────────────────
+  // Catastral (polígonos del GAD, cada predio una vez) es la que se entrega al
+  // consorcio y al agrónomo, y la que ve el cliente. Declarada (suma de fichas)
+  // es el dato social del sociólogo y vive en su propio bloque, solo interno.
+  //
+  // El 17-ago-2026 la pantalla mostraba el riego CATASTRAL junto al sin-riego
+  // DECLARADO: las tarjetas no sumaban la superficie del sistema (6.130,18 +
+  // 2.484,08 = 8.614,26 contra 8.092,45) y el contratante lo detectó sumando a
+  // ojo. De aquí salen ahora las dos, de la misma familia y en el mismo orden.
+  const catastral = superficie && !hayFiltro ? superficie.total : null;
+  const riegoHa = catastral ? catastral.riego_ajustado_ha : areaRiegoHa;
+  const sinRiegoHa = catastral ? catastral.sin_riego_catastral_ha : areaSinRiegoHa;
+  const superficieBaseHa = catastral
+    ? catastral.superficie_catastral_ha
+    : riegoHa + sinRiegoHa;
+  const pctDe = (h: number) =>
+    (superficieBaseHa > 0 ? (h / superficieBaseHa) * 100 : 0)
+      .toLocaleString('es-EC', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const haFmt = (h: number) =>
+    h.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
   // «Secano» se cambió por «Sin riego» en toda la pantalla (pedido de JAVIKO,
   // 12-ago): es el término que entiende cualquier lector, no solo el técnico.
+  // Usa las MISMAS cifras que las tarjetas de arriba: el anillo mostraba lo
+  // declarado mientras la tarjeta mostraba lo catastral, y no coincidían.
   const coberturaRiegoData = [
-    { name: 'Con riego', value: Number(areaRiegoHa.toFixed(2)), color: '#3b82f6' },
-    { name: 'Sin riego', value: Number(areaSinRiegoHa.toFixed(2)), color: '#f59e0b' }
+    { name: 'Con riego', value: Number(riegoHa.toFixed(2)), color: '#3b82f6' },
+    { name: 'Sin riego', value: Number(sinRiegoHa.toFixed(2)), color: '#f59e0b' }
   ].filter(item => item.value > 0);
 
   // 2. Distribución de Especies Pecuarias (Animales)
@@ -484,19 +511,17 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
         )}
         <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
         {/* La superficie del sistema se mide contando cada predio UNA vez (su
-            polígono del catastro). Sumar el área de las fichas cuenta varias
-            veces los predios de herederos —1.780 ha de más—; ese dato sigue
-            visible debajo porque es lo que declara la gente, no un error. */}
+            polígono del catastro). Lo declarado por los regantes NO se nombra
+            aquí: es dato del análisis social y vive en su bloque, solo interno. */}
         <KPICard
           icon={TrendingUp}
           label="Superficie del sistema"
           value={superficie
-            ? `${superficie.total.superficie_catastral_ha.toLocaleString('es-EC',
-                { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha`
+            ? `${haFmt(superficie.total.superficie_catastral_ha)} ha`
             : `${areaTotalHa.toLocaleString('es-EC', { maximumFractionDigits: 2 })} ha`}
           color="#f59e0b"
           sub={superficie
-            ? `${superficie.total.predios_catastrales.toLocaleString('es-EC')} predios · los regantes declaran ${superficie.total.superficie_declarada_ha.toLocaleString('es-EC', { maximumFractionDigits: 0 })} ha`
+            ? `${superficie.total.predios_catastrales.toLocaleString('es-EC')} predios · medición catastral`
             : `${Math.round(stats.areaTotal).toLocaleString('es-EC')} m² declarados`}
         />
         <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
@@ -561,21 +586,11 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie con Riego</p>
-                {/* Sin filtros manda la cifra del sistema, la misma que los
-                    informes: el riego declarado arrastra la duplicación de los
-                    predios de herederos y por eso sale más alto. Con un filtro
-                    puesto no se puede usar —el JSON es del total— y se muestra
-                    lo declarado, diciéndolo. */}
                 <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>
-                  {(superficie && !hayFiltro
-                    ? superficie.total.riego_ajustado_ha
-                    : areaRiegoHa
-                  ).toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                  {haFmt(riegoHa)} ha
                 </h4>
-                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
-                  {superficie && !hayFiltro
-                    ? `Cada predio contado una vez · los regantes declaran ${superficie.total.riego_declarado_ha.toLocaleString('es-EC', { maximumFractionDigits: 0 })} ha`
-                    : `Equivalente a ${Math.round(areaRiegoTotalM2).toLocaleString('es-EC')} m² bajo riego en este sector`}
+                <p className="text-xs mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  Equivalente a {Math.round(riegoHa * 10000).toLocaleString('es-EC')} m² · {pctDe(riegoHa)} %
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-500 shrink-0">
@@ -583,35 +598,104 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
               </div>
             </div>
             <div className="text-[10px] mt-4 font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1">
-              <span>{superficie && !hayFiltro
-                ? 'Hectáreas regadas del sistema'
-                : 'Hectáreas regadas registradas en fichas'}</span>
+              <span className="text-xs">{catastral
+                ? 'Medición catastral del sistema'
+                : 'Declarado en las fichas de este sector'}</span>
             </div>
           </div>
 
-          {/* Tarjeta ha Sin Riego */}
+          {/* Tarjeta ha Sin Riego — el complemento EXACTO de la de al lado: sale
+              de la misma medición, para que las dos sumen la superficie total. */}
           <div className="rounded-2xl border p-5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 hover:border-amber-500/30"
                style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)', boxShadow: 'var(--shadow-card)' }}>
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Superficie Sin Riego</p>
                 <h4 className="text-3xl font-black mt-2" style={{ color: 'var(--text-heading)' }}>
-                  {areaSinRiegoHa.toLocaleString('es-EC', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ha
+                  {haFmt(sinRiegoHa)} ha
                 </h4>
-                <p className="text-[11px] mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
-                  Equivalente a {Math.round(areaSinRiegoTotalM2).toLocaleString('es-EC')} m² sin riego en este sector
+                <p className="text-xs mt-1 leading-normal" style={{ color: 'var(--text-secondary)' }}>
+                  Equivalente a {Math.round(sinRiegoHa * 10000).toLocaleString('es-EC')} m² · {pctDe(sinRiegoHa)} %
                 </p>
               </div>
               <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-500 shrink-0">
                 <Droplets className="w-5 h-5" />
               </div>
             </div>
-            {/* Mensaje informativo */}
             <div className="text-[10px] mt-4 font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-              <span>Hectáreas sin riego registradas en fichas</span>
+              <span className="text-xs">{catastral
+                ? 'Medición catastral del sistema'
+                : 'Declarado en las fichas de este sector'}</span>
             </div>
           </div>
         </div>
+
+        {/* La suma explícita: es la comprobación que el lector hace a ojo y la
+            que descuadraba. Dicha en voz alta, la pregunta no vuelve. */}
+        <div className="rounded-xl border px-4 py-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
+             style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+          <span className="text-sm leading-normal" style={{ color: 'var(--text-secondary)' }}>
+            <b style={{ color: 'var(--text-heading)' }}>{haFmt(riegoHa)}</b> con riego
+            {' + '}<b style={{ color: 'var(--text-heading)' }}>{haFmt(sinRiegoHa)}</b> sin riego
+            {' = '}<b style={{ color: 'var(--text-heading)' }}>{haFmt(superficieBaseHa)} ha</b>
+            {catastral ? ' de superficie del sistema' : ' declaradas en este sector'}
+          </span>
+          {catastral && (
+            <span className="text-xs px-2.5 py-1 rounded-full border whitespace-nowrap font-semibold
+                             bg-amber-50 text-amber-700 border-amber-300
+                             dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30">
+              En depuración con el GAD Cayambe
+            </span>
+          )}
+        </div>
+
+        {catastral && (
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Superficies medidas sobre el catastro rural del GAD Cayambe contando cada
+            predio una vez. Las cifras se siguen depurando junto con el municipio.
+          </p>
+        )}
+
+        {/* ── Lo declarado por los regantes: dato del análisis social, NO la
+            medida del territorio. Solo equipo (decisión de JAVIKO, 17-ago-2026):
+            puesto junto al catastro invita a sumar peras con manzanas, que es
+            justo lo que descuadró la pantalla. ── */}
+        {esInterno && catastral && (
+          <div className="rounded-xl border p-4"
+               style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
+            <div className="flex items-center gap-2 flex-wrap mb-3">
+              <span className="text-sm font-bold uppercase tracking-wider" style={{ color: 'var(--text-heading)' }}>
+                Declarado por los regantes
+              </span>
+              <span className="text-xs px-2.5 py-0.5 rounded-full border font-semibold
+                               bg-blue-50 text-blue-700 border-blue-200
+                               dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30">
+                Solo equipo
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                ['Total declarado', superficie!.total.superficie_declarada_ha],
+                ['Con riego', superficie!.total.riego_declarado_ha],
+                ['Sin riego', superficie!.total.sin_riego_declarado_ha],
+              ].map(([k, v]) => (
+                <div key={k as string} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-secondary)' }}>
+                  <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{k as string}</div>
+                  <div className="text-lg font-bold" style={{ color: 'var(--text-heading)' }}>
+                    {haFmt(v as number)} ha
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs mt-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              Lo que declararon los regantes en campo — base del análisis social. Suma{' '}
+              <b>{haFmt(superficie!.total.superficie_declarada_ha - superficie!.total.superficie_catastral_ha)} ha</b>{' '}
+              más que el catastro porque en {superficie!.total.predios_compartidos.toLocaleString('es-EC')} predios
+              familiares cada heredero declara el terreno completo. <b>No es un error: es otra unidad de medida</b>,
+              y por eso no se suma ni se compara con las cifras catastrales de arriba.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Sección Gráficos Sectoriales Dinámicos */}
@@ -942,7 +1026,9 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           <h3 className="text-sm font-bold tracking-wide uppercase text-slate-400 flex items-center gap-2">
             <Users className="w-4 h-4" />
             Seguimiento del Equipo
-            <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-slate-500/10 text-slate-400 border border-slate-500/20 normal-case tracking-normal">
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full border normal-case tracking-normal
+                             bg-slate-100 text-slate-600 border-slate-300
+                             dark:bg-slate-500/10 dark:text-slate-300 dark:border-slate-500/20">
               Solo equipo consultor
             </span>
           </h3>
@@ -1026,18 +1112,34 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
+              {/* Sin etiquetas radiales: cinco de las siete tenencias son
+                  porciones mínimas (49 fichas la más chica) y sus rótulos se
+                  encimaban unos sobre otros hasta ser ilegibles. La cifra va
+                  en la leyenda de abajo, igual que en «Uso del suelo». */}
               <Pie data={tenencia} cx="50%" cy="50%" innerRadius={40} outerRadius={75} dataKey="value"
-                label={({ name, value }) => `${name}: ${value}`} paddingAngle={3}>
+                paddingAngle={3}>
                 {tenencia.map((_, i) => (
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip
+                formatter={(v: any) => `${Number(v).toLocaleString('es-EC')} fichas`}
                 contentStyle={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)', borderRadius: 8 }}
                 itemStyle={{ color: 'var(--text-primary)' }}
               />
             </PieChart>
           </ResponsiveContainer>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 mt-3">
+            {tenencia.map((t, i) => (
+              <span key={t.name} className="text-xs flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
+                <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: PIE_COLORS[i % PIE_COLORS.length] }} />
+                <span className="truncate" title={t.name}>{t.name}</span>
+                <strong className="ml-auto shrink-0" style={{ color: 'var(--text-primary)' }}>
+                  {t.value.toLocaleString('es-EC')}
+                </strong>
+              </span>
+            ))}
+          </div>
         </div>
 
         {/* Por parroquia */}

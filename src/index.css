@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* El tema lo manda el botón de la cabecera, que escribe data-theme en <html>.
+   Sin esta línea, Tailwind v4 resuelve `dark:` contra el SISTEMA OPERATIVO
+   (prefers-color-scheme), no contra ese botón: quien tenía Windows en oscuro y
+   ponía la app en claro veía los estilos oscuros encima de tarjetas blancas
+   —texto amber-400 y blue-400 sobre blanco, ilegible—. Reportado el 17-ago-2026
+   como «etiquetas que al cambiar a modo claro se pierden». */
+@custom-variant dark ([data-theme="dark"] &);
+
 @theme {
   --color-agri-50: #f0fdf4;
   --color-agri-100: #dcfce7;
@@ -24,7 +32,11 @@
   --border-input: rgba(71, 85, 105, 0.4);
   --text-primary: #f1f5f9;
   --text-secondary: #94a3b8;
-  --text-muted: #475569;
+  /* Los rótulos pequeños en mayúsculas de las tarjetas usan --text-muted. Con
+     el #475569 anterior quedaban en 2,2:1 sobre la tarjeta —por debajo del 4,5
+     legible— y se perdían. Sigue siendo el tono más apagado de los tres, pero
+     ahora se lee. Medido en pantalla, no a ojo (17-ago-2026). */
+  --text-muted: #7d8ca3;
   --text-heading: #f8fafc;
   --row-hover: rgba(51, 65, 85, 0.3);
   --row-alt: transparent;
@@ -45,7 +57,10 @@
   --border-input: rgba(203, 213, 225, 0.8);
   --text-primary: #0f172a;
   --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  /* Mismo caso que en oscuro, y aquí era peor: el #94a3b8 anterior daba 2,5:1
+     sobre la tarjeta blanca. Es el modo donde el cliente reportó que las
+     etiquetas «se pierden». */
+  --text-muted: #64748b;
   --text-heading: #1e293b;
   --row-hover: rgba(241, 245, 249, 0.8);
   --row-alt: rgba(248, 250, 252, 0.6);

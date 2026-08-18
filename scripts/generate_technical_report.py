@@ -1241,9 +1241,15 @@ def main():
             'Goteo': gote_avg
         }
         
+        # El «sin riego» sale de la columna area_sin_riego, la MISMA que alimenta
+        # la tabla por sector. Antes se calculaba aquí como (total - riego) y el
+        # documento se contradecía a sí mismo: la tabla decía 2.484,08 ha y esta
+        # barra dibujaba 2.486,29 —2,21 ha de diferencia en 3 fichas donde lo
+        # declarado no cuadra—. Un informe no puede dar dos cifras para el mismo
+        # concepto (17-ago-2026, tras el mismo hallazgo en el Dashboard).
         chart_riego_secano_data[sector] = {
             'Riego': sum_riego / 10000.0,
-            'Secano': (sum_total - sum_riego) / 10000.0
+            'Secano': sum(r[4] for r in recs) / 10000.0
         }
 
         sector_stats_report.append({
@@ -1610,6 +1616,18 @@ def main():
 *Elaborado por el Equipo Técnico de ap&catastro*
 
 Este informe técnico presenta los resultados consolidados del levantamiento catastral, de infraestructura y socio-productivo para el **SISTEMA DE RIEGO COMUNITARIO GUANGUILQUI POROTOG** al día de hoy. El documento sirve como soporte formal para la presentación y revisión del estado de avance de la consultoría.
+
+> **Datos en proceso de depuración.** Las cifras de este informe corresponden al
+> estado del padrón a la fecha de corte y **se siguen depurando** junto con el
+> GAD Cayambe. Al cerrar la depuración hay que **regenerar este documento**, y
+> con él los capítulos y el consolidado, porque los totales pueden cambiar.
+>
+> **Todas las superficies de este informe son las declaradas por los regantes**,
+> no la medición catastral. Son dos unidades distintas y no se suman entre sí:
+> en los predios familiares cada heredero declara el terreno completo, así que lo
+> declarado supera a lo que miden los polígonos. La superficie del territorio
+> —la que se entrega al consorcio y al agrónomo— se mide por polígono catastral y
+> está en el informe consolidado y en el capítulo del predio.
 
 ---
 

@@ -44,15 +44,16 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
   // identificarlo y planificar el alcance de investigación ──
   if (!ficha) {
     const dueno = `${predio.apellidos || ''} ${predio.nombres || ''}`.trim();
+    const sinDato = 'sin dato (NULL)';
     return (
       <div className="text-xs min-w-[240px] max-w-[290px]">
         <div className="border-b pb-1.5 mb-2">
           <div className="flex items-start justify-between gap-2">
             <div className="font-bold text-sm leading-tight">
-              {dueno || 'Propietario no registrado en catastro'}
+              {dueno || 'Sin propietario en el catastro municipal'}
             </div>
-            <span className="shrink-0 px-1.5 py-0.5 rounded-full text-[9px] font-bold border whitespace-nowrap bg-amber-50 text-amber-700 border-amber-300">
-              Sin investigar
+            <span className="shrink-0 px-1.5 py-0.5 rounded-full text-[9px] font-bold border whitespace-nowrap bg-gray-100 text-gray-600 border-gray-300">
+              Sin ficha de riego
             </span>
           </div>
           <div className="text-[10px] opacity-70 font-mono mt-0.5 flex items-center gap-1">
@@ -61,9 +62,9 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
         </div>
         <div className="space-y-1 mb-2">
           {[
-            ['Cédula / RUC', predio.cedula || '—'],
-            ['Comunidad', predio.comunidad || '—'],
-            ['Área catastral', predio.area_predi ? `${fmt(predio.area_predi)} m²` : '—'],
+            ['Cédula / RUC', predio.cedula || sinDato],
+            ['Comunidad', predio.comunidad || sinDato],
+            ['Área catastral', predio.area_predi ? `${fmt(predio.area_predi)} m²` : sinDato],
           ].map(([k, v]) => (
             <div key={k} className="flex justify-between gap-2">
               <span className="opacity-60">{k}:</span>
@@ -71,8 +72,8 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
             </div>
           ))}
         </div>
-        <div className="rounded-lg border border-dashed border-amber-300 bg-amber-50 px-2 py-1.5 text-[10px] text-amber-800 text-center">
-          📋 Predio sin ficha de riego — candidato a investigación de alcance
+        <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-2 py-1.5 text-[10px] text-gray-600 text-center">
+          Datos del catastro rural del GAD Cayambe (Depto. de Avalúos y Catastros), tal como fueron entregados
         </div>
       </div>
     );
