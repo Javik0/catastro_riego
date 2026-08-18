@@ -32,8 +32,9 @@ import type { LatLngExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';   // cada pantalla con mapa lo importa (igual que MapPage)
 import {
   AlertTriangle, CheckCircle2, Layers, MapPin, Phone, Ruler, Search, FileText,
-  PanelLeftClose, PanelLeftOpen,
+  PanelLeftClose, PanelLeftOpen, Hand,
 } from 'lucide-react';
+import AsignarComunidad from './AsignarComunidad';
 
 type Ficha = {
   n: string; ced: string; tel: string;
@@ -100,7 +101,7 @@ const TIPOS = {
   clave_mala: { et: 'Clave por verificar', corto: 'Clave por verificar', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
   clave_dmq: { et: 'Predio del Distrito Metropolitano de Quito', corto: 'Fichas DMQ', color: '#64748b', bg: 'bg-slate-100', tx: 'text-slate-600' },
   sin_comunidad: { et: 'Sin comunidad', corto: 'Sin comunidad', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
-  dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
+  dividido: { et: 'El reparto entre coherederos cuadra', corto: 'Reparto correcto', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
   sin_superficie: { et: 'Regantes sin superficie asignada', corto: 'Sin superficie', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   cultivo: { et: 'Siembra más de lo que mide', corto: 'Producción', color: '#65a30d', bg: 'bg-lime-50', tx: 'text-lime-700' },
 } as const;
@@ -154,6 +155,7 @@ export default function AuditoriaAreasPage() {
   const [filtro, setFiltro] = useState<keyof typeof TIPOS>('exceso');
   const [busca, setBusca] = useState('');
   const [sel, setSel] = useState<Caso | null>(null);
+  const [asignando, setAsignando] = useState(false);
   // El panel se pliega para revisar el mapa a pantalla completa, que es como
   // se mira un predio en reunión.
   const [panel, setPanel] = useState(true);
@@ -223,6 +225,7 @@ export default function AuditoriaAreasPage() {
 
   return (
     <div className="flex h-[calc(100vh-4rem)] flex-col">
+      {asignando && <AsignarComunidad onCerrar={() => setAsignando(false)} />}
       {/* ── cabecera ── */}
       <div className="border-b border-gray-200 bg-white px-5 py-3">
         <div className="flex flex-wrap items-end justify-between gap-4">
@@ -350,6 +353,20 @@ export default function AuditoriaAreasPage() {
                     </button>
                   ))}
                 </div>
+                {/* Las que quedan sin comunidad no las cierra ningún criterio
+                    automático: están en la frontera entre varias o aisladas.
+                    Se resuelven mirando el mapa, no yendo a campo. */}
+                {g.tipos.includes('sin_comunidad') && conteo.sin_comunidad > 0 && (
+                  <button
+                    onClick={() => setAsignando(true)}
+                    className="mt-1.5 inline-flex items-center gap-1.5 rounded border
+                               border-blue-300 bg-blue-50 px-2 py-1 text-[11px]
+                               font-medium text-blue-700 hover:bg-blue-100"
+                  >
+                    <Hand className="h-3 w-3" />
+                    Asignarlas a mano en el mapa
+                  </button>
+                )}
               </div>
             ))}
           </div>
