@@ -4,6 +4,7 @@ import type { FeatureCollection } from 'geojson';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
 import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_SUBTITLE_ALCANCE, PROJECT_LOCATION } from '../../lib/constants';
 import { wgs84ToUtm17S } from '../../lib/utm';
+import { useAuth } from '../../hooks/useAuth';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -52,6 +53,7 @@ function PolygonBoundsController({ feature, center, defaultZoom }: { feature: an
 }
 
 export default function FichaImpresion({ ficha, cultivos, animales, prediosAdicionales }: Props) {
+  const { isCliente } = useAuth();
   const [mapPolygon, setMapPolygon] = useState<FeatureCollection | null>(null);
   const [allPolygons, setAllPolygons] = useState<FeatureCollection | null>(null);
   const [loadingPolygon, setLoadingPolygon] = useState(true);
@@ -1051,15 +1053,29 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* Observaciones — fila completa */}
-      {ficha.observaciones && (
-        <div style={{
-          marginTop: '6px', padding: '5px 10px',
-          background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px'
-        }}>
-          <p style={{ fontSize: '6.5pt', textTransform: 'uppercase', color: '#475569', fontWeight: 700, marginBottom: '2px' }}>Observaciones Generales</p>
-          <p style={{ fontSize: '8pt', fontStyle: 'italic', color: '#334155', lineHeight: '1.4' }}>"{ficha.observaciones}"</p>
-        </div>
+      {/* Observaciones — fila completa. Al cliente no le mostramos el campo
+          crudo (texto interno del catastro); ve solo la relación principal/
+          adicional, si la ficha tiene una. */}
+      {isCliente ? (
+        ficha.observaciones_cliente && (
+          <div style={{
+            marginTop: '6px', padding: '5px 10px',
+            background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px'
+          }}>
+            <p style={{ fontSize: '6.5pt', textTransform: 'uppercase', color: '#475569', fontWeight: 700, marginBottom: '2px' }}>Observaciones Generales</p>
+            <p style={{ fontSize: '8pt', fontStyle: 'italic', color: '#334155', lineHeight: '1.4' }}>{ficha.observaciones_cliente}</p>
+          </div>
+        )
+      ) : (
+        ficha.observaciones && (
+          <div style={{
+            marginTop: '6px', padding: '5px 10px',
+            background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '4px'
+          }}>
+            <p style={{ fontSize: '6.5pt', textTransform: 'uppercase', color: '#475569', fontWeight: 700, marginBottom: '2px' }}>Observaciones Generales</p>
+            <p style={{ fontSize: '8pt', fontStyle: 'italic', color: '#334155', lineHeight: '1.4' }}>"{ficha.observaciones}"</p>
+          </div>
+        )
       )}
     </div>
   );

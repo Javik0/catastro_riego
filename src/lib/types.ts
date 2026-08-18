@@ -97,6 +97,10 @@ export interface FichaPredio {
   // Multimedia y Auditoría
   foto_predio?: string;
   observaciones?: string;
+  /** Relación principal↔adicional (calculado en export_geojson.py). Esto —no
+   * `observaciones`, que trae texto interno del catastro— es lo que ve el
+   * cliente. */
+  observaciones_cliente?: string;
   creado_por: string;
   fecha_creacion: Date | Timestamp | string;
   dispositivo?: string;

@@ -697,6 +697,31 @@ def export_fichas():
     if renombradas:
         print(f"  ✓ {renombradas} fichas con comunidad renombrada para presentación")
 
+    # observaciones_cliente: describe la relación principal <-> adicional (una
+    # ficha hija es, en la práctica, un predio adicional ya promovido a ficha
+    # propia — ver ficha_madre_id). El campo `observaciones` crudo trae texto
+    # interno del catastro —incluidas las notas que dejan los scripts de
+    # corrección— y no es apto para lo que ve el cliente; este campo sí.
+    por_id = {p.get('id'): p for p in (feat['properties'] for feat in features) if p.get('id')}
+    hijas_de = {}
+    for feat in features:
+        p = feat['properties']
+        p['observaciones_cliente'] = ''
+        if _es_ficha_hija(p) and p.get('ficha_madre_id'):
+            madre = por_id.get(p['ficha_madre_id'])
+            if madre:
+                clave_madre = madre.get('clave_catastral') or madre.get('cod_poligono') or ''
+                p['observaciones_cliente'] = f'FICHA ADICIONAL DE LA PRINCIPAL: {clave_madre}'
+                clave_propia = p.get('clave_catastral') or p.get('cod_poligono') or ''
+                hijas_de.setdefault(p['ficha_madre_id'], []).append(clave_propia)
+    for madre_id, claves in hijas_de.items():
+        madre = por_id.get(madre_id)
+        if madre and claves:
+            madre['observaciones_cliente'] = (
+                'FICHA PRINCIPAL DE LAS ADICIONALES: ' + ', '.join(claves))
+    con_relacion = sum(1 for feat in features if feat['properties']['observaciones_cliente'])
+    print(f"  ✓ {con_relacion} fichas con observaciones_cliente (relación principal/adicional)")
+
     _save(features, 'fichas_predios.geojson')
     print(f"  ✓ {len(features)} fichas exportadas ({sin_geom} sin coordenadas GPS — geometry: null)")
     conn.close()

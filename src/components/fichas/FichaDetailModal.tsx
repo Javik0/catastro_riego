@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional, esFichaHija, esHijaPendiente } from '../../lib/types';
 import { getNombreTecnico } from '../../lib/constants';
+import { useAuth } from '../../hooks/useAuth';
 import FichaImpresion from './FichaImpresion';
 
 const BUCKET_NAME = 'invs-riego-comunitario.firebasestorage.app';
@@ -55,6 +56,7 @@ function Field({ label, value, icon: Icon }: FieldProps) {
 }
 
 export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelectFicha }: Props) {
+  const { isCliente } = useAuth();
   const [activeTab, setActiveTab] = useState<string>('propietario');
   const fichaMadre = esFichaHija(ficha) && ficha.ficha_madre_id && todasFichas
     ? todasFichas.find((f) => f.id === ficha.ficha_madre_id)
@@ -398,7 +400,11 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
               <Field label="ID" value={ficha.id} icon={Hash} />
               <Field label="Nombre Archivo Foto" value={ficha.foto_predio} icon={ImageIcon} />
               <div className="col-span-full">
-                <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />
+                {isCliente ? (
+                  <Field label="Observaciones" value={ficha.observaciones_cliente} icon={FileText} />
+                ) : (
+                  <Field label="Observaciones" value={ficha.observaciones} icon={FileText} />
+                )}
               </div>
             </div>
 
