@@ -1336,7 +1336,7 @@
     "especie": "Otros",
     "cantidad": 4000,
     "es_mercado": 1,
-    "especie_otro": "Truchas "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{6195dc8d-5462-478f-a26e-a5932f005df8}",
@@ -3386,10 +3386,9 @@
   {
     "id_animal": "{74859026-1cac-4879-9689-751d2086db18}",
     "ficha_id": "{e2674918-2021-48bd-8833-9bb1e2b5969f}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 7,
-    "es_autoconsumo": 1,
-    "especie_otro": "Burros"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{8fb62340-ba10-46b4-aa42-a0404b108856}",
@@ -5027,11 +5026,10 @@
   {
     "id_animal": "{d6415dab-49e0-47e7-a9c4-abf82c75bc5c}",
     "ficha_id": "{ec43bcf0-746c-4860-ae0a-7153d0d0ec7a}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{b8f69018-bb7f-4168-a0ff-9ae99b113d74}",
@@ -5143,10 +5141,9 @@
   {
     "id_animal": "{0089cfea-9b15-44df-be1e-d34072a21273}",
     "ficha_id": "{2ed3158b-3e82-4646-9fee-d21a448fb751}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 2,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS "
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{87510630-dfe6-40db-8f8b-66ba90e8f85d}",
@@ -5208,11 +5205,10 @@
   {
     "id_animal": "{a80f09f5-2b3d-41d0-bff0-d77136a1b6ab}",
     "ficha_id": "{9e7ad339-dcb7-4028-bf8b-8d3e33770bc2}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 8,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{f3bab21c-e3b5-4680-aeaa-0c325d8bf357}",
@@ -6317,10 +6313,9 @@
   {
     "id_animal": "{e0132f22-e008-4225-a31a-369988d13e27}",
     "ficha_id": "{14a69d70-7654-483a-b7a7-cb8b951b9ba3}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS "
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{d81f48bf-dc81-4b70-a20e-d7dba3b92c8d}",
@@ -6430,10 +6425,9 @@
   {
     "id_animal": "{f5d1b24a-1f79-4e6e-9f8f-891880da22a2}",
     "ficha_id": "{be10cd46-70c1-4e7d-bfde-eeea4de6fda1}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGO"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{aba1f77d-5478-412d-a653-bbfdf5016bca}",
@@ -6460,11 +6454,10 @@
   {
     "id_animal": "{9ce7a841-c655-4221-8d5d-e53c91f4a067}",
     "ficha_id": "{972ca61c-d226-4d3e-ac7d-1a53a918b38e}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{181786df-4e68-44fc-b892-437cdefb2417}",
@@ -7228,9 +7221,8 @@
   {
     "id_animal": "{7eabee6a-f397-4b5a-9a01-fcc5ed8582f9}",
     "ficha_id": "{005ca8a8-98f6-4d43-b43e-7b2170026a4e}",
-    "especie": "Otros",
-    "cantidad": 1,
-    "especie_otro": "BORREGOS "
+    "especie": "Ovejas / Cabras",
+    "cantidad": 1
   },
   {
     "id_animal": "{4568102e-d1e5-439d-84f5-3cbbe463c02e}",
@@ -8324,8 +8316,7 @@
     "ficha_id": "{e855e376-e9c3-49bf-8d1a-47e75350d792}",
     "especie": "Vacas en producción",
     "cantidad": 2,
-    "es_mercado": 1,
-    "especie_otro": "VACAS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{ff0bfebc-6911-4808-9077-e0988611c515}",
@@ -8345,8 +8336,7 @@
     "ficha_id": "{e855e376-e9c3-49bf-8d1a-47e75350d792}",
     "especie": "Vaconas",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "VACONA"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{b454d1aa-7ad0-40ac-bd6c-0607e8394248}",
@@ -8819,11 +8809,10 @@
   {
     "id_animal": "{66626a12-752c-4ad0-ad42-e90e5d2ceb39}",
     "ficha_id": "{600b63aa-d951-4eef-b875-ec34b0f56430}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 7,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{68974c70-7ab4-49a7-bdcd-364358e661da}",
@@ -9045,8 +9034,7 @@
     "ficha_id": "{2f2c1cb8-68d3-40d8-9757-1d1a03c04967}",
     "especie": "Vacas en producción",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "VACA"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{16473acf-903e-40e5-b2cc-fe86f37d5c15}",
@@ -11284,7 +11272,7 @@
     "especie": "Otros",
     "cantidad": 1,
     "es_autoconsumo": 1,
-    "especie_otro": "Pato"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{542edfec-cb98-4fb7-8231-0d160b8ea6d9}",
@@ -11520,7 +11508,7 @@
     "especie": "Otros",
     "cantidad": 5,
     "es_autoconsumo": 1,
-    "especie_otro": "Ganzos"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{c63f1ec3-a551-45ef-8fcf-06a84b723ee8}",
@@ -12025,16 +12013,8 @@
     "id_animal": "{fc80dda3-6270-4048-ba0a-ebe8b246eb3c}",
     "ficha_id": "{61a73708-e8f7-4ed5-add8-fd7dd7ce7526}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 3,
+    "cantidad": 5,
     "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{9973a442-3c56-4123-a6e6-ef9eaea27503}",
-    "ficha_id": "{61a73708-e8f7-4ed5-add8-fd7dd7ce7526}",
-    "especie": "Otros",
-    "cantidad": 2,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVOS"
   },
   {
     "id_animal": "{b54d4c41-3581-4bb7-8603-9aeeed61ed64}",
@@ -12493,10 +12473,9 @@
   {
     "id_animal": "{2ac992b5-8ce0-4562-8776-bd9be8b625d9}",
     "ficha_id": "{5c3787ae-dfba-4145-9305-5c15013dbce4}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 2,
-    "es_autoconsumo": 1,
-    "especie_otro": "Caballos"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{2388b98f-de5c-4b91-ae40-7d5822fb10ff}",
@@ -12923,7 +12902,7 @@
     "especie": "Otros",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "especie_otro": "PALOMAS"
+    "especie_otro": "Palomas"
   },
   {
     "id_animal": "{81b725a7-d064-4d71-aa50-c2bfe3a61cba}",
@@ -15473,7 +15452,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{2738109a-b24e-4c17-babf-1409ac6a350d}",
@@ -18362,7 +18341,7 @@
     "especie": "Otros",
     "cantidad": 2000,
     "es_mercado": 1,
-    "especie_otro": "Truchas "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{f6efeb0f-5c30-43b0-9039-90edf5d67778}",
@@ -18817,7 +18796,7 @@
     "especie": "Otros",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{b1cf6e75-d26d-40e1-889e-c02cef42729d}",
@@ -20269,14 +20248,6 @@
     "especie": "Ovejas / Cabras",
     "cantidad": 2,
     "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{a5d3eae3-444c-4a9d-82fa-e0c27588ced2}",
-    "ficha_id": "{728b0cd4-301a-47fb-9574-364dd27f2495}",
-    "especie": "Otros",
-    "cantidad": 2,
-    "es_autoconsumo": 1,
-    "especie_otro": "Chivos"
   },
   {
     "id_animal": "{a4d6659f-5aec-47b6-8d9d-fdd3719527a8}",
@@ -22280,7 +22251,7 @@
     "especie": "Otros",
     "cantidad": 1,
     "es_autoconsumo": 1,
-    "especie_otro": "Llamingo"
+    "especie_otro": "Llamingos"
   },
   {
     "id_animal": "{afce7e5d-0aa1-4b85-b85a-c188297a6679}",
@@ -23231,21 +23202,12 @@
     "es_mercado": 1
   },
   {
-    "id_animal": "{f9a8358e-deb5-4d38-b13c-d6b4a737d3af}",
-    "ficha_id": "{742a6d79-9466-4053-a257-b9a723d70e6a}",
-    "especie": "Ovejas / Cabras",
-    "cantidad": 15,
-    "es_autoconsumo": 1,
-    "es_mercado": 1
-  },
-  {
     "id_animal": "{1bd9c428-17d8-4d38-92c6-13b36d36dc8e}",
     "ficha_id": "{742a6d79-9466-4053-a257-b9a723d70e6a}",
-    "especie": "Otros",
-    "cantidad": 20,
+    "especie": "Ovejas / Cabras",
+    "cantidad": 35,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{4a16a235-bb6d-4f5e-9dcd-47eaa6d63320}",
@@ -23924,18 +23886,16 @@
   {
     "id_animal": "{1827e2cc-0a9e-4fa4-ba5d-7877ee01b995}",
     "ficha_id": "{52287a95-20f9-4ba3-a02a-5ce0c664e3b1}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 2,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{6d542630-dfb3-48df-a1d3-6d240b125d89}",
     "ficha_id": "{b7df077a-b819-4e3c-8757-7edbf235eeec}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 6,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{8fd5a0a6-d541-4b8a-a9ae-9bc82cd1ab32}",
@@ -24780,7 +24740,7 @@
     "cantidad": 100,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "Truchas "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{e9d6dd30-349f-4c56-a3f0-d932ab7638f6}",
@@ -26289,11 +26249,10 @@
   {
     "id_animal": "{df21a1cc-c2b4-4b10-8060-47689c0181da}",
     "ficha_id": "{a6c659fb-d28c-4324-9e87-0b49d62f84a7}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{754607b2-4706-4f18-8cab-90001b26b8f7}",
@@ -26327,11 +26286,10 @@
   {
     "id_animal": "{016354b7-b394-483a-94d2-7b72e7e3a5ee}",
     "ficha_id": "{c9cd4a0c-2f54-403d-a507-876f69c52ac4}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 4,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{5dc8109e-85dc-4f28-bd41-1497747a3930}",
@@ -26358,11 +26316,10 @@
   {
     "id_animal": "{fd04a2b1-989b-4c71-8d7d-8e8c46c60e93}",
     "ficha_id": "{06d3025e-2a6a-4ee9-a839-bdb1210bea64}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 8,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{0926ceb9-e8b7-42f8-bd71-0a0e96f76e05}",
@@ -28094,9 +28051,8 @@
   {
     "id_animal": "{5d8bdd83-0ec9-4f49-9443-c177a83dca8c}",
     "ficha_id": "{e237b586-c8ca-425b-bbe5-4770d8a508e8}",
-    "especie": "Otros",
-    "cantidad": 3,
-    "especie_otro": "BORREGOS"
+    "especie": "Ovejas / Cabras",
+    "cantidad": 3
   },
   {
     "id_animal": "{c99bd504-e5c1-4e29-bd23-08357329f87f}",
@@ -28109,11 +28065,10 @@
   {
     "id_animal": "{7328a67d-6d8b-404d-a486-a8ac1c33d275}",
     "ficha_id": "{2eb00f27-8b38-4a7c-bad3-7878e6e6db28}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS "
+    "es_mercado": 1
   },
   {
     "id_animal": "{56c10625-4ee8-45e7-bcc9-c70c3b110985}",
@@ -28141,11 +28096,10 @@
   {
     "id_animal": "{49ffbd77-d65b-4552-9da4-0373c5d8b4c0}",
     "ficha_id": "{bd8fec92-6d07-4d27-a069-80ba6df44925}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{04014156-9532-436b-8ab5-b2cfff794ec9}",
@@ -28216,11 +28170,10 @@
   {
     "id_animal": "{403404f7-28ab-4d20-848c-3d2753780951}",
     "ficha_id": "{8e38eb1f-f901-4cc0-8263-c6f499712242}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{8a9f990b-c4d0-4f93-b2ec-fd824df5deb2}",
@@ -28936,10 +28889,9 @@
   {
     "id_animal": "{10c128b6-b494-4bc3-bc94-acd43e06c22d}",
     "ficha_id": "{2851d3be-ecd0-4eb3-af98-59d9aa6ae8cb}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 5,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{d7cf4836-c0b7-4de5-a21a-9d111b762a10}",
@@ -29098,11 +29050,10 @@
   {
     "id_animal": "{d28bb86a-ea9f-4d6c-8bdc-d514a0ae7837}",
     "ficha_id": "{5802b9e5-1c0e-452f-b0fc-6cf858ad07c0}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{4b048ec3-980a-4fa5-883e-331cfe05e9f5}",
@@ -29114,11 +29065,10 @@
   {
     "id_animal": "{5b29a44e-29ed-4619-bbc2-55709ec9b051}",
     "ficha_id": "{b38dea27-06c3-4782-a583-0b182fd7a2fc}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 4,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{7f4d0d64-a06f-470c-9958-55d1889154aa}",
@@ -29162,11 +29112,10 @@
   {
     "id_animal": "{a0c608d2-d8c1-4344-a2dd-a3f3e4605f94}",
     "ficha_id": "{3f3fae47-f15f-4025-8b56-28a430b439d3}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 5,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "BORREGOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{8f5db586-0cfa-4f98-9050-220f2ade361a}",
@@ -30418,10 +30367,9 @@
   {
     "id_animal": "{5df0edb5-4048-4178-b805-687ad387dd9a}",
     "ficha_id": "{5356aae1-cfef-4cdc-a271-008b3e5dba7f}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 5,
-    "es_autoconsumo": 1,
-    "especie_otro": "BORREGOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{f88ec94d-e35a-41cd-99a2-4c08899a5078}",
@@ -31241,10 +31189,9 @@
   {
     "id_animal": "{93f8494d-f280-4772-b067-11d4b0e691f7}",
     "ficha_id": "{f61d4b40-efb0-40f1-aa01-3a5d5516674c}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVO"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{8fb4ed8c-4f86-471a-86fc-e04469e8b661}",
@@ -31287,7 +31234,7 @@
     "especie": "Otros",
     "cantidad": 4,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{1c0bdf3f-1f27-4705-a024-17fafa9121e7}",
@@ -31306,11 +31253,10 @@
   {
     "id_animal": "{ddb194e8-bf73-41dc-8728-00e8b6fda0aa}",
     "ficha_id": "{842ab1ba-c392-401e-8c29-0ed1b3ef4d5a}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 36,
     "es_autoconsumo": 1,
-    "es_mercado": 1,
-    "especie_otro": "CHIVOS"
+    "es_mercado": 1
   },
   {
     "id_animal": "{01f21c4b-2a73-4d48-b0f0-de794d2c8668}",
@@ -32594,18 +32540,10 @@
   {
     "id_animal": "{c05fad68-fe70-4c41-a6d6-7757d413368f}",
     "ficha_id": "{11033f26-441f-4005-82ca-cfc4d1bf0761}",
-    "especie": "Otros",
-    "cantidad": 3,
-    "es_autoconsumo": 0,
-    "es_mercado": 1,
-    "especie_otro": "CHIVOS"
-  },
-  {
-    "id_animal": "{4aa7fb33-eea5-4377-86c8-35450e58d28b}",
-    "ficha_id": "{11033f26-441f-4005-82ca-cfc4d1bf0761}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 2,
-    "es_autoconsumo": 1
+    "cantidad": 5,
+    "es_autoconsumo": 1,
+    "es_mercado": 1
   },
   {
     "id_animal": "{f0bdd3ed-649b-4cce-80df-2988a6eefcb1}",
@@ -32779,7 +32717,7 @@
     "especie": "Otros",
     "cantidad": 5,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{ebfdb5b3-50b9-48c5-bb85-3e1599881dab}",
@@ -35265,7 +35203,7 @@
     "cantidad": 3,
     "es_autoconsumo": 1,
     "es_mercado": 0,
-    "especie_otro": "LLAMINGO"
+    "especie_otro": "Llamingos"
   },
   {
     "id_animal": "{6485055d-1611-4422-b828-84f1125346cf}",
@@ -36943,7 +36881,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "Patos "
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{32ca977f-ff61-4454-95b9-c072b3b5950e}",
@@ -38784,7 +38722,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{1cf7f1bd-8254-4ccc-a6b2-7d0c9151548c}",
@@ -39268,7 +39206,7 @@
     "especie": "Otros",
     "cantidad": 15,
     "es_autoconsumo": 1,
-    "especie_otro": "Palomas "
+    "especie_otro": "Palomas"
   },
   {
     "id_animal": "{45f6142e-eb17-4958-b523-27e907b262d0}",
@@ -39294,10 +39232,9 @@
   {
     "id_animal": "{7e10ed4c-67fa-4e7f-b44b-60292b683dfb}",
     "ficha_id": "{1683588a-330c-4874-b502-f929b49ab75f}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "Burro"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{41c2d69f-7d3e-4c17-9824-a404b9b6537c}",
@@ -39433,10 +39370,9 @@
   {
     "id_animal": "{6eaa7fc5-3115-4844-af0f-fa54fad18876}",
     "ficha_id": "{8d60b5fe-2b1b-4789-8277-3ea162005eee}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "Caballo"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{b2b9d2a3-4987-4c61-827a-e88d67599daf}",
@@ -41177,7 +41113,7 @@
     "cantidad": 500,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "TRUCHAS "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{a4909963-9e69-4bf8-9789-dd79fdf4d6cb}",
@@ -41229,18 +41165,10 @@
     "es_autoconsumo": 1
   },
   {
-    "id_animal": "{9910f4e2-f064-4793-8ad9-d40934a56d92}",
-    "ficha_id": "{2122adfa-bb8e-4afe-a4c7-603f69b002e7}",
-    "especie": "Otros",
-    "cantidad": 3,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVOS"
-  },
-  {
     "id_animal": "{4b09ee15-388c-49e6-8f8a-6e7076d78122}",
     "ficha_id": "{2122adfa-bb8e-4afe-a4c7-603f69b002e7}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 4,
+    "cantidad": 7,
     "es_autoconsumo": 1
   },
   {
@@ -41476,7 +41404,7 @@
     "cantidad": 100,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "TRUCHAS"
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{02696370-a946-4a11-959c-e79aa1058859}",
@@ -41507,7 +41435,7 @@
     "cantidad": 1,
     "es_autoconsumo": 0,
     "es_mercado": 1,
-    "especie_otro": "LLAMA"
+    "especie_otro": "Llama"
   },
   {
     "id_animal": "{bcebc62f-1f25-48ca-8cfd-d4dc687731fd}",
@@ -41549,17 +41477,9 @@
     "id_animal": "{ad41ead2-4add-4ee6-ba35-86447352af9d}",
     "ficha_id": "{f0654011-900b-4007-8031-25963ddd8bcf}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 30,
+    "cantidad": 36,
     "es_autoconsumo": 1,
     "es_mercado": 1
-  },
-  {
-    "id_animal": "{eb17e6bc-9e3a-457f-9e9c-7f4ab7722380}",
-    "ficha_id": "{f0654011-900b-4007-8031-25963ddd8bcf}",
-    "especie": "Otros",
-    "cantidad": 6,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVOS"
   },
   {
     "id_animal": "{2a9bb3cc-0d0e-4bed-932d-013970fa5cd2}",
@@ -41592,10 +41512,9 @@
   {
     "id_animal": "{ae6eebdf-1a7f-4a8f-821d-4bbf75e910cb}",
     "ficha_id": "{6841042a-4995-48d1-ab8b-43950c5c0e5f}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{47769dfc-c54e-4b9a-9cf5-ee04d592ffd3}",
@@ -41653,7 +41572,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{2657a687-9f08-4114-9cc0-af9f75232e5b}",
@@ -41739,7 +41658,7 @@
     "especie": "Otros",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{5d5d0006-16f1-46db-a769-dde302f738f5}",
@@ -43026,7 +42945,7 @@
     "cantidad": 2000,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "Truchas "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{62fcbd2a-2773-4fd8-93db-a428af650668}",
@@ -43523,7 +43442,7 @@
     "especie": "Otros",
     "cantidad": 6,
     "es_autoconsumo": 1,
-    "especie_otro": "Patos "
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{a8f9c723-0ee6-4cc8-894d-5a77d1bc5055}",
@@ -46243,7 +46162,7 @@
     "cantidad": 1000,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "TRUCHAS "
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{afa7423f-5788-47f5-81b6-e20ce9d2bb42}",
@@ -46507,7 +46426,7 @@
     "especie": "Otros",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{89fde019-1385-4acc-98a4-aee802ec7052}",
@@ -46673,7 +46592,7 @@
     "especie": "Otros",
     "cantidad": 1,
     "es_autoconsumo": 1,
-    "especie_otro": "PAVO"
+    "especie_otro": "Pavos"
   },
   {
     "id_animal": "{df94c861-4d25-4f85-b47b-c0fda0f8a334}",
@@ -46716,7 +46635,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{8012c973-c18e-4395-bd26-485046038a9b}",
@@ -46796,7 +46715,7 @@
     "especie": "Otros",
     "cantidad": 3,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{3432f2e5-989a-4fa2-9fb3-0c55cd9720c8}",
@@ -46818,7 +46737,7 @@
     "especie": "Otros",
     "cantidad": 5,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{2df9d918-1940-4153-ae3a-2750d5d75eb9}",
@@ -47186,7 +47105,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "Ganzos"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{a8d0cee2-cfae-4608-9258-9ba51a5251b7}",
@@ -47325,7 +47244,7 @@
     "cantidad": 330,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "TRUCHAS"
+    "especie_otro": "Truchas"
   },
   {
     "id_animal": "{be46d96e-b9cd-46ca-8550-6fbf96e5f0b1}",
@@ -47428,7 +47347,7 @@
     "especie": "Otros",
     "cantidad": 1,
     "es_autoconsumo": 1,
-    "especie_otro": "LLAMINGO"
+    "especie_otro": "Llamingos"
   },
   {
     "id_animal": "{f1787c71-47f8-4a2f-aa4d-7068d22f56cf}",
@@ -47464,7 +47383,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{e2088291-0281-4af2-bcf4-7e4ada43ae1e}",
@@ -47479,7 +47398,7 @@
     "especie": "Otros",
     "cantidad": 2,
     "es_autoconsumo": 1,
-    "especie_otro": "PATO"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{27330b89-2f43-4b58-b4f8-e4bd4efa6f1d}",
@@ -47558,7 +47477,7 @@
     "especie": "Otros",
     "cantidad": 500,
     "es_mercado": 1,
-    "especie_otro": "TILAPIAS"
+    "especie_otro": "Tilapias"
   },
   {
     "id_animal": "{775c5d3c-e768-4173-a8f3-b2a05d3ed75d}",
@@ -47686,7 +47605,7 @@
     "especie": "Otros",
     "cantidad": 6,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{590f3a37-a74c-44b1-aee4-8b5b842bb1d0}",
@@ -49033,16 +48952,8 @@
     "id_animal": "{1c608333-8480-4d5d-8acb-42ab811a381e}",
     "ficha_id": "{f430fc57-27cd-4133-b245-4e16ce699532}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 4,
+    "cantidad": 5,
     "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{fe45eee2-2038-4403-90a9-ec40bdd94d3b}",
-    "ficha_id": "{f430fc57-27cd-4133-b245-4e16ce699532}",
-    "especie": "Otros",
-    "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVO"
   },
   {
     "id_animal": "{ec57245e-a84a-4956-bdc5-b24cb8242625}",
@@ -52576,9 +52487,8 @@
   {
     "id_animal": "{82257b28-6d53-479a-83c8-3d76995e0957}",
     "ficha_id": "{42ea150f-1d79-410a-85bf-f26e8096a963}",
-    "especie": "Otros",
-    "cantidad": 1,
-    "especie_otro": "Burro"
+    "especie": "Equinos",
+    "cantidad": 1
   },
   {
     "id_animal": "{4f629cf1-510c-46ab-be72-965ba89968ff}",
@@ -52668,10 +52578,9 @@
   {
     "id_animal": "{a5beb48e-5f2e-4a1b-9e29-76b21415fd21}",
     "ficha_id": "{7bfcbfdc-34ed-43ff-98e1-d02596fe867e}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 1,
-    "es_autoconsumo": 0,
-    "especie_otro": "BURRO"
+    "es_autoconsumo": 0
   },
   {
     "id_animal": "{27e4be1f-baf4-4437-a8c3-41e19329f8c3}",
@@ -54108,10 +54017,9 @@
   {
     "id_animal": "{edd37ac9-13e5-451e-ba9f-2619f8fadc1d}",
     "ficha_id": "{8bfb1816-84a4-4272-a896-72309b25521d}",
-    "especie": "Otros",
+    "especie": "Ovejas / Cabras",
     "cantidad": 3,
-    "es_autoconsumo": 1,
-    "especie_otro": "CHIVOS"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{dc15f4de-5170-4262-ae54-613a490a9b4a}",
@@ -54793,7 +54701,7 @@
     "especie": "Otros",
     "cantidad": 35,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{f764376e-0aa0-4730-9df9-ff787aff1b2e}",
@@ -54936,7 +54844,7 @@
     "especie": "Otros",
     "cantidad": 10,
     "es_autoconsumo": 1,
-    "especie_otro": "PATOS"
+    "especie_otro": "Patos"
   },
   {
     "id_animal": "{5226fdb9-7452-49cb-8024-1d5b18a841e0}",
@@ -56388,7 +56296,7 @@
     "cantidad": 2,
     "es_autoconsumo": 1,
     "es_mercado": 0,
-    "especie_otro": "Pavos "
+    "especie_otro": "Pavos"
   },
   {
     "id_animal": "{87b66a3e-b248-4ab8-8d90-ec6ae56251df}",
@@ -56975,10 +56883,9 @@
   {
     "id_animal": "{c2dc45bf-c3c2-4278-8ffe-0a65b91cdfaa}",
     "ficha_id": "{a4113847-5b7c-4a29-a9c1-ee17a0e55b94}",
-    "especie": "Otros",
+    "especie": "Equinos",
     "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "Caballos"
+    "es_autoconsumo": 1
   },
   {
     "id_animal": "{80edd500-24c7-4b72-bc61-40cce9f0e7ea}",
@@ -57994,7 +57901,7 @@
     "especie": "Otros",
     "cantidad": 10,
     "es_mercado": 1,
-    "especie_otro": "Aves Hornamentales"
+    "especie_otro": "Aves ornamentales"
   },
   {
     "id_animal": "{bd4ac25f-bae1-44a9-94ed-770cce797770}",
@@ -58633,7 +58540,7 @@
     "especie": "Otros",
     "cantidad": 4,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{5b44c5e3-04ef-46c8-9405-3130fe44660b}",
@@ -62453,7 +62360,7 @@
     "especie": "Otros",
     "cantidad": 6,
     "es_autoconsumo": 1,
-    "especie_otro": "GANZOS"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{d3e1fc6c-a938-40dc-bd52-8bb2e9c3fa08}",
@@ -63144,16 +63051,8 @@
     "id_animal": "{e83e0064-dc51-49a1-b212-3e26b2876795}",
     "ficha_id": "{ede7bac1-e6f2-40c8-a047-744c9c9ec369}",
     "especie": "Ovejas / Cabras",
-    "cantidad": 3,
+    "cantidad": 4,
     "es_autoconsumo": 1
-  },
-  {
-    "id_animal": "{f4ba8341-2e8a-411d-b47b-5b16bb70d32a}",
-    "ficha_id": "{ede7bac1-e6f2-40c8-a047-744c9c9ec369}",
-    "especie": "Otros",
-    "cantidad": 1,
-    "es_autoconsumo": 1,
-    "especie_otro": "Chivo"
   },
   {
     "id_animal": "{d397cb59-11d0-4566-b54d-e19718ef0dd6}",
@@ -64786,7 +64685,7 @@
     "cantidad": 7,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "especie_otro": "Ganzos"
+    "especie_otro": "Gansos"
   },
   {
     "id_animal": "{d2ffb234-185c-4a6d-9633-2bd8f76c481b}",
@@ -65933,9 +65832,8 @@
   {
     "id_animal": "{f1581ed8-04b5-439f-a266-13892c04d866}",
     "ficha_id": "{a3c2be11-bed9-4013-af4d-ea3bf9ed79c9}",
-    "especie": "Otros",
-    "cantidad": 1,
-    "especie_otro": "Yuntas "
+    "especie": "Vacas en producción",
+    "cantidad": 1
   },
   {
     "id_animal": "{51c8bd48-6242-48bc-a75b-37f728394a90}",

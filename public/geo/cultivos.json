@@ -3667,7 +3667,7 @@
     "superficie_m2": 5000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 186322.82
   },
   {
@@ -3779,7 +3779,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 60.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "FRESAS",
+    "tipo_cultivo_otro": "Frutilla",
     "ref_area_predio": 5565.0
   },
   {
@@ -4343,7 +4343,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2850.89,
     "es_principal": 1,
-    "tipo_cultivo_otro": "INERNDERO ",
+    "tipo_cultivo_otro": "Invernadero",
     "ref_area_predio": 2850.89
   },
   {
@@ -9784,7 +9784,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 10.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "OCAS",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 4842.05
   },
   {
@@ -12189,7 +12189,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Alberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 10005.3
   },
   {
@@ -12506,7 +12506,7 @@
     "superficie_m2": 125.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARBEJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 20000.0
   },
   {
@@ -12750,10 +12750,9 @@
   {
     "id_cultivo": "{0dea40d4-1d8a-4141-9b8b-2f91eab0ce0a}",
     "ficha_id": "{0eaf5d7f-70c0-4738-a2b6-daec6da7dfa5}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 350.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "LADERA",
     "ref_area_predio": 4494.91
   },
   {
@@ -13572,7 +13571,7 @@
     "superficie_m2": 100.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Albaca",
+    "tipo_cultivo_otro": "Albahaca",
     "ref_area_predio": 6419.39
   },
   {
@@ -14811,7 +14810,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 5034.13
   },
   {
@@ -16298,7 +16297,7 @@
     "ficha_id": "{32c06a95-aa82-4cdb-9ed9-5f2101a95338}",
     "tipo_cultivo": "Otros",
     "superficie_m2": 300.0,
-    "tipo_cultivo_otro": "Alberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 18619.66
   },
   {
@@ -16699,10 +16698,9 @@
   {
     "id_cultivo": "{69ba14e1-dfc5-4ab0-9ff2-8e5fe3545088}",
     "ficha_id": "{e0027f16-307f-4125-91f4-60a8f1e6b827}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Hortalizas",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Hortalizas ",
     "ref_area_predio": 24319.86
   },
   {
@@ -17144,7 +17142,7 @@
     "superficie_m2": 500.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 3173.21
   },
   {
@@ -17481,9 +17479,8 @@
   {
     "id_cultivo": "{43c2e3e6-5846-4a84-8191-ffc3a2279142}",
     "ficha_id": "{0a4836b6-cb7a-44b7-acb8-9320d7c4ee06}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Trigo",
     "superficie_m2": 2500.0,
-    "tipo_cultivo_otro": "Trigo ",
     "ref_area_predio": 5662.39
   },
   {
@@ -18370,12 +18367,11 @@
   {
     "id_cultivo": "{b5d530ce-e133-466e-baad-fe56c9e060ab}",
     "ficha_id": "{2d592088-bcfb-4350-bfcd-66855d828ed4}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Cebada",
     "superficie_m2": 33658.81,
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Cebada",
     "ref_area_predio": 33658.81
   },
   {
@@ -18736,7 +18732,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Ocas",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 5825.72
   },
   {
@@ -19080,7 +19076,7 @@
     "superficie_m2": 36.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Reservorio para criadero de truchas ",
+    "tipo_cultivo_otro": "Reservorio para criadero de truchas",
     "ref_area_predio": 19926.8
   },
   {
@@ -19233,10 +19229,9 @@
   {
     "id_cultivo": "{04025c2f-5610-44ae-9d85-f893c86fb465}",
     "ficha_id": "{d04b0b1d-09c0-4d67-8ae5-4f6284374f16}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Hortalizas",
     "superficie_m2": 680.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Hortalizas ",
     "ref_area_predio": 3461.59
   },
   {
@@ -19427,7 +19422,7 @@
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 13926.38
   },
   {
@@ -19612,7 +19607,7 @@
     "superficie_m2": 2500.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 4902.74
   },
   {
@@ -19994,11 +19989,10 @@
   {
     "id_cultivo": "{f9f52cc5-6be3-461b-aedc-52e8e92f3bf7}",
     "ficha_id": "{ab376b7a-f20e-4f22-bd78-2eadc669c09e}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Baldío",
     "superficie_m2": 3000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Terreno preparado para arar",
     "ref_area_predio": 8505.95
   },
   {
@@ -20550,7 +20544,7 @@
     "ficha_id": "{14d6f703-1391-433b-bbe1-1f209c41e59d}",
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
-    "tipo_cultivo_otro": "FRUTILLA",
+    "tipo_cultivo_otro": "Frutilla",
     "ref_area_predio": 14478.56
   },
   {
@@ -23858,7 +23852,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 50.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Ocas",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 16118.46
   },
   {
@@ -24080,11 +24074,10 @@
   {
     "id_cultivo": "{581adcc0-d259-4f1c-8f9d-341aa24a1f85}",
     "ficha_id": "{300babf5-6d87-497e-a5c0-ff317943b36b}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Baldío",
     "superficie_m2": 4000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Cascajo",
     "ref_area_predio": 18533.44
   },
   {
@@ -24252,7 +24245,7 @@
     "superficie_m2": 6000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 6623.48
   },
   {
@@ -28406,7 +28399,7 @@
     "superficie_m2": 3000.0,
     "es_principal": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "FRESAS",
+    "tipo_cultivo_otro": "Frutilla",
     "ref_area_predio": 5136.87
   },
   {
@@ -29944,7 +29937,7 @@
     "es_principal": 0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbejas",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 5579.03
   },
   {
@@ -30151,7 +30144,7 @@
     "es_principal": 0,
     "es_autoconsumo": 0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑON",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 2588.98
   },
   {
@@ -31893,7 +31886,7 @@
     "superficie_m2": 600.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 26654.79
   },
   {
@@ -32304,7 +32297,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 13120.7
   },
   {
@@ -32929,7 +32922,7 @@
     "es_autoconsumo": 0,
     "es_agroindustria": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 3757.63
   },
   {
@@ -32986,7 +32979,7 @@
     "superficie_m2": 757.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 11757.31
   },
   {
@@ -33038,7 +33031,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 3067.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Eucalipto Baby Blue",
+    "tipo_cultivo_otro": "Eucalipto baby blue",
     "ref_area_predio": 6134.0
   },
   {
@@ -33253,7 +33246,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 3000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Reservorio ",
+    "tipo_cultivo_otro": "Reservorio",
     "ref_area_predio": 18353.96
   },
   {
@@ -33391,7 +33384,7 @@
     "superficie_m2": 500.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 22338.0
   },
   {
@@ -33716,7 +33709,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 7015.66
   },
   {
@@ -34625,7 +34618,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 7504.85
   },
   {
@@ -35220,7 +35213,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "FRUTILLA",
+    "tipo_cultivo_otro": "Frutilla",
     "ref_area_predio": 5000.0
   },
   {
@@ -35239,7 +35232,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "INVERNADERO MÚLTIPLE",
+    "tipo_cultivo_otro": "Invernadero",
     "ref_area_predio": 500.0
   },
   {
@@ -35257,7 +35250,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "FRUTILLA",
+    "tipo_cultivo_otro": "Frutilla",
     "ref_area_predio": 5000.0
   },
   {
@@ -35682,7 +35675,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 5000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 8052.75
   },
   {
@@ -35715,7 +35708,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 8052.75
   },
   {
@@ -37098,7 +37091,7 @@
     "superficie_m2": 500.0,
     "es_principal": 0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 2822.87
   },
   {
@@ -37440,7 +37433,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "HUERTO",
+    "tipo_cultivo_otro": "Huerto",
     "ref_area_predio": 4705.65
   },
   {
@@ -38357,7 +38350,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Hierbas medicinales",
+    "tipo_cultivo_otro": "Plantas medicinales",
     "ref_area_predio": 3696.66
   },
   {
@@ -38636,7 +38629,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 34298.7
   },
   {
@@ -39323,7 +39316,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 26060.48
   },
   {
@@ -39379,7 +39372,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 5182.05
   },
   {
@@ -39389,7 +39382,7 @@
     "superficie_m2": 2591.02,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 5182.05
   },
   {
@@ -40577,7 +40570,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 600.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 6800.0
   },
   {
@@ -40655,7 +40648,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 22590.52
   },
   {
@@ -41030,7 +41023,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 38360.76
   },
   {
@@ -41596,7 +41589,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 3937.94
   },
   {
@@ -41707,7 +41700,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 300.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 2566.4
   },
   {
@@ -41855,7 +41848,7 @@
     "superficie_m2": 10000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ACENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 41753.57
   },
   {
@@ -42353,7 +42346,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 28440.4
   },
   {
@@ -42668,7 +42661,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 4192.77
   },
   {
@@ -43344,7 +43337,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 21445.23
   },
   {
@@ -44005,7 +43998,7 @@
     "superficie_m2": 200.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 8060.62
   },
   {
@@ -44783,7 +44776,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 13624.96
   },
   {
@@ -44826,7 +44819,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 13624.96
   },
   {
@@ -44981,7 +44974,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 86353.26
   },
   {
@@ -45149,7 +45142,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 86353.26
   },
   {
@@ -45540,7 +45533,7 @@
     "superficie_m2": 8000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 86353.26
   },
   {
@@ -45593,7 +45586,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 86353.26
   },
   {
@@ -45756,7 +45749,7 @@
     "superficie_m2": 2000.0,
     "es_principal": 0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Girasoles ",
+    "tipo_cultivo_otro": "Girasoles",
     "ref_area_predio": 5199.66
   },
   {
@@ -46188,7 +46181,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑON",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 5114.51
   },
   {
@@ -46225,7 +46218,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑON",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 10154.19
   },
   {
@@ -46244,7 +46237,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑON",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 9304.99
   },
   {
@@ -46316,7 +46309,7 @@
     "superficie_m2": 1500.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 6343.41
   },
   {
@@ -46525,7 +46518,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 49831.09
   },
   {
@@ -46542,7 +46535,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑON",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 5356.73
   },
   {
@@ -46626,7 +46619,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 10756.35
   },
   {
@@ -46819,7 +46812,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 7880.11
   },
   {
@@ -47027,7 +47020,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Tomate ",
+    "tipo_cultivo_otro": "Tomate",
     "ref_area_predio": 6237.84
   },
   {
@@ -47377,7 +47370,7 @@
     "superficie_m2": 2114.3,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "TOMATE",
+    "tipo_cultivo_otro": "Tomate",
     "ref_area_predio": 2114.3
   },
   {
@@ -47418,7 +47411,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 7260.43,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Tomate ",
+    "tipo_cultivo_otro": "Tomate",
     "ref_area_predio": 7260.43
   },
   {
@@ -47427,7 +47420,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 5820.87,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "TOMATE",
+    "tipo_cultivo_otro": "Tomate",
     "ref_area_predio": 5820.87
   },
   {
@@ -48600,7 +48593,7 @@
     "superficie_m2": 200.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 2089.17
   },
   {
@@ -48700,7 +48693,7 @@
     "superficie_m2": 100.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 1486.53
   },
   {
@@ -49089,7 +49082,7 @@
     "superficie_m2": 358.18,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 658.18
   },
   {
@@ -49252,7 +49245,7 @@
     "superficie_m2": 30000.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 478098.75
   },
   {
@@ -49280,7 +49273,7 @@
     "superficie_m2": 50000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 357135.57
   },
   {
@@ -49290,7 +49283,7 @@
     "superficie_m2": 900.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 2983.54
   },
   {
@@ -49409,7 +49402,7 @@
     "superficie_m2": 2000.0,
     "es_principal": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 2134.33
   },
   {
@@ -50256,7 +50249,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Potrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 2162.02
   },
   {
@@ -50310,7 +50303,7 @@
     "superficie_m2": 50.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 1547.22
   },
   {
@@ -50443,7 +50436,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1500.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 2467.64
   },
   {
@@ -50484,7 +50477,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1494.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 6840.0
   },
   {
@@ -50607,7 +50600,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 600.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Tomate Riñón",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 6132.06
   },
   {
@@ -50690,7 +50683,7 @@
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALBERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 21035.84
   },
   {
@@ -51013,7 +51006,7 @@
     "superficie_m2": 5274.25,
     "es_principal": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 6474.25
   },
   {
@@ -51253,7 +51246,7 @@
     "superficie_m2": 2492.51,
     "es_principal": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 2492.51
   },
   {
@@ -51525,7 +51518,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "PATRONES",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 900.15
   },
   {
@@ -51888,7 +51881,7 @@
     "superficie_m2": 50.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 9471.28
   },
   {
@@ -52453,7 +52446,7 @@
     "superficie_m2": 5000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Patrones rosas",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 6967.26
   },
   {
@@ -52523,7 +52516,7 @@
     "ficha_id": "{360c316f-0ea9-4e90-9379-2a5e52c59c96}",
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
-    "tipo_cultivo_otro": "Mandarinas ",
+    "tipo_cultivo_otro": "Mandarinas",
     "ref_area_predio": 1278.52
   },
   {
@@ -52710,7 +52703,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 100.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AGUACATES",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 1278.52
   },
   {
@@ -53422,7 +53415,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 300.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 1733.03
   },
   {
@@ -53431,7 +53424,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 20.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4458.24
   },
   {
@@ -53484,7 +53477,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Aguacates",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 4506.18
   },
   {
@@ -53555,7 +53548,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 6741.74
   },
   {
@@ -53573,7 +53566,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2983.31
   },
   {
@@ -53599,7 +53592,7 @@
     "superficie_m2": 500.0,
     "es_principal": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 5147.76
   },
   {
@@ -53615,7 +53608,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa "
+    "tipo_cultivo_otro": "Alfalfa"
   },
   {
     "id_cultivo": "{0e4f1202-46a5-4211-ba8f-0b12f2ce1f9a}",
@@ -53632,7 +53625,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4666.29
   },
   {
@@ -53659,7 +53652,7 @@
     "superficie_m2": 3000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 10625.92
   },
   {
@@ -53760,7 +53753,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2622.27
   },
   {
@@ -53787,7 +53780,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2624.75
   },
   {
@@ -53814,7 +53807,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 7267.01
   },
   {
@@ -53861,7 +53854,7 @@
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 6192.99
   },
   {
@@ -53880,7 +53873,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4028.7
   },
   {
@@ -53976,7 +53969,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 1931.77
   },
   {
@@ -54010,7 +54003,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_principal": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 8455.01
   },
   {
@@ -54067,7 +54060,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4532.82
   },
   {
@@ -54186,7 +54179,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 6254.01
   },
   {
@@ -54581,7 +54574,7 @@
     "superficie_m2": 100.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "PATRONES DE FLORES",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 783.82
   },
   {
@@ -54629,7 +54622,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 8058.91
   },
   {
@@ -54771,7 +54764,7 @@
     "superficie_m2": 3000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AGUACATE",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 7403.5
   },
   {
@@ -54982,7 +54975,7 @@
     "es_autoconsumo": 1,
     "es_agroindustria": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "PATRONES DE ROSAS",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 6474.57
   },
   {
@@ -55027,7 +55020,7 @@
     "superficie_m2": 3000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "LENTEJA",
+    "tipo_cultivo_otro": "Lenteja",
     "ref_area_predio": 114985.92
   },
   {
@@ -55046,7 +55039,7 @@
     "superficie_m2": 200.0,
     "es_principal": 0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 3518.19
   },
   {
@@ -55255,7 +55248,7 @@
     "superficie_m2": 200.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 13874.18
   },
   {
@@ -55342,11 +55335,10 @@
   {
     "id_cultivo": "{6f7aa01a-5665-4583-bf17-b84702861ed0}",
     "ficha_id": "{ada2e495-bf55-4995-8e7f-dff2826df9a4}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 9500.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Ladera",
     "ref_area_predio": 107548.06
   },
   {
@@ -55702,7 +55694,7 @@
     "superficie_m2": 600.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 1681.79
   },
   {
@@ -55874,7 +55866,7 @@
     "superficie_m2": 500.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Atbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 1858.89
   },
   {
@@ -55920,7 +55912,7 @@
     "superficie_m2": 1900.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 7831.97
   },
   {
@@ -56386,7 +56378,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 7831.97
   },
   {
@@ -56483,7 +56475,7 @@
     "superficie_m2": 1100.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AGUATE",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 1373.04
   },
   {
@@ -56919,7 +56911,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALBERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 46319.7
   },
   {
@@ -57792,7 +57784,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 150.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 2017.07
   },
   {
@@ -57878,7 +57870,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 40.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "LEGUMBRES",
+    "tipo_cultivo_otro": "Legumbres",
     "ref_area_predio": 1555.36
   },
   {
@@ -57931,7 +57923,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "GIRASOLES",
+    "tipo_cultivo_otro": "Girasoles",
     "ref_area_predio": 4992.96
   },
   {
@@ -57957,7 +57949,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "MORA",
+    "tipo_cultivo_otro": "Mora",
     "ref_area_predio": 5501.6
   },
   {
@@ -58580,7 +58572,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 2094.9
   },
   {
@@ -59888,7 +59880,7 @@
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AGUACATE",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 1395.66
   },
   {
@@ -60158,7 +60150,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Tomate riñon",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 7720.89
   },
   {
@@ -60176,7 +60168,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 80000.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Tomate riñon",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 18599.7
   },
   {
@@ -60886,7 +60878,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 15534.56
   },
   {
@@ -60932,7 +60924,7 @@
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 8287.05
   },
   {
@@ -60977,7 +60969,7 @@
     "superficie_m2": 787.47,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "TOMATE RIÑO ",
+    "tipo_cultivo_otro": "Tomate riñón",
     "ref_area_predio": 3149.89
   },
   {
@@ -62842,7 +62834,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Arbeja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 24258.68
   },
   {
@@ -63393,7 +63385,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 3701.27
   },
   {
@@ -63726,7 +63718,7 @@
     "superficie_m2": 885.89,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 6795851.77
   },
   {
@@ -63791,7 +63783,7 @@
     "superficie_m2": 34571.99952,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFAFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2880999.96
   },
   {
@@ -63825,10 +63817,9 @@
   {
     "id_cultivo": "{6ef0682a-06ee-48d4-8d95-1e78d231e617}",
     "ficha_id": "{982775dd-90f8-436c-be9c-757425649b14}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 4000.0,
     "es_principal": 0,
-    "tipo_cultivo_otro": "Ladera",
     "ref_area_predio": 8574.6
   },
   {
@@ -63995,7 +63986,7 @@
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "JICAMA",
+    "tipo_cultivo_otro": "Jicama",
     "ref_area_predio": 1725.46
   },
   {
@@ -64068,7 +64059,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "AVENA",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 17371.46
   },
   {
@@ -64467,7 +64458,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 10884.51
   },
   {
@@ -64876,7 +64867,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 100.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 575.96
   },
   {
@@ -64931,7 +64922,7 @@
     "superficie_m2": 1550.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4627.09
   },
   {
@@ -65110,7 +65101,7 @@
     "superficie_m2": 1539.75,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Aguacate ",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 1539.75
   },
   {
@@ -66215,7 +66206,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 150.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "OCA",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 1111.9
   },
   {
@@ -67660,7 +67651,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Patrones"
+    "tipo_cultivo_otro": "Patrones de flores"
   },
   {
     "id_cultivo": "{ca654ab4-24c0-463e-95e7-f32f9d3d1c2c}",
@@ -68803,10 +68794,9 @@
   {
     "id_cultivo": "{30013eaa-acc9-4844-bddc-fe23f5d5092f}",
     "ficha_id": "{93be9c1e-aaa6-4112-bfca-bdcc95006706}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 5687.77,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Potrero",
     "ref_area_predio": 5687.77
   },
   {
@@ -68861,7 +68851,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Ocas",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 7060.69
   },
   {
@@ -69566,9 +69556,8 @@
   {
     "id_cultivo": "{3f51a520-d0de-450c-b555-da64882e352e}",
     "ficha_id": "{fb7d8fc5-edfa-4bd5-b0bb-cf2e6479e0ea}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 6000.64,
-    "tipo_cultivo_otro": "Ladera ",
     "ref_area_predio": 8500.64
   },
   {
@@ -69777,10 +69766,9 @@
   {
     "id_cultivo": "{f0f55ace-e677-4fee-9308-a3fda73b72de}",
     "ficha_id": "{c57b7531-ef87-44ac-b44f-261d70a669a4}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 2620.74,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "POTRERO ",
     "ref_area_predio": 4620.74
   },
   {
@@ -69802,9 +69790,8 @@
   {
     "id_cultivo": "{e3e592ea-d4a1-4d01-8759-fdf219ed61ae}",
     "ficha_id": "{2f2d8749-a714-4db0-953f-ce324227aee1}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 2093.75,
-    "tipo_cultivo_otro": "Potrero ",
     "ref_area_predio": 3593.75
   },
   {
@@ -69827,9 +69814,8 @@
   {
     "id_cultivo": "{977db865-fc52-4a6c-9b62-f2e2f793ae9e}",
     "ficha_id": "{715735ae-58be-422d-b999-d39ebe002066}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 3588.97,
-    "tipo_cultivo_otro": "Potrero ",
     "ref_area_predio": 5588.97
   },
   {
@@ -70037,7 +70023,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Ocas",
+    "tipo_cultivo_otro": "Oca",
     "ref_area_predio": 3965.22
   },
   {
@@ -71166,11 +71152,10 @@
   {
     "id_cultivo": "{c6f7b742-26df-4a7e-905d-5badaecbc24e}",
     "ficha_id": "{c9a17e03-7895-47fd-a265-89401ffcbcfd}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 25000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Ladera",
     "ref_area_predio": 48154.16
   },
   {
@@ -71572,7 +71557,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 50.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "AGUACATE ",
+    "tipo_cultivo_otro": "Aguacate",
     "ref_area_predio": 2848.61
   },
   {
@@ -73788,10 +73773,9 @@
   {
     "id_cultivo": "{ad8df83b-1483-4edc-841a-af1654fc8089}",
     "ficha_id": "{0a514cb8-95b7-4515-b185-21d9839bbf28}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 21601.92,
     "es_principal": 1,
-    "tipo_cultivo_otro": "Penduente",
     "ref_area_predio": 23601.92
   },
   {
@@ -74129,7 +74113,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 19798.99
   },
   {
@@ -74381,9 +74365,8 @@
   {
     "id_cultivo": "{cf67e688-1c7c-4247-a83a-44c5bb1704a0}",
     "ficha_id": "{c71750a0-88ca-4ab3-9588-caf5d70adac9}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 6469.92,
-    "tipo_cultivo_otro": "Ladera",
     "ref_area_predio": 16469.92
   },
   {
@@ -74464,7 +74447,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 8134.4
   },
   {
@@ -74779,9 +74762,8 @@
   {
     "id_cultivo": "{7b3fb997-b2f7-406a-9c74-d989932cac9a}",
     "ficha_id": "{303f9f1a-7a17-45e7-8324-6f5f18fc411c}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 30000.0,
-    "tipo_cultivo_otro": "Ladera",
     "ref_area_predio": 38034.02
   },
   {
@@ -75863,7 +75845,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 11252.14
   },
   {
@@ -75891,7 +75873,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 24764.36
   },
   {
@@ -76362,7 +76344,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 3000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Plantas nativas ",
+    "tipo_cultivo_otro": "Plantas nativas",
     "ref_area_predio": 6824.96
   },
   {
@@ -77760,10 +77742,9 @@
   {
     "id_cultivo": "{378db9b8-7c15-4f46-853d-04978a7e7b5e}",
     "ficha_id": "{087bd9ab-014c-4024-a2d3-b2dc9bdc950d}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Chocho",
     "superficie_m2": 300.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Chocho",
     "ref_area_predio": 4585.07
   },
   {
@@ -77938,10 +77919,9 @@
   {
     "id_cultivo": "{79abcf0d-6cf1-481e-9fa5-802cb4bc45d6}",
     "ficha_id": "{ca20b282-0299-4632-9f84-c916f49c3866}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Chocho",
     "superficie_m2": 2000.0,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Chocho",
     "ref_area_predio": 6262.27
   },
   {
@@ -79625,7 +79605,7 @@
     "superficie_m2": 10000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Avena ",
+    "tipo_cultivo_otro": "Avena",
     "ref_area_predio": 30174.62
   },
   {
@@ -79666,11 +79646,10 @@
   {
     "id_cultivo": "{16037199-03e0-4c1d-b590-4045130752bb}",
     "ficha_id": "{5f95e722-ff49-4b32-9fb6-d9b4734abbf1}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Baldío",
     "superficie_m2": 21535.37,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Terreno preparado",
     "ref_area_predio": 81535.37
   },
   {
@@ -82815,7 +82794,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 9679.46,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Alverja ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 19679.46
   },
   {
@@ -91448,7 +91427,7 @@
     "superficie_m2": 600.0,
     "es_principal": 0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ZAMBO",
+    "tipo_cultivo_otro": "Zambo",
     "ref_area_predio": 1259.0045
   },
   {
@@ -92382,7 +92361,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arberja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 9694.81
   },
   {
@@ -92428,7 +92407,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Arbeja",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 28089.53
   },
   {
@@ -93035,7 +93014,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Plantas ornamentales ",
+    "tipo_cultivo_otro": "Plantas ornamentales",
     "ref_area_predio": 6005.69
   },
   {
@@ -97577,7 +97556,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4916.8
   },
   {
@@ -97756,7 +97735,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 10111.24
   },
   {
@@ -97803,7 +97782,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 5553.51
   },
   {
@@ -97885,7 +97864,7 @@
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 18858.19
   },
   {
@@ -101790,10 +101769,9 @@
   {
     "id_cultivo": "{47fe3f94-26e6-4060-9556-b749ade78caa}",
     "ficha_id": "{ea5952c5-4cc6-4429-867b-2458e948bbaf}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 4258.88,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Potrero ",
     "ref_area_predio": 4258.88
   },
   {
@@ -101809,9 +101787,8 @@
   {
     "id_cultivo": "{b29402a6-fc41-4657-933d-100eb45a60eb}",
     "ficha_id": "{5cdc02b1-e847-4f09-9a1c-b958b7bbd3a9}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 327.98,
-    "tipo_cultivo_otro": "Potrero ",
     "ref_area_predio": 327.98
   },
   {
@@ -101853,10 +101830,9 @@
   {
     "id_cultivo": "{bf553e5e-1796-43a7-b912-34a0f517c969}",
     "ficha_id": "{22a6f584-fb8a-4118-9658-3480ac43cf59}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 16000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "Potrero ",
     "ref_area_predio": 16938.55
   },
   {
@@ -105189,7 +105165,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "Alfalfa ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4139.26
   },
   {
@@ -105276,7 +105252,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "MORAS ",
+    "tipo_cultivo_otro": "Mora",
     "ref_area_predio": 4874.45
   },
   {
@@ -105330,9 +105306,8 @@
   {
     "id_cultivo": "{ab9a9b25-b629-4c9b-b066-32ff21ac2a2c}",
     "ficha_id": "{1fbc5ffb-e797-4e1b-96de-bfc79339266a}",
-    "tipo_cultivo": "Otros",
+    "tipo_cultivo": "Pasto no mejorado",
     "superficie_m2": 410.68,
-    "tipo_cultivo_otro": "Potrero",
     "ref_area_predio": 410.68
   },
   {
@@ -105377,7 +105352,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2805.33
   },
   {
@@ -107993,7 +107968,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 4604.87
   },
   {
@@ -108074,7 +108049,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "SAMBOS",
+    "tipo_cultivo_otro": "Zambo",
     "ref_area_predio": 2711.64
   },
   {
@@ -108120,7 +108095,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 250.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 1500.17
   },
   {
@@ -108138,7 +108113,7 @@
     "superficie_m2": 500.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 836.56
   },
   {
@@ -108166,7 +108141,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 2000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 7704.07
   },
   {
@@ -108184,7 +108159,7 @@
     "superficie_m2": 500.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 613.53
   },
   {
@@ -108211,7 +108186,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2988.4
   },
   {
@@ -108247,7 +108222,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 500.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 2072.4
   },
   {
@@ -108283,7 +108258,7 @@
     "tipo_cultivo": "Otros",
     "superficie_m2": 200.0,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 5333.85
   },
   {
@@ -108346,7 +108321,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 1489.71
   },
   {
@@ -108410,7 +108385,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVEJA ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 3231.75
   },
   {
@@ -108642,7 +108617,7 @@
     "superficie_m2": 1000.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA ",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 1635.07
   },
   {
@@ -108697,7 +108672,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVEJA ",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 4223.3
   },
   {
@@ -108788,7 +108763,7 @@
     "es_principal": 1,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "PATRONES DE ROSAS",
+    "tipo_cultivo_otro": "Patrones de flores",
     "ref_area_predio": 629.05
   },
   {
@@ -108842,7 +108817,7 @@
     "superficie_m2": 600.0,
     "es_principal": 1,
     "es_autoconsumo": 1,
-    "tipo_cultivo_otro": "ALFALFA",
+    "tipo_cultivo_otro": "Alfalfa",
     "ref_area_predio": 836.56
   },
   {
@@ -109264,7 +109239,7 @@
     "superficie_m2": 1000.0,
     "es_autoconsumo": 1,
     "es_mercado": 1,
-    "tipo_cultivo_otro": "ARVERJA",
+    "tipo_cultivo_otro": "Arveja",
     "ref_area_predio": 4084.57
   },
   {
