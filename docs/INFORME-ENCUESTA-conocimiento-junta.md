@@ -38,8 +38,7 @@ Respondieron **4,132 de 4,307** regantes (95.9%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 4 | 0 | 100.0% |
-| Sector 1 | 1,541 | 217 | 87.7% |
+| Sector 1 | 1,545 | 217 | 87.7% |
 | Sector 2 | 1,452 | 185 | 88.7% |
 | Sector 3 | 610 | 123 | 83.2% |
 
@@ -95,15 +94,7 @@ Respondieron 4,136 regantes. **3,675 (88.9%) identifican a José Joaquín Tipanl
 
 Respondieron 4,107 regantes (95.4%). El operador varía por sector; los más nombrados en cada uno:
 
-**(sin sector)** (4 respuestas):
-
-| Operador | Menciones | % del sector |
-|---|---|---|
-| Elias Imbago | 2 | 50.0% |
-| Maria Elbia Chimarro Lincango | 1 | 25.0% |
-| Jose Elias Imbago | 1 | 25.0% |
-
-**Sector 1** (1,757 respuestas):
+**Sector 1** (1,761 respuestas):
 
 | Operador | Menciones | % del sector |
 |---|---|---|
@@ -182,8 +173,7 @@ Respondieron **4,110 de 4,307** regantes (95.4%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 4 | 0 | 100.0% |
-| Sector 1 | 1,319 | 434 | 75.2% |
+| Sector 1 | 1,323 | 434 | 75.3% |
 | Sector 2 | 1,359 | 263 | 83.8% |
 | Sector 3 | 503 | 228 | 68.8% |
 
@@ -211,8 +201,7 @@ Respondieron **4,038 de 4,307** regantes (93.8%).
 
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
-| (sin sector) | 4 | 0 | 100.0% |
-| Sector 1 | 1,649 | 96 | 94.5% |
+| Sector 1 | 1,653 | 96 | 94.5% |
 | Sector 2 | 1,400 | 158 | 89.9% |
 | Sector 3 | 630 | 101 | 86.2% |
 

@@ -10,7 +10,7 @@
     "CHAMBITOLA": {
       "caudal_ls": 32.5,
       "fichas": 262,
-      "origen": "moda (124 de 262 fichas)"
+      "origen": "moda (123 de 262 fichas)"
     },
     "LA LIBERTAD": {
       "caudal_ls": 31.5,
@@ -19,18 +19,18 @@
     },
     "CARRERA": {
       "caudal_ls": 0.8,
-      "fichas": 418,
-      "origen": "moda (406 de 418 fichas)"
+      "fichas": 419,
+      "origen": "moda (406 de 419 fichas)"
     },
     "SAN ANTONIO": {
       "caudal_ls": 34.32,
-      "fichas": 182,
-      "origen": "moda (96 de 182 fichas)"
+      "fichas": 185,
+      "origen": "moda (97 de 185 fichas)"
     },
     "COMUNA IZACATA": {
       "caudal_ls": 9.0,
-      "fichas": 138,
-      "origen": "moda (133 de 138 fichas)"
+      "fichas": 142,
+      "origen": "moda (137 de 142 fichas)"
     },
     "SAN JOSE": {
       "caudal_ls": 12.38,
@@ -70,8 +70,8 @@
     },
     "COCHAPAMBA": {
       "caudal_ls": 37.0,
-      "fichas": 489,
-      "origen": "moda (445 de 489 fichas)"
+      "fichas": 480,
+      "origen": "moda (445 de 480 fichas)"
     },
     "SAN JACINTO": {
       "caudal_ls": 2.17,
@@ -90,8 +90,8 @@
     },
     "SANTA BARBARA": {
       "caudal_ls": 12.35,
-      "fichas": 10,
-      "origen": "moda (10 de 10 fichas)"
+      "fichas": 11,
+      "origen": "moda (10 de 11 fichas)"
     },
     "ASOCIACION POROTOG": {
       "caudal_ls": 1.08,
@@ -105,8 +105,8 @@
     },
     "IZACATA": {
       "caudal_ls": 10.34,
-      "fichas": 109,
-      "origen": "moda (109 de 109 fichas)"
+      "fichas": 110,
+      "origen": "moda (109 de 110 fichas)"
     },
     "LOS ANDES IZACATA": {
       "caudal_ls": 9.51,
@@ -175,8 +175,8 @@
     },
     "PAMBAMARCA": {
       "caudal_ls": 11.33,
-      "fichas": 105,
-      "origen": "moda (98 de 105 fichas)"
+      "fichas": 104,
+      "origen": "moda (97 de 104 fichas)"
     },
     "PAMBAMARQUITO": {
       "caudal_ls": 17.0,
