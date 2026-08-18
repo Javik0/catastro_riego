@@ -45,7 +45,8 @@ type Ficha = {
 type Vecina = { com: string; lon: number; lat: number; d: number };
 type Caso = {
   clave: string;
-  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala' | 'sin_comunidad' | 'cultivo';
+  tipo: 'exceso' | 'dividido' | 'triple' | 'clave_mala' | 'sin_comunidad' | 'cultivo'
+      | 'sin_superficie' | 'clave_dmq';
   com: string; sec: string;
   pol: number; dec: number; exc: number; nf: number;
   fichas: Ficha[];
@@ -54,6 +55,8 @@ type Caso = {
   /** Un cultivo vale casi exacto el polígono catastral: mismo default de
    * QField que en area_total, no terreno arrendado. Ver generar_auditoria_areas.py. */
   coincide_poligono?: boolean;
+  /** Cuántas fichas del predio están en 0 m² (tipo `sin_superficie`). */
+  sin_area?: number;
   geo?: [number, number][];
   triple?: number;
   obs_n?: number; obs_suma?: number; resuelto_por_obs?: boolean; falta?: string;
@@ -75,6 +78,8 @@ type Datos = {
     con_obs: number; resueltos_por_obs: number;
     sin_comunidad: number; com_propuesta: number; com_revisar: number;
     cultivo?: number; cultivo_exc_ha?: number;
+    sin_superficie?: number; sin_superficie_fichas?: number;
+    clave_dmq?: number;
   };
   casos: Caso[];
   canal: [number, number][][];
@@ -92,9 +97,11 @@ const ha = (v: number) =>
 const TIPOS = {
   exceso: { et: 'Declaran más que el predio', corto: 'Declarado de más', color: '#d97706', bg: 'bg-amber-50', tx: 'text-amber-700' },
   triple: { et: 'Área triplicada', corto: 'Triplicada', color: '#b45309', bg: 'bg-orange-50', tx: 'text-orange-800' },
-  clave_mala: { et: 'Clave inexistente', corto: 'Clave mala', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
+  clave_mala: { et: 'Clave por verificar', corto: 'Clave por verificar', color: '#7c3aed', bg: 'bg-violet-50', tx: 'text-violet-700' },
+  clave_dmq: { et: 'Predio del Distrito Metropolitano de Quito', corto: 'Fichas DMQ', color: '#64748b', bg: 'bg-slate-100', tx: 'text-slate-600' },
   sin_comunidad: { et: 'Sin comunidad', corto: 'Sin comunidad', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   dividido: { et: 'Bien dividido', corto: 'Divididos', color: '#16a34a', bg: 'bg-green-50', tx: 'text-green-700' },
+  sin_superficie: { et: 'Regantes sin superficie asignada', corto: 'Sin superficie', color: '#0891b2', bg: 'bg-cyan-50', tx: 'text-cyan-700' },
   cultivo: { et: 'Siembra más de lo que mide', corto: 'Producción', color: '#65a30d', bg: 'bg-lime-50', tx: 'text-lime-700' },
 } as const;
 
@@ -114,7 +121,7 @@ const GRUPOS: { titulo: string; pie: string; tipos: (keyof typeof TIPOS)[] }[] =
   {
     titulo: 'Datos por completar',
     pie: 'No cambian la superficie',
-    tipos: ['sin_comunidad'],
+    tipos: ['sin_comunidad', 'sin_superficie', 'clave_dmq'],
   },
   {
     // Va en su propio grupo porque no mira el predio sino lo sembrado, y
@@ -210,6 +217,8 @@ export default function AuditoriaAreasPage() {
     exceso: R.exceso, triple: R.triple, clave_mala: R.clave_mala,
     sin_comunidad: R.sin_comunidad, dividido: R.dividido,
     cultivo: R.cultivo ?? 0,
+    sin_superficie: R.sin_superficie ?? 0,
+    clave_dmq: R.clave_dmq ?? 0,
   };
 
   return (
@@ -383,6 +392,14 @@ export default function AuditoriaAreasPage() {
                       </>
                     )}
                     {c.tipo === 'dividido' && <CheckCircle2 className="h-4 w-4 text-green-600" />}
+                    {c.tipo === 'sin_superficie' && (
+                      <>
+                        <span className="block text-xs font-semibold tabular-nums text-cyan-700">
+                          {c.sin_area}
+                        </span>
+                        <span className="text-[9px] text-gray-500">en 0 m²</span>
+                      </>
+                    )}
                     {c.tipo === 'cultivo' && (
                       <>
                         <span className={`block text-xs font-semibold tabular-nums ${
@@ -565,6 +582,37 @@ export default function AuditoriaAreasPage() {
                     polígono de <b>{m2(sel.pol)}</b>
                     {sel.exc > 0 && <> · declaran <b className="text-amber-700">{ha(sel.exc)} ha</b> de más</>}
                   </p>
+                )}
+                {sel.tipo === 'clave_dmq' && (
+                  <div className="mt-1.5 rounded border border-slate-300 bg-slate-50 px-2 py-1.5
+                                  text-[11px] text-slate-700">
+                    <p>
+                      <b>Su clave es correcta.</b> Este predio pertenece al catastro del
+                      <b> Distrito Metropolitano de Quito</b>, no al de Cayambe — por eso no
+                      aparece al cruzarlo contra el catastro del GADM. No hay nada que
+                      corregir aquí.
+                    </p>
+                    <p className="mt-1">
+                      La ficha cuenta con normalidad en el padrón, en cultivos, animales y
+                      encuestas. Lo único que no aporta es superficie catastral, porque su
+                      polígono está en el otro catastro y no lo tenemos.
+                    </p>
+                  </div>
+                )}
+                {sel.tipo === 'sin_superficie' && (
+                  <div className="mt-1.5 rounded border border-cyan-200 bg-cyan-50 px-2 py-1.5
+                                  text-[11px] text-cyan-900">
+                    <p>
+                      <b>{sel.sin_area} de {sel.nf} fichas declaran 0 m².</b> La suma cuadra
+                      con el polígono ({m2(sel.pol)}) porque unas pocas fichas cargan toda
+                      el área y el resto queda en cero — nadie repartió el terreno.
+                    </p>
+                    <p className="mt-1">
+                      Son regantes reconocidos sobre el predio, registrados desde el listado
+                      de la factura de agua a petición de la comunidad. Tienen derecho al
+                      agua, pero no una superficie asignada dentro del predio.
+                    </p>
+                  </div>
                 )}
                 {sel.tipo === 'cultivo' && (
                   <>

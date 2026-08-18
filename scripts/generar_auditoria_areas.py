@@ -84,6 +84,10 @@ MARGEN_DIVIDIDO = 0.15
 # redondas; los 200 m² evitan que un huerto mal medido llene la pantalla.
 MARGEN_CULTIVO = 1.10
 EXCESO_CULTIVO_M2 = 200
+# Código de catastro del Distrito Metropolitano de Quito. Las fichas de
+# Asociación Rosalía con este prefijo tienen su clave BIEN: pertenecen al
+# catastro del DMQ, no al de Cayambe, y por eso no aparecen aquí.
+PREFIJO_DMQ = '14544'
 
 # Números con pinta de superficie dentro de un texto libre. Los técnicos lo
 # escriben de muchas maneras y todas estas aparecen en el padrón:
@@ -291,10 +295,23 @@ def main():
                   if f['a'] > 0 and abs(f['a'] - f['ar']) < 1
                   and abs(f['a'] - f['asr']) < 1]
 
+        # Regantes reconocidos sobre el predio pero sin superficie asignada.
+        # No es lo mismo que un reparto: la suma cuadra con el polígono, sí,
+        # pero porque unas pocas fichas cargan toda el área y el resto queda en
+        # cero. Llamarlo «bien dividido» —con su ✓ verde— hacía pensar que
+        # alguien repartió el terreno, cuando nadie lo hizo. Es un caso solo:
+        # la hacienda de Sr. Coloma en Monteserrín Bajo, 809 ha, donde se
+        # registraron 118 regantes desde el listado de la factura de agua a
+        # petición de la comunidad (scripts/generar_regantes_monteserin.py).
+        sin_superficie = [f for f in fichas if (f['a'] or 0) == 0]
+
         tipo = None
         if len(fichas) > 1 and exceso > TOLERANCIA_M2:
             iguales = len(set(con_area)) == 1 and len(con_area) > 1
             tipo = 'exceso'
+        elif (len(fichas) > 1 and sin_superficie and pol
+              and abs(exceso) / pol <= MARGEN_DIVIDIDO):
+            tipo = 'sin_superficie'
         elif len(fichas) > 1 and pol and abs(exceso) / pol <= MARGEN_DIVIDIDO:
             tipo = 'dividido'
         elif triple:
@@ -314,6 +331,8 @@ def main():
         # y el recuento no daría las 54 que sabemos que hay.
         if triple:
             caso['triple'] = len(triple)
+        if sin_superficie:
+            caso['sin_area'] = len(sin_superficie)
         if clave in contorno:
             caso['geo'] = redondear(contorno[clave])
         # ¿lo resuelven las observaciones? Y si no, por qué no: es lo que hace
@@ -419,8 +438,18 @@ def main():
         print("  aviso: no se pudieron calcular las comunidades ({})".format(e))
         res_com, rev_com = [], []
 
+    # Las claves del Distrito Metropolitano de Quito no son erratas: son
+    # correctas, de otro catastro. Se separan de las que sí hay que verificar
+    # para que no se mezclen dos cosas distintas en el mismo contador. El
+    # criterio es el prefijo, no la observación: las seis de Asociación Rosalía
+    # empiezan por 14544 (código del DMQ) y las de Cayambe por 17025.
+    for c in casos:
+        if c['tipo'] == 'clave_mala' and str(c['clave']).startswith(PREFIJO_DMQ):
+            c['tipo'] = 'clave_dmq'
+
     orden = {'exceso': 0, 'triple': 1, 'clave_mala': 2,
-             'sin_comunidad': 3, 'dividido': 4}
+             'sin_comunidad': 3, 'sin_superficie': 4, 'clave_dmq': 5,
+             'dividido': 6}
     casos.sort(key=lambda c: (orden[c['tipo']], -c['exc'], -c['nf']))
 
     # ── canal, como referencia en el mapa ──
@@ -517,6 +546,10 @@ def main():
         'resumen': {
             'fichas': len(filas),
             'exceso': cuenta['exceso'], 'dividido': cuenta['dividido'],
+            'sin_superficie': cuenta['sin_superficie'],
+            'clave_dmq': cuenta['clave_dmq'],
+            'sin_superficie_fichas': sum(c.get('sin_area', 0) for c in casos
+                                          if c['tipo'] == 'sin_superficie'),
             'triple': n_triple, 'triple_solo': cuenta['triple'],
             'clave_mala': cuenta['clave_mala'],
             'sin_comunidad': cuenta['sin_comunidad'],
@@ -539,9 +572,14 @@ def main():
     print("     con área en las observaciones : {:>4}".format(con_obs))
     print("     que se resuelven copiándola   : {:>4}".format(resueltos))
     print("  bien divididos          : {:>4}".format(cuenta['dividido']))
+    print("  regantes sin superficie : {:>4} predio(s), {} fichas en 0 m²"
+          .format(cuenta['sin_superficie'],
+                  sum(c.get('sin_area', 0) for c in casos
+                      if c['tipo'] == 'sin_superficie')))
     print("  área repetida tres veces: {:>4} fichas ({} en predios que además "
           "tienen otro problema)".format(n_triple, n_triple - cuenta['triple']))
-    print("  clave inexistente       : {:>4}".format(cuenta['clave_mala']))
+    print("  fichas del DMQ (clave correcta): {:>4}".format(cuenta['clave_dmq']))
+    print("  clave por verificar     : {:>4}".format(cuenta['clave_mala']))
     est = {}
     for c in casos:
         if c['tipo'] == 'clave_mala':

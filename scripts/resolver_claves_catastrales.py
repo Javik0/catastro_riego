@@ -49,6 +49,7 @@ import os
 import sqlite3
 import sys
 import time
+import unicodedata
 
 from osgeo import ogr, osr
 
@@ -108,6 +109,27 @@ def respaldo_sqlite(origen, etiqueta):
     return destino
 
 
+def _norm_nombre(s):
+    """Para comparar nombres: sin tildes, sin dobles espacios, en mayúsculas."""
+    s = unicodedata.normalize('NFKD', str(s or '').strip().upper())
+    s = ''.join(ch for ch in s if not unicodedata.combining(ch))
+    return ' '.join(s.split())
+
+
+def mismo_dueno(nombre_ficha, nombre_catastro):
+    """El catastro nombra a la misma persona que la ficha.
+
+    Es la confirmación más fuerte que hay: si el predio donde cae el punto
+    está a nombre del mismo regante, la clave que tecleó es la equivocada y
+    esta es la buena. Se exige coincidencia completa —no basta con el primer
+    apellido, que en estas comunidades se repite muchísimo—.
+    """
+    a, b = _norm_nombre(nombre_ficha), _norm_nombre(nombre_catastro)
+    if not a or not b:
+        return False
+    return a == b or set(a.split()) == set(b.split())
+
+
 def diferencia(escrita, real):
     """En qué se diferencian dos claves, en lenguaje llano."""
     if escrita == real:
@@ -142,20 +164,47 @@ def analizar(gpkg=None, catastro=None):
     utm.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
     tr = osr.CoordinateTransformation(geo, utm)
 
-    with open(catastro, encoding='utf-8') as f:
-        datos = json.load(f)
-    predios, validas = [], set()
-    for ft in datos.get('features', []):
-        p = ft.get('properties') or {}
-        clave = str(p.get('clave_cata') or '').strip()
+    # El catastro COMPLETO, no solo los predios que ya tienen ficha.
+    #
+    # Esto se cargaba de `catastro_geo.geojson`, que trae únicamente los 5.993
+    # predios investigados. Contra ese archivo, tres fichas salían como «no cae
+    # en ningún predio» cuando en realidad su predio existe y está en el mapa:
+    # son predios urbanos, con clave de 23 dígitos, que ese archivo no incluye.
+    # Lo detectó JAVIKO el 18-ago-2026 abriéndolos en la web.
+    #
+    # El catastro entero son 30.932 claves y vive repartido en dos archivos:
+    # `catastro_busqueda.json` (fid → clave, área y propietario) y
+    # `catastro_poligonos.json` (fid → geometría).
+    base_geo = os.path.dirname(catastro)
+    with open(os.path.join(base_geo, 'catastro_busqueda.json'), encoding='utf-8') as f:
+        busqueda = json.load(f)
+    with open(os.path.join(base_geo, 'catastro_poligonos.json'), encoding='utf-8') as f:
+        poligonos = json.load(f)
+
+    info = {}
+    validas = set()
+    for r in busqueda:
+        clave = str(r.get('clave_cata') or '').strip()
         if not clave:
             continue
         validas.add(clave)
-        g = ogr.CreateGeometryFromJson(json.dumps(ft['geometry']))
-        if g is None:
+        info[str(r.get('fid'))] = (
+            clave, float(r.get('area_predi') or 0),
+            '{} {}'.format(r.get('apellidos') or '', r.get('nombres') or '').strip())
+
+    predios = []
+    for fid, g in poligonos.items():
+        dato = info.get(str(fid))
+        if not dato:
             continue
-        g.Transform(tr)
-        predios.append((clave, float(p.get('area_predi') or 0), g))
+        try:
+            gm = ogr.CreateGeometryFromJson(json.dumps(g))
+        except Exception:
+            continue
+        if gm is None:
+            continue
+        gm.Transform(tr)
+        predios.append((dato[0], dato[1], gm, dato[2]))
 
     con = sqlite3.connect(gpkg)
     cur = con.cursor()
@@ -174,20 +223,57 @@ def analizar(gpkg=None, catastro=None):
                 'obs': (obs or '').strip(), 'area': area, 'tec': tec,
                 'digitos': len(clave)}
         dentro, cerca = [], None
+        duenos = {}
         if x and y:
             p = ogr.Geometry(ogr.wkbPoint); p.AddPoint_2D(x, y)
-            for ck, ca, g in predios:
+            for ck, ca, g, dueno in predios:
                 if g.Contains(p):
                     dentro.append((ck, ca))
+                    duenos[ck] = dueno
             if not dentro:
-                d = sorted((p.Distance(g), ck, ca) for ck, ca, g in predios)
+                d = sorted((p.Distance(g), ck, ca) for ck, ca, g, _ in predios)
                 if d and d[0][0] <= BORDE_M:
                     cerca = d[0]
+        item['duenos'] = duenos
         item['dentro'] = dentro
         item['cerca'] = cerca
 
+        # ¿El predio donde cae el punto está a nombre del mismo regante? Es la
+        # confirmación más fuerte, y pesa más que una observación genérica.
+        por_dueno = [ck for ck, _ in dentro if mismo_dueno(nombre, duenos.get(ck))]
+
+        # Guarda contra «el punto está en su casa, no en su terreno».
+        #
+        # Que el catastro nombre al mismo regante no basta: una persona puede
+        # tener su casa en el pueblo y su terreno de riego en otro lado, y si
+        # el técnico levantó la ficha sentado en la casa, el punto cae sobre el
+        # lote urbano. El caso que lo obligó: Ulcuango Imbago Melchor declara
+        # 22.000 m² de riego y el lote a su nombre donde cae el punto mide 113
+        # —un solar del pueblo—. Asignarle esa clave le cambiaría el predio de
+        # riego por su casa. Si lo declarado no cabe ni de lejos en el
+        # polígono, no se propone.
+        if por_dueno and area and area > 0:
+            area_pol_dueno = next((ca for ck, ca in dentro if ck == por_dueno[0]), 0)
+            if area_pol_dueno > 0 and area / area_pol_dueno > 3:
+                item['motivo'] = (
+                    'el punto cae en un predio a su nombre de {:,.0f} m², pero la '
+                    'ficha declara {:,.0f} m²: parece su casa, no su terreno de riego'
+                    .format(area_pol_dueno, area))
+                sin_resolver.append(item)
+                continue
+
         aprobada = APROBADAS_A_MANO.get(clave)
-        if aprobada and any(ck == aprobada for ck, _ in dentro):
+        if por_dueno and len(dentro) == 1 and not item.get('dmq'):
+            ck = por_dueno[0]
+            item['propuesta'] = ck
+            item['area_pol'] = next(ca for c2, ca in dentro if c2 == ck)
+            item['dif'] = diferencia(clave, ck)
+            item['area_confirma'] = (
+                item['area_pol'] > 0
+                and abs(area - item['area_pol']) / item['area_pol'] <= COINCIDE_AREA)
+            item['dueno_confirma'] = duenos.get(ck)
+            proponibles.append(item)
+        elif aprobada and any(ck == aprobada for ck, _ in dentro):
             # revisada a mano: la observación no contradice la propuesta
             item['propuesta'] = aprobada
             item['area_pol'] = next(ca for ck, ca in dentro if ck == aprobada)

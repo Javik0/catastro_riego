@@ -79,6 +79,10 @@ VACIA = ("(comunidad IS NULL OR TRIM(comunidad) = '' "
          "OR TRIM(CAST(comunidad AS TEXT)) IN ('None','NULL'))")
 # Más allá de esto, «la comunidad más cercana» ya no dice nada útil.
 CERCA_MAX_M = 500
+# Qué tan dominante tiene que ser una organización de riego dentro de una
+# comuna oficial para que su nombre valga como pista. Chambitola llega al 97 %;
+# Izacata reparte entre ocho y no pasa el corte.
+UMBRAL_COMUNA = 0.90
 
 
 def respaldo_sqlite(origen, etiqueta):
@@ -117,6 +121,68 @@ def cargar_comunidades():
     return salida
 
 
+def cargar_comunas_oficiales(vecinas):
+    """La capa oficial de comunas del cantón, con la organización de riego que
+    predomina dentro de cada una.
+
+    Por qué hace falta otra capa. La de `comunidades.geojson` es el dissolve de
+    los predios que YA tienen comunidad, así que una ficha sin comunidad queda
+    fuera de ella por construcción — es circular y por eso resuelve tan poco.
+    La capa oficial (`comunas_oficiales.geojson`, del shapefile del cantón) no
+    depende del padrón y no tiene ese problema.
+
+    El matiz que obliga a contar en vez de leer el nombre: las comunas son
+    unidades **territoriales** y nuestras comunidades son **organizaciones de
+    riego**; una comuna puede albergar varias. «CHAMBITOLA» es 97 % de la
+    organización Chambitola —sirve—, pero «IZACATA» reparte sus fichas entre
+    ocho organizaciones distintas y no dice nada. Por eso se mira qué
+    organización domina dentro de cada comuna, y solo se acepta si supera
+    `UMBRAL_COMUNA`.
+
+    ⚠ El cruce es espacial, nunca por nombre (regla del proyecto): hay comunas
+    y comunidades homónimas que designan sitios distintos.
+    """
+    ruta = os.path.join(BASE, 'public', 'geo', 'comunas_oficiales.geojson')
+    if not os.path.exists(ruta):
+        return []
+    with open(ruta, encoding='utf-8') as f:
+        datos = json.load(f)
+    geo = osr.SpatialReference(); geo.ImportFromEPSG(4326)
+    utm = osr.SpatialReference(); utm.ImportFromEPSG(32717)
+    geo.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+    utm.SetAxisMappingStrategy(osr.OAMS_TRADITIONAL_GIS_ORDER)
+    tr = osr.CoordinateTransformation(geo, utm)
+
+    salida = []
+    for ft in datos.get('features', []):
+        try:
+            g = ogr.CreateGeometryFromJson(json.dumps(ft['geometry']))
+        except Exception:
+            continue
+        if g is None:
+            continue
+        g.Transform(tr)
+        salida.append([g, {}])
+
+    for com, vx, vy in vecinas:
+        p = ogr.Geometry(ogr.wkbPoint); p.AddPoint_2D(vx, vy)
+        for entrada in salida:
+            if entrada[0].Contains(p):
+                k = canonica(com) or com
+                entrada[1][k] = entrada[1].get(k, 0) + 1
+                break
+
+    listo = []
+    for g, cnt in salida:
+        total = sum(cnt.values())
+        if not total:
+            listo.append((g, None))
+            continue
+        org = max(cnt, key=cnt.get)
+        listo.append((g, org if cnt[org] / total >= UMBRAL_COMUNA else None))
+    return listo
+
+
 def analizar(n_vecinos=12, consenso=0.7, radio=400.0, con_vecinos=False):
     """Deduce la comunidad de cada ficha que no la tiene. Sin efectos.
 
@@ -128,6 +194,7 @@ def analizar(n_vecinos=12, consenso=0.7, radio=400.0, con_vecinos=False):
     propuesta, para poder dibujarlas en un mapa.
     """
     comunidades = cargar_comunidades()
+    comunas_of = []
     con = sqlite3.connect(GPKG)
     cur = con.cursor()
     t = '"{}"'.format(TABLA)
@@ -145,6 +212,8 @@ def analizar(n_vecinos=12, consenso=0.7, radio=400.0, con_vecinos=False):
                 "FROM {} WHERE NOT {} AND coord_x_utm IS NOT NULL "
                 "AND coord_x_utm <> 0".format(t, VACIA))
     vecinas = cur.fetchall()
+
+    comunas_of = cargar_comunas_oficiales(vecinas)
 
     cur.execute("SELECT TRIM(comunidad), COUNT(*) FROM {} WHERE NOT {} GROUP BY 1"
                 .format(t, VACIA))
@@ -202,6 +271,21 @@ def analizar(n_vecinos=12, consenso=0.7, radio=400.0, con_vecinos=False):
                 if ganador[0] / len(cand) >= consenso:
                     por_vec = ganador[1]
                     detalle_vec = '{} de {} vecinas'.format(ganador[0], len(cand))
+                else:
+                    # Sin consenso suficiente entre vecinas, pero puede que la
+                    # comuna oficial respalde a la mayoría simple. Son dos vías
+                    # independientes —una territorial, otra de proximidad— y
+                    # cuando coinciden, la propuesta se sostiene. Esto es lo que
+                    # desatasca las fichas de frontera, donde el consenso nunca
+                    # llega al umbral porque conviven dos o tres comunidades.
+                    for g_of, org_of in comunas_of:
+                        if org_of and g_of.Contains(p):
+                            if canonica(ganador[1]) == canonica(org_of):
+                                por_vec = ganador[1]
+                                detalle_vec = ('{} de {} vecinas, con la comuna '
+                                               'oficial de acuerdo'
+                                               .format(ganador[0], len(cand)))
+                            break
                 if con_vecinos:
                     soporte = [{'com': c, 'x': vx, 'y': vy, 'd': round(d2 ** 0.5)}
                                for d2, c, vx, vy in cand]
