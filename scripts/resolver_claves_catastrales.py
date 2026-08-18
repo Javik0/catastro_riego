@@ -68,6 +68,33 @@ BORDE_M = 15
 # se confirma sola: el técnico copió bien la superficie y falló al teclear.
 COINCIDE_AREA = 0.02
 
+# ── Casos con observación revisados y aprobados uno por uno ─────────────────
+#
+# La regla general es no tocar ninguna ficha que traiga observación: ahí está
+# la advertencia de que la clave del DMQ es correcta y no una errata. Pero una
+# observación no siempre contradice la propuesta —a veces habla de otra cosa—,
+# así que estos casos se revisan a mano y se aprueban aquí, con su razón.
+#
+#   clave escrita -> clave correcta
+APROBADAS_A_MANO = {
+    # Un «0» de más al teclear: 17025207000090 vs 1702520700090. El área
+    # declarada (5.723,057 m²) coincide con el polígono hasta el milímetro, el
+    # predio propuesto no tiene ninguna otra ficha —así que corregirlo no
+    # infla nada—, y su observación habla del predio PRINCIPAL del regante
+    # (1702520700060), no de esta clave: no la contradice.
+    # Revisado con JAVIKO el 18-ago-2026.
+    '17025207000090': '1702520700090',
+}
+
+# ── Revisado y NO aprobado, para que no se vuelva a proponer ────────────────
+#
+#   1702521020109 (UMAQUINGA ANDRANGO VIRGILIO, La Libertad) cae dentro del
+#   predio 1702520530049 y su área coincide exacta, pero ESE predio ya tiene
+#   una ficha (UMAQUINGA QUINATOA EDGAR ARMANDO) que declara esa misma área
+#   completa: mover la clave dejaría el predio declarado dos veces. Además su
+#   observación dice «Área Total: 1423,23 m²», que no es ninguna de las dos
+#   cifras en juego. Hace falta que una persona decida; no se toca.
+
 
 def respaldo_sqlite(origen, etiqueta):
     carpeta = os.path.join(RAIZ_RESPALDOS, time.strftime('%Y-%m-%d'))
@@ -159,7 +186,18 @@ def analizar(gpkg=None, catastro=None):
         item['dentro'] = dentro
         item['cerca'] = cerca
 
-        if item['obs']:
+        aprobada = APROBADAS_A_MANO.get(clave)
+        if aprobada and any(ck == aprobada for ck, _ in dentro):
+            # revisada a mano: la observación no contradice la propuesta
+            item['propuesta'] = aprobada
+            item['area_pol'] = next(ca for ck, ca in dentro if ck == aprobada)
+            item['dif'] = diferencia(clave, aprobada)
+            item['area_confirma'] = (
+                item['area_pol'] > 0
+                and abs(area - item['area_pol']) / item['area_pol'] <= COINCIDE_AREA)
+            item['aprobada_a_mano'] = True
+            proponibles.append(item)
+        elif item['obs']:
             # Ocho de estas dicen que la clave es del DMQ: no es una errata.
             item['dmq'] = 'DMQ' in item['obs'].upper() or 'QUITO' in item['obs'].upper()
             con_obs.append(item)

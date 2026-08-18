@@ -1,29 +1,29 @@
 {
- "generado": "2026-08-18 16:19",
+ "generado": "2026-08-18 16:28",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
   "regantes": 4307,
-  "predios_catastrales": 5984,
-  "superficie_catastral_ha": 8092.45,
+  "predios_catastrales": 5985,
+  "superficie_catastral_ha": 8093.03,
   "superficie_declarada_ha": 7992.88,
   "riego_declarado_ha": 6175.07,
   "riego_ajustado_ha": 6144.26,
   "sin_riego_declarado_ha": 1817.81,
-  "fichas_sin_poligono": 13,
+  "fichas_sin_poligono": 12,
   "predios_compartidos": 435,
-  "sin_riego_catastral_ha": 1948.19
+  "sin_riego_catastral_ha": 1948.77
  },
  "sectores": {
   "Sector 1": {
    "fichas": 3409.0,
    "regantes": 1789.0,
-   "predios_catastrales": 3092.0,
-   "superficie_catastral_ha": 3287.23,
+   "predios_catastrales": 3093.0,
+   "superficie_catastral_ha": 3287.81,
    "superficie_declarada_ha": 3322.86,
    "riego_declarado_ha": 2783.24,
    "riego_ajustado_ha": 2765.07,
-   "sin_riego_catastral_ha": 522.16,
+   "sin_riego_catastral_ha": 522.74,
    "sin_riego_declarado_ha": 539.61
   },
   "Sector 2": {
@@ -224,12 +224,12 @@
    "fichas": 200,
    "regantes": 110,
    "predios_adicionales": 90,
-   "predios_catastrales": 194,
-   "superficie_catastral_ha": 162.38,
+   "predios_catastrales": 195,
+   "superficie_catastral_ha": 162.96,
    "superficie_declarada_ha": 163.56,
    "riego_declarado_ha": 153.2,
    "riego_ajustado_ha": 152.5,
-   "sin_riego_catastral_ha": 9.88,
+   "sin_riego_catastral_ha": 10.46,
    "sin_riego_declarado_ha": 10.36
   },
   {
