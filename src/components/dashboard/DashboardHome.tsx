@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
   PieChart, Pie, Cell, ResponsiveContainer, LineChart, Line, LabelList,
@@ -131,6 +131,19 @@ interface Superficie {
     sin_riego_declarado_ha: number;
     predios_compartidos: number;
   };
+  /** Mismas seis cifras que `total`, una fila por comunidad. Usado para agregar
+   * la catastral cuando hay un filtro puesto (19-ago-2026). */
+  comunidades: {
+    comunidad: string;
+    sector: string;
+    predios_catastrales: number;
+    superficie_catastral_ha: number;
+    superficie_declarada_ha: number;
+    riego_declarado_ha: number;
+    riego_ajustado_ha: number;
+    sin_riego_catastral_ha: number;
+    sin_riego_declarado_ha: number;
+  }[];
 }
 
 export default function DashboardHome({ fichas, loading, cultivosData, animalesData = [], prediosAdicionalesData = [] }: Props) {
@@ -148,6 +161,68 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   // Los gráficos de seguimiento del equipo (por técnico y por día) son de uso
   // interno: el contratante ve el padrón, no cómo se reparte el trabajo.
   const esInterno = isAdmin || isTecnico;
+
+  // Con la barra de filtros puesta, las cifras del sistema (que son del
+  // total) ya no describen lo que se está viendo.
+  const hayFiltro = !!superficie && fichas.length < superficie.total.fichas;
+
+  // ── 19-ago: con un filtro puesto, la catastral ya NO cae a lo declarado ──
+  // El JSON trae superficie por comunidad. Se identifican las comunidades
+  // PRESENTES en las fichas ya filtradas (por App.tsx: parroquia, sector,
+  // técnico, comunidad, fecha...) y se suma su catastral completa.
+  //
+  // Ojo con lo que esto significa: si el filtro es "Técnico X", el número que
+  // sale es la superficie catastral ENTERA de las comunidades donde ese
+  // técnico levantó al menos una ficha — no la porción que él levantó. Un
+  // filtro de comunidad da el corte exacto; cualquier otro filtro da el corte
+  // por comunidades tocadas. Se avisa en el texto de abajo, no se esconde.
+  //
+  // Estos tres useMemo van ANTES del `if (loading) return` de más abajo a
+  // propósito: un hook después de ese return cambia la cuenta de hooks entre
+  // el render de carga y el render con datos, y React se rompe en blanco
+  // (regla del proyecto — ya pasó una vez en MapPage.tsx).
+  const DIACRITICOS = new RegExp('[' + String.fromCharCode(0x0300) + '-' + String.fromCharCode(0x036f) + ']', 'g');
+  const normComunidad = (t: string) => t.toUpperCase().trim()
+    .normalize('NFD').replace(DIACRITICOS, '').replace(/\s+/g, ' ');
+
+  const supPorComunidadNorm = useMemo(() => {
+    if (!superficie) return null;
+    const m = new Map<string, typeof superficie.comunidades[number]>();
+    for (const c of superficie.comunidades) m.set(normComunidad(c.comunidad), c);
+    return m;
+  }, [superficie]);
+
+  const comunidadesEnFiltro = useMemo(() => {
+    const s = new Set<string>();
+    for (const f of fichas) {
+      const c = (f.comunidad || f.sector_comunidad || '').trim();
+      if (c) s.add(normComunidad(c));
+    }
+    return s;
+  }, [fichas]);
+
+  const catastralFiltro = useMemo(() => {
+    if (!supPorComunidadNorm || hayFiltro === false) return null;
+    const acc = {
+      superficie_catastral_ha: 0, riego_ajustado_ha: 0, sin_riego_catastral_ha: 0,
+      superficie_declarada_ha: 0, riego_declarado_ha: 0, sin_riego_declarado_ha: 0,
+      predios_catastrales: 0,
+    };
+    let n = 0;
+    for (const key of comunidadesEnFiltro) {
+      const c = supPorComunidadNorm.get(key);
+      if (!c) continue;
+      n++;
+      acc.superficie_catastral_ha += c.superficie_catastral_ha;
+      acc.riego_ajustado_ha += c.riego_ajustado_ha;
+      acc.sin_riego_catastral_ha += c.sin_riego_catastral_ha;
+      acc.superficie_declarada_ha += c.superficie_declarada_ha;
+      acc.riego_declarado_ha += c.riego_declarado_ha;
+      acc.sin_riego_declarado_ha += c.sin_riego_declarado_ha;
+      acc.predios_catastrales += c.predios_catastrales;
+    }
+    return n > 0 ? { ...acc, nComunidades: n } : null;
+  }, [supPorComunidadNorm, comunidadesEnFiltro, hayFiltro]);
 
   useEffect(() => {
     if (fichas.length > 0) {
@@ -217,6 +292,13 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   );
 
   const totalDeclaradosPuros = clavesDeclaradasPuras.length;
+
+  // Solo se usa si `superficie` (el JSON de catastro) todavía no cargó —
+  // conteo aproximado desde las fichas ya en memoria, para no dejar la
+  // tarjeta "Predios Investigados" en blanco durante ese instante.
+  const prediosInvestigadosFallback = new Set(
+    fichas.map((f) => (f.clave_catastral || f.cod_poligono || '').trim()).filter(Boolean)
+  ).size;
 
   // ── Métricas de Fichas Hijas (v4.3 — generadas desde Sección 7) ──
   const fichasHijas = fichas.filter(esFichaHija);
@@ -289,9 +371,6 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
   // ── Cálculos dinámicos sectoriales para los gráficos Recharts ──
   // 1. Cobertura de Riego (Riego vs Secano en ha)
-  // Con la barra de filtros puesta, las cifras del sistema (que son del total)
-  // ya no describen lo que se está viendo y hay que volver a lo declarado.
-  const hayFiltro = !!superficie && fichas.length < superficie.total.fichas;
   const areaRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_riego) || 0), 0);
   const areaSinRiegoTotalM2 = fichas.reduce((acc, f) => acc + (Number(f.area_sin_riego) || 0), 0);
   const areaRiegoHa = areaRiegoTotalM2 / 10000;
@@ -306,7 +385,17 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   // DECLARADO: las tarjetas no sumaban la superficie del sistema (6.130,18 +
   // 2.484,08 = 8.614,26 contra 8.092,45) y el contratante lo detectó sumando a
   // ojo. De aquí salen ahora las dos, de la misma familia y en el mismo orden.
-  const catastral = superficie && !hayFiltro ? superficie.total : null;
+  // `hayFiltro`, `supPorComunidadNorm`, `comunidadesEnFiltro` y
+  // `catastralFiltro` se calculan más arriba, antes del `if (loading) return`.
+  const catastralTotal = superficie && !hayFiltro ? superficie.total : null;
+  const catastral = catastralTotal || catastralFiltro;
+  const nComunidadesFiltro = catastralFiltro && 'nComunidades' in catastralFiltro
+    ? catastralFiltro.nComunidades : 0;
+  const etiquetaMedicion = catastralTotal
+    ? 'Medición catastral del sistema'
+    : catastralFiltro
+      ? `Medición catastral de ${nComunidadesFiltro} comunidad${nComunidadesFiltro === 1 ? '' : 'es'}`
+      : 'Declarado en las fichas de este sector';
   const riegoHa = catastral ? catastral.riego_ajustado_ha : areaRiegoHa;
   const sinRiegoHa = catastral ? catastral.sin_riego_catastral_ha : areaSinRiegoHa;
   const superficieBaseHa = catastral
@@ -509,7 +598,19 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
           />
         )}
-        <KPICard icon={MapIcon} label="Polígonos Catastro" value={stats.totalPoligonos} color="#10b981" sub="Base catastral completa" />
+        {/* Antes mostraba primero el catastro completo del cantón (24.452,
+            número fijo sin relación con el padrón) y el avance quedaba
+            invisible. Se invierte: el titular es lo investigado, y el total
+            del catastro pasa a ser el contexto de escala (19-ago-2026). */}
+        <KPICard
+          icon={MapIcon}
+          label="Predios Investigados"
+          value={superficie ? superficie.total.predios_catastrales : prediosInvestigadosFallback}
+          color="#10b981"
+          sub={superficie
+            ? `de ${stats.totalPoligonos.toLocaleString('es-EC')} en el catastro rural`
+            : 'Predios únicos con ficha levantada'}
+        />
         {/* La superficie del sistema se mide contando cada predio UNA vez (su
             polígono del catastro). Lo declarado por los regantes NO se nombra
             aquí: es dato del análisis social y vive en su bloque, solo interno. */}
@@ -598,9 +699,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
               </div>
             </div>
             <div className="text-[10px] mt-4 font-semibold text-blue-600 dark:text-blue-400 flex items-center gap-1">
-              <span className="text-xs">{catastral
-                ? 'Medición catastral del sistema'
-                : 'Declarado en las fichas de este sector'}</span>
+              <span className="text-xs">{etiquetaMedicion}</span>
             </div>
           </div>
 
@@ -623,9 +722,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
               </div>
             </div>
             <div className="text-[10px] mt-4 font-semibold text-amber-600 dark:text-amber-400 flex items-center gap-1">
-              <span className="text-xs">{catastral
-                ? 'Medición catastral del sistema'
-                : 'Declarado en las fichas de este sector'}</span>
+              <span className="text-xs">{etiquetaMedicion}</span>
             </div>
           </div>
         </div>
@@ -638,7 +735,11 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             <b style={{ color: 'var(--text-heading)' }}>{haFmt(riegoHa)}</b> con riego
             {' + '}<b style={{ color: 'var(--text-heading)' }}>{haFmt(sinRiegoHa)}</b> sin riego
             {' = '}<b style={{ color: 'var(--text-heading)' }}>{haFmt(superficieBaseHa)} ha</b>
-            {catastral ? ' de superficie del sistema' : ' declaradas en este sector'}
+            {catastralTotal
+              ? ' de superficie del sistema'
+              : catastralFiltro
+                ? ` de las ${nComunidadesFiltro} comunidad${nComunidadesFiltro === 1 ? '' : 'es'} de este filtro`
+                : ' declaradas en este sector'}
           </span>
           {catastral && (
             <span className="text-xs px-2.5 py-1 rounded-full border whitespace-nowrap font-semibold
@@ -649,17 +750,35 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           )}
         </div>
 
-        {catastral && (
+        {catastralTotal && (
           <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
             Superficies medidas sobre el catastro rural del GAD Cayambe contando cada
             predio una vez. Las cifras se siguen depurando junto con el municipio.
           </p>
         )}
 
+        {/* El filtro no recorta una comunidad: la muestra ENTERA si el filtro
+            tocó al menos una de sus fichas. Un filtro de Comunidad da el corte
+            exacto; cualquier otro (técnico, fecha, sector) puede traer más
+            hectáreas de las que ese filtro realmente cubrió. Se avisa aquí en
+            vez de dejar que el número se lea como si fuera exacto siempre. */}
+        {catastralFiltro && (
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Superficie catastral completa de las comunidades donde este filtro tiene al menos
+            una ficha — no es una porción recortada por el filtro. Con el filtro «Comunidad»
+            el corte es exacto; con otros filtros (técnico, fecha, sector) puede incluir
+            hectáreas de partes de la comunidad que el filtro no tocó.
+          </p>
+        )}
+
         {/* ── Lo declarado por los regantes: dato del análisis social, NO la
             medida del territorio. Solo equipo (decisión de JAVIKO, 17-ago-2026):
             puesto junto al catastro invita a sumar peras con manzanas, que es
-            justo lo que descuadró la pantalla. ── */}
+            justo lo que descuadró la pantalla.
+            19-ago: `catastral` ya cubre el total Y el agregado filtrado (las
+            dos rutas traen los mismos seis campos), así que este bloque lee
+            directo de `catastral` y no vuelve a caer a `superficie!.total`
+            cuando hay un filtro puesto — antes se filtraba a lo declarado. ── */}
         {esInterno && catastral && (
           <div className="rounded-xl border p-4"
                style={{ background: 'var(--bg-card)', borderColor: 'var(--border-color)' }}>
@@ -672,12 +791,19 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                                dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/30">
                 Solo equipo
               </span>
+              {catastralFiltro && (
+                <span className="text-xs px-2.5 py-0.5 rounded-full border font-semibold
+                                 bg-slate-100 text-slate-600 border-slate-300
+                                 dark:bg-slate-500/10 dark:text-slate-300 dark:border-slate-500/20">
+                  {nComunidadesFiltro} comunidad{nComunidadesFiltro === 1 ? '' : 'es'} de este filtro
+                </span>
+              )}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {[
-                ['Total declarado', superficie!.total.superficie_declarada_ha],
-                ['Con riego', superficie!.total.riego_declarado_ha],
-                ['Sin riego', superficie!.total.sin_riego_declarado_ha],
+                ['Total declarado', catastral.superficie_declarada_ha],
+                ['Con riego', catastral.riego_declarado_ha],
+                ['Sin riego', catastral.sin_riego_declarado_ha],
               ].map(([k, v]) => (
                 <div key={k as string} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-secondary)' }}>
                   <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>{k as string}</div>
@@ -697,13 +823,16 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             <p className="text-xs mt-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               Lo que declararon los regantes en campo — base del análisis social.
               Difiere en <b>{haFmt(Math.abs(
-                superficie!.total.superficie_declarada_ha - superficie!.total.superficie_catastral_ha
-              ))} ha</b> de la medición catastral, y la diferencia va en los dos sentidos:
-              en {superficie!.total.predios_compartidos.toLocaleString('es-EC')} predios familiares
-              cada heredero declara el terreno completo —suma de más—, y a la vez hay superficie
-              catastrada que ninguna ficha declara —suma de menos—.{' '}
+                catastral.superficie_declarada_ha - catastral.superficie_catastral_ha
+              ))} ha</b> de la medición catastral, y la diferencia va en los dos sentidos: en los
+              predios familiares cada heredero declara el terreno completo —suma de más—, y a la
+              vez hay superficie catastrada que ninguna ficha declara —suma de menos—.{' '}
               <b>No es un error: es otra unidad de medida</b>, y por eso no se suma ni se compara
               con las cifras catastrales de arriba.
+              {catastralTotal && (
+                <> Son <b>{catastralTotal.predios_compartidos.toLocaleString('es-EC')}</b> los
+                predios familiares con más de una ficha, en todo el sistema.</>
+              )}
             </p>
           </div>
         )}

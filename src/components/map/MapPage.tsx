@@ -1243,22 +1243,28 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           )}
         </div>
 
-        {/* ── Leyenda del catastro investigado ──
-            Aquí iba el conteo de polígonos dibujados. Se retiró (9-ago, pedido
-            del contratante: «no cuadra con nada»): contaba LOTES mientras todo
-            el resto del panel cuenta FICHAS, y sin esa aclaración el número
-            parecía descuadrado. Son 6.825 fichas repartidas en 6.003 claves
-            catastrales — 432 claves tienen más de una ficha —, de las que 5.994
-            tienen polígono en el catastro. Explicarlo dentro del recuadro
-            confundía más que el propio número, así que queda solo la leyenda
-            del color. */}
+        {/* ── Leyenda del catastro investigado, con el conteo de vuelta ──
+            Se había retirado (9-ago, pedido del contratante: «no cuadra con
+            nada»): contaba LOTES mientras el resto del panel cuenta FICHAS,
+            y sin esa aclaración el número parecía descuadrado. Vuelve el
+            19-ago nombrando la unidad en la misma línea — el mismo criterio
+            que ya se usa en el Dashboard para catastral vs declarada. */}
         {layerInfo.catastro > 0 && (
-          <div className="flex items-center gap-1.5 mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}
-            title="En naranja, los lotes del catastro que tienen al menos una ficha levantada.">
-            <div className="w-2.5 h-2.5 rounded-sm border border-orange-400 shrink-0" style={{ background: 'rgba(249,115,22,0.2)' }} />
-            <span className="text-[10px] leading-none" style={{ color: 'var(--text-secondary)' }}>
-              Predios con ficha levantada
-            </span>
+          <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+            <div className="flex items-center gap-1.5"
+              title="En naranja, los lotes del catastro que tienen al menos una ficha levantada.">
+              <div className="w-2.5 h-2.5 rounded-sm border border-orange-400 shrink-0" style={{ background: 'rgba(249,115,22,0.2)' }} />
+              <span className="text-sm font-bold leading-none" style={{ color: 'var(--text-primary)' }}>
+                {(catastroVisible?.features.length ?? 0).toLocaleString('es-EC')}
+              </span>
+              <span className="text-[10px] leading-none" style={{ color: 'var(--text-secondary)' }}>
+                predios investigados
+              </span>
+            </div>
+            <div className="text-[9px] mt-0.5 pl-4 leading-snug" style={{ color: 'var(--text-muted)' }}>
+              {fichasConGeo.length.toLocaleString('es-EC')} fichas sobre {(catastroVisible?.features.length ?? 0).toLocaleString('es-EC')} predios: en los terrenos
+              familiares cada heredero llena la suya.
+            </div>
           </div>
         )}
 
