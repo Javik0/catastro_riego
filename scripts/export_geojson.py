@@ -42,6 +42,19 @@ CATASTRO_URBANO_GPKG = os.path.join(QFIELD_DIR, 'CATASTROURBANOUNIDO.gpkg')
 PARROQUIAS_GPKG = os.path.join(QFIELD_DIR, 'PARROQUIAS.gpkg')
 RAMALES_GPKG   = os.path.join(QFIELD_DIR, 'RamalesGuanguiquiPorotog.gpkg')
 
+# El campo `comunidad` del catastro rural (CATASTRO_4) es la etiqueta que el
+# GADM le puso al predio en SU base — no la tocamos, es dato municipal tal
+# como lo entregan. Pero a veces esa etiqueta es un nombre de finca familiar,
+# no una comunidad oficial, y confunde al buscador del mapa web. Cuando eso
+# pasa y el titular tiene comunidad conocida en nuestras fichas, se corrige
+# aquí — documentado, uno por uno, nunca en el archivo generado a mano.
+CORRECCIONES_ETIQUETA_CATASTRO = {
+    # 1702521730011 — ACERO FARINANGO JUAN MIGUEL. El GADM la etiqueta "LA
+    # COMPAÑIA LOTE 2 - SANTA BARBARA" (nombre de la finca familiar). Sus
+    # otras 7 fichas dicen COCHAPAMBA. Confirmado por Armando, 19-ago-2026.
+    '1702521730011': 'COCHAPAMBA',
+}
+
 # ─── Verificar pyproj ─────────────────────────────────────────
 try:
     from pyproj import Transformer
@@ -733,10 +746,17 @@ def export_fichas():
 
 def export_catastro(fichas_features):
     print("\n🗺  Exportando Catastro (polígonos)...")
+    # `clave_catastral` manda, `cod_poligono` es el respaldo si viene vacía —
+    # igual que en generar_gpkg_cliente.py y 06_capas_padron.py. Con el orden
+    # invertido que tenía esto antes, 10 fichas cuyas dos claves no coinciden
+    # dibujaban el predio de `cod_poligono` en vez del suyo propio, y 8 de esos
+    # predios no los reclamaba ninguna ficha por su clave real: el mapa contaba
+    # 5.995 "predios investigados" y el resto del sistema (Dashboard, JSON de
+    # superficie) contaba 5.987 sobre el mismo padrón. Corregido 19-ago-2026.
     claves = set()
     if fichas_features:
         for f in fichas_features:
-            c = f['properties'].get('cod_poligono') or f['properties'].get('clave_catastral')
+            c = f['properties'].get('clave_catastral') or f['properties'].get('cod_poligono')
             if c: claves.add(c)
     print(f"  Claves con fichas: {len(claves)}")
 
@@ -889,7 +909,7 @@ def export_catastro_busqueda():
                     'apellidos': ape or '',
                     'nombres': nom or '',
                     'cedula': ced or '',
-                    'comunidad': com or '',
+                    'comunidad': CORRECCIONES_ETIQUETA_CATASTRO.get(clave, com or ''),
                     'lat': lat,
                     'lng': lng,
                 })
@@ -1168,16 +1188,12 @@ def _es_ficha_hija(props):
     return props.get('es_ficha_hija') in (1, True)
 
 
-def export_stats(fichas):
+def export_stats(fichas, predios_investigados):
     print("\n📊 Generando estadísticas para el Login...")
-    claves = set()
     tecnicos = set()
     hijas = [f for f in fichas if _es_ficha_hija(f['properties'])]
     principales = [f for f in fichas if not _es_ficha_hija(f['properties'])]
     for f in fichas:
-        c = f['properties'].get('cod_poligono') or f['properties'].get('clave_catastral')
-        if c:
-            claves.add(c)
         t = f['properties'].get('creado_por')
         if t and t.strip() != 'AUTO-SECCION7':  # el generador no es un técnico
             nombre_tec = MAPEO_TECNICOS.get(t.strip(), t.strip())
@@ -1190,7 +1206,10 @@ def export_stats(fichas):
     stats = {
         # "fichas" = solo principales, para no inflar el conteo público con hijas pendientes
         "fichas": len(principales),
-        "predios": len(claves),
+        # El conteo LOCAL de claves únicas (antes) incluía 8 que no matchean
+        # ningún polígono real del catastro — 5.995 en vez de 5.987. Se recibe
+        # el conteo ya verificado que devuelve export_catastro() (19-ago-2026).
+        "predios": predios_investigados,
         "tecnicos": len(tecnicos) if len(tecnicos) > 0 else 9,
         "fichas_hijas": len(hijas),
         "fichas_hijas_pendientes": hijas_pendientes,
@@ -1413,7 +1432,7 @@ if __name__ == '__main__':
     export_catastro_poligonos()
     export_ramales()
     export_tablas_hijas()
-    export_stats(fichas)
+    export_stats(fichas, predios_vinculados_count)
     export_caudal_por_comunidad(fichas)
     export_auditoria_fichas_hijas(fichas)
 
