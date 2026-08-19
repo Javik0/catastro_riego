@@ -1,5 +1,5 @@
 {
- "generado": "2026-08-18 18:44",
+ "generado": "2026-08-19 16:41",
  "nota": "La superficie del sistema se mide sumando POLIGONOS CATASTRALES DISTINTOS (superficie_catastral_ha). Lo declarado por cada regante se conserva aparte (superficie_declarada_ha) porque es dato de analisis, no un error: en predios de herederos cada titular declara el predio completo. NO sume fichas para obtener la superficie.",
  "total": {
   "fichas": 6830,
@@ -8,22 +8,22 @@
   "superficie_catastral_ha": 8093.34,
   "superficie_declarada_ha": 7992.88,
   "riego_declarado_ha": 6175.07,
-  "riego_ajustado_ha": 6144.27,
+  "riego_ajustado_ha": 6143.98,
   "sin_riego_declarado_ha": 1817.81,
-  "fichas_sin_poligono": 10,
-  "predios_compartidos": 435,
-  "sin_riego_catastral_ha": 1949.07
+  "fichas_sin_poligono": 9,
+  "predios_compartidos": 436,
+  "sin_riego_catastral_ha": 1949.36
  },
  "sectores": {
   "Sector 1": {
    "fichas": 3410.0,
    "regantes": 1790.0,
    "predios_catastrales": 3094.0,
-   "superficie_catastral_ha": 3296.69,
-   "superficie_declarada_ha": 3331.74,
-   "riego_declarado_ha": 2792.12,
-   "riego_ajustado_ha": 2773.96,
-   "sin_riego_catastral_ha": 522.73,
+   "superficie_catastral_ha": 3296.68,
+   "superficie_declarada_ha": 3331.73,
+   "riego_declarado_ha": 2792.11,
+   "riego_ajustado_ha": 2773.67,
+   "sin_riego_catastral_ha": 523.01,
    "sin_riego_declarado_ha": 539.62
   },
   "Sector 2": {
@@ -123,14 +123,14 @@
   {
    "comunidad": "COCHAPAMBA",
    "sector": "Sector 1",
-   "fichas": 491,
-   "regantes": 238,
+   "fichas": 492,
+   "regantes": 239,
    "predios_adicionales": 253,
-   "predios_catastrales": 457,
-   "superficie_catastral_ha": 324.31,
-   "superficie_declarada_ha": 318.9,
-   "riego_declarado_ha": 284.37,
-   "riego_ajustado_ha": 284.16,
+   "predios_catastrales": 458,
+   "superficie_catastral_ha": 333.18,
+   "superficie_declarada_ha": 327.77,
+   "riego_declarado_ha": 293.24,
+   "riego_ajustado_ha": 293.03,
    "sin_riego_catastral_ha": 40.15,
    "sin_riego_declarado_ha": 34.52
   },
@@ -256,8 +256,8 @@
    "superficie_catastral_ha": 159.56,
    "superficie_declarada_ha": 163.55,
    "riego_declarado_ha": 154.47,
-   "riego_ajustado_ha": 154.47,
-   "sin_riego_catastral_ha": 5.09,
+   "riego_ajustado_ha": 154.19,
+   "sin_riego_catastral_ha": 5.37,
    "sin_riego_declarado_ha": 9.08
   },
   {
@@ -499,20 +499,6 @@
    "sin_riego_declarado_ha": 20.11
   },
   {
-   "comunidad": "SANTA BÁRBARA",
-   "sector": "Sector 1",
-   "fichas": 11,
-   "regantes": 8,
-   "predios_adicionales": 3,
-   "predios_catastrales": 9,
-   "superficie_catastral_ha": 71.33,
-   "superficie_declarada_ha": 71.33,
-   "riego_declarado_ha": 70.33,
-   "riego_ajustado_ha": 70.33,
-   "sin_riego_catastral_ha": 1.0,
-   "sin_riego_declarado_ha": 1.0
-  },
-  {
    "comunidad": "ASOC. SAN VICENTE ALTO",
    "sector": "Sector 2",
    "fichas": 94,
@@ -525,6 +511,20 @@
    "riego_ajustado_ha": 56.96,
    "sin_riego_catastral_ha": 11.93,
    "sin_riego_declarado_ha": 11.1
+  },
+  {
+   "comunidad": "SANTA BÁRBARA",
+   "sector": "Sector 1",
+   "fichas": 10,
+   "regantes": 7,
+   "predios_adicionales": 3,
+   "predios_catastrales": 8,
+   "superficie_catastral_ha": 62.45,
+   "superficie_declarada_ha": 62.45,
+   "riego_declarado_ha": 61.45,
+   "riego_ajustado_ha": 61.45,
+   "sin_riego_catastral_ha": 1.0,
+   "sin_riego_declarado_ha": 1.0
   },
   {
    "comunidad": "JUNTA SAN LUIS",
@@ -752,6 +752,7 @@
   }
  ],
  "factor_por_predio": {
+  "1702520530049": 0.5,
   "1702521040121": 0.5,
   "1702520990062": 0.145523,
   "1702521070020": 0.27809,
