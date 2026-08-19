@@ -687,12 +687,23 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
                 </div>
               ))}
             </div>
+            {/* La diferencia contra el catastro puede ir en CUALQUIER dirección y
+                de hecho se invirtió el 18-ago: la depuración repartió el área en
+                574 fichas donde QField había dejado el polígono entero, y lo
+                declarado pasó de 9.779,89 a 7.992,88 ha —de estar 1.687 ha por
+                encima del catastro a quedar por debajo—. El texto decía «Suma X
+                ha más que el catastro» con X calculada por resta, así que ese día
+                mostró «Suma −100,46 ha más que». No volver a fijar el sentido. */}
             <p className="text-xs mt-3 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Lo que declararon los regantes en campo — base del análisis social. Suma{' '}
-              <b>{haFmt(superficie!.total.superficie_declarada_ha - superficie!.total.superficie_catastral_ha)} ha</b>{' '}
-              más que el catastro porque en {superficie!.total.predios_compartidos.toLocaleString('es-EC')} predios
-              familiares cada heredero declara el terreno completo. <b>No es un error: es otra unidad de medida</b>,
-              y por eso no se suma ni se compara con las cifras catastrales de arriba.
+              Lo que declararon los regantes en campo — base del análisis social.
+              Difiere en <b>{haFmt(Math.abs(
+                superficie!.total.superficie_declarada_ha - superficie!.total.superficie_catastral_ha
+              ))} ha</b> de la medición catastral, y la diferencia va en los dos sentidos:
+              en {superficie!.total.predios_compartidos.toLocaleString('es-EC')} predios familiares
+              cada heredero declara el terreno completo —suma de más—, y a la vez hay superficie
+              catastrada que ninguna ficha declara —suma de menos—.{' '}
+              <b>No es un error: es otra unidad de medida</b>, y por eso no se suma ni se compara
+              con las cifras catastrales de arriba.
             </p>
           </div>
         )}
