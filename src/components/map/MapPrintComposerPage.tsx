@@ -11,7 +11,6 @@ import {
 } from 'react-leaflet';
 import L from 'leaflet';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import {
   ArrowLeft,
   Printer,
@@ -358,6 +357,12 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
 
   // Bounds para enfocar automáticamente en base al modo seleccionado
   const activeBounds = useMemo<L.LatLngBoundsExpression | null>(() => {
+    // En modo general, el encuadre es el extent completo del sistema (todos los
+    // sectores) — sin esto el PDF salía centrado en la coordenada fija inicial
+    if (modo === 'general' && sectoresData) {
+      const b = L.geoJSON(sectoresData).getBounds();
+      return b.isValid() ? b : null;
+    }
     if (modo === 'sector' && sectoresData && selectedSector) {
       const feat = sectoresData.features.find(
         (f: any) => f.properties?.sector === selectedSector
@@ -754,8 +759,15 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
         : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}';
       
-      const tileLayer = L.tileLayer(tileUrl, { maxZoom: 20 });
+      // crossOrigin es obligatorio: sin él los tiles "manchan" (taint) el canvas
+      // de captura y toda la imagen del mapa sale gris. Esri sí envía CORS.
+      const tileLayer = L.tileLayer(tileUrl, { maxZoom: 20, crossOrigin: 'anonymous' });
       tileLayer.addTo(map);
+
+      // Un solo renderer Canvas para TODAS las capas vectoriales: la captura
+      // lee ese canvas directamente, sin depender de rasterizar SVG con
+      // transforms de Leaflet (que es lo que descuadraba los predios)
+      const vectorRenderer = L.canvas({ padding: 0.5 });
 
       // Esperar a que el mapa esté montado y tenga el tamaño correcto
       await new Promise<void>((resolve) => {
@@ -777,14 +789,16 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       // 1. Canales de Riego
       if (incluirCanales && ramalesData) {
         L.geoJSON(ramalesData, {
+          renderer: vectorRenderer,
           style: { color: '#38bdf8', weight: formato === 'A3' ? 3 : 5, opacity: 0.85, dashArray: '6 3' }
-        }).addTo(map);
+        } as any).addTo(map);
       }
 
       // 2. Sectores de Investigación
       if (sectoresData) {
         L.geoJSON(sectoresData, {
-          style: (feature) => {
+          renderer: vectorRenderer,
+          style: (feature: any) => {
             const sec = feature?.properties?.sector;
             const color = SECTOR_COLORS_MAP[sec] || '#6b7280';
             const isTarget = modo === 'general' || (modo === 'sector' && sec === selectedSector);
@@ -797,17 +811,18 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
               dashArray: '8 4'
             };
           }
-        }).addTo(map);
+        } as any).addTo(map);
       }
 
       // 3. Comunidades
       if (comunidadesData) {
         L.geoJSON(comunidadesData, {
-          style: (feature) => {
+          renderer: vectorRenderer,
+          style: (feature: any) => {
             const com = feature?.properties?.comunidad;
             const sec = feature?.properties?.sector;
             const color = comunidadesColorMap.get(com) || '#94a3b8';
-            
+
             // Decidir visibilidad
             let visible = false;
             if (modo === 'general') visible = true;
@@ -823,13 +838,14 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
               dashArray: '4 3'
             };
           }
-        }).addTo(map);
+        } as any).addTo(map);
       }
 
       // 4. Catastro Rural
       if (incluirCatastro && catastroData) {
         L.geoJSON(catastroData, {
-          style: (feature) => {
+          renderer: vectorRenderer,
+          style: (feature: any) => {
             const com = feature?.properties?.comunidad;
             const isHighlight = modo === 'comunidad' && com === selectedComunidad;
             return {
@@ -840,12 +856,13 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
               opacity: isHighlight ? 0.9 : 0.6
             };
           }
-        }).addTo(map);
+        } as any).addTo(map);
       }
 
       // 4.5 Otros Predios del Regante
       if (incluirOtrosPredios && prediosAdicionalesData) {
         L.geoJSON(prediosAdicionalesData, {
+          renderer: vectorRenderer,
           style: {
             color: '#71717a',
             weight: formato === 'A3' ? 1 : 1.5,
@@ -853,14 +870,13 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
             fillOpacity: 0.04,
             opacity: 0.6
           }
-        }).addTo(map);
+        } as any).addTo(map);
       }
 
       // 4.7 Todos los predios (24K Canvas)
       if (showAllCatastro && allCatastroData) {
-        const canvasRenderer = L.canvas({ padding: 0.5 });
         L.geoJSON(allCatastroData, {
-          renderer: canvasRenderer,
+          renderer: vectorRenderer,
           style: {
             color: '#cbd5e1',
             weight: formato === 'A3' ? 0.4 : 0.6,
@@ -882,6 +898,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
           const latlng = L.latLng(f.geo!.lat, f.geo!.lng);
 
           L.circleMarker(latlng, {
+            renderer: vectorRenderer,
             radius: formato === 'A3' ? 5 : 8,
             fillColor: comColor,
             fillOpacity: 0.9,
@@ -911,13 +928,46 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
         }, 500);
       });
 
-      // Capturar usando html2canvas con proxy para imágenes externas y escalamiento
-      const canvas = await html2canvas(mapDiv, {
-        useCORS: true,
-        allowTaint: true,
-        scale: 1, // Ya tiene el tamaño pixel exacto offscreen
-        logging: false
-      });
+      // Zoom y latitud REALES del mapa exportado, para la barra de escala del
+      // PDF (el zoom de la previsualización en pantalla no coincide)
+      const exportZoom = map.getZoom();
+      const exportLat = map.getCenter().lat;
+
+      // Componer la captura a mano: tiles + canvas vectorial, cada uno en su
+      // posición real (getBoundingClientRect). html2canvas quedaba fuera: no
+      // rasteriza los tiles cross-origin (mapa gris) y malinterpreta los
+      // transforms de los panes de Leaflet (predios corridos a una esquina).
+      const canvas = document.createElement('canvas');
+      canvas.width = mapWidthPx;
+      canvas.height = mapHeightPx;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('No se pudo crear el canvas de captura');
+      ctx.fillStyle = '#dddddd'; // fondo por si falta algún tile
+      ctx.fillRect(0, 0, mapWidthPx, mapHeightPx);
+
+      // Forzar el pintado síncrono del renderer vectorial: L.canvas dibuja vía
+      // requestAnimationFrame y el navegador lo pausa si la pestaña está en
+      // segundo plano — sin esto los predios pueden salir en blanco
+      (vectorRenderer as any)._redraw?.();
+
+      const mapRect = mapDiv.getBoundingClientRect();
+      const drawElement = (el: HTMLImageElement | HTMLCanvasElement) => {
+        const r = el.getBoundingClientRect();
+        try {
+          ctx.drawImage(el, r.left - mapRect.left, r.top - mapRect.top, r.width, r.height);
+        } catch {
+          // un tile roto no debe tumbar toda la exportación
+        }
+      };
+
+      mapDiv
+        .querySelectorAll<HTMLImageElement>('.leaflet-tile-pane img.leaflet-tile-loaded')
+        .forEach((img) => {
+          if (img.complete && img.naturalWidth > 0) drawElement(img);
+        });
+      mapDiv
+        .querySelectorAll<HTMLCanvasElement>('.leaflet-overlay-pane canvas')
+        .forEach(drawElement);
 
       const mapImgBase64 = canvas.toDataURL('image/jpeg', 0.93);
 
@@ -990,6 +1040,9 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       const mapW = (width - margin * 2) * 0.72;
       const mapH = height - mapY - margin - (formato === 'A3' ? 18 : 32); // Deja espacio para membrete inferior
 
+      // Escala gráfica calculada sobre el mapa exportado (no el de pantalla)
+      const escalaPdf = calcularEscalaGrafica(exportLat, exportZoom, mapWidthPx, mapW);
+
       doc.addImage(mapImgBase64, 'JPEG', mapX, mapY, mapW, mapH);
       doc.setDrawColor(203, 213, 225); // slate-300
       doc.rect(mapX, mapY, mapW, mapH, 'S');
@@ -1012,7 +1065,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.rect(margin, footerY, width - margin * 2, footerH, 'S');
 
       // Barra de escala calculada
-      const escWidthMm = escalaInfo.anchoMm;
+      const escWidthMm = escalaPdf.anchoMm;
       const scaleX = margin + (formato === 'A3' ? 4 : 8);
       const scaleY = footerY + (formato === 'A3' ? 5 : 9);
 
@@ -1028,7 +1081,7 @@ export default function MapPrintComposerPage({ fichas, loading }: Props) {
       doc.setFont('Helvetica', 'bold');
       doc.setFontSize(formato === 'A3' ? 7 : 11);
       doc.setTextColor(15, 23, 42);
-      doc.text(escalaInfo.label, scaleX + escWidthMm + 2, scaleY);
+      doc.text(escalaPdf.label, scaleX + escWidthMm + 2, scaleY);
 
       // Proyección SRC (Centrado dinámicamente en el papel)
       doc.setFont('Helvetica', 'normal');
