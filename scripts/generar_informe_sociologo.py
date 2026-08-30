@@ -456,6 +456,151 @@ def verificar(comunidades, sup, caudal, fichas):
     return avisos
 
 
+# ─── Mapas por sector (dibujados desde las capas publicadas) ─────────────────
+# Decisión de JAVIKO (29-ago-2026): los mapas se GENERAN desde
+# comunidades.geojson, no se capturan de la web — una captura manual se
+# desactualiza en silencio con cada sincronización y trae la interfaz encima.
+# Cuatro mapas en total (uno general + uno por sector), incrustados solo en el
+# HTML (el conversor a Word no maneja imágenes). La numeración de las
+# etiquetas es la del listado oficial, la misma de los cuadros.
+
+COLOR_SECTOR = {'Sector 1': '#2e7d4f', 'Sector 2': '#1e4d8c',
+                'Sector 3': '#e0a800'}
+# fondos suaves para distinguir comunidades vecinas dentro de un sector
+PALETA_COM = ['#bfe3cc', '#c7d9f2', '#f6dcb5', '#dcc9e8', '#f2c9c9',
+              '#cde8e4', '#e6e2b8', '#d9d2c2']
+
+
+def _anillos(geom):
+    """Anillos exteriores de un (Multi)Polygon GeoJSON, como listas [x, y]."""
+    if geom['type'] == 'Polygon':
+        return [geom['coordinates'][0]]
+    return [p[0] for p in geom['coordinates']]
+
+
+def _centro_etiqueta(anillos):
+    """Punto para la etiqueta: promedio de vértices del anillo más grande
+    (suficiente para estos polígonos; no hace falta un centroide exacto)."""
+    mayor = max(anillos, key=len)
+    xs = [p[0] for p in mayor]
+    ys = [p[1] for p in mayor]
+    return sum(xs) / len(xs), sum(ys) / len(ys)
+
+
+def generar_mapas(catalogo):
+    """PNG en base64 por mapa: {'general': ..., 'Sector 1': ..., ...}.
+    Dibuja en grados WGS84: a esta latitud (~0°) el grado es prácticamente
+    cuadrado, así que el aspecto 1:1 no deforma y la escala es 1° ≈ 111,3 km."""
+    import base64
+    import io
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import matplotlib.patheffects as pe
+
+    with open(os.path.join(GEO, 'comunidades.geojson'), encoding='utf-8') as f:
+        capa = json.load(f)['features']
+
+    cat_por_key = {c['key']: c for c in catalogo}
+    comunidades = []
+    for feat in capa:
+        key = canonica(feat['properties'].get('comunidad') or '')
+        c = cat_por_key.get(key)
+        if not c:
+            print(f'⚠ Mapa: comunidad de la capa sin catálogo: {key}')
+            continue
+        anillos = _anillos(feat['geometry'])
+        comunidades.append({'n': c['n'], 'sector': c['sector'],
+                            'oficial': c['oficial'], 'anillos': anillos,
+                            'centro': _centro_etiqueta(anillos)})
+
+    xs = [p[0] for c in comunidades for a in c['anillos'] for p in a]
+    ys = [p[1] for c in comunidades for a in c['anillos'] for p in a]
+    margen = 0.008
+    limites = (min(xs) - margen, max(xs) + margen,
+               min(ys) - margen, max(ys) + margen)
+
+    def dibujar(nombre_sector):
+        con_leyenda = nombre_sector is not None
+        fig, ax = plt.subplots(figsize=(7.4, 6.4), dpi=150)
+        if con_leyenda:
+            fig.subplots_adjust(left=0.01, right=0.70, top=0.99, bottom=0.01)
+        else:
+            fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01)
+
+        destacadas = [c for c in comunidades
+                      if nombre_sector is None or c['sector'] == nombre_sector]
+        for c in comunidades:
+            es = c in destacadas
+            if nombre_sector is None:
+                relleno = COLOR_SECTOR[c['sector']]
+                alfa = 0.45
+            elif es:
+                relleno = PALETA_COM[(c['n'] - 1) % len(PALETA_COM)]
+                alfa = 1.0
+            else:
+                relleno, alfa = '#eef2f7', 1.0
+            for a in c['anillos']:
+                ax.fill([p[0] for p in a], [p[1] for p in a],
+                        facecolor=relleno, alpha=alfa,
+                        edgecolor='#4a6a8a' if es else '#b8c4d4',
+                        linewidth=0.7 if es else 0.4, zorder=2 if es else 1)
+        for c in destacadas:
+            ax.annotate(str(c['n']), c['centro'], ha='center', va='center',
+                        fontsize=7.5, fontweight='bold', color='#24405e',
+                        zorder=3,
+                        path_effects=[pe.withStroke(linewidth=2.2,
+                                                    foreground='white')])
+
+        # barra de escala de 2 km y norte
+        x0, x1, y0, y1 = limites
+        km2 = 2.0 / 111.32
+        bx, by = x0 + (x1 - x0) * 0.04, y0 + (y1 - y0) * 0.04
+        ax.plot([bx, bx + km2], [by, by], color='#24405e', linewidth=2.5)
+        ax.annotate('2 km', (bx + km2 / 2, by + (y1 - y0) * 0.012),
+                    ha='center', fontsize=7, color='#24405e')
+        ax.annotate('N', (x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.10),
+                    ha='center', fontsize=9, fontweight='bold', color='#24405e')
+        ax.annotate('', xy=(x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.035),
+                    xytext=(x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.085),
+                    arrowprops=dict(arrowstyle='-|>', color='#24405e'))
+
+        if con_leyenda:
+            filas = sorted(destacadas, key=lambda c: c['n'])
+            fig.text(0.72, 0.97, nombre_sector, fontsize=9,
+                     fontweight='bold', color='#1e4d8c', va='top')
+            for i, c in enumerate(filas):
+                fig.text(0.72, 0.93 - i * 0.038, f"{c['n']}. {c['oficial']}",
+                         fontsize=7, color='#1a1a1a', va='top')
+        else:
+            for i, (sec, col) in enumerate(COLOR_SECTOR.items()):
+                fig.text(0.03 + i * 0.16, 0.965, '■', color=col,
+                         fontsize=10)
+                fig.text(0.05 + i * 0.16, 0.965, sec, fontsize=8,
+                         color='#1a1a1a')
+
+        ax.set_xlim(x0, x1)
+        ax.set_ylim(y0, y1)
+        ax.set_aspect('equal')
+        ax.axis('off')
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png', dpi=150)
+        plt.close(fig)
+        return base64.b64encode(buf.getvalue()).decode('ascii')
+
+    mapas = {'general': dibujar(None)}
+    for sec in ('Sector 1', 'Sector 2', 'Sector 3'):
+        mapas[sec] = dibujar(sec)
+    return mapas
+
+
+def figura_mapa(b64, pie):
+    return ('<div class="evitar-corte" style="margin:14px 0">'
+            f'<img src="data:image/png;base64,{b64}" alt="{pie}" '
+            'style="width:100%;border:1px solid #dbe3ee;border-radius:7px">'
+            f'<p class="sub" style="margin-top:4px">{pie}</p></div>')
+
+
 def barra_pct(p):
     """Barra de porcentaje con la cifra FUERA de la barra. El componente de la
     casa (informe_estilo.barra) pone la cifra sobre la barra y solo la pasa a
@@ -968,11 +1113,18 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
          'caudal del sistema'),
     ]))
 
+    mapas = generar_mapas(comunidades)
+
     H.append('<h2>Presentación</h2>')
     M += ['## Presentación', '']
     for p in introduccion_general(sup, caudal, corte_txt):
         H.append(f'<p>{p}</p>')
         M += [p, '']
+    H.append(figura_mapa(
+        mapas['general'],
+        'Las 50 comunidades del sistema, coloreadas por sector de '
+        'investigación. Límites por agregación de los predios investigados '
+        '(comunidades.geojson); mapa generado junto con el documento.'))
 
     for sec in sectores:
         coms = [c for c in comunidades if c['sector'] == sec]
@@ -988,6 +1140,11 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
              'superficie declarada'),
             (f1(q_sec) + ' l/s', 'caudal de sus comunidades'),
         ]))
+        H.append(figura_mapa(
+            mapas[sec],
+            f'Ubicación de las comunidades del {sec}. La numeración es la '
+            'del listado oficial del consorcio, la misma de los cuadros; el '
+            'resto del sistema queda en gris.'))
         for p in narrativa_sector(sec, coms, sec_sup):
             H.append(f'<p>{p}</p>')
             M += [p, '']
