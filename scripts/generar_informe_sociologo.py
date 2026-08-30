@@ -487,10 +487,92 @@ def _centro_etiqueta(anillos):
     return sum(xs) / len(xs), sum(ys) / len(ys)
 
 
-def generar_mapas(catalogo):
-    """PNG en base64 por mapa: {'general': ..., 'Sector 1': ..., ...}.
-    Dibuja en grados WGS84: a esta latitud (~0°) el grado es prácticamente
-    cuadrado, así que el aspecto 1:1 no deforma y la escala es 1° ≈ 111,3 km."""
+def _mercator(lon, lat):
+    """WGS84 → Web Mercator (EPSG:3857), el sistema de los mosaicos. A la
+    latitud del proyecto (~0°) el metro Mercator coincide con el real, así
+    que la barra de escala sigue siendo válida."""
+    import math
+    R = 6378137.0
+    return (math.radians(lon) * R,
+            math.log(math.tan(math.pi / 4 + math.radians(lat) / 2)) * R)
+
+
+def descargar_base_satelital(limites, ancho_px=2400):
+    """Mosaico satelital de Esri World Imagery para la extensión del sistema
+    (la misma base del mapa web del proyecto). Se descarga UNA vez y se
+    reutiliza en los cuatro mapas. Si no hay red, se avisa y los mapas salen
+    sobre fondo blanco — el documento nunca deja de generarse por esto.
+    Devuelve (imagen PIL, extensión mercator (x0, x1, y0, y1)) o (None, None).
+    """
+    import io as _io
+    import math
+    import urllib.request
+    from concurrent.futures import ThreadPoolExecutor
+    try:
+        from PIL import Image
+    except ImportError:
+        print('⚠ Mapas sin base satelital: falta Pillow')
+        return None, None
+
+    x0, x1, y0, y1 = limites
+    for z in range(10, 17):
+        tx0 = int((x0 + 180) / 360 * 2 ** z)
+        tx1 = int((x1 + 180) / 360 * 2 ** z)
+        if (tx1 - tx0 + 1) * 256 >= ancho_px:
+            break
+
+    def fila(lat):
+        lr = math.radians(lat)
+        return int((1 - math.log(math.tan(lr) + 1 / math.cos(lr)) / math.pi)
+                   / 2 * 2 ** z)
+
+    ty0, ty1 = fila(y1), fila(y0)  # el norte es la fila menor
+    tiles = [(tx, ty) for ty in range(ty0, ty1 + 1)
+             for tx in range(tx0, tx1 + 1)]
+    mosaico = Image.new('RGB', ((tx1 - tx0 + 1) * 256, (ty1 - ty0 + 1) * 256),
+                        (238, 242, 247))
+
+    def traer(t):
+        tx, ty = t
+        url = ('https://server.arcgisonline.com/ArcGIS/rest/services/'
+               f'World_Imagery/MapServer/tile/{z}/{ty}/{tx}')
+        req = urllib.request.Request(url, headers={'User-Agent': 'padron-app'})
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                img = Image.open(_io.BytesIO(r.read())).convert('RGB')
+            mosaico.paste(img, ((tx - tx0) * 256, (ty - ty0) * 256))
+            return True
+        except Exception:
+            return False
+
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        ok = sum(ex.map(traer, tiles))
+    if ok < len(tiles) * 0.7:
+        print(f'⚠ Base satelital incompleta ({ok}/{len(tiles)} mosaicos): '
+              'los mapas salen sobre fondo blanco')
+        return None, None
+
+    R = 6378137.0
+    mundo = 2 * math.pi * R
+    ext = (tx0 / 2 ** z * mundo - mundo / 2,
+           (tx1 + 1) / 2 ** z * mundo - mundo / 2,
+           mundo / 2 - (ty1 + 1) / 2 ** z * mundo,
+           mundo / 2 - ty0 / 2 ** z * mundo)
+    print(f'✔ Base satelital Esri: {ok}/{len(tiles)} mosaicos (zoom {z})')
+    return mosaico, ext
+
+
+def generar_mapas(catalogo, pdf_ruta=None):
+    """Imagen en base64 por mapa: {'general': ..., 'Sector 1': ..., ...}.
+    Con `pdf_ruta`, además escribe las mismas cuatro láminas en un PDF (una
+    por página, texto vectorial): el anexo cartográfico. Se generan aquí y no
+    con el Diseñador de Impresión de la web porque su exportación a PDF está
+    rota al 29-ago-2026 (mapa gris sin base y extensión mal compuesta).
+    Se dibuja en Web Mercator sobre el mosaico satelital de Esri (la misma
+    base del mapa web del proyecto, decisión de JAVIKO del 29-ago-2026);
+    sin red, los mapas salen sobre fondo blanco y el documento no se detiene.
+    Los cuatro mapas comparten extensión, para que siempre se vea dónde cae
+    cada sector dentro del sistema."""
     import base64
     import io
     import matplotlib
@@ -509,61 +591,84 @@ def generar_mapas(catalogo):
         if not c:
             print(f'⚠ Mapa: comunidad de la capa sin catálogo: {key}')
             continue
-        anillos = _anillos(feat['geometry'])
+        anillos = [[_mercator(*p) for p in a]
+                   for a in _anillos(feat['geometry'])]
         comunidades.append({'n': c['n'], 'sector': c['sector'],
                             'oficial': c['oficial'], 'anillos': anillos,
                             'centro': _centro_etiqueta(anillos)})
 
-    xs = [p[0] for c in comunidades for a in c['anillos'] for p in a]
-    ys = [p[1] for c in comunidades for a in c['anillos'] for p in a]
-    margen = 0.008
+    # extensión: en grados para pedir mosaicos, en mercator para dibujar
+    todos = [p for c in comunidades for a in c['anillos'] for p in a]
+    xs, ys = [p[0] for p in todos], [p[1] for p in todos]
+    margen = 900  # metros
     limites = (min(xs) - margen, max(xs) + margen,
                min(ys) - margen, max(ys) + margen)
+    import math
+    R = 6378137.0
+    grados = (math.degrees(limites[0] / R), math.degrees(limites[1] / R),
+              math.degrees(2 * math.atan(math.exp(limites[2] / R)) - math.pi / 2),
+              math.degrees(2 * math.atan(math.exp(limites[3] / R)) - math.pi / 2))
+    base, base_ext = descargar_base_satelital(grados)
 
-    def dibujar(nombre_sector):
+    halo = [pe.withStroke(linewidth=2.4, foreground='white')]
+    halo_blanco = [pe.withStroke(linewidth=2.2, foreground='#1a1a1a')]
+
+    def dibujar(nombre_sector, pdf=None):
         con_leyenda = nombre_sector is not None
         fig, ax = plt.subplots(figsize=(7.4, 6.4), dpi=150)
-        if con_leyenda:
-            fig.subplots_adjust(left=0.01, right=0.70, top=0.99, bottom=0.01)
-        else:
-            fig.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01)
+        fig.subplots_adjust(left=0.01, right=0.70 if con_leyenda else 0.99,
+                            top=0.99, bottom=0.01)
+        if base is not None:
+            ax.imshow(base, extent=(base_ext[0], base_ext[1],
+                                    base_ext[2], base_ext[3]),
+                      interpolation='bilinear', zorder=0)
 
         destacadas = [c for c in comunidades
                       if nombre_sector is None or c['sector'] == nombre_sector]
         for c in comunidades:
             es = c in destacadas
             if nombre_sector is None:
-                relleno = COLOR_SECTOR[c['sector']]
-                alfa = 0.45
+                relleno, alfa = COLOR_SECTOR[c['sector']], 0.5
             elif es:
                 relleno = PALETA_COM[(c['n'] - 1) % len(PALETA_COM)]
-                alfa = 1.0
+                alfa = 0.55
             else:
-                relleno, alfa = '#eef2f7', 1.0
+                # el resto del sistema, atenuado sobre el satélite
+                relleno, alfa = '#ffffff', 0.4 if base is not None else 1.0
             for a in c['anillos']:
                 ax.fill([p[0] for p in a], [p[1] for p in a],
                         facecolor=relleno, alpha=alfa,
-                        edgecolor='#4a6a8a' if es else '#b8c4d4',
-                        linewidth=0.7 if es else 0.4, zorder=2 if es else 1)
+                        edgecolor='#24405e' if es else '#8896a8',
+                        linewidth=0.7 if es else 0.3, zorder=2 if es else 1)
         for c in destacadas:
             ax.annotate(str(c['n']), c['centro'], ha='center', va='center',
                         fontsize=7.5, fontweight='bold', color='#24405e',
-                        zorder=3,
-                        path_effects=[pe.withStroke(linewidth=2.2,
-                                                    foreground='white')])
+                        zorder=3, path_effects=halo)
 
-        # barra de escala de 2 km y norte
+        # barra de escala de 2 km, norte y crédito de la base
         x0, x1, y0, y1 = limites
-        km2 = 2.0 / 111.32
-        bx, by = x0 + (x1 - x0) * 0.04, y0 + (y1 - y0) * 0.04
-        ax.plot([bx, bx + km2], [by, by], color='#24405e', linewidth=2.5)
-        ax.annotate('2 km', (bx + km2 / 2, by + (y1 - y0) * 0.012),
-                    ha='center', fontsize=7, color='#24405e')
-        ax.annotate('N', (x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.10),
-                    ha='center', fontsize=9, fontweight='bold', color='#24405e')
-        ax.annotate('', xy=(x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.035),
-                    xytext=(x1 - (x1 - x0) * 0.05, y1 - (y1 - y0) * 0.085),
-                    arrowprops=dict(arrowstyle='-|>', color='#24405e'))
+        bx, by = x0 + (x1 - x0) * 0.04, y0 + (y1 - y0) * 0.045
+        ax.plot([bx, bx + 2000], [by, by], color='white' if base is not None
+                else '#24405e', linewidth=2.5, zorder=4,
+                path_effects=halo_blanco if base is not None else [])
+        ax.annotate('2 km', (bx + 1000, by + (y1 - y0) * 0.014), ha='center',
+                    fontsize=7, fontweight='bold', zorder=4,
+                    color='white' if base is not None else '#24405e',
+                    path_effects=halo_blanco if base is not None else [])
+        nx = x1 - (x1 - x0) * 0.05
+        ax.annotate('N', (nx, y1 - (y1 - y0) * 0.10), ha='center', fontsize=9,
+                    fontweight='bold', zorder=4,
+                    color='white' if base is not None else '#24405e',
+                    path_effects=halo_blanco if base is not None else [])
+        ax.annotate('', xy=(nx, y1 - (y1 - y0) * 0.035),
+                    xytext=(nx, y1 - (y1 - y0) * 0.085), zorder=4,
+                    arrowprops=dict(arrowstyle='-|>',
+                                    color='white' if base is not None
+                                    else '#24405e'))
+        if base is not None:
+            ax.annotate('Base: Esri World Imagery', (x1 - (x1 - x0) * 0.02,
+                        y0 + (y1 - y0) * 0.02), ha='right', fontsize=5.5,
+                        color='white', zorder=4, path_effects=halo_blanco)
 
         if con_leyenda:
             filas = sorted(destacadas, key=lambda c: c['n'])
@@ -574,8 +679,7 @@ def generar_mapas(catalogo):
                          fontsize=7, color='#1a1a1a', va='top')
         else:
             for i, (sec, col) in enumerate(COLOR_SECTOR.items()):
-                fig.text(0.03 + i * 0.16, 0.965, '■', color=col,
-                         fontsize=10)
+                fig.text(0.03 + i * 0.16, 0.965, '■', color=col, fontsize=10)
                 fig.text(0.05 + i * 0.16, 0.965, sec, fontsize=8,
                          color='#1a1a1a')
 
@@ -584,19 +688,32 @@ def generar_mapas(catalogo):
         ax.set_aspect('equal')
         ax.axis('off')
         buf = io.BytesIO()
-        fig.savefig(buf, format='png', dpi=150)
+        # JPEG: la foto satelital en PNG pesaría megas por mapa
+        fig.savefig(buf, format='jpg', dpi=200 if pdf is not None else 150,
+                    pil_kwargs={'quality': 87})
         plt.close(fig)
         return base64.b64encode(buf.getvalue()).decode('ascii')
 
-    mapas = {'general': dibujar(None)}
+    # el anexo se arma con Pillow desde los mismos JPEG: PdfPages de
+    # matplotlib incrusta el satélite sin comprimir y la salida pesa 12 MB
+    pdf = pdf_ruta is not None
+    mapas = {'general': dibujar(None, pdf)}
     for sec in ('Sector 1', 'Sector 2', 'Sector 3'):
-        mapas[sec] = dibujar(sec)
+        mapas[sec] = dibujar(sec, pdf)
+    if pdf:
+        from PIL import Image
+        paginas = [Image.open(io.BytesIO(base64.b64decode(mapas[k])))
+                   for k in ('general', 'Sector 1', 'Sector 2', 'Sector 3')]
+        paginas[0].save(pdf_ruta, save_all=True, append_images=paginas[1:],
+                        title='Anexo cartográfico — Informe por Comunidad',
+                        author=E.PIE_INSTITUCION)
+        print(f'✔ {os.path.relpath(pdf_ruta, BASE)}')
     return mapas
 
 
 def figura_mapa(b64, pie):
     return ('<div class="evitar-corte" style="margin:14px 0">'
-            f'<img src="data:image/png;base64,{b64}" alt="{pie}" '
+            f'<img src="data:image/jpeg;base64,{b64}" alt="{pie}" '
             'style="width:100%;border:1px solid #dbe3ee;border-radius:7px">'
             f'<p class="sub" style="margin-top:4px">{pie}</p></div>')
 
@@ -1113,7 +1230,10 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
          'caudal del sistema'),
     ]))
 
-    mapas = generar_mapas(comunidades)
+    mapas = generar_mapas(
+        comunidades,
+        pdf_ruta=None if solo_sector else
+        os.path.join(BASE, 'docs', 'ANEXO-MAPAS-sociologo.pdf'))
 
     H.append('<h2>Presentación</h2>')
     M += ['## Presentación', '']
@@ -1123,8 +1243,9 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
     H.append(figura_mapa(
         mapas['general'],
         'Las 50 comunidades del sistema, coloreadas por sector de '
-        'investigación. Límites por agregación de los predios investigados '
-        '(comunidades.geojson); mapa generado junto con el documento.'))
+        'investigación, sobre imagen satelital (Esri World Imagery). Límites '
+        'por agregación de los predios investigados (comunidades.geojson); '
+        'mapa generado junto con el documento.'))
 
     for sec in sectores:
         coms = [c for c in comunidades if c['sector'] == sec]
