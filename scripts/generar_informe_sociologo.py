@@ -1170,7 +1170,11 @@ def narrativa_sector(nombre, coms, sec_sup):
 
 # ─── Documento HTML y MD ─────────────────────────────────────────────────────
 
-def introduccion_general(sup, caudal, corte_txt):
+def fecha_es(d):
+    return f'{d.day} de {MESES[d.month - 1]} de {d.year}'
+
+
+def introduccion_general(sup, caudal, corte_txt, hoy_txt):
     tot = sup['total']
     q = caudal['totales']
     parrafos = [
@@ -1201,6 +1205,13 @@ def introduccion_general(sup, caudal, corte_txt):
         'duplicarían su respuesta. El respaldo ficha por ficha existe en el '
         'Excel catastral del proyecto; aquí no se publican listados '
         'nominales.',
+        # el corte tiene dos fechas y conviene decirlo: la última ficha de
+        # campo es del 5-ago, pero las cifras llevan la depuración posterior
+        f'Los datos de campo llegan hasta el {corte_txt}: desde esa fecha no '
+        'se ha incorporado ninguna ficha nueva al padrón. Las cifras de este '
+        'documento incorporan además las depuraciones de gabinete '
+        'posteriores (reparto de áreas, fusiones y correcciones de comunidad '
+        f'y de claves catastrales), vigentes al {hoy_txt}.',
     ]
     return parrafos
 
@@ -1217,9 +1228,14 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
     if solo_sector:
         subtitulo += f' · MUESTRA: Sector {solo_sector}'
 
+    import datetime
+    hoy_txt = fecha_es(datetime.date.today())
+    corte_linea = (f'Levantamiento de campo al {corte_txt} · cifras con la '
+                   f'depuración vigente al {hoy_txt}')
+
     H = [E.cabecera(titulo, subtitulo)]
     M = [f'# {titulo}', '', f'*{subtitulo}*', '',
-         f'*Corte de datos: {corte_txt}.*', '']
+         f'*{corte_linea}.*', '']
 
     total = sup['total']
     H.append(E.kpis([
@@ -1237,7 +1253,7 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
 
     H.append('<h2>Presentación</h2>')
     M += ['## Presentación', '']
-    for p in introduccion_general(sup, caudal, corte_txt):
+    for p in introduccion_general(sup, caudal, corte_txt, hoy_txt):
         H.append(f'<p>{p}</p>')
         M += [p, '']
     H.append(figura_mapa(
@@ -1273,9 +1289,9 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
             H.append(cu.html())
             M += [cu.md(), '']
 
-    H.append(E.pie(corte_txt))
+    H.append(E.pie(corte_linea.lower()))
     M += ['---', '',
-          f'*{E.PIE_INSTITUCION} · Corte: {corte_txt}. Documento generado '
+          f'*{E.PIE_INSTITUCION} · {corte_linea}. Documento generado '
           f'por scripts/generar_informe_sociologo.py; especificaciones del '
           f'cliente, 24-ago-2026.*', '']
 
