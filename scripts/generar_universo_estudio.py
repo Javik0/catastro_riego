@@ -108,10 +108,14 @@ def main():
     resto_ha = round(universo_ha - inv_ha_oficial, 2)
     universo_ha = round(inv_ha_oficial + resto_ha, 2)  # sin residuo de redondeo
 
-    # ── predios de principales y de adicionales (regla 14) ──
-    claves_inv = {str(f['properties'].get('clave_cata') or '').strip()
-                  for f in investigados}
-    claves_inv.discard('')
+    # ── predios de principales y de adicionales (regla 14), con sus áreas ──
+    area_por_clave = {}
+    for f in investigados:
+        clave = str(f['properties'].get('clave_cata') or '').strip()
+        if clave:
+            area_por_clave[clave] = (area_por_clave.get(clave, 0.0) +
+                                     (f['properties'].get('area_predi') or 0))
+    claves_inv = set(area_por_clave)
     pri, adi = set(), set()
     for p in fichas:
         clave = (str(p.get('clave_catastral') or '').strip() or
@@ -119,6 +123,15 @@ def main():
         if clave not in claves_inv:
             continue
         (adi if p.get('es_ficha_hija') == 1 else pri).add(clave)
+
+    # Área que ocupan: los (pocos) predios con ficha principal Y adicional se
+    # asignan a principales para que principales + adicionales = investigado
+    # EXACTO (pedido de JAVIKO, 31-ago-2026: «debe cuadrar con el total
+    # investigado de ha»). La suma de area_predi de catastro_geo coincide al
+    # centavo con la cifra oficial (verificado); adicionales sale por resta
+    # para que el redondeo no deje residuo.
+    area_pri = round(sum(area_por_clave[c] for c in pri) / 10000.0, 2)
+    area_adi = round(inv_ha_oficial - area_pri, 2)
 
     salida = {
         'generado_por': 'scripts/generar_universo_estudio.py',
@@ -131,7 +144,9 @@ def main():
         'investigado': {'predios': inv_n, 'area_ha': inv_ha_oficial,
                         'predios_de_principales': len(pri),
                         'predios_de_adicionales': len(adi),
-                        'predios_en_ambos': len(pri & adi)},
+                        'predios_en_ambos': len(pri & adi),
+                        'area_de_principales_ha': area_pri,
+                        'area_de_adicionales_ha': area_adi},
         'resto': {'predios': resto_n, 'area_ha': resto_ha},
         'verificacion': {'area_investigada_shoelace_ha':
                          round(inv_ha_shoelace, 2),
@@ -145,8 +160,9 @@ def main():
           f'{inv_ha_oficial:,.2f} + resto {resto_n:,} / {resto_ha:,.2f}')
     print(f'  medición propia de lo investigado: {inv_ha_shoelace:,.2f} ha '
           f'(desvío {desvio:.2f} % vs oficial)')
-    print(f'  predios de principales: {len(pri):,} · de adicionales: '
-          f'{len(adi):,} · en ambos: {len(pri & adi):,}')
+    print(f'  predios de principales: {len(pri):,} ({area_pri:,.2f} ha) · '
+          f'de adicionales: {len(adi):,} ({area_adi:,.2f} ha) · en ambos: '
+          f'{len(pri & adi):,} — cuadre: {area_pri + area_adi:,.2f} ha')
 
 
 if __name__ == '__main__':

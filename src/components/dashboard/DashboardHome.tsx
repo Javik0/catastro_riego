@@ -154,6 +154,8 @@ interface UniversoEstudio {
   investigado: {
     predios: number; area_ha: number;
     predios_de_principales: number; predios_de_adicionales: number;
+    /** Reparto que cuadra exacto: principales + adicionales = area_ha. */
+    area_de_principales_ha: number; area_de_adicionales_ha: number;
   };
   resto: { predios: number; area_ha: number };
 }
@@ -599,7 +601,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
           value={totalPrincipales}
           color="#3b82f6"
           sub={universo
-            ? `en ${universo.investigado.predios_de_principales.toLocaleString('es-EC')} predios principales`
+            ? `en ${universo.investigado.predios_de_principales.toLocaleString('es-EC')} predios principales · ocupan ${haFmt(universo.investigado.area_de_principales_ha)} ha`
             : `Total de fichas registradas en el catastro`}
         />
         {fichasHijas.length > 0 ? (
@@ -609,7 +611,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             value={fichasHijas.length}
             color="#06b6d4"
             sub={universo
-              ? `en ${universo.investigado.predios_de_adicionales.toLocaleString('es-EC')} predios adicionales`
+              ? `en ${universo.investigado.predios_de_adicionales.toLocaleString('es-EC')} predios adicionales · ocupan ${haFmt(universo.investigado.area_de_adicionales_ha)} ha`
                 + (hijasPendientes > 0 ? ` · ⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4` : '')
               : `⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4 · ✅ ${hijasCompletadas.toLocaleString('es-EC')} completadas`}
           />

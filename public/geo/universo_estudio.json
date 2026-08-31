@@ -10,7 +10,9 @@
   "area_ha": 8093.34,
   "predios_de_principales": 3709,
   "predios_de_adicionales": 2288,
-  "predios_en_ambos": 10
+  "predios_en_ambos": 10,
+  "area_de_principales_ha": 6331.3,
+  "area_de_adicionales_ha": 1762.04
  },
  "resto": {
   "predios": 18473,
