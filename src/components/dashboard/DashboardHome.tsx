@@ -633,17 +633,18 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             número fijo sin relación con el padrón) y el avance quedaba
             invisible. Se invierte: el titular es lo investigado, y el total
             del catastro pasa a ser el contexto de escala (19-ago-2026). */}
-        {/* El total del universo sale CALCULADO de universo_estudio.json
+        {/* El total del catastro sale CALCULADO de universo_estudio.json
             (el 24.452 fijo de firestoreService estaba viejo: el catastro
-            rural publicado trae 24.460). El resto en predios y hectáreas
-            va aquí, no en la card de superficie (Armando: allí sin predios). */}
+            rural publicado trae 24.460). El «restan N predios» se retiró y
+            «universo de estudio» pasó a «catastro rural municipal»
+            (JAVIKO, 31-ago-2026, revisando producción en vivo). */}
         <KPICard
           icon={MapIcon}
           label="Predios Investigados"
           value={superficie ? superficie.total.predios_catastrales : prediosInvestigadosFallback}
           color="#10b981"
           sub={universo
-            ? `de ${universo.universo.predios.toLocaleString('es-EC')} del universo de estudio · restan ${universo.resto.predios.toLocaleString('es-EC')} predios (${haFmt(universo.resto.area_ha)} ha)`
+            ? `de ${universo.universo.predios.toLocaleString('es-EC')} del catastro rural municipal`
             : superficie
               ? `de ${stats.totalPoligonos.toLocaleString('es-EC')} en el catastro rural`
               : 'Predios únicos con ficha levantada'}
@@ -652,8 +653,8 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             polígono del catastro). Lo declarado por los regantes NO se nombra
             aquí: es dato del análisis social y vive en su bloque, solo interno. */}
         {/* Sin número de predios en esta card (Armando, 30-ago-2026): solo
-            áreas, con el universo completo y el resto para que el total
-            cuadre a la vista: investigado + resto = universo. */}
+            áreas. El «resto: … ha · medición catastral» se borró y el total
+            se nombra «catastro rural municipal» (JAVIKO, 31-ago-2026). */}
         <KPICard
           icon={TrendingUp}
           label="Superficie del sistema"
@@ -662,7 +663,7 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             : `${areaTotalHa.toLocaleString('es-EC', { maximumFractionDigits: 2 })} ha`}
           color="#f59e0b"
           sub={universo
-            ? `de ${haFmt(universo.universo.area_ha)} ha del universo de estudio · resto: ${haFmt(universo.resto.area_ha)} ha · medición catastral`
+            ? `de ${haFmt(universo.universo.area_ha)} ha del catastro rural municipal`
             : superficie
               ? 'medición catastral'
               : `${Math.round(stats.areaTotal).toLocaleString('es-EC')} m² declarados`}
