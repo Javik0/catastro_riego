@@ -379,6 +379,18 @@ def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
     a['telefono'] = sum(1 for p in pri if lleno(p.get('telefono_celular')) or
                         lleno(p.get('telefono_casa')))
 
+    # Material de la vivienda y altitud: venían del capítulo «Servicios
+    # básicos y hábitat», integrado aquí el 31-ago-2026 para que todo lo que
+    # se mira por comunidad viva en un solo documento.
+    mat = Counter(str(p.get('material_construccion')).strip() for p in con_viv)
+    a['materiales'] = dict(mat)
+    a['mat_top'] = mat.most_common(2)
+    cotas = [num(p, 'cota_msnm') for p in pri if lleno(p.get('cota_msnm'))]
+    a['cota_n'] = len(cotas)
+    a['cota_min'] = min(cotas) if cotas else None
+    a['cota_med'] = st.median(cotas) if cotas else None
+    a['cota_max'] = max(cotas) if cotas else None
+
     presa = Counter(str(p.get('conoce_presa')).strip() for p in pri
                     if lleno(p.get('conoce_presa')))
     a['presa_n'] = sum(presa.values())
@@ -1168,6 +1180,47 @@ def cuadros_sector(coms, sec_sup, caudal):
          'son la respuesta correcta, no un dato faltante.'],
         barras=[2, 4, 6, 8]))
 
+    # C3b — material de la vivienda (del capítulo de servicios, integrado)
+    MATS = ['BLOQUE', 'HORMIGÓN ARMADO', 'TAPIA', 'LADRILLO', 'ADOBE',
+            'MIXTA', 'MADERA']
+    def otros_mat(c):
+        return sum(v for k, v in c['materiales'].items() if k not in MATS)
+    C.append(Cuadro(
+        'Material de la vivienda',
+        'De qué está construida la vivienda declarada, en número de fichas '
+        'por material. Describe el hábitat de las familias del sistema.',
+        ['Comunidad'] + [m.capitalize() for m in MATS] + ['Otros',
+                                                          'Con vivienda'],
+        [[et(c)] + [f0(c['materiales'].get(m, 0)) for m in MATS] +
+         [f0(otros_mat(c)), f0(c['con_vivienda'])] for c in coms],
+        ['Total del sector'] +
+        [f0(sum(c['materiales'].get(m, 0) for c in coms)) for m in MATS] +
+        [f0(sum(otros_mat(c) for c in coms)),
+         f0(sum(c['con_vivienda'] for c in coms))],
+        [NOTA_UNIV_PRI,
+         'Solo las fichas que declaran vivienda; los predios sin '
+         'construcción no aparecen en este cuadro.']))
+
+    # C3c — altitud de los predios (del capítulo de servicios, integrado)
+    C.append(Cuadro(
+        'Altitud de los predios',
+        'A qué altura sobre el nivel del mar están los predios de cada '
+        'comunidad. La altitud condiciona qué se puede sembrar y cómo llega '
+        'el agua, y es el dato de hábitat que ordena el sistema de arriba '
+        'hacia abajo.',
+        ['Comunidad', 'Mínima (m s. n. m.)', 'Mediana (m s. n. m.)',
+         'Máxima (m s. n. m.)', 'Fichas con dato'],
+        [[et(c),
+          f0(c['cota_min']) if c['cota_min'] is not None else '—',
+          f0(c['cota_med']) if c['cota_med'] is not None else '—',
+          f0(c['cota_max']) if c['cota_max'] is not None else '—',
+          f0(c['cota_n'])] for c in coms],
+        ['Total del sector',
+         f0(min(c['cota_min'] for c in coms if c['cota_min'] is not None)),
+         '', f0(max(c['cota_max'] for c in coms if c['cota_max'] is not None)),
+         f0(sum(c['cota_n'] for c in coms))],
+        [NOTA_UNIV_PRI]))
+
     # C4 — presa
     C.append(Cuadro(
         'Conocimiento de la presa',
@@ -1549,6 +1602,20 @@ def escribir_xlsx(comunidades, ruta):
                       'Telefono', 'Fichas principales'],
          [base(c) + [c['con_vivienda'], c['agua_consumo'], c['energia'],
                      c['telefono'], c['n_pri']] for c in comunidades])
+
+    hoja('Material de vivienda',
+         cols_base + ['Bloque', 'Hormigon armado', 'Tapia', 'Ladrillo',
+                      'Adobe', 'Mixta', 'Madera', 'Con vivienda'],
+         [base(c) + [c['materiales'].get(m, 0) for m in
+                     ('BLOQUE', 'HORMIGÓN ARMADO', 'TAPIA', 'LADRILLO',
+                      'ADOBE', 'MIXTA', 'MADERA')] + [c['con_vivienda']]
+          for c in comunidades])
+
+    hoja('Altitud',
+         cols_base + ['Cota minima', 'Cota mediana', 'Cota maxima',
+                      'Fichas con dato'],
+         [base(c) + [c['cota_min'], c['cota_med'], c['cota_max'], c['cota_n']]
+          for c in comunidades])
 
     hoja('Presa y capacitacion',
          cols_base + ['Conoce presa', 'Respuestas presa', 'Recibio capacitacion',

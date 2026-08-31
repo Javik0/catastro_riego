@@ -485,6 +485,76 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 *La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
 
 
+### Material de la vivienda
+
+De qué está construida la vivienda declarada, en número de fichas por material. Describe el hábitat de las familias del sistema.
+
+<!-- tabla-completa -->
+| Comunidad | Bloque | Hormigón armado | Tapia | Ladrillo | Adobe | Mixta | Madera | Otros | Con vivienda |
+|---|---|---|---|---|---|---|---|---|---|
+| 1. LARCACHACA | 50 | 7 | 0 | 4 | 0 | 17 | 3 | 4 | 85 |
+| 2. LA LIBERTAD | 51 | 8 | 2 | 3 | 0 | 2 | 5 | 10 | 81 |
+| 3. SAN ANTONIO | 45 | 14 | 5 | 2 | 2 | 7 | 0 | 0 | 75 |
+| 4. SAN JOSE | 65 | 5 | 6 | 1 | 3 | 0 | 0 | 0 | 80 |
+| 5. MILAGRO | 32 | 6 | 2 | 1 | 0 | 0 | 0 | 0 | 41 |
+| 6. CHAMBITOLA | 66 | 15 | 5 | 0 | 2 | 0 | 3 | 1 | 92 |
+| 7. LA CANDELARIA | 85 | 15 | 6 | 9 | 6 | 4 | 1 | 0 | 126 |
+| 8. CARRERA | 184 | 28 | 6 | 6 | 5 | 3 | 2 | 0 | 234 |
+| 9. COCHAPAMBA | 124 | 16 | 9 | 2 | 3 | 1 | 2 | 0 | 157 |
+| 10. JESUS DE GRAN PODER | 21 | 2 | 6 | 2 | 1 | 0 | 0 | 0 | 32 |
+| 11. AS. SANTA BARBARA | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 | 2 |
+| 12. ASO. POROTOG | 22 | 2 | 6 | 2 | 1 | 0 | 1 | 0 | 34 |
+| 13. COMUNA POROTOG | 27 | 4 | 11 | 9 | 7 | 5 | 0 | 0 | 63 |
+| 14. ASO. 17 DE JUNIO | 14 | 1 | 2 | 2 | 0 | 1 | 2 | 0 | 22 |
+| 15. ELIOT AVELLANEDA | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 1 |
+| 16. CORDILLERA LOS ANDES | 24 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 32 |
+| 17. COMUNA JURIDICA IZACATA | 30 | 5 | 0 | 0 | 2 | 3 | 1 | 1 | 42 |
+| 18. IZACATA GRANDE | 18 | 2 | 1 | 4 | 2 | 0 | 0 | 0 | 27 |
+| 19. LOS ANDES IZACTA | 23 | 0 | 0 | 4 | 1 | 1 | 0 | 0 | 29 |
+| 20. ASO. LOMA GORDA | 31 | 1 | 1 | 0 | 0 | 0 | 2 | 0 | 35 |
+| 21. ASO. SAN JACINTO | 3 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 3 |
+| 22. MATIAS IMBAGO | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Total del sector** | **915** | **139** | **68** | **54** | **35** | **44** | **22** | **16** | **1,293** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*Solo las fichas que declaran vivienda; los predios sin construcción no aparecen en este cuadro.*
+
+
+### Altitud de los predios
+
+A qué altura sobre el nivel del mar están los predios de cada comunidad. La altitud condiciona qué se puede sembrar y cómo llega el agua, y es el dato de hábitat que ordena el sistema de arriba hacia abajo.
+
+<!-- tabla-completa -->
+| Comunidad | Mínima (m s. n. m.) | Mediana (m s. n. m.) | Máxima (m s. n. m.) | Fichas con dato |
+|---|---|---|---|---|
+| 1. LARCACHACA | 3,400 | 3,520 | 3,600 | 149 |
+| 2. LA LIBERTAD | 3,185 | 3,395 | 3,740 | 118 |
+| 3. SAN ANTONIO | 3,275 | 3,405 | 3,665 | 100 |
+| 4. SAN JOSE | 3,355 | 3,400 | 3,740 | 110 |
+| 5. MILAGRO | 3,325 | 3,365 | 3,550 | 46 |
+| 6. CHAMBITOLA | 3,355 | 3,440 | 3,650 | 116 |
+| 7. LA CANDELARIA | 3,135 | 3,315 | 3,660 | 171 |
+| 8. CARRERA | 2,935 | 3,260 | 3,720 | 291 |
+| 9. COCHAPAMBA | 2,735 | 3,525 | 3,785 | 239 |
+| 10. JESUS DE GRAN PODER | 3,390 | 3,480 | 3,760 | 45 |
+| 11. AS. SANTA BARBARA | 3,425 | 3,570 | 3,575 | 7 |
+| 12. ASO. POROTOG | 3,245 | 3,365 | 3,410 | 43 |
+| 13. COMUNA POROTOG | 2,825 | 3,125 | 3,480 | 79 |
+| 14. ASO. 17 DE JUNIO | 3,425 | 3,475 | 3,545 | 28 |
+| 15. ELIOT AVELLANEDA | 3,490 | 3,490 | 3,490 | 1 |
+| 16. CORDILLERA LOS ANDES | 3,480 | 3,490 | 3,535 | 39 |
+| 17. COMUNA JURIDICA IZACATA | 3,365 | 3,512 | 3,870 | 66 |
+| 18. IZACATA GRANDE | 3,415 | 3,470 | 3,820 | 42 |
+| 19. LOS ANDES IZACTA | 3,490 | 3,530 | 3,860 | 49 |
+| 20. ASO. LOMA GORDA | 3,375 | 3,500 | 3,645 | 44 |
+| 21. ASO. SAN JACINTO | 3,550 | 3,555 | 3,560 | 6 |
+| 22. MATIAS IMBAGO | 3,210 | 3,210 | 3,210 | 1 |
+| **Total del sector** | **2,735** | **** | **3,870** | **1,790** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+
 ### Conocimiento de la presa
 
 Si el titular entrevistado sabe de la construcción de la presa del proyecto.
@@ -913,6 +983,58 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 *La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
 
 
+### Material de la vivienda
+
+De qué está construida la vivienda declarada, en número de fichas por material. Describe el hábitat de las familias del sistema.
+
+<!-- tabla-completa -->
+| Comunidad | Bloque | Hormigón armado | Tapia | Ladrillo | Adobe | Mixta | Madera | Otros | Con vivienda |
+|---|---|---|---|---|---|---|---|---|---|
+| 23. CUARTO LOTE | 31 | 8 | 0 | 0 | 0 | 0 | 0 | 0 | 39 |
+| 24. ASO. SAN VICENTE BAJO | 59 | 4 | 6 | 2 | 1 | 0 | 1 | 0 | 73 |
+| 25. STA. ROSA DE PACCHA | 33 | 4 | 3 | 4 | 1 | 0 | 0 | 0 | 45 |
+| 26. ASO. SAN VICENTE ALTO | 32 | 6 | 4 | 2 | 7 | 0 | 0 | 0 | 51 |
+| 27. PUCARA | 108 | 11 | 8 | 3 | 5 | 1 | 0 | 0 | 136 |
+| 28. ASO. SAN PEDRO | 15 | 3 | 0 | 0 | 0 | 0 | 0 | 1 | 19 |
+| 29. PITANA ALTO | 69 | 13 | 7 | 1 | 3 | 0 | 0 | 0 | 93 |
+| 30. ALPAKA | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| 31. ASO. PITANA BAJO | 39 | 4 | 0 | 0 | 0 | 0 | 0 | 0 | 43 |
+| 32. PRO MEJORAS PITANA BAJO | 78 | 26 | 0 | 4 | 0 | 0 | 4 | 0 | 112 |
+| 33. STA. ROSA DE PINGULMI | 55 | 8 | 2 | 4 | 1 | 3 | 1 | 0 | 74 |
+| 34. STA. MARIANITA DE PINGULMI | 105 | 24 | 0 | 12 | 1 | 14 | 0 | 1 | 157 |
+| 35. PAMBAMARCA | 46 | 2 | 3 | 1 | 1 | 1 | 1 | 0 | 55 |
+| **Total del sector** | **670** | **113** | **33** | **33** | **20** | **19** | **7** | **2** | **897** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*Solo las fichas que declaran vivienda; los predios sin construcción no aparecen en este cuadro.*
+
+
+### Altitud de los predios
+
+A qué altura sobre el nivel del mar están los predios de cada comunidad. La altitud condiciona qué se puede sembrar y cómo llega el agua, y es el dato de hábitat que ordena el sistema de arriba hacia abajo.
+
+<!-- tabla-completa -->
+| Comunidad | Mínima (m s. n. m.) | Mediana (m s. n. m.) | Máxima (m s. n. m.) | Fichas con dato |
+|---|---|---|---|---|
+| 23. CUARTO LOTE | 3,325 | 3,550 | 3,720 | 47 |
+| 24. ASO. SAN VICENTE BAJO | 3,280 | 3,375 | 3,490 | 108 |
+| 25. STA. ROSA DE PACCHA | 3,420 | 3,495 | 3,735 | 56 |
+| 26. ASO. SAN VICENTE ALTO | 3,270 | 3,395 | 3,485 | 68 |
+| 27. PUCARA | 3,300 | 3,448 | 3,705 | 198 |
+| 28. ASO. SAN PEDRO | 3,145 | 3,275 | 3,380 | 33 |
+| 29. PITANA ALTO | 2,875 | 3,235 | 3,645 | 117 |
+| 30. ALPAKA | 2,970 | 3,510 | 3,510 | 492 |
+| 31. ASO. PITANA BAJO | 2,830 | 3,250 | 3,410 | 60 |
+| 32. PRO MEJORAS PITANA BAJO | 2,795 | 2,955 | 3,160 | 158 |
+| 33. STA. ROSA DE PINGULMI | 2,700 | 2,755 | 2,835 | 86 |
+| 34. STA. MARIANITA DE PINGULMI | 2,655 | 2,718 | 2,920 | 208 |
+| 35. PAMBAMARCA | 2,855 | 3,540 | 3,750 | 97 |
+| **Total del sector** | **2,655** | **** | **3,750** | **1,728** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+
 ### Conocimiento de la presa
 
 Si el titular entrevistado sabe de la construcción de la presa del proyecto.
@@ -1337,6 +1459,62 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 *La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
+
+
+### Material de la vivienda
+
+De qué está construida la vivienda declarada, en número de fichas por material. Describe el hábitat de las familias del sistema.
+
+<!-- tabla-completa -->
+| Comunidad | Bloque | Hormigón armado | Tapia | Ladrillo | Adobe | Mixta | Madera | Otros | Con vivienda |
+|---|---|---|---|---|---|---|---|---|---|
+| 36. OTONCITO | 30 | 15 | 2 | 2 | 3 | 2 | 0 | 0 | 54 |
+| 37. PAMBAMARQUITO | 45 | 3 | 3 | 1 | 6 | 0 | 0 | 0 | 58 |
+| 38. HERNAN TIMPE | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 1 |
+| 39. HDA. SAN FRANCISCO | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 40. MONTESERRIN ALTO | 6 | 1 | 0 | 0 | 2 | 2 | 1 | 0 | 12 |
+| 41. CHAUPIESTANCIA | 71 | 2 | 2 | 2 | 1 | 1 | 0 | 1 | 80 |
+| 42. PUEBLO DE OTON | 67 | 26 | 3 | 9 | 4 | 1 | 1 | 0 | 111 |
+| 43. CANGAHUAPUNGO | 63 | 31 | 2 | 3 | 4 | 1 | 0 | 1 | 105 |
+| 44. CHINCHIN LOMA | 43 | 3 | 2 | 13 | 1 | 2 | 0 | 0 | 64 |
+| 45. ASO. ROSALIA | 18 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 22 |
+| 46. SR. COLOMA MONT. BAJO | 1 | 0 | 3 | 0 | 0 | 0 | 0 | 0 | 4 |
+| 47. HDA. GUANGULQUI | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 |
+| 48. PUEBLO DE ASCAZUBI | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 0 | 2 |
+| 49. ASO. EL MANZANO | 5 | 2 | 3 | 0 | 2 | 1 | 1 | 0 | 14 |
+| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 9 | 1 | 4 | 7 | 4 | 2 | 1 | 0 | 28 |
+| **Total del sector** | **359** | **86** | **26** | **38** | **27** | **14** | **4** | **3** | **557** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*Solo las fichas que declaran vivienda; los predios sin construcción no aparecen en este cuadro.*
+
+
+### Altitud de los predios
+
+A qué altura sobre el nivel del mar están los predios de cada comunidad. La altitud condiciona qué se puede sembrar y cómo llega el agua, y es el dato de hábitat que ordena el sistema de arriba hacia abajo.
+
+<!-- tabla-completa -->
+| Comunidad | Mínima (m s. n. m.) | Mediana (m s. n. m.) | Máxima (m s. n. m.) | Fichas con dato |
+|---|---|---|---|---|
+| 36. OTONCITO | 2,680 | 2,792 | 3,050 | 78 |
+| 37. PAMBAMARQUITO | 2,800 | 3,065 | 3,170 | 66 |
+| 38. HERNAN TIMPE | 3,210 | 3,210 | 3,210 | 1 |
+| 39. HDA. SAN FRANCISCO | 3,245 | 3,245 | 3,245 | 1 |
+| 40. MONTESERRIN ALTO | 2,810 | 3,282 | 3,480 | 28 |
+| 41. CHAUPIESTANCIA | 2,770 | 3,035 | 3,220 | 139 |
+| 42. PUEBLO DE OTON | 2,535 | 2,735 | 3,270 | 153 |
+| 43. CANGAHUAPUNGO | 2,895 | 2,990 | 3,350 | 131 |
+| 44. CHINCHIN LOMA | 2,575 | 2,760 | 3,105 | 88 |
+| 45. ASO. ROSALIA | 2,635 | 2,695 | 2,870 | 39 |
+| 46. SR. COLOMA MONT. BAJO | 3,205 | 3,205 | 3,580 | 4 |
+| 47. HDA. GUANGULQUI | 2,800 | 2,800 | 2,800 | 1 |
+| 48. PUEBLO DE ASCAZUBI | 2,705 | 2,818 | 2,930 | 2 |
+| 49. ASO. EL MANZANO | 2,850 | 2,925 | 3,180 | 18 |
+| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 2,645 | 2,778 | 2,895 | 40 |
+| **Total del sector** | **2,535** | **** | **3,580** | **789** |
+
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Conocimiento de la presa
