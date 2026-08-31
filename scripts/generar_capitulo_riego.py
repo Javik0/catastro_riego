@@ -7,7 +7,7 @@ frecuencia y turnos, grado de tecnificación, tarifas y reservorios.
 
 CRITERIOS DE ANÁLISIS
 ---------------------
-· Universo: las fichas PRINCIPALES. Cada una es un predio con su regante; las
+· Universo: las fichas PRINCIPALES. Cada una es un predio con su titular; las
   adicionales son otros predios del mismo titular y se cuentan aparte para no
   duplicar al entrevistado.
 · Los porcentajes de método de riego vacíos son CEROS, no datos faltantes: el
@@ -43,7 +43,7 @@ BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-predio-y-agua.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Predio_y_Agua.xlsx')
 CAUDAL_JSON = os.path.join(BASE, 'public', 'geo', 'caudal_por_comunidad.json')
-# Fuente única de superficie: la del territorio y la que declararon los regantes
+# Fuente única de superficie: la del territorio y la que declararon los titulares
 SUPERFICIE_JSON = os.path.join(BASE, 'public', 'geo', 'superficie_por_comunidad.json')
 
 # Comunidad cuyas tarifas no son comparables (ver encabezado).
@@ -121,7 +121,7 @@ def main():
     # más sobre 435 predios. Se mide sumando polígonos catastrales distintos.
     #
     # Lo declarado se conserva y se publica al lado, porque no es un error: es
-    # lo que cada regante considera suyo, y eso es material de análisis.
+    # lo que cada titular considera suyo, y eso es material de análisis.
     # Decisión del proyecto del 14-ago-2026.
     with open(SUPERFICIE_JSON, encoding='utf-8') as f:
         SUP = json.load(f)['total']
@@ -226,7 +226,7 @@ def main():
       'varias fichas— cada titular declara el terreno familiar completo, y al '
       'sumar fichas ese terreno se contaría tantas veces como herederos '
       'tenga.</p>'
-      f'<p>Lo que los regantes declaran suma <b>{ha_dec:,.1f} ha</b>, '
+      f'<p>Lo que los titulares declaran suma <b>{ha_dec:,.1f} ha</b>, '
       f'{ha_dec - ha_t:,.0f} más que la superficie real del territorio. Esa '
       'diferencia no es un error de nadie y no se ha corregido: es lo que cada '
       'familia considera suyo, y como tal se conserva en la base de datos para '
@@ -320,7 +320,7 @@ def main():
       f'<b>{st.median(t_anio):,.2f} USD</b>.</p>')
     A('<div class="nota"><b>Por qué se usa la mediana.</b> Unos pocos registros con '
       'valores muy altos desplazan el promedio hasta cifras que no representan a '
-      'ningún regante real. La mediana —el valor central— describe lo que paga '
+      'ningún titular real. La mediana —el valor central— describe lo que paga '
       'efectivamente la mayoría.</div>')
     if anomalas:
         A(f'<div class="alerta"><b>Dato a verificar en campo.</b> '

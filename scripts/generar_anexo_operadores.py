@@ -8,10 +8,10 @@ lo lista al revés: una fila por comunidad, con su operador.
 
 CÓMO SE DETERMINA EL OPERADOR DE UNA COMUNIDAD
 ----------------------------------------------
-Cada regante declara a quién reconoce como operador de su sector. El nombre se
+Cada titular declara a quién reconoce como operador de su sector. El nombre se
 escribe a mano, así que la misma persona aparece con variantes ('ROBERTO
 AIGAJE', 'ROBERTO HAIGAJE', 'LUIS ROBERTO AIGAJE'). Se toma la MODA por
-comunidad —el nombre que más regantes repiten— y se indica cuántos lo
+comunidad —el nombre que más titulares repiten— y se indica cuántos lo
 mencionan, para que se vea el respaldo de cada dato.
 
 Las comunidades donde el operador más nombrado no llega a la mitad de las
@@ -126,7 +126,7 @@ def main():
                  'Anexo del informe técnico · Padrón de Usuarios'))
     A(f'<div class="corte"><b>Datos con corte al {corte_txt}.</b> '
       'El operador de cada comunidad se establece a partir de lo que declaran sus '
-      'propios regantes durante el empadronamiento. El levantamiento sigue en '
+      'propios titulares durante el empadronamiento. El levantamiento sigue en '
       'curso, de modo que este listado puede completarse en próximas '
       'actualizaciones.</div>')
 
@@ -134,13 +134,13 @@ def main():
     A(E.kpis([
         (f'{len(filas_out)}', 'comunidades'),
         (f'{len({r[3] for r in filas_out if r[4]})}', 'operadores identificados'),
-        (f'{con_op:,}', 'regantes que lo declararon'),
+        (f'{con_op:,}', 'fichas principales que lo declararon'),
         (f'{100.0 * con_op / len(filas):.0f}%', 'de respuesta'),
     ]))
 
     A('<h2>Listado por comunidad</h2>')
     A('<p>Una fila por comunidad, en el orden del listado oficial del sistema. La '
-      'columna <b>Respaldo</b> indica cuántos regantes de esa comunidad nombran a '
+      'columna <b>Respaldo</b> indica cuántas fichas principales de esa comunidad nombran a '
       'ese operador sobre el total que respondió, de modo que se vea la solidez de '
       'cada dato.</p>')
     A('<table><tr><th class="n">N°</th><th>Comunidad</th><th>Sector</th>'
@@ -156,7 +156,7 @@ def main():
     if dudosas:
         A('<h2>Comunidades con reconocimiento repartido</h2>')
         A('<p>En estas comunidades el operador más nombrado no alcanza la mitad de '
-          'las menciones: los regantes reconocen a más de una persona. Conviene '
+          'las menciones: los titulares reconocen a más de una persona. Conviene '
           'confirmarlo con la Junta de Agua antes de darlo por definitivo.</p>')
         A('<table><tr><th>Comunidad</th><th>Más nombrado</th>'
           '<th>Respaldo</th><th>Otros nombres mencionados</th></tr>')
@@ -168,7 +168,7 @@ def main():
     A('<div class="nota"><b>Sobre las variantes de escritura.</b> El nombre del '
       'operador se registra a mano, de modo que una misma persona puede aparecer '
       'escrita de varias formas. Para cada comunidad se toma el nombre que más '
-      'regantes repiten; las variantes menores de ese mismo nombre no alteran el '
+      'titulares repiten; las variantes menores de ese mismo nombre no alteran el '
       'resultado.</div>')
     A(E.pie(corte_txt))
 

@@ -110,7 +110,7 @@ def main():
     # corte y cifras del primer capítulo disponible
     primero = open(os.path.join(DOCS, CAPITULOS[0][0]), encoding='utf-8').read()
     corte = re.search(r'Datos de avance al ([^<.]+)\.', primero).group(1)
-    m = re.search(r'se registran <b>([\d,\.]+) fichas de regante</b> y quedan '
+    m = re.search(r'se registran <b>([\d,\.]+) fichas principales</b> y quedan '
                   r'<b>([\d,\.]+) predios adicionales</b>', primero)
     entrevistas, pendientes = (m.group(1), m.group(2)) if m else ('—', '—')
 

@@ -81,7 +81,7 @@ def construir(d):
 
     A('<header><div>')
     A('<h1>Conocimiento y gobernanza del sistema de riego</h1>')
-    A('<p class="sub">Resultados de la encuesta a los regantes · '
+    A('<p class="sub">Resultados de la encuesta a los titulares entrevistados · '
       'Capítulo del informe técnico</p>')
     A('</div><div class="meta">'
       'Padrón de Usuarios<br>Sistema de Riego Comunitario Guanguilquí–Porotog<br>'
@@ -97,7 +97,7 @@ def construir(d):
     # ── KPIs ──
     A('<div class="kpis">')
     for n, t in [
-        (f'{d["total"]:,}', 'regantes entrevistados'),
+        (f'{d["total"]:,}', 'fichas principales'),
         (f'{d["pct_presa"]:.1f}%', 'conoce el proyecto de la presa'),
         (f'{d["pct_presidente"]:.1f}%', 'identifica al presidente'),
         (f'{d["pct_quiere_cap"]:.1f}%', 'quiere capacitación'),
@@ -110,9 +110,9 @@ def construir(d):
     A(f'<p>Este capítulo sintetiza la sección <i>«Datos de la comunidad y conocimiento '
       f'de la Junta de Agua»</i> de la ficha de campo, aplicada a los usuarios del '
       f'sistema durante el empadronamiento. El universo son las <b>{d["total"]:,} '
-      f'fichas principales</b> registradas hasta el corte: una por regante '
+      f'fichas principales</b> registradas hasta el corte: una por titular '
       f'entrevistado.</p>')
-    A('<div class="nota"><b>Sobre el universo.</b> Un mismo regante puede tener varios '
+    A('<div class="nota"><b>Sobre el universo.</b> Un mismo titular puede tener varios '
       f'predios: {d["con_adicionales"]:,} de los entrevistados declararon predios '
       'adicionales. La entrevista se realiza <b>una sola vez por persona</b>, de modo '
       'que sus fichas adicionales no se contabilizan como entrevistas independientes; '
@@ -127,7 +127,7 @@ def construir(d):
 
     # ── 2 ──
     A('<h2>2. Conocimiento del proyecto de la presa Río Porotog</h2>')
-    A(f'<p>El <b>{d["pct_presa"]:.1f} %</b> de los regantes declara conocer el proyecto '
+    A(f'<p>El <b>{d["pct_presa"]:.1f} %</b> de las fichas principales declara conocer el proyecto '
       f'de la presa ({d["presa_si"]:,} de {d["presa_resp"]:,} respuestas). Es un nivel '
       'alto de difusión previa, aunque con diferencias territoriales relevantes.</p>')
     A('<table class="evitar-corte"><tr><th>Sector</th><th class="n">Sí</th>'
@@ -161,7 +161,7 @@ def construir(d):
     # ── 3 ──
     A('<h2>3. Gobernanza de la Junta de Agua</h2>')
     A(f'<p>La directiva se elige por <b>asamblea general</b> según el '
-      f'<b>{d["pct_asamblea"]:.1f} %</b> de los regantes, una unanimidad que confirma '
+      f'<b>{d["pct_asamblea"]:.1f} %</b> de las fichas principales, una unanimidad que confirma '
       'la vigencia del mecanismo comunitario de designación. Las menciones a '
       'designación directa o herencia son marginales.</p>')
     A(f'<p>El <b>{d["pct_presidente"]:.1f} %</b> identifica por nombre al presidente '
@@ -196,7 +196,7 @@ def construir(d):
     A(f'<p>El <b>{d["pct_recibio_cap"]:.1f} %</b> declara haber recibido capacitación '
       f'y el <b>{d["pct_quiere_cap"]:.1f} %</b> desea recibirla. El contraste entre '
       'ambas cifras revela una demanda formativa amplia y sostenida.</p>')
-    A('<table class="evitar-corte"><tr><th>Situación</th><th class="n">Regantes</th>'
+    A('<table class="evitar-corte"><tr><th>Situación</th><th class="n">Fichas principales</th>'
       '<th class="n">%</th></tr>')
     A(f'<tr class="dest"><td>Nunca recibió capacitación y la solicita</td>'
       f'<td class="n">{d["demanda_no_atendida"]:,}</td>'
@@ -207,7 +207,7 @@ def construir(d):
       f'<td class="n">{d["pct_no_quiere"]:.1f}%</td></tr>')
     A('</table>')
     A(f'<div class="hallazgo"><b>Hallazgo principal.</b> '
-      f'{d["demanda_no_atendida"]:,} regantes nunca han recibido capacitación y '
+      f'{d["demanda_no_atendida"]:,} titulares nunca han recibido capacitación y '
       'manifiestan querer recibirla. Constituyen la población objetivo directa e '
       'inmediata de un plan de formación, sin necesidad de estudios adicionales para '
       'identificarla: están nominados en el padrón, con su comunidad y su sector.</div>')

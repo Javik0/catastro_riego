@@ -9,7 +9,7 @@ CRITERIOS DE ANÁLISIS
 ---------------------
 · Universo: los PREDIOS (fichas principales y adicionales). A diferencia de los
   capítulos de encuesta —donde se cuentan personas— aquí se mide producción, y
-  un regante con tres predios produce en los tres.
+  un titular con tres predios produce en los tres.
 · Los nombres de cultivo y especie vienen con dos escrituras (mayúsculas y
   normal) por cambios en el formulario: 'CEBOLLA' y 'Cebolla' son lo mismo. Se
   unifican; sin eso, la cebolla aparecería partida en dos filas.
@@ -229,7 +229,7 @@ def main():
     A(f'<p>Se registraron <b>{len(cultivos):,} declaraciones de cultivo</b> en '
       f'<b>{predios_c:,} predios</b> y <b>{len(animales):,} declaraciones de ganado</b> '
       f'en <b>{predios_a:,} predios</b>. A diferencia de los capítulos de encuesta, '
-      'aquí la unidad de análisis es el <b>predio</b> y no la persona: un regante '
+      'aquí la unidad de análisis es el <b>predio</b> y no la persona: un titular '
       'con varias parcelas produce en todas ellas.</p>')
 
     A('<h2>2. Uso agrícola del suelo</h2>')
@@ -303,7 +303,7 @@ def main():
       'alimentaria de las familias antes que una cadena comercial</b>, un dato central '
       'para dimensionar el impacto social del sistema.</div>')
     if sob:
-        A(f'<p>Consistentemente, los regantes declaran destinar en promedio el '
+        A(f'<p>Consistentemente, los titulares declaran destinar en promedio el '
           f'<b>{sob_media:.0f} % de su producción a la soberanía alimentaria</b> '
           f'(autoconsumo familiar), según el campo específico de la ficha '
           f'({len(sob):,} respuestas).</p>')

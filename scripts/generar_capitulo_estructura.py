@@ -4,7 +4,7 @@ Capítulo del informe técnico: "Estructura del padrón".
 
 Explica de qué está hecho el padrón —personas, predios y fichas— y por qué esas
 tres cifras no coinciden. Cubre las secciones 6 y 7 de la ficha (observaciones y
-otros predios del regante) y el estado del levantamiento.
+otros predios del titular) y el estado del levantamiento.
 
 POR QUÉ ESTE CAPÍTULO
 ---------------------
@@ -165,7 +165,7 @@ def main():
     A(E.aviso_corte(corte_txt, len(pri), estados.get('pendiente_produccion', 0)))
     A(E.kpis([
         (f'{N:,}', 'fichas de predio'),
-        (f'{len(pri):,}', 'regantes entrevistados'),
+        (f'{len(pri):,}', 'fichas principales'),
         (f'{personas:,}', 'personas en el padrón'),
         (f'{pct(multi, personas):.0f}%', 'con más de un predio'),
     ]))
@@ -178,13 +178,13 @@ def main():
       '<th>Qué responde</th></tr>')
     A(f'<tr><td><b>Fichas de predio</b></td><td class="n">{N:,}</td>'
       '<td>¿Cuántas parcelas se levantaron? Es la unidad de la producción y del catastro</td></tr>')
-    A(f'<tr class="dest"><td><b>Regantes entrevistados</b></td><td class="n">{len(pri):,}</td>'
+    A(f'<tr class="dest"><td><b>Fichas principales</b></td><td class="n">{len(pri):,}</td>'
       '<td>¿A cuántas personas se aplicó la encuesta? Es la unidad de los capítulos sociales</td></tr>')
     A(f'<tr><td><b>Personas del padrón</b></td><td class="n">{personas:,}</td>'
       '<td>¿Cuántos titulares distintos hay? Incluye a quienes solo constan como predio adicional</td></tr>')
     A('</table>')
     A(f'<p>La diferencia entre las dos primeras se explica por los '
-      f'<b>{len(hij):,} predios adicionales</b>: un mismo regante puede tener varias '
+      f'<b>{len(hij):,} predios adicionales</b>: un mismo titular puede tener varias '
       'parcelas y se le entrevista una sola vez. La tercera cifra incorpora además '
       f'<b>{len(solo_adic)} personas</b> que figuran únicamente como titulares de un '
       'predio adicional declarado por otro y que no tienen ficha propia.</p>')
@@ -194,7 +194,7 @@ def main():
       'se usan todas las fichas, porque cada predio produce. Nunca deben sumarse '
       'ambos universos.</div>')
 
-    A('<h2>2. Cuántos predios tiene cada regante</h2>')
+    A('<h2>2. Cuántos predios tiene cada titular</h2>')
     A('<table class="evitar-corte"><tr><th>Predios por titular</th>'
       '<th class="n">Titulares</th><th>Peso</th></tr>')
     for k in sorted(dist):
@@ -209,7 +209,7 @@ def main():
     A(f'<p>El <b>{pct(dist[1], personas):.1f} % de los titulares tiene un solo '
       f'predio</b>. El resto —{multi:,} personas— posee dos o más parcelas, con un '
       f'máximo de {max(dist)} predios en un mismo titular. Esta dispersión explica '
-      'por qué el número de fichas supera al de regantes y por qué el registro de '
+      'por qué el número de fichas totales supera al de principales y por qué el registro de '
       'predios adicionales fue necesario.</p>')
 
     A('<h2>3. Distribución de la tierra</h2>')
@@ -243,7 +243,7 @@ def main():
     A(f'<p>Entre personas naturales la concentración sigue siendo alta: el '
       f'<b>{10} % con más tierra reúne el {c10:.1f} %</b> de la superficie privada. '
       'Coherente con el minifundio descrito en el capítulo del predio: la mayoría '
-      'de los regantes trabaja parcelas pequeñas mientras unos pocos concentran '
+      'de los titulares trabaja parcelas pequeñas mientras unos pocos concentran '
       'las extensiones mayores.</p>')
 
     A('<h2>4. Estado del levantamiento</h2>')
@@ -308,7 +308,7 @@ def main():
                 12, min(46, max(len(str(c.value or '')) for c in col) + 2))
 
     hoja('Resumen', ['Indicador', 'Valor'], [
-        ['Fichas de predio', N], ['Regantes entrevistados', len(pri)],
+        ['Fichas de predio', N], ['Fichas principales', len(pri)],
         ['Predios adicionales', len(hij)], ['Personas distintas', personas],
         ['Personas solo como predio adicional', len(solo_adic)],
         ['% con más de un predio', round(pct(multi, personas), 1)],

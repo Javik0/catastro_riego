@@ -175,7 +175,7 @@ def main():
                  'Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, N, pendientes))
     A(E.kpis([
-        (f'{N:,}', 'regantes registrados'),
+        (f'{N:,}', 'fichas principales'),
         (f'{pct(instr["Primaria"] + instr["Ninguno"] + instr["Alfabetizado"], n_ins):.0f}%',
          'con instrucción básica o menos'),
         (f'{pct(ten["Posesión sin Título"], n_ten):.1f}%', 'sin título de propiedad'),
@@ -183,14 +183,14 @@ def main():
     ]))
 
     A('<h2>1. Quién es el usuario del sistema</h2>')
-    A(f'<p>El padrón registra <b>{N:,} regantes</b> hasta la fecha de corte. Este '
+    A(f'<p>El padrón registra <b>{N:,} fichas principales</b> hasta la fecha de corte. Este '
       'capítulo describe sus características sociales, que condicionan tanto la '
       'forma de comunicarse con ellos como el tipo de acompañamiento técnico que '
       'requiere cualquier intervención.</p>')
 
     A('<h2>2. Nivel de instrucción</h2>')
     A('<table class="evitar-corte"><tr><th>Nivel alcanzado</th>'
-      '<th class="n">Regantes</th><th>Peso</th></tr>')
+      '<th class="n">Fichas principales</th><th>Peso</th></tr>')
     for k in ('Ninguno', 'Alfabetizado', 'Primaria', 'Secundaria', 'Superior'):
         if instr.get(k):
             A(f'<tr><td>{k}</td><td class="n">{instr[k]:,}</td>'
@@ -198,7 +198,7 @@ def main():
     A('</table>')
     basica = instr['Ninguno'] + instr['Alfabetizado'] + instr['Primaria']
     A(f'<div class="hallazgo"><b>Hallazgo.</b> El '
-      f'<b>{pct(basica, n_ins):.1f} % de los regantes alcanzó como máximo la '
+      f'<b>{pct(basica, n_ins):.1f} % de los titulares alcanzó como máximo la '
       f'primaria</b>, y un <b>{pct(instr["Ninguno"], n_ins):.1f} % no cursó ningún '
       f'nivel formal</b>. Solo el {pct(instr["Superior"], n_ins):.1f} % tiene '
       'estudios superiores. Toda comunicación técnica, reglamento o material de '
@@ -210,7 +210,7 @@ def main():
     A(f'<p>De los {n_gen:,} titulares cuyo nombre permite estimar el género, '
       f'<b>{gen["Mujer"]:,} son mujeres ({pct(gen["Mujer"], n_gen):.1f} %)</b> y '
       f'{gen["Hombre"]:,} hombres ({pct(gen["Hombre"], n_gen):.1f} %).</p>')
-    A('<table class="evitar-corte"><tr><th>Titular</th><th class="n">Regantes</th>'
+    A('<table class="evitar-corte"><tr><th>Titular</th><th class="n">Fichas principales</th>'
       '<th>Peso</th></tr>')
     for k in ('Hombre', 'Mujer'):
         A(f'<tr><td>{k}</td><td class="n">{gen[k]:,}</td>'
@@ -226,20 +226,20 @@ def main():
 
     A('<h2>4. Tenencia de la tierra</h2>')
     A('<table class="evitar-corte"><tr><th>Forma de tenencia</th>'
-      '<th class="n">Regantes</th><th>Peso</th></tr>')
+      '<th class="n">Fichas principales</th><th>Peso</th></tr>')
     for k, n in ten.most_common():
         A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
           f'<td>{E.barra(pct(n, n_ten))}</td></tr>')
     A('</table>')
     sp = ten['Posesión sin Título'] + ten['Herencia sin Legalizar']
-    A(f'<div class="hallazgo"><b>Hallazgo.</b> <b>{sp:,} regantes '
+    A(f'<div class="hallazgo"><b>Hallazgo.</b> <b>{sp:,} titulares '
       f'({pct(sp, n_ten):.1f} %) ocupan su predio sin título de propiedad</b>, sea '
       'por posesión o por herencia no legalizada. Es casi un tercio del padrón. '
       'La inseguridad jurídica limita el acceso a crédito y a programas públicos, '
       'y condiciona cualquier inversión predial que se quiera promover desde el '
       'sistema de riego.</div>')
     A('<h3>Comunidades con mayor proporción sin título</h3>')
-    A('<p>Comunidades de veinte o más regantes, ordenadas por peso de la posesión '
+    A('<p>Comunidades de veinte o más fichas principales, ordenadas por peso de la posesión '
       'sin título. Son el foco natural de un programa de regularización:</p>')
     A('<table class="evitar-corte"><tr><th>Comunidad</th><th class="n">Sin título</th>'
       '<th class="n">Total</th><th>Proporción</th></tr>')
@@ -249,7 +249,7 @@ def main():
     A('</table>')
 
     A('<h2>5. Composición familiar</h2>')
-    A(f'<p>Los {len(con_hijos):,} regantes que informaron sobre su descendencia '
+    A(f'<p>Los {len(con_hijos):,} titulares que informaron sobre su descendencia '
       f'declaran <b>{sum(hijos):,} hijos</b> en total: {h_var:,} varones y '
       f'{h_muj:,} mujeres. El promedio es de <b>{st.mean(hijos):.2f} hijos por '
       f'familia</b> (mediana {st.median(hijos):.0f}).</p>')
@@ -268,7 +268,7 @@ def main():
       'sistema.</p>')
 
     A('<h2>6. Distribución territorial</h2>')
-    A('<table class="evitar-corte"><tr><th>Parroquia</th><th class="n">Regantes</th>'
+    A('<table class="evitar-corte"><tr><th>Parroquia</th><th class="n">Fichas principales</th>'
       '<th>Peso</th></tr>')
     for k, n in parr.most_common():
         A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
@@ -277,13 +277,13 @@ def main():
     A(f'<p>El sistema es esencialmente un servicio de la parroquia '
       f'<b>{parr.most_common(1)[0][0]}</b>, que concentra el '
       f'{pct(parr.most_common(1)[0][1], sum(parr.values())):.1f} % de los usuarios.</p>')
-    A(f'<p>Se dispone de <b>teléfono de contacto para {tel:,} regantes</b> '
+    A(f'<p>Se dispone de <b>teléfono de contacto para {tel:,} titulares</b> '
       f'({pct(tel, N):.1f} %), lo que permite una convocatoria directa para '
       'asambleas, capacitaciones o socialización del proyecto.</p>')
 
     A('<h2>7. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li><b>{pct(basica, n_ins):.0f} % de los regantes no superó la primaria</b>: '
+    A(f'<li><b>{pct(basica, n_ins):.0f} % de los titulares no superó la primaria</b>: '
       'la comunicación institucional debe ser oral, visual y en lenguaje llano.</li>')
     A(f'<li><b>Casi un tercio ({pct(sp, n_ten):.0f} %) carece de título de '
       'propiedad</b>, lo que limita su acceso a crédito e inversión.</li>')
@@ -320,7 +320,7 @@ def main():
                 12, min(40, max(len(str(c.value or '')) for c in col) + 2))
 
     hoja('Resumen', ['Indicador', 'Valor'], [
-        ['Regantes registrados', N],
+        ['Fichas principales', N],
         ['% instrucción básica o menos', round(pct(basica, n_ins), 1)],
         ['% sin instrucción formal', round(pct(instr['Ninguno'], n_ins), 1)],
         ['% sin título de propiedad', round(pct(sp, n_ten), 1)],
@@ -329,14 +329,14 @@ def main():
         ['Población vinculada (estimada)', round(N * (st.mean(hijos) + 2))],
         ['% con teléfono registrado', round(pct(tel, N), 1)],
     ])
-    hoja('Instrucción', ['Nivel', 'Regantes', '%'],
+    hoja('Instrucción', ['Nivel', 'Fichas principales', '%'],
          [[k, v, round(pct(v, n_ins), 1)] for k, v in instr.most_common()])
-    hoja('Tenencia', ['Forma de tenencia', 'Regantes', '%'],
+    hoja('Tenencia', ['Forma de tenencia', 'Fichas principales', '%'],
          [[k, v, round(pct(v, n_ten), 1)] for k, v in ten.most_common()])
     hoja('Sin título por comunidad',
-         ['Comunidad', 'Sin título', 'Total regantes', '% sin título'],
+         ['Comunidad', 'Sin título', 'Total fichas principales', '% sin título'],
          [[c, s, t, round(p, 1)] for c, s, t, p in sin_titulo])
-    hoja('Parroquias', ['Parroquia', 'Regantes'], [[k, v] for k, v in parr.most_common()])
+    hoja('Parroquias', ['Parroquia', 'Fichas principales'], [[k, v] for k, v in parr.most_common()])
 
     filas = []
     for com in sorted({p['_com'] for p in pri}):
@@ -352,7 +352,7 @@ def main():
             round(pct(g_.count('Mujer'), g_.count('Mujer') + g_.count('Hombre')), 1)
             if (g_.count('Mujer') + g_.count('Hombre')) else None,
         ])
-    hoja('Por comunidad', ['Comunidad', 'Sector', 'Regantes', '% instrucción básica',
+    hoja('Por comunidad', ['Comunidad', 'Sector', 'Fichas principales', '% instrucción básica',
                            '% sin título', '% mujeres (est.)'], filas)
 
     del wb['Sheet']
@@ -363,7 +363,7 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {N:,} regantes | {pct(basica, n_ins):.0f}% instrucción básica | '
+    print(f'\n  {N:,} fichas principales | {pct(basica, n_ins):.0f}% instrucción básica | '
           f'{pct(sp, n_ten):.0f}% sin título | {pct(gen["Mujer"], n_gen):.0f}% mujeres (est.)')
 
 

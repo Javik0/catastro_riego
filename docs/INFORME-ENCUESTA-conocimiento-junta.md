@@ -1,13 +1,13 @@
 # Encuesta a los regantes — conocimiento de la Junta y del sistema
 
 **Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog**  
-Generado el 30/08/2026 desde el `data.gpkg` de campo.
+Generado el 31/08/2026 desde el `data.gpkg` de campo.
 
 Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta de Agua"** de la ficha de papel (pestaña "5. ENCUESTA" en QField).
 
 ## Metodología
 
-- El universo son las **4,307 fichas principales** — una por regante entrevistado. Las fichas adicionales heredan las respuestas de su ficha madre, así que incluirlas contaría al mismo entrevistado varias veces.
+- El universo son las **4,307 fichas principales** — una por titular entrevistado. Las fichas adicionales heredan las respuestas de su ficha madre, así que incluirlas contaría al mismo entrevistado varias veces.
 - Los nombres propios se agrupan ignorando acentos y espacios, para no partir a la misma persona en varias escrituras.
 - Los temas de capacitación son texto libre (245 escrituras distintas) y se agrupan por palabra clave.
 - Desde el 30/07 el formulario precarga las respuestas más comunes; **41 fichas** se crearon después y sus respuestas pueden ser la precarga sin corregir. Sobre 4,307 entrevistas no alteran ninguna cifra.
@@ -15,12 +15,12 @@ Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta
 
 ## Resumen ejecutivo
 
-- **4,307 regantes entrevistados** (fichas principales).
+- **4,307 fichas principales** (una por titular entrevistado).
 - **87.3% conoce el proyecto de la presa Río Porotog**; el desconocimiento se concentra en comunidades puntuales (detalle en §1).
 - **88.9% identifica por nombre al presidente de la Junta** (José Joaquín Tipanluisa): el nivel de conocimiento de la dirigencia es alto.
 - La directiva se elige por **asamblea general** según el 99.3% — gobernanza comunitaria consolidada.
 - El sistema tiene **~60 años** según la mayoría y el canal principal **63 km**; las respuestas convergen, señal de memoria colectiva consistente.
-- **77.5% ha recibido capacitación** y **91.2% quiere recibirla**. Hay **752 regantes** que nunca la recibieron y la piden.
+- **77.5% ha recibido capacitación** y **91.2% quiere recibirla**. Hay **752 titulares** que nunca la recibieron y la piden.
 - El tema más pedido es **riego y su manejo** (95% de las menciones).
 
 ---
@@ -29,7 +29,7 @@ Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta
 
 ### ¿Conoce sobre el Proyecto de la presa Río Porotog?
 
-Respondieron **4,132 de 4,307** regantes (95.9%).
+Respondieron **4,132 de 4,307** fichas principales (95.9%).
 
 | Respuesta | Regantes | % |
 |---|---|---|
@@ -74,7 +74,7 @@ La elección por **asamblea general** es prácticamente unánime (99.3%): la Jun
 
 ### ¿Cómo se llama el Presidente de la Junta de Agua?
 
-Respondieron 4,136 regantes. **3,675 (88.9%) identifican a José Joaquín Tipanluisa** (agrupando todas las escrituras del apellido).
+Respondieron 4,136 fichas principales. **3,675 (88.9%) identifican a José Joaquín Tipanluisa** (agrupando todas las escrituras del apellido).
 
 | Nombre respondido (agrupado) | Regantes | % |
 |---|---|---|
@@ -92,7 +92,7 @@ Respondieron 4,136 regantes. **3,675 (88.9%) identifican a José Joaquín Tipanl
 
 ### ¿Conoce al operador del sistema en su sector?
 
-Respondieron 4,107 regantes (95.4%). El operador varía por sector; los más nombrados en cada uno:
+Respondieron 4,107 fichas principales (95.4%). El operador varía por sector; los más nombrados en cada uno:
 
 **Sector 1** (1,761 respuestas):
 
@@ -130,7 +130,7 @@ Respondieron 4,107 regantes (95.4%). El operador varía por sector; los más nom
 
 ### ¿Cuántos años tiene el sistema?
 
-Respondieron 4,111 regantes. La respuesta dominante es **60 años** (1,834 regantes, 44.6%); mediana 53 años, promedio 48.2, rango 1–88.
+Respondieron 4,111 fichas principales. La respuesta dominante es **60 años** (1,834 fichas principales, 44.6%); mediana 53 años, promedio 48.2, rango 1–88.
 
 | Años declarados | Regantes | % |
 |---|---|---|
@@ -145,7 +145,7 @@ Respondieron 4,111 regantes. La respuesta dominante es **60 años** (1,834 regan
 
 ### ¿Cuántos km tiene el canal principal?
 
-Respondieron 4,108 regantes. **3,328 (81.0%) responden 63 km**, que es la longitud de referencia del canal principal.
+Respondieron 4,108 fichas principales. **3,328 (81.0%) responden 63 km**, que es la longitud de referencia del canal principal.
 
 | Km declarados | Regantes | % |
 |---|---|---|
@@ -164,7 +164,7 @@ Respondieron 4,108 regantes. **3,328 (81.0%) responden 63 km**, que es la longit
 
 ### ¿Ha recibido capacitación?
 
-Respondieron **4,110 de 4,307** regantes (95.4%).
+Respondieron **4,110 de 4,307** fichas principales (95.4%).
 
 | Respuesta | Regantes | % |
 |---|---|---|
@@ -192,7 +192,7 @@ Comunidades con el **menor** porcentaje de "Sí" (20+ entrevistados — donde en
 
 ### ¿Le gustaría recibir capacitación?
 
-Respondieron **4,038 de 4,307** regantes (93.8%).
+Respondieron **4,038 de 4,307** fichas principales (93.8%).
 
 | Respuesta | Regantes | % |
 |---|---|---|
@@ -213,11 +213,11 @@ Respondieron **4,038 de 4,307** regantes (93.8%).
 | Recibió y quiere más | 2,925 | 72.5% |
 | No quiere | 355 | 8.8% |
 
-**752 regantes nunca recibieron capacitación y la piden**: es la población objetivo directa de un plan de capacitación.
+**752 titulares nunca recibieron capacitación y la piden**: es la población objetivo directa de un plan de capacitación.
 
 ### Temas solicitados
 
-3,703 regantes indicaron temas (texto libre, agrupado por palabra clave):
+3,703 titulares indicaron temas (texto libre, agrupado por palabra clave):
 
 | Categoría | Menciones | % |
 |---|---|---|

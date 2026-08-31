@@ -17,7 +17,7 @@ DE AGUA"; en el formulario QField, la pestaña "5. ENCUESTA". Cubre:
 
 METODOLOGÍA
 -----------
-· El universo son las FICHAS PRINCIPALES (una por regante entrevistado). Las
+· El universo son las FICHAS PRINCIPALES (una por titular entrevistado). Las
   adicionales heredan las respuestas de su ficha madre, así que incluirlas
   contaría al mismo entrevistado varias veces.
 · Los nombres propios se agrupan sin acentos/espacios para no partir a la misma
@@ -141,7 +141,7 @@ def si_no(pri, campo, titulo, L, por_comunidad=True):
     si = sum(1 for p in resp if str(p[campo]).strip() == 'Sí')
     L.append(f'### {titulo}')
     L.append('')
-    L.append(f'Respondieron **{len(resp):,} de {len(pri):,}** regantes '
+    L.append(f'Respondieron **{len(resp):,} de {len(pri):,}** fichas principales '
              f'({pct(len(resp), len(pri)):.1f}%).')
     L.append('')
     L.append(f'| Respuesta | Regantes | % |')
@@ -192,7 +192,7 @@ def main():
     L.append('')
     L.append('## Metodología')
     L.append('')
-    L.append(f'- El universo son las **{total:,} fichas principales** — una por regante '
+    L.append(f'- El universo son las **{total:,} fichas principales** — una por titular '
              'entrevistado. Las fichas adicionales heredan las respuestas de su ficha '
              'madre, así que incluirlas contaría al mismo entrevistado varias veces.')
     L.append('- Los nombres propios se agrupan ignorando acentos y espacios, para no '
@@ -246,7 +246,7 @@ def main():
     resp_p = [p for p in pri if lleno(p.get('nom_presidente'))]
     nombres = Counter(norm(p['nom_presidente']) for p in resp_p)
     correcto = sum(n for k, n in nombres.items() if 'TIPANLUISA' in k)
-    L.append(f'Respondieron {len(resp_p):,} regantes. **{correcto:,} '
+    L.append(f'Respondieron {len(resp_p):,} fichas principales. **{correcto:,} '
              f'({pct(correcto, len(resp_p)):.1f}%) identifican a José Joaquín '
              'Tipanluisa** (agrupando todas las escrituras del apellido).')
     L.append('')
@@ -262,7 +262,7 @@ def main():
     L.append('### ¿Conoce al operador del sistema en su sector?')
     L.append('')
     resp_o = [p for p in pri if lleno(p.get('operador_sector'))]
-    L.append(f'Respondieron {len(resp_o):,} regantes '
+    L.append(f'Respondieron {len(resp_o):,} fichas principales '
              f'({pct(len(resp_o), total):.1f}%). El operador varía por sector; '
              'los más nombrados en cada uno:')
     L.append('')
@@ -287,9 +287,9 @@ def main():
              if lleno(p.get('anios_sistema')) and str(p['anios_sistema']).isdigit()]
     anios_c = Counter(anios)
     med = sorted(anios)[len(anios) // 2]
-    L.append(f'Respondieron {len(anios):,} regantes. La respuesta dominante es '
+    L.append(f'Respondieron {len(anios):,} fichas principales. La respuesta dominante es '
              f'**{anios_c.most_common(1)[0][0]} años** '
-             f'({anios_c.most_common(1)[0][1]:,} regantes, '
+             f'({anios_c.most_common(1)[0][1]:,} fichas principales, '
              f'{pct(anios_c.most_common(1)[0][1], len(anios)):.1f}%); '
              f'mediana {med} años, promedio {sum(anios) / len(anios):.1f}, '
              f'rango {min(anios)}–{max(anios)}.')
@@ -306,7 +306,7 @@ def main():
            and re.fullmatch(r'\d+(\.\d+)?', str(p['km_canal']).strip())]
     kms_c = Counter(kms)
     moda_km, n_moda = kms_c.most_common(1)[0]
-    L.append(f'Respondieron {len(kms):,} regantes. **{n_moda:,} '
+    L.append(f'Respondieron {len(kms):,} fichas principales. **{n_moda:,} '
              f'({pct(n_moda, len(kms)):.1f}%) responden {moda_km:g} km**, que es la '
              'longitud de referencia del canal principal.')
     L.append('')
@@ -343,7 +343,7 @@ def main():
     L.append(f'| No quiere | {len(ambos) - no_pero_quiere - si_y_quiere:,} | '
              f'{pct(len(ambos) - no_pero_quiere - si_y_quiere, len(ambos)):.1f}% |')
     L.append('')
-    L.append(f'**{no_pero_quiere:,} regantes nunca recibieron capacitación y la piden**: '
+    L.append(f'**{no_pero_quiere:,} titulares nunca recibieron capacitación y la piden**: '
              'es la población objetivo directa de un plan de capacitación.')
     L.append('')
 
@@ -351,7 +351,7 @@ def main():
     L.append('')
     temas = [p['temas_capacitacion'] for p in pri if lleno(p.get('temas_capacitacion'))]
     cat = Counter(categoria_tema(t) for t in temas)
-    L.append(f'{len(temas):,} regantes indicaron temas (texto libre, agrupado por '
+    L.append(f'{len(temas):,} titulares indicaron temas (texto libre, agrupado por '
              'palabra clave):')
     L.append('')
     L.append('| Categoría | Menciones | % |')
@@ -396,7 +396,7 @@ def main():
     resumen = []
     resumen.append('## Resumen ejecutivo')
     resumen.append('')
-    resumen.append(f'- **{total:,} regantes entrevistados** (fichas principales).')
+    resumen.append(f'- **{total:,} fichas principales** (una por titular entrevistado).')
     resumen.append(f'- **{pct(presa["si"], presa["respondieron"]):.1f}% conoce el proyecto '
                    'de la presa Río Porotog**; el desconocimiento se concentra en '
                    'comunidades puntuales (detalle en §1).')
@@ -411,7 +411,7 @@ def main():
                    'memoria colectiva consistente.')
     resumen.append(f'- **{pct(cap["si"], cap["respondieron"]):.1f}% ha recibido '
                    f'capacitación** y **{pct(gusta["si"], gusta["respondieron"]):.1f}% '
-                   f'quiere recibirla**. Hay **{no_pero_quiere:,} regantes** que nunca '
+                   f'quiere recibirla**. Hay **{no_pero_quiere:,} titulares** que nunca '
                    'la recibieron y la piden.')
     resumen.append(f'- El tema más pedido es **{cat.most_common(1)[0][0].lower()}** '
                    f'({pct(cat.most_common(1)[0][1], len(temas)):.0f}% de las menciones).')
@@ -588,7 +588,7 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {total:,} regantes | presa {pct(presa["si"], presa["respondieron"]):.1f}% | '
+    print(f'\n  {total:,} fichas principales | presa {pct(presa["si"], presa["respondieron"]):.1f}% | '
           f'presidente {pct(correcto, len(resp_p)):.1f}% | '
           f'demanda de capacitación no atendida: {no_pero_quiere:,}')
 

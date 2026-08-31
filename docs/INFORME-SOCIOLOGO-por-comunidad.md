@@ -8,9 +8,11 @@
 
 Este informe presenta, comunidad por comunidad, los resultados de la ficha catastral del padrón de usuarios del sistema de riego Guanguilquí–Porotog. Está organizado por sector de investigación: cada sector abre con una lectura general de sus resultados y continúa con cuadros comparativos donde cada pregunta de la ficha se responde con una fila por comunidad.
 
-El universo del informe es LO DECLARADO POR LOS COMUNEROS en la entrevista: 6,830 fichas catastrales de 4,307 regantes en 50 comunidades, que declaran 7,992.88 hectáreas. Como referencia, el catastro municipal mide 8,093.34 hectáreas en los mismos predios: son dos mediciones distintas del mismo territorio (lo que las familias declaran y lo que los polígonos miden) y en ningún cuadro se suman entre sí.
+El universo del informe es LO DECLARADO POR LOS COMUNEROS en la entrevista: 6,830 fichas catastrales en 50 comunidades —4,307 principales y 2,523 adicionales— que declaran 7,992.88 hectáreas. Como referencia, el catastro municipal mide 8,093.34 hectáreas en los mismos predios: son dos mediciones distintas del mismo territorio (lo que las familias declaran y lo que los polígonos miden) y en ningún cuadro se suman entre sí.
 
 El caudal del sistema es de 950.16 litros por segundo: 733.51 l/s que reciben las comunidades (calculados por la moda de las fichas de cada una, nunca sumando ficha a ficha) más 216.65 l/s de 110 tomas individuales.
+
+CÓMO SE CUENTA EN ESTE INFORME. Cada titular entrevistado llenó una **ficha principal**. Sobre un mismo predio puede haber varias fichas principales: en los predios familiares cada heredero llena la suya. Una ficha principal puede tener **fichas adicionales**, que son los otros predios del mismo titular, levantados aparte; una ficha adicional es un predio más, no una persona más. Las **fichas totales** suman las dos. Los **predios catastrales** son los polígonos distintos del catastro municipal que esas fichas ocupan y no coinciden con ninguno de los dos conteos anteriores, por los mismos dos efectos.
 
 Dos universos conviven en los cuadros y cada uno nombra el suyo al pie: los datos de tierra y producción salen de TODAS las fichas (cada ficha es un predio); los datos de las personas (tenencia, instrucción, hijos, capacitación) salen SOLO de las fichas principales, porque las adicionales pertenecen al mismo titular y duplicarían su respuesta. El respaldo ficha por ficha existe en el Excel catastral del proyecto; aquí no se publican listados nominales.
 
@@ -18,20 +20,20 @@ Los datos de campo llegan hasta el 5 de agosto de 2026: desde esa fecha no se ha
 
 ## Sector 1 — 22 comunidades
 
-El Sector 1 agrupa 22 comunidades, con 3,410 fichas catastrales que corresponden a 1,790 regantes entrevistados. En conjunto sus comuneros declaran 3,331.73 hectáreas, de las cuales 2,792.11 (83.8 %) se riegan. La comunidad de mayor superficie declarada del sector es COMUNA POROTOG (499.68 ha) y la de menor número de fichas es ELIOT AVELLANEDA (1 ficha).
+El Sector 1 agrupa 22 comunidades, con 3,410 fichas catastrales: 1,790 principales y 1,620 adicionales. En conjunto sus comuneros declaran 3,331.73 hectáreas, de las cuales 2,792.11 (83.8 %) se riegan. La comunidad de mayor superficie declarada del sector es COMUNA POROTOG (499.68 ha) y la de menor número de fichas es ELIOT AVELLANEDA (1 ficha).
 
 Por sus llaves entra un caudal de 335.2 litros por segundo (sumando la moda de cada comunidad, nunca ficha a ficha). El riego del sector es mayoritariamente tecnificado: en promedio, el 75.7 % del agua se aplica por aspersión o goteo y el 24.3 % por gravedad (inundación); la comunidad más tecnificada del sector es MILAGRO, con 100.0 % de sus porcentajes declarados.
 
 En la tierra dominan Pasto no mejorado (1,283.4 ha), Pasto mejorado (716.4 ha), Cebolla (544.3 ha), sobre un total cultivado de 3,189.2 hectáreas declaradas en el sector. El pasto mejorado, cruzado con el inventario pecuario, marca la superficie de uso pecuario de cada comunidad: 716.4 ha que sostienen 6,471 bovinos.
 
-En el perfil de las personas, 68.0 % de los regantes con respuesta tiene escritura o título de propiedad. 48.2 % alcanzó la primaria y 12.9 % no tiene instrucción formal. El 87.7 % conoce la presa del proyecto y el 94.5 % quisiera recibir capacitación.
+En el perfil de las personas, 68.0 % de los titulares con respuesta tiene escritura o título de propiedad. 48.2 % alcanzó la primaria y 12.9 % no tiene instrucción formal. El 87.7 % conoce la presa del proyecto y el 94.5 % quisiera recibir capacitación.
 
 ### Fichas principales, adicionales y totales
 
-Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
+Cada titular entrevistado llenó una ficha principal. Sobre un mismo predio puede haber varias fichas principales —los predios familiares, donde cada heredero llena la suya— y una ficha principal puede tener fichas adicionales: los otros predios del mismo titular, levantados aparte. Las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que todas esas fichas ocupan: por esos dos efectos no coinciden ni con las principales ni con las totales, y no tienen por qué hacerlo.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
+| Comunidad | Fichas principales | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
 | 1. LARCACHACA | 149 | 77 | 226 | 165 |
 | 2. LA LIBERTAD | 118 | 35 | 153 | 139 |
@@ -98,7 +100,7 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 
 ### Riego tecnificado frente a riego por inundación
 
-Cómo se aplica el agua en el predio, según el porcentaje que declaró cada regante. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
+Cómo se aplica el agua en el predio, según el porcentaje que declaró cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
 
 <!-- tabla-completa -->
 | Comunidad | Inundación (gravedad) % | Aspersión % | Goteo % | Tecnificado % | Fichas con dato |
@@ -126,7 +128,7 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada reg
 | 21. ASO. SAN JACINTO | 100.0 | 0.0 | 0.0 | 0.0 % | 6 |
 | 22. MATIAS IMBAGO | 0.0 | 100.0 | 0.0 | 100.0 % | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
 
 ### Los cinco cultivos relevantes
@@ -199,7 +201,7 @@ La superficie de uso pecuario se deriva del cultivo «Pasto mejorado» declarado
 
 ### Tenencia del predio
 
-La forma en que cada regante dice tener su predio.
+La forma en que cada titular entrevistado dice tener su predio.
 
 <!-- tabla-completa -->
 | Comunidad | Escritura / título % | Posesión sin título % | Otras formas % | Respuestas |
@@ -227,12 +229,12 @@ La forma en que cada regante dice tener su predio.
 | 21. ASO. SAN JACINTO | 33.3 % | 66.7 | 0.0 | 6 |
 | 22. MATIAS IMBAGO | 100.0 % | 0.0 | 0.0 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### El agua que recibe cada comunidad: caudal, turnos y días de riego
 
-Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada regante y cuántos días a la semana riega.
+Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada titular y cuántos días a la semana riega.
 
 <!-- tabla-completa -->
 | Comunidad | Caudal (l/s) | Cómo se obtuvo | Turno (horas, mediana) | Días de riego por semana (mediana) |
@@ -272,7 +274,7 @@ Los litros por segundo que recibe la comunidad (calculados por la moda de sus fi
 
 ### Frecuencia de riego
 
-Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cada comunidad.
+Cada cuánto le llega el agua al titular, en porcentaje de las respuestas de cada comunidad.
 
 <!-- tabla-completa -->
 | Comunidad | Semanal % | Quincenal % | Mensual % | Permanente % | No tiene riego % | Respuestas |
@@ -300,12 +302,12 @@ Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cad
 | 21. ASO. SAN JACINTO | 100.0 | 0.0 | 0.0 | 0.0 | 0.0 | 6 |
 | 22. MATIAS IMBAGO | 100.0 | 0.0 | 0.0 | 0.0 | 0.0 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Tarifas por el agua
 
-Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
+Lo que el titular entrevistado dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
 
 <!-- tabla-completa -->
 | Comunidad | Mediana mensual (USD) | Pagan mensual | Mediana anual (USD) | Pagan anual |
@@ -333,12 +335,12 @@ Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o f
 | 21. ASO. SAN JACINTO | 8.00 | 6 | — | 0 |
 | 22. MATIAS IMBAGO | — | 0 | 23.00 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Reservorios
 
-Si el regante cuenta con un reservorio de agua y de qué tipo.
+Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 
 <!-- tabla-completa -->
 | Comunidad | Comunitario % | Privado % | No tiene % | Respuestas |
@@ -366,10 +368,10 @@ Si el regante cuenta con un reservorio de agua y de qué tipo.
 | 21. ASO. SAN JACINTO | 100.0 % | 0.0 | 0.0 | 6 |
 | 22. MATIAS IMBAGO | 100.0 % | 0.0 | 0.0 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Nivel de instrucción del regante
+### Nivel de instrucción del titular
 
 El nivel de estudios que declaró cada titular entrevistado, en porcentaje de las respuestas de su comunidad.
 
@@ -399,7 +401,7 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 21. ASO. SAN JACINTO | 0.0 | 0.0 | 83.3 | 0.0 | 16.7 | 6 |
 | 22. MATIAS IMBAGO | 0.0 | 0.0 | 100.0 | 0.0 | 0.0 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Hijos por familia
@@ -432,7 +434,7 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 | 21. ASO. SAN JACINTO | 3.4 | 5 |
 | 22. MATIAS IMBAGO | 2.0 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Servicios básicos (levantamiento preliminar)
@@ -466,12 +468,12 @@ Fichas principales que registran cada servicio. El levantamiento de servicios b�
 | 22. MATIAS IMBAGO | 1 | 0 | 1 | 1 |
 | **Total del sector** | **1,331** | **1,229** | **1,560** | **1,790** |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Conocimiento de la presa
 
-Si el regante sabe de la construcción de la presa del proyecto.
+Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 
 <!-- tabla-completa -->
 | Comunidad | Conoce la presa % | Respuestas |
@@ -499,12 +501,12 @@ Si el regante sabe de la construcción de la presa del proyecto.
 | 21. ASO. SAN JACINTO | 100.0 % | 6 |
 | 22. MATIAS IMBAGO | 100.0 % | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Capacitación recibida y demandada
 
-Si el regante recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
+Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
 
 <!-- tabla-completa -->
 | Comunidad | Recibió % | Le gustaría % | Temas más pedidos |
@@ -532,25 +534,25 @@ Si el regante recibió capacitación, si le gustaría recibirla, y los temas que
 | 21. ASO. SAN JACINTO | 100.0 % | 100.0 % | Manejo de sistemas de riego (6) |
 | 22. MATIAS IMBAGO | 100.0 % | 100.0 % | Otros temas (1) |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ## Sector 2 — 13 comunidades
 
-El Sector 2 agrupa 13 comunidades, con 2,244 fichas catastrales que corresponden a 1,728 regantes entrevistados. En conjunto sus comuneros declaran 2,258.23 hectáreas, de las cuales 1,788.92 (79.2 %) se riegan. La comunidad de mayor superficie declarada del sector es ALPAKA (907.82 ha) y la de menor número de fichas es ASO. SAN PEDRO (45 fichas).
+El Sector 2 agrupa 13 comunidades, con 2,244 fichas catastrales: 1,728 principales y 516 adicionales. En conjunto sus comuneros declaran 2,258.23 hectáreas, de las cuales 1,788.92 (79.2 %) se riegan. La comunidad de mayor superficie declarada del sector es ALPAKA (907.82 ha) y la de menor número de fichas es ASO. SAN PEDRO (45 fichas).
 
 Por sus llaves entra un caudal de 183.1 litros por segundo (sumando la moda de cada comunidad, nunca ficha a ficha). El riego del sector es mayoritariamente tecnificado: en promedio, el 65.8 % del agua se aplica por aspersión o goteo y el 34.2 % por gravedad (inundación); la comunidad más tecnificada del sector es ASO. SAN VICENTE ALTO, con 100.0 % de sus porcentajes declarados.
 
 En la tierra dominan Pasto no mejorado (714.8 ha), Otros (181.6 ha), Maíz (169.4 ha), sobre un total cultivado de 2,103.3 hectáreas declaradas en el sector. El pasto mejorado, cruzado con el inventario pecuario, marca la superficie de uso pecuario de cada comunidad: 136.3 ha que sostienen 1,644 bovinos.
 
-En el perfil de las personas, 68.3 % de los regantes con respuesta tiene escritura o título de propiedad. 46.1 % alcanzó la primaria y 27.9 % no tiene instrucción formal. El 88.7 % conoce la presa del proyecto y el 89.9 % quisiera recibir capacitación.
+En el perfil de las personas, 68.3 % de los titulares con respuesta tiene escritura o título de propiedad. 46.1 % alcanzó la primaria y 27.9 % no tiene instrucción formal. El 88.7 % conoce la presa del proyecto y el 89.9 % quisiera recibir capacitación.
 
 ### Fichas principales, adicionales y totales
 
-Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
+Cada titular entrevistado llenó una ficha principal. Sobre un mismo predio puede haber varias fichas principales —los predios familiares, donde cada heredero llena la suya— y una ficha principal puede tener fichas adicionales: los otros predios del mismo titular, levantados aparte. Las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que todas esas fichas ocupan: por esos dos efectos no coinciden ni con las principales ni con las totales, y no tienen por qué hacerlo.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
+| Comunidad | Fichas principales | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
 | 23. CUARTO LOTE | 47 | 19 | 66 | 57 |
 | 24. ASO. SAN VICENTE BAJO | 108 | 45 | 153 | 138 |
@@ -601,7 +603,7 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 
 ### Riego tecnificado frente a riego por inundación
 
-Cómo se aplica el agua en el predio, según el porcentaje que declaró cada regante. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
+Cómo se aplica el agua en el predio, según el porcentaje que declaró cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
 
 <!-- tabla-completa -->
 | Comunidad | Inundación (gravedad) % | Aspersión % | Goteo % | Tecnificado % | Fichas con dato |
@@ -620,7 +622,7 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada reg
 | 34. STA. MARIANITA DE PINGULMI | 0.0 | 98.6 | 1.4 | 100.0 % | 207 |
 | 35. PAMBAMARCA | 92.8 | 7.2 | 0.0 | 7.2 % | 97 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
 
 ### Los cinco cultivos relevantes
@@ -677,7 +679,7 @@ La superficie de uso pecuario se deriva del cultivo «Pasto mejorado» declarado
 
 ### Tenencia del predio
 
-La forma en que cada regante dice tener su predio.
+La forma en que cada titular entrevistado dice tener su predio.
 
 <!-- tabla-completa -->
 | Comunidad | Escritura / título % | Posesión sin título % | Otras formas % | Respuestas |
@@ -696,14 +698,14 @@ La forma en que cada regante dice tener su predio.
 | 34. STA. MARIANITA DE PINGULMI | 56.5 % | 43.5 | 0.0 | 207 |
 | 35. PAMBAMARCA | 77.4 % | 22.6 | 0.0 | 93 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 *ALPAKA es un fraccionamiento digitalizado desde planos de loteo, no una encuesta de campo: sus respuestas provienen de ese registro.*
 
 
 ### El agua que recibe cada comunidad: caudal, turnos y días de riego
 
-Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada regante y cuántos días a la semana riega.
+Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada titular y cuántos días a la semana riega.
 
 <!-- tabla-completa -->
 | Comunidad | Caudal (l/s) | Cómo se obtuvo | Turno (horas, mediana) | Días de riego por semana (mediana) |
@@ -734,7 +736,7 @@ Los litros por segundo que recibe la comunidad (calculados por la moda de sus fi
 
 ### Frecuencia de riego
 
-Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cada comunidad.
+Cada cuánto le llega el agua al titular, en porcentaje de las respuestas de cada comunidad.
 
 <!-- tabla-completa -->
 | Comunidad | Semanal % | Quincenal % | Mensual % | Permanente % | No tiene riego % | Respuestas |
@@ -753,12 +755,12 @@ Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cad
 | 34. STA. MARIANITA DE PINGULMI | 97.1 | 0.5 | 0.5 | 0.0 | 1.9 | 207 |
 | 35. PAMBAMARCA | 24.7 | 4.1 | 71.1 | 0.0 | 0.0 | 97 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Tarifas por el agua
 
-Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
+Lo que el titular entrevistado dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
 
 <!-- tabla-completa -->
 | Comunidad | Mediana mensual (USD) | Pagan mensual | Mediana anual (USD) | Pagan anual |
@@ -777,14 +779,14 @@ Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o f
 | 34. STA. MARIANITA DE PINGULMI | 3.00 | 80 | 15.00 | 125 |
 | 35. PAMBAMARCA | — | 0 | 10.00 | 29 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 *ALPAKA declara tarifas de 672 y 308 USD «mensuales» en 491 fichas, muy por encima de cualquier tarifa del sistema: no es la tarifa de riego sino otro concepto del fraccionamiento, y se excluye del análisis económico como anomalía en verificación.*
 
 
 ### Reservorios
 
-Si el regante cuenta con un reservorio de agua y de qué tipo.
+Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 
 <!-- tabla-completa -->
 | Comunidad | Comunitario % | Privado % | No tiene % | Respuestas |
@@ -803,10 +805,10 @@ Si el regante cuenta con un reservorio de agua y de qué tipo.
 | 34. STA. MARIANITA DE PINGULMI | 92.7 % | 4.4 | 2.9 | 206 |
 | 35. PAMBAMARCA | 48.4 % | 9.7 | 41.9 | 31 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Nivel de instrucción del regante
+### Nivel de instrucción del titular
 
 El nivel de estudios que declaró cada titular entrevistado, en porcentaje de las respuestas de su comunidad.
 
@@ -827,7 +829,7 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 34. STA. MARIANITA DE PINGULMI | 1.0 | 3.9 | 61.8 | 25.1 | 8.2 | 207 |
 | 35. PAMBAMARCA | 9.7 | 16.1 | 65.6 | 8.6 | 0.0 | 93 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 *ALPAKA es un fraccionamiento digitalizado desde planos de loteo, no una encuesta de campo: sus respuestas provienen de ese registro.*
 
@@ -853,7 +855,7 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 | 34. STA. MARIANITA DE PINGULMI | 3.3 | 192 |
 | 35. PAMBAMARCA | 4.9 | 90 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Servicios básicos (levantamiento preliminar)
@@ -878,12 +880,12 @@ Fichas principales que registran cada servicio. El levantamiento de servicios b�
 | 35. PAMBAMARCA | 58 | 57 | 81 | 97 |
 | **Total del sector** | **897** | **848** | **1,644** | **1,728** |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Conocimiento de la presa
 
-Si el regante sabe de la construcción de la presa del proyecto.
+Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 
 <!-- tabla-completa -->
 | Comunidad | Conoce la presa % | Respuestas |
@@ -902,12 +904,12 @@ Si el regante sabe de la construcción de la presa del proyecto.
 | 34. STA. MARIANITA DE PINGULMI | 95.6 % | 206 |
 | 35. PAMBAMARCA | 26.7 % | 15 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Capacitación recibida y demandada
 
-Si el regante recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
+Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
 
 <!-- tabla-completa -->
 | Comunidad | Recibió % | Le gustaría % | Temas más pedidos |
@@ -926,25 +928,25 @@ Si el regante recibió capacitación, si le gustaría recibirla, y los temas que
 | 34. STA. MARIANITA DE PINGULMI | 74.6 % | 71.4 % | Manejo de sistemas de riego (111) |
 | 35. PAMBAMARCA | 26.7 % | 100.0 % | Manejo de sistemas de riego (15) |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ## Sector 3 — 15 comunidades
 
-El Sector 3 agrupa 15 comunidades, con 1,176 fichas catastrales que corresponden a 789 regantes entrevistados. En conjunto sus comuneros declaran 2,402.94 hectáreas, de las cuales 1,594.03 (66.3 %) se riegan. La comunidad de mayor superficie declarada del sector es SR. COLOMA MONT. BAJO (809.38 ha) y la de menor número de fichas es HERNAN TIMPE (1 ficha).
+El Sector 3 agrupa 15 comunidades, con 1,176 fichas catastrales: 789 principales y 387 adicionales. En conjunto sus comuneros declaran 2,402.94 hectáreas, de las cuales 1,594.03 (66.3 %) se riegan. La comunidad de mayor superficie declarada del sector es SR. COLOMA MONT. BAJO (809.38 ha) y la de menor número de fichas es HERNAN TIMPE (1 ficha).
 
 Por sus llaves entra un caudal de 215.3 litros por segundo (sumando la moda de cada comunidad, nunca ficha a ficha). El riego del sector es mayoritariamente tecnificado: en promedio, el 71.9 % del agua se aplica por aspersión o goteo y el 28.1 % por gravedad (inundación); la comunidad más tecnificada del sector es PAMBAMARQUITO, con 100.0 % de sus porcentajes declarados.
 
 En la tierra dominan Pasto no mejorado (957.9 ha), Maíz (126.5 ha), Papas (82.3 ha), sobre un total cultivado de 1,587.9 hectáreas declaradas en el sector. El pasto mejorado, cruzado con el inventario pecuario, marca la superficie de uso pecuario de cada comunidad: 76.5 ha que sostienen 1,133 bovinos.
 
-En el perfil de las personas, 71.6 % de los regantes con respuesta tiene escritura o título de propiedad. 62.0 % alcanzó la primaria y 6.5 % no tiene instrucción formal. El 83.2 % conoce la presa del proyecto y el 86.2 % quisiera recibir capacitación.
+En el perfil de las personas, 71.6 % de los titulares con respuesta tiene escritura o título de propiedad. 62.0 % alcanzó la primaria y 6.5 % no tiene instrucción formal. El 83.2 % conoce la presa del proyecto y el 86.2 % quisiera recibir capacitación.
 
 ### Fichas principales, adicionales y totales
 
-Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
+Cada titular entrevistado llenó una ficha principal. Sobre un mismo predio puede haber varias fichas principales —los predios familiares, donde cada heredero llena la suya— y una ficha principal puede tener fichas adicionales: los otros predios del mismo titular, levantados aparte. Las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que todas esas fichas ocupan: por esos dos efectos no coinciden ni con las principales ni con las totales, y no tienen por qué hacerlo.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
+| Comunidad | Fichas principales | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
 | 36. OTONCITO | 78 | 28 | 106 | 82 |
 | 37. PAMBAMARQUITO | 66 | 10 | 76 | 72 |
@@ -997,7 +999,7 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 
 ### Riego tecnificado frente a riego por inundación
 
-Cómo se aplica el agua en el predio, según el porcentaje que declaró cada regante. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
+Cómo se aplica el agua en el predio, según el porcentaje que declaró cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
 
 <!-- tabla-completa -->
 | Comunidad | Inundación (gravedad) % | Aspersión % | Goteo % | Tecnificado % | Fichas con dato |
@@ -1018,7 +1020,7 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada reg
 | 49. ASO. EL MANZANO | 16.9 | 76.4 | 6.7 | 83.1 % | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 56.2 | 35.0 | 8.8 | 43.8 % | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
 
 ### Los cinco cultivos relevantes
@@ -1079,7 +1081,7 @@ La superficie de uso pecuario se deriva del cultivo «Pasto mejorado» declarado
 
 ### Tenencia del predio
 
-La forma en que cada regante dice tener su predio.
+La forma en que cada titular entrevistado dice tener su predio.
 
 <!-- tabla-completa -->
 | Comunidad | Escritura / título % | Posesión sin título % | Otras formas % | Respuestas |
@@ -1100,12 +1102,12 @@ La forma en que cada regante dice tener su predio.
 | 49. ASO. EL MANZANO | 88.9 % | 11.1 | 0.0 | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 82.5 % | 17.5 | 0.0 | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### El agua que recibe cada comunidad: caudal, turnos y días de riego
 
-Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada regante y cuántos días a la semana riega.
+Los litros por segundo que recibe la comunidad (calculados por la moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el turno de cada titular y cuántos días a la semana riega.
 
 <!-- tabla-completa -->
 | Comunidad | Caudal (l/s) | Cómo se obtuvo | Turno (horas, mediana) | Días de riego por semana (mediana) |
@@ -1136,7 +1138,7 @@ Los litros por segundo que recibe la comunidad (calculados por la moda de sus fi
 
 ### Frecuencia de riego
 
-Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cada comunidad.
+Cada cuánto le llega el agua al titular, en porcentaje de las respuestas de cada comunidad.
 
 <!-- tabla-completa -->
 | Comunidad | Semanal % | Quincenal % | Mensual % | Permanente % | No tiene riego % | Respuestas |
@@ -1157,12 +1159,12 @@ Cada cuánto le llega el agua al regante, en porcentaje de las respuestas de cad
 | 49. ASO. EL MANZANO | 50.0 | 0.0 | 38.9 | 11.1 | 0.0 | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 0.0 | 97.5 | 2.5 | 0.0 | 0.0 | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Tarifas por el agua
 
-Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
+Lo que el titular entrevistado dice pagar por el riego, según su modalidad (fija mensual o fija anual). Se reporta la mediana, no el promedio: unas pocas fichas con valores extremos desplazarían el promedio hacia una cifra que no representa a nadie.
 
 <!-- tabla-completa -->
 | Comunidad | Mediana mensual (USD) | Pagan mensual | Mediana anual (USD) | Pagan anual |
@@ -1183,12 +1185,12 @@ Lo que el regante dice pagar por el riego, según su modalidad (fija mensual o f
 | 49. ASO. EL MANZANO | 2.75 | 15 | — | 0 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 18.66 | 39 | 18.66 | 1 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Reservorios
 
-Si el regante cuenta con un reservorio de agua y de qué tipo.
+Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 
 <!-- tabla-completa -->
 | Comunidad | Comunitario % | Privado % | No tiene % | Respuestas |
@@ -1209,10 +1211,10 @@ Si el regante cuenta con un reservorio de agua y de qué tipo.
 | 49. ASO. EL MANZANO | 93.3 % | 6.7 | 0.0 | 15 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 100.0 % | 0.0 | 0.0 | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Nivel de instrucción del regante
+### Nivel de instrucción del titular
 
 El nivel de estudios que declaró cada titular entrevistado, en porcentaje de las respuestas de su comunidad.
 
@@ -1235,7 +1237,7 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 49. ASO. EL MANZANO | 5.6 | 5.6 | 66.7 | 16.7 | 5.6 | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 2.5 | 5.0 | 60.0 | 10.0 | 22.5 | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Hijos por familia
@@ -1261,7 +1263,7 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 | 49. ASO. EL MANZANO | 3.8 | 17 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 3.7 | 38 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Servicios básicos (levantamiento preliminar)
@@ -1288,12 +1290,12 @@ Fichas principales que registran cada servicio. El levantamiento de servicios b�
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 28 | 27 | 38 | 40 |
 | **Total del sector** | **568** | **567** | **719** | **789** |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Conocimiento de la presa
 
-Si el regante sabe de la construcción de la presa del proyecto.
+Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 
 <!-- tabla-completa -->
 | Comunidad | Conoce la presa % | Respuestas |
@@ -1314,12 +1316,12 @@ Si el regante sabe de la construcción de la presa del proyecto.
 | 49. ASO. EL MANZANO | 100.0 % | 16 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 100.0 % | 40 |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ### Capacitación recibida y demandada
 
-Si el regante recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
+Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y los temas que más pide (agrupados desde las respuestas libres de la entrevista).
 
 <!-- tabla-completa -->
 | Comunidad | Recibió % | Le gustaría % | Temas más pedidos |
@@ -1340,7 +1342,7 @@ Si el regante recibió capacitación, si le gustaría recibirla, y los temas que
 | 49. ASO. EL MANZANO | 93.8 % | 100.0 % | Manejo de sistemas de riego (15); Producción pecuaria (1) |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 87.5 % | 92.5 % | Manejo de sistemas de riego (35); Producción pecuaria (2) |
 
-*Universo: fichas PRINCIPALES (una por regante entrevistado; las adicionales heredan datos de su ficha madre y duplicarían la respuesta).*
+*Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
 ---

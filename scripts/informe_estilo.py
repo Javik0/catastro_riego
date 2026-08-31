@@ -80,7 +80,7 @@ def cabecera(titulo, subtitulo):
 def aviso_corte(corte_texto, entrevistas, pendientes):
     return ('<div class="corte"><b>Datos de avance al '
             f'{corte_texto}.</b> El levantamiento del padrón <b>sigue en curso</b>: '
-            f'a la fecha de corte se registran <b>{entrevistas:,} fichas de regante</b> '
+            f'a la fecha de corte se registran <b>{entrevistas:,} fichas principales</b> '
             f'y quedan <b>{pendientes:,} predios adicionales</b> por completar. Las '
             'cifras de este capítulo son parciales y se recalculan en cada '
             'actualización; deben citarse siempre acompañadas de su fecha de corte.'

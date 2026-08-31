@@ -103,9 +103,9 @@ NOTA_ALPAKA_LOTEO = ('ALPAKA es un fraccionamiento digitalizado desde planos de 
                      'de ese registro.')
 NOTA_UNIV_TODAS = ('Universo: lo declarado en TODAS las fichas (principales + '
                    'adicionales completadas). Cada ficha es un predio.')
-NOTA_UNIV_PRI = ('Universo: fichas PRINCIPALES (una por regante entrevistado; '
-                 'las adicionales heredan datos de su ficha madre y duplicarían '
-                 'la respuesta).')
+NOTA_UNIV_PRI = ('Universo: fichas PRINCIPALES (una por titular entrevistado; '
+                 'las adicionales heredan datos de su ficha principal y '
+                 'duplicarían la respuesta).')
 
 
 def num(d, k):
@@ -852,11 +852,16 @@ def cuadros_sector(coms, sec_sup, caudal):
     # A1 — padrón (misma terminología que las cards del Dashboard, 31-ago)
     C.append(Cuadro(
         'Fichas principales, adicionales y totales',
-        'Una ficha principal por regante entrevistado y una ficha adicional '
-        'por cada otro predio del mismo titular; las fichas totales suman '
-        'las dos. Los predios catastrales son los polígonos distintos del '
-        'catastro municipal que esas fichas ocupan.',
-        ['Comunidad', 'Fichas principales (regantes)', 'Fichas adicionales',
+        'Cada titular entrevistado llenó una ficha principal. Sobre un mismo '
+        'predio puede haber varias fichas principales —los predios '
+        'familiares, donde cada heredero llena la suya— y una ficha '
+        'principal puede tener fichas adicionales: los otros predios del '
+        'mismo titular, levantados aparte. Las fichas totales suman las dos. '
+        'Los predios catastrales son los polígonos distintos del catastro '
+        'municipal que todas esas fichas ocupan: por esos dos efectos no '
+        'coinciden ni con las principales ni con las totales, y no tienen '
+        'por qué hacerlo.',
+        ['Comunidad', 'Fichas principales', 'Fichas adicionales',
          'Fichas totales', 'Predios catastrales'],
         [[et(c), f0(c['regantes']), f0(c['adicionales']), f0(c['fichas']),
           f0(c['predios_catastrales'])] for c in coms],
@@ -894,7 +899,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     C.append(Cuadro(
         'Riego tecnificado frente a riego por inundación',
         'Cómo se aplica el agua en el predio, según el porcentaje que declaró '
-        'cada regante. Tecnificado agrupa aspersión y goteo; inundación es el '
+        'cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el '
         'riego por gravedad.',
         ['Comunidad', 'Inundación (gravedad) %', 'Aspersión %', 'Goteo %',
          'Tecnificado %', 'Fichas con dato'],
@@ -958,7 +963,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     # A6 — tenencia
     C.append(Cuadro(
         'Tenencia del predio',
-        'La forma en que cada regante dice tener su predio.',
+        'La forma en que cada titular entrevistado dice tener su predio.',
         ['Comunidad', 'Escritura / título %', 'Posesión sin título %',
          'Otras formas %', 'Respuestas'],
         [[et(c), pct(c['ten_escritura'], c['ten_n']),
@@ -981,7 +986,7 @@ def cuadros_sector(coms, sec_sup, caudal):
         'El agua que recibe cada comunidad: caudal, turnos y días de riego',
         'Los litros por segundo que recibe la comunidad (calculados por la '
         'moda de sus fichas, nunca sumando ficha a ficha), cuánto dura el '
-        'turno de cada regante y cuántos días a la semana riega.',
+        'turno de cada titular y cuántos días a la semana riega.',
         ['Comunidad', 'Caudal (l/s)', 'Cómo se obtuvo', 'Turno (horas, mediana)',
          'Días de riego por semana (mediana)'],
         [[et(c), celda_caudal(c), c['caudal_origen'].capitalize() or '—',
@@ -1004,7 +1009,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     cats_frec = ['Semanal', 'Quincenal', 'Mensual', 'Permanente', 'No tiene riego']
     C.append(Cuadro(
         'Frecuencia de riego',
-        'Cada cuánto le llega el agua al regante, en porcentaje de las '
+        'Cada cuánto le llega el agua al titular, en porcentaje de las '
         'respuestas de cada comunidad.',
         ['Comunidad'] + [f'{f} %' for f in cats_frec] + ['Respuestas'],
         [[et(c)] + [f1(pct(c['frec'].get(f, 0), c['frec_n'])) for f in cats_frec] +
@@ -1023,7 +1028,7 @@ def cuadros_sector(coms, sec_sup, caudal):
                 f0(c['tarifa_anual_n'])]
     C.append(Cuadro(
         'Tarifas por el agua',
-        'Lo que el regante dice pagar por el riego, según su modalidad (fija '
+        'Lo que el titular entrevistado dice pagar por el riego, según su modalidad (fija '
         'mensual o fija anual). Se reporta la mediana, no el promedio: unas '
         'pocas fichas con valores extremos desplazarían el promedio hacia una '
         'cifra que no representa a nadie.',
@@ -1041,7 +1046,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     # B4 — reservorios
     C.append(Cuadro(
         'Reservorios',
-        'Si el regante cuenta con un reservorio de agua y de qué tipo.',
+        'Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.',
         ['Comunidad', 'Comunitario %', 'Privado %', 'No tiene %', 'Respuestas'],
         [[et(c), pct(c['res_comunitario'], c['res_n']),
           f1(pct(c['res_privado'], c['res_n'])),
@@ -1053,7 +1058,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     # C1 — instrucción
     cats_ins = ['Ninguno', 'Alfabetizado', 'Primaria', 'Secundaria', 'Superior']
     C.append(Cuadro(
-        'Nivel de instrucción del regante',
+        'Nivel de instrucción del titular',
         'El nivel de estudios que declaró cada titular entrevistado, en '
         'porcentaje de las respuestas de su comunidad.',
         ['Comunidad'] + [f'{i} %' for i in cats_ins] + ['Respuestas'],
@@ -1092,7 +1097,7 @@ def cuadros_sector(coms, sec_sup, caudal):
     # C4 — presa
     C.append(Cuadro(
         'Conocimiento de la presa',
-        'Si el regante sabe de la construcción de la presa del proyecto.',
+        'Si el titular entrevistado sabe de la construcción de la presa del proyecto.',
         ['Comunidad', 'Conoce la presa %', 'Respuestas'],
         [[et(c), pct(c['presa_si'], c['presa_n']), f0(c['presa_n'])]
          for c in coms],
@@ -1107,7 +1112,7 @@ def cuadros_sector(coms, sec_sup, caudal):
         return '; '.join(f'{t} ({f0(n)})' for t, n in c['temas_top'])
     C.append(Cuadro(
         'Capacitación recibida y demandada',
-        'Si el regante recibió capacitación, si le gustaría recibirla, y los '
+        'Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y los '
         'temas que más pide (agrupados desde las respuestas libres de la '
         'entrevista).',
         ['Comunidad', 'Recibió %', 'Le gustaría %', 'Temas más pedidos'],
@@ -1160,8 +1165,9 @@ def narrativa_sector(nombre, coms, sec_sup):
     p = []
     p.append(
         f'El {nombre} agrupa {n_com} comunidades, con {f0(fichas)} fichas '
-        f'catastrales que corresponden a {f0(regantes)} regantes '
-        f'entrevistados. En conjunto sus comuneros declaran '
+        f'catastrales: {f0(regantes)} principales y '
+        f'{f0(fichas - regantes)} adicionales. En conjunto sus comuneros '
+        f'declaran '
         f'{f2(decl)} hectáreas, de las cuales {f2(riego)} '
         f'({f1(pct(riego, decl))} %) se riegan. La comunidad de mayor '
         f'superficie declarada del sector es {mayor["oficial"]} '
@@ -1199,7 +1205,7 @@ def narrativa_sector(nombre, coms, sec_sup):
             f'sostienen {f0(sum(c["bovinos"] for c in coms))} bovinos.')
     p.append(
         f'En el perfil de las personas, {f1(pct(ten_esc, ten_n))} % de los '
-        f'regantes con respuesta tiene escritura o título de propiedad. '
+        f'titulares con respuesta tiene escritura o título de propiedad. '
         f'{f1(pct(ins_prim, ins_n))} % alcanzó la primaria y '
         f'{f1(pct(ins_ning, ins_n))} % no tiene instrucción formal. El '
         f'{f1(pct(presa_si, presa_n))} % conoce la presa del proyecto y el '
@@ -1224,8 +1230,9 @@ def introduccion_general(sup, caudal, corte_txt, hoy_txt):
         'continúa con cuadros comparativos donde cada pregunta de la ficha '
         'se responde con una fila por comunidad.',
         f'El universo del informe es LO DECLARADO POR LOS COMUNEROS en la '
-        f'entrevista: {f0(tot["fichas"])} fichas catastrales de '
-        f'{f0(tot["regantes"])} regantes en 50 comunidades, que declaran '
+        f'entrevista: {f0(tot["fichas"])} fichas catastrales en 50 '
+        f'comunidades —{f0(tot["regantes"])} principales y '
+        f'{f0(tot["fichas"] - tot["regantes"])} adicionales— que declaran '
         f'{f2(tot["superficie_declarada_ha"])} hectáreas. Como referencia, '
         f'el catastro municipal mide {f2(tot["superficie_catastral_ha"])} '
         f'hectáreas en los mismos predios: son dos mediciones distintas del '
@@ -1236,6 +1243,20 @@ def introduccion_general(sup, caudal, corte_txt, hoy_txt):
         f'comunidades (calculados por la moda de las fichas de cada una, '
         f'nunca sumando ficha a ficha) más {f2(q["caudal_individual_ls"])} '
         f'l/s de {f0(q["fichas_individuales"])} tomas individuales.',
+        # Glosario fijado con JAVIKO el 31-ago-2026: en cifras, columnas y
+        # títulos se cuentan fichas (nunca «regantes»); en la prosa, cuando
+        # el sujeto es la persona que responde, se dice «titular
+        # entrevistado» — una ficha no tiene hijos ni conoce la presa.
+        'CÓMO SE CUENTA EN ESTE INFORME. Cada titular entrevistado llenó una '
+        '<b>ficha principal</b>. Sobre un mismo predio puede haber varias '
+        'fichas principales: en los predios familiares cada heredero llena '
+        'la suya. Una ficha principal puede tener <b>fichas adicionales</b>, '
+        'que son los otros predios del mismo titular, levantados aparte; una '
+        'ficha adicional es un predio más, no una persona más. Las <b>fichas '
+        'totales</b> suman las dos. Los <b>predios catastrales</b> son los '
+        'polígonos distintos del catastro municipal que esas fichas ocupan y '
+        'no coinciden con ninguno de los dos conteos anteriores, por los '
+        'mismos dos efectos.',
         'Dos universos conviven en los cuadros y cada uno nombra el suyo al '
         'pie: los datos de tierra y producción salen de TODAS las fichas '
         '(cada ficha es un predio); los datos de las personas (tenencia, '
@@ -1279,7 +1300,7 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
     total = sup['total']
     H.append(E.kpis([
         (f0(total['fichas']), 'fichas catastrales'),
-        (f0(total['regantes']), 'regantes entrevistados'),
+        (f0(total['regantes']), 'fichas principales'),
         (f2(total['superficie_declarada_ha']) + ' ha', 'superficie declarada'),
         (f2(caudal['totales']['caudal_sistema_ls']) + ' l/s',
          'caudal del sistema'),
@@ -1294,7 +1315,8 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
     M += ['## Presentación', '']
     for p in introduccion_general(sup, caudal, corte_txt, hoy_txt):
         H.append(f'<p>{p}</p>')
-        M += [p, '']
+        # el glosario lleva <b> para el HTML; en Markdown va como **negrita**
+        M += [p.replace('<b>', '**').replace('</b>', '**'), '']
     H.append(figura_mapa(
         mapas['general'],
         'Las 50 comunidades del sistema, coloreadas por sector de '
@@ -1311,7 +1333,7 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
                     if not c['caudal_heredado_de'])
         H.append(E.kpis([
             (f0(sum(c['fichas'] for c in coms)), 'fichas catastrales'),
-            (f0(sum(c['regantes'] for c in coms)), 'regantes entrevistados'),
+            (f0(sum(c['regantes'] for c in coms)), 'fichas principales'),
             (f2(sum(c['sup_declarada'] for c in coms)) + ' ha',
              'superficie declarada'),
             (f1(q_sec) + ' l/s', 'caudal de sus comunidades'),
@@ -1367,7 +1389,7 @@ def escribir_xlsx(comunidades, ruta):
     base = lambda c: [c['n'], c['oficial'], c['sector']]
     cols_base = ['N.º', 'Comunidad (listado oficial)', 'Sector']
 
-    hoja('Padron', cols_base + ['Fichas principales (regantes)',
+    hoja('Padron', cols_base + ['Fichas principales',
                                 'Fichas adicionales', 'Fichas totales',
                                 'Predios catastrales'],
          [base(c) + [c['regantes'], c['adicionales'], c['fichas'],
