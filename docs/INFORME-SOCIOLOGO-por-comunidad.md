@@ -18,7 +18,11 @@ Dos universos conviven en los cuadros y cada uno nombra el suyo al pie: los dato
 
 Los datos de campo llegan hasta el 5 de agosto de 2026: desde esa fecha no se ha incorporado ninguna ficha nueva al padrón. Las cifras de este documento incorporan además las depuraciones de gabinete posteriores (reparto de áreas, fusiones y correcciones de comunidad y de claves catastrales), vigentes al 31 de agosto de 2026.
 
+![Las 50 comunidades del sistema, coloreadas por sector de investigación, sobre imagen satelital (Esri World Imagery). Límites por agregación de los predios investigados (comunidades.geojson); mapa generado junto con el documento.](mapas-sociologo/general.jpg)
+
 ## Sector 1 — 22 comunidades
+
+![Ubicación de las comunidades del Sector 1. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-1.jpg)
 
 El Sector 1 agrupa 22 comunidades, con 3,410 fichas catastrales: 1,790 principales y 1,620 adicionales. En conjunto sus comuneros declaran 3,331.73 hectáreas, de las cuales 2,792.11 (83.8 %) se riegan. La comunidad de mayor superficie declarada del sector es COMUNA POROTOG (499.68 ha) y la de menor número de fichas es ELIOT AVELLANEDA (1 ficha).
 
@@ -553,6 +557,8 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 
 ## Sector 2 — 13 comunidades
 
+![Ubicación de las comunidades del Sector 2. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-2.jpg)
+
 El Sector 2 agrupa 13 comunidades, con 2,244 fichas catastrales: 1,728 principales y 516 adicionales. En conjunto sus comuneros declaran 2,258.23 hectáreas, de las cuales 1,788.92 (79.2 %) se riegan. La comunidad de mayor superficie declarada del sector es ALPAKA (907.82 ha) y la de menor número de fichas es ASO. SAN PEDRO (45 fichas).
 
 Por sus llaves entra un caudal de 183.1 litros por segundo (sumando la moda de cada comunidad, nunca ficha a ficha). El riego del sector es mayoritariamente tecnificado: en promedio, el 65.8 % del agua se aplica por aspersión o goteo y el 34.2 % por gravedad (inundación); la comunidad más tecnificada del sector es ASO. SAN VICENTE ALTO, con 100.0 % de sus porcentajes declarados.
@@ -960,6 +966,8 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 
 
 ## Sector 3 — 15 comunidades
+
+![Ubicación de las comunidades del Sector 3. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-3.jpg)
 
 El Sector 3 agrupa 15 comunidades, con 1,176 fichas catastrales: 789 principales y 387 adicionales. En conjunto sus comuneros declaran 2,402.94 hectáreas, de las cuales 1,594.03 (66.3 %) se riegan. La comunidad de mayor superficie declarada del sector es SR. COLOMA MONT. BAJO (809.38 ha) y la de menor número de fichas es HERNAN TIMPE (1 ficha).
 

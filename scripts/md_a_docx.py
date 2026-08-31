@@ -189,6 +189,32 @@ def convertir(ruta_md, ruta_docx, max_filas=0):
             i += 1
             continue
 
+        # ── imagen: ![pie](ruta) ──
+        # Se añadió el 31-ago-2026 para que el Word del informe por comunidad
+        # lleve los mismos mapas que el HTML. Antes el Word salía sin ellos y
+        # los mapas vivían solo en un PDF aparte. La ruta se resuelve desde
+        # la carpeta del propio .md; si el archivo no existe se deja el pie
+        # como texto y se avisa, en vez de romper la conversión.
+        m_img = re.match(r'^!\[(.*?)\]\((.+?)\)\s*$', linea.strip())
+        if m_img:
+            pie, ruta = m_img.group(1), m_img.group(2)
+            ruta_abs = os.path.join(os.path.dirname(os.path.abspath(ruta_md)),
+                                    ruta)
+            if os.path.exists(ruta_abs):
+                doc.add_picture(ruta_abs, width=Cm(16.0))
+                doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+            else:
+                print(f'  ⚠ imagen no encontrada: {ruta}')
+            if pie:
+                p = doc.add_paragraph()
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                r = p.add_run(pie)
+                r.italic = True
+                r.font.size = Pt(8.5)
+                r.font.color.rgb = GRIS
+            i += 1
+            continue
+
         # ── separador ──
         if linea.strip() in ('---', '***', '___'):
             p = doc.add_paragraph()

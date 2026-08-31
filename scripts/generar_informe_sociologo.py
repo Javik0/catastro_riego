@@ -95,6 +95,9 @@ XLSX_OUT = os.path.join(BASE, 'build_entrega', 'Informe_Sociologo_Matrices.xlsx'
 
 MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
          'octubre noviembre diciembre').split()
+# Carpeta (relativa a docs/) donde quedan los mapas en disco, para que el
+# Markdown y el Word puedan apuntarlos. El HTML los lleva embebidos.
+DIR_MAPAS = 'mapas-sociologo'
 
 NOTA_P001 = ('ALPAKA: el dato de las fichas P001 (representación del total del '
              'fraccionamiento) queda pendiente a lo que las comunidades definan.')
@@ -768,6 +771,18 @@ def generar_mapas(catalogo, pdf_ruta=None):
     mapas = {'general': dibujar(None, pdf)}
     for sec in ('Sector 1', 'Sector 2', 'Sector 3'):
         mapas[sec] = dibujar(sec, pdf)
+
+    # Los mismos mapas en disco: el HTML los lleva embebidos en base64, pero
+    # el Markdown (y por tanto el Word) necesita archivos a los que apuntar.
+    # Se guardan junto al .md para que la ruta relativa funcione.
+    if pdf_ruta:
+        carpeta = os.path.join(BASE, 'docs', DIR_MAPAS)
+        os.makedirs(carpeta, exist_ok=True)
+        for clave, b64 in mapas.items():
+            nombre = clave.lower().replace(' ', '-') + '.jpg'
+            with open(os.path.join(carpeta, nombre), 'wb') as f:
+                f.write(base64.b64decode(b64))
+
     if pdf:
         from PIL import Image
         paginas = [Image.open(io.BytesIO(base64.b64decode(mapas[k])))
@@ -1366,12 +1381,13 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
         H.append(f'<p>{p}</p>')
         # el glosario lleva <b> para el HTML; en Markdown va como **negrita**
         M += [p.replace('<b>', '**').replace('</b>', '**'), '']
-    H.append(figura_mapa(
-        mapas['general'],
-        'Las 50 comunidades del sistema, coloreadas por sector de '
-        'investigación, sobre imagen satelital (Esri World Imagery). Límites '
-        'por agregación de los predios investigados (comunidades.geojson); '
-        'mapa generado junto con el documento.'))
+    pie_general = ('Las 50 comunidades del sistema, coloreadas por sector de '
+                   'investigación, sobre imagen satelital (Esri World '
+                   'Imagery). Límites por agregación de los predios '
+                   'investigados (comunidades.geojson); mapa generado junto '
+                   'con el documento.')
+    H.append(figura_mapa(mapas['general'], pie_general))
+    M += [f'![{pie_general}]({DIR_MAPAS}/general.jpg)', '']
 
     for sec in sectores:
         coms = [c for c in comunidades if c['sector'] == sec]
@@ -1387,11 +1403,11 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
              'superficie declarada'),
             (f1(q_sec) + ' l/s', 'caudal de sus comunidades'),
         ]))
-        H.append(figura_mapa(
-            mapas[sec],
-            f'Ubicación de las comunidades del {sec}. La numeración es la '
-            'del listado oficial del consorcio, la misma de los cuadros; el '
-            'resto del sistema queda en gris.'))
+        pie_sec = (f'Ubicación de las comunidades del {sec}. La numeración '
+                   'es la del listado oficial del consorcio, la misma de los '
+                   'cuadros; el resto del sistema queda en gris.')
+        H.append(figura_mapa(mapas[sec], pie_sec))
+        M += [f'![{pie_sec}]({DIR_MAPAS}/{sec.lower().replace(" ", "-")}.jpg)', '']
         for p in narrativa_sector(sec, coms, sec_sup):
             H.append(f'<p>{p}</p>')
             M += [p, '']

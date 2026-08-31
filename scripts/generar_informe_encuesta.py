@@ -553,14 +553,14 @@ def main():
           '% recibió capacitación', '% quiere capacitación', 'Identifican al presidente'],
          filas_com)
 
-    hoja('Presidente', ['Nombre (agrupado)', 'Regantes'],
+    hoja('Presidente', ['Nombre (agrupado)', 'Fichas principales'],
          [[k.title(), n] for k, n in nombres.most_common()])
     filas_op = []
     for sec in sorted({p['_sec'] for p in resp_o}):
         ops = Counter(norm(p['operador_sector']) for p in resp_o if p['_sec'] == sec)
         filas_op += [[sec, k.title(), n] for k, n in ops.most_common()]
     hoja('Operadores', ['Sector', 'Operador', 'Menciones'], filas_op)
-    hoja('Años y km', ['Años declarados', 'Regantes', '', 'Km declarados', 'Regantes'],
+    hoja('Años y km', ['Años declarados', 'Fichas principales', '', 'Km declarados', 'Fichas principales'],
          [[a[0], a[1], '', k[0], k[1]] for a, k in
           zip(anios_c.most_common(15) + [('', '')] * 15, kms_c.most_common(15) + [('', '')] * 15)
           if a[0] != '' or k[0] != ''][:15])
