@@ -6,7 +6,7 @@ import {
 import {
   ClipboardList, Map as MapIcon, Sprout, PawPrint,
   Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin,
-  GraduationCap, Baby, Lightbulb
+  GraduationCap, Baby, Lightbulb, Layers
 } from 'lucide-react';
 import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente, safeToDate } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
@@ -146,16 +146,33 @@ interface Superficie {
   }[];
 }
 
+/** Universo de estudio: catastro rural completo vs investigado vs resto,
+ * con cuadre exacto (`generar_universo_estudio.py`, pedido de Armando
+ * 30-ago-2026). Sustituye al 24.452 que vivía fijo en firestoreService. */
+interface UniversoEstudio {
+  universo: { predios: number; area_ha: number };
+  investigado: {
+    predios: number; area_ha: number;
+    predios_de_principales: number; predios_de_adicionales: number;
+  };
+  resto: { predios: number; area_ha: number };
+}
+
 export default function DashboardHome({ fichas, loading, cultivosData, animalesData = [], prediosAdicionalesData = [] }: Props) {
   const [stats, setStats] = useState<EstadisticasResumen | null>(null);
   // Fuente única de superficie: ningún cálculo de hectáreas se rehace aquí.
   const [superficie, setSuperficie] = useState<Superficie | null>(null);
+  const [universo, setUniverso] = useState<UniversoEstudio | null>(null);
 
   useEffect(() => {
     fetch('/geo/superficie_por_comunidad.json')
       .then((r) => (r.ok ? r.json() : null))
       .then(setSuperficie)
       .catch(() => setSuperficie(null));
+    fetch('/geo/universo_estudio.json')
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setUniverso)
+      .catch(() => setUniverso(null));
   }, []);
   const { isAdmin, isTecnico } = useAuth();
   // Los gráficos de seguimiento del equipo (por técnico y por día) son de uso
@@ -572,22 +589,29 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3">
+        {/* Títulos y desgloses por pedido de Armando y JAVIKO (30/31-ago-2026):
+            «Fichas Principales» (antes «Levantadas») con sus predios,
+            «Fichas Adicionales» sin el «(Otros Predios)» y con los suyos,
+            y la card de totales en la posición 3. */}
         <KPICard
           icon={ClipboardList}
-          label="Fichas Levantadas"
+          label="Fichas Principales"
           value={totalPrincipales}
           color="#3b82f6"
-          sub={fichasHijas.length > 0
-            ? `+ ${fichasHijas.length.toLocaleString('es-EC')} fichas adicionales (Sección 7)`
+          sub={universo
+            ? `en ${universo.investigado.predios_de_principales.toLocaleString('es-EC')} predios principales`
             : `Total de fichas registradas en el catastro`}
         />
         {fichasHijas.length > 0 ? (
           <KPICard
             icon={MapPin}
-            label="Fichas Adicionales (Otros Predios)"
+            label="Fichas Adicionales"
             value={fichasHijas.length}
             color="#06b6d4"
-            sub={`⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4 · ✅ ${hijasCompletadas.toLocaleString('es-EC')} completadas`}
+            sub={universo
+              ? `en ${universo.investigado.predios_de_adicionales.toLocaleString('es-EC')} predios adicionales`
+                + (hijasPendientes > 0 ? ` · ⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4` : '')
+              : `⚪ ${hijasPendientes.toLocaleString('es-EC')} pendientes S4 · ✅ ${hijasCompletadas.toLocaleString('es-EC')} completadas`}
           />
         ) : (
           <KPICard
@@ -598,22 +622,38 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             sub={`${totalDeclaradosPuros.toLocaleString('es-EC')} predios únicos sin encuesta`}
           />
         )}
+        <KPICard
+          icon={Layers}
+          label="Fichas Totales"
+          value={totalPrincipales + fichasHijas.length}
+          color="#8b5cf6"
+          sub={`${totalPrincipales.toLocaleString('es-EC')} principales + ${fichasHijas.length.toLocaleString('es-EC')} adicionales`}
+        />
         {/* Antes mostraba primero el catastro completo del cantón (24.452,
             número fijo sin relación con el padrón) y el avance quedaba
             invisible. Se invierte: el titular es lo investigado, y el total
             del catastro pasa a ser el contexto de escala (19-ago-2026). */}
+        {/* El total del universo sale CALCULADO de universo_estudio.json
+            (el 24.452 fijo de firestoreService estaba viejo: el catastro
+            rural publicado trae 24.460). El resto en predios y hectáreas
+            va aquí, no en la card de superficie (Armando: allí sin predios). */}
         <KPICard
           icon={MapIcon}
           label="Predios Investigados"
           value={superficie ? superficie.total.predios_catastrales : prediosInvestigadosFallback}
           color="#10b981"
-          sub={superficie
-            ? `de ${stats.totalPoligonos.toLocaleString('es-EC')} en el catastro rural`
-            : 'Predios únicos con ficha levantada'}
+          sub={universo
+            ? `de ${universo.universo.predios.toLocaleString('es-EC')} del universo de estudio · restan ${universo.resto.predios.toLocaleString('es-EC')} predios (${haFmt(universo.resto.area_ha)} ha)`
+            : superficie
+              ? `de ${stats.totalPoligonos.toLocaleString('es-EC')} en el catastro rural`
+              : 'Predios únicos con ficha levantada'}
         />
         {/* La superficie del sistema se mide contando cada predio UNA vez (su
             polígono del catastro). Lo declarado por los regantes NO se nombra
             aquí: es dato del análisis social y vive en su bloque, solo interno. */}
+        {/* Sin número de predios en esta card (Armando, 30-ago-2026): solo
+            áreas, con el universo completo y el resto para que el total
+            cuadre a la vista: investigado + resto = universo. */}
         <KPICard
           icon={TrendingUp}
           label="Superficie del sistema"
@@ -621,11 +661,14 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
             ? `${haFmt(superficie.total.superficie_catastral_ha)} ha`
             : `${areaTotalHa.toLocaleString('es-EC', { maximumFractionDigits: 2 })} ha`}
           color="#f59e0b"
-          sub={superficie
-            ? `${superficie.total.predios_catastrales.toLocaleString('es-EC')} predios · medición catastral`
-            : `${Math.round(stats.areaTotal).toLocaleString('es-EC')} m² declarados`}
+          sub={universo
+            ? `de ${haFmt(universo.universo.area_ha)} ha del universo de estudio · resto: ${haFmt(universo.resto.area_ha)} ha · medición catastral`
+            : superficie
+              ? 'medición catastral'
+              : `${Math.round(stats.areaTotal).toLocaleString('es-EC')} m² declarados`}
         />
-        <KPICard icon={Users} label="Técnicos Activos" value={stats.tecnicosActivos} color="#8b5cf6" />
+        {/* La card «Técnicos Activos» se retiró el 31-ago-2026: JAVIKO —
+            «esos datos no son relevantes» para este tablero. */}
         <KPICard icon={Sprout} label="Cultivos Registrados" value={stats.totalCultivos} color="#22c55e" />
         <KPICard icon={PawPrint} label="Animales Registrados" value={totalAnimales} color="#ec4899" sub={`${filteredAnimales.length} registros`} />
       </div>

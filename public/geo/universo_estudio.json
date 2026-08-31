@@ -1,0 +1,23 @@
+{
+ "generado_por": "scripts/generar_universo_estudio.py",
+ "nota": "Universo de estudio = catastro RURAL completo. El resto se obtiene por resta contra el área oficial de superficie_por_comunidad.json: el cuadre es exacto por construcción. Un predio con ficha principal y adicional cuenta en ambos grupos.",
+ "universo": {
+  "predios": 24460,
+  "area_ha": 30702.2
+ },
+ "investigado": {
+  "predios": 5987,
+  "area_ha": 8093.34,
+  "predios_de_principales": 3709,
+  "predios_de_adicionales": 2288,
+  "predios_en_ambos": 10
+ },
+ "resto": {
+  "predios": 18473,
+  "area_ha": 22608.86
+ },
+ "verificacion": {
+  "area_investigada_shoelace_ha": 8125.68,
+  "desvio_pct": 0.4
+ }
+}
