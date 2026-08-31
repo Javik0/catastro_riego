@@ -10,7 +10,7 @@ APARTADO EN LEVANTAMIENTO
 Es el único bloque de la ficha cuya cobertura está por debajo del 70 %: hay
 1.395 fichas principales sin registro en ninguno de los tres campos. El
 levantamiento de este apartado continúa, de modo que las cifras se presentan
-como preliminares y siempre acompañadas de la base sobre la que se calculan.
+siempre acompañadas de la base sobre la que se calculan: las viviendas.
 
 Nunca se atribuye el vacío a personas o a la organización del trabajo: el
 informe describe el estado del dato, no el desempeño de quien lo levanta.
@@ -110,13 +110,19 @@ def main():
                  'Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, N, pendientes))
 
-    A('<div class="alerta"><b>Apartado en levantamiento.</b> A diferencia del resto '
-      f'de la ficha, este bloque está registrado en <b>{registrado:,} de {N:,} '
-      f'predios ({pct(registrado, N):.1f} %)</b>. El levantamiento continúa, por lo '
-      'que las cifras siguientes son <b>preliminares</b> y se calculan siempre sobre '
-      'la base efectivamente registrada, no sobre el total del padrón. No deben '
-      'presentarse como cobertura de servicios del sistema hasta cerrar el '
-      'levantamiento.</div>')
+    # El 64 % NO es avance de levantamiento (cerrado el 5-ago-2026): es la
+    # proporción de predios CON VIVIENDA. Regla 2 del cliente (9-ago-2026):
+    # sin material de construcción no hay vivienda, y entonces agua y luz
+    # vacías son la respuesta correcta. Leerlo como cobertura pendiente
+    # hacía parecer que a un tercio del padrón le falta el servicio.
+    A('<div class="nota"><b>Sobre la base de cálculo.</b> Este bloque describe '
+      f'la <b>vivienda</b> del predio: <b>{registrado:,} de {N:,} fichas '
+      f'principales ({pct(registrado, N):.1f} %)</b> declaran una construcción. '
+      'En los demás predios no hay vivienda, y por eso agua y energía figuran '
+      'vacías: es la respuesta correcta, no un dato faltante (criterio del '
+      'cliente, 9 de agosto de 2026). Los porcentajes de servicios se '
+      'calculan <b>sobre las viviendas</b>, nunca sobre el total del padrón, '
+      'y no deben presentarse como cobertura de servicios del sistema.</div>')
 
     A(E.kpis([
         (f'{pct(registrado, N):.0f}%', 'del padrón con este dato'),
@@ -193,8 +199,9 @@ def main():
 
     A('<h2>5. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li>El apartado está registrado en el <b>{pct(registrado, N):.0f} % de los '
-      'predios</b> y su levantamiento continúa; las cifras son preliminares.</li>')
+    A(f'<li><b>{pct(registrado, N):.0f} % de las fichas principales declara '
+      'una vivienda</b> en el predio; el resto son predios sin construcción y '
+      'quedan fuera del cálculo de servicios.</li>')
     A(f'<li>Entre los predios ya registrados, la cobertura de <b>agua de consumo '
       f'({pct(con_agua, len(agua)):.1f} %) y energía eléctrica '
       f'({pct(con_ener, len(ener)):.1f} %) es prácticamente universal</b>.</li>')

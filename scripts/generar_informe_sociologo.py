@@ -123,6 +123,26 @@ def pct(a, b):
     return 100.0 * a / b if b else 0.0
 
 
+# Bajo este número de respuestas un porcentaje no describe una tendencia sino
+# un caso individual: con una sola ficha, «0 %» y «100 %» son la misma
+# respuesta de una persona dibujada como si fuera una estadística. Siete
+# comunidades del padrón están en esa situación —las haciendas y los titulares
+# individuales, que tienen una o dos fichas—. Detectado por JAVIKO el
+# 31-ago-2026 al ver a Avellaneda con 0,0 % y barra vacía.
+MIN_RESPUESTAS = 5
+NOTA_POCAS = ('En las comunidades con menos de 5 respuestas se muestra el '
+              'conteo en lugar del porcentaje: con tan pocas fichas el '
+              'porcentaje describe un caso individual, no una tendencia.')
+
+
+def pct_o_conteo(a, b):
+    """Porcentaje (float → se dibuja con barra) o «a de b» (str → texto) si la
+    base es demasiado pequeña para que el porcentaje signifique algo."""
+    if b < MIN_RESPUESTAS:
+        return f'{f0(a)} de {f0(b)}'
+    return pct(a, b)
+
+
 def f0(n):
     return f'{n:,.0f}'
 
@@ -342,8 +362,17 @@ def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
     a['hijos_prom'] = st.mean(hijos) if hijos else None
 
     a['n_pri'] = len(pri)
-    a['agua_consumo'] = sum(1 for p in pri if lleno(p.get('agua_consumo')))
-    a['energia'] = sum(1 for p in pri if lleno(p.get('energia_electrica')))
+    # Servicios de la VIVIENDA: el denominador son las fichas que declaran
+    # material de construcción, no todas. Regla 2 del cliente (9-ago-2026):
+    # «sin material de construcción no hay vivienda: agua y luz vacías son la
+    # respuesta correcta, no una omisión». Con el denominador completo el agua
+    # aparentaría 64,9 % cuando entre viviendas es 96,3 %.
+    con_viv = [p for p in pri if lleno(p.get('material_construccion'))]
+    a['con_vivienda'] = len(con_viv)
+    a['agua_consumo'] = sum(1 for p in con_viv if lleno(p.get('agua_consumo')))
+    a['energia'] = sum(1 for p in con_viv if lleno(p.get('energia_electrica')))
+    # El teléfono es dato de contacto de la persona, no de la casa: su
+    # denominador sí son todas las fichas principales.
     a['telefono'] = sum(1 for p in pri if lleno(p.get('telefono_celular')) or
                         lleno(p.get('telefono_casa')))
 
@@ -904,11 +933,13 @@ def cuadros_sector(coms, sec_sup, caudal):
         ['Comunidad', 'Inundación (gravedad) %', 'Aspersión %', 'Goteo %',
          'Tecnificado %', 'Fichas con dato'],
         [[et(c), f1(c['met_gravedad']), f1(c['met_aspersion']),
-          f1(c['met_goteo']), c['met_tecnificado'] + 0.0, f0(c['met_n'])]
+          f1(c['met_goteo']),
+          (c['met_tecnificado'] + 0.0 if c['met_n'] >= MIN_RESPUESTAS
+           else f1(c['met_tecnificado']) + ' %'), f0(c['met_n'])]
          for c in coms],
         None,
         [NOTA_UNIV_PRI + ' Promedio simple de los porcentajes declarados por '
-         'ficha con al menos un método.'],
+         'ficha con al menos un método.', NOTA_POCAS],
         barras=[4]))
 
     # A4 — cultivos top 5
@@ -966,11 +997,11 @@ def cuadros_sector(coms, sec_sup, caudal):
         'La forma en que cada titular entrevistado dice tener su predio.',
         ['Comunidad', 'Escritura / título %', 'Posesión sin título %',
          'Otras formas %', 'Respuestas'],
-        [[et(c), pct(c['ten_escritura'], c['ten_n']),
+        [[et(c), pct_o_conteo(c['ten_escritura'], c['ten_n']),
           f1(pct(c['ten_posesion'], c['ten_n'])),
           f1(pct(c['ten_otras'], c['ten_n'])), f0(c['ten_n'])] for c in coms],
         None,
-        [NOTA_UNIV_PRI, NOTA_ALPAKA_LOTEO if nota_alpaka else None],
+        [NOTA_UNIV_PRI, NOTA_POCAS, NOTA_ALPAKA_LOTEO if nota_alpaka else None],
         barras=[1]))
 
     # B1 — el agua: caudal, turnos, días
@@ -1048,11 +1079,11 @@ def cuadros_sector(coms, sec_sup, caudal):
         'Reservorios',
         'Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.',
         ['Comunidad', 'Comunitario %', 'Privado %', 'No tiene %', 'Respuestas'],
-        [[et(c), pct(c['res_comunitario'], c['res_n']),
+        [[et(c), pct_o_conteo(c['res_comunitario'], c['res_n']),
           f1(pct(c['res_privado'], c['res_n'])),
           f1(pct(c['res_no'], c['res_n'])), f0(c['res_n'])] for c in coms],
         None,
-        [NOTA_UNIV_PRI],
+        [NOTA_UNIV_PRI, NOTA_POCAS],
         barras=[1]))
 
     # C1 — instrucción
@@ -1065,7 +1096,8 @@ def cuadros_sector(coms, sec_sup, caudal):
         [[et(c)] + [f1(pct(c['instruccion'].get(i, 0), c['ins_n']))
                     for i in cats_ins] + [f0(c['ins_n'])] for c in coms],
         None,
-        [NOTA_UNIV_PRI, NOTA_ALPAKA_LOTEO if nota_alpaka else None]))
+        [NOTA_UNIV_PRI, NOTA_POCAS,
+         NOTA_ALPAKA_LOTEO if nota_alpaka else None]))
 
     # C2 — hijos
     C.append(Cuadro(
@@ -1078,31 +1110,48 @@ def cuadros_sector(coms, sec_sup, caudal):
         None,
         [NOTA_UNIV_PRI]))
 
-    # C3 — servicios básicos
+    # C3 — servicios básicos (denominador = viviendas, no todas las fichas)
+    n_viv = sum(c['con_vivienda'] for c in coms)
+    n_pri_sec = sum(c['n_pri'] for c in coms)
     C.append(Cuadro(
-        'Servicios básicos (levantamiento preliminar)',
-        'Fichas principales que registran cada servicio. El levantamiento de '
-        'servicios básicos sigue en curso (registrado en torno al 68 % del '
-        'padrón): un vacío aquí puede ser dato aún no tomado, no carencia.',
-        ['Comunidad', 'Agua de consumo', 'Energía eléctrica', 'Teléfono',
-         'Fichas principales'],
-        [[et(c), f0(c['agua_consumo']), f0(c['energia']), f0(c['telefono']),
+        'Vivienda y servicios básicos',
+        'Cuántas fichas principales declaran una vivienda en el predio y qué '
+        'servicios tiene esa vivienda. Los porcentajes de agua y energía se '
+        'calculan sobre las viviendas, no sobre todas las fichas: un predio '
+        'sin casa no tiene agua ni luz porque no hay vivienda, no porque le '
+        'falte el servicio. El teléfono es dato de contacto de la persona y '
+        'se calcula sobre todas las fichas principales.',
+        ['Comunidad', 'Con vivienda', '% con vivienda', 'Agua de consumo',
+         '% de las viviendas', 'Energía eléctrica', '% de las viviendas',
+         'Teléfono', '% de las fichas', 'Fichas principales'],
+        [[et(c), f0(c['con_vivienda']), pct(c['con_vivienda'], c['n_pri']),
+          f0(c['agua_consumo']), pct(c['agua_consumo'], c['con_vivienda']),
+          f0(c['energia']), pct(c['energia'], c['con_vivienda']),
+          f0(c['telefono']), pct(c['telefono'], c['n_pri']),
           f0(c['n_pri'])] for c in coms],
-        ['Total del sector', f0(sum(c['agua_consumo'] for c in coms)),
+        ['Total del sector', f0(n_viv), pct(n_viv, n_pri_sec),
+         f0(sum(c['agua_consumo'] for c in coms)),
+         pct(sum(c['agua_consumo'] for c in coms), n_viv),
          f0(sum(c['energia'] for c in coms)),
+         pct(sum(c['energia'] for c in coms), n_viv),
          f0(sum(c['telefono'] for c in coms)),
-         f0(sum(c['n_pri'] for c in coms))],
-        [NOTA_UNIV_PRI]))
+         pct(sum(c['telefono'] for c in coms), n_pri_sec), f0(n_pri_sec)],
+        [NOTA_UNIV_PRI,
+         'La vivienda se identifica por el material de construcción '
+         'declarado. Criterio del cliente (9 de agosto de 2026): sin material '
+         'de construcción no hay vivienda, y entonces agua y energía vacías '
+         'son la respuesta correcta, no un dato faltante.'],
+        barras=[2, 4, 6, 8]))
 
     # C4 — presa
     C.append(Cuadro(
         'Conocimiento de la presa',
         'Si el titular entrevistado sabe de la construcción de la presa del proyecto.',
         ['Comunidad', 'Conoce la presa %', 'Respuestas'],
-        [[et(c), pct(c['presa_si'], c['presa_n']), f0(c['presa_n'])]
+        [[et(c), pct_o_conteo(c['presa_si'], c['presa_n']), f0(c['presa_n'])]
          for c in coms],
         None,
-        [NOTA_UNIV_PRI],
+        [NOTA_UNIV_PRI, NOTA_POCAS],
         barras=[1]))
 
     # C5 — capacitación
@@ -1116,10 +1165,10 @@ def cuadros_sector(coms, sec_sup, caudal):
         'temas que más pide (agrupados desde las respuestas libres de la '
         'entrevista).',
         ['Comunidad', 'Recibió %', 'Le gustaría %', 'Temas más pedidos'],
-        [[et(c), pct(c['cap_si'], c['cap_n']),
-          pct(c['des_si'], c['des_n']), celda_temas(c)] for c in coms],
+        [[et(c), pct_o_conteo(c['cap_si'], c['cap_n']),
+          pct_o_conteo(c['des_si'], c['des_n']), celda_temas(c)] for c in coms],
         None,
-        [NOTA_UNIV_PRI],
+        [NOTA_UNIV_PRI, NOTA_POCAS],
         barras=[1, 2]))
 
     return C
@@ -1469,11 +1518,11 @@ def escribir_xlsx(comunidades, ruta):
           [c['ins_n'], round(c['hijos_prom'], 2) if c['hijos_prom'] is not None else None,
            c['hijos_n']] for c in comunidades])
 
-    hoja('Servicios basicos',
-         cols_base + ['Agua de consumo', 'Energia electrica', 'Telefono',
-                      'Fichas principales'],
-         [base(c) + [c['agua_consumo'], c['energia'], c['telefono'],
-                     c['n_pri']] for c in comunidades])
+    hoja('Vivienda y servicios',
+         cols_base + ['Con vivienda', 'Agua de consumo', 'Energia electrica',
+                      'Telefono', 'Fichas principales'],
+         [base(c) + [c['con_vivienda'], c['agua_consumo'], c['energia'],
+                     c['telefono'], c['n_pri']] for c in comunidades])
 
     hoja('Presa y capacitacion',
          cols_base + ['Conoce presa', 'Respuestas presa', 'Recibio capacitacion',

@@ -78,12 +78,26 @@ def cabecera(titulo, subtitulo):
 
 
 def aviso_corte(corte_texto, entrevistas, pendientes):
-    return ('<div class="corte"><b>Datos de avance al '
-            f'{corte_texto}.</b> El levantamiento del padrón <b>sigue en curso</b>: '
-            f'a la fecha de corte se registran <b>{entrevistas:,} fichas principales</b> '
+    """Aviso de cabecera de cada capítulo.
+
+    El levantamiento de campo se cerró (JAVIKO, 31-ago-2026: todas las
+    secciones de la ficha están completadas), así que el texto ya no dice
+    «sigue en curso». Si algún día vuelven a quedar adicionales pendientes,
+    el aviso lo detecta y vuelve a hablar de levantamiento abierto.
+
+    La frase «se registran N fichas principales y quedan M predios
+    adicionales» la LEE con un regex `generar_informe_consolidado.py`: si se
+    reescribe, hay que actualizar el regex a la par.
+    """
+    estado = ('El levantamiento de campo está <b>cerrado</b>: todas las '
+              'secciones de la ficha se completaron.' if not pendientes else
+              'El levantamiento del padrón <b>sigue en curso</b>.')
+    return ('<div class="corte"><b>Datos al '
+            f'{corte_texto}.</b> {estado} '
+            f'A la fecha de corte se registran <b>{entrevistas:,} fichas principales</b> '
             f'y quedan <b>{pendientes:,} predios adicionales</b> por completar. Las '
-            'cifras de este capítulo son parciales y se recalculan en cada '
-            'actualización; deben citarse siempre acompañadas de su fecha de corte.'
+            'cifras se recalculan con cada depuración de gabinete; deben '
+            'citarse siempre acompañadas de su fecha de corte.'
             '</div>')
 
 

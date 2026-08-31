@@ -130,6 +130,8 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada tit
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
+
 
 ### Los cinco cultivos relevantes
 
@@ -220,16 +222,18 @@ La forma en que cada titular entrevistado dice tener su predio.
 | 12. ASO. POROTOG | 69.8 % | 30.2 | 0.0 | 43 |
 | 13. COMUNA POROTOG | 70.9 % | 29.1 | 0.0 | 79 |
 | 14. ASO. 17 DE JUNIO | 85.2 % | 14.8 | 0.0 | 27 |
-| 15. ELIOT AVELLANEDA | 100.0 % | 0.0 | 0.0 | 1 |
+| 15. ELIOT AVELLANEDA | 1 de 1 | 0.0 | 0.0 | 1 |
 | 16. CORDILLERA LOS ANDES | 41.0 % | 59.0 | 0.0 | 39 |
 | 17. COMUNA JURIDICA IZACATA | 77.3 % | 22.7 | 0.0 | 66 |
 | 18. IZACATA GRANDE | 76.2 % | 23.8 | 0.0 | 42 |
 | 19. LOS ANDES IZACTA | 89.6 % | 10.4 | 0.0 | 48 |
 | 20. ASO. LOMA GORDA | 69.8 % | 30.2 | 0.0 | 43 |
 | 21. ASO. SAN JACINTO | 33.3 % | 66.7 | 0.0 | 6 |
-| 22. MATIAS IMBAGO | 100.0 % | 0.0 | 0.0 | 1 |
+| 22. MATIAS IMBAGO | 1 de 1 | 0.0 | 0.0 | 1 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### El agua que recibe cada comunidad: caudal, turnos y días de riego
@@ -359,16 +363,18 @@ Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 | 12. ASO. POROTOG | 100.0 % | 0.0 | 0.0 | 43 |
 | 13. COMUNA POROTOG | 100.0 % | 0.0 | 0.0 | 78 |
 | 14. ASO. 17 DE JUNIO | 100.0 % | 0.0 | 0.0 | 28 |
-| 15. ELIOT AVELLANEDA | 100.0 % | 0.0 | 0.0 | 1 |
+| 15. ELIOT AVELLANEDA | 1 de 1 | 0.0 | 0.0 | 1 |
 | 16. CORDILLERA LOS ANDES | 2.6 % | 0.0 | 97.4 | 39 |
 | 17. COMUNA JURIDICA IZACATA | 98.5 % | 1.5 | 0.0 | 66 |
 | 18. IZACATA GRANDE | 81.0 % | 0.0 | 19.0 | 42 |
 | 19. LOS ANDES IZACTA | 97.9 % | 0.0 | 2.1 | 48 |
 | 20. ASO. LOMA GORDA | 97.7 % | 2.3 | 0.0 | 44 |
 | 21. ASO. SAN JACINTO | 100.0 % | 0.0 | 0.0 | 6 |
-| 22. MATIAS IMBAGO | 100.0 % | 0.0 | 0.0 | 1 |
+| 22. MATIAS IMBAGO | 1 de 1 | 0.0 | 0.0 | 1 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Nivel de instrucción del titular
@@ -402,6 +408,8 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 22. MATIAS IMBAGO | 0.0 | 0.0 | 100.0 | 0.0 | 0.0 | 1 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Hijos por familia
@@ -437,38 +445,40 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Servicios básicos (levantamiento preliminar)
+### Vivienda y servicios básicos
 
-Fichas principales que registran cada servicio. El levantamiento de servicios básicos sigue en curso (registrado en torno al 68 % del padrón): un vacío aquí puede ser dato aún no tomado, no carencia.
+Cuántas fichas principales declaran una vivienda en el predio y qué servicios tiene esa vivienda. Los porcentajes de agua y energía se calculan sobre las viviendas, no sobre todas las fichas: un predio sin casa no tiene agua ni luz porque no hay vivienda, no porque le falte el servicio. El teléfono es dato de contacto de la persona y se calcula sobre todas las fichas principales.
 
 <!-- tabla-completa -->
-| Comunidad | Agua de consumo | Energía eléctrica | Teléfono | Fichas principales |
-|---|---|---|---|---|
-| 1. LARCACHACA | 95 | 80 | 134 | 149 |
-| 2. LA LIBERTAD | 82 | 70 | 110 | 118 |
-| 3. SAN ANTONIO | 77 | 75 | 78 | 100 |
-| 4. SAN JOSE | 80 | 72 | 98 | 110 |
-| 5. MILAGRO | 41 | 36 | 40 | 46 |
-| 6. CHAMBITOLA | 90 | 86 | 104 | 116 |
-| 7. LA CANDELARIA | 141 | 133 | 160 | 171 |
-| 8. CARRERA | 234 | 224 | 271 | 291 |
-| 9. COCHAPAMBA | 158 | 156 | 177 | 239 |
-| 10. JESUS DE GRAN PODER | 31 | 32 | 39 | 45 |
-| 11. AS. SANTA BARBARA | 3 | 3 | 7 | 7 |
-| 12. ASO. POROTOG | 34 | 35 | 33 | 43 |
-| 13. COMUNA POROTOG | 63 | 60 | 71 | 79 |
-| 14. ASO. 17 DE JUNIO | 24 | 24 | 26 | 28 |
-| 15. ELIOT AVELLANEDA | 1 | 1 | 1 | 1 |
-| 16. CORDILLERA LOS ANDES | 30 | 31 | 36 | 39 |
-| 17. COMUNA JURIDICA IZACATA | 44 | 40 | 59 | 66 |
-| 18. IZACATA GRANDE | 29 | 28 | 35 | 42 |
-| 19. LOS ANDES IZACTA | 31 | 27 | 37 | 49 |
-| 20. ASO. LOMA GORDA | 39 | 13 | 37 | 44 |
-| 21. ASO. SAN JACINTO | 3 | 3 | 6 | 6 |
-| 22. MATIAS IMBAGO | 1 | 0 | 1 | 1 |
-| **Total del sector** | **1,331** | **1,229** | **1,560** | **1,790** |
+| Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
+|---|---|---|---|---|---|---|---|---|---|
+| 1. LARCACHACA | 85 | 57.0 % | 82 | 96.5 % | 73 | 85.9 % | 134 | 89.9 % | 149 |
+| 2. LA LIBERTAD | 81 | 68.6 % | 77 | 95.1 % | 67 | 82.7 % | 110 | 93.2 % | 118 |
+| 3. SAN ANTONIO | 75 | 75.0 % | 74 | 98.7 % | 72 | 96.0 % | 78 | 78.0 % | 100 |
+| 4. SAN JOSE | 80 | 72.7 % | 75 | 93.8 % | 67 | 83.8 % | 98 | 89.1 % | 110 |
+| 5. MILAGRO | 41 | 89.1 % | 41 | 100.0 % | 36 | 87.8 % | 40 | 87.0 % | 46 |
+| 6. CHAMBITOLA | 92 | 79.3 % | 88 | 95.7 % | 83 | 90.2 % | 104 | 89.7 % | 116 |
+| 7. LA CANDELARIA | 126 | 73.7 % | 125 | 99.2 % | 119 | 94.4 % | 160 | 93.6 % | 171 |
+| 8. CARRERA | 234 | 80.4 % | 226 | 96.6 % | 220 | 94.0 % | 271 | 93.1 % | 291 |
+| 9. COCHAPAMBA | 157 | 65.7 % | 152 | 96.8 % | 149 | 94.9 % | 177 | 74.1 % | 239 |
+| 10. JESUS DE GRAN PODER | 32 | 71.1 % | 30 | 93.8 % | 30 | 93.8 % | 39 | 86.7 % | 45 |
+| 11. AS. SANTA BARBARA | 2 | 28.6 % | 2 | 100.0 % | 2 | 100.0 % | 7 | 100.0 % | 7 |
+| 12. ASO. POROTOG | 34 | 79.1 % | 32 | 94.1 % | 33 | 97.1 % | 33 | 76.7 % | 43 |
+| 13. COMUNA POROTOG | 63 | 79.7 % | 62 | 98.4 % | 59 | 93.7 % | 71 | 89.9 % | 79 |
+| 14. ASO. 17 DE JUNIO | 22 | 78.6 % | 22 | 100.0 % | 22 | 100.0 % | 26 | 92.9 % | 28 |
+| 15. ELIOT AVELLANEDA | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
+| 16. CORDILLERA LOS ANDES | 32 | 82.1 % | 29 | 90.6 % | 30 | 93.8 % | 36 | 92.3 % | 39 |
+| 17. COMUNA JURIDICA IZACATA | 42 | 63.6 % | 42 | 100.0 % | 39 | 92.9 % | 59 | 89.4 % | 66 |
+| 18. IZACATA GRANDE | 27 | 64.3 % | 27 | 100.0 % | 26 | 96.3 % | 35 | 83.3 % | 42 |
+| 19. LOS ANDES IZACTA | 29 | 59.2 % | 28 | 96.6 % | 26 | 89.7 % | 37 | 75.5 % | 49 |
+| 20. ASO. LOMA GORDA | 35 | 79.5 % | 33 | 94.3 % | 12 | 34.3 % | 37 | 84.1 % | 44 |
+| 21. ASO. SAN JACINTO | 3 | 50.0 % | 3 | 100.0 % | 3 | 100.0 % | 6 | 100.0 % | 6 |
+| 22. MATIAS IMBAGO | 0 | 0.0 % | 0 | 0.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 |
+| **Total del sector** | **1,293** | **72.2 %** | **1,251** | **96.8 %** | **1,169** | **90.4 %** | **1,560** | **87.2 %** | **1,790** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
 
 
 ### Conocimiento de la presa
@@ -492,16 +502,18 @@ Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 | 12. ASO. POROTOG | 93.0 % | 43 |
 | 13. COMUNA POROTOG | 98.7 % | 79 |
 | 14. ASO. 17 DE JUNIO | 92.9 % | 28 |
-| 15. ELIOT AVELLANEDA | 0.0 % | 1 |
+| 15. ELIOT AVELLANEDA | 0 de 1 | 1 |
 | 16. CORDILLERA LOS ANDES | 97.4 % | 39 |
 | 17. COMUNA JURIDICA IZACATA | 87.9 % | 66 |
 | 18. IZACATA GRANDE | 78.6 % | 42 |
 | 19. LOS ANDES IZACTA | 87.5 % | 48 |
 | 20. ASO. LOMA GORDA | 70.5 % | 44 |
 | 21. ASO. SAN JACINTO | 100.0 % | 6 |
-| 22. MATIAS IMBAGO | 100.0 % | 1 |
+| 22. MATIAS IMBAGO | 1 de 1 | 1 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Capacitación recibida y demandada
@@ -525,16 +537,18 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 | 12. ASO. POROTOG | 72.1 % | 100.0 % | Manejo de sistemas de riego (38); Otros temas (4); Producción pecuaria (1) |
 | 13. COMUNA POROTOG | 96.2 % | 98.7 % | Manejo de sistemas de riego (75); Producción agrícola (2); Producción pecuaria (1) |
 | 14. ASO. 17 DE JUNIO | 85.2 % | 100.0 % | Manejo de sistemas de riego (27); Otros temas (1) |
-| 15. ELIOT AVELLANEDA | 100.0 % | 100.0 % | Manejo de sistemas de riego (1) |
+| 15. ELIOT AVELLANEDA | 1 de 1 | 1 de 1 | Manejo de sistemas de riego (1) |
 | 16. CORDILLERA LOS ANDES | 94.9 % | 100.0 % | Manejo de sistemas de riego (39) |
 | 17. COMUNA JURIDICA IZACATA | 50.0 % | 89.4 % | Manejo de sistemas de riego (47); Otros temas (13); Producción agrícola (1) |
 | 18. IZACATA GRANDE | 56.1 % | 100.0 % | Manejo de sistemas de riego (37); Otros temas (2); Producción agrícola (1) |
 | 19. LOS ANDES IZACTA | 77.1 % | 93.8 % | Manejo de sistemas de riego (44) |
 | 20. ASO. LOMA GORDA | 30.2 % | 88.6 % | Manejo de sistemas de riego (37); Producción agrícola (1) |
 | 21. ASO. SAN JACINTO | 100.0 % | 100.0 % | Manejo de sistemas de riego (6) |
-| 22. MATIAS IMBAGO | 100.0 % | 100.0 % | Otros temas (1) |
+| 22. MATIAS IMBAGO | 1 de 1 | 1 de 1 | Otros temas (1) |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ## Sector 2 — 13 comunidades
@@ -624,6 +638,8 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada tit
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
+
 
 ### Los cinco cultivos relevantes
 
@@ -699,6 +715,8 @@ La forma en que cada titular entrevistado dice tener su predio.
 | 35. PAMBAMARCA | 77.4 % | 22.6 | 0.0 | 93 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 *ALPAKA es un fraccionamiento digitalizado desde planos de loteo, no una encuesta de campo: sus respuestas provienen de ese registro.*
 
@@ -807,6 +825,8 @@ Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
+
 
 ### Nivel de instrucción del titular
 
@@ -830,6 +850,8 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 35. PAMBAMARCA | 9.7 | 16.1 | 65.6 | 8.6 | 0.0 | 93 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 *ALPAKA es un fraccionamiento digitalizado desde planos de loteo, no una encuesta de campo: sus respuestas provienen de ese registro.*
 
@@ -858,29 +880,31 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Servicios básicos (levantamiento preliminar)
+### Vivienda y servicios básicos
 
-Fichas principales que registran cada servicio. El levantamiento de servicios básicos sigue en curso (registrado en torno al 68 % del padrón): un vacío aquí puede ser dato aún no tomado, no carencia.
+Cuántas fichas principales declaran una vivienda en el predio y qué servicios tiene esa vivienda. Los porcentajes de agua y energía se calculan sobre las viviendas, no sobre todas las fichas: un predio sin casa no tiene agua ni luz porque no hay vivienda, no porque le falte el servicio. El teléfono es dato de contacto de la persona y se calcula sobre todas las fichas principales.
 
 <!-- tabla-completa -->
-| Comunidad | Agua de consumo | Energía eléctrica | Teléfono | Fichas principales |
-|---|---|---|---|---|
-| 23. CUARTO LOTE | 39 | 37 | 41 | 47 |
-| 24. ASO. SAN VICENTE BAJO | 78 | 59 | 97 | 108 |
-| 25. STA. ROSA DE PACCHA | 44 | 44 | 55 | 56 |
-| 26. ASO. SAN VICENTE ALTO | 53 | 50 | 65 | 68 |
-| 27. PUCARA | 137 | 130 | 183 | 198 |
-| 28. ASO. SAN PEDRO | 19 | 14 | 30 | 33 |
-| 29. PITANA ALTO | 84 | 86 | 107 | 117 |
-| 30. ALPAKA | 0 | 0 | 491 | 492 |
-| 31. ASO. PITANA BAJO | 40 | 34 | 58 | 60 |
-| 32. PRO MEJORAS PITANA BAJO | 111 | 108 | 151 | 158 |
-| 33. STA. ROSA DE PINGULMI | 76 | 73 | 83 | 86 |
-| 34. STA. MARIANITA DE PINGULMI | 158 | 156 | 202 | 208 |
-| 35. PAMBAMARCA | 58 | 57 | 81 | 97 |
-| **Total del sector** | **897** | **848** | **1,644** | **1,728** |
+| Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
+|---|---|---|---|---|---|---|---|---|---|
+| 23. CUARTO LOTE | 39 | 83.0 % | 38 | 97.4 % | 37 | 94.9 % | 41 | 87.2 % | 47 |
+| 24. ASO. SAN VICENTE BAJO | 73 | 67.6 % | 71 | 97.3 % | 57 | 78.1 % | 97 | 89.8 % | 108 |
+| 25. STA. ROSA DE PACCHA | 45 | 80.4 % | 44 | 97.8 % | 44 | 97.8 % | 55 | 98.2 % | 56 |
+| 26. ASO. SAN VICENTE ALTO | 51 | 75.0 % | 50 | 98.0 % | 47 | 92.2 % | 65 | 95.6 % | 68 |
+| 27. PUCARA | 136 | 68.7 % | 128 | 94.1 % | 124 | 91.2 % | 183 | 92.4 % | 198 |
+| 28. ASO. SAN PEDRO | 19 | 57.6 % | 18 | 94.7 % | 14 | 73.7 % | 30 | 90.9 % | 33 |
+| 29. PITANA ALTO | 93 | 79.5 % | 83 | 89.2 % | 85 | 91.4 % | 107 | 91.5 % | 117 |
+| 30. ALPAKA | 0 | 0.0 % | 0 | 0.0 % | 0 | 0.0 % | 491 | 99.8 % | 492 |
+| 31. ASO. PITANA BAJO | 43 | 71.7 % | 39 | 90.7 % | 33 | 76.7 % | 58 | 96.7 % | 60 |
+| 32. PRO MEJORAS PITANA BAJO | 112 | 70.9 % | 108 | 96.4 % | 107 | 95.5 % | 151 | 95.6 % | 158 |
+| 33. STA. ROSA DE PINGULMI | 74 | 86.0 % | 74 | 100.0 % | 72 | 97.3 % | 83 | 96.5 % | 86 |
+| 34. STA. MARIANITA DE PINGULMI | 157 | 75.5 % | 151 | 96.2 % | 149 | 94.9 % | 202 | 97.1 % | 208 |
+| 35. PAMBAMARCA | 55 | 56.7 % | 50 | 90.9 % | 51 | 92.7 % | 81 | 83.5 % | 97 |
+| **Total del sector** | **897** | **51.9 %** | **854** | **95.2 %** | **820** | **91.4 %** | **1,644** | **95.1 %** | **1,728** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
 
 
 ### Conocimiento de la presa
@@ -906,6 +930,8 @@ Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
+
 
 ### Capacitación recibida y demandada
 
@@ -929,6 +955,8 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 | 35. PAMBAMARCA | 26.7 % | 100.0 % | Manejo de sistemas de riego (15) |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ## Sector 3 — 15 comunidades
@@ -1022,6 +1050,8 @@ Cómo se aplica el agua en el predio, según el porcentaje que declaró cada tit
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta). Promedio simple de los porcentajes declarados por ficha con al menos un método.*
 
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
+
 
 ### Los cinco cultivos relevantes
 
@@ -1088,21 +1118,23 @@ La forma en que cada titular entrevistado dice tener su predio.
 |---|---|---|---|---|
 | 36. OTONCITO | 61.0 % | 37.7 | 1.3 | 77 |
 | 37. PAMBAMARQUITO | 68.2 % | 31.8 | 0.0 | 66 |
-| 38. HERNAN TIMPE | 100.0 % | 0.0 | 0.0 | 1 |
-| 39. HDA. SAN FRANCISCO | 100.0 % | 0.0 | 0.0 | 1 |
+| 38. HERNAN TIMPE | 1 de 1 | 0.0 | 0.0 | 1 |
+| 39. HDA. SAN FRANCISCO | 1 de 1 | 0.0 | 0.0 | 1 |
 | 40. MONTESERRIN ALTO | 78.6 % | 21.4 | 0.0 | 28 |
 | 41. CHAUPIESTANCIA | 82.5 % | 17.5 | 0.0 | 137 |
 | 42. PUEBLO DE OTON | 75.2 % | 24.8 | 0.0 | 153 |
 | 43. CANGAHUAPUNGO | 50.4 % | 45.0 | 4.6 | 131 |
 | 44. CHINCHIN LOMA | 76.1 % | 23.9 | 0.0 | 88 |
 | 45. ASO. ROSALIA | 76.9 % | 23.1 | 0.0 | 39 |
-| 46. SR. COLOMA MONT. BAJO | 100.0 % | 0.0 | 0.0 | 4 |
-| 47. HDA. GUANGULQUI | 100.0 % | 0.0 | 0.0 | 1 |
-| 48. PUEBLO DE ASCAZUBI | 100.0 % | 0.0 | 0.0 | 2 |
+| 46. SR. COLOMA MONT. BAJO | 4 de 4 | 0.0 | 0.0 | 4 |
+| 47. HDA. GUANGULQUI | 1 de 1 | 0.0 | 0.0 | 1 |
+| 48. PUEBLO DE ASCAZUBI | 2 de 2 | 0.0 | 0.0 | 2 |
 | 49. ASO. EL MANZANO | 88.9 % | 11.1 | 0.0 | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 82.5 % | 17.5 | 0.0 | 40 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### El agua que recibe cada comunidad: caudal, turnos y días de riego
@@ -1197,21 +1229,23 @@ Si el titular entrevistado cuenta con un reservorio de agua y de qué tipo.
 |---|---|---|---|---|
 | 36. OTONCITO | 90.7 % | 3.7 | 5.6 | 54 |
 | 37. PAMBAMARQUITO | 100.0 % | 0.0 | 0.0 | 60 |
-| 38. HERNAN TIMPE | 100.0 % | 0.0 | 0.0 | 1 |
-| 39. HDA. SAN FRANCISCO | 100.0 % | 0.0 | 0.0 | 1 |
+| 38. HERNAN TIMPE | 1 de 1 | 0.0 | 0.0 | 1 |
+| 39. HDA. SAN FRANCISCO | 1 de 1 | 0.0 | 0.0 | 1 |
 | 40. MONTESERRIN ALTO | 100.0 % | 0.0 | 0.0 | 28 |
 | 41. CHAUPIESTANCIA | 58.9 % | 30.4 | 10.7 | 112 |
 | 42. PUEBLO DE OTON | 64.1 % | 0.7 | 35.3 | 153 |
 | 43. CANGAHUAPUNGO | 100.0 % | 0.0 | 0.0 | 131 |
 | 44. CHINCHIN LOMA | 98.9 % | 0.0 | 1.1 | 87 |
 | 45. ASO. ROSALIA | 59.0 % | 41.0 | 0.0 | 39 |
-| 46. SR. COLOMA MONT. BAJO | 0.0 % | 100.0 | 0.0 | 4 |
-| 47. HDA. GUANGULQUI | 0.0 % | 100.0 | 0.0 | 1 |
-| 48. PUEBLO DE ASCAZUBI | 100.0 % | 0.0 | 0.0 | 2 |
+| 46. SR. COLOMA MONT. BAJO | 0 de 4 | 100.0 | 0.0 | 4 |
+| 47. HDA. GUANGULQUI | 0 de 1 | 100.0 | 0.0 | 1 |
+| 48. PUEBLO DE ASCAZUBI | 2 de 2 | 0.0 | 0.0 | 2 |
 | 49. ASO. EL MANZANO | 93.3 % | 6.7 | 0.0 | 15 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 100.0 % | 0.0 | 0.0 | 40 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Nivel de instrucción del titular
@@ -1238,6 +1272,8 @@ El nivel de estudios que declaró cada titular entrevistado, en porcentaje de la
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 2.5 | 5.0 | 60.0 | 10.0 | 22.5 | 40 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Hijos por familia
@@ -1266,31 +1302,33 @@ Cuántos hijos e hijas declaró cada titular, en promedio por comunidad.
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
 
-### Servicios básicos (levantamiento preliminar)
+### Vivienda y servicios básicos
 
-Fichas principales que registran cada servicio. El levantamiento de servicios básicos sigue en curso (registrado en torno al 68 % del padrón): un vacío aquí puede ser dato aún no tomado, no carencia.
+Cuántas fichas principales declaran una vivienda en el predio y qué servicios tiene esa vivienda. Los porcentajes de agua y energía se calculan sobre las viviendas, no sobre todas las fichas: un predio sin casa no tiene agua ni luz porque no hay vivienda, no porque le falte el servicio. El teléfono es dato de contacto de la persona y se calcula sobre todas las fichas principales.
 
 <!-- tabla-completa -->
-| Comunidad | Agua de consumo | Energía eléctrica | Teléfono | Fichas principales |
-|---|---|---|---|---|
-| 36. OTONCITO | 56 | 55 | 68 | 78 |
-| 37. PAMBAMARQUITO | 60 | 60 | 61 | 66 |
-| 38. HERNAN TIMPE | 0 | 1 | 1 | 1 |
-| 39. HDA. SAN FRANCISCO | 0 | 1 | 1 | 1 |
-| 40. MONTESERRIN ALTO | 11 | 10 | 25 | 28 |
-| 41. CHAUPIESTANCIA | 87 | 86 | 122 | 139 |
-| 42. PUEBLO DE OTON | 116 | 114 | 137 | 153 |
-| 43. CANGAHUAPUNGO | 106 | 104 | 126 | 131 |
-| 44. CHINCHIN LOMA | 67 | 68 | 80 | 88 |
-| 45. ASO. ROSALIA | 16 | 21 | 36 | 39 |
-| 46. SR. COLOMA MONT. BAJO | 4 | 4 | 4 | 4 |
-| 47. HDA. GUANGULQUI | 1 | 1 | 1 | 1 |
-| 48. PUEBLO DE ASCAZUBI | 2 | 1 | 2 | 2 |
-| 49. ASO. EL MANZANO | 14 | 14 | 17 | 18 |
-| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 28 | 27 | 38 | 40 |
-| **Total del sector** | **568** | **567** | **719** | **789** |
+| Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
+|---|---|---|---|---|---|---|---|---|---|
+| 36. OTONCITO | 54 | 69.2 % | 54 | 100.0 % | 54 | 100.0 % | 68 | 87.2 % | 78 |
+| 37. PAMBAMARQUITO | 58 | 87.9 % | 58 | 100.0 % | 58 | 100.0 % | 61 | 92.4 % | 66 |
+| 38. HERNAN TIMPE | 1 | 100.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
+| 39. HDA. SAN FRANCISCO | 1 | 100.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
+| 40. MONTESERRIN ALTO | 12 | 42.9 % | 11 | 91.7 % | 10 | 83.3 % | 25 | 89.3 % | 28 |
+| 41. CHAUPIESTANCIA | 80 | 57.6 % | 79 | 98.8 % | 78 | 97.5 % | 122 | 87.8 % | 139 |
+| 42. PUEBLO DE OTON | 111 | 72.5 % | 110 | 99.1 % | 110 | 99.1 % | 137 | 89.5 % | 153 |
+| 43. CANGAHUAPUNGO | 105 | 80.2 % | 105 | 100.0 % | 104 | 99.0 % | 126 | 96.2 % | 131 |
+| 44. CHINCHIN LOMA | 64 | 72.7 % | 62 | 96.9 % | 63 | 98.4 % | 80 | 90.9 % | 88 |
+| 45. ASO. ROSALIA | 22 | 56.4 % | 14 | 63.6 % | 19 | 86.4 % | 36 | 92.3 % | 39 |
+| 46. SR. COLOMA MONT. BAJO | 4 | 100.0 % | 4 | 100.0 % | 4 | 100.0 % | 4 | 100.0 % | 4 |
+| 47. HDA. GUANGULQUI | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
+| 48. PUEBLO DE ASCAZUBI | 2 | 100.0 % | 2 | 100.0 % | 1 | 50.0 % | 2 | 100.0 % | 2 |
+| 49. ASO. EL MANZANO | 14 | 77.8 % | 13 | 92.9 % | 13 | 92.9 % | 17 | 94.4 % | 18 |
+| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 28 | 70.0 % | 26 | 92.9 % | 25 | 89.3 % | 38 | 95.0 % | 40 |
+| **Total del sector** | **557** | **70.6 %** | **539** | **96.8 %** | **542** | **97.3 %** | **719** | **91.1 %** | **789** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*La vivienda se identifica por el material de construcción declarado. Criterio del cliente (9 de agosto de 2026): sin material de construcción no hay vivienda, y entonces agua y energía vacías son la respuesta correcta, no un dato faltante.*
 
 
 ### Conocimiento de la presa
@@ -1302,21 +1340,23 @@ Si el titular entrevistado sabe de la construcción de la presa del proyecto.
 |---|---|---|
 | 36. OTONCITO | 42.4 % | 66 |
 | 37. PAMBAMARQUITO | 87.3 % | 63 |
-| 38. HERNAN TIMPE | 100.0 % | 1 |
-| 39. HDA. SAN FRANCISCO | 100.0 % | 1 |
+| 38. HERNAN TIMPE | 1 de 1 | 1 |
+| 39. HDA. SAN FRANCISCO | 1 de 1 | 1 |
 | 40. MONTESERRIN ALTO | 100.0 % | 28 |
 | 41. CHAUPIESTANCIA | 100.0 % | 103 |
 | 42. PUEBLO DE OTON | 81.7 % | 153 |
 | 43. CANGAHUAPUNGO | 64.9 % | 131 |
 | 44. CHINCHIN LOMA | 98.8 % | 86 |
 | 45. ASO. ROSALIA | 94.9 % | 39 |
-| 46. SR. COLOMA MONT. BAJO | 100.0 % | 4 |
-| 47. HDA. GUANGULQUI | 100.0 % | 1 |
-| 48. PUEBLO DE ASCAZUBI | 100.0 % | 2 |
+| 46. SR. COLOMA MONT. BAJO | 4 de 4 | 4 |
+| 47. HDA. GUANGULQUI | 1 de 1 | 1 |
+| 48. PUEBLO DE ASCAZUBI | 2 de 2 | 2 |
 | 49. ASO. EL MANZANO | 100.0 % | 16 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 100.0 % | 40 |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ### Capacitación recibida y demandada
@@ -1328,21 +1368,23 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 |---|---|---|---|
 | 36. OTONCITO | 51.5 % | 59.1 % | Manejo de sistemas de riego (38); Otros temas (5) |
 | 37. PAMBAMARQUITO | 55.6 % | 100.0 % | Manejo de sistemas de riego (63) |
-| 38. HERNAN TIMPE | 0.0 % | 100.0 % | Manejo de sistemas de riego (1) |
-| 39. HDA. SAN FRANCISCO | 0.0 % | 100.0 % | Manejo de sistemas de riego (1) |
+| 38. HERNAN TIMPE | 0 de 1 | 1 de 1 | Manejo de sistemas de riego (1) |
+| 39. HDA. SAN FRANCISCO | 0 de 1 | 1 de 1 | Manejo de sistemas de riego (1) |
 | 40. MONTESERRIN ALTO | 46.4 % | 10.7 % | Manejo de sistemas de riego (5) |
 | 41. CHAUPIESTANCIA | 99.0 % | 94.1 % | Manejo de sistemas de riego (93) |
 | 42. PUEBLO DE OTON | 76.5 % | 98.0 % | Manejo de sistemas de riego (150) |
 | 43. CANGAHUAPUNGO | 58.8 % | 73.3 % | Manejo de sistemas de riego (97) |
 | 44. CHINCHIN LOMA | 54.7 % | 98.8 % | Manejo de sistemas de riego (85) |
 | 45. ASO. ROSALIA | 60.5 % | 97.4 % | Manejo de sistemas de riego (35); Otros temas (1) |
-| 46. SR. COLOMA MONT. BAJO | 100.0 % | 100.0 % | Manejo de sistemas de riego (4) |
-| 47. HDA. GUANGULQUI | 100.0 % | 100.0 % | Manejo de sistemas de riego (1) |
-| 48. PUEBLO DE ASCAZUBI | 100.0 % | 100.0 % | Manejo de sistemas de riego (2) |
+| 46. SR. COLOMA MONT. BAJO | 4 de 4 | 4 de 4 | Manejo de sistemas de riego (4) |
+| 47. HDA. GUANGULQUI | 1 de 1 | 1 de 1 | Manejo de sistemas de riego (1) |
+| 48. PUEBLO DE ASCAZUBI | 2 de 2 | 2 de 2 | Manejo de sistemas de riego (2) |
 | 49. ASO. EL MANZANO | 93.8 % | 100.0 % | Manejo de sistemas de riego (15); Producción pecuaria (1) |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 87.5 % | 92.5 % | Manejo de sistemas de riego (35); Producción pecuaria (2) |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
+
+*En las comunidades con menos de 5 respuestas se muestra el conteo en lugar del porcentaje: con tan pocas fichas el porcentaje describe un caso individual, no una tendencia.*
 
 
 ---
