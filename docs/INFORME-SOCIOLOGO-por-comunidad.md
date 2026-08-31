@@ -26,36 +26,36 @@ En la tierra dominan Pasto no mejorado (1,283.4 ha), Pasto mejorado (716.4 ha), 
 
 En el perfil de las personas, 68.0 % de los regantes con respuesta tiene escritura o título de propiedad. 48.2 % alcanzó la primaria y 12.9 % no tiene instrucción formal. El 87.7 % conoce la presa del proyecto y el 94.5 % quisiera recibir capacitación.
 
-### Fichas y regantes
+### Fichas principales, adicionales y totales
 
-Cuántas fichas catastrales se levantaron en cada comunidad: una por predio. Los regantes son los titulares entrevistados (fichas principales); los predios adicionales son otros predios del mismo titular.
+Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas | Regantes | Predios adicionales | Predios catastrales |
+| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
-| 1. LARCACHACA | 226 | 149 | 77 | 165 |
-| 2. LA LIBERTAD | 153 | 118 | 35 | 139 |
-| 3. SAN ANTONIO | 185 | 100 | 85 | 177 |
-| 4. SAN JOSE | 200 | 110 | 90 | 195 |
-| 5. MILAGRO | 81 | 46 | 35 | 76 |
-| 6. CHAMBITOLA | 262 | 116 | 146 | 223 |
-| 7. LA CANDELARIA | 318 | 171 | 147 | 280 |
-| 8. CARRERA | 497 | 291 | 206 | 450 |
-| 9. COCHAPAMBA | 492 | 239 | 253 | 458 |
-| 10. JESUS DE GRAN PODER | 104 | 45 | 59 | 100 |
-| 11. AS. SANTA BARBARA | 10 | 7 | 3 | 8 |
-| 12. ASO. POROTOG | 115 | 43 | 72 | 108 |
-| 13. COMUNA POROTOG | 248 | 79 | 169 | 240 |
-| 14. ASO. 17 DE JUNIO | 34 | 28 | 6 | 29 |
-| 15. ELIOT AVELLANEDA | 1 | 1 | 0 | 1 |
-| 16. CORDILLERA LOS ANDES | 53 | 39 | 14 | 37 |
-| 17. COMUNA JURIDICA IZACATA | 142 | 66 | 76 | 137 |
-| 18. IZACATA GRANDE | 110 | 42 | 68 | 100 |
-| 19. LOS ANDES IZACTA | 109 | 49 | 60 | 105 |
-| 20. ASO. LOMA GORDA | 58 | 44 | 14 | 56 |
-| 21. ASO. SAN JACINTO | 6 | 6 | 0 | 4 |
-| 22. MATIAS IMBAGO | 6 | 1 | 5 | 6 |
-| **Total del sector** | **3,410** | **1,790** | **1,620** | **3,094** |
+| 1. LARCACHACA | 149 | 77 | 226 | 165 |
+| 2. LA LIBERTAD | 118 | 35 | 153 | 139 |
+| 3. SAN ANTONIO | 100 | 85 | 185 | 177 |
+| 4. SAN JOSE | 110 | 90 | 200 | 195 |
+| 5. MILAGRO | 46 | 35 | 81 | 76 |
+| 6. CHAMBITOLA | 116 | 146 | 262 | 223 |
+| 7. LA CANDELARIA | 171 | 147 | 318 | 280 |
+| 8. CARRERA | 291 | 206 | 497 | 450 |
+| 9. COCHAPAMBA | 239 | 253 | 492 | 458 |
+| 10. JESUS DE GRAN PODER | 45 | 59 | 104 | 100 |
+| 11. AS. SANTA BARBARA | 7 | 3 | 10 | 8 |
+| 12. ASO. POROTOG | 43 | 72 | 115 | 108 |
+| 13. COMUNA POROTOG | 79 | 169 | 248 | 240 |
+| 14. ASO. 17 DE JUNIO | 28 | 6 | 34 | 29 |
+| 15. ELIOT AVELLANEDA | 1 | 0 | 1 | 1 |
+| 16. CORDILLERA LOS ANDES | 39 | 14 | 53 | 37 |
+| 17. COMUNA JURIDICA IZACATA | 66 | 76 | 142 | 137 |
+| 18. IZACATA GRANDE | 42 | 68 | 110 | 100 |
+| 19. LOS ANDES IZACTA | 49 | 60 | 109 | 105 |
+| 20. ASO. LOMA GORDA | 44 | 14 | 58 | 56 |
+| 21. ASO. SAN JACINTO | 6 | 0 | 6 | 4 |
+| 22. MATIAS IMBAGO | 1 | 5 | 6 | 6 |
+| **Total del sector** | **1,790** | **1,620** | **3,410** | **3,094** |
 
 *Fuente: superficie_por_comunidad.json (fuente única del padrón).*
 
@@ -545,27 +545,27 @@ En la tierra dominan Pasto no mejorado (714.8 ha), Otros (181.6 ha), Maíz (169.
 
 En el perfil de las personas, 68.3 % de los regantes con respuesta tiene escritura o título de propiedad. 46.1 % alcanzó la primaria y 27.9 % no tiene instrucción formal. El 88.7 % conoce la presa del proyecto y el 89.9 % quisiera recibir capacitación.
 
-### Fichas y regantes
+### Fichas principales, adicionales y totales
 
-Cuántas fichas catastrales se levantaron en cada comunidad: una por predio. Los regantes son los titulares entrevistados (fichas principales); los predios adicionales son otros predios del mismo titular.
+Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas | Regantes | Predios adicionales | Predios catastrales |
+| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
-| 23. CUARTO LOTE | 66 | 47 | 19 | 57 |
-| 24. ASO. SAN VICENTE BAJO | 153 | 108 | 45 | 138 |
-| 25. STA. ROSA DE PACCHA | 95 | 56 | 39 | 92 |
-| 26. ASO. SAN VICENTE ALTO | 94 | 68 | 26 | 88 |
-| 27. PUCARA | 349 | 198 | 151 | 318 |
-| 28. ASO. SAN PEDRO | 45 | 33 | 12 | 44 |
-| 29. PITANA ALTO | 133 | 117 | 16 | 78 |
-| 30. ALPAKA | 492 | 492 | 0 | 489 |
-| 31. ASO. PITANA BAJO | 75 | 60 | 15 | 39 |
-| 32. PRO MEJORAS PITANA BAJO | 188 | 158 | 30 | 115 |
-| 33. STA. ROSA DE PINGULMI | 121 | 86 | 35 | 117 |
-| 34. STA. MARIANITA DE PINGULMI | 328 | 208 | 120 | 274 |
-| 35. PAMBAMARCA | 105 | 97 | 8 | 101 |
-| **Total del sector** | **2,244** | **1,728** | **516** | **1,950** |
+| 23. CUARTO LOTE | 47 | 19 | 66 | 57 |
+| 24. ASO. SAN VICENTE BAJO | 108 | 45 | 153 | 138 |
+| 25. STA. ROSA DE PACCHA | 56 | 39 | 95 | 92 |
+| 26. ASO. SAN VICENTE ALTO | 68 | 26 | 94 | 88 |
+| 27. PUCARA | 198 | 151 | 349 | 318 |
+| 28. ASO. SAN PEDRO | 33 | 12 | 45 | 44 |
+| 29. PITANA ALTO | 117 | 16 | 133 | 78 |
+| 30. ALPAKA | 492 | 0 | 492 | 489 |
+| 31. ASO. PITANA BAJO | 60 | 15 | 75 | 39 |
+| 32. PRO MEJORAS PITANA BAJO | 158 | 30 | 188 | 115 |
+| 33. STA. ROSA DE PINGULMI | 86 | 35 | 121 | 117 |
+| 34. STA. MARIANITA DE PINGULMI | 208 | 120 | 328 | 274 |
+| 35. PAMBAMARCA | 97 | 8 | 105 | 101 |
+| **Total del sector** | **1,728** | **516** | **2,244** | **1,950** |
 
 *Fuente: superficie_por_comunidad.json (fuente única del padrón).*
 
@@ -939,29 +939,29 @@ En la tierra dominan Pasto no mejorado (957.9 ha), Maíz (126.5 ha), Papas (82.3
 
 En el perfil de las personas, 71.6 % de los regantes con respuesta tiene escritura o título de propiedad. 62.0 % alcanzó la primaria y 6.5 % no tiene instrucción formal. El 83.2 % conoce la presa del proyecto y el 86.2 % quisiera recibir capacitación.
 
-### Fichas y regantes
+### Fichas principales, adicionales y totales
 
-Cuántas fichas catastrales se levantaron en cada comunidad: una por predio. Los regantes son los titulares entrevistados (fichas principales); los predios adicionales son otros predios del mismo titular.
+Una ficha principal por regante entrevistado y una ficha adicional por cada otro predio del mismo titular; las fichas totales suman las dos. Los predios catastrales son los polígonos distintos del catastro municipal que esas fichas ocupan.
 
 <!-- tabla-completa -->
-| Comunidad | Fichas | Regantes | Predios adicionales | Predios catastrales |
+| Comunidad | Fichas principales (regantes) | Fichas adicionales | Fichas totales | Predios catastrales |
 |---|---|---|---|---|
-| 36. OTONCITO | 106 | 78 | 28 | 82 |
-| 37. PAMBAMARQUITO | 76 | 66 | 10 | 72 |
-| 38. HERNAN TIMPE | 1 | 1 | 0 | 1 |
-| 39. HDA. SAN FRANCISCO | 1 | 1 | 0 | 1 |
-| 40. MONTESERRIN ALTO | 64 | 28 | 36 | 62 |
-| 41. CHAUPIESTANCIA | 191 | 139 | 52 | 181 |
-| 42. PUEBLO DE OTON | 193 | 153 | 40 | 187 |
-| 43. CANGAHUAPUNGO | 168 | 131 | 37 | 128 |
-| 44. CHINCHIN LOMA | 130 | 88 | 42 | 125 |
-| 45. ASO. ROSALIA | 47 | 39 | 8 | 31 |
-| 46. SR. COLOMA MONT. BAJO | 122 | 4 | 118 | 1 |
-| 47. HDA. GUANGULQUI | 4 | 1 | 3 | 4 |
-| 48. PUEBLO DE ASCAZUBI | 2 | 2 | 0 | 1 |
-| 49. ASO. EL MANZANO | 21 | 18 | 3 | 19 |
-| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 50 | 40 | 10 | 48 |
-| **Total del sector** | **1,176** | **789** | **387** | **943** |
+| 36. OTONCITO | 78 | 28 | 106 | 82 |
+| 37. PAMBAMARQUITO | 66 | 10 | 76 | 72 |
+| 38. HERNAN TIMPE | 1 | 0 | 1 | 1 |
+| 39. HDA. SAN FRANCISCO | 1 | 0 | 1 | 1 |
+| 40. MONTESERRIN ALTO | 28 | 36 | 64 | 62 |
+| 41. CHAUPIESTANCIA | 139 | 52 | 191 | 181 |
+| 42. PUEBLO DE OTON | 153 | 40 | 193 | 187 |
+| 43. CANGAHUAPUNGO | 131 | 37 | 168 | 128 |
+| 44. CHINCHIN LOMA | 88 | 42 | 130 | 125 |
+| 45. ASO. ROSALIA | 39 | 8 | 47 | 31 |
+| 46. SR. COLOMA MONT. BAJO | 4 | 118 | 122 | 1 |
+| 47. HDA. GUANGULQUI | 1 | 3 | 4 | 4 |
+| 48. PUEBLO DE ASCAZUBI | 2 | 0 | 2 | 1 |
+| 49. ASO. EL MANZANO | 18 | 3 | 21 | 19 |
+| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 40 | 10 | 50 | 48 |
+| **Total del sector** | **789** | **387** | **1,176** | **943** |
 
 *Fuente: superficie_por_comunidad.json (fuente única del padrón).*
 

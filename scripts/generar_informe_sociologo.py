@@ -849,20 +849,20 @@ def cuadros_sector(coms, sec_sup, caudal):
     C = []
     nota_alpaka = any(c['key'] == 'ALPAKA' for c in coms)
 
-    # A1 — padrón
+    # A1 — padrón (misma terminología que las cards del Dashboard, 31-ago)
     C.append(Cuadro(
-        'Fichas y regantes',
-        'Cuántas fichas catastrales se levantaron en cada comunidad: una por '
-        'predio. Los regantes son los titulares entrevistados (fichas '
-        'principales); los predios adicionales son otros predios del mismo '
-        'titular.',
-        ['Comunidad', 'Fichas', 'Regantes', 'Predios adicionales',
-         'Predios catastrales'],
-        [[et(c), f0(c['fichas']), f0(c['regantes']), f0(c['adicionales']),
+        'Fichas principales, adicionales y totales',
+        'Una ficha principal por regante entrevistado y una ficha adicional '
+        'por cada otro predio del mismo titular; las fichas totales suman '
+        'las dos. Los predios catastrales son los polígonos distintos del '
+        'catastro municipal que esas fichas ocupan.',
+        ['Comunidad', 'Fichas principales (regantes)', 'Fichas adicionales',
+         'Fichas totales', 'Predios catastrales'],
+        [[et(c), f0(c['regantes']), f0(c['adicionales']), f0(c['fichas']),
           f0(c['predios_catastrales'])] for c in coms],
-        ['Total del sector', f0(sum(c['fichas'] for c in coms)),
-         f0(sum(c['regantes'] for c in coms)),
+        ['Total del sector', f0(sum(c['regantes'] for c in coms)),
          f0(sum(c['adicionales'] for c in coms)),
+         f0(sum(c['fichas'] for c in coms)),
          f0(sum(c['predios_catastrales'] for c in coms))],
         ['Fuente: superficie_por_comunidad.json (fuente única del padrón).']))
 
@@ -1367,9 +1367,10 @@ def escribir_xlsx(comunidades, ruta):
     base = lambda c: [c['n'], c['oficial'], c['sector']]
     cols_base = ['N.º', 'Comunidad (listado oficial)', 'Sector']
 
-    hoja('Padron', cols_base + ['Fichas', 'Regantes', 'Adicionales',
+    hoja('Padron', cols_base + ['Fichas principales (regantes)',
+                                'Fichas adicionales', 'Fichas totales',
                                 'Predios catastrales'],
-         [base(c) + [c['fichas'], c['regantes'], c['adicionales'],
+         [base(c) + [c['regantes'], c['adicionales'], c['fichas'],
                      c['predios_catastrales']] for c in comunidades])
 
     hoja('Superficie declarada',
