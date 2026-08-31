@@ -173,6 +173,14 @@ def convertir(ruta_md, ruta_docx, max_filas=0):
     normal.font.size = Pt(10.5)
     normal.paragraph_format.space_after = Pt(6)
 
+    # Word recomprime las imágenes al guardar (Opciones → Avanzadas → Tamaño y
+    # calidad de imagen) y los mapas satelitales pierden nitidez sin que nadie
+    # lo pida. Este ajuste del documento lo desactiva: equivale a marcar «No
+    # comprimir las imágenes del archivo». Pedido de JAVIKO, 31-ago-2026.
+    ajustes = doc.settings.element
+    if ajustes.find(qn('w:doNotAutoCompressPictures')) is None:
+        ajustes.append(OxmlElement('w:doNotAutoCompressPictures'))
+
     i = 0
     tablas_cortadas = 0
     sin_recorte = False

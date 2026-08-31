@@ -559,7 +559,7 @@ def _mercator(lon, lat):
             math.log(math.tan(math.pi / 4 + math.radians(lat) / 2)) * R)
 
 
-def descargar_base_satelital(limites, ancho_px=2400):
+def descargar_base_satelital(limites, ancho_px=4200):
     """Mosaico satelital de Esri World Imagery para la extensión del sistema
     (la misma base del mapa web del proyecto). Se descarga UNA vez y se
     reutiliza en los cuatro mapas. Si no hay red, se avisa y los mapas salen
@@ -680,7 +680,7 @@ def generar_mapas(catalogo, pdf_ruta=None):
     halo = [pe.withStroke(linewidth=2.4, foreground='white')]
     halo_blanco = [pe.withStroke(linewidth=2.2, foreground='#1a1a1a')]
 
-    def dibujar(nombre_sector, pdf=None):
+    def dibujar(nombre_sector, archivo=None):
         con_leyenda = nombre_sector is not None
         fig, ax = plt.subplots(figsize=(7.4, 6.4), dpi=150)
         fig.subplots_adjust(left=0.01, right=0.70 if con_leyenda else 0.99,
@@ -759,38 +759,48 @@ def generar_mapas(catalogo, pdf_ruta=None):
         ax.set_aspect('equal')
         ax.axis('off')
         buf = io.BytesIO()
-        # JPEG: la foto satelital en PNG pesaría megas por mapa
-        fig.savefig(buf, format='jpg', dpi=200 if pdf is not None else 150,
-                    pil_kwargs={'quality': 87})
+        # JPEG: la foto satelital en PNG pesaría megas por mapa. La web va a
+        # 150 dpi; el archivo en disco —el que acaba en el Word y en el anexo
+        # PDF— sale a 300 dpi sin submuestreo de color, para que se pueda
+        # imprimir y ampliar sin que se deshaga (JAVIKO, 31-ago-2026).
+        fig.savefig(buf, format='jpg', dpi=150, pil_kwargs={'quality': 88})
+        if archivo:
+            fig.savefig(archivo, format='jpg', dpi=300,
+                        pil_kwargs={'quality': 96, 'subsampling': 0})
         plt.close(fig)
         return base64.b64encode(buf.getvalue()).decode('ascii')
 
     # el anexo se arma con Pillow desde los mismos JPEG: PdfPages de
     # matplotlib incrusta el satélite sin comprimir y la salida pesa 12 MB
-    pdf = pdf_ruta is not None
-    mapas = {'general': dibujar(None, pdf)}
-    for sec in ('Sector 1', 'Sector 2', 'Sector 3'):
-        mapas[sec] = dibujar(sec, pdf)
-
-    # Los mismos mapas en disco: el HTML los lleva embebidos en base64, pero
-    # el Markdown (y por tanto el Word) necesita archivos a los que apuntar.
-    # Se guardan junto al .md para que la ruta relativa funcione.
+    # Los mapas en disco: el HTML los lleva embebidos en base64, pero el
+    # Markdown (y por tanto el Word) necesita archivos a los que apuntar, y el
+    # anexo PDF se arma con esos mismos archivos de alta resolución.
+    carpeta = os.path.join(BASE, 'docs', DIR_MAPAS)
+    rutas = {}
     if pdf_ruta:
-        carpeta = os.path.join(BASE, 'docs', DIR_MAPAS)
         os.makedirs(carpeta, exist_ok=True)
-        for clave, b64 in mapas.items():
-            nombre = clave.lower().replace(' ', '-') + '.jpg'
-            with open(os.path.join(carpeta, nombre), 'wb') as f:
-                f.write(base64.b64decode(b64))
 
-    if pdf:
+    def ruta_de(clave):
+        if not pdf_ruta:
+            return None
+        r = os.path.join(carpeta, clave.lower().replace(' ', '-') + '.jpg')
+        rutas[clave] = r
+        return r
+
+    mapas = {'general': dibujar(None, ruta_de('general'))}
+    for sec in ('Sector 1', 'Sector 2', 'Sector 3'):
+        mapas[sec] = dibujar(sec, ruta_de(sec))
+
+    if pdf_ruta:
         from PIL import Image
-        paginas = [Image.open(io.BytesIO(base64.b64decode(mapas[k])))
-                   for k in ('general', 'Sector 1', 'Sector 2', 'Sector 3')]
+        orden = ('general', 'Sector 1', 'Sector 2', 'Sector 3')
+        paginas = [Image.open(rutas[k]) for k in orden]
         paginas[0].save(pdf_ruta, save_all=True, append_images=paginas[1:],
+                        resolution=300.0,
                         title='Anexo cartográfico — Informe por Comunidad',
                         author=E.PIE_INSTITUCION)
-        print(f'✔ {os.path.relpath(pdf_ruta, BASE)}')
+        mb = os.path.getsize(pdf_ruta) / 1e6
+        print(f'✔ {os.path.relpath(pdf_ruta, BASE)} ({mb:.1f} MB, 300 dpi)')
     return mapas
 
 
