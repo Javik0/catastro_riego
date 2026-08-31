@@ -34,7 +34,7 @@ SALIDA = os.path.join(DOCS, 'INFORME-CONSOLIDADO-padron-regantes.html')
 CAPITULOS = [
     ('CAPITULO-estructura-del-padron.html', 'Estructura del padrón',
      'generar_capitulo_estructura.py'),
-    ('CAPITULO-perfil-del-regante.html', 'Perfil del regante',
+    ('CAPITULO-perfil-del-titular.html', 'Perfil del titular',
      'generar_capitulo_perfil.py'),
     ('CAPITULO-predio-y-agua.html', 'El predio y el acceso al agua',
      'generar_capitulo_riego.py'),

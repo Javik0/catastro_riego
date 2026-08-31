@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Capítulo del informe técnico: "Perfil del regante".
+Capítulo del informe técnico: "Perfil del titular".
 
 Cubre la sección 1 de la ficha (Datos del propietario): escolaridad, tenencia
 de la tierra, composición familiar y distribución territorial.
@@ -14,8 +14,8 @@ queda como "no determinado" en lugar de forzar una clasificación. El capítulo
 declara que es una estimación y no un dato registrado.
 
 SALIDAS
-  docs/CAPITULO-perfil-del-regante.html
-  build_entrega/Perfil_del_Regante.xlsx
+  docs/CAPITULO-perfil-del-titular.html
+  build_entrega/Perfil_del_Titular.xlsx
 """
 
 import os
@@ -32,8 +32,8 @@ import informe_estilo as E  # noqa: E402
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-HTML = os.path.join(BASE, 'docs', 'CAPITULO-perfil-del-regante.html')
-XLSX = os.path.join(BASE, 'build_entrega', 'Perfil_del_Regante.xlsx')
+HTML = os.path.join(BASE, 'docs', 'CAPITULO-perfil-del-titular.html')
+XLSX = os.path.join(BASE, 'build_entrega', 'Perfil_del_Titular.xlsx')
 MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
          'octubre noviembre diciembre').split()
 
@@ -170,7 +170,7 @@ def main():
 
     B = []
     A = B.append
-    A(E.cabecera('Perfil del regante',
+    A(E.cabecera('Perfil del titular',
                  'Escolaridad, tenencia de la tierra y composición familiar · '
                  'Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, N, pendientes))
@@ -299,7 +299,7 @@ def main():
 
     os.makedirs(os.path.dirname(HTML), exist_ok=True)
     with open(HTML, 'w', encoding='utf-8') as f:
-        f.write(E.documento('Perfil del regante — Padrón Guanguilquí–Porotog',
+        f.write(E.documento('Perfil del titular — Padrón Guanguilquí–Porotog',
                             '\n'.join(B)))
     print(f'  capítulo: {os.path.relpath(HTML, BASE)}  (corte: {corte_txt})')
 

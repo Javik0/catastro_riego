@@ -2,7 +2,7 @@
 
 *Resultados de la ficha catastral por comunidad y sector de investigación · Universo declarado por los comuneros*
 
-*Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 31 de agosto de 2026.*
+*Datos al 19 de agosto de 2026.*
 
 ## Presentación
 
@@ -16,7 +16,7 @@ CÓMO SE CUENTA EN ESTE INFORME. Cada titular entrevistado llenó una **ficha pr
 
 Dos universos conviven en los cuadros y cada uno nombra el suyo al pie: los datos de tierra y producción salen de TODAS las fichas (cada ficha es un predio); los datos de las personas (tenencia, instrucción, hijos, capacitación) salen SOLO de las fichas principales, porque las adicionales pertenecen al mismo titular y duplicarían su respuesta. El respaldo ficha por ficha existe en el Excel catastral del proyecto; aquí no se publican listados nominales.
 
-Los datos de campo llegan hasta el 5 de agosto de 2026: desde esa fecha no se ha incorporado ninguna ficha nueva al padrón. Las cifras de este documento incorporan además las depuraciones de gabinete posteriores (reparto de áreas, fusiones y correcciones de comunidad y de claves catastrales), vigentes al 31 de agosto de 2026.
+Las cifras corresponden al padrón al 19 de agosto de 2026, la misma fecha de referencia de los demás documentos entregados al consorcio. El levantamiento de campo está cerrado: todas las secciones de la ficha se completaron y desde entonces no se ha incorporado ninguna ficha nueva al padrón.
 
 ![Las 50 comunidades del sistema, coloreadas por sector de investigación, sobre imagen satelital (Esri World Imagery). Límites por agregación de los predios investigados (comunidades.geojson); mapa generado junto con el documento.](mapas-sociologo/general.jpg)
 
@@ -1575,4 +1575,4 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 
 ---
 
-*Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog · Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 31 de agosto de 2026. Documento generado por scripts/generar_informe_sociologo.py; especificaciones del cliente, 24-ago-2026.*
+*Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog · Datos al 19 de agosto de 2026. Documento generado por scripts/generar_informe_sociologo.py; especificaciones del cliente, 24-ago-2026.*

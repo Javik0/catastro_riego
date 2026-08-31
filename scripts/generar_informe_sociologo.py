@@ -99,6 +99,15 @@ MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
 # Markdown y el Word puedan apuntarlos. El HTML los lleva embebidos.
 DIR_MAPAS = 'mapas-sociologo'
 
+# Fecha que cita el documento. Es EDITORIAL, no calculada: el 19 de agosto de
+# 2026 es cuando se publicó y entregó el paquete al consorcio, y por eso todos
+# los documentos deben citar la misma referencia (decisión de JAVIKO,
+# 31-ago-2026). Verificado que las cifras no se han movido desde entonces: la
+# depuración posterior (corrección de Coyago, 30-ago) no alteró ningún
+# agregado. Si una sincronización futura cambia las cifras, hay que mover esta
+# fecha o el documento estaría citando datos que no son los de ese día.
+FECHA_CORTE = '19 de agosto de 2026'
+
 NOTA_P001 = ('ALPAKA: el dato de las fichas P001 (representación del total del '
              'fraccionamiento) queda pendiente a lo que las comunidades definan.')
 NOTA_ALPAKA_LOTEO = ('ALPAKA es un fraccionamiento digitalizado desde planos de '
@@ -1394,11 +1403,11 @@ def introduccion_general(sup, caudal, corte_txt, hoy_txt):
         'nominales.',
         # el corte tiene dos fechas y conviene decirlo: la última ficha de
         # campo es del 5-ago, pero las cifras llevan la depuración posterior
-        f'Los datos de campo llegan hasta el {corte_txt}: desde esa fecha no '
-        'se ha incorporado ninguna ficha nueva al padrón. Las cifras de este '
-        'documento incorporan además las depuraciones de gabinete '
-        'posteriores (reparto de áreas, fusiones y correcciones de comunidad '
-        f'y de claves catastrales), vigentes al {hoy_txt}.',
+        f'Las cifras corresponden al padrón al {hoy_txt}, la misma fecha '
+        'de referencia de los demás documentos entregados al consorcio. El '
+        'levantamiento de campo está cerrado: todas las secciones de la '
+        'ficha se completaron y desde entonces no se ha incorporado ninguna '
+        'ficha nueva al padrón.',
     ]
     return parrafos
 
@@ -1415,10 +1424,8 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
     if solo_sector:
         subtitulo += f' · MUESTRA: Sector {solo_sector}'
 
-    import datetime
-    hoy_txt = fecha_es(datetime.date.today())
-    corte_linea = (f'Levantamiento de campo al {corte_txt} · cifras con la '
-                   f'depuración vigente al {hoy_txt}')
+    hoy_txt = FECHA_CORTE
+    corte_linea = f'Datos al {FECHA_CORTE}'
 
     H = [E.cabecera(titulo, subtitulo)]
     M = [f'# {titulo}', '', f'*{subtitulo}*', '',
