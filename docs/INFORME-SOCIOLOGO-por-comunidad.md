@@ -2,7 +2,7 @@
 
 *Resultados de la ficha catastral por comunidad y sector de investigación · Universo declarado por los comuneros*
 
-*Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 29 de agosto de 2026.*
+*Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 31 de agosto de 2026.*
 
 ## Presentación
 
@@ -14,7 +14,7 @@ El caudal del sistema es de 950.16 litros por segundo: 733.51 l/s que reciben la
 
 Dos universos conviven en los cuadros y cada uno nombra el suyo al pie: los datos de tierra y producción salen de TODAS las fichas (cada ficha es un predio); los datos de las personas (tenencia, instrucción, hijos, capacitación) salen SOLO de las fichas principales, porque las adicionales pertenecen al mismo titular y duplicarían su respuesta. El respaldo ficha por ficha existe en el Excel catastral del proyecto; aquí no se publican listados nominales.
 
-Los datos de campo llegan hasta el 5 de agosto de 2026: desde esa fecha no se ha incorporado ninguna ficha nueva al padrón. Las cifras de este documento incorporan además las depuraciones de gabinete posteriores (reparto de áreas, fusiones y correcciones de comunidad y de claves catastrales), vigentes al 29 de agosto de 2026.
+Los datos de campo llegan hasta el 5 de agosto de 2026: desde esa fecha no se ha incorporado ninguna ficha nueva al padrón. Las cifras de este documento incorporan además las depuraciones de gabinete posteriores (reparto de áreas, fusiones y correcciones de comunidad y de claves catastrales), vigentes al 31 de agosto de 2026.
 
 ## Sector 1 — 22 comunidades
 
@@ -1345,4 +1345,4 @@ Si el regante recibió capacitación, si le gustaría recibirla, y los temas que
 
 ---
 
-*Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog · Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 29 de agosto de 2026. Documento generado por scripts/generar_informe_sociologo.py; especificaciones del cliente, 24-ago-2026.*
+*Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog · Levantamiento de campo al 5 de agosto de 2026 · cifras con la depuración vigente al 31 de agosto de 2026. Documento generado por scripts/generar_informe_sociologo.py; especificaciones del cliente, 24-ago-2026.*

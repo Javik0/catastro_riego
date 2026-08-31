@@ -487,6 +487,36 @@ def _centro_etiqueta(anillos):
     return sum(xs) / len(xs), sum(ys) / len(ys)
 
 
+def _separar_etiquetas(comunidades, d_min=650.0):
+    """Separa las etiquetas que quedarían una sobre otra (Armando detectó el
+    16 montado sobre el 1, 30-ago-2026). Repulsión simple por pares en
+    metros Mercator: si dos centros quedan a menos de `d_min`, se empujan a
+    partes iguales sobre la línea que los une, unas pocas pasadas. La
+    posición ajustada va a `c['etiqueta']`; el centro real no se toca."""
+    import math
+    pos = [list(c['centro']) for c in comunidades]
+    for _ in range(40):
+        movido = False
+        for i in range(len(pos)):
+            for j in range(i + 1, len(pos)):
+                dx = pos[j][0] - pos[i][0]
+                dy = pos[j][1] - pos[i][1]
+                d = math.hypot(dx, dy)
+                if d < d_min:
+                    if d < 1:
+                        dx, dy, d = 1.0, 0.0, 1.0
+                    e = (d_min - d) / 2 / d
+                    pos[i][0] -= dx * e
+                    pos[i][1] -= dy * e
+                    pos[j][0] += dx * e
+                    pos[j][1] += dy * e
+                    movido = True
+        if not movido:
+            break
+    for c, p in zip(comunidades, pos):
+        c['etiqueta'] = tuple(p)
+
+
 def _mercator(lon, lat):
     """WGS84 → Web Mercator (EPSG:3857), el sistema de los mosaicos. A la
     latitud del proyecto (~0°) el metro Mercator coincide con el real, así
@@ -537,13 +567,16 @@ def descargar_base_satelital(limites, ancho_px=2400):
         url = ('https://server.arcgisonline.com/ArcGIS/rest/services/'
                f'World_Imagery/MapServer/tile/{z}/{ty}/{tx}')
         req = urllib.request.Request(url, headers={'User-Agent': 'padron-app'})
-        try:
-            with urllib.request.urlopen(req, timeout=25) as r:
-                img = Image.open(_io.BytesIO(r.read())).convert('RGB')
-            mosaico.paste(img, ((tx - tx0) * 256, (ty - ty0) * 256))
-            return True
-        except Exception:
-            return False
+        # un mosaico perdido deja un rectángulo gris en pleno mapa: 3 intentos
+        for _ in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=25) as r:
+                    img = Image.open(_io.BytesIO(r.read())).convert('RGB')
+                mosaico.paste(img, ((tx - tx0) * 256, (ty - ty0) * 256))
+                return True
+            except Exception:
+                continue
+        return False
 
     with ThreadPoolExecutor(max_workers=8) as ex:
         ok = sum(ex.map(traer, tiles))
@@ -597,6 +630,8 @@ def generar_mapas(catalogo, pdf_ruta=None):
                             'oficial': c['oficial'], 'anillos': anillos,
                             'centro': _centro_etiqueta(anillos)})
 
+    _separar_etiquetas(comunidades)
+
     # extensión: en grados para pedir mosaicos, en mercator para dibujar
     todos = [p for c in comunidades for a in c['anillos'] for p in a]
     xs, ys = [p[0] for p in todos], [p[1] for p in todos]
@@ -635,13 +670,17 @@ def generar_mapas(catalogo, pdf_ruta=None):
             else:
                 # el resto del sistema, atenuado sobre el satélite
                 relleno, alfa = '#ffffff', 0.4 if base is not None else 1.0
+            # el borde de comunidad va marcado (pedido de Armando, 30-ago):
+            # blanco sobre el relleno de sector en el mapa general, azul
+            # oscuro en el mapa del sector
             for a in c['anillos']:
                 ax.fill([p[0] for p in a], [p[1] for p in a],
                         facecolor=relleno, alpha=alfa,
-                        edgecolor='#24405e' if es else '#8896a8',
-                        linewidth=0.7 if es else 0.3, zorder=2 if es else 1)
+                        edgecolor=('white' if nombre_sector is None
+                                   else '#24405e') if es else '#8896a8',
+                        linewidth=0.9 if es else 0.3, zorder=2 if es else 1)
         for c in destacadas:
-            ax.annotate(str(c['n']), c['centro'], ha='center', va='center',
+            ax.annotate(str(c['n']), c['etiqueta'], ha='center', va='center',
                         fontsize=7.5, fontweight='bold', color='#24405e',
                         zorder=3, path_effects=halo)
 
