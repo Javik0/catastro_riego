@@ -18,11 +18,11 @@ Dos universos conviven en los cuadros y cada uno nombra el suyo al pie: los dato
 
 Las cifras corresponden al padrón al 19 de agosto de 2026, la misma fecha de referencia de los demás documentos entregados al consorcio. El levantamiento de campo está cerrado: todas las secciones de la ficha se completaron y desde entonces no se ha incorporado ninguna ficha nueva al padrón.
 
-![Las 50 comunidades del sistema, coloreadas por sector de investigación, sobre imagen satelital (Esri World Imagery). Límites por agregación de los predios investigados (comunidades.geojson); mapa generado junto con el documento.](mapas-sociologo/general.jpg)
+![El área de estudio sobre imagen satelital (Esri World Imagery): límites oficiales de comunas entregados por el GADM Cayambe, recortados al sistema y coloreados por sector de investigación (asignación por cruce espacial con las organizaciones de riego). La numeración 1–50 es la del listado oficial de organizaciones, la misma de los cuadros; mapa generado junto con el documento.](mapas-sociologo/general.jpg)
 
 ## Sector 1 — 22 comunidades
 
-![Ubicación de las comunidades del Sector 1. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-1.jpg)
+![Las comunas oficiales del Sector 1 (límites del GADM Cayambe, asignadas al sector por cruce espacial). La numeración es la del listado oficial de organizaciones del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-1.jpg)
 
 El Sector 1 agrupa 22 comunidades, con 3,410 fichas catastrales: 1,790 principales y 1,620 adicionales. En conjunto sus comuneros declaran 3,331.73 hectáreas, de las cuales 2,792.11 (83.8 %) se riegan. La comunidad de mayor superficie declarada del sector es COMUNA POROTOG (499.68 ha) y la de menor número de fichas es ELIOT AVELLANEDA (1 ficha).
 
@@ -627,7 +627,7 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 
 ## Sector 2 — 13 comunidades
 
-![Ubicación de las comunidades del Sector 2. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-2.jpg)
+![Las comunas oficiales del Sector 2 (límites del GADM Cayambe, asignadas al sector por cruce espacial). La numeración es la del listado oficial de organizaciones del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-2.jpg)
 
 El Sector 2 agrupa 13 comunidades, con 2,244 fichas catastrales: 1,728 principales y 516 adicionales. En conjunto sus comuneros declaran 2,258.23 hectáreas, de las cuales 1,788.92 (79.2 %) se riegan. La comunidad de mayor superficie declarada del sector es ALPAKA (907.82 ha) y la de menor número de fichas es ASO. SAN PEDRO (45 fichas).
 
@@ -1089,7 +1089,7 @@ Si el titular entrevistado recibió capacitación, si le gustaría recibirla, y 
 
 ## Sector 3 — 15 comunidades
 
-![Ubicación de las comunidades del Sector 3. La numeración es la del listado oficial del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-3.jpg)
+![Las comunas oficiales del Sector 3 (límites del GADM Cayambe, asignadas al sector por cruce espacial). La numeración es la del listado oficial de organizaciones del consorcio, la misma de los cuadros; el resto del sistema queda en gris.](mapas-sociologo/sector-3.jpg)
 
 El Sector 3 agrupa 15 comunidades, con 1,176 fichas catastrales: 789 principales y 387 adicionales. En conjunto sus comuneros declaran 2,402.94 hectáreas, de las cuales 1,594.03 (66.3 %) se riegan. La comunidad de mayor superficie declarada del sector es SR. COLOMA MONT. BAJO (809.38 ha) y la de menor número de fichas es HERNAN TIMPE (1 ficha).
 

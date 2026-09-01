@@ -658,13 +658,25 @@ def generar_mapas(catalogo, pdf_ruta=None):
     base del mapa web del proyecto, decisión de JAVIKO del 29-ago-2026);
     sin red, los mapas salen sobre fondo blanco y el documento no se detiene.
     Los cuatro mapas comparten extensión, para que siempre se vea dónde cae
-    cada sector dentro del sistema."""
+    cada sector dentro del sistema.
+
+    POLÍGONOS: la capa oficial de comunas entregada por el GADM, ya recortada
+    al área de estudio (public/geo/comunas_oficiales.geojson, 53 de 117) —
+    decisión de JAVIKO del 31-ago-2026; antes se dibujaba el dissolve de los
+    predios (comunidades.geojson), que ahora solo aporta la ubicación de las
+    etiquetas 1-50 de las organizaciones de riego. El sector de cada comuna se
+    asigna por CRUCE ESPACIAL (mayor área de intersección con las
+    organizaciones del sector): el cruce por nombre está prohibido en el
+    proyecto — una comuna puede contener varias organizaciones y hay nombres
+    iguales que designan sitios distintos."""
     import base64
     import io
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     import matplotlib.patheffects as pe
+    from shapely.geometry import shape
+    from shapely.ops import unary_union
 
     with open(os.path.join(GEO, 'comunidades.geojson'), encoding='utf-8') as f:
         capa = json.load(f)['features']
@@ -681,12 +693,42 @@ def generar_mapas(catalogo, pdf_ruta=None):
                    for a in _anillos(feat['geometry'])]
         comunidades.append({'n': c['n'], 'sector': c['sector'],
                             'oficial': c['oficial'], 'anillos': anillos,
-                            'centro': _centro_etiqueta(anillos)})
+                            'centro': _centro_etiqueta(anillos),
+                            'geom': shape(feat['geometry'])})
 
     _separar_etiquetas(comunidades)
 
-    # extensión: en grados para pedir mosaicos, en mercator para dibujar
-    todos = [p for c in comunidades for a in c['anillos'] for p in a]
+    # ── capa oficial de comunas, con su sector asignado espacialmente ──
+    with open(os.path.join(GEO, 'comunas_oficiales.geojson'),
+              encoding='utf-8') as f:
+        capa_comunas = json.load(f)['features']
+    geom_sector = {s: unary_union([c['geom'] for c in comunidades
+                                   if c['sector'] == s])
+                   for s in COLOR_SECTOR}
+    comunas = []
+    sin_sector = []
+    for feat in capa_comunas:
+        g = shape(feat['geometry'])
+        sector, area = None, 0.0
+        for s, sg in geom_sector.items():
+            a = g.intersection(sg).area
+            if a > area:
+                sector, area = s, a
+        anillos = [[_mercator(*p) for p in a_]
+                   for a_ in _anillos(feat['geometry'])]
+        comunas.append({'nombre': feat['properties'].get('comuna') or '',
+                        'sector': sector, 'anillos': anillos})
+        if sector is None:
+            sin_sector.append(feat['properties'].get('comuna') or '?')
+    if sin_sector:
+        print(f'ℹ Mapa: {len(sin_sector)} comunas sin organización de riego '
+              f'encima (van en gris neutro): {sin_sector}')
+
+    # extensión: en grados para pedir mosaicos, en mercator para dibujar.
+    # Manda la capa dibujada (las comunas); los centros de las etiquetas
+    # entran también por si alguna organización quedara fuera del recorte.
+    todos = [p for c in comunas for a in c['anillos'] for p in a] + \
+            [c['centro'] for c in comunidades]
     xs, ys = [p[0] for p in todos], [p[1] for p in todos]
     margen = 900  # metros
     limites = (min(xs) - margen, max(xs) + margen,
@@ -713,17 +755,26 @@ def generar_mapas(catalogo, pdf_ruta=None):
 
         destacadas = [c for c in comunidades
                       if nombre_sector is None or c['sector'] == nombre_sector]
-        for c in comunidades:
-            es = c in destacadas
-            if nombre_sector is None:
+        # Los polígonos son las COMUNAS OFICIALES; se destacan las del sector
+        # del capítulo. Dentro del sector cada comuna toma un fondo distinto
+        # de la paleta para distinguir vecinas, igual que hacía el dissolve.
+        idx_paleta = 0
+        for c in comunas:
+            es = (nombre_sector is None and c['sector'] is not None) or \
+                 c['sector'] == nombre_sector
+            if c['sector'] is None:
+                # comuna del recorte sin organización de riego encima
+                relleno, alfa = '#d7dce3', 0.45 if base is not None else 1.0
+            elif nombre_sector is None:
                 relleno, alfa = COLOR_SECTOR[c['sector']], 0.5
             elif es:
-                relleno = PALETA_COM[(c['n'] - 1) % len(PALETA_COM)]
+                relleno = PALETA_COM[idx_paleta % len(PALETA_COM)]
+                idx_paleta += 1
                 alfa = 0.55
             else:
                 # el resto del sistema, atenuado sobre el satélite
                 relleno, alfa = '#ffffff', 0.4 if base is not None else 1.0
-            # el borde de comunidad va marcado (pedido de Armando, 30-ago):
+            # el borde de comuna va marcado (pedido de Armando, 30-ago):
             # blanco sobre el relleno de sector en el mapa general, azul
             # oscuro en el mapa del sector
             for a in c['anillos']:
@@ -758,7 +809,8 @@ def generar_mapas(catalogo, pdf_ruta=None):
                                     color='white' if base is not None
                                     else '#24405e'))
         if base is not None:
-            ax.annotate('Base: Esri World Imagery', (x1 - (x1 - x0) * 0.02,
+            ax.annotate('Base: Esri World Imagery · Límites: comunas '
+                        'oficiales (GADM Cayambe)', (x1 - (x1 - x0) * 0.02,
                         y0 + (y1 - y0) * 0.02), ha='right', fontsize=5.5,
                         color='white', zorder=4, path_effects=halo_blanco)
 
@@ -1451,11 +1503,13 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
         H.append(f'<p>{p}</p>')
         # el glosario lleva <b> para el HTML; en Markdown va como **negrita**
         M += [p.replace('<b>', '**').replace('</b>', '**'), '']
-    pie_general = ('Las 50 comunidades del sistema, coloreadas por sector de '
-                   'investigación, sobre imagen satelital (Esri World '
-                   'Imagery). Límites por agregación de los predios '
-                   'investigados (comunidades.geojson); mapa generado junto '
-                   'con el documento.')
+    pie_general = ('El área de estudio sobre imagen satelital (Esri World '
+                   'Imagery): límites oficiales de comunas entregados por el '
+                   'GADM Cayambe, recortados al sistema y coloreados por '
+                   'sector de investigación (asignación por cruce espacial '
+                   'con las organizaciones de riego). La numeración 1–50 es '
+                   'la del listado oficial de organizaciones, la misma de '
+                   'los cuadros; mapa generado junto con el documento.')
     H.append(figura_mapa(mapas['general'], pie_general))
     M += [f'![{pie_general}]({DIR_MAPAS}/general.jpg)', '']
 
@@ -1473,9 +1527,11 @@ def construir_documento(comunidades, sup, caudal, corte_txt, fichas,
              'superficie declarada'),
             (f1(q_sec) + ' l/s', 'caudal de sus comunidades'),
         ]))
-        pie_sec = (f'Ubicación de las comunidades del {sec}. La numeración '
-                   'es la del listado oficial del consorcio, la misma de los '
-                   'cuadros; el resto del sistema queda en gris.')
+        pie_sec = (f'Las comunas oficiales del {sec} (límites del GADM '
+                   'Cayambe, asignadas al sector por cruce espacial). La '
+                   'numeración es la del listado oficial de organizaciones '
+                   'del consorcio, la misma de los cuadros; el resto del '
+                   'sistema queda en gris.')
         H.append(figura_mapa(mapas[sec], pie_sec))
         M += [f'![{pie_sec}]({DIR_MAPAS}/{sec.lower().replace(" ", "-")}.jpg)', '']
         for p in narrativa_sector(sec, coms, sec_sup):
