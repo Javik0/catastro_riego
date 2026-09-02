@@ -201,6 +201,10 @@ def cargar_datos():
     animales = leer('animales.json')
     sup = leer('superficie_por_comunidad.json')
     caudal = leer('caudal_por_comunidad.json')
+    # predios catastrales investigados, con su comunidad y su superficie: es la
+    # base del cuadro de tamaños (cada predio una vez, no una vez por ficha)
+    predios = [f['properties']
+               for f in leer('catastro_geo.geojson')['features']]
 
     # hijas PENDIENTES fuera de producción (duplican lo heredado de la madre)
     todas = [p for p in fichas
@@ -216,10 +220,26 @@ def cargar_datos():
     corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
                  if corte else 'la fecha de generación')
 
-    return fichas, todas, pri, cultivos, animales, sup, caudal, corte_txt
+    return fichas, todas, pri, cultivos, animales, sup, caudal, corte_txt, predios
 
 
 # ─── Agregación por comunidad ────────────────────────────────────────────────
+
+# Rangos de tamaño del predio, pedidos por el sociólogo del proyecto
+# (2-sep-2026, vía Armando). Son los mismos cortes del reporte «Terrenos por
+# rango de superficie», que existía suelto y él no encontraba dentro del
+# informe. Se cuenta POR PREDIO catastral, no por ficha: los 436 predios con
+# varias fichas se contarían hasta 122 veces (ver ese reporte).
+RANGOS_PREDIO = [
+    (0, 1000, 'Menos de 1.000 m²'),
+    (1000, 5000, '1.000 a 5.000 m²'),
+    (5000, 10000, '5.000 m² a 1 ha'),
+    (10000, 20000, '1 a 2 ha'),
+    (20000, 30000, '2 a 3 ha'),
+    (30000, 40000, '3 a 4 ha'),
+    (40000, 50000, '4 a 5 ha'),
+    (50000, float('inf'), '5 ha o más'),
+]
 
 GRUPOS_PECUARIOS = {
     'Vacas en producción': 'Bovinos', 'Vacas secas': 'Bovinos',
@@ -258,7 +278,7 @@ def clasificar_tema_cap(texto):
 
 
 def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
-                      sup_com, caudal_com, heredado_de):
+                      sup_com, caudal_com, heredado_de, predios=()):
     """Todas las cifras de una comunidad, en crudo. Cada bloque nombra su
     universo (regla 6): 'todas' para tierra y producción, 'pri' para personas
     y para lo que describe la entrega de agua al entrevistado."""
@@ -315,6 +335,21 @@ def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
     a['bovinos'] = cab.get('Bovinos', 0)
     a['carga_bovina'] = (a['bovinos'] / a['pasto_mejorado_ha']
                          if a['pasto_mejorado_ha'] > 0 else None)
+
+    # ── tamaño de los predios catastrales (uno por polígono, no por ficha) ──
+    tam = {et: 0 for _, _, et in RANGOS_PREDIO}
+    a['predios_sin_area'] = 0
+    for p in predios:
+        area = p.get('area_predi') or 0
+        if not area:
+            a['predios_sin_area'] += 1
+            continue
+        for lo, hi, et in RANGOS_PREDIO:
+            if lo <= area < hi:
+                tam[et] += 1
+                break
+    a['tamanos'] = tam
+    a['predios_medidos'] = sum(tam.values())
 
     # ── tenencia (pri con respuesta) ──
     ten = [str(p.get('tenencia_predio')).strip() for p in pri
@@ -425,7 +460,8 @@ def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
 
 def agregar_todo():
     catalogo = cargar_catalogo()
-    fichas, todas, pri, cultivos, animales, sup, caudal, corte_txt = cargar_datos()
+    (fichas, todas, pri, cultivos, animales, sup, caudal, corte_txt,
+     predios) = cargar_datos()
 
     sup_por_key = {canonica(c['comunidad']): c for c in sup['comunidades']}
     caudal_por_key = {canonica(k): v for k, v in caudal['comunidades'].items()}
@@ -450,13 +486,35 @@ def agregar_todo():
         if k:
             anim_por_key[k].append(an)
 
+    # El predio se asigna a la comunidad de SU FICHA. El campo `comunidad` de
+    # catastro_geo.geojson es la etiqueta del catastro MUNICIPAL (767 valores
+    # como «SARACHUPA» o «SAN JOSE - MOYURCO»), no la comunidad que escribió el
+    # técnico: agrupar por ahí dejaba comunidades enteras en cero. Es la misma
+    # trampa del caso Acero Farinango (ver CONTINUAR-AQUI.md). La unión va por
+    # clave catastral, con cod_poligono de respaldo (regla 14).
+    area_por_clave = {}
+    for p in predios:
+        clave = str(p.get('clave_cata') or '').strip()
+        if clave:
+            area_por_clave[clave] = p.get('area_predi') or 0
+    predios_por_key = defaultdict(list)
+    vistas = defaultdict(set)
+    for p in todas:
+        clave = (str(p.get('clave_catastral') or '').strip() or
+                 str(p.get('cod_poligono') or '').strip())
+        k = p['_key']
+        if not clave or clave in vistas[k] or clave not in area_por_clave:
+            continue
+        vistas[k].add(clave)
+        predios_por_key[k].append({'area_predi': area_por_clave[clave]})
+
     comunidades = []
     for c in catalogo:
         k = c['key']
         a = agregar_comunidad(k, todas_por_key.get(k, []), pri_por_key.get(k, []),
                               cult_por_key.get(k, []), anim_por_key.get(k, []),
                               sup_por_key.get(k), caudal_por_key.get(k),
-                              heredado.get(k))
+                              heredado.get(k), predios_por_key.get(k, []))
         a.update(n=c['n'], oficial=c['oficial'], datos=c['datos'],
                  sector=c['sector'])
         comunidades.append(a)
@@ -1021,6 +1079,33 @@ def cuadros_sector(coms, sec_sup, caudal):
          'territorio y NO se suman entre sí.',
          NOTA_P001 if nota_alpaka else None],
         barras=[4]))
+
+    # A2b — tamaño de los predios (pedido del sociólogo, 2-sep-2026)
+    ETIQ = [et for _, _, et in RANGOS_PREDIO]
+    sin_area = sum(c['predios_sin_area'] for c in coms)
+    C.append(Cuadro(
+        'Tamaño de los predios',
+        'Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se '
+        'cuenta por predio catastral, no por ficha: los predios familiares '
+        'tienen varias fichas y contarlos por ficha multiplicaría los más '
+        'grandes.',
+        ['Comunidad'] + ETIQ + ['Predios medidos'],
+        [[et(c)] + [f0(c['tamanos'][e]) for e in ETIQ] +
+         [f0(c['predios_medidos'])] for c in coms],
+        ['Total del sector'] +
+        [f0(sum(c['tamanos'][e] for c in coms)) for e in ETIQ] +
+        [f0(sum(c['predios_medidos'] for c in coms))],
+        ['Universo: los predios catastrales investigados de la comunidad, con '
+         'la superficie que les da el catastro municipal. Cada predio se '
+         'asigna a la comunidad de sus fichas, no a la etiqueta del catastro.',
+         (f'{f0(sin_area)} predios del sector no tienen superficie en el '
+          'catastro y quedan fuera del conteo.') if sin_area else None,
+         'Un puñado de predios tiene fichas en dos comunidades vecinas y '
+         'aparece en ambas, así que la suma de las 50 comunidades supera en '
+         '20 los 5.987 predios del sistema.',
+         'El detalle a nivel de sistema, con la comparación de contar por '
+         'predio frente a contar por ficha, está en el reporte «Terrenos por '
+         'rango de superficie».']))
 
     # A3 — tecnificación
     C.append(Cuadro(
@@ -1626,6 +1711,13 @@ def escribir_xlsx(comunidades, ruta):
                      c['pecuario'].get('Aves', 0),
                      round(c['carga_bovina'], 2) if c['carga_bovina'] is not None else None,
                      c['aves_granja_excluidas']] for c in comunidades])
+
+    hoja('Tamano de predios',
+         cols_base + [et for _, _, et in RANGOS_PREDIO] +
+         ['Predios medidos', 'Sin area en catastro'],
+         [base(c) + [c['tamanos'][et] for _, _, et in RANGOS_PREDIO] +
+          [c['predios_medidos'], c['predios_sin_area']]
+          for c in comunidades])
 
     hoja('Tenencia',
          cols_base + ['Escritura/titulo', 'Posesion sin titulo', 'Otras',

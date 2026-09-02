@@ -102,6 +102,42 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 *La referencia catastral mide los polígonos del catastro municipal (cada predio una sola vez). Son dos mediciones distintas del mismo territorio y NO se suman entre sí.*
 
 
+### Tamaño de los predios
+
+Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta por predio catastral, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los más grandes.
+
+<!-- tabla-completa -->
+| Comunidad | Menos de 1.000 m² | 1.000 a 5.000 m² | 5.000 m² a 1 ha | 1 a 2 ha | 2 a 3 ha | 3 a 4 ha | 4 a 5 ha | 5 ha o más | Predios medidos |
+|---|---|---|---|---|---|---|---|---|---|
+| 1. LARCACHACA | 15 | 76 | 48 | 26 | 0 | 0 | 0 | 0 | 165 |
+| 2. LA LIBERTAD | 6 | 33 | 41 | 38 | 18 | 2 | 0 | 2 | 140 |
+| 3. SAN ANTONIO | 23 | 65 | 45 | 35 | 7 | 1 | 0 | 2 | 178 |
+| 4. SAN JOSE | 23 | 94 | 45 | 30 | 3 | 0 | 0 | 1 | 196 |
+| 5. MILAGRO | 2 | 37 | 27 | 5 | 5 | 0 | 0 | 0 | 76 |
+| 6. CHAMBITOLA | 5 | 102 | 80 | 20 | 14 | 2 | 0 | 0 | 223 |
+| 7. LA CANDELARIA | 3 | 106 | 94 | 48 | 15 | 9 | 2 | 3 | 280 |
+| 8. CARRERA | 20 | 217 | 146 | 35 | 18 | 5 | 0 | 9 | 450 |
+| 9. COCHAPAMBA | 53 | 191 | 103 | 85 | 14 | 7 | 2 | 3 | 458 |
+| 10. JESUS DE GRAN PODER | 3 | 32 | 34 | 19 | 4 | 3 | 0 | 6 | 101 |
+| 11. AS. SANTA BARBARA | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 6 | 8 |
+| 12. ASO. POROTOG | 1 | 19 | 12 | 22 | 25 | 10 | 9 | 10 | 108 |
+| 13. COMUNA POROTOG | 6 | 46 | 58 | 57 | 34 | 18 | 7 | 18 | 244 |
+| 14. ASO. 17 DE JUNIO | 1 | 1 | 0 | 6 | 2 | 2 | 5 | 12 | 29 |
+| 15. ELIOT AVELLANEDA | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| 16. CORDILLERA LOS ANDES | 7 | 17 | 4 | 11 | 0 | 0 | 0 | 0 | 39 |
+| 17. COMUNA JURIDICA IZACATA | 2 | 41 | 39 | 44 | 6 | 5 | 0 | 0 | 137 |
+| 18. IZACATA GRANDE | 1 | 39 | 18 | 31 | 12 | 0 | 0 | 0 | 101 |
+| 19. LOS ANDES IZACTA | 9 | 33 | 28 | 31 | 3 | 1 | 1 | 0 | 106 |
+| 20. ASO. LOMA GORDA | 1 | 5 | 35 | 13 | 2 | 0 | 0 | 0 | 56 |
+| 21. ASO. SAN JACINTO | 0 | 0 | 3 | 1 | 0 | 0 | 0 | 0 | 4 |
+| 22. MATIAS IMBAGO | 0 | 0 | 3 | 1 | 2 | 0 | 0 | 0 | 6 |
+| **Total del sector** | **181** | **1,154** | **864** | **558** | **184** | **65** | **27** | **73** | **3,106** |
+
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+
+*El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
+
+
 ### Riego tecnificado frente a riego por inundación
 
 Cómo se aplica el agua en el predio, según el porcentaje que declaró cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
@@ -691,6 +727,33 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 *ALPAKA: el dato de las fichas P001 (representación del total del fraccionamiento) queda pendiente a lo que las comunidades definan.*
 
 
+### Tamaño de los predios
+
+Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta por predio catastral, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los más grandes.
+
+<!-- tabla-completa -->
+| Comunidad | Menos de 1.000 m² | 1.000 a 5.000 m² | 5.000 m² a 1 ha | 1 a 2 ha | 2 a 3 ha | 3 a 4 ha | 4 a 5 ha | 5 ha o más | Predios medidos |
+|---|---|---|---|---|---|---|---|---|---|
+| 23. CUARTO LOTE | 4 | 15 | 14 | 9 | 5 | 4 | 4 | 2 | 57 |
+| 24. ASO. SAN VICENTE BAJO | 1 | 41 | 42 | 29 | 13 | 5 | 4 | 4 | 139 |
+| 25. STA. ROSA DE PACCHA | 1 | 46 | 29 | 10 | 6 | 0 | 0 | 0 | 92 |
+| 26. ASO. SAN VICENTE ALTO | 1 | 46 | 21 | 14 | 4 | 0 | 2 | 0 | 88 |
+| 27. PUCARA | 36 | 193 | 55 | 17 | 16 | 0 | 1 | 0 | 318 |
+| 28. ASO. SAN PEDRO | 1 | 16 | 15 | 7 | 4 | 1 | 0 | 0 | 44 |
+| 29. PITANA ALTO | 3 | 29 | 15 | 10 | 13 | 5 | 2 | 2 | 79 |
+| 30. ALPAKA | 1 | 21 | 55 | 333 | 42 | 9 | 12 | 17 | 490 |
+| 31. ASO. PITANA BAJO | 2 | 6 | 3 | 3 | 12 | 13 | 2 | 0 | 41 |
+| 32. PRO MEJORAS PITANA BAJO | 7 | 39 | 33 | 22 | 6 | 3 | 2 | 4 | 116 |
+| 33. STA. ROSA DE PINGULMI | 12 | 62 | 27 | 13 | 2 | 0 | 0 | 1 | 117 |
+| 34. STA. MARIANITA DE PINGULMI | 15 | 129 | 71 | 43 | 7 | 4 | 1 | 4 | 274 |
+| 35. PAMBAMARCA | 4 | 22 | 34 | 31 | 4 | 1 | 2 | 3 | 101 |
+| **Total del sector** | **88** | **665** | **414** | **541** | **134** | **45** | **32** | **37** | **1,956** |
+
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+
+*El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
+
+
 ### Riego tecnificado frente a riego por inundación
 
 Cómo se aplica el agua en el predio, según el porcentaje que declaró cada titular entrevistado. Tecnificado agrupa aspersión y goteo; inundación es el riego por gravedad.
@@ -1153,6 +1216,35 @@ La superficie que los comuneros declararon en la entrevista, en hectáreas. Es e
 *Universo: lo declarado en TODAS las fichas (principales + adicionales completadas). Cada ficha es un predio.*
 
 *La referencia catastral mide los polígonos del catastro municipal (cada predio una sola vez). Son dos mediciones distintas del mismo territorio y NO se suman entre sí.*
+
+
+### Tamaño de los predios
+
+Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta por predio catastral, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los más grandes.
+
+<!-- tabla-completa -->
+| Comunidad | Menos de 1.000 m² | 1.000 a 5.000 m² | 5.000 m² a 1 ha | 1 a 2 ha | 2 a 3 ha | 3 a 4 ha | 4 a 5 ha | 5 ha o más | Predios medidos |
+|---|---|---|---|---|---|---|---|---|---|
+| 36. OTONCITO | 7 | 60 | 6 | 4 | 2 | 1 | 0 | 2 | 82 |
+| 37. PAMBAMARQUITO | 14 | 49 | 5 | 2 | 1 | 0 | 0 | 2 | 73 |
+| 38. HERNAN TIMPE | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| 39. HDA. SAN FRANCISCO | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| 40. MONTESERRIN ALTO | 6 | 17 | 15 | 19 | 2 | 2 | 1 | 0 | 62 |
+| 41. CHAUPIESTANCIA | 75 | 66 | 14 | 19 | 3 | 1 | 0 | 3 | 181 |
+| 42. PUEBLO DE OTON | 23 | 102 | 38 | 19 | 3 | 1 | 0 | 1 | 187 |
+| 43. CANGAHUAPUNGO | 34 | 60 | 20 | 9 | 1 | 0 | 2 | 2 | 128 |
+| 44. CHINCHIN LOMA | 12 | 68 | 16 | 17 | 7 | 1 | 0 | 4 | 125 |
+| 45. ASO. ROSALIA | 0 | 11 | 9 | 3 | 5 | 1 | 1 | 1 | 31 |
+| 46. SR. COLOMA MONT. BAJO | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 1 |
+| 47. HDA. GUANGULQUI | 0 | 0 | 0 | 0 | 1 | 1 | 0 | 2 | 4 |
+| 48. PUEBLO DE ASCAZUBI | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 2 |
+| 49. ASO. EL MANZANO | 1 | 4 | 7 | 6 | 0 | 0 | 0 | 1 | 19 |
+| 50. JUNTA ADMISIS. RIEGO SAN LUIS | 4 | 30 | 7 | 2 | 1 | 0 | 1 | 3 | 48 |
+| **Total del sector** | **176** | **468** | **137** | **100** | **26** | **8** | **5** | **25** | **945** |
+
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+
+*El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
 
 
 ### Riego tecnificado frente a riego por inundación

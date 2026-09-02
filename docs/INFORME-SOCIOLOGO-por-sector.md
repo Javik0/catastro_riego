@@ -84,6 +84,14 @@ En producción, el cultivo más registrado es Pasto no mejorado y la especie pec
 
 *Universo: todas las fichas del corte (principales + adicionales completadas). Cada ficha es un predio.*
 
+### Tamaño de los Predios
+
+![Tamaño de los Predios](graficos-sociologo/sistema-tamanos.png)
+
+*Los predios catastrales del corte por rango de superficie. Se cuenta por PREDIO, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los tramos grandes. La superficie es la del catastro municipal.*
+
+*5,987 predios con superficie en el catastro. El detalle a nivel de sistema, con la comparación entre contar por predio y por ficha, está en el reporte «Terrenos por rango de superficie».*
+
 ## Sector 1 — 22 comunidades
 
 ![Las comunas oficiales del Sector 1 (límites del GADM Cayambe, asignadas por cruce espacial); la numeración es la del listado oficial de organizaciones del consorcio.](graficos-sociologo/mapa-sector-1.jpg)
@@ -152,6 +160,14 @@ En producción, el cultivo más registrado es Pasto no mejorado y la especie pec
 
 *Universo: todas las fichas del corte (principales + adicionales completadas). Cada ficha es un predio.*
 
+### Tamaño de los Predios
+
+![Tamaño de los Predios](graficos-sociologo/sector-1-tamanos.png)
+
+*Los predios catastrales del corte por rango de superficie. Se cuenta por PREDIO, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los tramos grandes. La superficie es la del catastro municipal.*
+
+*3,094 predios con superficie en el catastro. El detalle a nivel de sistema, con la comparación entre contar por predio y por ficha, está en el reporte «Terrenos por rango de superficie».*
+
 ## Sector 2 — 13 comunidades
 
 ![Las comunas oficiales del Sector 2 (límites del GADM Cayambe, asignadas por cruce espacial); la numeración es la del listado oficial de organizaciones del consorcio.](graficos-sociologo/mapa-sector-2.jpg)
@@ -219,6 +235,14 @@ En producción, el cultivo más registrado es Pasto no mejorado y la especie pec
 ![Fichas por Parroquia](graficos-sociologo/sector-2-parroquias.png)
 
 *Universo: todas las fichas del corte (principales + adicionales completadas). Cada ficha es un predio.*
+
+### Tamaño de los Predios
+
+![Tamaño de los Predios](graficos-sociologo/sector-2-tamanos.png)
+
+*Los predios catastrales del corte por rango de superficie. Se cuenta por PREDIO, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los tramos grandes. La superficie es la del catastro municipal.*
+
+*1,950 predios con superficie en el catastro. El detalle a nivel de sistema, con la comparación entre contar por predio y por ficha, está en el reporte «Terrenos por rango de superficie».*
 
 ## Sector 3 — 15 comunidades
 
@@ -289,6 +313,14 @@ En producción, el cultivo más registrado es Maíz y la especie pecuaria con m�
 ![Fichas por Parroquia](graficos-sociologo/sector-3-parroquias.png)
 
 *Universo: todas las fichas del corte (principales + adicionales completadas). Cada ficha es un predio.*
+
+### Tamaño de los Predios
+
+![Tamaño de los Predios](graficos-sociologo/sector-3-tamanos.png)
+
+*Los predios catastrales del corte por rango de superficie. Se cuenta por PREDIO, no por ficha: los predios familiares tienen varias fichas y contarlos por ficha multiplicaría los tramos grandes. La superficie es la del catastro municipal.*
+
+*944 predios con superficie en el catastro. El detalle a nivel de sistema, con la comparación entre contar por predio y por ficha, está en el reporte «Terrenos por rango de superficie».*
 
 ---
 

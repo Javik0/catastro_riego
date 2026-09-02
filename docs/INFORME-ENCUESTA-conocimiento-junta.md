@@ -1,7 +1,7 @@
 # Encuesta a los regantes — conocimiento de la Junta y del sistema
 
 **Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog**  
-Generado el 31/08/2026 desde el `data.gpkg` de campo.
+Generado el 02/09/2026 desde el `data.gpkg` de campo.
 
 Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta de Agua"** de la ficha de papel (pestaña "5. ENCUESTA" en QField).
 

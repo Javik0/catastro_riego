@@ -104,6 +104,10 @@ DIR_GRAF = 'graficos-sociologo'
 
 SECTORES = ('Sector 1', 'Sector 2', 'Sector 3')
 
+# Los mismos cortes del informe por comunidad y del reporte «Terrenos por
+# rango de superficie»: se importan para que las tres salidas no se separen.
+from generar_informe_sociologo import RANGOS_PREDIO  # noqa: E402
+
 # La paleta del Dashboard (PIE_COLORS de DashboardHome.tsx), en el mismo orden.
 PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444',
               '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16']
@@ -129,6 +133,27 @@ def fnum(n):
 
 
 # ─── Los datos de cada gráfico, calcados de DashboardHome.tsx ────────────────
+
+# Superficie catastral por clave de predio, para el gráfico de tamaños que
+# pidió el sociólogo (2-sep-2026). Se carga una vez; el predio se asigna a la
+# comunidad de SU FICHA, no a la etiqueta del catastro municipal (ese campo
+# trae 767 valores propios del GADM y agrupar por él vacía comunidades).
+_AREA_POR_CLAVE = None
+
+
+def area_por_clave():
+    global _AREA_POR_CLAVE
+    if _AREA_POR_CLAVE is None:
+        import json as _json
+        ruta = os.path.join(BASE, 'public', 'geo', 'catastro_geo.geojson')
+        with open(ruta, encoding='utf-8') as f:
+            _AREA_POR_CLAVE = {
+                str(x['properties'].get('clave_cata') or '').strip():
+                    x['properties'].get('area_predi') or 0
+                for x in _json.load(f)['features']
+                if str(x['properties'].get('clave_cata') or '').strip()}
+    return _AREA_POR_CLAVE
+
 
 def datos_graficos(todas, pri, cultivos, animales, coms_sup):
     """`todas`/`pri`: fichas del corte (sector o sistema); `cultivos`/
@@ -256,6 +281,27 @@ def datos_graficos(todas, pri, cultivos, animales, coms_sup):
     d['parroquias'] = parr.most_common()
 
     d['n_todas'] = len(todas)
+    # 11 — Tamaño de los predios del corte. Por predio catastral, no por
+    # ficha: los predios familiares tienen varias fichas y contarlos por
+    # ficha multiplicaría los grandes (regla del reporte «Terrenos por rango
+    # de superficie»). La clave se resuelve con clave_catastral y
+    # cod_poligono de respaldo (regla 14).
+    areas = area_por_clave()
+    vistas, tam = set(), {et: 0 for _, _, et in RANGOS_PREDIO}
+    for p in todas:
+        clave = (str(p.get('clave_catastral') or '').strip() or
+                 str(p.get('cod_poligono') or '').strip())
+        if not clave or clave in vistas or clave not in areas:
+            continue
+        vistas.add(clave)
+        a_ = areas[clave]
+        for lo, hi, et in RANGOS_PREDIO:
+            if lo <= a_ < hi:
+                tam[et] += 1
+                break
+    d['tamanos'] = [(et, tam[et]) for _, _, et in RANGOS_PREDIO]
+    d['tamanos_total'] = sum(tam.values())
+
     return d
 
 
@@ -423,6 +469,9 @@ def dibujar_graficos(slug, d):
     if d['parroquias']:
         g[10] = g_barras_v(f'{slug}-parroquias', d['parroquias'],
                            lambda i, n: '#8b5cf6')
+    if d['tamanos_total']:
+        g[11] = g_barras_h(f'{slug}-tamanos', d['tamanos'],
+                           lambda i, n: '#0ea5e9', alto=3.4)
     return g
 
 
@@ -431,6 +480,15 @@ def dibujar_graficos(slug, d):
 def titulos_y_notas(d, nombre_corte):
     granja = d['pecuario_granja_excluida']
     return {
+        11: ('Tamaño de los Predios',
+             ['Los predios catastrales del corte por rango de superficie. Se '
+              'cuenta por PREDIO, no por ficha: los predios familiares tienen '
+              'varias fichas y contarlos por ficha multiplicaría los tramos '
+              'grandes. La superficie es la del catastro municipal.',
+              f"{fnum(d['tamanos_total'])} predios con superficie en el "
+              'catastro. El detalle a nivel de sistema, con la comparación '
+              'entre contar por predio y por ficha, está en el reporte '
+              '«Terrenos por rango de superficie».']),
         1: ('Uso del Suelo: Con Riego vs Sin Riego (ha)',
             [f"Medición catastral de las {d['uso_suelo']['n_com']} comunidades "
              f"de {nombre_corte}: riego ajustado y resto del polígono, cada "
@@ -663,7 +721,8 @@ def construir_documento(comunidades, sup, caudal, datos_por_corte, mapas):
 
 CLAVES_GRAFICO = {1: 'uso-suelo', 2: 'pecuario', 3: 'destino',
                   4: 'instruccion', 5: 'hijos', 6: 'comunitaria',
-                  7: 'metodo', 8: 'cultivos', 9: 'tenencia', 10: 'parroquias'}
+                  7: 'metodo', 8: 'cultivos', 9: 'tenencia', 10: 'parroquias',
+                  11: 'tamanos'}
 
 
 # ─── Excel de matrices crudas ────────────────────────────────────────────────
@@ -738,6 +797,12 @@ def escribir_xlsx(datos_por_corte, ruta):
     hoja('Tenencia (principales)',
          ['Corte', 'Tenencia', 'Fichas principales'],
          [[n, t, v] for n, d in cortes for t, v in d['tenencia']])
+
+    hoja('Tamano de predios',
+         ['Corte'] + [et for _, _, et in RANGOS_PREDIO] + ['Predios'],
+         [[nombre] + [dict(d['tamanos']).get(et, 0)
+                      for _, _, et in RANGOS_PREDIO] + [d['tamanos_total']]
+          for nombre, d in datos_por_corte.items()])
 
     hoja('Parroquias',
          ['Corte', 'Parroquia', 'Fichas'],

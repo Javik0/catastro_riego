@@ -257,14 +257,25 @@ def main():
       'en el documento de metodología del caudal.</div>')
     # Solo comunidades con llave propia: las de caudal heredado repiten el valor
     # de otra y aparecerían como si aportaran un caudal que no existe.
-    top_c = sorted((k, v) for k, v in caudal['comunidades'].items()
-                   if 'caudal_heredado_de' not in v)
-    top_c = sorted(top_c, key=lambda x: -x[1]['caudal_ls'])[:8]
-    A('<table class="evitar-corte"><tr><th>Comunidad</th><th class="n">Caudal (l/s)</th>'
+    #
+    # Antes esta tabla se recortaba a las 8 mayores y NO lo decía: el texto de
+    # arriba habla de «las 50 comunidades» y debajo aparecían ocho filas, así
+    # que se leía como si faltaran 42. Lo reportó el sociólogo del proyecto el
+    # 2-sep-2026 («el caudal solo se anota de 8 comunidades»). Ahora se listan
+    # todas, ordenadas de mayor a menor.
+    filas_c = sorted(((k, v) for k, v in caudal['comunidades'].items()
+                      if 'caudal_heredado_de' not in v),
+                     key=lambda x: -x[1]['caudal_ls'])
+    A(f'<p>Las <b>{len(filas_c)} comunidades con llave propia</b>, ordenadas '
+      'por el caudal que reciben:</p>')
+    A('<table><tr><th>Comunidad</th><th class="n">Caudal (l/s)</th>'
       '<th class="n">Fichas</th><th>Origen del dato</th></tr>')
-    for com, d in top_c:
+    for com, d in filas_c:
         A(f'<tr><td>{com}</td><td class="n">{d["caudal_ls"]:,.2f}</td>'
           f'<td class="n">{d["fichas"]:,}</td><td>{d["origen"].capitalize()}</td></tr>')
+    A(f'<tr class="dest"><td><b>Total</b></td><td class="n">'
+      f'{sum(d["caudal_ls"] for _, d in filas_c):,.2f}</td>'
+      f'<td class="n">{sum(d["fichas"] for _, d in filas_c):,}</td><td></td></tr>')
     A('</table>')
     heredadas = caudal.get('caudal_heredado', {})
     if heredadas:
