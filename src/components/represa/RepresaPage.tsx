@@ -720,11 +720,7 @@ export default function RepresaPage() {
                     <b>{magnitud.riego_ha.toLocaleString('es-EC')} ha</b></div>
                   <div className="flex justify-between"><span>Predios investigados</span>
                     <b>{magnitud.predios.toLocaleString('es-EC')}</b></div>
-                  <div className="mt-1.5 pt-1.5 border-t" style={{ borderColor: 'var(--border-color)' }}>
-                    Por cada hectárea de represa se riegan
-                    <b className="text-emerald-700 dark:text-emerald-400"> {num(magnitud.ha_regadas_por_ha_de_represa, 1)} ha</b>.
-                  </div>
-                  <ul className="mt-1.5 space-y-0.5">
+                  <ul className="mt-1.5 pt-1.5 border-t space-y-0.5" style={{ borderColor: 'var(--border-color)' }}>
                     {magnitud.sectores.map((s) => (
                       <li key={s.sector} className="flex items-center gap-1.5">
                         <span className="w-2 h-2 rounded-sm shrink-0"
