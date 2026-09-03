@@ -155,7 +155,9 @@ export default function TerrenoVista3D() {
     escena.background = new THREE.Color(0x0b1220);
 
     const camara = new THREE.PerspectiveCamera(50, 1, 1, 40000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    // preserveDrawingBuffer permite capturar la vista (toDataURL) para informes;
+    // en una escena estatica como esta el costo es despreciable.
+    const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     nodo.appendChild(renderer.domElement);
 
