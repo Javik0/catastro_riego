@@ -89,7 +89,8 @@ export default function Header({ onMobileMenuOpen }: Props) {
         </div>
       </div>
 
-      {/* Filter bar */}
+      {/* Filter bar — en /represa no aplica: esos filtros son del padrón */}
+      {!location.pathname.startsWith('/represa') && (
       <div
         className="flex items-center gap-2 px-4 lg:px-6 py-2 border-t overflow-x-auto"
         style={{ borderColor: 'var(--border-color)' }}
@@ -194,6 +195,8 @@ export default function Header({ onMobileMenuOpen }: Props) {
           </button>
         )}
       </div>
+      )}
+    
     </header>
   );
 }

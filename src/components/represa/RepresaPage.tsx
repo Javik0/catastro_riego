@@ -20,7 +20,7 @@ import {
 import L, { type PathOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';   // cada pantalla con mapa lo importa (igual que MapPage)
 import {
-  Map as MapIcon, Mountain, Loader2, AlertTriangle, Info, Layers, Droplets, Maximize2,
+  Map as MapIcon, Mountain, Loader2, AlertTriangle, Layers, Droplets, Maximize2, ChevronDown, ChevronRight,
 } from 'lucide-react';
 import { useData } from '../../App';
 import { type FichaPredio, esFichaHija, esHijaPendiente } from '../../lib/types';
@@ -37,7 +37,7 @@ interface Capa {
   activaPorDefecto?: boolean;
   nota?: string;
   /** Bloque del panel: la obra por un lado, el sistema de riego por otro. */
-  grupo?: 'obra' | 'sistema';
+  grupo?: 'obra' | 'entorno' | 'sistema';
   /** Colorea cada elemento según su sector de investigación. */
   porSector?: boolean;
   /** Colorea cada predio según el tipo de ficha, igual que el mapa del padrón. */
@@ -79,58 +79,64 @@ const ETIQUETA_PREDIO: Record<EstadoPredio, string> = {
 
 const CAPAS: Capa[] = [
   {
-    id: 'limite', archivo: 'limite_proyecto', nombre: 'Límite de proyecto',
+    id: 'limite', grupo: 'obra', archivo: 'limite_proyecto', nombre: 'Límite de proyecto',
     estilo: { color: '#ef4444', weight: 3, fillOpacity: 0.06 },
     activaPorDefecto: true,
     nota: '63,59 ha · tabla oficial del plano, con el vértice 23 corregido',
   },
   {
-    id: 'bancos_sup', archivo: 'bancos_superficie', nombre: 'Bancos de materiales',
+    id: 'bancos_sup', grupo: 'obra', archivo: 'bancos_superficie', nombre: 'Bancos de materiales',
     estilo: { color: '#d946ef', weight: 2, fillOpacity: 0.18 },
     activaPorDefecto: true,
     nota: 'superficie estimada por envolvente del sombreado del plano',
   },
   {
-    id: 'obras', archivo: 'obras', nombre: 'Obras (captación, túnel, vertedero)',
+    id: 'obras', grupo: 'obra', archivo: 'obras', nombre: 'Obras (captación, túnel, vertedero)',
     estilo: { color: '#38bdf8', weight: 1.5 }, activaPorDefecto: true,
   },
   {
-    id: 'area_prot', archivo: 'area_protegida', nombre: 'Parque Nacional Cayambe Coca',
-    estilo: { color: '#22c55e', weight: 2, dashArray: '6 4', fillOpacity: 0.05 },
+    id: 'pncc', grupo: 'entorno', archivo: 'pncc_canton', nombre: 'Parque Nacional Cayambe Coca',
+    estilo: { color: '#16a34a', weight: 2, fillColor: '#22c55e', fillOpacity: 0.12 },
     activaPorDefecto: true,
+    nota: 'límite oficial (escala 1:250.000) · la obra llega hasta su borde sin entrar',
   },
   {
-    id: 'curvas', archivo: 'curvas_cota', nombre: 'Curvas de nivel (con cota)',
+    id: 'area_prot', grupo: 'entorno', archivo: 'area_protegida', nombre: 'Borde del parque según el plano',
+    estilo: { color: '#22c55e', weight: 2, dashArray: '6 4', fillOpacity: 0.05 },
+    nota: 'línea del CAD del consorcio — coincide a ~1 m con el límite oficial',
+  },
+  {
+    id: 'curvas', grupo: 'entorno', archivo: 'curvas_cota', nombre: 'Curvas de nivel (con cota)',
     estilo: { color: '#a16207', weight: 0.8 },
     nota: 'solo las curvas cuya cota se pudo determinar sin ambigüedad',
   },
   {
-    id: 'hidro', archivo: 'hidrografia', nombre: 'Río, canal y pantanos',
+    id: 'hidro', grupo: 'entorno', archivo: 'hidrografia', nombre: 'Río, canal y pantanos',
     estilo: { color: '#0ea5e9', weight: 1.6 },
   },
-  { id: 'vial', archivo: 'vialidad', nombre: 'Caminos', estilo: { color: '#e5e7eb', weight: 1.4 } },
-  { id: 'tuberia', archivo: 'tuberia', nombre: 'Tubería y derecho de paso', estilo: { color: '#f59e0b', weight: 1.4 } },
+  { id: 'vial', grupo: 'entorno', archivo: 'vialidad', nombre: 'Caminos', estilo: { color: '#e5e7eb', weight: 1.4 } },
+  { id: 'tuberia', grupo: 'obra', archivo: 'tuberia', nombre: 'Tubería y derecho de paso', estilo: { color: '#f59e0b', weight: 1.4 } },
   {
-    id: 'bancos_hatch', archivo: 'bancos_materiales', nombre: 'Sombreado de los bancos (detalle)',
+    id: 'bancos_hatch', grupo: 'obra', archivo: 'bancos_materiales', nombre: 'Sombreado de los bancos (detalle)',
     estilo: { color: '#d946ef', weight: 0.5, opacity: 0.55 },
   },
-  { id: 'ejes', archivo: 'ejes', nombre: 'Ejes de replanteo', estilo: { color: '#94a3b8', weight: 0.8 } },
+  { id: 'ejes', grupo: 'obra', archivo: 'ejes', nombre: 'Ejes de replanteo', estilo: { color: '#94a3b8', weight: 0.8 } },
   {
-    id: 'gnss', archivo: 'control_gnss', nombre: 'Puntos de control GNSS',
+    id: 'gnss', grupo: 'obra', archivo: 'control_gnss', nombre: 'Puntos de control GNSS',
     estilo: { color: '#facc15', weight: 1.5 },
   },
   {
-    id: 'dibujado', archivo: 'limite_dibujado', nombre: 'Límite tal como lo dibuja el plano',
+    id: 'dibujado', grupo: 'obra', archivo: 'limite_dibujado', nombre: 'Límite tal como lo dibuja el plano',
     estilo: { color: '#fb7185', weight: 1, dashArray: '3 3' },
     nota: 'para contrastar contra la tabla de coordenadas',
   },
   {
     // el hallazgo que nadie ve mirando solo el plano: parte de la obra se
     // levanta sobre predios que el padrón ya investigó
-    id: 'vaso', archivo: 'predios_en_vaso', nombre: 'Predios bajo el área de proyecto',
+    id: 'vaso', grupo: 'obra', archivo: 'predios_en_vaso', nombre: 'Predios bajo el área de proyecto',
     estilo: { color: '#f59e0b', weight: 2.5, fillOpacity: 0.35 },
     activaPorDefecto: true,
-    nota: 'catastro del GADM · rojo si además tiene ficha del padrón',
+    nota: 'de cada predio se dibujan dos formas: contorno punteado = el predio completo, relleno = la parte que ocupa la obra · rojo si tiene ficha del padrón',
   },
 
   // ── el sistema de riego al que va a servir la obra ──
@@ -188,6 +194,8 @@ interface PredioEnVaso {
   pct_del_predio: number;
   /** Del punto GPS de la ficha al límite de proyecto. Ver nota del panel. */
   distancia_punto_m: number | null;
+  /** Relación del predio con el PNCC oficial, medida aparte (07_capa_pncc.py). */
+  nota_parque?: string | null;
 }
 
 interface Magnitud {
@@ -339,7 +347,7 @@ function popupDeVaso(p: Record<string, unknown>) {
       ${linea('Condición', p.condicion)}
       ${linea('Predio completo', `${num(Number(p.area_predio_ha ?? 0), 2)} ha`)}
       ${linea('Dentro del proyecto', `${num(Number(p.ha_en_vaso ?? 0), 2)} ha`)}
-      ${linea('Del área de proyecto', `${p.pct_del_vaso}%`)}
+      ${linea('Del área de proyecto', `${num(Number(p.pct_del_vaso ?? 0), 1)}%`)}
       ${investigado
         ? `${linea('Ficha del padrón', p.codigo_ficha)}${linea('Titular', p.propietario)}`
         : '<div style="margin-top:4px;opacity:.8">Sin ficha en el padrón.</div>'}
@@ -372,11 +380,17 @@ function IrAlPredioOcupado({ trigger, datos }: { trigger: number; datos: unknown
   return null;
 }
 
+
 export default function RepresaPage() {
   const [vista, setVista] = useState<'mapa' | 'relieve'>('mapa');
   const [activas, setActivas] = useState<Set<string>>(
     () => new Set(CAPAS.filter((c) => c.activaPorDefecto).map((c) => c.id)),
   );
+  // Secciones del panel de capas: 'obra' abierta al entrar; el resto,
+  // recogidas para que la simbología no tape el mapa.
+  const [gruposAbiertos, setGruposAbiertos] = useState<Set<string>>(() => new Set(['obra']));
+  // Notas de contexto de cada capa: solo se despliegan al pulsar la (i).
+  const [notasAbiertas, setNotasAbiertas] = useState<Set<string>>(new Set());
   const [datos, setDatos] = useState<Record<string, unknown>>({});
   const [rotulos, setRotulos] = useState<Array<{ nombre: string; lat: number; lon: number }>>([]);
   const [cargando, setCargando] = useState<Set<string>>(new Set());
@@ -529,15 +543,32 @@ export default function RepresaPage() {
                     style={{ background: String(c.estilo.color) }} />
             )}
             <span className="truncate">{c.nombre}</span>
+            {c.nota && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();   // que no alterne el checkbox de la capa
+                  setNotasAbiertas((prev) => {
+                    const n = new Set(prev);
+                    if (n.has(c.id)) n.delete(c.id); else n.add(c.id);
+                    return n;
+                  });
+                }}
+                className="shrink-0 w-4 h-4 rounded-full border text-[10px] leading-none
+                           cursor-pointer hover:bg-white/10"
+                style={{ borderColor: 'var(--border-color)', color: 'var(--text-muted)' }}
+                title="Más contexto de esta capa"
+              >i</button>
+            )}
             {cargando.has(c.id) && <Loader2 className="w-3 h-3 animate-spin shrink-0" />}
           </span>
-          {c.nota && (
+          {c.nota && notasAbiertas.has(c.id) && (
             <span className="block text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {c.nota}
             </span>
           )}
           {fallos[c.id] && (
-            <span className="block text-[11px] mt-0.5 text-red-400">
+            <span className="block text-[11px] mt-0.5 text-red-700 dark:text-red-400">
               no se pudo cargar ({fallos[c.id]})
             </span>
           )}
@@ -550,7 +581,7 @@ export default function RepresaPage() {
     // Altura explícita, igual que MapPage: el <main> del layout no la fija, y
     // sin esto el mapa y el canvas 3D se quedan en 0 px de alto.
     <div className="flex flex-col rounded-xl overflow-hidden border"
-         style={{ height: 'calc(100vh - 180px)', borderColor: 'var(--border-color)' }}>
+         style={{ height: 'calc(100vh - 56px)', borderColor: 'var(--border-color)' }}>
       {/* Cabecera */}
       <div className="px-4 py-3 border-b flex flex-wrap items-center justify-between gap-3"
            style={{ borderColor: 'var(--border-color)' }}>
@@ -559,7 +590,7 @@ export default function RepresaPage() {
             Represa de Porotog — cartografía del proyecto
           </h1>
           <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-            Planos del Consorcio CCSPT georreferenciados · uso interno de consultoría
+            Planos del Consorcio CCSPT georreferenciados sobre el catastro y el padrón
           </p>
         </div>
         <div className="flex rounded-lg overflow-hidden border" style={{ borderColor: 'var(--border-color)' }}>
@@ -574,8 +605,9 @@ export default function RepresaPage() {
           <button
             onClick={() => setVista('relieve')}
             className={`flex items-center gap-2 px-3 py-1.5 text-sm cursor-pointer ${
-              vista === 'relieve' ? 'bg-blue-500/20 text-blue-300' : 'hover:bg-white/5'}`}
-            style={{ color: vista === 'relieve' ? undefined : 'var(--text-secondary)' }}
+              vista === 'relieve'
+                ? 'bg-blue-500/20 text-blue-700 dark:text-blue-300'
+                : 'btn-relieve-pulso font-medium text-blue-600 dark:text-blue-400 hover:bg-white/5'}`}
           >
             <Mountain className="w-4 h-4" /> Relieve 3D
           </button>
@@ -592,18 +624,65 @@ export default function RepresaPage() {
                    style={{ color: 'var(--text-muted)' }}>
                 <Layers className="w-3.5 h-3.5" /> Capas
               </div>
-              <ul className="space-y-1">
-                {CAPAS.filter((c) => c.grupo !== 'sistema').map(fila)}
-              </ul>
+              {(['obra', 'entorno'] as const).map((g) => {
+                const capasG = CAPAS.filter((c) => c.grupo === g);
+                const encendidas = capasG.filter((c) => activas.has(c.id)).length;
+                const abierto = gruposAbiertos.has(g);
+                return (
+                  <div key={g} className="mb-2">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setGruposAbiertos((prev) => {
+                          const n = new Set(prev);
+                          if (n.has(g)) n.delete(g); else n.add(g);
+                          return n;
+                        })}
+                        className="flex-1 flex items-center gap-1.5 text-xs font-semibold uppercase
+                                   tracking-wider cursor-pointer hover:opacity-80 py-1"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        {abierto ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                        {g === 'obra' ? 'Obra propuesta' : 'Territorio y entorno'}
+                        <span className="font-normal normal-case tracking-normal">
+                          ({encendidas}/{capasG.length})
+                        </span>
+                      </button>
+                      <input
+                        type="checkbox"
+                        checked={encendidas > 0}
+                        onChange={() => setActivas((prev) => {
+                          const n = new Set(prev);
+                          if (encendidas > 0) capasG.forEach((c) => n.delete(c.id));
+                          else capasG.forEach((c) => n.add(c.id));
+                          return n;
+                        })}
+                        className="cursor-pointer"
+                        title={encendidas > 0 ? 'Apagar todo el grupo' : 'Encender todo el grupo'}
+                      />
+                    </div>
+                    {abierto && <ul className="space-y-1">{capasG.map(fila)}</ul>}
+                  </div>
+                );
+              })}
 
               {/* El sistema de riego al que servirá la obra: es lo que da la
                   medida de la represa. Apagado por defecto — encenderlo cambia
                   la escala del mapa de 1 km a 20 km. */}
               <div className="flex items-center justify-between gap-2 mt-4 mb-2">
-                <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider"
-                      style={{ color: 'var(--text-muted)' }}>
+                <button
+                  onClick={() => setGruposAbiertos((prev) => {
+                    const n = new Set(prev);
+                    if (n.has('sistema')) n.delete('sistema'); else n.add('sistema');
+                    return n;
+                  })}
+                  className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider
+                             cursor-pointer hover:opacity-80"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  {gruposAbiertos.has('sistema')
+                    ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                   <Droplets className="w-3.5 h-3.5" /> Sistema de riego
-                </span>
+                </button>
                 <button
                   onClick={() => {
                     // «Ver todo» sin predios encendidos no enseñaría nada: se
@@ -623,9 +702,11 @@ export default function RepresaPage() {
                   {encuadre === 'obra' ? 'Ver todo' : 'Ver la obra'}
                 </button>
               </div>
-              <ul className="space-y-1">
-                {CAPAS.filter((c) => c.grupo === 'sistema').map(fila)}
-              </ul>
+              {gruposAbiertos.has('sistema') && (
+                <ul className="space-y-1">
+                  {CAPAS.filter((c) => c.grupo === 'sistema').map(fila)}
+                </ul>
+              )}
 
               {magnitud && (
                 <div className="mt-3 rounded-lg p-3 text-[11px] leading-relaxed"
@@ -641,7 +722,7 @@ export default function RepresaPage() {
                     <b>{magnitud.predios.toLocaleString('es-EC')}</b></div>
                   <div className="mt-1.5 pt-1.5 border-t" style={{ borderColor: 'var(--border-color)' }}>
                     Por cada hectárea de represa se riegan
-                    <b className="text-emerald-400"> {magnitud.ha_regadas_por_ha_de_represa} ha</b>.
+                    <b className="text-emerald-700 dark:text-emerald-400"> {num(magnitud.ha_regadas_por_ha_de_represa, 1)} ha</b>.
                   </div>
                   <ul className="mt-1.5 space-y-0.5">
                     {magnitud.sectores.map((s) => (
@@ -665,65 +746,116 @@ export default function RepresaPage() {
                               borderColor: magnitud.vaso.investigada_ha > 0 ? '#dc262666' : '#f59e0b66',
                               color: 'var(--text-muted)' }}>
                   <div className={`flex items-center gap-1.5 mb-1.5 font-semibold ${
-                    magnitud.vaso.investigada_ha > 0 ? 'text-red-400' : 'text-amber-400'}`}>
+                    magnitud.vaso.investigada_ha > 0 ? 'text-red-700 dark:text-red-400' : 'text-amber-700 dark:text-amber-400'}`}>
                     <AlertTriangle className="w-3.5 h-3.5" /> Sobre qué se levanta la obra
                   </div>
-                  <p className="mb-2">
-                    El área de proyecto se apoya sobre{' '}
-                    <b>{magnitud.vaso.predios.length} predios catastrales</b>
-                    {magnitud.vaso.investigada_ha > 0
-                      ? ', y parte de esa superficie está investigada por el padrón.'
-                      : '. Ninguno tiene ficha en el padrón: la obra no se levanta sobre el predio de ningún regante.'}
-                  </p>
-                  <div className="flex justify-between"><span>Área de proyecto</span>
-                    <b>{num(magnitud.vaso.area_ha, 2)} ha</b></div>
-                  <div className="flex justify-between"><span>Sobre predio catastrado</span>
-                    <b>{num(magnitud.vaso.cubierta_ha, 2)} ha ({magnitud.vaso.cubierta_pct}%)</b></div>
-                  <div className="flex justify-between"><span>Sin predio catastrado</span>
-                    <b>{num(magnitud.vaso.libre_ha, 2)} ha</b></div>
-                  <div className="flex justify-between"><span>Sobre predio del padrón</span>
-                    <b className={magnitud.vaso.investigada_ha > 0
-                      ? 'text-red-400' : 'text-emerald-400'}>
-                      {num(magnitud.vaso.investigada_ha, 2)} ha</b></div>
+{(() => {
+                    // Este panel se proyecta al consorcio para tomar decisiones:
+                    // primero las dos respuestas que importan (que no toca a
+                    // regantes y que no entra al parque), despues el detalle por
+                    // predio. Los slivers del catastro (costuras de digitalizacion)
+                    // ya vienen filtrados desde el generador (06_capas_padron.py):
+                    // todo lo que llega aqui es un predio de verdad.
+                    return (
+                      <>
+                        {magnitud.vaso.investigada_ha > 0 ? (
+                          <p className="mb-2 font-semibold text-red-700 dark:text-red-400">
+                            Parte de la obra cae sobre predios investigados por el
+                            padron: hay regantes con quienes acordar.
+                          </p>
+                        ) : (
+                          <div className="mb-2 space-y-1 font-medium text-emerald-700 dark:text-emerald-400">
+                            <div className="flex gap-1.5"><span className="shrink-0">✓</span>
+                              <span>La obra no toca el predio de ningún regante del padrón.</span></div>
+                            <div className="flex gap-1.5"><span className="shrink-0">✓</span>
+                              <span>No entra al Parque Nacional Cayambe Coca: llega hasta su
+                                límite sin invadirlo.</span></div>
+                          </div>
+                        )}
 
-                  {magnitud.vaso.predios
-                    .filter((r) => r.ha_en_vaso >= 0.1)
-                    .map((r) => (
-                    <div key={r.clave} className="mt-2 pt-2 border-t"
-                         style={{ borderColor: 'var(--border-color)' }}>
-                      <div className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
-                        {r.nombre_predio ?? `Predio ${r.clave}`}
-                      </div>
-                      <div className="mb-1">
-                        clave {r.clave}
-                        {r.tipo_predio ? ` · ${r.tipo_predio}` : ''}
-                      </div>
-                      <div>
-                        <b>{num(r.ha_en_vaso, 2)} ha</b> dentro del proyecto — el
-                        {' '}{r.pct_del_vaso}% del área de la obra y el {r.pct_del_predio}% de sus
-                        {' '}{num(r.area_predio_ha, 2)} ha.
-                      </div>
-                      {r.condicion && (
-                        <div className="mt-1 text-emerald-400">{r.condicion}</div>
-                      )}
-                      {r.detalle_condicion && (
-                        <div style={{ color: 'var(--text-secondary)' }}>{r.detalle_condicion}</div>
-                      )}
-                      {r.investigado ? (
-                        <div className="mt-1 text-red-400">
-                          ⚠ Investigado por el padrón: ficha {r.codigo_ficha} de {r.propietario}
-                          {r.tenencia ? ` · ${r.tenencia}` : ''}
+                        <p className="mb-2">
+                          El área de proyecto se apoya sobre{' '}
+                          <b>{magnitud.vaso.predios.length} predios del catastro municipal</b>.
+                        </p>
+
+                        <div className="flex justify-between"><span>Área de proyecto</span>
+                          <b>{num(magnitud.vaso.area_ha, 2)} ha</b></div>
+                        <div className="flex justify-between"><span>Sobre predio catastrado</span>
+                          <b>{num(magnitud.vaso.cubierta_ha, 2)} ha ({num(magnitud.vaso.cubierta_pct ?? 0, 1)}%)</b></div>
+                        <div className="flex justify-between"><span>Sin predio catastrado</span>
+                          <b>{num(magnitud.vaso.libre_ha, 2)} ha</b></div>
+                        {magnitud.vaso.investigada_ha > 0 && (
+                          <div className="flex justify-between"><span>Sobre predio del padrón</span>
+                            <b className="text-red-700 dark:text-red-400">
+                              {num(magnitud.vaso.investigada_ha, 2)} ha</b></div>
+                        )}
+
+                        {/* qué significa cada forma del mapa, junto al texto que las cita */}
+                        <div className="mt-2 pt-2 border-t space-y-1"
+                             style={{ borderColor: 'var(--border-color)' }}>
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-3 shrink-0 rounded-[2px]"
+                                  style={{ border: '2px dashed #f59e0b' }} />
+                            <span>predio completo</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-3 shrink-0 rounded-[2px]"
+                                  style={{ background: '#f59e0b66', border: '1px solid #f59e0b' }} />
+                            <span>parte que ocupa la obra</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="w-5 h-3 shrink-0 rounded-[2px]"
+                                  style={{ background: '#22c55e2e', border: '2px solid #16a34a' }} />
+                            <span>Parque Nacional Cayambe Coca (límite oficial)</span>
+                          </div>
                         </div>
-                      ) : (
-                        <div className="mt-1">Sin ficha en el padrón.</div>
-                      )}
-                      {!r.condicion && !r.investigado && (
-                        <div className="text-amber-400/90">
-                          Su condición jurídica no se ha consultado al GADM.
-                        </div>
-                      )}
-                    </div>
-                  ))}
+
+                        {magnitud.vaso.predios.map((r) => (
+                          <div key={r.clave} className="mt-2 pt-2 border-t"
+                               style={{ borderColor: 'var(--border-color)' }}>
+                            <div className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+                              {r.nombre_predio ?? `Predio ${r.clave}`}
+                            </div>
+                            <div className="mb-1">
+                              clave {r.clave}
+                              {r.tipo_predio ? ` - ${r.tipo_predio}` : ''}
+                            </div>
+                            <div>
+                              <b>{num(r.ha_en_vaso, 2)} ha</b> dentro del proyecto: el
+                              {' '}{num(r.pct_del_vaso ?? 0, 1)}% del área de la obra y el
+                              {' '}{num(r.pct_del_predio ?? 0, 1)}% de sus
+                              {' '}{num(r.area_predio_ha, 2)} ha.
+                            </div>
+                            {r.condicion && (
+                              <div className="mt-1 text-amber-700 dark:text-amber-400">{r.condicion}</div>
+                            )}
+                            {r.detalle_condicion && (
+                              <div style={{ color: 'var(--text-secondary)' }}>{r.detalle_condicion}</div>
+                            )}
+                            {r.nota_parque && (
+                              <div className="mt-1" style={{ color: 'var(--text-secondary)' }}>
+                                {r.nota_parque}
+                              </div>
+                            )}
+                            {r.investigado ? (
+                              <div className="mt-1 text-red-700 dark:text-red-400">
+                                ⚠ Investigado por el padrón: ficha {r.codigo_ficha} de {r.propietario}
+                                {r.tenencia ? ` - ${r.tenencia}` : ''}
+                              </div>
+                            ) : (
+                              <div className="mt-1">Sin ficha en el padrón.</div>
+                            )}
+                            {!r.condicion && !r.investigado && (
+                              <div className="text-amber-700/90 dark:text-amber-400/90">
+                                Su condición jurídica no se ha consultado al GADM.
+                              </div>
+                            )}
+                          </div>
+                        ))}
+
+                      </>
+                    );
+                  })()}
 
                   <button
                     onClick={() => {
@@ -738,45 +870,37 @@ export default function RepresaPage() {
                   </button>
 
                   <p className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
-                    Cómo se calcula: los polígonos del catastro rural del GADM cruzados con el
-                    límite de proyecto (con el vértice 23 corregido), medidos en UTM 17S. La
-                    condición de cada predio la aporta la ficha catastral del municipio, no el
-                    archivo. Se recalcula en cada sincronización.
+                    Cómo se calcula: los polígonos del catastro rural del GADM cruzados
+                    con el límite de proyecto, medidos en UTM 17S. La condición jurídica
+                    la aporta el GADM, no el archivo del plano; el límite del parque, el
+                    shapefile oficial del PNCC. Se recalcula en cada sincronización.
                   </p>
                 </div>
               )}
 
-              {/* Ficha de procedencia: quien mire esto tiene que saber de dónde sale */}
-              <div className="mt-4 rounded-lg p-3 text-[11px] leading-relaxed"
-                   style={{ background: 'var(--bg-primary)', color: 'var(--text-muted)' }}>
-                <div className="flex items-center gap-1.5 mb-1.5 font-semibold"
-                     style={{ color: 'var(--text-secondary)' }}>
-                  <Info className="w-3.5 h-3.5" /> Procedencia y precisión
-                </div>
-                <p className="mb-1.5">
-                  Los planos PDF no traen georreferencia. Se calculó a partir de la tabla
-                  de coordenadas del propio plano: <b>RMS 0,216 m</b>, y la escala que
-                  resulta del ajuste (1:1.998) coincide con la declarada (1:2.000).
-                </p>
-                <p className="mb-1.5">
-                  Contraste independiente contra las curvas de nivel regionales de 5 m:
-                  <b> 3,4 m de diferencia mediana</b> sobre 708 puntos.
-                </p>
-                <p className="text-amber-400/90 flex gap-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                  <span>
-                    La fila 23 de la tabla del consorcio está equivocada: sitúa el
-                    vértice a 2,5 km de donde el propio plano lo dibuja. Aquí se usa la
-                    coordenada corregida. Conviene reportárselo.
-                  </span>
-                </p>
-              </div>
             </div>
           </aside>
         )}
 
         {/* Vista */}
-        <div className="flex-1 min-w-0 min-h-0">
+        <div className="flex-1 min-w-0 min-h-0 relative">
+          {/* flecha de norte: en Leaflet el norte siempre es arriba, pero en una
+              lamina para presentar es de rigor declararlo */}
+          {vista !== 'relieve' && (
+            <div className="absolute bottom-2 left-2 z-[1000] w-10 h-10 rounded-full
+                            flex items-center justify-center pointer-events-none"
+                 style={{ background: 'var(--bg-secondary)', opacity: 0.92,
+                          border: '1px solid var(--border-color)' }}
+                 title="Norte">
+              <svg width="28" height="28" viewBox="0 0 34 34">
+                <polygon points="17,6 21.5,21 17,17.5 12.5,21" fill="#ef4444" />
+                <polygon points="17,29 21.5,21 17,24.5 12.5,21"
+                         fill="var(--text-muted)" opacity="0.8" />
+                <text x="17" y="13" textAnchor="middle" fontSize="8"
+                      fill="var(--text-primary)" fontWeight="700">N</text>
+              </svg>
+            </div>
+          )}
           {vista === 'relieve' ? (
             <Suspense fallback={
               <div className="w-full h-full flex items-center justify-center"

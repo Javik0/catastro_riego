@@ -1,39 +1,40 @@
 {
   "represa_ha": 63.59,
-  "riego_ha": 6036.8,
-  "huella_ha": 6847.3,
+  "riego_ha": 5004.5,
+  "huella_ha": 6856.2,
   "predios": 6830,
-  "ha_regadas_por_ha_de_represa": 94.9,
+  "ha_regadas_por_ha_de_represa": 78.7,
   "sectores": [
     {
       "sector": "Sector 1",
-      "predios": 3390,
-      "area_riego_ha": 3035.3
+      "predios": 3407,
+      "area_riego_ha": 2308.1
     },
     {
       "sector": "Sector 2",
-      "predios": 2247,
-      "area_riego_ha": 1490.7
+      "predios": 2246,
+      "area_riego_ha": 1228.2
     },
     {
       "sector": "Sector 3",
       "predios": 1176,
-      "area_riego_ha": 1510.7
+      "area_riego_ha": 1468.2
     }
   ],
   "vaso": {
     "area_ha": 63.59,
-    "cubierta_ha": 63.25,
-    "cubierta_pct": 99.5,
-    "libre_ha": 0.34,
+    "cubierta_ha": 63.18,
+    "cubierta_pct": 99.3,
+    "libre_ha": 0.41,
     "investigada_ha": 0,
     "predios": [
       {
         "clave": "1702606901",
         "nombre_predio": "PÁRAMO CHICO",
         "tipo_predio": "Polígono Especial de Colindancia",
-        "condicion": "Predio del Estado",
-        "detalle_condicion": "Revertido al Estado a partir de la cota 3680 msnm — Oficio Nº 269-JACR-2018, inspección Nº 422 del 26/09/2018 (GADM Cayambe).",
+        "condicion": "En litigio comunidad–Estado",
+        "detalle_condicion": "El GADM Cayambe informó en agosto de 2026 que este predio está en litigio entre las comunidades y el Estado; el pronunciamiento por escrito está pendiente. Un oficio de 2018 (Nº 269-JACR-2018, inspección Nº 422) lo daba por revertido al Estado desde la cota 3680 msnm.",
+        "nota_parque": "Su parte alta traslapa unas 64,6 ha con el límite oficial del Parque Nacional Cayambe Coca, fuera del área de la obra. El límite del parque es de escala 1:250.000: es una referencia, no una medición catastral.",
         "investigado": false,
         "propietario": null,
         "cedula": null,
@@ -53,8 +54,9 @@
         "clave": "1702605313",
         "nombre_predio": null,
         "tipo_predio": null,
-        "condicion": null,
-        "detalle_condicion": null,
+        "condicion": "En litigio comunidad–Estado",
+        "detalle_condicion": "El GADM Cayambe informó en agosto de 2026 que este predio está en litigio entre las comunidades y el Estado; el pronunciamiento por escrito está pendiente.",
+        "nota_parque": null,
         "investigado": false,
         "propietario": null,
         "cedula": null,
@@ -68,48 +70,6 @@
         "ha_en_vaso": 31.49,
         "pct_del_vaso": 49.5,
         "pct_del_predio": 4.8,
-        "distancia_punto_m": null
-      },
-      {
-        "clave": "1702300178",
-        "nombre_predio": null,
-        "tipo_predio": null,
-        "condicion": null,
-        "detalle_condicion": null,
-        "investigado": false,
-        "propietario": null,
-        "cedula": null,
-        "comunidad": null,
-        "codigo_ficha": null,
-        "tenencia": null,
-        "caudal_ls": null,
-        "observaciones": null,
-        "fichas_en_el_predio": 0,
-        "area_predio_ha": 0.15,
-        "ha_en_vaso": 0.04,
-        "pct_del_vaso": 0.1,
-        "pct_del_predio": 24.3,
-        "distancia_punto_m": null
-      },
-      {
-        "clave": "1702300173",
-        "nombre_predio": null,
-        "tipo_predio": null,
-        "condicion": null,
-        "detalle_condicion": null,
-        "investigado": false,
-        "propietario": null,
-        "cedula": null,
-        "comunidad": null,
-        "codigo_ficha": null,
-        "tenencia": null,
-        "caudal_ls": null,
-        "observaciones": null,
-        "fichas_en_el_predio": 0,
-        "area_predio_ha": 0.12,
-        "ha_en_vaso": 0.03,
-        "pct_del_vaso": 0.1,
-        "pct_del_predio": 28.0,
         "distancia_punto_m": null
       }
     ]

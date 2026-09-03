@@ -159,3 +159,19 @@ body {
 .recharts-wrapper *, .leaflet-container * {
   transition: none;
 }
+
+/* Botón «Relieve 3D» de la represa: pulso que invita a descubrir esa vista.
+   El anillo azul se lee sobre los dos temas; el color del texto va por clases
+   (blue-600 en claro / blue-400 en oscuro) para cumplir contraste AA. Se apaga
+   cuando la vista 3D ya está activa y si el usuario pide menos movimiento. */
+@keyframes pulso-relieve {
+  0%   { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.55); }
+  70%  { box-shadow: 0 0 0 7px rgba(59, 130, 246, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+.btn-relieve-pulso {
+  animation: pulso-relieve 2.2s ease-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-relieve-pulso { animation: none; }
+}

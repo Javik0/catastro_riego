@@ -76,18 +76,50 @@ CATASTRO_TABLA = 'CATASTROACTUALIZADORURALCATASTRORURALACTUALIZADO'
 # El GeoPackage del catastro trae la geometría y la clave, pero los campos de
 # titular y observaciones vienen vacíos en estos predios: esa información está
 # en el sistema catastral del municipio, no en el archivo. Se transcribe aquí
-# lo consultado en la ficha catastral del GADM Cayambe, con su oficio, para que
-# la pantalla pueda explicar sobre qué se levanta la obra.
+# lo consultado al GADM Cayambe para que la pantalla pueda explicar sobre qué
+# se levanta la obra.
 #
-# Fuente: ficha catastral del GADM Cayambe, consultada por Armando Proaño el
-# 13 de agosto de 2026; copia de los oficios en su poder.
+# CUIDADO AL EDITAR ESTO: es lo único de la pantalla que afirma algo sobre la
+# propiedad de la tierra. La versión del 13-ago-2026 decía que el Páramo Chico
+# estaba "revertido al Estado" citando el Oficio Nº 269-JACR-2018, y quedó
+# desactualizada once días después. Si la condición vuelve a cambiar, se
+# corrige AQUÍ y se regenera; nunca a mano en el JSON publicado.
+#
+# Fuentes, en orden cronológico:
+#   · 13-ago-2026 — ficha catastral del GADM Cayambe consultada por Armando
+#     Proaño; copia de los oficios en su poder. De ahí salen el nombre del
+#     predio, su tipo y el oficio de reversión.
+#   · 24-ago-2026 — Armando comunica que el GAD informa que los DOS predios
+#     del vaso están en litigio entre las comunidades y el Estado ("los dos
+#     son de las comunidades y los dos el mismo caso que ya se definió en el
+#     primero"). Esto MATIZA el oficio de 2018: la titularidad estatal no es
+#     firme. Es un reporte verbal, no un documento del GAD — por eso la
+#     pantalla dice que falta el pronunciamiento por escrito.
+LITIGIO = 'En litigio comunidad–Estado'
+DETALLE_LITIGIO = (
+    'El GADM Cayambe informó en agosto de 2026 que este predio está en litigio '
+    'entre las comunidades y el Estado; el pronunciamiento por escrito está '
+    'pendiente.')
+
 NOTA_CATASTRAL = {
     '1702606901': {
         'nombre': 'PÁRAMO CHICO',
         'tipo': 'Polígono Especial de Colindancia',
-        'condicion': 'Predio del Estado',
-        'detalle': ('Revertido al Estado a partir de la cota 3680 msnm — Oficio '
-                    'Nº 269-JACR-2018, inspección Nº 422 del 26/09/2018 (GADM Cayambe).'),
+        'condicion': LITIGIO,
+        'detalle': (DETALLE_LITIGIO + ' Un oficio de 2018 (Nº 269-JACR-2018, '
+                    'inspección Nº 422) lo daba por revertido al Estado desde la '
+                    'cota 3680 msnm.'),
+        # medido en sep-2026 contra el shapefile oficial del PNCC (07_capa_pncc.py)
+        'nota_parque': ('Su parte alta traslapa unas 64,6 ha con el límite '
+                        'oficial del Parque Nacional Cayambe Coca, fuera del área '
+                        'de la obra. El límite del parque es de escala 1:250.000: '
+                        'es una referencia, no una medición catastral.'),
+    },
+    '1702605313': {
+        'nombre': None,
+        'tipo': None,
+        'condicion': LITIGIO,
+        'detalle': DETALLE_LITIGIO,
     },
 }
 
@@ -183,6 +215,26 @@ def ocupacion_del_vaso(limite, tr):
         geom_utm = geom_utm.Clone()
         solape = geom_utm.Intersection(limite_utm)
         ha = solape.GetArea() / 10000.0 if solape and not solape.IsEmpty() else 0.0
+
+        # Slivers del catastro, fuera. El cruce trae dos "predios" (1702300178
+        # y 1702300173) que no son lotes sino costuras de la digitalizacion
+        # municipal: franjas de ~25 cm de ancho y mas de 1 km de largo pegadas
+        # al borde de la obra (~700 m2, 0,2 %). Presentarlos como predios
+        # invitaba a observaciones que no corresponden — decision de JAVIKO,
+        # sep-2026: se excluyen por criterio geometrico (un predio real, por
+        # chico que sea, tiene metros de ancho, no centimetros) y se deja
+        # constancia por consola. Si un dia aparece aqui un predio de verdad,
+        # pasa el filtro y entra solo.
+        if ha > 0:
+            borde = solape.Boundary()
+            perimetro = borde.Length() if borde else 0.0
+            ancho_medio = (ha * 10000.0) / (perimetro / 2.0) if perimetro else 999.0
+            if ancho_medio < 1.0:
+                print('      (sliver del catastro descartado: {} — {:,.0f} m² '
+                      'con ancho medio {:.2f} m)'.format(
+                          str(ft.GetField('clave_cata') or '').strip(),
+                          ha * 10000, ancho_medio))
+                continue
         if ha < 0.01:
             continue          # roce de bordes, no ocupación real
 
@@ -213,6 +265,7 @@ def ocupacion_del_vaso(limite, tr):
             'tipo_predio': nota.get('tipo'),
             'condicion': nota.get('condicion'),
             'detalle_condicion': nota.get('detalle'),
+            'nota_parque': nota.get('nota_parque'),
             'investigado': bool(asociadas),
             'propietario': nombre or None,
             'cedula': (ficha or {}).get('cedula'),

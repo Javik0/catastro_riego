@@ -23,6 +23,7 @@ interface Terreno {
   nx: number;
   ny: number;
   bbox_utm: [number, number, number, number];
+  bbox_wgs84: [number, number, number, number];
   ancho_m: number;
   alto_m: number;
   cota_min: number;
@@ -54,12 +55,91 @@ function colorPorAltura(t: number): [number, number, number] {
   return paradas[paradas.length - 1][1];
 }
 
+/**
+ * Imagen satelital real drapeada sobre el relieve: se componen los tiles de
+ * ESRI World_Imagery (los mismos del mapa 2D) en un canvas recortado al bbox
+ * del terreno. En el ecuador la grilla UTM queda alineada con el norte y la
+ * distorsion Mercator es minima, asi que el mapeo lineal sobre la malla es
+ * suficiente para un modelo apoyado en cartografia de 5 m.
+ * Si la red falla, se devuelve null y la malla conserva su paleta por alturas.
+ */
+async function texturaSatelital(bbox: [number, number, number, number]):
+  Promise<HTMLCanvasElement | null> {
+  try {
+    const [lngMin, latMin, lngMax, latMax] = bbox;
+    const Z = 17;                       // ~1,2 m/px en el ecuador
+    const T = 256;
+    const n = 2 ** Z * T;
+    const merc = (lat: number, lng: number): [number, number] => {
+      const sen = Math.sin((lat * Math.PI) / 180);
+      return [((lng + 180) / 360) * n,
+              (0.5 - Math.log((1 + sen) / (1 - sen)) / (4 * Math.PI)) * n];
+    };
+    const [px0, py0] = merc(latMax, lngMin);   // esquina noroeste
+    const [px1, py1] = merc(latMin, lngMax);   // esquina sureste
+    const lienzo = document.createElement('canvas');
+    lienzo.width = Math.round(px1 - px0);
+    lienzo.height = Math.round(py1 - py0);
+    const ctx = lienzo.getContext('2d');
+    if (!ctx) return null;
+
+    const cargas: Array<Promise<boolean>> = [];
+    for (let ty = Math.floor(py0 / T); ty <= Math.floor(py1 / T); ty++) {
+      for (let tx = Math.floor(px0 / T); tx <= Math.floor(px1 / T); tx++) {
+        cargas.push(new Promise((fin) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => { ctx.drawImage(img, tx * T - px0, ty * T - py0); fin(true); };
+          img.onerror = () => fin(false);
+          img.src = 'https://server.arcgisonline.com/ArcGIS/rest/services/'
+                  + `World_Imagery/MapServer/tile/${Z}/${ty}/${tx}`;
+        }));
+      }
+    }
+    const resultados = await Promise.all(cargas);
+    // sin la mayoria de los tiles la textura seria un parche negro: mejor la paleta
+    if (resultados.filter(Boolean).length < resultados.length / 2) return null;
+    return lienzo;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Lineas y poligonos del proyecto que se pueden drapear sobre el relieve.
+ * Mismos colores que la vista 2D, para que las dos se lean igual.
+ */
+const CAPAS_3D = [
+  { id: 'limite', archivo: 'limite_proyecto', nombre: 'Limite de proyecto', color: 0xff3b30, css: '#ff3b30', defecto: true },
+  { id: 'obras', archivo: 'obras', nombre: 'Obras (captacion, tunel, vertedero)', color: 0x38bdf8, css: '#38bdf8', defecto: true },
+  { id: 'bancos', archivo: 'bancos_superficie', nombre: 'Bancos de materiales', color: 0xd946ef, css: '#d946ef', defecto: true },
+  { id: 'tuberia', archivo: 'tuberia', nombre: 'Tuberia y derecho de paso', color: 0xf59e0b, css: '#f59e0b', defecto: false },
+  { id: 'hidro', archivo: 'hidrografia', nombre: 'Rio, canal y pantanos', color: 0x0ea5e9, css: '#0ea5e9', defecto: false },
+  { id: 'ejes', archivo: 'ejes', nombre: 'Ejes de replanteo', color: 0x94a3b8, css: '#94a3b8', defecto: false },
+];
+
 export default function TerrenoVista3D() {
   const contenedor = useRef<HTMLDivElement>(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [exageracion, setExageracion] = useState(2);
   const [info, setInfo] = useState<{ min: number; max: number } | null>(null);
+  // visibilidad de cada capa drapeada (persiste al reconstruir por exageracion)
+  const [visibles3D, setVisibles3D] = useState<Record<string, boolean>>(() => ({
+    ...Object.fromEntries(CAPAS_3D.map((c) => [c.id, c.defecto])),
+    rotulos: true,
+  }));
+  const visiblesRef = useRef(visibles3D);
+  useEffect(() => { visiblesRef.current = visibles3D; }, [visibles3D]);
+  const grupos3D = useRef<Record<string, THREE.Group>>({});
+  const flechaNorte = useRef<HTMLDivElement>(null);
+
+  const alternar3D = (id: string) => setVisibles3D((prev) => {
+    const v = { ...prev, [id]: !prev[id] };
+    const g = grupos3D.current[id];
+    if (g) g.visible = v[id];
+    return v;
+  });
 
   // La escena se reconstruye al cambiar la exageración (por eso está en las
   // dependencias). Se podría recalcular solo las alturas y evitar el remontaje,
@@ -83,7 +163,8 @@ export default function TerrenoVista3D() {
     controles.enableDamping = true;
     controles.maxPolarAngle = Math.PI / 2.05;   // no meterse debajo del terreno
 
-    escena.add(new THREE.AmbientLight(0xffffff, 0.55));
+    const ambiente = new THREE.AmbientLight(0xffffff, 0.55);
+    escena.add(ambiente);
     const sol = new THREE.DirectionalLight(0xffffff, 1.1);
     sol.position.set(-1, 1.4, -0.8);
     escena.add(sol);
@@ -123,6 +204,22 @@ export default function TerrenoVista3D() {
 
       const material = new THREE.MeshLambertMaterial({ vertexColors: true });
       const malla = new THREE.Mesh(geom, material);
+
+      // La malla nace con la paleta por alturas (respuesta inmediata y modo
+      // sin red); en cuanto los tiles del satelite componen, se drapean encima.
+      texturaSatelital(t.bbox_wgs84).then((lienzo) => {
+        if (cancelado || !lienzo) return;
+        const tex = new THREE.CanvasTexture(lienzo);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        material.map = tex;
+        material.vertexColors = false;
+        material.needsUpdate = true;
+        // el satelite ya trae su propio sombreado: menos sol para no quemarlo
+        ambiente.intensity = 0.85;
+        sol.intensity = 0.55;
+        desechables.push(tex);
+      });
       mundo.add(malla);
       desechables.push(geom, material);
 
@@ -178,28 +275,51 @@ export default function TerrenoVista3D() {
         );
       };
 
-      // ── límite de proyecto sobre el relieve ──
-      try {
-        const rl = await fetch('/geo/represa/limite_proyecto.geojson');
-        const gj = await rl.json();
-        for (const f of gj.features ?? []) {
-          const anillos = f.geometry?.type === 'Polygon' ? f.geometry.coordinates : [];
-          for (const anillo of anillos) {
-            const puntos = anillo.map(([lon, lat]: [number, number]) => {
+      // ── capas del proyecto drapeadas sobre el relieve ──
+      // Cada una vive en su propio Group: prender y apagar es cambiar
+      // `visible`, sin reconstruir nada.
+      const dibujarCapa = async (c: typeof CAPAS_3D[number]) => {
+        const grupo = new THREE.Group();
+        grupo.visible = visiblesRef.current[c.id] !== false;
+        mundo.add(grupo);
+        grupos3D.current[c.id] = grupo;
+        try {
+          const r = await fetch(`/geo/represa/${c.archivo}.geojson`);
+          const gj = await r.json();
+          if (cancelado) return;
+          const m = new THREE.LineBasicMaterial({ color: c.color });
+          desechables.push(m);
+          const linea = (coords: Array<[number, number]>) => {
+            if (!coords || coords.length < 2) return;
+            const puntos = coords.map(([lon, lat]) => {
               const { este, norte } = wgs84ToUtm17S(lat, lon);
-              const p = aEscena(este, norte);
-              p.y += 8;                       // despegarlo para que no se entierre
-              return p;
+              const q = aEscena(este, norte);
+              q.y += 8;                     // despegada para que no se entierre
+              return q;
             });
             const g = new THREE.BufferGeometry().setFromPoints(puntos);
-            const m = new THREE.LineBasicMaterial({ color: 0xff3b30 });
-            mundo.add(new THREE.Line(g, m));
-            desechables.push(g, m);
+            grupo.add(new THREE.Line(g, m));
+            desechables.push(g);
+          };
+          for (const f of gj.features ?? []) {
+            const geo = f.geometry;
+            if (!geo) continue;
+            if (geo.type === 'LineString') linea(geo.coordinates);
+            else if (geo.type === 'MultiLineString') geo.coordinates.forEach(linea);
+            else if (geo.type === 'Polygon') geo.coordinates.forEach(linea);
+            else if (geo.type === 'MultiPolygon') {
+              geo.coordinates.forEach((po: Array<Array<[number, number]>>) => po.forEach(linea));
+            }
           }
-        }
-      } catch { /* el relieve se ve igual sin el límite */ }
+        } catch { /* sin esa capa el relieve se ve igual */ }
+      };
+      CAPAS_3D.forEach(dibujarCapa);   // cargan en paralelo, van apareciendo
 
       // ── rótulos de obra ──
+      const gRotulos = new THREE.Group();
+      gRotulos.visible = visiblesRef.current['rotulos'] !== false;
+      mundo.add(gRotulos);
+      grupos3D.current['rotulos'] = gRotulos;
       try {
         const rr = await fetch('/geo/represa/rotulos_obra.geojson');
         const gj = await rr.json();
@@ -216,7 +336,7 @@ export default function TerrenoVista3D() {
           const m = new THREE.MeshBasicMaterial({ color: 0xffd400 });
           const punto = new THREE.Mesh(g, m);
           punto.position.copy(p).setY(p.y + 20);
-          mundo.add(punto);
+          gRotulos.add(punto);
           desechables.push(g, m);
 
           const lienzo = document.createElement('canvas');
@@ -235,7 +355,7 @@ export default function TerrenoVista3D() {
           sprite.scale.set(300, 38, 1);
           sprite.position.copy(p).setY(p.y + 95);
           sprite.center.set(0, 0.5);          // anclar por la izquierda del texto
-          mundo.add(sprite);
+          gRotulos.add(sprite);
           desechables.push(textura, sm);
         }
       } catch { /* idem */ }
@@ -268,6 +388,11 @@ export default function TerrenoVista3D() {
     const bucle = () => {
       animacion = requestAnimationFrame(bucle);
       controles.update();
+      // la flecha de norte sigue a la camara: siempre dice donde queda el norte
+      if (flechaNorte.current) {
+        flechaNorte.current.style.transform =
+          `rotate(${controles.getAzimuthalAngle()}rad)`;
+      }
       renderer.render(escena, camara);
     };
     bucle();
@@ -304,6 +429,21 @@ export default function TerrenoVista3D() {
         </div>
       )}
 
+      {/* flecha de norte: gira con la camara para orientar la vista */}
+      <div className="absolute bottom-3 right-3 w-12 h-12 rounded-full backdrop-blur
+                      flex items-center justify-center pointer-events-none"
+           style={{ background: 'rgba(8,14,26,0.78)', border: '1px solid rgba(148,163,184,0.35)' }}
+           title="Norte">
+        <div ref={flechaNorte}>
+          <svg width="34" height="34" viewBox="0 0 34 34">
+            <polygon points="17,6 21.5,21 17,17.5 12.5,21" fill="#f87171" />
+            <polygon points="17,29 21.5,21 17,24.5 12.5,21" fill="#e2e8f0" opacity="0.85" />
+            <text x="17" y="13" textAnchor="middle" fontSize="8" fill="#fff"
+                  fontWeight="700">N</text>
+          </svg>
+        </div>
+      </div>
+
       <div className="absolute top-3 left-3 rounded-lg px-3 py-2 text-xs backdrop-blur"
            style={{ background: 'rgba(8,14,26,0.78)', color: '#cbd5e1' }}>
         <div className="flex items-center gap-2 mb-2 font-semibold text-slate-200">
@@ -325,6 +465,24 @@ export default function TerrenoVista3D() {
             className="w-40 mt-1 block"
           />
         </label>
+
+        <div className="mt-2 pt-2 space-y-1"
+             style={{ borderTop: '1px solid rgba(148,163,184,0.25)' }}>
+          {[...CAPAS_3D.map((c) => ({ id: c.id, nombre: c.nombre, css: c.css })),
+            { id: 'rotulos', nombre: 'Rotulos de obra', css: '#ffd400' }].map((c) => (
+            <label key={c.id} className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={!!visibles3D[c.id]}
+                onChange={() => alternar3D(c.id)}
+                className="cursor-pointer"
+              />
+              <span className="inline-block w-3 h-1.5 rounded-sm shrink-0"
+                    style={{ background: c.css }} />
+              {c.nombre}
+            </label>
+          ))}
+        </div>
         <p className="mt-2 text-[11px] text-slate-400 max-w-[15rem]">
           Arrastra para girar, rueda para acercar. Modelo apoyado en cartografía
           de 5 m: sirve para leer el relieve, no para medir volúmenes.
