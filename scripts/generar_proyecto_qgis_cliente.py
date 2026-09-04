@@ -393,9 +393,10 @@ QUÉ CONTIENE
    Condición de riego        los mismos predios, pintados por su condición de
       (con/sin/mixto)        riego declarada en las fichas de campo:
       verde    = con riego
-      mixto    = declara una parte con riego y otra sin riego; su color es un
-                 degradado: tomate si riega poco, verde claro si riega casi todo
-                 (en la leyenda la regla "Mixto" se muestra en amarillo)
+      mixto    = declara una parte con riego y otra sin riego; el polígono se
+                 pinta DIVIDIDO en dos colores según el % declarado: verde la
+                 parte regada y tomate la parte sin riego (agrupados por
+                 decenas de %; cada rango se puede prender y apagar)
       tomate   = sin riego
       gris     = sin dato de riego
       Cada clase se prende y apaga por separado desde la flecha de la capa.

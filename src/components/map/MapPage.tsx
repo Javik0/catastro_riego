@@ -61,17 +61,18 @@ const CLASES_RIEGO = {
 type ClaseRiego = keyof typeof CLASES_RIEGO;
 type ResumenRiego = Record<ClaseRiego, { predios: number; ha: number }>;
 
-// Relleno de los predios MIXTOS: degradado tomate → verde claro según el % del
-// área declarada que se riega (pedido de JAVIKO, 3-sep-2026). Con el umbral de
-// clasificación un mixto solo puede regar entre el 5 % y el 95 %, así que ese
-// es el rango del degradado: tomate = riega poco, verde claro = riega casi todo.
-function colorMixto(pct: number | null | undefined): string {
-  const t = Math.max(0, Math.min(1, ((pct ?? 50) - 5) / 90));
-  const lerp = (a: number, b: number) => Math.round(a + (b - a) * t);
-  // #f97316 (tomate) → #86efac (verde claro)
-  return `rgb(${lerp(249, 134)},${lerp(115, 239)},${lerp(22, 172)})`;
+// Relleno de los predios MIXTOS: el polígono se DIVIDE en dos colores según
+// el % declarado con riego (aclaración de JAVIKO, 3-sep-2026: no un tono
+// intermedio, sino «el 80 % de un color y lo demás de otro»). Se logra con un
+// degradado SVG de corte duro: verde desde abajo hasta el % regado, tomate el
+// resto. Los <linearGradient> viven en un <svg> oculto (los url(#id) de SVG
+// resuelven contra el documento completo) y el fill del polígono los referencia.
+function fillMixto(pct: number | null | undefined): string {
+  const p = Math.max(0, Math.min(100, Math.round(pct ?? 50)));
+  return `url(#mixriego-${p})`;
 }
-const GRADIENTE_MIXTO = 'linear-gradient(90deg, #f97316, #86efac)';
+// Swatch de la leyenda: la misma división vertical, al 50 % de ejemplo
+const SWATCH_MIXTO = 'linear-gradient(to top, #22c55e 50%, #f97316 50%)';
 
 // ── Leyenda ──────────────────────────────────────────────────────────
 function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, totalHijasPendientes, tecnicosOcultos, onToggleTecnico, onTodosTecnicos, conteoPorTecnico, modoMapa, resumenRiego, clasesOcultas, onToggleClase }: {
@@ -218,7 +219,7 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
                     />
                     <div className="w-3 h-2 rounded-sm shrink-0"
                       style={{
-                        background: c === 'mixto' ? GRADIENTE_MIXTO : info.fill,
+                        background: c === 'mixto' ? SWATCH_MIXTO : info.fill,
                         opacity: visible ? 0.85 : 0.3,
                         border: `1px solid ${info.stroke}`,
                       }} />
@@ -232,7 +233,8 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
                 );
               })}
               <p className="text-[8px] leading-snug" style={{ color: 'var(--text-muted)' }}>
-                Mixto: tomate = riega poco → verde = riega casi todo.
+                Mixto: el polígono se divide según el % declarado — verde la
+                parte regada, tomate la parte sin riego.
                 Clasificación según lo declarado en las fichas de campo ·
                 hectáreas de superficie catastral (polígonos del GAD)
               </p>
@@ -1309,6 +1311,23 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     <div className="relative rounded-xl overflow-hidden border"
       style={{ height: 'calc(100vh - 180px)', borderColor: 'var(--border-color)' }}>
 
+      {/* Degradados de corte duro para los predios MIXTOS: mixriego-N pinta el
+          N % inferior del polígono en verde (parte regada) y el resto en
+          tomate. Los referencia fillMixto() vía url(#...); un url de SVG
+          resuelve contra el documento, por eso basta este <svg> oculto. */}
+      {modoMapa === 'riego' && (
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
+          <defs>
+            {Array.from({ length: 101 }, (_, p) => (
+              <linearGradient key={p} id={`mixriego-${p}`} x1="0" y1="1" x2="0" y2="0">
+                <stop offset={`${p}%`} stopColor="#22c55e" />
+                <stop offset={`${p}%`} stopColor="#f97316" />
+              </linearGradient>
+            ))}
+          </defs>
+        </svg>
+      )}
+
       {/* Resumen de lo que se está viendo. Va en top-24 y no en top-16: los
           botones de zoom de Leaflet llegan hasta ~70 px y se pisaban. */}
       <div className="absolute top-24 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm max-w-[215px]"
@@ -1444,8 +1463,8 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                   if (modoMapa === 'riego') {
                     const cls = (feature?.properties?.clase_riego ?? 'sin_dato') as ClaseRiego;
                     const c = CLASES_RIEGO[cls];
-                    const fill = cls === 'mixto' ? colorMixto(feature?.properties?.riego_pct) : c.fill;
-                    return { color: c.stroke, weight: 1.5, fillColor: fill, fillOpacity: 0.45, opacity: 0.9 };
+                    const fill = cls === 'mixto' ? fillMixto(feature?.properties?.riego_pct) : c.fill;
+                    return { color: c.stroke, weight: 1.5, fillColor: fill, fillOpacity: 0.5, opacity: 0.9 };
                   }
                   // v4.6: simbología QGIS — azul/celeste según el estado de las adicionales
                   const est = estadoPorClave.get(clave);

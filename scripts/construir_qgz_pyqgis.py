@@ -35,9 +35,11 @@ from qgis.core import (  # noqa: E402  (el entorno lo da python-qgis.bat)
     QgsRuleBasedRenderer, QgsCategorizedSymbolRenderer, QgsRendererCategory,
     QgsSingleSymbolRenderer, QgsReferencedRectangle, QgsRectangle,
     QgsAttributeTableConfig, QgsFeatureRequest,
-    QgsProperty, QgsSymbolLayer,
+    QgsGradientFillSymbolLayer, QgsGradientColorRamp, QgsGradientStop,
+    QgsSimpleLineSymbolLayer,
 )
 from qgis.PyQt.QtGui import QColor  # noqa: E402
+from qgis.PyQt.QtCore import QPointF  # noqa: E402
 
 
 # ── paletas ───────────────────────────────────────────────────────────
@@ -174,22 +176,59 @@ def simbologia_predios(vl):
     vl.setRenderer(QgsRuleBasedRenderer(raiz))
 
 
+def _simbolo_mixto(pct):
+    """Relleno PARTIDO en dos colores, como en la web: verde el `pct` %
+    inferior del polígono (la parte regada) y tomate el resto — un degradado
+    vertical con corte duro, sin transición."""
+    verde, tomate = QColor('#22c55e'), QColor('#f97316')
+    t = max(0.02, min(0.98, pct / 100.0))
+    ramp = QgsGradientColorRamp(verde, tomate)
+    ramp.setStops([QgsGradientStop(t, verde), QgsGradientStop(min(t + 0.001, 0.99), tomate)])
+    gl = QgsGradientFillSymbolLayer()
+    try:
+        tipo_ramp = QgsGradientFillSymbolLayer.ColorRamp
+    except AttributeError:            # API nueva (QGIS >= 3.36)
+        from qgis.core import Qgis
+        tipo_ramp = Qgis.GradientColorSource.ColorRamp
+    gl.setGradientColorType(tipo_ramp)
+    gl.setColorRamp(ramp)
+    gl.setReferencePoint1(QPointF(0.5, 1.0))   # abajo (parte regada)
+    gl.setReferencePoint2(QPointF(0.5, 0.0))   # arriba
+    sym = QgsFillSymbol()
+    sym.changeSymbolLayer(0, gl)
+    borde = QgsSimpleLineSymbolLayer(QColor('#a16207'))
+    borde.setWidth(0.3)
+    sym.appendSymbolLayer(borde)
+    sym.setOpacity(0.55)
+    return sym
+
+
 def simbologia_riego(vl):
-    """Reglas por condición de riego, con los colores de la web. Los MIXTOS no
-    llevan color plano: el relleno se calcula por expresión con un degradado
-    tomate→verde claro según `riego_pct` (rango 5–95 %, el mismo criterio y
-    los mismos RGB que usa colorMixto() en la vista de riego del mapa web)."""
+    """Reglas por condición de riego, con los colores de la web. Los MIXTOS se
+    subdividen por decenas de % regado y cada rango lleva el relleno partido
+    en dos colores (verde la parte regada, tomate la parte sin riego), igual
+    que la vista de riego de la web. Cada clase —y cada rango de mixto— se
+    prende y apaga por separado desde el panel de Capas."""
     raiz = QgsRuleBasedRenderer.Rule(None)
     for etiqueta, color in COLOR_RIEGO.items():
+        if etiqueta.startswith('Mixto'):
+            padre = QgsRuleBasedRenderer.Rule(None)
+            padre.setLabel(etiqueta)
+            padre.setFilterExpression('"condicion_riego" = \'{}\''.format(etiqueta))
+            for b in range(10, 100, 10):
+                r = QgsRuleBasedRenderer.Rule(_simbolo_mixto(b))
+                r.setLabel('riega ~{} %'.format(b))
+                if b == 90:
+                    r.setFilterExpression('"riego_pct" >= 85')
+                else:
+                    r.setFilterExpression(
+                        '"riego_pct" >= {} AND "riego_pct" < {}'.format(b - 5, b + 5))
+                padre.appendChild(r)
+            raiz.appendChild(padre)
+            continue
         r = QgsRuleBasedRenderer.Rule(relleno(color, color, 0.50, 0.4))
         r.setLabel(etiqueta)
         r.setFilterExpression('"condicion_riego" = \'{}\''.format(etiqueta))
-        if etiqueta.startswith('Mixto'):
-            t = 'clamp((coalesce("riego_pct",50)-5)/90.0, 0, 1)'
-            expr = ('color_rgb( round(249+(134-249)*{t}), '
-                    'round(115+(239-115)*{t}), round(22+(172-22)*{t}) )').format(t=t)
-            r.symbol().symbolLayer(0).setDataDefinedProperty(
-                QgsSymbolLayer.PropertyFillColor, QgsProperty.fromExpression(expr))
         raiz.appendChild(r)
     vl.setRenderer(QgsRuleBasedRenderer(raiz))
 
