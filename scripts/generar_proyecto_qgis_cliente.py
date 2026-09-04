@@ -50,7 +50,10 @@ UTM17S_WKT = ('PROJCRS["WGS 84 / UTM zone 17S",BASEGEOGCRS["WGS 84",'
 # capa -> (id interno, título, ¿visible al abrir?)
 CAPAS = [
     ('predios_investigados', 'predios_lyr', 'Predios investigados', True),
-    ('comunidades', 'comunidades_lyr', 'Comunidades', False),
+    # 'comunidades' (dissolve) retirada el 3-sep-2026 — decisión de JAVIKO; el
+    # límite territorial lo da 'comunas_oficiales'. La capa «Condición de riego»
+    # del proyecto real la añade construir_qgz_pyqgis.py; este generador XML es
+    # solo el respaldo sin PyQGIS y no la incluye.
     ('comunas_oficiales', 'comunas_ofi_lyr', 'Límites de comunas (oficial)', False),
     ('sectores', 'sectores_lyr', 'Sectores de investigación', False),
     ('canales_riego', 'canales_lyr', 'Canales de riego', True),
@@ -99,7 +102,8 @@ GRUPOS_PREDIO = [
     ('Fichas levantadas', 4,
      ['total_fichas', 'fichas_principales', 'fichas_adicionales', 'adicionales_pendientes']),
     ('Superficies y caudal', 2,
-     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_comunidad_ls']),
+     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'area_sin_riego_m2',
+      'condicion_riego', 'riego_pct', 'caudal_comunidad_ls']),
     ('Producción declarada', 1, ['cultivos_predio', 'animales_predio']),
 ]
 
@@ -386,13 +390,22 @@ QUÉ CONTIENE
       celeste  = predio adicional pendiente de la Sección 4 (producción)
       Para mostrar u ocultar cada color por separado, despliegue la flecha que
       está a la izquierda del nombre de la capa en el panel de Capas.
+   Condición de riego        los mismos predios, pintados por su condición de
+      (con/sin/mixto)        riego declarada en las fichas de campo:
+      verde    = con riego
+      mixto    = declara una parte con riego y otra sin riego; su color es un
+                 degradado: tomate si riega poco, verde claro si riega casi todo
+                 (en la leyenda la regla "Mixto" se muestra en amarillo)
+      tomate   = sin riego
+      gris     = sin dato de riego
+      Cada clase se prende y apaga por separado desde la flecha de la capa.
+      El campo "Riega (% del área declarada)" indica cuánto riega cada mixto.
+      Viene apagada; enciéndala y apague "Predios investigados" para usarla.
    Catastro rural completo   universo catastral de referencia
-   Comunidades / Sectores    ámbito territorial del estudio
+   Sectores                  ámbito territorial del estudio
    Canales de riego          red de conducción
    Límites de comunas        límite comunal oficial entregado por el contratante
-      (oficial)              Es distinto de "Comunidades": aquella se genera de
-                             los predios investigados y esta es el límite
-                             territorial de la comuna, por lo que una misma
+      (oficial)              Es el límite territorial de la comuna: una misma
                              comuna puede abarcar varias comunidades de riego
                              (p. ej. Monteserrín, o Izacata antes de dividirse).
                              Los nombres se conservan tal como vinieron.

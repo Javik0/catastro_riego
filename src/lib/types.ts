@@ -58,6 +58,9 @@ export interface FichaPredio {
   caudal_tipo?: string;
   area_riego: number;
   area_sin_riego: number;
+  /** El export imputó area_riego = area_total porque campo no declaró nada:
+   *  la vista de riego del mapa pinta estos predios como «sin dato». */
+  riego_sin_dato?: boolean;
   frecuencia_riego?: string;
   metodo_gravedad_pct?: number;
   metodo_aspersion_pct?: number;

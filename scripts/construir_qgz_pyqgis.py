@@ -35,6 +35,7 @@ from qgis.core import (  # noqa: E402  (el entorno lo da python-qgis.bat)
     QgsRuleBasedRenderer, QgsCategorizedSymbolRenderer, QgsRendererCategory,
     QgsSingleSymbolRenderer, QgsReferencedRectangle, QgsRectangle,
     QgsAttributeTableConfig, QgsFeatureRequest,
+    QgsProperty, QgsSymbolLayer,
 )
 from qgis.PyQt.QtGui import QColor  # noqa: E402
 
@@ -51,6 +52,16 @@ COLOR_SECTOR = {
     'Sector 1': '#8b5cf6',
     'Sector 2': '#06b6d4',
     'Sector 3': '#10b981',
+}
+# Condición de riego del predio — mismos colores que la vista de riego de la
+# web (3-sep-2026). Los mixtos, igual que en la web, llevan degradado
+# tomate→verde según su % regado (ver simbologia_riego); el amarillo de aquí
+# es solo el color de la LEYENDA de esa regla.
+COLOR_RIEGO = {
+    'Con riego': '#22c55e',
+    'Mixto (riega una parte)': '#facc15',
+    'Sin riego': '#c2410c',
+    'Sin dato': '#94a3b8',
 }
 # 12 tonos bien diferenciados que se van rotando entre las 46 comunidades
 PALETA_COMUNIDADES = [
@@ -74,7 +85,8 @@ GRUPOS_PREDIO = [
     ('Fichas levantadas', 4,
      ['total_fichas', 'fichas_principales', 'fichas_adicionales', 'adicionales_pendientes']),
     ('Superficies y caudal', 2,
-     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'caudal_comunidad_ls']),
+     ['area_catastro_m2', 'area_declarada_m2', 'area_riego_m2', 'area_sin_riego_m2',
+      'condicion_riego', 'riego_pct', 'caudal_comunidad_ls']),
     # 'cultivos_predio' / 'animales_predio' (texto resumido) quedan en la tabla de
     # atributos para consulta rápida, pero en el formulario se reemplazan por las
     # pestañas "Cultivos del predio" / "Animales del predio" (tabla real, con
@@ -111,6 +123,8 @@ ALIAS = {
     # sumarse. El alias lo dice explícitamente para que nadie lo agregue.
     'caudal_ls': 'Caudal declarado (l/s) — es el de la comunidad, no sumar',
     'caudal_comunidad_ls': 'Caudal de la comunidad (l/s)',
+    'condicion_riego': 'Condición de riego',
+    'riego_pct': 'Riega (% del área declarada)',
     'caudal_total_ls': 'Caudal de la comunidad (l/s)',
     'total_fichas': 'Total de fichas', 'fichas_principales': 'Fichas principales',
     'fichas_adicionales': 'Fichas adicionales', 'adicionales_pendientes': 'Adicionales pendientes',
@@ -156,6 +170,26 @@ def simbologia_predios(vl):
         r = QgsRuleBasedRenderer.Rule(relleno(f, b))
         r.setLabel(estado)
         r.setFilterExpression('"estado_predio" = \'{}\''.format(estado))
+        raiz.appendChild(r)
+    vl.setRenderer(QgsRuleBasedRenderer(raiz))
+
+
+def simbologia_riego(vl):
+    """Reglas por condición de riego, con los colores de la web. Los MIXTOS no
+    llevan color plano: el relleno se calcula por expresión con un degradado
+    tomate→verde claro según `riego_pct` (rango 5–95 %, el mismo criterio y
+    los mismos RGB que usa colorMixto() en la vista de riego del mapa web)."""
+    raiz = QgsRuleBasedRenderer.Rule(None)
+    for etiqueta, color in COLOR_RIEGO.items():
+        r = QgsRuleBasedRenderer.Rule(relleno(color, color, 0.50, 0.4))
+        r.setLabel(etiqueta)
+        r.setFilterExpression('"condicion_riego" = \'{}\''.format(etiqueta))
+        if etiqueta.startswith('Mixto'):
+            t = 'clamp((coalesce("riego_pct",50)-5)/90.0, 0, 1)'
+            expr = ('color_rgb( round(249+(134-249)*{t}), '
+                    'round(115+(239-115)*{t}), round(22+(172-22)*{t}) )').format(t=t)
+            r.symbol().symbolLayer(0).setDataDefinedProperty(
+                QgsSymbolLayer.PropertyFillColor, QgsProperty.fromExpression(expr))
         raiz.appendChild(r)
     vl.setRenderer(QgsRuleBasedRenderer(raiz))
 
@@ -236,7 +270,10 @@ def main():
 
     capas = {}
 
-    def cargar(tabla, nombre, visible, expandida=False):
+    def cargar(tabla, nombre, visible, expandida=False, clave=None):
+        # `clave` permite cargar la misma tabla dos veces (p.ej. la simbología
+        # de riego sobre predios_investigados) sin pisar la entrada de `capas`
+        # que usan las relaciones.
         vl = QgsVectorLayer('{}|layername={}'.format(GPKG, tabla), nombre, 'ogr')
         if not vl.isValid():
             print('ERROR: no carga la capa', tabla)
@@ -250,12 +287,15 @@ def main():
         nodo = raiz.addLayer(vl)
         nodo.setItemVisibilityChecked(visible)
         nodo.setExpanded(expandida)
-        capas[tabla] = vl
+        capas[clave or tabla] = vl
         return vl
 
     # orden del panel = orden de carga
+    # (La capa 'Comunidades' —dissolve— se retiró el 3-sep-2026: decisión de
+    # JAVIKO; el límite territorial lo da 'Límites de comunas (oficial)'.)
     predios = cargar('predios_investigados', 'Predios investigados', True, expandida=True)
-    comunidades = cargar('comunidades', 'Comunidades', False)
+    riego = cargar('predios_investigados', 'Condición de riego (con/sin/mixto)',
+                   False, expandida=True, clave='condicion_riego')
     comunas_ofi = cargar('comunas_oficiales', 'Límites de comunas (oficial)', False)
     sectores = cargar('sectores', 'Sectores de investigación', False)
     canales = cargar('canales_riego', 'Canales de riego', True)
@@ -266,10 +306,12 @@ def main():
 
     # ── simbología ────────────────────────────────────────────────────
     simbologia_predios(predios)
-    simbologia_categorizada(comunidades, 'comunidad', opacidad=0.30)
+    # Condición de riego: una regla por clase (cada una se prende y apaga desde
+    # el panel de Capas) y los mixtos con degradado por % regado, como la web.
+    simbologia_riego(riego)
     # Una categoría por comuna: así se prende y apaga cada una por separado
     # desde el panel de Capas. Va tenue porque es límite de referencia, no el
-    # ámbito investigado (para eso está "Comunidades").
+    # ámbito investigado.
     simbologia_categorizada(comunas_ofi, 'comuna', opacidad=0.18, borde_grueso=True)
     simbologia_categorizada(sectores, 'sector', COLOR_SECTOR, opacidad=0.25, borde_grueso=True)
     catastro.setRenderer(QgsSingleSymbolRenderer(
@@ -281,10 +323,13 @@ def main():
         'outline_width': '0.2', 'size': '1.6'})))
 
     # ── tabla de atributos lista para analizar ────────────────────────
-    tabla_atributos_ordenada(predios, [
+    orden_predios = [
         'clave_catastral', 'estado_predio', 'comunidad', 'sector_riego', 'parroquia',
         'propietarios', 'total_fichas', 'area_catastro_m2', 'area_declarada_m2',
-        'area_riego_m2', 'caudal_comunidad_ls', 'cultivos_predio', 'animales_predio'])
+        'area_riego_m2', 'area_sin_riego_m2', 'condicion_riego', 'riego_pct',
+        'caudal_comunidad_ls', 'cultivos_predio', 'animales_predio']
+    tabla_atributos_ordenada(predios, orden_predios)
+    tabla_atributos_ordenada(riego, orden_predios)
     tabla_atributos_ordenada(fichas, [
         'apellidos', 'nombres', 'cedula', 'tipo_ficha', 'estado_investigacion',
         'clave_catastral', 'comunidad', 'parroquia', 'area_total_m2', 'area_riego_m2',
@@ -386,6 +431,9 @@ def main():
              else len(rnd.rootRule().children()) if tipo == 'RuleRenderer' else 1)
         print('  {:<38} {:<18} {} clases'.format(vl.name(), tipo, n))
         if vl.name() == 'Predios investigados' and (tipo != 'RuleRenderer' or n != 4):
+            fallo = True
+        # la capa de riego debe salir con sus 4 reglas (una por clase)
+        if vl.name().startswith('Condición de riego') and (tipo != 'RuleRenderer' or n != 4):
             fallo = True
     # prueba funcional: el predio de CARRERA con 11 fichas
     for vl in p2.mapLayers().values():

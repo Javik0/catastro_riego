@@ -14,8 +14,12 @@ padron-app/public/descargas/padron_riego_porotog.gpkg  con estas capas:
   cultivos              Sección 4 agrícola, enlazada a la ficha
   animales              Sección 4 pecuaria, enlazada a la ficha
   canales_riego         red de conducción
-  comunidades           límites por comunidad
   sectores              sectores de investigación
+
+(La capa `comunidades` —el dissolve de los predios investigados— se retiró el
+3-sep-2026 por decisión de JAVIKO: su límite no era claro y el territorio ya lo
+cubre `comunas_oficiales`. Los predios llevan además `condicion_riego`,
+`riego_pct` y las áreas declaradas con/sin riego, calculadas por el export.)
 
 Decisiones de diseño
 --------------------
@@ -51,6 +55,14 @@ GPKG = os.path.join(OUT_DIR, 'padron_riego_porotog.gpkg')
 
 SRS_ID = 32717
 BUCKET = 'invs-riego-comunitario.firebasestorage.app'
+
+# Etiquetas legibles de la condición de riego (el geojson trae claves técnicas)
+ETIQUETA_RIEGO = {
+    'con_riego': 'Con riego',
+    'mixto': 'Mixto (riega una parte)',
+    'sin_riego': 'Sin riego',
+    'sin_dato': 'Sin dato',
+}
 
 # Nombre real del técnico a partir del usuario de QField (mismo mapeo que el resto
 # del proyecto). En el entregable se muestra el nombre, no el usuario interno.
@@ -483,6 +495,11 @@ def main():
         ('total_fichas', 'INTEGER'), ('fichas_principales', 'INTEGER'),
         ('fichas_adicionales', 'INTEGER'), ('adicionales_pendientes', 'INTEGER'),
         ('area_declarada_m2', 'REAL'), ('area_riego_m2', 'REAL'),
+        ('area_sin_riego_m2', 'REAL'),
+        # Condición de riego del predio (3-sep-2026): calculada por el export
+        # en catastro_geo.geojson con la misma regla que usa la web (umbral de
+        # mixto: 5 % del área declarada y 100 m² por lado). Aquí solo se copia.
+        ('condicion_riego', 'TEXT'), ('riego_pct', 'REAL'),
         ('caudal_comunidad_ls', 'REAL'),
         ('cultivos_predio', 'TEXT'), ('animales_predio', 'TEXT'),
     ]
@@ -535,6 +552,9 @@ def main():
                 len(fs), len(ppal), len(adic), sum(1 for x in adic if pendiente(x)),
                 num(sum(x.get('area_total') or 0 for x in fs)),
                 num(sum(x.get('area_riego') or 0 for x in fs)),
+                num(p.get('sin_riego_m2')),
+                ETIQUETA_RIEGO.get(p.get('clase_riego'), 'Sin dato'),
+                num(p.get('riego_pct')),
                 # El caudal es de la COMUNIDAD, no del predio: se toma su valor
                 # oficial (una vez), nunca la suma de las fichas del predio.
                 num(caudal_comunal(fs[0].get('comunidad')) if fs else None),
@@ -790,19 +810,13 @@ def main():
         guardar_estilo(cur, tabla, [c for c, _ in columnas], qml_fn([c for c, _ in columnas]))
         print("      {}: {:,}".format(titulo, m))
 
-    capa_geojson('comunidades.geojson', 'comunidades',
-                 [('comunidad', 'TEXT'), ('sector', 'TEXT'), ('total_fichas', 'TEXT'),
-                  ('predios_catastro', 'TEXT'), ('area_dissolve_ha', 'REAL'),
-                  ('area_riego_ha', 'REAL'), ('caudal_total_ls', 'REAL')],
-                 'Comunidades', 'Límite aproximado por comunidad, generado de los predios investigados.',
-                 lambda cs: qml_simple(cs, _simbolo_relleno(
-                     '0', '236,72,153,20,rgb:0.925,0.282,0.600,0.078',
-                     '236,72,153,200,rgb:0.925,0.282,0.600,0.784', '0.5'),
-                     '[% "comunidad" %]'))
+    # La capa 'comunidades' (dissolve de los predios investigados) se RETIRÓ del
+    # entregable el 3-sep-2026 (decisión de JAVIKO): su límite no era claro y el
+    # territorio lo cubre 'comunas_oficiales'. El geojson se sigue generando
+    # para la web y los agregados; simplemente ya no viaja en el gpkg.
 
     # Límite comunal OFICIAL del contratante, recortado al ámbito del sistema
-    # (scripts/generar_capa_comunas_oficiales.py). No sustituye a 'comunidades':
-    # aquel es la huella de lo investigado, este es el límite territorial, y una
+    # (scripts/generar_capa_comunas_oficiales.py): el límite territorial — una
     # comuna puede contener varias de nuestras organizaciones de riego.
     capa_geojson('comunas_oficiales.geojson', 'comunas_oficiales',
                  [('comuna', 'TEXT'), ('area_comuna_ha', 'REAL'),

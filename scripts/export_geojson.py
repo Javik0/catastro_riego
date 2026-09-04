@@ -642,8 +642,13 @@ def export_fichas():
         elif at > 0:
             # No declaró ninguno de los dos: se mantiene el criterio anterior de
             # dar el predio por regado, que es lo que ya reflejan los informes.
+            # La bandera `riego_sin_dato` deja constancia de la imputación sin
+            # mover ninguna cifra: la vista de riego del mapa (decisión de
+            # JAVIKO, 3-sep-2026) pinta estos predios como «sin dato» en vez de
+            # afirmarles un riego que campo no declaró.
             props['area_riego'] = at
             props['area_sin_riego'] = 0.0
+            props['riego_sin_dato'] = True
             cambios_detalles.append(f"area_riego -> {at} (sin dato de riego)")
             cambio = True
         
@@ -840,8 +845,55 @@ def export_catastro(fichas_features):
                 },'geometry': geom})
         conn.close()
 
+    # ── Condición de riego por predio (vista de riego del mapa + QGIS) ──
+    # Decisiones de JAVIKO (3-sep-2026): clase «sin dato» aparte; umbral de
+    # «mixto» = un lado cuenta solo si alcanza el 5 % del área declarada del
+    # predio Y 100 m² (un filo residual no vuelve mixto un predio entero).
+    # Regla 14 para resolver el predio: clave_catastral manda, cod_poligono
+    # es respaldo. Las áreas declaradas solo DECIDEN la clase; las hectáreas
+    # que se muestran junto a ella siguen siendo las catastrales.
+    claves_publicadas = {f['properties'].get('clave_cata') for f in features}
+    acc = {}   # clave -> [riego_m2, sin_riego_m2, sin_dato_m2]
+    for f in (fichas_features or []):
+        p = f['properties']
+        cl = (p.get('clave_catastral') or '').strip()
+        cp = (p.get('cod_poligono') or '').strip()
+        key = cl if cl in claves_publicadas else (cp if cp in claves_publicadas else None)
+        if not key:
+            continue
+        a = acc.setdefault(key, [0.0, 0.0, 0.0])
+        if p.get('riego_sin_dato'):
+            a[2] += p.get('area_total') or 0.0
+        else:
+            a[0] += p.get('area_riego') or 0.0
+            a[1] += p.get('area_sin_riego') or 0.0
+
+    def _clase_riego(r, s, nd):
+        tot = r + s + nd
+        if tot <= 0 or (r == 0 and s == 0):
+            return 'sin_dato'
+        ok_r = r > 100 and r / tot > 0.05
+        ok_s = s > 100 and s / tot > 0.05
+        if ok_r and ok_s: return 'mixto'
+        if ok_r: return 'con_riego'
+        if ok_s: return 'sin_riego'
+        return 'con_riego' if r >= s else 'sin_riego'
+
+    conteo_clases = {}
+    for f in features:
+        r, s, nd = acc.get(f['properties'].get('clave_cata'), (0.0, 0.0, 0.0))
+        clase = _clase_riego(r, s, nd)
+        f['properties']['clase_riego'] = clase
+        f['properties']['riego_m2'] = round(r, 2)
+        f['properties']['sin_riego_m2'] = round(s, 2)
+        # % del área declarada que se riega (para el degradado de los mixtos)
+        f['properties']['riego_pct'] = round(100.0 * r / (r + s), 1) if (r + s) > 0 else None
+        conteo_clases[clase] = conteo_clases.get(clase, 0) + 1
+
     _save(features, 'catastro_geo.geojson')
     print(f"  ✓ {ok} polígonos unificados con geometría, {skip} sin geometría → catastro_geo.geojson")
+    print("  ✓ Condición de riego por predio: " +
+          ' · '.join(f"{k}: {v}" for k, v in sorted(conteo_clases.items())))
     return ok
 
 

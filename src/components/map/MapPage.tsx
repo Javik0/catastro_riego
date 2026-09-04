@@ -4,7 +4,7 @@ import {
   LayersControl, useMap, Tooltip, Marker,
 } from 'react-leaflet';
 import L from 'leaflet';
-import type { CircleMarker as LeafletCircleMarker, GeoJSON as LeafletGeoJSON, LeafletMouseEvent } from 'leaflet';
+import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
 import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X, Download } from 'lucide-react';
 import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento, usuarioDeFicha } from '../../lib/types';
@@ -49,8 +49,32 @@ const pulseIcon = L.divIcon({
   iconAnchor: [12, 12],
 });
 
+// ── Vista «Condición de riego» ───────────────────────────────────────
+// Simbología y etiquetas de la clasificación por predio (decisiones de
+// JAVIKO, 3-sep-2026): con riego / sin riego / mixto / sin dato.
+const CLASES_RIEGO = {
+  con_riego: { stroke: '#15803d', fill: '#22c55e', label: 'Con riego' },
+  mixto:     { stroke: '#a16207', fill: '#facc15', label: 'Mixto (riega una parte)' },
+  sin_riego: { stroke: '#7c2d12', fill: '#c2410c', label: 'Sin riego' },
+  sin_dato:  { stroke: '#475569', fill: '#94a3b8', label: 'Sin dato de riego' },
+} as const;
+type ClaseRiego = keyof typeof CLASES_RIEGO;
+type ResumenRiego = Record<ClaseRiego, { predios: number; ha: number }>;
+
+// Relleno de los predios MIXTOS: degradado tomate → verde claro según el % del
+// área declarada que se riega (pedido de JAVIKO, 3-sep-2026). Con el umbral de
+// clasificación un mixto solo puede regar entre el 5 % y el 95 %, así que ese
+// es el rango del degradado: tomate = riega poco, verde claro = riega casi todo.
+function colorMixto(pct: number | null | undefined): string {
+  const t = Math.max(0, Math.min(1, ((pct ?? 50) - 5) / 90));
+  const lerp = (a: number, b: number) => Math.round(a + (b - a) * t);
+  // #f97316 (tomate) → #86efac (verde claro)
+  return `rgb(${lerp(249, 134)},${lerp(115, 239)},${lerp(22, 172)})`;
+}
+const GRADIENTE_MIXTO = 'linear-gradient(90deg, #f97316, #86efac)';
+
 // ── Leyenda ──────────────────────────────────────────────────────────
-function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, totalHijasPendientes, tecnicosOcultos, onToggleTecnico, onTodosTecnicos, conteoPorTecnico }: {
+function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, totalHijasPendientes, tecnicosOcultos, onToggleTecnico, onTodosTecnicos, conteoPorTecnico, modoMapa, resumenRiego, clasesOcultas, onToggleClase }: {
   showAll: boolean;
   onToggleAll: () => void;
   allLoaded: boolean;
@@ -62,8 +86,19 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
   onToggleTecnico: (nombre: string) => void;
   onTodosTecnicos: (visibles: boolean) => void;
   conteoPorTecnico: Map<string, number>;
+  /** Vista activa del catastro: estado de investigación o condición de riego */
+  modoMapa: 'estado' | 'riego';
+  /** Conteo y superficie catastral por clase de riego (de lo visible) */
+  resumenRiego: ResumenRiego;
+  /** Clases de riego apagadas por el usuario (solo aplica en vista riego) */
+  clasesOcultas: Set<ClaseRiego>;
+  onToggleClase: (clase: ClaseRiego) => void;
 }) {
   const [show, setShow] = useState(true);
+  // En la vista de riego los técnicos no aportan: el grupo arranca plegado
+  // (pedido de JAVIKO, 3-sep-2026). El usuario puede desplegarlo a mano.
+  const [tecnicosAbiertos, setTecnicosAbiertos] = useState(modoMapa !== 'riego');
+  useEffect(() => { setTecnicosAbiertos(modoMapa !== 'riego'); }, [modoMapa]);
   const nombres = Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre))).sort();
   const algunoOculto = tecnicosOcultos.size > 0;
   return (
@@ -78,19 +113,29 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
       {show && (
         <div className="rounded-lg border p-3 max-w-[210px] shadow-lg"
           style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
-          {/* v4.6: cada técnico se puede apagar y prender */}
+          {/* v4.6: cada técnico se puede apagar y prender. El grupo entero se
+              pliega (y arranca plegado en la vista de riego). */}
           <div className="flex items-center justify-between mb-2">
-            <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Técnicos</p>
             <button
-              onClick={() => onTodosTecnicos(algunoOculto)}
-              className="text-[9px] px-1.5 py-0.5 rounded border cursor-pointer hover:brightness-125"
-              style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
-              title={algunoOculto ? 'Mostrar todos los técnicos' : 'Ocultar todos los técnicos'}
+              onClick={() => setTecnicosAbiertos(!tecnicosAbiertos)}
+              className="text-[10px] font-semibold uppercase tracking-wider cursor-pointer flex items-center gap-1"
+              style={{ color: 'var(--text-muted)' }}
+              title={tecnicosAbiertos ? 'Plegar el grupo de técnicos' : 'Desplegar el grupo de técnicos'}
             >
-              {algunoOculto ? 'Todos' : 'Ninguno'}
+              <span className="inline-block w-2">{tecnicosAbiertos ? '▾' : '▸'}</span>Técnicos
             </button>
+            {tecnicosAbiertos && (
+              <button
+                onClick={() => onTodosTecnicos(algunoOculto)}
+                className="text-[9px] px-1.5 py-0.5 rounded border cursor-pointer hover:brightness-125"
+                style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+                title={algunoOculto ? 'Mostrar todos los técnicos' : 'Ocultar todos los técnicos'}
+              >
+                {algunoOculto ? 'Todos' : 'Ninguno'}
+              </button>
+            )}
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-1.5" hidden={!tecnicosAbiertos}>
             {nombres.map((nombre) => {
               const tec = Object.values(TECNICOS).find((t) => t.nombre === nombre);
               if (!tec) return null;
@@ -142,18 +187,56 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
           )}
           <div className="mt-3 pt-2 border-t space-y-1.5" style={{ borderColor: 'var(--border-color)' }}>
             <p className="text-[10px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>Capas</p>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-2 rounded-sm border border-orange-400/60" style={{ background: 'rgba(249,115,22,0.35)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio investigado (ficha principal)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-2 rounded-sm border border-blue-500/60" style={{ background: 'rgba(59,130,246,0.35)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (investigado)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-2 rounded-sm" style={{ background: 'rgba(125,211,252,0.45)', border: '1px solid rgba(14,165,233,0.7)' }} />
-              <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (pendiente S4)</span>
-            </div>
+            {modoMapa === 'estado' ? (<>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-2 rounded-sm border border-orange-400/60" style={{ background: 'rgba(249,115,22,0.35)' }} />
+                <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio investigado (ficha principal)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-2 rounded-sm border border-blue-500/60" style={{ background: 'rgba(59,130,246,0.35)' }} />
+                <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (investigado)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-2 rounded-sm" style={{ background: 'rgba(125,211,252,0.45)', border: '1px solid rgba(14,165,233,0.7)' }} />
+                <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Predio adicional (pendiente S4)</span>
+              </div>
+            </>) : (<>
+              {(Object.keys(CLASES_RIEGO) as ClaseRiego[]).map((c) => {
+                const info = CLASES_RIEGO[c];
+                const r = resumenRiego[c];
+                if (c === 'sin_dato' && r.predios === 0) return null;
+                const visible = !clasesOcultas.has(c);
+                return (
+                  <label key={c} className="flex items-center gap-2 cursor-pointer"
+                    title={`${r.predios.toLocaleString('es-EC')} predios · ${r.ha.toLocaleString('es-EC', { maximumFractionDigits: 1 })} ha de superficie catastral — clic para ${visible ? 'ocultar' : 'mostrar'} esta clase`}>
+                    <input
+                      type="checkbox"
+                      checked={visible}
+                      onChange={() => onToggleClase(c)}
+                      className="w-3 h-3 rounded cursor-pointer shrink-0"
+                      style={{ accentColor: info.fill }}
+                    />
+                    <div className="w-3 h-2 rounded-sm shrink-0"
+                      style={{
+                        background: c === 'mixto' ? GRADIENTE_MIXTO : info.fill,
+                        opacity: visible ? 0.85 : 0.3,
+                        border: `1px solid ${info.stroke}`,
+                      }} />
+                    <span className="text-[10px] flex-1 truncate"
+                      style={{ color: 'var(--text-secondary)', opacity: visible ? 1 : 0.45 }}>{info.label}</span>
+                    <span className="text-[9px] shrink-0 text-right leading-tight"
+                      style={{ color: 'var(--text-muted)', opacity: visible ? 1 : 0.45 }}>
+                      {r.predios.toLocaleString('es-EC')}<br />{r.ha.toLocaleString('es-EC', { maximumFractionDigits: 1 })} ha
+                    </span>
+                  </label>
+                );
+              })}
+              <p className="text-[8px] leading-snug" style={{ color: 'var(--text-muted)' }}>
+                Mixto: tomate = riega poco → verde = riega casi todo.
+                Clasificación según lo declarado en las fichas de campo ·
+                hectáreas de superficie catastral (polígonos del GAD)
+              </p>
+            </>)}
             <div className="flex items-center gap-2">
               <div className="w-5 h-0.5 rounded" style={{ background: '#38bdf8' }} />
               <span className="text-[10px]" style={{ color: 'var(--text-secondary)' }}>Canales de riego</span>
@@ -605,8 +688,8 @@ function DescargaGeoPackage() {
           </p>
           <p className="text-[10px] leading-relaxed mb-2" style={{ color: 'var(--text-muted)' }}>
             Predios con la información de las fichas incorporada, listos para abrir en
-            QGIS con su simbología. Incluye el catastro completo, comunidades, sectores
-            y canales de riego.
+            QGIS con su simbología. Incluye el catastro completo, la condición de
+            riego por predio, comunas oficiales, sectores y canales de riego.
           </p>
           <div className="text-[10px] mb-2 space-y-0.5" style={{ color: 'var(--text-secondary)' }}>
             <div className="flex justify-between"><span className="opacity-60">Formato:</span><span>GeoPackage + proyecto QGIS</span></div>
@@ -833,7 +916,7 @@ function ZoomTracker({ onChange }: { onChange: (zoom: number) => void }) {
 
 export default function MapPage({ fichas, loading, allFichas, cultivosData = [], animalesData = [] }: Props) {
   const { selectedFichaMap, navigateToFichaMap, clearMapSelection } = useMapNav();
-  const { filtros, hasActiveFilters } = useFiltros();
+  const { hasActiveFilters } = useFiltros();
 
   // ── v4.4: Índices en memoria para la Tarjeta de Predio ──
   // Se calculan una sola vez por cambio de datos; el clic sobre cualquiera de
@@ -981,7 +1064,6 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   }, []);
   const [catastroData, setCatastroData] = useState<FeatureCollection | null>(null);
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
-  const [comunidadesData, setComunidadesData] = useState<FeatureCollection | null>(null);
   const [sectoresData, setSectoresData] = useState<FeatureCollection | null>(null);
   const [comunasOficialesData, setComunasOficialesData] = useState<FeatureCollection | null>(null);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
@@ -997,40 +1079,61 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
     } as FeatureCollection;
   }, [catastroData, clavesFiltradas]);
 
-  // Reutiliza el filtro "Comunidad" de la barra: si hay una comunidad elegida,
-  // la capa de polígonos de Comunidades muestra solo esa (en vez de un único
-  // interruptor todo-o-nada para las 50).
-  //
-  // El contenido se recarga con clearLayers()+addData() sobre la MISMA capa
-  // (ver comunidadesRef abajo). No se usa `key` para forzar el remonte: eso
-  // hacía que LayersControl la registrara como capa nueva y la casilla
-  // "Comunidades" se apagara sola cada vez que se cambiaba de comunidad.
-  const comunidadesVisible = useMemo<FeatureCollection | null>(() => {
-    if (!comunidadesData) return null;
-    if (!filtros.comunidad) return comunidadesData;
-    // El desplegable trae el nombre con tildes ("PUCARÁ") y la capa viene del
-    // dissolve, que las escribe sin tilde ("PUCARA"): se comparan normalizados,
-    // con el mismo criterio que usa App.tsx para el sector de investigación.
-    const norm = (t: string) => t.toUpperCase().trim()
-      .replace(/Á/g, 'A').replace(/É/g, 'E').replace(/Í/g, 'I')
-      .replace(/Ó/g, 'O').replace(/Ú/g, 'U').replace(/Ñ/g, 'N');
-    const buscada = norm(filtros.comunidad);
+  // ── Vista «Condición de riego» (decisiones de JAVIKO, 3-sep-2026) ──
+  // OJO: estos hooks deben quedar ANTES del `return` por loading de más abajo
+  // (un hook después de ese return deja la página en blanco).
+  const [modoMapa, setModoMapa] = useState<'estado' | 'riego'>('estado');
+
+  // La clase de cada predio (con_riego / mixto / sin_riego / sin_dato) viene
+  // CALCULADA desde el export en catastro_geo.geojson (`clase_riego`, junto a
+  // `riego_pct`, `riego_m2` y `sin_riego_m2`): una sola implementación de la
+  // regla para la web y el proyecto QGIS del cliente. Umbral de «mixto»: cada
+  // lado cuenta solo si alcanza el 5 % del área declarada del predio y 100 m².
+
+  // Clases apagadas desde la leyenda (solo afecta a la vista de riego)
+  const [clasesOcultas, setClasesOcultas] = useState<Set<ClaseRiego>>(new Set());
+  const toggleClase = useCallback((c: ClaseRiego) => {
+    setClasesOcultas((prev) => {
+      const n = new Set(prev);
+      if (n.has(c)) n.delete(c); else n.add(c);
+      return n;
+    });
+  }, []);
+
+  // Conteo y superficie CATASTRAL (area_predi de los polígonos, la familia que
+  // ve el cliente) por clase, sobre lo visible con los filtros de la barra —
+  // alimenta la leyenda. Se calcula ANTES de apagar clases, para que el conteo
+  // de una clase no desaparezca al ocultarla.
+  const resumenRiego = useMemo<ResumenRiego>(() => {
+    const r: ResumenRiego = {
+      con_riego: { predios: 0, ha: 0 }, mixto: { predios: 0, ha: 0 },
+      sin_riego: { predios: 0, ha: 0 }, sin_dato: { predios: 0, ha: 0 },
+    };
+    if (!catastroVisible) return r;
+    for (const f of catastroVisible.features) {
+      const c = (f.properties?.clase_riego ?? 'sin_dato') as ClaseRiego;
+      r[c].predios += 1;
+      r[c].ha += Number(f.properties?.area_predi || 0) / 10000;
+    }
+    return r;
+  }, [catastroVisible]);
+
+  // Lo que de verdad se dibuja: lo visible por filtros menos las clases apagadas
+  const catastroDibujado = useMemo<FeatureCollection | null>(() => {
+    if (!catastroVisible) return null;
+    if (modoMapa !== 'riego' || clasesOcultas.size === 0) return catastroVisible;
     return {
       type: 'FeatureCollection',
-      features: comunidadesData.features.filter((f) =>
-        norm(String(f.properties?.comunidad || '')) === buscada),
+      features: catastroVisible.features.filter(
+        (f) => !clasesOcultas.has((f.properties?.clase_riego ?? 'sin_dato') as ClaseRiego)),
     } as FeatureCollection;
-  }, [comunidadesData, filtros.comunidad]);
+  }, [catastroVisible, modoMapa, clasesOcultas]);
 
-  // Recarga en sitio el contenido de la capa de Comunidades cuando cambia el
-  // filtro, conservando su estado (encendida/apagada) en el control de capas.
-  const comunidadesRef = useRef<LeafletGeoJSON | null>(null);
-  useEffect(() => {
-    const capa = comunidadesRef.current;
-    if (!capa || !comunidadesVisible) return;
-    capa.clearLayers();
-    capa.addData(comunidadesVisible as any);
-  }, [comunidadesVisible]);
+  // La capa «Comunidades» (dissolve de los predios investigados) se RETIRÓ del
+  // control de capas el 3-sep-2026 (decisión de JAVIKO): su límite no era claro
+  // y para el territorio ya está «Límites de comunas (oficial)». El archivo
+  // comunidades.geojson se sigue generando — lo usan el Diseñador de Impresión
+  // y los agregados por comunidad — pero el mapa ya no lo carga.
 
   const [searchTarget, setSearchTarget] = useState<CatastroBusqueda | null>(null);
   const poligonosRef = useRef<Record<string, Geometry> | null>(null);
@@ -1077,14 +1180,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         setLayerInfo((p) => ({ ...p, ramales: valid.length }));
       }).catch(() => {});
 
-    // Cargar capas de Comunidades y Sectores (generadas por el script GIS)
-    fetch(`/geo/comunidades.geojson?t=${timestamp}`)
-      .then((r) => r.json())
-      .then((data: FeatureCollection) => {
-        const valid = data.features?.filter((f) => f.geometry != null) || [];
-        setComunidadesData({ type: 'FeatureCollection', features: valid });
-      }).catch(() => {});
-
+    // Cargar capa de Sectores (generada por el script GIS)
     fetch(`/geo/sectores.geojson?t=${timestamp}`)
       .then((r) => r.json())
       .then((data: FeatureCollection) => {
@@ -1218,6 +1314,31 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
       <div className="absolute top-24 left-3 z-[1000] rounded-lg border px-3 py-2 shadow-lg backdrop-blur-sm max-w-[215px]"
         style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border-color)' }}>
 
+        {/* ── Selector de vista del catastro: investigación vs riego ── */}
+        <div className="flex rounded-md overflow-hidden border mb-2 text-[10px] font-medium"
+          style={{ borderColor: 'var(--border-color)' }}>
+          <button
+            onClick={() => setModoMapa('estado')}
+            className="flex-1 px-1.5 py-1 cursor-pointer transition-colors"
+            style={modoMapa === 'estado'
+              ? { background: '#2563eb', color: '#fff' }
+              : { background: 'transparent', color: 'var(--text-secondary)' }}
+            title="Colorear los predios por su estado de investigación (simbología QGIS)"
+          >
+            Investigación
+          </button>
+          <button
+            onClick={() => setModoMapa('riego')}
+            className="flex-1 px-1.5 py-1 cursor-pointer transition-colors"
+            style={modoMapa === 'riego'
+              ? { background: '#15803d', color: '#fff' }
+              : { background: 'transparent', color: 'var(--text-secondary)' }}
+            title="Colorear los predios según su condición de riego declarada en campo: con riego, sin riego o mixto"
+          >
+            💧 Riego
+          </button>
+        </div>
+
         <p className="text-[9px] font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>
           {hasActiveFilters ? 'Resultado del filtro' : 'Padrón levantado'}
         </p>
@@ -1309,16 +1430,24 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           {catastroVisible && catastroVisible.features.length > 0 && (
             <LayersControl.Overlay checked name="Catastro Rural">
               <GeoJSON
-                key={`catastro-${estadoPorClave.size}-${catastroVisible.features.length}`}
-                data={catastroVisible}
+                key={`catastro-${modoMapa}-${estadoPorClave.size}-${Array.from(clasesOcultas).join('.')}-${catastroDibujado?.features.length ?? 0}`}
+                data={catastroDibujado ?? catastroVisible}
                 style={(feature) => {
                   const isHighlighted = searchTarget &&
                     feature?.properties?.clave_cata === searchTarget.clave_cata;
                   if (isHighlighted) {
                     return { color: '#facc15', weight: 3, fillColor: '#facc15', fillOpacity: 0.50, opacity: 1 };
                   }
-                  // v4.6: simbología QGIS — azul/celeste según el estado de las adicionales
                   const clave = String(feature?.properties?.clave_cata || '').trim();
+                  // Vista «Condición de riego»: pinta por clase del predio.
+                  // Los mixtos llevan degradado tomate→verde según su % regado.
+                  if (modoMapa === 'riego') {
+                    const cls = (feature?.properties?.clase_riego ?? 'sin_dato') as ClaseRiego;
+                    const c = CLASES_RIEGO[cls];
+                    const fill = cls === 'mixto' ? colorMixto(feature?.properties?.riego_pct) : c.fill;
+                    return { color: c.stroke, weight: 1.5, fillColor: fill, fillOpacity: 0.45, opacity: 0.9 };
+                  }
+                  // v4.6: simbología QGIS — azul/celeste según el estado de las adicionales
                   const est = estadoPorClave.get(clave);
                   if (est === 'celeste') {
                     return { color: '#0ea5e9', weight: 1.5, fillColor: '#7dd3fc', fillOpacity: 0.35, opacity: 0.85 };
@@ -1349,9 +1478,25 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                       }
                       if (fichasPredio.length > 1) extra += `<br/><span style="color:#64748b">${fichasPredio.length} fichas en este predio</span>`;
                     }
+                    // En la vista de riego el tooltip nombra la clase del predio
+                    // (la capa se remonta al cambiar de modo: la clausura es fresca).
+                    // En los mixtos detalla cuánto se riega y cuánto no (declarado).
+                    let lineaRiego = '';
+                    if (modoMapa === 'riego') {
+                      const cls = (p.clase_riego ?? 'sin_dato') as ClaseRiego;
+                      const cr = CLASES_RIEGO[cls];
+                      lineaRiego = `<br/><span style="color:${cr.stroke}">💧 ${cr.label}</span>`;
+                      if (cls === 'mixto') {
+                        const rm = Number(p.riego_m2 || 0);
+                        const sm = Number(p.sin_riego_m2 || 0);
+                        const pct = Number(p.riego_pct ?? 0);
+                        lineaRiego += `<br/><span style="font-size:10px;color:#64748b">Riega el ${pct.toLocaleString('es-EC', { maximumFractionDigits: 0 })} % de lo declarado</span>` +
+                          `<br/><span style="font-size:10px;color:#64748b">Con riego: ${rm.toLocaleString('es-EC', { maximumFractionDigits: 0 })} m² · Sin riego: ${sm.toLocaleString('es-EC', { maximumFractionDigits: 0 })} m² (declarado en ficha)</span>`;
+                      }
+                    }
                     return `<b>${p.apellidos || ''} ${p.nombres || ''}</b><br/>
                        Clave: ${p.clave_cata || '—'}<br/>
-                       Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}${extra}<br/>
+                       Área: ${p.area_predi ? Number(p.area_predi).toLocaleString('es-EC') + ' m²' : '—'}${lineaRiego}${extra}<br/>
                        <span style="color:#3b82f6;font-size:10px">Clic para ver detalles</span>`;
                   }, { sticky: true, opacity: 0.9 });
                   // Clic → abrir la Tarjeta de Predio
@@ -1433,57 +1578,8 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
             </LayersControl.Overlay>
           )}
 
-          {/* ── Overlay: Comunidades (respeta el filtro "Comunidad" de la barra) ── */}
-          {comunidadesData && comunidadesData.features.length > 0 && (
-            <LayersControl.Overlay name="Comunidades">
-              <GeoJSON
-                key="comunidades-layer"
-                ref={comunidadesRef}
-                data={comunidadesVisible ?? comunidadesData}
-                style={(feature) => {
-                  const sectorColors: Record<string, string> = {
-                    'Sector 1': '#f59e0b',
-                    'Sector 2': '#ec4899',
-                    'Sector 3': '#14b8a6',
-                  };
-                  const sec = feature?.properties?.sector || '';
-                  const color = sectorColors[sec] || '#94a3b8';
-                  return {
-                    color,
-                    weight: 1.8,
-                    fillColor: color,
-                    fillOpacity: 0.08,
-                    opacity: 0.75,
-                    dashArray: '4 3',
-                  };
-                }}
-                onEachFeature={(feature, layer) => {
-                  const p = feature.properties;
-                  if (p) {
-                    const areaHa = Number(p.area_dissolve_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
-                    const areaRiego = Number(p.area_riego_ha || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
-                    const caudal = Number(p.caudal_total_ls || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 });
-                    layer.bindTooltip(
-                      `<b style="font-size:13px">${p.comunidad || '—'}</b><br/>
-                       <span style="color:#9ca3af">Sector:</span> <b>${p.sector || '—'}</b><br/>
-                       <span style="color:#9ca3af">Fichas investigadas:</span> <b>${p.total_fichas || p.fichas_validas || '—'}</b><br/>
-                       <span style="color:#9ca3af">Predios en catastro:</span> <b>${p.predios_catastro || '—'}</b><br/>
-                       <span style="color:#9ca3af">Área geográfica:</span> <b>${areaHa} ha</b><br/>
-                       <span style="color:#9ca3af">Área con riego declarada:</span> <b>${areaRiego} ha</b><br/>
-                       <span style="color:#9ca3af">Caudal total:</span> <b>${caudal} l/s</b>`,
-                      { sticky: true, opacity: 0.97 }
-                    );
-                    layer.on('mouseover', function (e: any) {
-                      (e.target as any).setStyle({ fillOpacity: 0.22, weight: 3 });
-                    });
-                    layer.on('mouseout', function (e: any) {
-                      (e.target as any).setStyle({ fillOpacity: 0.08, weight: 1.8 });
-                    });
-                  }
-                }}
-              />
-            </LayersControl.Overlay>
-          )}
+          {/* La capa «Comunidades» (dissolve) se retiró de aquí el 3-sep-2026:
+              ver la nota junto a los estados de capas, más arriba. */}
 
           {/* ── Overlay: Límites de comunas (capa oficial del contratante) ── */}
           {comunasOficialesData && comunasOficialesData.features.length > 0 && (
@@ -1632,6 +1728,10 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
           onToggleTecnico={toggleTecnico}
           onTodosTecnicos={todosTecnicos}
           conteoPorTecnico={conteoPorTecnico}
+          modoMapa={modoMapa}
+          resumenRiego={resumenRiego}
+          clasesOcultas={clasesOcultas}
+          onToggleClase={toggleClase}
         />
         <MouseCoordinates />
 
