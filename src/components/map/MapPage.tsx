@@ -96,10 +96,11 @@ function MapLegend({ showAll, onToggleAll, allLoaded, showHijas, onToggleHijas, 
   onToggleClase: (clase: ClaseRiego) => void;
 }) {
   const [show, setShow] = useState(true);
-  // En la vista de riego los técnicos no aportan: el grupo arranca plegado
-  // (pedido de JAVIKO, 3-sep-2026). El usuario puede desplegarlo a mano.
-  const [tecnicosAbiertos, setTecnicosAbiertos] = useState(modoMapa !== 'riego');
-  useEffect(() => { setTecnicosAbiertos(modoMapa !== 'riego'); }, [modoMapa]);
+  // El grupo de técnicos arranca SIEMPRE plegado (pedido de JAVIKO,
+  // 3-sep-2026): ocupaba media leyenda y al entrar al mapa se lee por los
+  // polígonos, no por autoría. Quien lo necesite lo despliega, y queda abierto
+  // aunque cambie de vista — por eso no se reinicia al cambiar de modo.
+  const [tecnicosAbiertos, setTecnicosAbiertos] = useState(false);
   const nombres = Array.from(new Set(Object.values(TECNICOS).map((t) => t.nombre))).sort();
   const algunoOculto = tecnicosOcultos.size > 0;
   return (
