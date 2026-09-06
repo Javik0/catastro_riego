@@ -613,13 +613,13 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* ── SECCIÓN 3: OTROS PREDIOS DEL REGANTE EN LA COMUNIDAD ── */}
+      {/* ── SECCIÓN 3: OTROS PREDIOS DEL TITULAR EN LA COMUNIDAD ── */}
       <div className="section-block">
         <div className="report-section-title">
-          <span>3. Otros Predios del Regante en la Comunidad</span>
+          <span>3. Otros Predios del Titular en la Comunidad</span>
         </div>
         {prediosAdicionales.length === 0 ? (
-          <p className="text-[8pt] text-slate-500 italic p-1">No se registraron predios o pedidos adicionales asociados a este regante.</p>
+          <p className="text-[8pt] text-slate-500 italic p-1">No se registraron predios o pedidos adicionales asociados a este titular.</p>
         ) : (
           <table className="report-table">
             <thead>
