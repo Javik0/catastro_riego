@@ -569,6 +569,7 @@ ST_TH = ParagraphStyle('th', fontName='Helvetica-Bold', fontSize=6.4,
                        leading=7.6, textColor=colors.HexColor('#1e293b'))
 ST_TD = ParagraphStyle('td', fontName='Helvetica', fontSize=7.0,
                        leading=8.2, textColor=TINTA)
+ST_TD_B = ParagraphStyle('tdb', parent=ST_TD, fontName='Helvetica-Bold')
 ST_NOTA = ParagraphStyle('nota', fontName='Helvetica-Oblique', fontSize=7.2,
                          leading=8.6, textColor=colors.HexColor('#64748b'))
 
@@ -619,10 +620,11 @@ def grid(filas):
     return t
 
 
-def tabla_datos(cabeceras, filas, anchos):
+def tabla_datos(cabeceras, filas, anchos, ultima_negrita=False):
     data = [[Paragraph(esc(h).upper(), ST_TH) for h in cabeceras]]
-    for fila in filas:
-        data.append([Paragraph(esc(v), ST_TD) for v in fila])
+    for i, fila in enumerate(filas):
+        estilo = (ST_TD_B if (ultima_negrita and i == len(filas) - 1) else ST_TD)
+        data.append([Paragraph(esc(v), estilo) for v in fila])
     t = Table(data, colWidths=anchos, repeatRows=1)
     t.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 0.5, BORDE),
@@ -685,7 +687,10 @@ def cabecera_pie(canv, doc, ficha):
     canv.setFillColor(colors.HexColor('#64748b'))
     canv.setFont('Helvetica', 6.2)
     inv = ficha.get('_investigador') or '—'
-    canv.drawString(10 * mm, 7.5 * mm, f'Investigador: {inv} · AP&CATASTROS')
+    # el documento de presentación del paquete no tiene investigador que rotular
+    pie_izq = ('AP&CATASTROS' if ficha.get('creado_por') is None
+               else f'Investigador: {inv} · AP&CATASTROS')
+    canv.drawString(10 * mm, 7.5 * mm, pie_izq)
     canv.drawRightString(w - 10 * mm, 7.5 * mm,
                          f'CONSORCIO CAYAMBE SPT · Datos al {FECHA_CORTE} · pág. {canv.getPageNumber()}')
     canv.restoreState()
@@ -1080,6 +1085,129 @@ def cargar_contexto(con_mapa):
     return fichas, ctx
 
 
+# ─── Documento de presentación del paquete ───────────────────────────────────
+
+
+def generar_leeme(fichas, salida):
+    """Una página que explica al consorcio cómo está organizado el paquete y
+    cómo se lee el código de cada ficha. Lleva un 0 al inicio del nombre para
+    aparecer primero en la carpeta."""
+    from reportlab.platypus import SimpleDocTemplate
+
+    def _hija(p):
+        return str(p.get('es_ficha_hija') or '') in ('1', 'True', 'true')
+
+    resumen = defaultdict(lambda: [0, 0, set()])
+    for p in fichas:
+        if not p.get('_sector'):
+            continue
+        r = resumen[p['_sector']]
+        r[0] += 1
+        if not _hija(p):
+            r[1] += 1
+        r[2].add(p['_com'])
+
+    ruta = os.path.join(salida, '0 - COMO LEER ESTE PAQUETE.pdf')
+    doc = SimpleDocTemplate(
+        ruta, pagesize=A4, leftMargin=10 * mm, rightMargin=10 * mm,
+        topMargin=27 * mm, bottomMargin=13 * mm,
+        title='Fichas individuales del padrón — organización del paquete',
+        author='AP&CATASTROS — Padrón Guanguilquí–Porotog')
+
+    st_h = ParagraphStyle('h', fontName='Helvetica-Bold', fontSize=12.5,
+                          leading=15, textColor=AZUL, alignment=1)
+    st_sub = ParagraphStyle('sub', fontName='Helvetica', fontSize=9.5,
+                            leading=12, alignment=1,
+                            textColor=colors.HexColor('#475569'))
+    st_p = ParagraphStyle('p', fontName='Helvetica', fontSize=9,
+                          leading=12.5, textColor=TINTA, alignment=4)
+    st_li = ParagraphStyle('li', parent=st_p, leftIndent=8 * mm, spaceAfter=2)
+    st_mono = ParagraphStyle('m', fontName='Courier-Bold', fontSize=8.5,
+                             leading=11.5, textColor=AZUL)
+
+    h = [Paragraph('Fichas individuales del padrón de usuarios', st_h),
+         Spacer(0, 1.5 * mm),
+         Paragraph('Sistema de riego comunitario Guanguilquí–Porotog', st_sub),
+         Spacer(0, 5 * mm),
+         Paragraph('Este paquete reúne las 6.830 fichas del padrón, una por archivo '
+                   'PDF, organizadas en carpetas por sector de investigación y '
+                   'comunidad. Los datos corresponden al levantamiento de campo '
+                   f'cerrado al {FECHA_CORTE}.', st_p)]
+
+    h += titulo_seccion('Contenido')
+    filas, tot = [], [0, 0, 0, 0]
+    for sec in sorted(resumen):
+        n, pri, coms = resumen[sec]
+        filas.append([sec, fmt_num(len(coms)), fmt_num(pri),
+                      fmt_num(n - pri), fmt_num(n)])
+        tot[0] += len(coms)
+        tot[1] += pri
+        tot[2] += n - pri
+        tot[3] += n
+    filas.append(['Total', fmt_num(tot[0]), fmt_num(tot[1]),
+                  fmt_num(tot[2]), fmt_num(tot[3])])
+    t = tabla_datos(['Sector', 'Comunidades', 'Fichas principales',
+                     'Fichas adicionales', 'Total de fichas'], filas,
+                    [40 * mm, 32 * mm, 40 * mm, 40 * mm, 38 * mm],
+                    ultima_negrita=True)
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0, len(filas)), (-1, len(filas)), colors.HexColor('#e2e8f0')),
+    ]))
+    h.append(t)
+
+    h += titulo_seccion('El código de cada ficha')
+    h += [Paragraph('Cada ficha lleva un código único, que encabeza también el '
+                    'nombre de su archivo:', st_p),
+          Spacer(0, 2.5 * mm),
+          Paragraph('S01 – C22 – R001 – F01',
+                    ParagraphStyle('ej', parent=st_mono, fontSize=13, alignment=1)),
+          Spacer(0, 3 * mm),
+          Paragraph('<b>S01</b> · Sector de investigación, del 01 al 03.', st_li),
+          Paragraph('<b>C22</b> · Comunidad, según el listado oficial de las 50 '
+                    'comunidades del sistema: C01 a C22 pertenecen al Sector 1, '
+                    'C23 a C35 al Sector 2 y C36 a C50 al Sector 3.', st_li),
+          Paragraph('<b>R001</b> · Titular dentro de su comunidad, numerado en orden '
+                    'alfabético de apellidos. La numeración es propia de cada '
+                    'comunidad: un titular con predios en dos comunidades recibe un '
+                    'número en cada una.', st_li),
+          Paragraph('<b>F01</b> · Ficha del titular. F01 es su ficha principal; las '
+                    'siguientes corresponden a sus predios adicionales.', st_li)]
+
+    h += titulo_seccion('Organización de las carpetas')
+    h += [Paragraph('Cada archivo se nombra con su código, la clave catastral del '
+                    'predio y el titular:', st_p),
+          Spacer(0, 2.5 * mm),
+          Paragraph('Sector 1 \\ MATIAS IMBAGO \\<br/>'
+                    'S01-C22-R001-F01 - 1702520440024 - LANCHIMBA PARION PAULA.pdf',
+                    st_mono),
+          Spacer(0, 3 * mm),
+          Paragraph('El archivo <b>INDICE DE FICHAS.xlsx</b> lista las 6.830 fichas '
+                    'con su código, clave catastral, titular, cédula, tipo de ficha y '
+                    'la ruta de su archivo dentro del paquete. Sus columnas tienen '
+                    'filtros.', st_p)]
+
+    h += titulo_seccion('Contenido de cada ficha')
+    h += [Paragraph('Cada ficha ocupa dos páginas A4 y reúne siete secciones: datos '
+                    'del propietario o titular; información del predio y de riego; '
+                    'otros predios del titular en la comunidad; servicios básicos e '
+                    'infraestructura; producción y actividad agropecuaria; '
+                    'organización comunitaria y auditoría; y la ubicación regional y '
+                    'el emplazamiento del predio sobre imagen satelital, con el '
+                    'polígono catastral y el punto levantado en campo.', st_p),
+          Spacer(0, 2 * mm),
+          Paragraph('Las superficies que constan en cada ficha son las declaradas por '
+                    'el titular durante el levantamiento. La medición catastral por '
+                    'polígono se reporta en los documentos del padrón.', st_p),
+          Spacer(0, 2 * mm),
+          Paragraph('El caudal que muestra la ficha es el de su comunidad, conforme a '
+                    'la metodología del padrón.', st_p)]
+
+    cab = {'creado_por': None, '_investigador': 'AP&CATASTROS'}
+    doc.build(h, onFirstPage=lambda c, d: cabecera_pie(c, d, cab),
+              onLaterPages=lambda c, d: cabecera_pie(c, d, cab))
+    print(f'✔ Presentación del paquete: {ruta}')
+
+
 # ─── Índice Excel ────────────────────────────────────────────────────────────
 
 
@@ -1123,6 +1251,8 @@ def main():
                          'en la entrega al consorcio, ver la nota en construir_historia')
     ap.add_argument('--rehacer', action='store_true', help='regenerar aunque el PDF exista')
     ap.add_argument('--indice', action='store_true', help='solo escribir el índice Excel')
+    ap.add_argument('--leeme', action='store_true',
+                    help='solo escribir el documento que presenta el paquete')
     ap.add_argument('--salida', default=SALIDA_DEF)
     args = ap.parse_args()
 
@@ -1176,6 +1306,10 @@ def main():
                        'Adicional' if str(p.get('es_ficha_hija') or '') in ('1', 'True', 'true') else 'Principal',
                        os.path.relpath(ruta, args.salida)])
 
+    if args.leeme:
+        generar_leeme(fichas, args.salida)
+        return
+
     if args.indice:
         escribir_indice(indice, args.salida)
         return
@@ -1226,6 +1360,7 @@ def main():
 
     if not args.comunidad and not args.clave and not args.limite:
         escribir_indice(indice, args.salida)
+        generar_leeme(fichas, args.salida)
 
 
 if __name__ == '__main__':
