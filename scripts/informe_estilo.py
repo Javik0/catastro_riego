@@ -70,6 +70,25 @@ CSS = """
 # fichas, así que la fecha del gpkg ya no describe el corte real.
 FECHA_CORTE = '19 de agosto de 2026'
 
+def esn(valor, dec=0, miles=True):
+    """Número escrito en castellano: miles con punto, decimales con coma.
+
+    El formato por defecto de Python es anglosajón y escribía «6,830» y
+    «95.3» en documentos en español, donde significan otra cosa. `miles=False`
+    formatea sin separador de miles, para lo que no debe llevarlo (años,
+    códigos): así la conversión nunca añade un punto donde no lo había.
+    """
+    if valor is None or valor == '':
+        return '—'
+    try:
+        n = float(valor)
+    except (TypeError, ValueError):
+        return str(valor)
+    s = f'{n:,.{dec}f}' if miles else f'{n:.{dec}f}'
+    # el intercambio se hace en dos pasos para no pisar el separador ya puesto
+    return s.replace(',', '\x00').replace('.', ',').replace('\x00', '.')
+
+
 PIE_INSTITUCION = ('Padrón de Usuarios · Sistema de Riego Comunitario '
                    'Guanguilquí–Porotog')
 
@@ -77,8 +96,9 @@ PIE_INSTITUCION = ('Padrón de Usuarios · Sistema de Riego Comunitario '
 def barra(p):
     """Barra de porcentaje; el número pasa a blanco cuando la barra lo taparía."""
     color = ' style="color:#fff"' if p >= 88 else ''
+    # el ancho es CSS y va sin formato de idioma; el número lo lee una persona
     return (f'<div class="barra"><span style="width:{min(p, 100):.0f}%"></span>'
-            f'<i{color}>{p:.1f}%</i></div>')
+            f'<i{color}>{esn(p, 1, False)} %</i></div>')
 
 
 def cabecera(titulo, subtitulo):
@@ -100,12 +120,12 @@ def aviso_corte(corte_texto, entrevistas, pendientes):
     con un regex: si se reescribe, actualizar el regex a la par.
     """
     if pendientes:
-        estado = (f'levantamiento en curso, {pendientes:,} predios adicionales '
+        estado = (f'levantamiento en curso, {esn(pendientes, 0)} predios adicionales '
                   'por completar')
     else:
         estado = 'levantamiento de campo cerrado'
     return (f'<div class="corte"><b>Datos al {corte_texto}.</b> '
-            f'{entrevistas:,} fichas principales · {estado}.</div>')
+            f'{esn(entrevistas, 0)} fichas principales · {estado}.</div>')
 
 
 def figura(b64, titulo, pie='', nivel='h3'):

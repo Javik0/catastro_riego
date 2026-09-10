@@ -309,6 +309,7 @@ def datos_graficos(todas, pri, cultivos, animales, coms_sup):
 from informe_graficos import (  # noqa: E402
     ARCHIVOS as _ARCHIVOS, g_barras_h, g_barras_v, g_donut, g_si_no,
 )
+from informe_estilo import esn  # noqa: E402
 
 
 def dibujar_graficos(slug, d):
@@ -388,7 +389,7 @@ def titulos_y_notas(d, nombre_corte):
             [f"{NOTA_UNIV_PRI} "
              f"{fnum(d['hijos']['hombres'] + d['hijos']['mujeres'])} hijos en "
              f"{fnum(d['hijos']['familias'])} familias, "
-             f"{d['hijos']['promedio']:.1f} por familia."]),
+             f"{esn(d['hijos']['promedio'], 1, False)} por familia."]),
         6: ('Represa y Capacitación',
             [pri + ' Verde Sí, rojo No.']),
         7: ('Método de Riego (promedio %)',
@@ -451,7 +452,7 @@ def lectura_corte(nombre, d, coms, caudal_ls, es_sistema=False,
           f'catastrales ({fnum(d["n_pri"])} principales y '
           f'{fnum(d["n_todas"] - d["n_pri"])} adicionales). Los comuneros '
           f'declaran {f2(decl)} hectáreas, de las cuales {f2(decl_riego)} '
-          f'({pct(decl_riego, decl):,.1f} %) con riego; la medición catastral '
+          f'({esn(pct(decl_riego, decl), 1)} %) con riego; la medición catastral '
           f'de sus comunidades es de {f2(uso["catastral"])} hectáreas. '
           + frase_caudal).replace('.0 %', ' %')
     p2 = (f'En producción, el cultivo más registrado es {top_cult} y la '
@@ -700,19 +701,19 @@ def verificar(datos_por_corte, comunidades, sup, caudal):
 
     decl = sum(c['sup_declarada'] for c in comunidades)
     if abs(decl - tot['superficie_declarada_ha']) > 0.5:
-        avisos.append(f"declarada: {decl:,.2f} ≠ fuente "
-                      f"{tot['superficie_declarada_ha']:,.2f}")
+        avisos.append(f"declarada: {esn(decl, 2)} ≠ fuente "
+                      f"{esn(tot['superficie_declarada_ha'], 2)}")
 
     cat_sis = d_sis['uso_suelo']['catastral']
     if abs(cat_sis - tot['superficie_catastral_ha']) > 0.5:
-        avisos.append(f"catastral: {cat_sis:,.2f} ≠ fuente "
-                      f"{tot['superficie_catastral_ha']:,.2f}")
+        avisos.append(f"catastral: {esn(cat_sis, 2)} ≠ fuente "
+                      f"{esn(tot['superficie_catastral_ha'], 2)}")
 
     q = sum(c['caudal_ls'] or 0 for c in comunidades
             if not c['caudal_heredado_de'])
     q_ref = caudal['totales']['caudal_comunidades_ls']
     if abs(q - q_ref) > 0.1:
-        avisos.append(f'caudal de comunidades: {q:,.2f} ≠ fuente {q_ref:,.2f}')
+        avisos.append(f'caudal de comunidades: {esn(q, 2)} ≠ fuente {esn(q_ref, 2)}')
 
     # La discrepancia CONOCIDA del bloque `sectores` del JSON: cuenta a
     # ASOCIACIÓN ROSALÍA en el Sector 2 (lista duplicada en
@@ -732,17 +733,17 @@ def verificar(datos_por_corte, comunidades, sup, caudal):
     for a in avisos:
         print(f'⚠ NO CUADRA — {a}')
     if not avisos:
-        print(f"✔ Cuadre contra fuentes únicas: {tot['fichas']:,} fichas "
-              f"({tot['regantes']:,} principales) · declarada "
-              f"{tot['superficie_declarada_ha']:,.2f} ha · catastral "
-              f"{tot['superficie_catastral_ha']:,.2f} ha · caudal "
-              f"{caudal['totales']['caudal_sistema_ls']:,.2f} l/s")
+        print(f"✔ Cuadre contra fuentes únicas: {esn(tot['fichas'], 0)} fichas "
+              f"({esn(tot['regantes'], 0)} principales) · declarada "
+              f"{esn(tot['superficie_declarada_ha'], 2)} ha · catastral "
+              f"{esn(tot['superficie_catastral_ha'], 2)} ha · caudal "
+              f"{esn(caudal['totales']['caudal_sistema_ls'], 2)} l/s")
         for s in SECTORES:
             ds = datos_por_corte[s]
             coms_s = [c for c in comunidades if c['sector_informe'] == s]
-            print(f"   {s}: {ds['n_todas']:,} fichas · declarada "
-                  f"{sum(c['sup_declarada'] for c in coms_s):,.2f} ha · "
-                  f"catastral {ds['uso_suelo']['catastral']:,.2f} ha")
+            print(f"   {s}: {esn(ds['n_todas'], 0)} fichas · declarada "
+                  f"{esn(sum(c['sup_declarada'] for c in coms_s), 2)} ha · "
+                  f"catastral {esn(ds['uso_suelo']['catastral'], 2)} ha")
     return avisos
 
 

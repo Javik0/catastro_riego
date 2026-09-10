@@ -32,6 +32,7 @@ USO
 import base64
 import io
 import os
+from informe_estilo import esn
 
 # La paleta del Dashboard (PIE_COLORS de DashboardHome.tsx), en el mismo orden.
 PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444',
@@ -69,7 +70,7 @@ def preparar():
 
 
 def fnum(n):
-    return f'{n:,.0f}'
+    return f'{esn(n, 0)}'
 
 
 def guardar(fig, clave):

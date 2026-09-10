@@ -34,6 +34,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
 from generar_informe_sociologo import COLOR_SECTOR, RANGOS_PREDIO, f0, f1, f2, pct  # noqa: E402
+from informe_estilo import esn
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-los-tres-sectores.html')
@@ -103,8 +104,8 @@ def main():
     assert suma_f == tot['fichas'], (suma_f, tot['fichas'])
     suma_p = sum(F[s]['predios'] for s in SECTORES)
 
-    pct1 = lambda v: f'{v:.1f} %'  # noqa: E731
-    pct0 = lambda v: f'{v:.0f} %'  # noqa: E731
+    pct1 = lambda v: f'{esn(v, 1, False)} %'  # noqa: E731
+    pct0 = lambda v: f'{esn(v, 0, False)} %'  # noqa: E731
 
     B = []
     A = B.append
@@ -198,7 +199,7 @@ def main():
     # ── agua ──
     A('<h2>4. El agua</h2>')
     b64 = G.g_barras_v('sectores-caudal', [(s, F[s]['caudal']) for s in SECTORES],
-                       [COLOR_SECTOR[s] for s in SECTORES], fmt=lambda v: f'{v:,.1f}')
+                       [COLOR_SECTOR[s] for s in SECTORES], fmt=lambda v: f'{esn(v, 1)}')
     A(E.figura(b64, 'Caudal de las comunidades por sector (l/s)',
                'Un caudal por comunidad; '
                f'{f2(caudal["totales"]["caudal_comunidades_ls"])} l/s en el sistema.'))
@@ -221,7 +222,7 @@ def main():
     A(E.figura(b64, 'Nivel de instrucción por sector (% de los titulares)',
                f'Fichas principales con el dato, {f0(sis["instruccion_con_dato"])}.'))
     b64 = G.g_barras_v('sectores-hijos', [(s, round(F[s]['hijos_prom'], 2)) for s in SECTORES],
-                       [COLOR_SECTOR[s] for s in SECTORES], fmt=lambda v: f'{v:.1f}')
+                       [COLOR_SECTOR[s] for s in SECTORES], fmt=lambda v: f'{esn(v, 1, False)}')
     A(E.figura(b64, 'Hijos por familia (promedio)',
                f'Fichas principales con el dato, {f0(sis["hijos"]["familias"])} familias.'))
     tenencias = [k for k, _ in sis['tenencia'] if k != 'Sin dato'][:4]
@@ -280,15 +281,15 @@ def main():
            for s in SECTORES}
     presa = {s: F[s]['comunitaria_pct'].get('Conoce la represa', 0) for s in SECTORES}
     A('<ul>')
-    A(f'<li>El <b>Sector 1</b> concentra {pct(F["Sector 1"]["fichas"], tot["fichas"]):.0f} % '
-      f'de las fichas y {pct(F["Sector 1"]["caudal"], caudal["totales"]["caudal_comunidades_ls"]):.0f} % '
+    A(f'<li>El <b>Sector 1</b> concentra {esn(pct(F["Sector 1"]["fichas"], tot["fichas"]), 0, False)} % '
+      f'de las fichas y {esn(pct(F["Sector 1"]["caudal"], caudal["totales"]["caudal_comunidades_ls"]), 0, False)} % '
       'del caudal de las comunidades.</li>')
     A(f'<li>El <b>{lider}</b> es el de mayor superficie catastral '
       f'({f2(F[lider]["catastral"])} ha), con los predios más grandes.</li>')
     A(f'<li>La tecnificación del riego (aspersión más goteo, promedio por ficha) va de '
-      f'{min(tec.values()):.0f} % a {max(tec.values()):.0f} % según el sector.</li>')
+      f'{esn(min(tec.values()), 0, False)} % a {esn(max(tec.values()), 0, False)} % según el sector.</li>')
     A(f'<li>El conocimiento del proyecto de la represa es alto en los tres sectores: '
-      f'entre {min(presa.values()):.0f} % y {max(presa.values()):.0f} %.</li>')
+      f'entre {esn(min(presa.values()), 0, False)} % y {esn(max(presa.values()), 0, False)} %.</li>')
     A('</ul>')
     A(E.pie(E.FECHA_CORTE))
 
@@ -353,7 +354,7 @@ def main():
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
     for s in SECTORES:
         print(f'  {s}: {f0(F[s]["fichas"])} fichas · catastral {f2(F[s]["catastral"])} ha · '
-              f'caudal {f1(F[s]["caudal"])} l/s · presa {presa[s]:.1f} %')
+              f'caudal {f1(F[s]["caudal"])} l/s · presa {esn(presa[s], 1, False)} %')
 
 
 if __name__ == '__main__':

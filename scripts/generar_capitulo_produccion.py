@@ -35,6 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -232,61 +233,61 @@ def main():
     A(E.aviso_corte(corte_txt, len([1 for p in fichas.values()
                                     if p.get('es_ficha_hija') not in (1, True)]), pendientes))
     A(E.kpis([
-        (f'{sup_total / 10000:,.0f} ha', 'superficie cultivada'),
-        (f'{len(sup):,}', 'cultivos distintos'),
-        (f'{total_pec:,}', 'animales de granja'),
-        (f'{pct(destino_c["Autoconsumo"], sum(destino_c.values())):.0f}%', 'destino autoconsumo'),
+        (f'{esn(sup_total / 10000, 0)} ha', 'superficie cultivada'),
+        (f'{esn(len(sup), 0)}', 'cultivos distintos'),
+        (f'{esn(total_pec, 0)}', 'animales de granja'),
+        (f'{esn(pct(destino_c["Autoconsumo"], sum(destino_c.values())), 0, False)}%', 'destino autoconsumo'),
     ]))
 
     A('<h2>1. Alcance</h2>')
-    A(f'<p>Se registraron <b>{len(cultivos):,} declaraciones de cultivo</b> en '
-      f'<b>{predios_c:,} predios</b> y <b>{len(animales):,} declaraciones de ganado</b> '
-      f'en <b>{predios_a:,} predios</b>. A diferencia de los capítulos de encuesta, '
+    A(f'<p>Se registraron <b>{esn(len(cultivos), 0)} declaraciones de cultivo</b> en '
+      f'<b>{esn(predios_c, 0)} predios</b> y <b>{esn(len(animales), 0)} declaraciones de ganado</b> '
+      f'en <b>{esn(predios_a, 0)} predios</b>. A diferencia de los capítulos de encuesta, '
       'aquí la unidad de análisis es el <b>predio</b> y no la persona: un titular '
       'con varias parcelas produce en todas ellas.</p>')
 
     A('<h2>2. Uso agrícola del suelo</h2>')
     A(f'<p>La superficie declarada en cultivos asciende a '
-      f'<b>{sup_total / 10000:,.1f} hectáreas</b>, distribuidas así:</p>')
+      f'<b>{esn(sup_total / 10000, 1)} hectáreas</b>, distribuidas así:</p>')
     A('<table class="evitar-corte"><tr><th>Grupo de cultivo</th>'
       '<th class="n">Superficie (ha)</th><th>Peso</th></tr>')
     for g, s in sorted(sup_grupo.items(), key=lambda x: -x[1]):
-        A(f'<tr><td>{g}</td><td class="n">{s / 10000:,.1f}</td>'
+        A(f'<tr><td>{g}</td><td class="n">{esn(s / 10000, 1)}</td>'
           f'<td>{E.barra(pct(s, sup_total))}</td></tr>')
     A('</table>')
     b64 = G.g_donut('produccion-grupos',
                     [(g, s / 10000, G.PIE_COLORS[i % 8]) for i, (g, s) in
                      enumerate(sorted(sup_grupo.items(), key=lambda x: -x[1]))],
-                    lambda v: f'{v:,.0f} ha', centro=f'{sup_total / 10000:,.0f} ha')
+                    lambda v: f'{esn(v, 0)} ha', centro=f'{esn(sup_total / 10000, 0)} ha')
     A(E.figura(b64, 'Superficie cultivada por grupo (ha)',
-               f'Todas las fichas; {len(cultivos):,} registros de cultivo.'))
+               f'Todas las fichas; {esn(len(cultivos), 0)} registros de cultivo.'))
     past = sup_grupo['Pastos y forraje']
-    A(f'<p>El dato dominante es que <b>{pct(past, sup_total):.1f} % de la superficie '
-      f'cultivada son pastos</b> ({past / 10000:,.1f} ha), destinados a sostener la '
+    A(f'<p>El dato dominante es que <b>{esn(pct(past, sup_total), 1, False)} % de la superficie '
+      f'cultivada son pastos</b> ({esn(past / 10000, 1)} ha), destinados a sostener la '
       'ganadería. La agricultura de consumo y venta ocupa el resto, con la cebolla y '
       'la papa como cultivos comerciales de referencia.</p>')
     A('<h3>Cultivos individuales de mayor superficie</h3>')
     A('<table class="evitar-corte"><tr><th>Cultivo</th><th class="n">Superficie (ha)</th>'
       '<th class="n">Predios</th><th class="n">Superficie media (m²)</th></tr>')
     for t, s in sorted(sup.items(), key=lambda x: -x[1])[:12]:
-        A(f'<tr><td>{t}</td><td class="n">{s / 10000:,.1f}</td>'
-          f'<td class="n">{frec[t]:,}</td><td class="n">{s / frec[t]:,.0f}</td></tr>')
+        A(f'<tr><td>{t}</td><td class="n">{esn(s / 10000, 1)}</td>'
+          f'<td class="n">{esn(frec[t], 0)}</td><td class="n">{esn(s / frec[t], 0)}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('produccion-cultivos', W['cultivos_frec'],
                        lambda i, n: G.PIE_COLORS[i % 8], rot=45)
     A(E.figura(b64, 'Cultivos más frecuentes (registros)',
                f'Todas las fichas; los doce cultivos con más registros, de '
-               f'{W["cultivos_registros"]:,}.'))
+               f'{esn(W["cultivos_registros"], 0)}.'))
 
     A('<h2>3. Ganadería</h2>')
-    A(f'<p>Se contabilizan <b>{total_pec:,} animales</b> en {predios_a:,} predios. '
+    A(f'<p>Se contabilizan <b>{esn(total_pec, 0)} animales</b> en {esn(predios_a, 0)} predios. '
       'La composición del hato revela una ganadería <b>de traspatio</b>, orientada '
       'al consumo familiar y a la venta de excedentes:</p>')
     A('<table class="evitar-corte"><tr><th>Especie</th><th class="n">Animales</th>'
       '<th class="n">Predios</th><th>Peso</th></tr>')
     for e, n in sorted(((e, n) for e, n in cabezas.items() if e not in acuicola),
                        key=lambda x: -x[1])[:12]:
-        A(f'<tr><td>{e}</td><td class="n">{n:,}</td><td class="n">{reg_esp[e]:,}</td>'
+        A(f'<tr><td>{e}</td><td class="n">{esn(n, 0)}</td><td class="n">{esn(reg_esp[e], 0)}</td>'
           f'<td>{E.barra(pct(n, total_pec))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_h('produccion-pecuario', W['pecuario'],
@@ -295,14 +296,14 @@ def main():
                'Todas las fichas; las cinco especies con más cabezas, tal como '
                'las registró el técnico.'))
     if acuicola:
-        det = ', '.join(f'{n:,} {e.lower()}' for e, n in
+        det = ', '.join(f'{esn(n, 0)} {e.lower()}' for e, n in
                         sorted(acuicola.items(), key=lambda x: -x[1]))
         A(f'<p>Se registra además <b>producción acuícola</b> —{det}— en '
           f'{sum(reg_esp[e] for e in acuicola)} predios. Se contabiliza aparte por '
           'tratarse de una actividad de naturaleza distinta a la ganadería.</p>')
     if cabezas_dup:
         A(f'<p>El inventario no incluye una <b>explotación avícola industrial de '
-          f'{cabezas_dup:,} aves</b> registrada en Asociación Rosalía —seis fichas '
+          f'{esn(cabezas_dup, 0)} aves</b> registrada en Asociación Rosalía —seis fichas '
           'de una misma familia sobre un mismo predio—, ajena a la producción '
           'familiar que describe este capítulo.</p>')
 
@@ -314,27 +315,27 @@ def main():
       '<th class="n">Cultivos</th><th class="n">Ganado</th><th>Peso agrícola</th></tr>')
     tot_dc, tot_da = sum(destino_c.values()), sum(destino_a.values())
     for et in ('Autoconsumo', 'Mercado', 'Agroindustria', 'Exportación'):
-        A(f'<tr><td>{et}</td><td class="n">{destino_c[et]:,}</td>'
-          f'<td class="n">{destino_a[et]:,}</td>'
+        A(f'<tr><td>{et}</td><td class="n">{esn(destino_c[et], 0)}</td>'
+          f'<td class="n">{esn(destino_a[et], 0)}</td>'
           f'<td>{E.barra(pct(destino_c[et], tot_dc))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('produccion-destino', [(n_, v) for n_, v, _ in W['destino']],
                        [c for _, _, c in W['destino']])
     A(E.figura(b64, 'Destino de la producción agrícola (registros)',
-               f'Todas las fichas; {len(cultivos):,} registros de cultivo, cada uno '
+               f'Todas las fichas; {esn(len(cultivos), 0)} registros de cultivo, cada uno '
                'con uno o más destinos.'))
     A(f'<p>La producción del sistema es predominantemente de <b>autoconsumo</b>: '
-      f'{pct(destino_c["Autoconsumo"], tot_dc):.1f} % de las declaraciones agrícolas y '
-      f'{pct(destino_a["Autoconsumo"], tot_da):.1f} % de las pecuarias se destinan a '
+      f'{esn(pct(destino_c["Autoconsumo"], tot_dc), 1, False)} % de las declaraciones agrícolas y '
+      f'{esn(pct(destino_a["Autoconsumo"], tot_da), 1, False)} % de las pecuarias se destinan a '
       'la alimentación familiar. El mercado es el segundo destino y la agroindustria '
       'y la exportación son marginales. <b>El riego sostiene aquí la seguridad '
       'alimentaria de las familias antes que una cadena comercial</b>, un dato central '
       'para dimensionar el impacto social del sistema.</p>')
     if sob:
         A(f'<p>Consistentemente, los titulares declaran destinar en promedio el '
-          f'<b>{sob_media:.0f} % de su producción a la soberanía alimentaria</b> '
+          f'<b>{esn(sob_media, 0, False)} % de su producción a la soberanía alimentaria</b> '
           f'(autoconsumo familiar), según el campo específico de la ficha '
-          f'({len(sob):,} respuestas).</p>')
+          f'({esn(len(sob), 0)} respuestas).</p>')
 
     A('<h2>5. Distribución territorial</h2>')
     A('<table class="evitar-corte"><tr><th>Sector</th><th class="n">Predios con cultivo</th>'
@@ -343,20 +344,20 @@ def main():
         if sec.startswith('('):
             continue
         d = por_sector[sec]
-        A(f'<tr><td>{sec}</td><td class="n">{len(d["predios"]):,}</td>'
-          f'<td class="n">{d["sup"] / 10000:,.1f}</td><td class="n">{d["cab"]:,}</td></tr>')
+        A(f'<tr><td>{sec}</td><td class="n">{esn(len(d["predios"]), 0)}</td>'
+          f'<td class="n">{esn(d["sup"] / 10000, 1)}</td><td class="n">{esn(d["cab"], 0)}</td></tr>')
     A('</table>')
 
     A('<h2>6. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li>Se cultivan <b>{sup_total / 10000:,.0f} ha</b> con <b>{len(sup)} especies '
+    A(f'<li>Se cultivan <b>{esn(sup_total / 10000, 0)} ha</b> con <b>{len(sup)} especies '
       f'vegetales</b> distintas, lo que indica un sistema productivo diversificado.</li>')
-    A(f'<li><b>{pct(past, sup_total):.0f} % de la superficie son pastos</b>: el uso '
+    A(f'<li><b>{esn(pct(past, sup_total), 0, False)} % de la superficie son pastos</b>: el uso '
       'principal del agua es sostener la ganadería familiar.</li>')
-    A(f'<li>El hato asciende a <b>{total_pec:,} animales</b>, dominado por especies '
+    A(f'<li>El hato asciende a <b>{esn(total_pec, 0)} animales</b>, dominado por especies '
       'menores (cuyes, aves, ovinos) propias de la producción de traspatio.</li>')
     A(f'<li>El <b>autoconsumo es el destino principal</b> '
-      f'({pct(destino_c["Autoconsumo"], tot_dc):.0f} % de las declaraciones agrícolas): '
+      f'({esn(pct(destino_c["Autoconsumo"], tot_dc), 0, False)} % de las declaraciones agrícolas): '
       'el sistema de riego sostiene la seguridad alimentaria de las familias.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
@@ -420,9 +421,9 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {sup_total / 10000:,.0f} ha cultivadas | {total_cab:,} cabezas | '
-          f'autoconsumo {pct(destino_c["Autoconsumo"], tot_dc):.0f}% | '
-          f'excluidas {cabezas_dup:,} cabezas duplicadas')
+    print(f'\n  {esn(sup_total / 10000, 0)} ha cultivadas | {esn(total_cab, 0)} cabezas | '
+          f'autoconsumo {esn(pct(destino_c["Autoconsumo"], tot_dc), 0, False)}% | '
+          f'excluidas {esn(cabezas_dup, 0)} cabezas duplicadas')
 
 
 if __name__ == '__main__':

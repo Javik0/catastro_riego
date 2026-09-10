@@ -36,6 +36,7 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import informe_estilo as E  # noqa: E402
+from informe_estilo import esn
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 DOCS = os.path.join(BASE, 'docs')
@@ -264,7 +265,7 @@ def main():
         f.write(doc)
 
     kb = os.path.getsize(SALIDA) / 1024
-    print(f'\n  INFORME CONSOLIDADO: {os.path.relpath(SALIDA, BASE)}  ({kb:,.0f} KB)')
+    print(f'\n  INFORME CONSOLIDADO: {os.path.relpath(SALIDA, BASE)}  ({esn(kb, 0)} KB)')
     print(f'  {len(CAPITULOS)} capítulos · corte al {corte}')
 
 

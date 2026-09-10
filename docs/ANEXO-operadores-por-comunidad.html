@@ -13,9 +13,13 @@
   h3 { font-size: 11pt; margin: 16px 0 6px; color: #24405e; }
   p { margin: 7px 0; text-align: justify; }
 
-  .corte { background: #fff8e6; border: 1px solid #e0a800; border-left: 5px solid #e0a800;
-           padding: 9px 13px; margin: 12px 0 18px; font-size: 9.5pt; border-radius: 4px; }
-  .corte b { color: #8a6100; }
+  .corte { color: #445; padding: 6px 0 8px; margin: 8px 0 14px; font-size: 9.5pt;
+           border-bottom: 1px solid #dbe3ee; }
+  .corte b { color: #1e4d8c; }
+  .fig { margin: 8px 0 4px; }
+  .fig img { max-width: 100%; border: 1px solid #dbe3ee; border-radius: 7px;
+             background: #fff; padding: 6px; }
+  .pie-fig { font-size: 8.5pt; color: #667; margin: 2px 0 14px; text-align: left; }
 
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 14px 0; }
   .kpi { border: 1px solid #dbe3ee; border-radius: 7px; padding: 9px 11px; background: #f8fafc; }
@@ -53,62 +57,62 @@
 <div class="kpis">
 <div class="kpi"><div class="n">50</div><div class="t">comunidades</div></div>
 <div class="kpi"><div class="n">39</div><div class="t">operadores identificados</div></div>
-<div class="kpi"><div class="n">4,107</div><div class="t">fichas principales que lo declararon</div></div>
+<div class="kpi"><div class="n">4.107</div><div class="t">fichas principales que lo declararon</div></div>
 <div class="kpi"><div class="n">95%</div><div class="t">de respuesta</div></div>
 </div>
 <h2>Listado por comunidad</h2>
 <p>Una fila por comunidad, en el orden del listado oficial del sistema. La columna <b>Respaldo</b> indica cuántas fichas principales de esa comunidad nombran a ese operador sobre el total que respondió, de modo que se vea la solidez de cada dato.</p>
 <table><tr><th class="n">N°</th><th>Comunidad</th><th>Sector</th><th>Operador</th><th class="n">Menciones</th><th>Respaldo</th></tr>
-<tr><td class="n">1</td><td>LARCACHACA</td><td>Sector 1</td><td class="dest">Roberto Aigaje</td><td class="n">127</td><td><div class="barra"><span style="width:85%"></span><i>85.2%</i></div></td></tr>
-<tr><td class="n">2</td><td>LA LIBERTAD</td><td>Sector 1</td><td class="dest">Clemente Quinatoa</td><td class="n">82</td><td><div class="barra"><span style="width:71%"></span><i>70.7%</i></div></td></tr>
-<tr><td class="n">3</td><td>SAN ANTONIO</td><td>Sector 1</td><td class="dest">Sergio Ascanta</td><td class="n">52</td><td><div class="barra"><span style="width:52%"></span><i>52.0%</i></div></td></tr>
-<tr><td class="n">4</td><td>SAN JOSÉ</td><td>Sector 1</td><td class="dest">Segundo Pilca</td><td class="n">62</td><td><div class="barra"><span style="width:58%"></span><i>57.9%</i></div></td></tr>
-<tr><td class="n">5</td><td>MILAGRO</td><td>Sector 1</td><td class="dest">Transito Tipanluisa</td><td class="n">27</td><td><div class="barra"><span style="width:60%"></span><i>60.0%</i></div></td></tr>
-<tr><td class="n">6</td><td>CHAMBITOLA</td><td>Sector 1</td><td class="dest">Elias Imbago</td><td class="n">77</td><td><div class="barra"><span style="width:66%"></span><i>66.4%</i></div></td></tr>
-<tr><td class="n">7</td><td>LA CANDELARIA</td><td>Sector 1</td><td>Guillermo Sopalo</td><td class="n">81</td><td><div class="barra"><span style="width:47%"></span><i>47.4%</i></div></td></tr>
-<tr><td class="n">8</td><td>CARRERA</td><td>Sector 1</td><td class="dest">Enrique Quishpe</td><td class="n">274</td><td><div class="barra"><span style="width:96%"></span><i style="color:#fff">96.1%</i></div></td></tr>
-<tr><td class="n">9</td><td>COCHAPAMBA</td><td>Sector 1</td><td class="dest">Edison Acero</td><td class="n">205</td><td><div class="barra"><span style="width:92%"></span><i style="color:#fff">91.9%</i></div></td></tr>
-<tr><td class="n">10</td><td>JESÚS GRAN PODER</td><td>Sector 1</td><td class="dest">Luis Tandayamo</td><td class="n">44</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97.8%</i></div></td></tr>
-<tr><td class="n">11</td><td>SANTA BÁRBARA</td><td>Sector 1</td><td class="dest">Luis Tandayamo</td><td class="n">7</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">12</td><td>ASOCIACIÓN POROTOG</td><td>Sector 1</td><td class="dest">Alonso Ushina</td><td class="n">43</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">13</td><td>COMUNA POROTOG</td><td>Sector 1</td><td class="dest">Ramiro Morales</td><td class="n">71</td><td><div class="barra"><span style="width:90%"></span><i style="color:#fff">89.9%</i></div></td></tr>
-<tr><td class="n">14</td><td>ASOCIACIÓN 17 DE JUNIO</td><td>Sector 1</td><td class="dest">Jose Quishpe</td><td class="n">19</td><td><div class="barra"><span style="width:68%"></span><i>67.9%</i></div></td></tr>
-<tr><td class="n">15</td><td>SR. COLOMA MONTESERRIN BAJO</td><td>Sector 3</td><td class="dest">Juan Quisphe</td><td class="n">4</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">16</td><td>CORDILLERAS DE LOS ANDES</td><td>Sector 1</td><td class="dest">Juan Tandayamo</td><td class="n">39</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">17</td><td>COMUNA IZACATA</td><td>Sector 1</td><td class="dest">Ramon Lanchimba</td><td class="n">62</td><td><div class="barra"><span style="width:94%"></span><i style="color:#fff">93.9%</i></div></td></tr>
-<tr><td class="n">18</td><td>IZACATA</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">42</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">19</td><td>LOS ANDES IZACATA</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">48</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">20</td><td>LOMA GORDA</td><td>Sector 1</td><td class="dest">Luis Farinango</td><td class="n">43</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97.7%</i></div></td></tr>
-<tr><td class="n">21</td><td>SAN JACINTO</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">6</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">22</td><td>MATÍAS IMBAGO</td><td>Sector 1</td><td class="dest">Enrique Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">23</td><td>CUARTO LOTE</td><td>Sector 2</td><td class="dest">Micaela Pilca</td><td class="n">39</td><td><div class="barra"><span style="width:83%"></span><i>83.0%</i></div></td></tr>
-<tr><td class="n">24</td><td>ASOC. SAN VICENTE BAJO</td><td>Sector 2</td><td class="dest">Abraham Benigno Aules</td><td class="n">88</td><td><div class="barra"><span style="width:81%"></span><i>81.5%</i></div></td></tr>
-<tr><td class="n">25</td><td>SANTA ROSA DE PACCHA</td><td>Sector 2</td><td class="dest">Melchor Alcasiga</td><td class="n">54</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98.2%</i></div></td></tr>
-<tr><td class="n">26</td><td>ASOC. SAN VICENTE ALTO</td><td>Sector 2</td><td class="dest">Vicente Lanchimba</td><td class="n">65</td><td><div class="barra"><span style="width:97%"></span><i style="color:#fff">97.0%</i></div></td></tr>
-<tr><td class="n">27</td><td>PUCARÁ</td><td>Sector 2</td><td class="dest">Jose Miguel Ushina</td><td class="n">116</td><td><div class="barra"><span style="width:60%"></span><i>60.1%</i></div></td></tr>
-<tr><td class="n">28</td><td>ASOCIACIÓN SAN PEDRO</td><td>Sector 2</td><td>Bety Tipanluisa</td><td class="n">16</td><td><div class="barra"><span style="width:48%"></span><i>48.5%</i></div></td></tr>
-<tr><td class="n">29</td><td>PITANA ALTO</td><td>Sector 2</td><td class="dest">Orlando Quimbiulco</td><td class="n">92</td><td><div class="barra"><span style="width:79%"></span><i>78.6%</i></div></td></tr>
-<tr><td class="n">30</td><td>ALPAKA</td><td>Sector 2</td><td class="dest">Jose Manuel Imbaquingo</td><td class="n">491</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">31</td><td>ASOC. PITANA BAJO</td><td>Sector 2</td><td class="dest">Rafael Quishpe</td><td class="n">59</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98.3%</i></div></td></tr>
-<tr><td class="n">32</td><td>PROMEJ. PITANA BAJO</td><td>Sector 2</td><td class="dest">Victor Quishpe</td><td class="n">156</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">99.4%</i></div></td></tr>
-<tr><td class="n">33</td><td>SANTA ROSA DE PINGULMI</td><td>Sector 2</td><td class="dest">Jose Maria Acero</td><td class="n">81</td><td><div class="barra"><span style="width:94%"></span><i style="color:#fff">94.2%</i></div></td></tr>
-<tr><td class="n">34</td><td>SANTA MARIANITA DE PINGULMI</td><td>Sector 2</td><td class="dest">Rafael Limaico</td><td class="n">170</td><td><div class="barra"><span style="width:82%"></span><i>82.1%</i></div></td></tr>
-<tr><td class="n">35</td><td>PAMBAMARCA</td><td>Sector 2</td><td class="dest">Guillermo Caiza</td><td class="n">6</td><td><div class="barra"><span style="width:60%"></span><i>60.0%</i></div></td></tr>
-<tr><td class="n">36</td><td>OTONCITO</td><td>Sector 3</td><td class="dest">Lucrecia Ilianes</td><td class="n">28</td><td><div class="barra"><span style="width:53%"></span><i>52.8%</i></div></td></tr>
-<tr><td class="n">37</td><td>PAMBAMARQUITO</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">39</td><td><div class="barra"><span style="width:66%"></span><i>66.1%</i></div></td></tr>
-<tr><td class="n">38</td><td>SR. HERNÁN TIMPE</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">39</td><td>HDA. SAN FRANSISCO</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">40</td><td>MONTESERRÍN ALTO</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">28</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">41</td><td>CHAUPIESTANCIA</td><td>Sector 3</td><td class="dest">Cesar Maldonado</td><td class="n">99</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">42</td><td>PUEBLO DE OTÓN</td><td>Sector 3</td><td class="dest">Alfredo Quishpe</td><td class="n">150</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98.0%</i></div></td></tr>
-<tr><td class="n">43</td><td>CANGAHUA PUNGO</td><td>Sector 3</td><td class="dest">Ricardo Jitala</td><td class="n">130</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">99.2%</i></div></td></tr>
-<tr><td class="n">44</td><td>CHINCHINLOMA</td><td>Sector 3</td><td class="dest">Segundo Pineda</td><td class="n">85</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">98.8%</i></div></td></tr>
-<tr><td class="n">45</td><td>ASOCIACIÓN ROSALÍA</td><td>Sector 3</td><td class="dest">Carlos Quilumba</td><td class="n">39</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">46</td><td>HDA. GUANGUILQUI</td><td>Sector 3</td><td class="dest">Cesar Maldonado</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
-<tr><td class="n">47</td><td>PUEBLO DE ASCÁZUBI</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:50%"></span><i>50.0%</i></div></td></tr>
-<tr><td class="n">48</td><td>EL MANZANO</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">10</td><td><div class="barra"><span style="width:56%"></span><i>55.6%</i></div></td></tr>
-<tr><td class="n">49</td><td>JUNTA SAN LUIS</td><td>Sector 3</td><td class="dest">Adan Cevallos</td><td class="n">39</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97.5%</i></div></td></tr>
-<tr><td class="n">—</td><td>AVELLANEDA</td><td>Sector 1</td><td class="dest">Jose Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100.0%</i></div></td></tr>
+<tr><td class="n">1</td><td>LARCACHACA</td><td>Sector 1</td><td class="dest">Roberto Aigaje</td><td class="n">127</td><td><div class="barra"><span style="width:85%"></span><i>85,2 %</i></div></td></tr>
+<tr><td class="n">2</td><td>LA LIBERTAD</td><td>Sector 1</td><td class="dest">Clemente Quinatoa</td><td class="n">82</td><td><div class="barra"><span style="width:71%"></span><i>70,7 %</i></div></td></tr>
+<tr><td class="n">3</td><td>SAN ANTONIO</td><td>Sector 1</td><td class="dest">Sergio Ascanta</td><td class="n">52</td><td><div class="barra"><span style="width:52%"></span><i>52,0 %</i></div></td></tr>
+<tr><td class="n">4</td><td>SAN JOSÉ</td><td>Sector 1</td><td class="dest">Segundo Pilca</td><td class="n">62</td><td><div class="barra"><span style="width:58%"></span><i>57,9 %</i></div></td></tr>
+<tr><td class="n">5</td><td>MILAGRO</td><td>Sector 1</td><td class="dest">Transito Tipanluisa</td><td class="n">27</td><td><div class="barra"><span style="width:60%"></span><i>60,0 %</i></div></td></tr>
+<tr><td class="n">6</td><td>CHAMBITOLA</td><td>Sector 1</td><td class="dest">Elias Imbago</td><td class="n">77</td><td><div class="barra"><span style="width:66%"></span><i>66,4 %</i></div></td></tr>
+<tr><td class="n">7</td><td>LA CANDELARIA</td><td>Sector 1</td><td>Guillermo Sopalo</td><td class="n">81</td><td><div class="barra"><span style="width:47%"></span><i>47,4 %</i></div></td></tr>
+<tr><td class="n">8</td><td>CARRERA</td><td>Sector 1</td><td class="dest">Enrique Quishpe</td><td class="n">274</td><td><div class="barra"><span style="width:96%"></span><i style="color:#fff">96,1 %</i></div></td></tr>
+<tr><td class="n">9</td><td>COCHAPAMBA</td><td>Sector 1</td><td class="dest">Edison Acero</td><td class="n">205</td><td><div class="barra"><span style="width:92%"></span><i style="color:#fff">91,9 %</i></div></td></tr>
+<tr><td class="n">10</td><td>JESÚS GRAN PODER</td><td>Sector 1</td><td class="dest">Luis Tandayamo</td><td class="n">44</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97,8 %</i></div></td></tr>
+<tr><td class="n">11</td><td>SANTA BÁRBARA</td><td>Sector 1</td><td class="dest">Luis Tandayamo</td><td class="n">7</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">12</td><td>ASOCIACIÓN POROTOG</td><td>Sector 1</td><td class="dest">Alonso Ushina</td><td class="n">43</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">13</td><td>COMUNA POROTOG</td><td>Sector 1</td><td class="dest">Ramiro Morales</td><td class="n">71</td><td><div class="barra"><span style="width:90%"></span><i style="color:#fff">89,9 %</i></div></td></tr>
+<tr><td class="n">14</td><td>ASOCIACIÓN 17 DE JUNIO</td><td>Sector 1</td><td class="dest">Jose Quishpe</td><td class="n">19</td><td><div class="barra"><span style="width:68%"></span><i>67,9 %</i></div></td></tr>
+<tr><td class="n">15</td><td>SR. COLOMA MONTESERRIN BAJO</td><td>Sector 3</td><td class="dest">Juan Quisphe</td><td class="n">4</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">16</td><td>CORDILLERAS DE LOS ANDES</td><td>Sector 1</td><td class="dest">Juan Tandayamo</td><td class="n">39</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">17</td><td>COMUNA IZACATA</td><td>Sector 1</td><td class="dest">Ramon Lanchimba</td><td class="n">62</td><td><div class="barra"><span style="width:94%"></span><i style="color:#fff">93,9 %</i></div></td></tr>
+<tr><td class="n">18</td><td>IZACATA</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">42</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">19</td><td>LOS ANDES IZACATA</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">48</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">20</td><td>LOMA GORDA</td><td>Sector 1</td><td class="dest">Luis Farinango</td><td class="n">43</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97,7 %</i></div></td></tr>
+<tr><td class="n">21</td><td>SAN JACINTO</td><td>Sector 1</td><td class="dest">Cesar Maldonado</td><td class="n">6</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">22</td><td>MATÍAS IMBAGO</td><td>Sector 1</td><td class="dest">Enrique Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">23</td><td>CUARTO LOTE</td><td>Sector 2</td><td class="dest">Micaela Pilca</td><td class="n">39</td><td><div class="barra"><span style="width:83%"></span><i>83,0 %</i></div></td></tr>
+<tr><td class="n">24</td><td>ASOC. SAN VICENTE BAJO</td><td>Sector 2</td><td class="dest">Abraham Benigno Aules</td><td class="n">88</td><td><div class="barra"><span style="width:81%"></span><i>81,5 %</i></div></td></tr>
+<tr><td class="n">25</td><td>SANTA ROSA DE PACCHA</td><td>Sector 2</td><td class="dest">Melchor Alcasiga</td><td class="n">54</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98,2 %</i></div></td></tr>
+<tr><td class="n">26</td><td>ASOC. SAN VICENTE ALTO</td><td>Sector 2</td><td class="dest">Vicente Lanchimba</td><td class="n">65</td><td><div class="barra"><span style="width:97%"></span><i style="color:#fff">97,0 %</i></div></td></tr>
+<tr><td class="n">27</td><td>PUCARÁ</td><td>Sector 2</td><td class="dest">Jose Miguel Ushina</td><td class="n">116</td><td><div class="barra"><span style="width:60%"></span><i>60,1 %</i></div></td></tr>
+<tr><td class="n">28</td><td>ASOCIACIÓN SAN PEDRO</td><td>Sector 2</td><td>Bety Tipanluisa</td><td class="n">16</td><td><div class="barra"><span style="width:48%"></span><i>48,5 %</i></div></td></tr>
+<tr><td class="n">29</td><td>PITANA ALTO</td><td>Sector 2</td><td class="dest">Orlando Quimbiulco</td><td class="n">92</td><td><div class="barra"><span style="width:79%"></span><i>78,6 %</i></div></td></tr>
+<tr><td class="n">30</td><td>ALPAKA</td><td>Sector 2</td><td class="dest">Jose Manuel Imbaquingo</td><td class="n">491</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">31</td><td>ASOC. PITANA BAJO</td><td>Sector 2</td><td class="dest">Rafael Quishpe</td><td class="n">59</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98,3 %</i></div></td></tr>
+<tr><td class="n">32</td><td>PROMEJ. PITANA BAJO</td><td>Sector 2</td><td class="dest">Victor Quishpe</td><td class="n">156</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">99,4 %</i></div></td></tr>
+<tr><td class="n">33</td><td>SANTA ROSA DE PINGULMI</td><td>Sector 2</td><td class="dest">Jose Maria Acero</td><td class="n">81</td><td><div class="barra"><span style="width:94%"></span><i style="color:#fff">94,2 %</i></div></td></tr>
+<tr><td class="n">34</td><td>SANTA MARIANITA DE PINGULMI</td><td>Sector 2</td><td class="dest">Rafael Limaico</td><td class="n">170</td><td><div class="barra"><span style="width:82%"></span><i>82,1 %</i></div></td></tr>
+<tr><td class="n">35</td><td>PAMBAMARCA</td><td>Sector 2</td><td class="dest">Guillermo Caiza</td><td class="n">6</td><td><div class="barra"><span style="width:60%"></span><i>60,0 %</i></div></td></tr>
+<tr><td class="n">36</td><td>OTONCITO</td><td>Sector 3</td><td class="dest">Lucrecia Ilianes</td><td class="n">28</td><td><div class="barra"><span style="width:53%"></span><i>52,8 %</i></div></td></tr>
+<tr><td class="n">37</td><td>PAMBAMARQUITO</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">39</td><td><div class="barra"><span style="width:66%"></span><i>66,1 %</i></div></td></tr>
+<tr><td class="n">38</td><td>SR. HERNÁN TIMPE</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">39</td><td>HDA. SAN FRANSISCO</td><td>Sector 3</td><td class="dest">Jorge Toapanta</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">40</td><td>MONTESERRÍN ALTO</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">28</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">41</td><td>CHAUPIESTANCIA</td><td>Sector 3</td><td class="dest">Cesar Maldonado</td><td class="n">99</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">42</td><td>PUEBLO DE OTÓN</td><td>Sector 3</td><td class="dest">Alfredo Quishpe</td><td class="n">150</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">98,0 %</i></div></td></tr>
+<tr><td class="n">43</td><td>CANGAHUA PUNGO</td><td>Sector 3</td><td class="dest">Ricardo Jitala</td><td class="n">130</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">99,2 %</i></div></td></tr>
+<tr><td class="n">44</td><td>CHINCHINLOMA</td><td>Sector 3</td><td class="dest">Segundo Pineda</td><td class="n">85</td><td><div class="barra"><span style="width:99%"></span><i style="color:#fff">98,8 %</i></div></td></tr>
+<tr><td class="n">45</td><td>ASOCIACIÓN ROSALÍA</td><td>Sector 3</td><td class="dest">Carlos Quilumba</td><td class="n">39</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">46</td><td>HDA. GUANGUILQUI</td><td>Sector 3</td><td class="dest">Cesar Maldonado</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
+<tr><td class="n">47</td><td>PUEBLO DE ASCÁZUBI</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:50%"></span><i>50,0 %</i></div></td></tr>
+<tr><td class="n">48</td><td>EL MANZANO</td><td>Sector 3</td><td class="dest">Juan Quishpe</td><td class="n">10</td><td><div class="barra"><span style="width:56%"></span><i>55,6 %</i></div></td></tr>
+<tr><td class="n">49</td><td>JUNTA SAN LUIS</td><td>Sector 3</td><td class="dest">Adan Cevallos</td><td class="n">39</td><td><div class="barra"><span style="width:98%"></span><i style="color:#fff">97,5 %</i></div></td></tr>
+<tr><td class="n">—</td><td>AVELLANEDA</td><td>Sector 1</td><td class="dest">Jose Quishpe</td><td class="n">1</td><td><div class="barra"><span style="width:100%"></span><i style="color:#fff">100,0 %</i></div></td></tr>
 </table>
 <h2>Comunidades con reconocimiento repartido</h2>
 <p>En estas comunidades el operador más nombrado no alcanza la mitad de las menciones: los titulares reconocen a más de una persona. Conviene confirmarlo con la Junta de Agua antes de darlo por definitivo.</p>

@@ -35,6 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -130,28 +131,28 @@ def main():
     # vacías son la respuesta correcta. Leerlo como cobertura pendiente
     # hacía parecer que a un tercio del padrón le falta el servicio.
     A('<p>Este capítulo describe la <b>vivienda</b> del predio: '
-      f'<b>{registrado:,} de {N:,} fichas principales ({pct(registrado, N):.1f} %)</b> '
+      f'<b>{esn(registrado, 0)} de {esn(N, 0)} fichas principales ({esn(pct(registrado, N), 1, False)} %)</b> '
       'declaran una construcción. En los demás predios no hay vivienda, y por eso '
       'los porcentajes de agua y energía se calculan sobre las viviendas, no '
       'sobre el total del padrón.</p>')
 
     A(E.kpis([
-        (f'{pct(registrado, N):.0f}%', 'de las fichas principales con vivienda'),
-        (f'{pct(con_agua, n_viv):.1f}%', 'de las viviendas con agua de consumo'),
-        (f'{pct(con_ener, n_viv):.1f}%', 'de las viviendas con energía eléctrica'),
-        (f'{st.median(cot):,.0f}', 'msnm (altitud mediana)'),
+        (f'{esn(pct(registrado, N), 0, False)}%', 'de las fichas principales con vivienda'),
+        (f'{esn(pct(con_agua, n_viv), 1, False)}%', 'de las viviendas con agua de consumo'),
+        (f'{esn(pct(con_ener, n_viv), 1, False)}%', 'de las viviendas con energía eléctrica'),
+        (f'{esn(st.median(cot), 0)}', 'msnm (altitud mediana)'),
     ]))
 
     A('<h2>1. Predios con vivienda</h2>')
-    A(f'<p>De los {N:,} predios con ficha principal, <b>{registrado:,} '
-      f'({pct(registrado, N):.1f} %) declaran una vivienda</b> (material de '
+    A(f'<p>De los {esn(N, 0)} predios con ficha principal, <b>{esn(registrado, 0)} '
+      f'({esn(pct(registrado, N), 1, False)} %) declaran una vivienda</b> (material de '
       'construcción registrado). Los demás son predios sin casa: lotes de '
       'cultivo o pastoreo donde no corresponde preguntar por agua de consumo ni '
       'energía. La proporción por sector:</p>')
     A('<table class="evitar-corte"><tr><th>Sector</th><th class="n">Con vivienda</th>'
       '<th class="n">Fichas principales</th><th>Proporción</th></tr>')
     for sec, (r, t, p) in cob_sector.items():
-        A(f'<tr><td>{sec}</td><td class="n">{r:,}</td><td class="n">{t:,}</td>'
+        A(f'<tr><td>{sec}</td><td class="n">{esn(r, 0)}</td><td class="n">{esn(t, 0)}</td>'
           f'<td>{E.barra(p)}</td></tr>')
     A('</table>')
 
@@ -159,16 +160,16 @@ def main():
     A('<table class="evitar-corte"><tr><th>Servicio</th><th class="n">Dispone</th>'
       '<th class="n">No dispone</th><th class="n">Sin dato</th>'
       '<th class="n">Viviendas</th><th>Cobertura</th></tr>')
-    A(f'<tr><td>Agua de consumo</td><td class="n">{con_agua:,}</td>'
-      f'<td class="n">{n_viv - con_agua - sd_agua:,}</td><td class="n">{sd_agua:,}</td>'
-      f'<td class="n">{n_viv:,}</td><td>{E.barra(pct(con_agua, n_viv))}</td></tr>')
-    A(f'<tr><td>Energía eléctrica</td><td class="n">{con_ener:,}</td>'
-      f'<td class="n">{n_viv - con_ener - sd_ener:,}</td><td class="n">{sd_ener:,}</td>'
-      f'<td class="n">{n_viv:,}</td><td>{E.barra(pct(con_ener, n_viv))}</td></tr>')
+    A(f'<tr><td>Agua de consumo</td><td class="n">{esn(con_agua, 0)}</td>'
+      f'<td class="n">{esn(n_viv - con_agua - sd_agua, 0)}</td><td class="n">{esn(sd_agua, 0)}</td>'
+      f'<td class="n">{esn(n_viv, 0)}</td><td>{E.barra(pct(con_agua, n_viv))}</td></tr>')
+    A(f'<tr><td>Energía eléctrica</td><td class="n">{esn(con_ener, 0)}</td>'
+      f'<td class="n">{esn(n_viv - con_ener - sd_ener, 0)}</td><td class="n">{esn(sd_ener, 0)}</td>'
+      f'<td class="n">{esn(n_viv, 0)}</td><td>{E.barra(pct(con_ener, n_viv))}</td></tr>')
     A('</table>')
     A(f'<p>Entre las viviendas, la cobertura de ambos servicios es alta: '
-      f'<b>{pct(con_agua, n_viv):.1f} % dispone de agua de consumo</b> y '
-      f'<b>{pct(con_ener, n_viv):.1f} % de energía eléctrica</b>. Las viviendas que '
+      f'<b>{esn(pct(con_agua, n_viv), 1, False)} % dispone de agua de consumo</b> y '
+      f'<b>{esn(pct(con_ener, n_viv), 1, False)} % de energía eléctrica</b>. Las viviendas que '
       f'declaran no tener el servicio son {n_viv - con_agua - sd_agua} y '
       f'{n_viv - con_ener - sd_ener} respectivamente, cifras reducidas pero '
       'identificables predio a predio para una eventual intervención focalizada. '
@@ -179,31 +180,31 @@ def main():
         [('Dispone', '#10b981', [con_agua, con_ener]),
          ('No dispone', '#ef4444', [n_viv - con_agua - sd_agua, n_viv - con_ener - sd_ener]),
          ('Sin dato', '#94a3b8', [sd_agua, sd_ener])])
-    A(E.figura(b64, 'Servicios de la vivienda', f'Viviendas, {n_viv:,}.'))
+    A(E.figura(b64, 'Servicios de la vivienda', f'Viviendas, {esn(n_viv, 0)}.'))
 
     A('<h2>3. Material de la vivienda</h2>')
-    A(f'<p>Se registró el material predominante de la vivienda en {n_mat:,} '
+    A(f'<p>Se registró el material predominante de la vivienda en {esn(n_mat, 0)} '
       'predios:</p>')
     A('<table class="evitar-corte"><tr><th>Material</th><th class="n">Viviendas</th>'
       '<th>Peso</th></tr>')
     for k, n in mat.most_common():
-        A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>{k}</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(pct(n, n_mat))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_h('servicios-material', mat.most_common(),
                        lambda i, n: G.PIE_COLORS[i % 8])
-    A(E.figura(b64, 'Material de la vivienda', f'Viviendas, {n_mat:,}.'))
+    A(E.figura(b64, 'Material de la vivienda', f'Viviendas, {esn(n_mat, 0)}.'))
     trad = sum(n for k, n in mat.items() if k.lower() in ('tapia', 'adobe', 'madera'))
-    A(f'<p>Predomina el <b>bloque</b> ({pct(mat.get("Bloque", 0), n_mat):.1f} %), '
-      f'seguido del hormigón armado ({pct(mat.get("Hormigón Armado", 0), n_mat):.1f} %). '
+    A(f'<p>Predomina el <b>bloque</b> ({esn(pct(mat.get("Bloque", 0), n_mat), 1, False)} %), '
+      f'seguido del hormigón armado ({esn(pct(mat.get("Hormigón Armado", 0), n_mat), 1, False)} %). '
       f'Las construcciones de materiales tradicionales —tapia, adobe y madera— '
-      f'representan el {pct(trad, n_mat):.1f} % de las viviendas registradas.</p>')
+      f'representan el {esn(pct(trad, n_mat), 1, False)} % de las viviendas registradas.</p>')
 
     A('<h2>4. Altitud de los predios</h2>')
     A(f'<p>La cota está registrada en la totalidad de los predios '
-      f'({len(cot):,} registros). El sistema se despliega entre los '
-      f'<b>{min(cot):,.0f} y los {max(cot):,.0f} msnm</b>, con una mediana de '
-      f'<b>{st.median(cot):,.0f} msnm</b>.</p>')
+      f'({esn(len(cot), 0)} registros). El sistema se despliega entre los '
+      f'<b>{esn(min(cot), 0)} y los {esn(max(cot), 0)} msnm</b>, con una mediana de '
+      f'<b>{esn(st.median(cot), 0)} msnm</b>.</p>')
     tramos = [('Bajo 3.000 m', 0, 3000), ('3.000 – 3.200 m', 3000, 3200),
               ('3.200 – 3.400 m', 3200, 3400), ('3.400 – 3.600 m', 3400, 3600),
               ('Sobre 3.600 m', 3600, 9999)]
@@ -213,27 +214,27 @@ def main():
     for et, lo, hi in tramos:
         n = sum(1 for x in cot if lo <= x < hi)
         filas_alt.append((et, n))
-        A(f'<tr><td>{et}</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>{et}</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(pct(n, len(cot)))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_h('servicios-altitud', filas_alt, lambda i, n: '#0ea5e9')
-    A(E.figura(b64, 'Altitud de los predios', f'Fichas principales con cota, {len(cot):,}.'))
+    A(E.figura(b64, 'Altitud de los predios', f'Fichas principales con cota, {esn(len(cot), 0)}.'))
     A('<p>El rango altitudinal de más de mil metros condiciona los cultivos '
       'posibles y los requerimientos de riego en cada franja, y explica la '
       'diversidad de especies descrita en el capítulo de producción.</p>')
 
     A('<h2>5. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li><b>{pct(registrado, N):.0f} % de las fichas principales declara '
+    A(f'<li><b>{esn(pct(registrado, N), 0, False)} % de las fichas principales declara '
       'una vivienda</b> en el predio; el resto son predios sin construcción y '
       'quedan fuera del cálculo de servicios.</li>')
     A(f'<li>Entre las viviendas, la cobertura de <b>agua de consumo '
-      f'({pct(con_agua, n_viv):.1f} %) y energía eléctrica '
-      f'({pct(con_ener, n_viv):.1f} %) es prácticamente universal</b>.</li>')
+      f'({esn(pct(con_agua, n_viv), 1, False)} %) y energía eléctrica '
+      f'({esn(pct(con_ener, n_viv), 1, False)} %) es prácticamente universal</b>.</li>')
     A(f'<li>La vivienda es mayoritariamente de <b>bloque</b> '
-      f'({pct(mat.get("Bloque", 0), n_mat):.0f} %); los materiales tradicionales '
-      f'persisten en el {pct(trad, n_mat):.0f} % de los casos.</li>')
-    A(f'<li>El sistema abarca desde los {min(cot):,.0f} hasta los {max(cot):,.0f} '
+      f'({esn(pct(mat.get("Bloque", 0), n_mat), 0, False)} %); los materiales tradicionales '
+      f'persisten en el {esn(pct(trad, n_mat), 0, False)} % de los casos.</li>')
+    A(f'<li>El sistema abarca desde los {esn(min(cot), 0)} hasta los {esn(max(cot), 0)} '
       'msnm, un rango que condiciona la aptitud productiva de cada zona.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
@@ -290,8 +291,8 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  con vivienda {pct(registrado, N):.0f}% | agua {pct(con_agua, n_viv):.1f}% | '
-          f'energía {pct(con_ener, n_viv):.1f}% (sobre viviendas)')
+    print(f'\n  con vivienda {esn(pct(registrado, N), 0, False)}% | agua {esn(pct(con_agua, n_viv), 1, False)}% | '
+          f'energía {esn(pct(con_ener, n_viv), 1, False)}% (sobre viviendas)')
 
 
 if __name__ == '__main__':

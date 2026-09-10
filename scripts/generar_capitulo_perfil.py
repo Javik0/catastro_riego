@@ -29,6 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -188,15 +189,15 @@ def main():
                  'Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, N, pendientes))
     A(E.kpis([
-        (f'{N:,}', 'fichas principales'),
-        (f'{pct(instr["Primaria"] + instr["Ninguno"] + instr["Alfabetizado"], n_ins):.0f}%',
+        (f'{esn(N, 0)}', 'fichas principales'),
+        (f'{esn(pct(instr["Primaria"] + instr["Ninguno"] + instr["Alfabetizado"], n_ins), 0, False)}%',
          'con instrucción básica o menos'),
-        (f'{pct(ten["Posesión sin Título"], n_ten):.1f}%', 'sin título de propiedad'),
-        (f'{st.mean(hijos):.1f}', 'hijos por familia'),
+        (f'{esn(pct(ten["Posesión sin Título"], n_ten), 1, False)}%', 'sin título de propiedad'),
+        (f'{esn(st.mean(hijos), 1, False)}', 'hijos por familia'),
     ]))
 
     A('<h2>1. Quién es el usuario del sistema</h2>')
-    A(f'<p>El padrón registra <b>{N:,} fichas principales</b> hasta la fecha de corte. Este '
+    A(f'<p>El padrón registra <b>{esn(N, 0)} fichas principales</b> hasta la fecha de corte. Este '
       'capítulo describe sus características sociales, que condicionan tanto la '
       'forma de comunicarse con ellos como el tipo de acompañamiento técnico que '
       'requiere cualquier intervención.</p>')
@@ -206,41 +207,41 @@ def main():
       '<th class="n">Fichas principales</th><th>Peso</th></tr>')
     for k in ('Ninguno', 'Alfabetizado', 'Primaria', 'Secundaria', 'Superior'):
         if instr.get(k):
-            A(f'<tr><td>{k}</td><td class="n">{instr[k]:,}</td>'
+            A(f'<tr><td>{k}</td><td class="n">{esn(instr[k], 0)}</td>'
               f'<td>{E.barra(pct(instr[k], n_ins))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_h('perfil-instruccion', W['instruccion'],
                        lambda i, n: G.COLORES_INSTRUCCION.get(n, G.PIE_COLORS[i % 8]))
     A(E.figura(b64, 'Nivel de instrucción',
-               f'Fichas principales con el dato, {n_ins:,} de {N:,}.'))
+               f'Fichas principales con el dato, {esn(n_ins, 0)} de {esn(N, 0)}.'))
     basica = instr['Ninguno'] + instr['Alfabetizado'] + instr['Primaria']
-    A(f'<p>El <b>{pct(basica, n_ins):.1f} % de los titulares alcanzó como máximo la '
-      f'primaria</b>, y un <b>{pct(instr["Ninguno"], n_ins):.1f} % no cursó ningún '
-      f'nivel formal</b>. Solo el {pct(instr["Superior"], n_ins):.1f} % tiene '
+    A(f'<p>El <b>{esn(pct(basica, n_ins), 1, False)} % de los titulares alcanzó como máximo la '
+      f'primaria</b>, y un <b>{esn(pct(instr["Ninguno"], n_ins), 1, False)} % no cursó ningún '
+      f'nivel formal</b>. Solo el {esn(pct(instr["Superior"], n_ins), 1, False)} % tiene '
       'estudios superiores. Toda comunicación técnica, reglamento o material de '
       'capacitación debe diseñarse en lenguaje sencillo y con apoyo visual: un '
       'documento escrito en registro administrativo no llega a la mayoría de los '
       'usuarios.</p>')
 
     A('<h2>3. Titularidad y participación de la mujer</h2>')
-    A(f'<p>De los {n_gen:,} titulares cuyo nombre permite estimar el género, '
-      f'<b>{gen["Mujer"]:,} son mujeres ({pct(gen["Mujer"], n_gen):.1f} %)</b> y '
-      f'{gen["Hombre"]:,} hombres ({pct(gen["Hombre"], n_gen):.1f} %).</p>')
+    A(f'<p>De los {esn(n_gen, 0)} titulares cuyo nombre permite estimar el género, '
+      f'<b>{esn(gen["Mujer"], 0)} son mujeres ({esn(pct(gen["Mujer"], n_gen), 1, False)} %)</b> y '
+      f'{esn(gen["Hombre"], 0)} hombres ({esn(pct(gen["Hombre"], n_gen), 1, False)} %).</p>')
     A('<table class="evitar-corte"><tr><th>Titular</th><th class="n">Fichas principales</th>'
       '<th>Peso</th></tr>')
     for k in ('Hombre', 'Mujer'):
-        A(f'<tr><td>{k}</td><td class="n">{gen[k]:,}</td>'
+        A(f'<tr><td>{k}</td><td class="n">{esn(gen[k], 0)}</td>'
           f'<td>{E.barra(pct(gen[k], n_gen))}</td></tr>')
     A('</table>')
     b64 = G.g_donut('perfil-titularidad',
                     [('Mujeres', gen['Mujer'], '#ec4899'),
                      ('Hombres', gen['Hombre'], '#3b82f6')],
-                    G.fnum, centro=f'{n_gen:,}')
+                    G.fnum, centro=f'{esn(n_gen, 0)}')
     A(E.figura(b64, 'Titularidad por sexo (estimación)',
-               f'Fichas principales con nombre clasificable, {n_gen:,} de {N:,}.'))
+               f'Fichas principales con nombre clasificable, {esn(n_gen, 0)} de {esn(N, 0)}.'))
     A('<p>La ficha no pregunta el sexo del titular: la cifra es una '
       '<b>estimación</b> a partir del primer nombre, con una lista de nombres '
-      f'inequívocos de la zona; los {gen[None]:,} casos ambiguos quedan sin '
+      f'inequívocos de la zona; los {esn(gen[None], 0)} casos ambiguos quedan sin '
       'clasificar. Se lee como orden de magnitud. Registrar el sexo del titular en '
       'las próximas actualizaciones del padrón convertiría la estimación en un '
       'dato.</p>')
@@ -249,15 +250,15 @@ def main():
     A('<table class="evitar-corte"><tr><th>Forma de tenencia</th>'
       '<th class="n">Fichas principales</th><th>Peso</th></tr>')
     for k, n in ten.most_common():
-        A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>{k}</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(pct(n, n_ten))}</td></tr>')
     A('</table>')
     b64 = G.g_donut('perfil-tenencia',
                     [(n_, v, G.PIE_COLORS[i % 8]) for i, (n_, v) in enumerate(W['tenencia'])],
                     G.fnum, centro=G.fnum(sum(v for _, v in W['tenencia'])))
-    A(E.figura(b64, 'Tenencia del predio', f'Fichas principales, {N:,}.'))
+    A(E.figura(b64, 'Tenencia del predio', f'Fichas principales, {esn(N, 0)}.'))
     sp = ten['Posesión sin Título'] + ten['Herencia sin Legalizar']
-    A(f'<p><b>{sp:,} titulares ({pct(sp, n_ten):.1f} %) ocupan su predio sin '
+    A(f'<p><b>{esn(sp, 0)} titulares ({esn(pct(sp, n_ten), 1, False)} %) ocupan su predio sin '
       'título de propiedad</b>, sea por posesión o por herencia no legalizada: '
       'casi un tercio del padrón. La inseguridad jurídica limita el acceso a '
       'crédito y a programas públicos, y condiciona cualquier inversión predial '
@@ -268,30 +269,30 @@ def main():
     A('<table class="evitar-corte"><tr><th>Comunidad</th><th class="n">Sin título</th>'
       '<th class="n">Total</th><th>Proporción</th></tr>')
     for com, s, t, p in sin_titulo[:8]:
-        A(f'<tr><td>{com}</td><td class="n">{s:,}</td><td class="n">{t:,}</td>'
+        A(f'<tr><td>{com}</td><td class="n">{esn(s, 0)}</td><td class="n">{esn(t, 0)}</td>'
           f'<td>{E.barra(p)}</td></tr>')
     A('</table>')
 
     A('<h2>5. Composición familiar</h2>')
-    A(f'<p>Los {len(con_hijos):,} titulares que informaron sobre su descendencia '
-      f'declaran <b>{sum(hijos):,} hijos</b> en total: {h_var:,} varones y '
-      f'{h_muj:,} mujeres. El promedio es de <b>{st.mean(hijos):.2f} hijos por '
-      f'familia</b> (mediana {st.median(hijos):.0f}).</p>')
+    A(f'<p>Los {esn(len(con_hijos), 0)} titulares que informaron sobre su descendencia '
+      f'declaran <b>{esn(sum(hijos), 0)} hijos</b> en total: {esn(h_var, 0)} varones y '
+      f'{esn(h_muj, 0)} mujeres. El promedio es de <b>{esn(st.mean(hijos), 2, False)} hijos por '
+      f'familia</b> (mediana {esn(st.median(hijos), 0, False)}).</p>')
     dist = Counter(min(h, 6) for h in hijos)
     A('<table class="evitar-corte"><tr><th>Hijos por familia</th>'
       '<th class="n">Familias</th><th>Peso</th></tr>')
     for k in sorted(dist):
         et = f'{k}' if k < 6 else '6 o más'
-        A(f'<tr><td>{et}</td><td class="n">{dist[k]:,}</td>'
+        A(f'<tr><td>{et}</td><td class="n">{esn(dist[k], 0)}</td>'
           f'<td>{E.barra(pct(dist[k], len(hijos)))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('perfil-hijos', [('Hombres', int(h_var)), ('Mujeres', int(h_muj))],
                        ['#3b82f6', '#ec4899'])
     A(E.figura(b64, 'Hijos por familia',
-               f'Fichas principales con el dato, {len(con_hijos):,} familias; '
-               f'{sum(hijos):,.0f} hijos, {st.mean(hijos):.1f} por familia.'))
-    A(f'<p>Tomando el promedio declarado, los {N:,} predios empadronados '
-      f'representan una población aproximada de <b>{N * (st.mean(hijos) + 2):,.0f} '
+               f'Fichas principales con el dato, {esn(len(con_hijos), 0)} familias; '
+               f'{esn(sum(hijos), 0)} hijos, {esn(st.mean(hijos), 1, False)} por familia.'))
+    A(f'<p>Tomando el promedio declarado, los {esn(N, 0)} predios empadronados '
+      f'representan una población aproximada de <b>{esn(N * (st.mean(hijos) + 2), 0)} '
       'personas</b> vinculadas al sistema de riego, contando titular, pareja e '
       'hijos. Es una estimación de orden de magnitud sobre el alcance social del '
       'sistema.</p>')
@@ -304,31 +305,31 @@ def main():
     A('<table class="evitar-corte"><tr><th>Parroquia</th><th class="n">Fichas</th>'
       '<th class="n">Fichas principales</th><th>Peso</th></tr>')
     for k, n in todas_parr:
-        A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
-          f'<td class="n">{parr.get(k, 0):,}</td>'
+        A(f'<tr><td>{k}</td><td class="n">{esn(n, 0)}</td>'
+          f'<td class="n">{esn(parr.get(k, 0), 0)}</td>'
           f'<td>{E.barra(pct(n, n_todas))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('perfil-parroquias', todas_parr, lambda i, n: '#8b5cf6')
-    A(E.figura(b64, 'Fichas por parroquia', f'Todas las fichas, {n_todas:,}.'))
+    A(E.figura(b64, 'Fichas por parroquia', f'Todas las fichas, {esn(n_todas, 0)}.'))
     A(f'<p>El sistema es esencialmente un servicio de la parroquia '
       f'<b>{todas_parr[0][0]}</b>, que concentra el '
-      f'{pct(todas_parr[0][1], n_todas):.1f} % de las fichas.</p>')
-    A(f'<p>Se dispone de <b>teléfono de contacto para {tel:,} titulares</b> '
-      f'({pct(tel, N):.1f} %), lo que permite una convocatoria directa para '
+      f'{esn(pct(todas_parr[0][1], n_todas), 1, False)} % de las fichas.</p>')
+    A(f'<p>Se dispone de <b>teléfono de contacto para {esn(tel, 0)} titulares</b> '
+      f'({esn(pct(tel, N), 1, False)} %), lo que permite una convocatoria directa para '
       'asambleas, capacitaciones o socialización del proyecto.</p>')
 
     A('<h2>7. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li><b>{pct(basica, n_ins):.0f} % de los titulares no superó la primaria</b>: '
+    A(f'<li><b>{esn(pct(basica, n_ins), 0, False)} % de los titulares no superó la primaria</b>: '
       'la comunicación institucional debe ser oral, visual y en lenguaje llano.</li>')
-    A(f'<li><b>Casi un tercio ({pct(sp, n_ten):.0f} %) carece de título de '
+    A(f'<li><b>Casi un tercio ({esn(pct(sp, n_ten), 0, False)} %) carece de título de '
       'propiedad</b>, lo que limita su acceso a crédito e inversión.</li>')
-    A(f'<li>Se estima que <b>{pct(gen["Mujer"], n_gen):.0f} % de los titulares son '
+    A(f'<li>Se estima que <b>{esn(pct(gen["Mujer"], n_gen), 0, False)} % de los titulares son '
       'mujeres</b>; conviene registrar el sexo de forma explícita en el padrón.</li>')
-    A(f'<li>Las familias tienen <b>{st.mean(hijos):.1f} hijos en promedio</b>, con '
-      f'una población vinculada estimada en <b>{N * (st.mean(hijos) + 2):,.0f} '
+    A(f'<li>Las familias tienen <b>{esn(st.mean(hijos), 1, False)} hijos en promedio</b>, con '
+      f'una población vinculada estimada en <b>{esn(N * (st.mean(hijos) + 2), 0)} '
       'personas</b>.</li>')
-    A(f'<li>El <b>{pct(tel, N):.0f} % tiene teléfono registrado</b>: existe un canal '
+    A(f'<li>El <b>{esn(pct(tel, N), 0, False)} % tiene teléfono registrado</b>: existe un canal '
       'directo de comunicación con la mayoría del padrón.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
@@ -399,8 +400,8 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {N:,} fichas principales | {pct(basica, n_ins):.0f}% instrucción básica | '
-          f'{pct(sp, n_ten):.0f}% sin título | {pct(gen["Mujer"], n_gen):.0f}% mujeres (est.)')
+    print(f'\n  {esn(N, 0)} fichas principales | {esn(pct(basica, n_ins), 0, False)}% instrucción básica | '
+          f'{esn(pct(sp, n_ten), 0, False)}% sin título | {esn(pct(gen["Mujer"], n_gen), 0, False)}% mujeres (est.)')
 
 
 if __name__ == '__main__':

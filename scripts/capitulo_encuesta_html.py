@@ -21,6 +21,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
@@ -78,7 +79,7 @@ def barra(p, ancho=100):
     verde, así que pasa a blanco para que siga leyéndose."""
     color = ' style="color:#fff"' if p >= 88 else ''
     return (f'<div class="barra"><span style="width:{min(p, 100):.0f}%"></span>'
-            f'<i{color}>{p:.1f}%</i></div>')
+            f'<i{color}>{esn(p, 1, False)}%</i></div>')
 
 
 def construir(d):
@@ -106,10 +107,10 @@ def construir(d):
     # ── KPIs ──
     A('<div class="kpis">')
     for n, t in [
-        (f'{d["total"]:,}', 'fichas principales'),
-        (f'{d["pct_presa"]:.1f}%', 'conoce el proyecto de la presa'),
-        (f'{d["pct_presidente"]:.1f}%', 'identifica al presidente'),
-        (f'{d["pct_quiere_cap"]:.1f}%', 'quiere capacitación'),
+        (f'{esn(d["total"], 0)}', 'fichas principales'),
+        (f'{esn(d["pct_presa"], 1, False)}%', 'conoce el proyecto de la presa'),
+        (f'{esn(d["pct_presidente"], 1, False)}%', 'identifica al presidente'),
+        (f'{esn(d["pct_quiere_cap"], 1, False)}%', 'quiere capacitación'),
     ]:
         A(f'<div class="kpi"><div class="n">{n}</div><div class="t">{t}</div></div>')
     A('</div>')
@@ -118,24 +119,24 @@ def construir(d):
     A('<h2>1. Alcance y método</h2>')
     A(f'<p>Este capítulo sintetiza la sección <i>«Datos de la comunidad y conocimiento '
       f'de la Junta de Agua»</i> de la ficha de campo, aplicada a los usuarios del '
-      f'sistema durante el empadronamiento. El universo son las <b>{d["total"]:,} '
+      f'sistema durante el empadronamiento. El universo son las <b>{esn(d["total"], 0)} '
       f'fichas principales</b> registradas hasta el corte: una por titular '
       f'entrevistado.</p>')
-    A(f'<p>Un mismo titular puede tener varios predios: {d["con_adicionales"]:,} '
+    A(f'<p>Un mismo titular puede tener varios predios: {esn(d["con_adicionales"], 0)} '
       'de los entrevistados declararon predios adicionales. La entrevista se '
       'realiza <b>una sola vez por persona</b>, de modo que sus fichas adicionales '
       f'no se cuentan como entrevistas independientes. Otras {d["solo_adicionales"]} '
       'personas constan únicamente como predio adicional de otro titular y '
       'heredan las respuestas de la ficha de origen; el padrón de usuarios '
-      f'asciende, por tanto, a {d["padron_personas"]:,} personas.</p>')
+      f'asciende, por tanto, a {esn(d["padron_personas"], 0)} personas.</p>')
     A('<p>La tasa de respuesta supera el 93 % en todas las preguntas cerradas. Los '
       'nombres propios se agrupan sin acentos ni espacios sobrantes para no fragmentar '
       'a una misma persona en variantes de escritura.</p>')
 
     # ── 2 ──
     A('<h2>2. Conocimiento del proyecto de la presa Río Porotog</h2>')
-    A(f'<p>El <b>{d["pct_presa"]:.1f} %</b> de las fichas principales declara conocer el proyecto '
-      f'de la presa ({d["presa_si"]:,} de {d["presa_resp"]:,} respuestas). Es un nivel '
+    A(f'<p>El <b>{esn(d["pct_presa"], 1, False)} %</b> de las fichas principales declara conocer el proyecto '
+      f'de la presa ({esn(d["presa_si"], 0)} de {esn(d["presa_resp"], 0)} respuestas). Es un nivel '
       'alto de difusión previa, aunque con diferencias territoriales relevantes.</p>')
     A('<table class="evitar-corte"><tr><th>Sector</th><th class="n">Sí</th>'
       '<th class="n">No</th><th>Conocimiento</th></tr>')
@@ -148,7 +149,7 @@ def construir(d):
             sin_sector += si + no
             continue
         p = 100.0 * si / (si + no) if si + no else 0
-        A(f'<tr><td>{sec}</td><td class="n">{si:,}</td><td class="n">{no:,}</td>'
+        A(f'<tr><td>{sec}</td><td class="n">{esn(si, 0)}</td><td class="n">{esn(no, 0)}</td>'
           f'<td>{barra(p)}</td></tr>')
     A('</table>')
     filas_presa = [(sec, round(100.0 * si / (si + no), 1) if si + no else 0)
@@ -156,29 +157,29 @@ def construir(d):
                    if not sec.startswith('(')]
     b64 = G.g_barras_v('conocimiento-presa-sector', filas_presa,
                        [COLOR_SECTOR.get(sec, '#3b82f6') for sec, _ in filas_presa],
-                       fmt=lambda v: f'{v:.1f} %')
+                       fmt=lambda v: f'{esn(v, 1, False)} %')
     A(E.figura(b64, 'Conoce el proyecto de la presa, por sector (% Sí)',
-               f'Fichas principales con respuesta, {d["presa_resp"]:,}.'))
+               f'Fichas principales con respuesta, {esn(d["presa_resp"], 0)}.'))
     if sin_sector:
         A(f'<p class="pie-fig">No se incluyen {sin_sector} fichas cuyo sector no '
-          f'pudo determinarse ({100.0 * sin_sector / d["presa_resp"]:.1f} % del total).</p>')
+          f'pudo determinarse ({esn(100.0 * sin_sector / d["presa_resp"], 1, False)} % del total).</p>')
     A('<h3>Comunidades con menor difusión</h3>')
     A('<p>Comunidades con veinte o más entrevistados donde el conocimiento del proyecto '
       'es más bajo. Constituyen el foco prioritario de socialización:</p>')
     A('<table class="evitar-corte"><tr><th>Comunidad</th><th class="n">Sí</th>'
       '<th class="n">No</th><th>Conocimiento</th></tr>')
     for com, si, no, p in d['presa_bajas'][:8]:
-        A(f'<tr><td>{com}</td><td class="n">{si:,}</td><td class="n">{no:,}</td>'
+        A(f'<tr><td>{com}</td><td class="n">{esn(si, 0)}</td><td class="n">{esn(no, 0)}</td>'
           f'<td>{barra(p)}</td></tr>')
     A('</table>')
 
     # ── 3 ──
     A('<h2>3. Gobernanza de la Junta de Agua</h2>')
     A(f'<p>La directiva se elige por <b>asamblea general</b> según el '
-      f'<b>{d["pct_asamblea"]:.1f} %</b> de las fichas principales, una unanimidad que confirma '
+      f'<b>{esn(d["pct_asamblea"], 1, False)} %</b> de las fichas principales, una unanimidad que confirma '
       'la vigencia del mecanismo comunitario de designación. Las menciones a '
       'designación directa o herencia son marginales.</p>')
-    A(f'<p>El <b>{d["pct_presidente"]:.1f} %</b> identifica por nombre al presidente '
+    A(f'<p>El <b>{esn(d["pct_presidente"], 1, False)} %</b> identifica por nombre al presidente '
       f'de la Junta, {d["presidente"]}. El reconocimiento de la dirigencia es, por '
       'tanto, generalizado: la Junta es una institución presente y conocida por sus '
       'usuarios, no una figura administrativa lejana.</p>')
@@ -190,16 +191,16 @@ def construir(d):
     for sec, nom, n, p in d['operadores']:
         if sec.startswith('('):      # sector indeterminado: no va en el cuadro
             continue
-        A(f'<tr><td>{sec}</td><td>{nom}</td><td class="n">{n:,}</td>'
-          f'<td class="n">{p:.1f}%</td></tr>')
+        A(f'<tr><td>{sec}</td><td>{nom}</td><td class="n">{esn(n, 0)}</td>'
+          f'<td class="n">{esn(p, 1, False)}%</td></tr>')
     A('</table>')
 
     # ── 4 ──
     A('<h2>4. Conocimiento de la infraestructura</h2>')
     A(f'<p>Consultados por la antigüedad del sistema, la respuesta dominante es '
-      f'<b>{d["anios_moda"]} años</b> ({d["anios_pct"]:.1f} % de las respuestas; '
+      f'<b>{d["anios_moda"]} años</b> ({esn(d["anios_pct"], 1, False)} % de las respuestas; '
       f'mediana {d["anios_mediana"]}). Sobre la longitud del canal principal, el '
-      f'<b>{d["km_pct"]:.1f} %</b> responde <b>{d["km_moda"]:g} km</b>.</p>')
+      f'<b>{esn(d["km_pct"], 1, False)} %</b> responde <b>{d["km_moda"]:g} km</b>.</p>')
     A('<p>La convergencia de ambas respuestas en un valor claramente dominante indica '
       'una <b>memoria colectiva consistente</b> sobre la obra: los usuarios comparten '
       'una misma referencia histórica y física del sistema, lo que facilita cualquier '
@@ -207,23 +208,23 @@ def construir(d):
 
     # ── 5 ──
     A('<h2>5. Capacitación</h2>')
-    A(f'<p>El <b>{d["pct_recibio_cap"]:.1f} %</b> declara haber recibido capacitación '
-      f'y el <b>{d["pct_quiere_cap"]:.1f} %</b> desea recibirla. El contraste entre '
+    A(f'<p>El <b>{esn(d["pct_recibio_cap"], 1, False)} %</b> declara haber recibido capacitación '
+      f'y el <b>{esn(d["pct_quiere_cap"], 1, False)} %</b> desea recibirla. El contraste entre '
       'ambas cifras revela una demanda formativa amplia y sostenida.</p>')
     A('<table class="evitar-corte"><tr><th>Situación</th><th class="n">Fichas principales</th>'
       '<th class="n">%</th></tr>')
     A(f'<tr class="dest"><td>Nunca recibió capacitación y la solicita</td>'
-      f'<td class="n">{d["demanda_no_atendida"]:,}</td>'
-      f'<td class="n">{d["pct_demanda"]:.1f}%</td></tr>')
-    A(f'<tr><td>Ya recibió y solicita más</td><td class="n">{d["cap_si_y_quiere"]:,}</td>'
-      f'<td class="n">{d["pct_si_quiere"]:.1f}%</td></tr>')
-    A(f'<tr><td>No solicita capacitación</td><td class="n">{d["cap_no_quiere"]:,}</td>'
-      f'<td class="n">{d["pct_no_quiere"]:.1f}%</td></tr>')
+      f'<td class="n">{esn(d["demanda_no_atendida"], 0)}</td>'
+      f'<td class="n">{esn(d["pct_demanda"], 1, False)}%</td></tr>')
+    A(f'<tr><td>Ya recibió y solicita más</td><td class="n">{esn(d["cap_si_y_quiere"], 0)}</td>'
+      f'<td class="n">{esn(d["pct_si_quiere"], 1, False)}%</td></tr>')
+    A(f'<tr><td>No solicita capacitación</td><td class="n">{esn(d["cap_no_quiere"], 0)}</td>'
+      f'<td class="n">{esn(d["pct_no_quiere"], 1, False)}%</td></tr>')
     A('</table>')
     b64 = G.g_si_no('conocimiento-comunitaria', W['comunitaria'])
     A(E.figura(b64, 'Represa y capacitación',
                'Fichas principales con respuesta; verde Sí, rojo No.'))
-    A(f'<p><b>{d["demanda_no_atendida"]:,} titulares nunca han recibido capacitación '
+    A(f'<p><b>{esn(d["demanda_no_atendida"], 0)} titulares nunca han recibido capacitación '
       'y manifiestan querer recibirla.</b> Constituyen la población objetivo directa '
       'e inmediata de un plan de formación, sin necesidad de estudios adicionales '
       'para identificarla: están nominados en el padrón, con su comunidad y su '
@@ -232,12 +233,12 @@ def construir(d):
     A('<table class="evitar-corte"><tr><th>Categoría temática</th>'
       '<th class="n">Menciones</th><th>Peso</th></tr>')
     for cat, n, p in d['temas']:
-        A(f'<tr><td>{cat}</td><td class="n">{n:,}</td><td>{barra(p)}</td></tr>')
+        A(f'<tr><td>{cat}</td><td class="n">{esn(n, 0)}</td><td>{barra(p)}</td></tr>')
     A('</table>')
     b64 = G.g_barras_h('conocimiento-temas', [(cat, n) for cat, n, _ in d['temas']],
                        lambda i, n: G.PIE_COLORS[i % 8])
     A(E.figura(b64, 'Temas de capacitación solicitados',
-               f'Menciones, {sum(n for _, n, _ in d["temas"]):,}.'))
+               f'Menciones, {esn(sum(n for _, n, _ in d["temas"]), 0)}.'))
     A(f'<p>La demanda se concentra de forma abrumadora en el <b>manejo del riego</b>, '
       'coherente con el objeto del sistema y con la expectativa que genera el proyecto '
       'de la presa.</p>')
@@ -246,15 +247,15 @@ def construir(d):
     A('<h2>6. Conclusiones</h2>')
     A('<ul>')
     A(f'<li>La Junta de Agua es una <b>institución reconocida</b>: '
-      f'{d["pct_presidente"]:.1f} % identifica a su presidente y '
-      f'{d["pct_asamblea"]:.1f} % confirma la elección por asamblea.</li>')
-    A(f'<li>El proyecto de la presa <b>ya es conocido por {d["pct_presa"]:.1f} %</b> de '
+      f'{esn(d["pct_presidente"], 1, False)} % identifica a su presidente y '
+      f'{esn(d["pct_asamblea"], 1, False)} % confirma la elección por asamblea.</li>')
+    A(f'<li>El proyecto de la presa <b>ya es conocido por {esn(d["pct_presa"], 1, False)} %</b> de '
       'los usuarios, con vacíos concentrados en comunidades identificables — la '
       'socialización pendiente es acotada y focalizable.</li>')
     A('<li>Existe una <b>memoria técnica compartida</b> sobre la antigüedad y la '
       'extensión de la infraestructura.</li>')
     A(f'<li>La <b>demanda de capacitación es la principal oportunidad</b> detectada: '
-      f'{d["demanda_no_atendida"]:,} usuarios sin formación previa la solicitan '
+      f'{esn(d["demanda_no_atendida"], 0)} usuarios sin formación previa la solicitan '
       'expresamente, y el tema prioritario es el manejo del riego.</li>')
     A('</ul>')
 

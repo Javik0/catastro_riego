@@ -46,6 +46,7 @@ from datetime import date
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico  # noqa: E402
 import informe_estilo as E  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -140,13 +141,13 @@ def si_no(pri, campo, titulo, L, por_comunidad=True):
     si = sum(1 for p in resp if str(p[campo]).strip() == 'Sí')
     L.append(f'### {titulo}')
     L.append('')
-    L.append(f'Respondieron **{len(resp):,} de {len(pri):,}** fichas principales '
-             f'({pct(len(resp), len(pri)):.1f}%).')
+    L.append(f'Respondieron **{esn(len(resp), 0)} de {esn(len(pri), 0)}** fichas principales '
+             f'({esn(pct(len(resp), len(pri)), 1, False)}%).')
     L.append('')
     L.append(f'| Respuesta | Regantes | % |')
     L.append(f'|---|---|---|')
-    L.append(f'| **Sí** | {si:,} | **{pct(si, len(resp)):.1f}%** |')
-    L.append(f'| No | {len(resp) - si:,} | {pct(len(resp) - si, len(resp)):.1f}% |')
+    L.append(f'| **Sí** | {esn(si, 0)} | **{esn(pct(si, len(resp)), 1, False)}%** |')
+    L.append(f'| No | {esn(len(resp) - si, 0)} | {esn(pct(len(resp) - si, len(resp)), 1, False)}% |')
     L.append('')
     L.append('| Sector | Sí | No | % Sí |')
     L.append('|---|---|---|---|')
@@ -155,7 +156,7 @@ def si_no(pri, campo, titulo, L, por_comunidad=True):
         rs = [p for p in resp if p['_sec'] == sec]
         s = sum(1 for p in rs if str(p[campo]).strip() == 'Sí')
         filas_sector[sec] = (s, len(rs) - s)
-        L.append(f'| {sec} | {s:,} | {len(rs) - s:,} | {pct(s, len(rs)):.1f}% |')
+        L.append(f'| {sec} | {esn(s, 0)} | {esn(len(rs) - s, 0)} | {esn(pct(s, len(rs)), 1, False)}% |')
     L.append('')
     if por_comunidad:
         por_com = defaultdict(lambda: [0, 0])
@@ -169,7 +170,7 @@ def si_no(pri, campo, titulo, L, por_comunidad=True):
         L.append('| Comunidad | Sí | No | % Sí |')
         L.append('|---|---|---|---|')
         for com, (s, n) in orden[:8]:
-            L.append(f'| {com} | {s:,} | {n:,} | {pct(s, s + n):.1f}% |')
+            L.append(f'| {com} | {esn(s, 0)} | {esn(n, 0)} | {esn(pct(s, s + n), 1, False)}% |')
         L.append('')
     return {'respondieron': len(resp), 'si': si, 'por_sector': filas_sector}
 
@@ -191,7 +192,7 @@ def main():
     L.append('')
     L.append('## Metodología')
     L.append('')
-    L.append(f'- El universo son las **{total:,} fichas principales** — una por titular '
+    L.append(f'- El universo son las **{esn(total, 0)} fichas principales** — una por titular '
              'entrevistado. Las fichas adicionales heredan las respuestas de su ficha '
              'madre, así que incluirlas contaría al mismo entrevistado varias veces.')
     L.append('- Los nombres propios se agrupan ignorando acentos y espacios, para no '
@@ -201,7 +202,7 @@ def main():
     L.append(f'- Desde el {FECHA_PRECARGA[8:10]}/{FECHA_PRECARGA[5:7]} el formulario '
              f'precarga las respuestas más comunes; **{precargadas} fichas** se crearon '
              'después y sus respuestas pueden ser la precarga sin corregir. Sobre '
-             f'{total:,} entrevistas no alteran ninguna cifra.')
+             f'{esn(total, 0)} entrevistas no alteran ninguna cifra.')
     L.append('- La ficha de papel también pregunta si la Junta **tiene estatutos y '
              'reglamentos**; esos dos campos no existen en el formulario digital y '
              'no se pueden reportar.')
@@ -228,7 +229,7 @@ def main():
     L.append('| Mecanismo | Regantes | % |')
     L.append('|---|---|---|')
     for k, n in c.most_common():
-        L.append(f'| {k} | {n:,} | {pct(n, len(resp)):.1f}% |')
+        L.append(f'| {k} | {esn(n, 0)} | {esn(pct(n, len(resp)), 1, False)}% |')
     otros = Counter(norm(p['como_elige_dir_otro']) for p in pri
                     if lleno(p.get('como_elige_dir_otro')))
     if otros:
@@ -236,7 +237,7 @@ def main():
         L.append('Respuestas de "Otro": ' + '; '.join(f'{k} ({n})' for k, n in otros.most_common()))
     L.append('')
     L.append(f'La elección por **asamblea general** es prácticamente unánime '
-             f'({pct(c.get("Asamblea general", 0), len(resp)):.1f}%): la Junta opera '
+             f'({esn(pct(c.get("Asamblea general", 0), len(resp)), 1, False)}%): la Junta opera '
              'con el mecanismo comunitario clásico.')
     L.append('')
 
@@ -245,34 +246,34 @@ def main():
     resp_p = [p for p in pri if lleno(p.get('nom_presidente'))]
     nombres = Counter(norm(p['nom_presidente']) for p in resp_p)
     correcto = sum(n for k, n in nombres.items() if 'TIPANLUISA' in k)
-    L.append(f'Respondieron {len(resp_p):,} fichas principales. **{correcto:,} '
-             f'({pct(correcto, len(resp_p)):.1f}%) identifican a José Joaquín '
+    L.append(f'Respondieron {esn(len(resp_p), 0)} fichas principales. **{esn(correcto, 0)} '
+             f'({esn(pct(correcto, len(resp_p)), 1, False)}%) identifican a José Joaquín '
              'Tipanluisa** (agrupando todas las escrituras del apellido).')
     L.append('')
     L.append('| Nombre respondido (agrupado) | Regantes | % |')
     L.append('|---|---|---|')
     for k, n in nombres.most_common(10):
-        L.append(f'| {k.title()} | {n:,} | {pct(n, len(resp_p)):.1f}% |')
+        L.append(f'| {k.title()} | {esn(n, 0)} | {esn(pct(n, len(resp_p)), 1, False)}% |')
     resto = len(resp_p) - sum(n for _, n in nombres.most_common(10))
     if resto > 0:
-        L.append(f'| *(otros {len(nombres) - 10} nombres)* | {resto:,} | {pct(resto, len(resp_p)):.1f}% |')
+        L.append(f'| *(otros {len(nombres) - 10} nombres)* | {esn(resto, 0)} | {esn(pct(resto, len(resp_p)), 1, False)}% |')
     L.append('')
 
     L.append('### ¿Conoce al operador del sistema en su sector?')
     L.append('')
     resp_o = [p for p in pri if lleno(p.get('operador_sector'))]
-    L.append(f'Respondieron {len(resp_o):,} fichas principales '
-             f'({pct(len(resp_o), total):.1f}%). El operador varía por sector; '
+    L.append(f'Respondieron {esn(len(resp_o), 0)} fichas principales '
+             f'({esn(pct(len(resp_o), total), 1, False)}%). El operador varía por sector; '
              'los más nombrados en cada uno:')
     L.append('')
     for sec in sorted({p['_sec'] for p in resp_o}):
         ops = Counter(norm(p['operador_sector']) for p in resp_o if p['_sec'] == sec)
-        L.append(f'**{sec}** ({sum(ops.values()):,} respuestas):')
+        L.append(f'**{sec}** ({esn(sum(ops.values()), 0)} respuestas):')
         L.append('')
         L.append('| Operador | Menciones | % del sector |')
         L.append('|---|---|---|')
         for k, n in ops.most_common(5):
-            L.append(f'| {k.title()} | {n:,} | {pct(n, sum(ops.values())):.1f}% |')
+            L.append(f'| {k.title()} | {esn(n, 0)} | {esn(pct(n, sum(ops.values())), 1, False)}% |')
         L.append('')
 
     # ── el sistema ──
@@ -286,17 +287,17 @@ def main():
              if lleno(p.get('anios_sistema')) and str(p['anios_sistema']).isdigit()]
     anios_c = Counter(anios)
     med = sorted(anios)[len(anios) // 2]
-    L.append(f'Respondieron {len(anios):,} fichas principales. La respuesta dominante es '
+    L.append(f'Respondieron {esn(len(anios), 0)} fichas principales. La respuesta dominante es '
              f'**{anios_c.most_common(1)[0][0]} años** '
-             f'({anios_c.most_common(1)[0][1]:,} fichas principales, '
-             f'{pct(anios_c.most_common(1)[0][1], len(anios)):.1f}%); '
-             f'mediana {med} años, promedio {sum(anios) / len(anios):.1f}, '
+             f'({esn(anios_c.most_common(1)[0][1], 0)} fichas principales, '
+             f'{esn(pct(anios_c.most_common(1)[0][1], len(anios)), 1, False)}%); '
+             f'mediana {med} años, promedio {esn(sum(anios) / len(anios), 1, False)}, '
              f'rango {min(anios)}–{max(anios)}.')
     L.append('')
     L.append('| Años declarados | Regantes | % |')
     L.append('|---|---|---|')
     for k, n in anios_c.most_common(8):
-        L.append(f'| {k} | {n:,} | {pct(n, len(anios)):.1f}% |')
+        L.append(f'| {k} | {esn(n, 0)} | {esn(pct(n, len(anios)), 1, False)}% |')
     L.append('')
 
     L.append('### ¿Cuántos km tiene el canal principal?')
@@ -305,14 +306,14 @@ def main():
            and re.fullmatch(r'\d+(\.\d+)?', str(p['km_canal']).strip())]
     kms_c = Counter(kms)
     moda_km, n_moda = kms_c.most_common(1)[0]
-    L.append(f'Respondieron {len(kms):,} fichas principales. **{n_moda:,} '
-             f'({pct(n_moda, len(kms)):.1f}%) responden {moda_km:g} km**, que es la '
+    L.append(f'Respondieron {esn(len(kms), 0)} fichas principales. **{esn(n_moda, 0)} '
+             f'({esn(pct(n_moda, len(kms)), 1, False)}%) responden {moda_km:g} km**, que es la '
              'longitud de referencia del canal principal.')
     L.append('')
     L.append('| Km declarados | Regantes | % |')
     L.append('|---|---|---|')
     for k, n in kms_c.most_common(8):
-        L.append(f'| {k:g} | {n:,} | {pct(n, len(kms)):.1f}% |')
+        L.append(f'| {k:g} | {esn(n, 0)} | {esn(pct(n, len(kms)), 1, False)}% |')
     L.append('')
 
     # ── capacitación ──
@@ -337,12 +338,12 @@ def main():
     L.append('')
     L.append('| Situación | Regantes | % |')
     L.append('|---|---|---|')
-    L.append(f'| No ha recibido pero SÍ quiere | **{no_pero_quiere:,}** | {pct(no_pero_quiere, len(ambos)):.1f}% |')
-    L.append(f'| Recibió y quiere más | {si_y_quiere:,} | {pct(si_y_quiere, len(ambos)):.1f}% |')
-    L.append(f'| No quiere | {len(ambos) - no_pero_quiere - si_y_quiere:,} | '
-             f'{pct(len(ambos) - no_pero_quiere - si_y_quiere, len(ambos)):.1f}% |')
+    L.append(f'| No ha recibido pero SÍ quiere | **{esn(no_pero_quiere, 0)}** | {esn(pct(no_pero_quiere, len(ambos)), 1, False)}% |')
+    L.append(f'| Recibió y quiere más | {esn(si_y_quiere, 0)} | {esn(pct(si_y_quiere, len(ambos)), 1, False)}% |')
+    L.append(f'| No quiere | {esn(len(ambos) - no_pero_quiere - si_y_quiere, 0)} | '
+             f'{esn(pct(len(ambos) - no_pero_quiere - si_y_quiere, len(ambos)), 1, False)}% |')
     L.append('')
-    L.append(f'**{no_pero_quiere:,} titulares nunca recibieron capacitación y la piden**: '
+    L.append(f'**{esn(no_pero_quiere, 0)} titulares nunca recibieron capacitación y la piden**: '
              'es la población objetivo directa de un plan de capacitación.')
     L.append('')
 
@@ -350,13 +351,13 @@ def main():
     L.append('')
     temas = [p['temas_capacitacion'] for p in pri if lleno(p.get('temas_capacitacion'))]
     cat = Counter(categoria_tema(t) for t in temas)
-    L.append(f'{len(temas):,} titulares indicaron temas (texto libre, agrupado por '
+    L.append(f'{esn(len(temas), 0)} titulares indicaron temas (texto libre, agrupado por '
              'palabra clave):')
     L.append('')
     L.append('| Categoría | Menciones | % |')
     L.append('|---|---|---|')
     for k, n in cat.most_common():
-        L.append(f'| {k} | {n:,} | {pct(n, len(temas)):.1f}% |')
+        L.append(f'| {k} | {esn(n, 0)} | {esn(pct(n, len(temas)), 1, False)}% |')
     L.append('')
     ejemplos = Counter(norm(t)[:60] for t in temas)
     L.append('Las 10 respuestas literales más frecuentes:')
@@ -364,7 +365,7 @@ def main():
     L.append('| Respuesta (normalizada) | Veces |')
     L.append('|---|---|')
     for k, n in ejemplos.most_common(10):
-        L.append(f'| {k.capitalize()} | {n:,} |')
+        L.append(f'| {k.capitalize()} | {esn(n, 0)} |')
     L.append('')
 
     # ── calidad ──
@@ -384,36 +385,36 @@ def main():
                           ('le_gustaria_cap', 'Le gustaría capacitación'),
                           ('temas_capacitacion', 'Temas deseados')]:
         n = sum(1 for p in pri if lleno(p.get(campo)))
-        L.append(f'| {titulo} | {n:,} | {pct(n, total):.1f}% |')
+        L.append(f'| {titulo} | {esn(n, 0)} | {esn(pct(n, total), 1, False)}% |')
     L.append('')
     L.append('La tasa de respuesta supera el 93% en todas las preguntas cerradas; '
              'solo los temas de capacitación (texto libre y opcional) bajan al '
-             f'{pct(len(temas), total):.0f}%.')
+             f'{esn(pct(len(temas), total), 0, False)}%.')
     L.append('')
 
     # ── resumen ejecutivo ──
     resumen = []
     resumen.append('## Resumen ejecutivo')
     resumen.append('')
-    resumen.append(f'- **{total:,} fichas principales** (una por titular entrevistado).')
-    resumen.append(f'- **{pct(presa["si"], presa["respondieron"]):.1f}% conoce el proyecto '
+    resumen.append(f'- **{esn(total, 0)} fichas principales** (una por titular entrevistado).')
+    resumen.append(f'- **{esn(pct(presa["si"], presa["respondieron"]), 1, False)}% conoce el proyecto '
                    'de la presa Río Porotog**; el desconocimiento se concentra en '
                    'comunidades puntuales (detalle en §1).')
-    resumen.append(f'- **{pct(correcto, len(resp_p)):.1f}% identifica por nombre al '
+    resumen.append(f'- **{esn(pct(correcto, len(resp_p)), 1, False)}% identifica por nombre al '
                    'presidente de la Junta** (José Joaquín Tipanluisa): el nivel de '
                    'conocimiento de la dirigencia es alto.')
     resumen.append(f'- La directiva se elige por **asamblea general** según el '
-                   f'{pct(c.get("Asamblea general", 0), len(resp)):.1f}% — '
+                   f'{esn(pct(c.get("Asamblea general", 0), len(resp)), 1, False)}% — '
                    'gobernanza comunitaria consolidada.')
     resumen.append(f'- El sistema tiene **~60 años** según la mayoría y el canal '
                    f'principal **{moda_km:g} km**; las respuestas convergen, señal de '
                    'memoria colectiva consistente.')
-    resumen.append(f'- **{pct(cap["si"], cap["respondieron"]):.1f}% ha recibido '
-                   f'capacitación** y **{pct(gusta["si"], gusta["respondieron"]):.1f}% '
-                   f'quiere recibirla**. Hay **{no_pero_quiere:,} titulares** que nunca '
+    resumen.append(f'- **{esn(pct(cap["si"], cap["respondieron"]), 1, False)}% ha recibido '
+                   f'capacitación** y **{esn(pct(gusta["si"], gusta["respondieron"]), 1, False)}% '
+                   f'quiere recibirla**. Hay **{esn(no_pero_quiere, 0)} titulares** que nunca '
                    'la recibieron y la piden.')
     resumen.append(f'- El tema más pedido es **{cat.most_common(1)[0][0].lower()}** '
-                   f'({pct(cat.most_common(1)[0][1], len(temas)):.0f}% de las menciones).')
+                   f'({esn(pct(cat.most_common(1)[0][1], len(temas)), 0, False)}% de las menciones).')
     resumen.append('')
     L[idx_resumen:idx_resumen] = resumen
 
@@ -583,9 +584,9 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {total:,} fichas principales | presa {pct(presa["si"], presa["respondieron"]):.1f}% | '
-          f'presidente {pct(correcto, len(resp_p)):.1f}% | '
-          f'demanda de capacitación no atendida: {no_pero_quiere:,}')
+    print(f'\n  {esn(total, 0)} fichas principales | presa {esn(pct(presa["si"], presa["respondieron"]), 1, False)}% | '
+          f'presidente {esn(pct(correcto, len(resp_p)), 1, False)}% | '
+          f'demanda de capacitación no atendida: {esn(no_pero_quiere, 0)}')
 
 
 if __name__ == '__main__':

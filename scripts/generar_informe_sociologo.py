@@ -85,6 +85,7 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica  # noqa: E402
 import informe_estilo as E  # noqa: E402
+from informe_estilo import esn
 
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 GEO = os.path.join(BASE, 'public', 'geo')
@@ -163,15 +164,15 @@ def pct_o_conteo(a, b):
 
 
 def f0(n):
-    return f'{n:,.0f}'
+    return f'{esn(n, 0)}'
 
 
 def f1(n):
-    return f'{n:,.1f}'
+    return f'{esn(n, 1)}'
 
 
 def f2(n):
-    return f'{n:,.2f}'
+    return f'{esn(n, 2)}'
 
 
 # ─── Catálogo oficial de comunidades ─────────────────────────────────────────
@@ -545,8 +546,8 @@ def verificar(comunidades, sup, caudal, fichas):
 
     d = sum(c['sup_declarada'] for c in comunidades)
     if abs(d - tot['superficie_declarada_ha']) > 0.5:
-        avisos.append(f"superficie declarada: cuadros {d:,.2f} ≠ fuente "
-                      f"{tot['superficie_declarada_ha']:,.2f}")
+        avisos.append(f"superficie declarada: cuadros {esn(d, 2)} ≠ fuente "
+                      f"{esn(tot['superficie_declarada_ha'], 2)}")
 
     nf = sum(c['fichas'] for c in comunidades)
     if nf != tot['fichas'] - sum(1 for p in fichas if p['_key'] == '(sin comunidad)'):
@@ -557,8 +558,8 @@ def verificar(comunidades, sup, caudal, fichas):
                  if not c['caudal_heredado_de'])
     q_ref = caudal['totales']['caudal_comunidades_ls']
     if abs(q_sect - q_ref) > 0.1:
-        avisos.append(f"caudal de comunidades: cuadros {q_sect:,.2f} ≠ fuente "
-                      f"{q_ref:,.2f}")
+        avisos.append(f"caudal de comunidades: cuadros {esn(q_sect, 2)} ≠ fuente "
+                      f"{esn(q_ref, 2)}")
 
     sin_caudal = [c['oficial'] for c in comunidades if c['caudal_ls'] is None]
     if sin_caudal:
@@ -572,11 +573,11 @@ def verificar(comunidades, sup, caudal, fichas):
         print(f'⚠ NO CUADRA — {a}')
     if not avisos:
         print(f"✔ Cuadre contra fuentes únicas: declarada "
-              f"{tot['superficie_declarada_ha']:,.2f} ha · "
-              f"{tot['fichas']:,} fichas · {tot['regantes']:,} regantes · "
-              f"caudal {caudal['totales']['caudal_sistema_ls']:,.2f} l/s "
-              f"({q_ref:,.2f} de comunidades + "
-              f"{caudal['totales']['caudal_individual_ls']:,.2f} individuales)")
+              f"{esn(tot['superficie_declarada_ha'], 2)} ha · "
+              f"{esn(tot['fichas'], 0)} fichas · {esn(tot['regantes'], 0)} regantes · "
+              f"caudal {esn(caudal['totales']['caudal_sistema_ls'], 2)} l/s "
+              f"({esn(q_ref, 2)} de comunidades + "
+              f"{esn(caudal['totales']['caudal_individual_ls'], 2)} individuales)")
     return avisos
 
 
@@ -944,7 +945,7 @@ def generar_mapas(catalogo, pdf_ruta=None):
                         title='Anexo cartográfico — Informe por Comunidad',
                         author=E.PIE_INSTITUCION)
         mb = os.path.getsize(pdf_ruta) / 1e6
-        print(f'✔ {os.path.relpath(pdf_ruta, BASE)} ({mb:.1f} MB, 300 dpi)')
+        print(f'✔ {os.path.relpath(pdf_ruta, BASE)} ({esn(mb, 1, False)} MB, 300 dpi)')
     return mapas
 
 
@@ -963,7 +964,7 @@ def barra_pct(p):
     cifra va a la izquierda y la barra al lado, con los mismos colores."""
     return ('<div style="display:flex;align-items:center;gap:6px;min-width:110px">'
             f'<span style="width:44px;text-align:right;font-size:8.5pt;'
-            f'color:#24405e;flex:none">{p:,.1f}%</span>'
+            f'color:#24405e;flex:none">{esn(p, 1)}%</span>'
             f'<div class="barra" style="flex:1">'
             f'<span style="width:{min(p, 100):.0f}%"></span></div></div>')
 
@@ -994,7 +995,7 @@ class Cuadro:
 
     def _celda_txt(self, i, v):
         if i in self.barras and isinstance(v, float):
-            return f'{v:,.1f} %'
+            return f'{esn(v, 1)} %'
         return str(v)
 
     def html(self):

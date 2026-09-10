@@ -37,6 +37,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -241,56 +242,56 @@ def main():
                  'Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, N, pendientes))
     A(E.kpis([
-        (f'{ha_r:,.0f} ha', 'bajo riego'),
-        (f'{pct(a_riego, a_total):.1f}%', 'del área del sistema'),
-        (f'{tot_c["caudal_sistema_ls"]:,.0f} l/s', 'caudal del sistema'),
-        (f'{pct(tecnificada, sup_total_met):.1f}%', 'superficie tecnificada'),
+        (f'{esn(ha_r, 0)} ha', 'bajo riego'),
+        (f'{esn(pct(a_riego, a_total), 1, False)}%', 'del área del sistema'),
+        (f'{esn(tot_c["caudal_sistema_ls"], 0)} l/s', 'caudal del sistema'),
+        (f'{esn(pct(tecnificada, sup_total_met), 1, False)}%', 'superficie tecnificada'),
     ]))
 
     A('<h2>1. Superficie del sistema y superficie bajo riego</h2>')
-    A(f'<p>El padrón cubre <b>{SUP["predios_catastrales"]:,} predios</b> que '
-      f'suman <b>{ha_t:,.1f} hectáreas</b>, de las cuales <b>{ha_r:,.1f} ha '
-      f'({pct(a_riego, a_total):.1f} %) cuentan con riego</b>. El resto '
+    A(f'<p>El padrón cubre <b>{esn(SUP["predios_catastrales"], 0)} predios</b> que '
+      f'suman <b>{esn(ha_t, 1)} hectáreas</b>, de las cuales <b>{esn(ha_r, 1)} ha '
+      f'({esn(pct(a_riego, a_total), 1, False)} %) cuentan con riego</b>. El resto '
       # «secano» se retiró de toda la interfaz web por pedido del cliente
       # (12-ago-2026) y los informes usan el mismo término: «sin riego».
       'corresponde a áreas sin dotación: pastos sin riego, bosque o terreno no '
       'cultivable dentro del mismo predio.</p>')
     A('<p>Esta superficie se mide sumando cada predio <b>una sola vez</b>, según '
       'el polígono del catastro municipal. Lo que los titulares declaran en la '
-      f'entrevista suma <b>{ha_dec:,.1f} ha</b>: en los {SUP["predios_compartidos"]} '
+      f'entrevista suma <b>{esn(ha_dec, 1)} ha</b>: en los {SUP["predios_compartidos"]} '
       'predios de herederos cada titular declara el terreno familiar completo, y '
       'esa cifra se conserva como dato social. Las dos mediciones describen el '
       'mismo territorio y no se suman entre sí.</p>')
     b64 = G.g_donut('riego-uso-suelo',
                     [('Con riego', ha_r, '#3b82f6'),
                      ('Sin riego', SUP['sin_riego_catastral_ha'], '#f59e0b')],
-                    lambda v: f'{v:,.2f} ha', centro=f'{ha_t:,.2f} ha')
+                    lambda v: f'{esn(v, 2)} ha', centro=f'{esn(ha_t, 2)} ha')
     A(E.figura(b64, 'Uso del suelo: con riego y sin riego (ha)',
-               f'Medición catastral, {ha_t:,.2f} ha en {SUP["predios_catastrales"]:,} '
+               f'Medición catastral, {esn(ha_t, 2)} ha en {esn(SUP["predios_catastrales"], 0)} '
                'predios; riego ajustado al polígono.'))
-    A(f'<p>El predio catastral tiene una superficie <b>mediana de {med_area:,.0f} m²</b> '
-      f'({len(areas):,} predios distintos, cada uno contado una sola vez aunque '
+    A(f'<p>El predio catastral tiene una superficie <b>mediana de {esn(med_area, 0)} m²</b> '
+      f'({esn(len(areas), 0)} predios distintos, cada uno contado una sola vez aunque '
       'tenga varias fichas). La distribución muestra una estructura de '
       '<b>minifundio</b>:</p>')
     A('<table class="evitar-corte"><tr><th>Tamaño del predio (catastral)</th>'
       '<th class="n">Predios</th><th>Peso</th></tr>')
     for et, n in dist_area:
-        A(f'<tr><td>{et}</td><td class="n">{n:,}</td><td>{E.barra(pct(n, len(areas)))}</td></tr>')
+        A(f'<tr><td>{et}</td><td class="n">{esn(n, 0)}</td><td>{E.barra(pct(n, len(areas)))}</td></tr>')
     A('</table>')
     if dist_area != W['tamanos']:
         print('  ⚠ tamaños: el capítulo y el tablero no cuentan igual')
     b64 = G.g_barras_h('riego-tamanos', dist_area, lambda i, n: '#0ea5e9', alto=3.4)
-    A(E.figura(b64, 'Tamaño de los predios', f'Predios catastrales, {len(areas):,}.'))
+    A(E.figura(b64, 'Tamaño de los predios', f'Predios catastrales, {esn(len(areas), 0)}.'))
     A('<p>Esta estructura condiciona cualquier intervención: el sistema atiende a '
       'una mayoría de productores con parcelas pequeñas, para quienes el acceso al '
       'agua es determinante de la viabilidad productiva.</p>')
 
     A('<h2>2. Caudal del sistema</h2>')
-    A(f'<p>El sistema entrega <b>{tot_c["caudal_sistema_ls"]:,.2f} l/s</b>, '
+    A(f'<p>El sistema entrega <b>{esn(tot_c["caudal_sistema_ls"], 2)} l/s</b>, '
       f'resultado de sumar el caudal de las <b>{len(caudal["comunidades"])} '
-      f'comunidades</b> ({tot_c["caudal_comunidades_ls"]:,.2f} l/s) y las '
+      f'comunidades</b> ({esn(tot_c["caudal_comunidades_ls"], 2)} l/s) y las '
       f'{tot_c["fichas_individuales"]} concesiones individuales '
-      f'({tot_c["caudal_individual_ls"]:,.2f} l/s).</p>')
+      f'({esn(tot_c["caudal_individual_ls"], 2)} l/s).</p>')
     A('<p>El caudal se contabiliza <b>una sola vez por comunidad</b>: los '
       'técnicos anotaron en cada ficha el caudal que recibe su comunidad, de modo '
       'que el mismo valor se repite en todas las fichas de esa comunidad.</p>')
@@ -310,11 +311,11 @@ def main():
     A('<table><tr><th>Comunidad</th><th class="n">Caudal (l/s)</th>'
       '<th class="n">Fichas</th><th>Origen del dato</th></tr>')
     for com, d in filas_c:
-        A(f'<tr><td>{com}</td><td class="n">{d["caudal_ls"]:,.2f}</td>'
-          f'<td class="n">{d["fichas"]:,}</td><td>{d["origen"].capitalize()}</td></tr>')
+        A(f'<tr><td>{com}</td><td class="n">{esn(d["caudal_ls"], 2)}</td>'
+          f'<td class="n">{esn(d["fichas"], 0)}</td><td>{d["origen"].capitalize()}</td></tr>')
     A(f'<tr class="dest"><td><b>Total</b></td><td class="n">'
-      f'{sum(d["caudal_ls"] for _, d in filas_c):,.2f}</td>'
-      f'<td class="n">{sum(d["fichas"] for _, d in filas_c):,}</td><td></td></tr>')
+      f'{esn(sum(d["caudal_ls"] for _, d in filas_c), 2)}</td>'
+      f'<td class="n">{esn(sum(d["fichas"] for _, d in filas_c), 0)}</td><td></td></tr>')
     A('</table>')
     heredadas = caudal.get('caudal_heredado', {})
     if heredadas:
@@ -326,17 +327,17 @@ def main():
     A('<table class="evitar-corte"><tr><th>Frecuencia</th><th class="n">Predios</th>'
       '<th>Peso</th></tr>')
     for k, n in frec.most_common():
-        A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>{k}</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(pct(n, sum(frec.values())))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('riego-frecuencia', frec.most_common(),
                        lambda i, n: G.PIE_COLORS[i % 8])
     A(E.figura(b64, 'Frecuencia de riego',
-               f'Fichas principales con el dato, {sum(frec.values()):,}.'))
+               f'Fichas principales con el dato, {esn(sum(frec.values()), 0)}.'))
     A(f'<p>El turno <b>semanal</b> es el régimen dominante '
-      f'({pct(frec.get("Semanal", 0), sum(frec.values())):.1f} %). La mediana es de '
-      f'<b>{st.median(dias_ok):.0f} días de riego</b> por turno y '
-      f'<b>{st.median(horas_ok):.0f} horas</b> por jornada de riego.</p>')
+      f'({esn(pct(frec.get("Semanal", 0), sum(frec.values())), 1, False)} %). La mediana es de '
+      f'<b>{esn(st.median(dias_ok), 0, False)} días de riego</b> por turno y '
+      f'<b>{esn(st.median(horas_ok), 0, False)} horas</b> por jornada de riego.</p>')
 
     A('<h2>4. Tecnificación del riego</h2>')
     A('<p>Se midió la superficie regada por cada método, ponderando el área de '
@@ -346,15 +347,15 @@ def main():
     A('<table class="evitar-corte"><tr><th>Método</th><th class="n">Superficie (ha)</th>'
       '<th class="n">Predios donde predomina</th><th>Peso en superficie</th></tr>')
     for met in ('Aspersión', 'Gravedad', 'Goteo'):
-        A(f'<tr><td>{met}</td><td class="n">{sup_met[met] / 10000:,.1f}</td>'
-          f'<td class="n">{pred.get(met, 0):,}</td>'
+        A(f'<tr><td>{met}</td><td class="n">{esn(sup_met[met] / 10000, 1)}</td>'
+          f'<td class="n">{esn(pred.get(met, 0), 0)}</td>'
           f'<td>{E.barra(pct(sup_met[met], sup_total_met))}</td></tr>')
     A('</table>')
-    A(f'<p>El <b>{pct(tecnificada, sup_total_met):.1f} % de la superficie regada '
-      f'ya usa métodos tecnificados</b> (aspersión o goteo): {tecnificada / 10000:,.1f} ha '
-      f'de {sup_total_met / 10000:,.1f} ha. La aspersión es el método dominante del '
-      f'sistema, mientras el goteo apenas alcanza {sup_met["Goteo"] / 10000:,.1f} ha '
-      f'({pct(sup_met["Goteo"], sup_total_met):.1f} %) y representa el mayor margen '
+    A(f'<p>El <b>{esn(pct(tecnificada, sup_total_met), 1, False)} % de la superficie regada '
+      f'ya usa métodos tecnificados</b> (aspersión o goteo): {esn(tecnificada / 10000, 1)} ha '
+      f'de {esn(sup_total_met / 10000, 1)} ha. La aspersión es el método dominante del '
+      f'sistema, mientras el goteo apenas alcanza {esn(sup_met["Goteo"] / 10000, 1)} ha '
+      f'({esn(pct(sup_met["Goteo"], sup_total_met), 1, False)} %) y representa el mayor margen '
       'de mejora en eficiencia.</p>')
     met_web = {n_: v for n_, v, _ in W['metodo']}
     A(f'<p>Contado por ficha y no por hectárea —el promedio simple del porcentaje '
@@ -364,36 +365,36 @@ def main():
     b64 = G.g_donut('riego-metodo', [(n_, v, c) for n_, v, c in W['metodo']],
                     lambda v: f'{v} %')
     A(E.figura(b64, 'Método de riego (promedio %)',
-               f'Todas las fichas, {W["n_todas"]:,}; promedio simple del porcentaje '
+               f'Todas las fichas, {esn(W["n_todas"], 0)}; promedio simple del porcentaje '
                'declarado en cada ficha, redondeado a enteros.'))
     A('<h3>Tecnificación por sector</h3>')
     A('<table class="evitar-corte"><tr><th>Sector</th>'
       '<th class="n">Superficie regada (ha)</th><th class="n">Tecnificada (ha)</th>'
       '<th>% tecnificado</th></tr>')
     for sec, (s_tec, s_tot, p) in sorted(tec_sector.items()):
-        A(f'<tr><td>{sec}</td><td class="n">{s_tot:,.1f}</td>'
-          f'<td class="n">{s_tec:,.1f}</td><td>{E.barra(p)}</td></tr>')
+        A(f'<tr><td>{sec}</td><td class="n">{esn(s_tot, 1)}</td>'
+          f'<td class="n">{esn(s_tec, 1)}</td><td>{E.barra(p)}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('riego-tecnificacion-sector',
                        [(sec, round(p, 1)) for sec, (_, _, p) in sorted(tec_sector.items())],
                        [COLOR_SECTOR.get(sec, '#3b82f6') for sec in sorted(tec_sector)],
-                       fmt=lambda v: f'{v:.1f} %')
+                       fmt=lambda v: f'{esn(v, 1, False)} %')
     A(E.figura(b64, 'Riego tecnificado por sector (% de la superficie regada)',
                'Fichas principales; superficie ponderada por el porcentaje '
                'declarado de cada método.'))
 
     A('<h2>5. Tarifas y reservorios</h2>')
     A(f'<p>La tarifa <b>fija mensual</b> es la modalidad más extendida '
-      f'({len(t_mes):,} predios), con una <b>mediana de {st.median(t_mes):,.2f} USD</b>. '
-      f'La modalidad <b>anual</b> ({len(t_anio):,} predios) tiene una mediana de '
-      f'<b>{st.median(t_anio):,.2f} USD</b>.</p>')
+      f'({esn(len(t_mes), 0)} predios), con una <b>mediana de {esn(st.median(t_mes), 2)} USD</b>. '
+      f'La modalidad <b>anual</b> ({esn(len(t_anio), 0)} predios) tiene una mediana de '
+      f'<b>{esn(st.median(t_anio), 2)} USD</b>.</p>')
     A('<p>Se reporta la mediana —el valor central— porque describe lo que paga '
       'efectivamente la mayoría; unos pocos registros altos desplazarían el '
       'promedio hasta una cifra que no representa a ningún titular.</p>')
     if anomalas:
         A(f'<p>Las {len(anomalas)} fichas del fraccionamiento {TARIFA_ANOMALA.title()} '
           'registran valores de '
-          + ' y '.join(f'{v:,.0f}' for v, _ in val_anom.most_common(2))
+          + ' y '.join(f'{esn(v, 0)}' for v, _ in val_anom.most_common(2))
           + ' USD que corresponden a otro concepto del proceso de fraccionamiento, '
           'no a la tarifa de riego, y no entran en este cálculo.</p>')
     A('<h3>Reservorios</h3>')
@@ -401,31 +402,31 @@ def main():
       '<th class="n">Predios</th><th>Peso</th></tr>')
     for k, n in reserv.most_common():
         et = {'No': 'Sin reservorio'}.get(k, f'Reservorio {k.lower()}')
-        A(f'<tr><td>{et}</td><td class="n">{n:,}</td><td>{E.barra(pct(n, n_res))}</td></tr>')
+        A(f'<tr><td>{et}</td><td class="n">{esn(n, 0)}</td><td>{E.barra(pct(n, n_res))}</td></tr>')
     A('</table>')
     b64 = G.g_donut('riego-reservorios',
                     [({'No': 'Sin reservorio'}.get(k, f'Reservorio {k.lower()}'), n,
                       G.PIE_COLORS[i % 8]) for i, (k, n) in enumerate(reserv.most_common())],
-                    G.fnum, centro=f'{n_res:,}')
-    A(E.figura(b64, 'Reservorios', f'Fichas principales con el dato, {n_res:,}.'))
-    A(f'<p>El <b>{pct(reserv.get("Comunitario", 0), n_res):.1f} %</b> de los predios '
+                    G.fnum, centro=f'{esn(n_res, 0)}')
+    A(E.figura(b64, 'Reservorios', f'Fichas principales con el dato, {esn(n_res, 0)}.'))
+    A(f'<p>El <b>{esn(pct(reserv.get("Comunitario", 0), n_res), 1, False)} %</b> de los predios '
       'se sirve de un <b>reservorio comunitario</b>, lo que confirma el carácter '
       'colectivo de la infraestructura de almacenamiento: la gestión del agua no '
       'es predio a predio sino comunitaria.</p>')
 
     A('<h2>6. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li>El padrón registra <b>{ha_t:,.0f} ha</b>, de las cuales '
-      f'<b>{ha_r:,.0f} ha ({pct(a_riego, a_total):.0f} %) tienen riego</b>.</li>')
+    A(f'<li>El padrón registra <b>{esn(ha_t, 0)} ha</b>, de las cuales '
+      f'<b>{esn(ha_r, 0)} ha ({esn(pct(a_riego, a_total), 0, False)} %) tienen riego</b>.</li>')
     A(f'<li>Predomina el <b>minifundio</b>: la mitad de los predios no supera los '
-      f'{med_area:,.0f} m².</li>')
-    A(f'<li>La <b>tecnificación alcanza el {pct(tecnificada, sup_total_met):.1f} %</b> '
+      f'{esn(med_area, 0)} m².</li>')
+    A(f'<li>La <b>tecnificación alcanza el {esn(pct(tecnificada, sup_total_met), 1, False)} %</b> '
       f'de la superficie regada, concentrada en aspersión; el goteo, con '
-      f'{pct(sup_met["Goteo"], sup_total_met):.1f} %, es el margen de mejora.</li>')
+      f'{esn(pct(sup_met["Goteo"], sup_total_met), 1, False)} %, es el margen de mejora.</li>')
     A(f'<li>El régimen es <b>semanal</b> para el '
-      f'{pct(frec.get("Semanal", 0), sum(frec.values())):.0f} % y el almacenamiento '
-      f'es <b>comunitario</b> para el {pct(reserv.get("Comunitario", 0), n_res):.0f} %.</li>')
-    A(f'<li>La tarifa mediana es de <b>{st.median(t_mes):,.2f} USD mensuales</b>, '
+      f'{esn(pct(frec.get("Semanal", 0), sum(frec.values())), 0, False)} % y el almacenamiento '
+      f'es <b>comunitario</b> para el {esn(pct(reserv.get("Comunitario", 0), n_res), 0, False)} %.</li>')
+    A(f'<li>La tarifa mediana es de <b>{esn(st.median(t_mes), 2)} USD mensuales</b>, '
       'una contribución baja que sostiene la operación del sistema.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
@@ -498,9 +499,9 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {ha_r:,.0f} ha bajo riego ({pct(a_riego, a_total):.1f}%) | '
-          f'tecnificado {pct(tecnificada, sup_total_met):.1f}% | '
-          f'tarifa mediana {st.median(t_mes):,.2f} USD/mes')
+    print(f'\n  {esn(ha_r, 0)} ha bajo riego ({esn(pct(a_riego, a_total), 1, False)}%) | '
+          f'tecnificado {esn(pct(tecnificada, sup_total_met), 1, False)}% | '
+          f'tarifa mediana {esn(st.median(t_mes), 2)} USD/mes')
 
 
 if __name__ == '__main__':

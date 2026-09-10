@@ -38,6 +38,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
 import informe_graficos as G  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -166,10 +167,10 @@ def main():
                  'Personas, predios y fichas · Capítulo del informe técnico'))
     A(E.aviso_corte(corte_txt, len(pri), estados.get('pendiente_produccion', 0)))
     A(E.kpis([
-        (f'{N:,}', 'fichas de predio'),
-        (f'{len(pri):,}', 'fichas principales'),
-        (f'{personas:,}', 'personas en el padrón'),
-        (f'{pct(multi, personas):.0f}%', 'con más de un predio'),
+        (f'{esn(N, 0)}', 'fichas de predio'),
+        (f'{esn(len(pri), 0)}', 'fichas principales'),
+        (f'{esn(personas, 0)}', 'personas en el padrón'),
+        (f'{esn(pct(multi, personas), 0, False)}%', 'con más de un predio'),
     ]))
 
     A('<h2>1. Tres cifras que no son lo mismo</h2>')
@@ -178,15 +179,15 @@ def main():
       'que conviene fijarlos:</p>')
     A('<table class="evitar-corte"><tr><th>Cifra</th><th class="n">Valor</th>'
       '<th>Qué responde</th></tr>')
-    A(f'<tr><td><b>Fichas de predio</b></td><td class="n">{N:,}</td>'
+    A(f'<tr><td><b>Fichas de predio</b></td><td class="n">{esn(N, 0)}</td>'
       '<td>¿Cuántas parcelas se levantaron? Es la unidad de la producción y del catastro</td></tr>')
-    A(f'<tr class="dest"><td><b>Fichas principales</b></td><td class="n">{len(pri):,}</td>'
+    A(f'<tr class="dest"><td><b>Fichas principales</b></td><td class="n">{esn(len(pri), 0)}</td>'
       '<td>¿A cuántas personas se aplicó la encuesta? Es la unidad de los capítulos sociales</td></tr>')
-    A(f'<tr><td><b>Personas del padrón</b></td><td class="n">{personas:,}</td>'
+    A(f'<tr><td><b>Personas del padrón</b></td><td class="n">{esn(personas, 0)}</td>'
       '<td>¿Cuántos titulares distintos hay? Incluye a quienes solo constan como predio adicional</td></tr>')
     A('</table>')
     A(f'<p>La diferencia entre las dos primeras se explica por los '
-      f'<b>{len(hij):,} predios adicionales</b>: un mismo titular puede tener varias '
+      f'<b>{esn(len(hij), 0)} predios adicionales</b>: un mismo titular puede tener varias '
       'parcelas y se le entrevista una sola vez. La tercera cifra incorpora además '
       f'<b>{len(solo_adic)} personas</b> que figuran únicamente como titulares de un '
       'predio adicional declarado por otro y que no tienen ficha propia.</p>')
@@ -198,8 +199,8 @@ def main():
     b64 = G.g_donut('estructura-composicion',
                     [('Fichas principales', len(pri), '#3b82f6'),
                      ('Fichas adicionales', len(hij), '#10b981')],
-                    G.fnum, centro=f'{N:,}')
-    A(E.figura(b64, 'Composición del padrón', f'Fichas de predio, {N:,}.'))
+                    G.fnum, centro=f'{esn(N, 0)}')
+    A(E.figura(b64, 'Composición del padrón', f'Fichas de predio, {esn(N, 0)}.'))
 
     A('<h2>2. Cuántos predios tiene cada titular</h2>')
     A('<table class="evitar-corte"><tr><th>Predios por titular</th>'
@@ -208,18 +209,18 @@ def main():
         if k > 6:
             continue
         A(f'<tr><td>{k} predio{"s" if k > 1 else ""}</td>'
-          f'<td class="n">{dist[k]:,}</td><td>{E.barra(pct(dist[k], personas))}</td></tr>')
+          f'<td class="n">{esn(dist[k], 0)}</td><td>{E.barra(pct(dist[k], personas))}</td></tr>')
     mas = sum(v for k, v in dist.items() if k > 6)
-    A(f'<tr><td>7 o más</td><td class="n">{mas:,}</td>'
+    A(f'<tr><td>7 o más</td><td class="n">{esn(mas, 0)}</td>'
       f'<td>{E.barra(pct(mas, personas))}</td></tr>')
     A('</table>')
     b64 = G.g_barras_v('estructura-predios-titular',
                        [(f'{k}', dist[k]) for k in sorted(dist) if k <= 6] +
                        [('7 o más', mas)],
                        lambda i, n: '#3b82f6')
-    A(E.figura(b64, 'Predios por titular', f'Titulares del padrón, {personas:,}.'))
-    A(f'<p>El <b>{pct(dist[1], personas):.1f} % de los titulares tiene un solo '
-      f'predio</b>. El resto —{multi:,} personas— posee dos o más parcelas, con un '
+    A(E.figura(b64, 'Predios por titular', f'Titulares del padrón, {esn(personas, 0)}.'))
+    A(f'<p>El <b>{esn(pct(dist[1], personas), 1, False)} % de los titulares tiene un solo '
+      f'predio</b>. El resto —{esn(multi, 0)} personas— posee dos o más parcelas, con un '
       f'máximo de {max(dist)} predios en un mismo titular. Esta dispersión explica '
       'por qué el número de fichas totales supera al de principales y por qué el registro de '
       'predios adicionales fue necesario.</p>')
@@ -231,47 +232,47 @@ def main():
       'separado para los titulares colectivos y para las personas naturales.</p>')
     A('<h3>Titulares colectivos</h3>')
     A(f'<p><b>{len(colectivos)} titulares</b> del padrón son organizaciones —comunas, '
-      f'comités, asociaciones, haciendas o empresas— y reúnen <b>{sup_col / 10000:,.1f} '
-      f'ha, el {pct(sup_col, sup_tot):.1f} % de la superficie</b>:</p>')
+      f'comités, asociaciones, haciendas o empresas— y reúnen <b>{esn(sup_col / 10000, 1)} '
+      f'ha, el {esn(pct(sup_col, sup_tot), 1, False)} % de la superficie</b>:</p>')
     A('<table class="evitar-corte"><tr><th>Titular colectivo</th>'
       '<th class="n">Superficie (ha)</th></tr>')
     for s, k in top_col:
         v = grupos[k][0]
         nom = f"{v.get('apellidos') or ''} {v.get('nombres') or ''}".strip()
-        A(f'<tr><td>{nom[:52]}</td><td class="n">{s / 10000:,.1f}</td></tr>')
+        A(f'<tr><td>{nom[:52]}</td><td class="n">{esn(s / 10000, 1)}</td></tr>')
     A('</table>')
     A('<h3>Personas naturales</h3>')
-    A(f'<p>Excluidos los titulares colectivos, quedan <b>{len(naturales):,} personas '
-      f'naturales</b> con <b>{sup_nat / 10000:,.1f} ha</b>. Su distribución:</p>')
+    A(f'<p>Excluidos los titulares colectivos, quedan <b>{esn(len(naturales), 0)} personas '
+      f'naturales</b> con <b>{esn(sup_nat / 10000, 1)} ha</b>. Su distribución:</p>')
     A('<table class="evitar-corte"><tr><th>Tramo</th><th class="n">Personas</th>'
       '<th>Superficie que concentran</th></tr>')
     for p in (1, 5, 10, 25, 50):
         n, c = concentra(naturales, p)
-        A(f'<tr><td>El {p} % con más tierra</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>El {p} % con más tierra</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(c)}</td></tr>')
     A('</table>')
     n10, c10 = concentra(naturales, 10)
     A(f'<p>Entre personas naturales la concentración sigue siendo alta: el '
-      f'<b>{10} % con más tierra reúne el {c10:.1f} %</b> de la superficie privada. '
+      f'<b>{10} % con más tierra reúne el {esn(c10, 1, False)} %</b> de la superficie privada. '
       'Coherente con el minifundio descrito en el capítulo del predio: la mayoría '
       'de los titulares trabaja parcelas pequeñas mientras unos pocos concentran '
       'las extensiones mayores.</p>')
 
     A('<h2>4. Estado del levantamiento</h2>')
-    A(f'<p>De los <b>{len(hij):,} predios adicionales</b> registrados:</p>')
+    A(f'<p>De los <b>{esn(len(hij), 0)} predios adicionales</b> registrados:</p>')
     A('<table class="evitar-corte"><tr><th>Estado</th><th class="n">Predios</th>'
       '<th>Peso</th></tr>')
     ET = {'completada': 'Con producción levantada',
           'pendiente_produccion': 'Pendiente de levantar la producción',
           'en_revision': 'En revisión'}
     for k, n in estados.most_common():
-        A(f'<tr><td>{ET.get(k, k)}</td><td class="n">{n:,}</td>'
+        A(f'<tr><td>{ET.get(k, k)}</td><td class="n">{esn(n, 0)}</td>'
           f'<td>{E.barra(pct(n, len(hij)))}</td></tr>')
     A('</table>')
     pend = estados.get('pendiente_produccion', 0)
     if pend:
-        A(f'<p>Quedan <b>{pend:,} predios adicionales</b> por completar '
-          f'({pct(pend, len(hij)):.1f} % de los adicionales). Es el trabajo de campo '
+        A(f'<p>Quedan <b>{esn(pend, 0)} predios adicionales</b> por completar '
+          f'({esn(pct(pend, len(hij)), 1, False)} % de los adicionales). Es el trabajo de campo '
           'pendiente a la fecha de corte y la razón por la que las cifras de este '
           'informe son provisionales.</p>')
     else:
@@ -280,26 +281,26 @@ def main():
         A('<p>No queda ningún predio adicional por completar: <b>el levantamiento '
           'de campo está cerrado</b>. Las cifras solo cambian con las depuraciones '
           'de gabinete, y por eso se citan siempre con su fecha de corte.</p>')
-    A(f'<p>Adicionalmente, <b>{obs:,} fichas</b> incluyen observaciones escritas por '
+    A(f'<p>Adicionalmente, <b>{esn(obs, 0)} fichas</b> incluyen observaciones escritas por '
       'el técnico, una fuente cualitativa que documenta casos particulares del '
       'levantamiento.</p>')
 
     A('<h2>5. Conclusiones</h2>')
     A('<ul>')
-    A(f'<li>El padrón registra <b>{N:,} predios</b> pertenecientes a '
-      f'<b>{personas:,} titulares</b>, de los cuales {len(pri):,} fueron '
+    A(f'<li>El padrón registra <b>{esn(N, 0)} predios</b> pertenecientes a '
+      f'<b>{esn(personas, 0)} titulares</b>, de los cuales {esn(len(pri), 0)} fueron '
       'entrevistados.</li>')
-    A(f'<li><b>{pct(multi, personas):.0f} % de los titulares posee más de un '
+    A(f'<li><b>{esn(pct(multi, personas), 0, False)} % de los titulares posee más de un '
       'predio</b>, lo que hace imprescindible distinguir entre contar personas y '
       'contar parcelas.</li>')
     A(f'<li><b>{len(colectivos)} titulares colectivos</b> (comunas, comités, '
-      f'haciendas) concentran el {pct(sup_col, sup_tot):.1f} % de la superficie: '
+      f'haciendas) concentran el {esn(pct(sup_col, sup_tot), 1, False)} % de la superficie: '
       'la propiedad colectiva es una característica estructural del sistema, no '
       'una anomalía.</li>')
-    A(f'<li>Entre personas naturales, el 10 % mayor reúne el {c10:.0f} % de la '
+    A(f'<li>Entre personas naturales, el 10 % mayor reúne el {esn(c10, 0, False)} % de la '
       'tierra privada.</li>')
     if pend:
-        A(f'<li>Restan <b>{pend:,} predios adicionales</b> por completar para '
+        A(f'<li>Restan <b>{esn(pend, 0)} predios adicionales</b> por completar para '
           'cerrar el levantamiento.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
@@ -356,8 +357,8 @@ def main():
     from excel_compat import aplicar_formatos
     aplicar_formatos(XLSX)
     print(f'  excel   : {os.path.relpath(XLSX, BASE)}')
-    print(f'\n  {N:,} fichas | {personas:,} personas | {pct(multi, personas):.0f}% multi-predio | '
-          f'{len(colectivos)} titulares colectivos ({pct(sup_col, sup_tot):.1f}% del área)')
+    print(f'\n  {esn(N, 0)} fichas | {esn(personas, 0)} personas | {esn(pct(multi, personas), 0, False)}% multi-predio | '
+          f'{len(colectivos)} titulares colectivos ({esn(pct(sup_col, sup_tot), 1, False)}% del área)')
 
 
 if __name__ == '__main__':

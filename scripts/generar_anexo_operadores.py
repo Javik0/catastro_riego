@@ -33,6 +33,7 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
+from informe_estilo import esn
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -132,8 +133,8 @@ def main():
     A(E.kpis([
         (f'{len(filas_out)}', 'comunidades'),
         (f'{len({r[3] for r in filas_out if r[4]})}', 'operadores identificados'),
-        (f'{con_op:,}', 'fichas principales que lo declararon'),
-        (f'{100.0 * con_op / len(filas):.0f}%', 'de respuesta'),
+        (f'{esn(con_op, 0)}', 'fichas principales que lo declararon'),
+        (f'{esn(100.0 * con_op / len(filas), 0, False)}%', 'de respuesta'),
     ]))
 
     A('<h2>Listado por comunidad</h2>')
@@ -159,7 +160,7 @@ def main():
         A('<table><tr><th>Comunidad</th><th>Más nombrado</th>'
           '<th>Respaldo</th><th>Otros nombres mencionados</th></tr>')
         for n_of, com, sec, op, n, tot, p, otros in dudosas:
-            A(f'<tr><td>{com}</td><td>{op}</td><td class="n">{p:.0f} %</td>'
+            A(f'<tr><td>{com}</td><td>{op}</td><td class="n">{esn(p, 0, False)} %</td>'
               f'<td>{"; ".join(o.title() for o in otros) or "—"}</td></tr>')
         A('</table>')
 
