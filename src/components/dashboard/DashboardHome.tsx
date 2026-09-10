@@ -8,7 +8,7 @@ import {
   Users, Droplets, TrendingUp, Loader2, Link, Copy, Check, ExternalLink, MapPin,
   GraduationCap, Baby, Lightbulb, Layers
 } from 'lucide-react';
-import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente, safeToDate } from '../../lib/types';
+import { type FichaPredio, type EstadisticasResumen, esFichaHija, esHijaPendiente, safeToDate, esSi } from '../../lib/types';
 import { calcularEstadisticas } from '../../lib/firestoreService';
 import { getColorTecnico, TECNICOS } from '../../lib/constants';
 import { useAuth } from '../../hooks/useAuth';
@@ -455,10 +455,10 @@ export default function DashboardHome({ fichas, loading, cultivosData, animalesD
   const fIds = new Set(fichas.map(f => f.id));
   const fCultivos = cultivosData.filter((c: any) => fIds.has(c.ficha_id));
   for (const c of fCultivos) {
-    if (c.es_autoconsumo) autoconsumoCount++;
-    if (c.es_mercado) mercadoCount++;
-    if (c.es_agroindustria) agroindustriaCount++;
-    if (c.es_exportacion) exportacionCount++;
+    if (esSi(c.es_autoconsumo)) autoconsumoCount++;
+    if (esSi(c.es_mercado)) mercadoCount++;
+    if (esSi(c.es_agroindustria)) agroindustriaCount++;
+    if (esSi(c.es_exportacion)) exportacionCount++;
   }
 
   const destinoCultivosData = [

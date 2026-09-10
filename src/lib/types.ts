@@ -23,6 +23,19 @@ export function safeToDate(value: unknown): Date {
 }
 
 // ── Ficha de Predio (tabla principal — 524+ registros) ──
+/**
+ * Un campo de sí/no del formulario de campo, que llega como '1', '0' o vacío.
+ *
+ * Se compara contra el '1' a propósito: los JSON de public/geo entregan estos
+ * campos como CADENA, y en JavaScript la cadena '0' es verdadera. Un
+ * `if (cultivo.es_autoconsumo)` contaba también a quienes respondieron que no
+ * — así el gráfico de destino de la producción del Dashboard sumaba 330
+ * cultivos de más. Acepta además 1 y true por si la fuente cambia de tipo.
+ */
+export function esSi(valor: unknown): boolean {
+  return valor === '1' || valor === 1 || valor === true;
+}
+
 export interface FichaPredio {
   // IDs
   id: string;

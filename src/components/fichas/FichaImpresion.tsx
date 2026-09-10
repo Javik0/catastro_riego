@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, CircleMarker, Rectangle, useMap } from 'react-leaflet';
 import type { FeatureCollection } from 'geojson';
-import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional } from '../../lib/types';
+import { type FichaPredio, safeToDate, type CultivoAgricola, type AnimalEspecie, type PredioAdicional, esSi } from '../../lib/types';
 import { getNombreTecnico, PROJECT_TITLE, PROJECT_SUBTITLE, PROJECT_SUBTITLE_ALCANCE, PROJECT_LOCATION } from '../../lib/constants';
 import { wgs84ToUtm17S } from '../../lib/utm';
 import { useAuth } from '../../hooks/useAuth';
@@ -168,12 +168,12 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
       });
   }, [ficha.clave_catastral, ficha.geo, ficha._geojson]);
 
-  const obtenerDestino = (item: { es_autoconsumo?: boolean | number; es_mercado?: boolean | number; es_agroindustria?: boolean | number; es_exportacion?: boolean | number }) => {
+  const obtenerDestino = (item: { es_autoconsumo?: unknown; es_mercado?: unknown; es_agroindustria?: unknown; es_exportacion?: unknown }) => {
     const destinos = [];
-    if (item.es_autoconsumo) destinos.push('Autoconsumo');
-    if (item.es_mercado) destinos.push('Mercado');
-    if (item.es_agroindustria) destinos.push('Agroindustria');
-    if (item.es_exportacion) destinos.push('Exportación');
+    if (esSi(item.es_autoconsumo)) destinos.push('Autoconsumo');
+    if (esSi(item.es_mercado)) destinos.push('Mercado');
+    if (esSi(item.es_agroindustria)) destinos.push('Agroindustria');
+    if (esSi(item.es_exportacion)) destinos.push('Exportación');
     return destinos.length > 0 ? destinos.join(', ') : '—';
   };
 
