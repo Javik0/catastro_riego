@@ -34,6 +34,8 @@ REGLAS DEL PROYECTO QUE ESTE SCRIPT RESPETA
 · Las observaciones que se imprimen son `observaciones_cliente` (la vista
   externa de la web); el campo `observaciones` crudo es texto interno.
 · La fecha de corte del paquete es informe_estilo.FECHA_CORTE.
+· La ficha NO lleva fotografía: el campo `foto_predio` guarda el retrato del
+  titular, no el predio (decisión de JAVIKO, 10-sep-2026). Ver `--con-foto`.
 
 CÓMO SE CORRE
 -------------
@@ -689,7 +691,7 @@ def cabecera_pie(canv, doc, ficha):
     canv.restoreState()
 
 
-def construir_historia(ficha, ctx, con_mapa):
+def construir_historia(ficha, ctx, con_mapa, con_foto=False):
     p = ficha
     historia = []
 
@@ -882,7 +884,13 @@ def construir_historia(ficha, ctx, con_mapa):
         historia.append(Paragraph('Coordenadas geográficas no disponibles — '
                                   'la ficha no registra ubicación en campo.', ST_NOTA))
 
-    foto_rel = p.get('foto_predio')
+    # FOTOGRAFÍA: apagada por defecto (decisión de JAVIKO, 10-sep-2026). El
+    # campo se llama `foto_predio` pero lo que los técnicos capturaron en campo
+    # es el RETRATO DEL TITULAR (revisadas 40 de las 894: todas son personas en
+    # asambleas, varias sosteniendo su cédula). No aporta dato catastral y son
+    # datos personales que no deben viajar en el paquete del consorcio. Se
+    # conserva el código tras `--con-foto` por si algún día hacen falta.
+    foto_rel = p.get('foto_predio') if con_foto else None
     if foto_rel:
         ruta_foto = os.path.join(QFIELD_DIR, foto_rel.replace('/', os.sep))
         if os.path.exists(ruta_foto):
@@ -964,7 +972,7 @@ def construir_historia(ficha, ctx, con_mapa):
     return historia
 
 
-def generar_pdf(ficha, ctx, ruta, con_mapa):
+def generar_pdf(ficha, ctx, ruta, con_mapa, con_foto=False):
     doc = BaseDocTemplate(
         ruta, pagesize=A4,
         leftMargin=10 * mm, rightMargin=10 * mm,
@@ -975,7 +983,7 @@ def generar_pdf(ficha, ctx, ruta, con_mapa):
     doc.addPageTemplates([PageTemplate(
         id='pagina', frames=[marco],
         onPage=lambda c, d: cabecera_pie(c, d, ficha))])
-    doc.build(construir_historia(ficha, ctx, con_mapa))
+    doc.build(construir_historia(ficha, ctx, con_mapa, con_foto))
 
 
 # ─── Carga de datos ──────────────────────────────────────────────────────────
@@ -1110,6 +1118,9 @@ def main():
     ap.add_argument('--clave', action='append', default=[], help='limitar a esta(s) clave(s)')
     ap.add_argument('--limite', type=int, default=0, help='generar solo N fichas (medición)')
     ap.add_argument('--sin-mapa', action='store_true', help='fichas sin mapas satelitales')
+    ap.add_argument('--con-foto', action='store_true',
+                    help='incrustar la foto de campo (retrato del titular): NO se usa '
+                         'en la entrega al consorcio, ver la nota en construir_historia')
     ap.add_argument('--rehacer', action='store_true', help='regenerar aunque el PDF exista')
     ap.add_argument('--indice', action='store_true', help='solo escribir el índice Excel')
     ap.add_argument('--salida', default=SALIDA_DEF)
@@ -1178,7 +1189,7 @@ def main():
             continue
         os.makedirs(os.path.dirname(ruta), exist_ok=True)
         try:
-            generar_pdf(p, ctx, ruta, con_mapa)
+            generar_pdf(p, ctx, ruta, con_mapa, args.con_foto)
             hechos += 1
         except Exception as e:
             errores.append((p.get('codigo_final'), str(e)))
