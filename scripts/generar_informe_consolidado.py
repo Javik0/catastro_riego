@@ -4,7 +4,18 @@ Informe consolidado: reúne los seis capítulos en un solo documento entregable.
 
 Toma los HTML que ya generan los scripts de cada capítulo, les quita cabecera y
 pie individuales, renumera sus secciones (1.1, 2.3…) y los monta bajo una
-portada única con índice, resumen ejecutivo y anexo de datos a verificar.
+portada única con índice, una sección de alcance y método y un resumen
+ejecutivo. Los gráficos vienen DENTRO de cada capítulo (PNG en base64 a 200
+ppp, dibujados por `informe_graficos.py`), así que el consolidado los hereda
+sin tocarlos.
+
+ACENTO (aprobado por JAVIKO, 4-sep-2026)
+----------------------------------------
+Es un informe de resultados: afirma, no advierte. Las explicaciones de método
+van UNA vez, en «Alcance y método»; los capítulos no llevan recuadros de
+advertencia ni vocabulario de gestión («a verificar», «pendiente», nombres
+de archivos o de la aplicación). Lo que el equipo necesita saber está en
+CONTINUAR-AQUI.md y en las cabeceras de los scripts, no en el entregable.
 
 POR QUÉ SE ARMA DESDE LOS CAPÍTULOS YA GENERADOS
 ------------------------------------------------
@@ -44,6 +55,8 @@ CAPITULOS = [
      'generar_informe_encuesta.py'),
     ('CAPITULO-servicios-basicos.html', 'Servicios básicos y hábitat',
      'generar_capitulo_servicios.py'),
+    ('CAPITULO-los-tres-sectores.html', 'Los tres sectores de un vistazo',
+     'generar_capitulo_sectores.py'),
 ]
 
 CSS_EXTRA = """
@@ -70,6 +83,9 @@ CSS_EXTRA = """
   .resumen { break-after: page; }
   .resumen h2 { margin-top: 0; }
   .cifra { font-weight: 700; color: #1e4d8c; }
+  .metodo { break-after: page; }
+  .metodo h2 { margin-top: 0; }
+  .portada .corte-portada { margin-top: 40px; font-size: 10pt; color: #666; }
 """
 
 
@@ -80,6 +96,16 @@ def cuerpo_de(ruta):
     cuerpo = html[html.index('</header>') + len('</header>'):html.index('<footer')]
     cuerpo = re.sub(r'<div class="corte">.*?</div>', '', cuerpo, flags=re.S)
     return cuerpo.strip()
+
+
+def kpi(resumen_kpis, etiqueta):
+    """Valor del KPI cuya etiqueta contiene `etiqueta` (para la prosa del
+    resumen); '—' si ningún capítulo lo publica."""
+    for _, pares in resumen_kpis:
+        for valor, et in pares:
+            if etiqueta in et:
+                return valor
+    return '—'
 
 
 def kpis_de(html_cuerpo):
@@ -107,17 +133,18 @@ def main():
                 print(r.stderr[-600:])
                 raise SystemExit('Abortado: falló un capítulo')
 
-    # corte y cifras del primer capítulo disponible
+    # corte y cifras del primer capítulo disponible (línea de corte de
+    # informe_estilo.aviso_corte: «Datos al X. N fichas principales · …»)
     primero = open(os.path.join(DOCS, CAPITULOS[0][0]), encoding='utf-8').read()
-    corte = re.search(r'Datos (?:de avance )?al ([^<.]+)\.', primero).group(1)
-    m = re.search(r'se registran <b>([\d,\.]+) fichas principales</b> y quedan '
-                  r'<b>([\d,\.]+) predios adicionales</b>', primero)
-    entrevistas, pendientes = (m.group(1), m.group(2)) if m else ('—', '—')
+    corte = re.search(r'Datos al ([^<.]+)\.', primero).group(1)
+    m = re.search(r'([\d,\.]+) fichas principales', primero)
+    entrevistas = m.group(1) if m else '—'
 
     cuerpos, resumen_kpis = [], []
     for i, (arch, titulo, _) in enumerate(CAPITULOS, 1):
         c = cuerpo_de(os.path.join(DOCS, arch))
-        resumen_kpis.append((titulo, kpis_de(c)))
+        if titulo != 'Los tres sectores de un vistazo':
+            resumen_kpis.append((titulo, kpis_de(c)))
         cuerpos.append(
             f'<section class="cap"><div class="cap-titulo">'
             f'<span class="num">{i}</span><h2>{titulo}</h2></div>'
@@ -134,7 +161,7 @@ def main():
     A('<div class="linea"></div>')
     A('<p class="inst">Provincia de Pichincha · Cantón Cayambe<br>'
       'Parroquias de Cangahua, Otón, Cusubamba y Ascázubi</p>')
-    A(f'<p class="fecha"><b>Datos con corte al {corte}</b><br>'
+    A(f'<p class="fecha"><b>Datos al {corte}</b><br>'
       f'Documento generado el {date.today().strftime("%d/%m/%Y")}</p>')
     A('</div>')
 
@@ -144,20 +171,47 @@ def main():
     for _, titulo, _ in CAPITULOS:
         A(f'<li>{titulo}</li>')
     A('</ol>')
-    A('<h2 style="margin-top:26px">Sobre este informe</h2>')
-    # El aviso viene redactado para un capítulo suelto; aquí encabeza el documento.
-    A(E.aviso_corte(corte, int(entrevistas.replace(',', '').replace('.', '')),
-                    int(pendientes.replace(',', '').replace('.', '')))
-      .replace('de este capítulo', 'de este informe'))
-    A('<p>El presente informe sintetiza los resultados del empadronamiento de '
-      'usuarios del sistema de riego, levantado predio a predio mediante ficha '
-      'digital georreferenciada. Cada capítulo corresponde a una sección de esa '
-      'ficha y puede leerse de forma independiente.</p>')
-    A('<p>Las cifras provienen directamente de la base de datos de campo, sin '
-      'transcripción intermedia. Cuando un dato requiere una advertencia '
-      'metodológica —una cobertura parcial, un registro que debe verificarse o un '
-      'criterio de cálculo que condiciona el resultado— esa advertencia acompaña a '
-      'la cifra en el propio capítulo, para que ninguna se cite fuera de contexto.</p>')
+    A('</div>')
+
+    total_fichas = kpi(resumen_kpis, 'fichas de predio')
+    A('<div class="metodo">')
+    A('<h2>Alcance y método</h2>')
+    A('<p>Este informe presenta los resultados del empadronamiento de usuarios '
+      'del sistema de riego comunitario Guanguilquí–Porotog, levantado predio a '
+      'predio con una ficha digital georreferenciada y cerrado en campo con '
+      f'<b>{total_fichas} fichas</b> al {corte}. Cada capítulo corresponde a una '
+      'sección de esa ficha y puede leerse por separado; el último compara los '
+      'tres sectores de investigación. Las cifras salen directamente de la base '
+      'de datos de campo, sin transcripción intermedia, y cada gráfico nombra al '
+      'pie el universo sobre el que se calcula.</p>')
+    A('<p><b>Fichas principales y adicionales.</b> Cada ficha es un predio. La '
+      f'<i>ficha principal</i> recoge la entrevista al titular ({entrevistas} '
+      'fichas); las <i>fichas adicionales</i> son los demás predios del mismo '
+      'titular, levantados sin repetir la entrevista. Por eso las cifras sobre '
+      'personas —instrucción, familia, tenencia, conocimiento del proyecto y '
+      'capacitación— se calculan sobre las fichas principales, y las cifras '
+      'sobre territorio y producción —superficie, cultivos, ganado— sobre todas '
+      'las fichas. Los dos universos no se suman entre sí.</p>')
+    A('<p><b>Dos mediciones de superficie.</b> La <i>catastral</i> suma cada '
+      'polígono del catastro municipal una sola vez y es la superficie del '
+      'sistema; la <i>declarada</i> es lo que cada titular considera suyo en la '
+      'entrevista, y en los predios familiares varios herederos declaran el '
+      'mismo terreno. Las dos describen el mismo territorio, cada cuadro nombra '
+      'la suya y nunca se combinan. El tamaño de los predios se cuenta por '
+      'predio catastral, no por ficha.</p>')
+    A('<p><b>Caudal, tarifas y sector.</b> El caudal se contabiliza una sola vez '
+      'por comunidad, porque los técnicos anotaron en cada ficha el caudal que '
+      'recibe la comunidad entera. Las tarifas se resumen con la mediana, el '
+      'valor que paga efectivamente la mayoría; los valores del fraccionamiento '
+      'Alpaka corresponden a otro concepto y no entran en ese cálculo. El sector '
+      'de cada ficha es el de su comunidad según el listado oficial de '
+      'organizaciones de riego.</p>')
+    A('<p><b>Producción y vivienda.</b> El inventario pecuario no incluye una '
+      'explotación avícola industrial de 60.000 aves registrada en una '
+      'comunidad, ajena a la producción familiar que describe el informe. Los '
+      'servicios de agua y energía se calculan sobre las viviendas, es decir, '
+      'sobre las fichas que declaran una construcción en el predio; un predio '
+      'sin casa no es una vivienda sin servicio.</p>')
     A('</div>')
 
     A('<div class="resumen">')
@@ -174,20 +228,28 @@ def main():
         for valor, etiqueta in kpis:
             A(f'<li><span class="cifra">{valor}</span> — {etiqueta}</li>')
         A('</ul>')
-    A('<h3>Cuatro registros a verificar en campo</h3>')
-    A('<p>El análisis detectó cuatro casos cuyos valores no son consistentes con el '
-      'resto del padrón. Están excluidos de las cifras de este informe y en proceso '
-      'de verificación con los usuarios:</p>')
-    A('<ol>')
-    A('<li>Tarifas de 672 y 308 USD mensuales declaradas en 491 predios de una '
-      'misma comunidad, frente a una mediana de 3 USD en el resto del sistema.</li>')
-    A('<li>Una explotación avícola declarada de forma repetida por seis titulares '
-      'sobre un mismo predio, equivalente a 60.000 aves.</li>')
-    A('<li>Tres usuarios individuales cuyo caudal declarado coincide exactamente '
-      'con el de su comunidad de origen, por 71,5 l/s.</li>')
-    A('<li>El apartado de servicios básicos, cuyo levantamiento continúa y alcanza '
-      'el 68 % de los predios.</li>')
-    A('</ol>')
+    A('<h3>Cuatro rasgos que definen el sistema</h3>')
+    A(f'<p><b>Minifundio bajo riego.</b> El sistema riega '
+      f'{kpi(resumen_kpis, "bajo riego")}, el {kpi(resumen_kpis, "del área del sistema")} '
+      f'de su superficie catastral, con un caudal de {kpi(resumen_kpis, "caudal del sistema")}; '
+      'la mayoría de los predios no llega a la hectárea y '
+      f'{kpi(resumen_kpis, "con más de un predio")} de los titulares tiene más de un '
+      'predio.</p>')
+    A(f'<p><b>Producción para la familia.</b> El '
+      f'{kpi(resumen_kpis, "destino autoconsumo")} de las declaraciones agrícolas se '
+      'destinan al autoconsumo y la mayor parte de la superficie cultivada son '
+      'pastos que sostienen una ganadería de traspatio: el riego asegura antes la '
+      'alimentación de las familias que una cadena comercial.</p>')
+    A(f'<p><b>Titulares con instrucción básica y sin título.</b> El '
+      f'{kpi(resumen_kpis, "con instrucción básica o menos")} de los titulares no '
+      f'superó la primaria y el {kpi(resumen_kpis, "sin título de propiedad")} ocupa '
+      'su predio sin título: toda comunicación y todo programa de inversión deben '
+      'partir de ahí.</p>')
+    A(f'<p><b>Una Junta reconocida y una demanda de capacitación.</b> El '
+      f'{kpi(resumen_kpis, "identifica al presidente")} identifica al presidente de '
+      f'la Junta, el {kpi(resumen_kpis, "conoce el proyecto de la presa")} conoce el '
+      f'proyecto de la presa y el {kpi(resumen_kpis, "quiere capacitación")} quiere '
+      'capacitarse, sobre todo en manejo del riego.</p>')
     A('</div>')
 
     H += cuerpos

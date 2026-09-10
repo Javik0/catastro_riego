@@ -23,8 +23,10 @@ las tarjetas `kpis` y el `footer`. Dentro del texto respeta negrita, cursiva
 y código. Las barras de porcentaje (`div.barra`) NO se dibujan: se convierte
 su cifra a texto, que es la información que llevan.
 
-Las imágenes embebidas en base64 (los mapas del informe por comunidad) se
-incrustan en el Word a tamaño de página.
+Las imágenes embebidas en base64 (gráficos de los capítulos y mapas) se
+incrustan en el Word a tamaño de página, tal cual vienen (PNG a 200 ppp) y
+con la opción «no comprimir imágenes» del documento activada: JAVIKO pidió
+resolución fiel (4-sep-2026).
 
 Uso
 ---
@@ -60,7 +62,7 @@ BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 # Recuadros del estilo de la casa → color de fondo en Word. Los mismos tonos
 # que el CSS de informe_estilo.py, para que las dos versiones se reconozcan.
 RECUADROS = {
-    'corte': ('FFF8E6', '8A6100'),
+    'corte': ('F3F5F8', '445566'),
     'nota': ('F0F6FF', '1E4D8C'),
     'hallazgo': ('F4FBF6', '1D6B35'),
     'alerta': ('FFF5F5', 'A03030'),
@@ -77,6 +79,7 @@ PAQUETE = [
     'CAPITULO-perfil-del-titular.html',
     'CAPITULO-estructura-del-padron.html',
     'CAPITULO-servicios-basicos.html',
+    'CAPITULO-los-tres-sectores.html',
     'ANEXO-operadores-por-comunidad.html',
 ]
 
@@ -331,7 +334,7 @@ def escribir(doc, nodo):
         elif tag == 'p':
             t = texto_de(h)
             if t:
-                if 'sub' in clases:
+                if 'sub' in clases or 'pie-fig' in clases:
                     parrafo(doc, t, 8.5, GRIS, cursiva=True)
                 else:
                     parrafo(doc, t)

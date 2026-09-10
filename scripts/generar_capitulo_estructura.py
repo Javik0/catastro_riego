@@ -37,6 +37,7 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
+import informe_graficos as G  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -45,8 +46,6 @@ BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 SUPERFICIE_JSON = os.path.join(BASE, 'public', 'geo', 'superficie_por_comunidad.json')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-estructura-del-padron.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Estructura_del_Padron.xlsx')
-MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-         'octubre noviembre diciembre').split()
 
 # Palabras que identifican a un titular COLECTIVO (no una persona natural).
 COLECTIVOS = ('COMUNA', 'COMITE', 'COMITÉ', 'ASOCIACION', 'ASOCIACIÓN', 'JUNTA',
@@ -98,9 +97,10 @@ def main():
     f1, f2 = cur.fetchone()
     con.close()
 
-    corte = max(str(f1 or '')[:10], str(f2 or '')[:10])
-    corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                 if corte else 'la fecha de generación')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg: las depuraciones de gabinete
+    # posteriores no mueven esas fechas (decisión de JAVIKO, 4-sep-2026).
+    corte_txt = E.FECHA_CORTE
 
     por_id = {f['id']: f for f in todas}
     pri = [f for f in todas if not es_hija(f)]
@@ -158,6 +158,8 @@ def main():
     obs = sum(1 for f in todas if (f.get('observaciones') or '').strip())
 
     # ── documento ──
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), 'graficos-capitulos')
     B = []
     A = B.append
     A(E.cabecera('Estructura del padrón',
@@ -188,11 +190,16 @@ def main():
       'parcelas y se le entrevista una sola vez. La tercera cifra incorpora además '
       f'<b>{len(solo_adic)} personas</b> que figuran únicamente como titulares de un '
       'predio adicional declarado por otro y que no tienen ficha propia.</p>')
-    A('<div class="nota"><b>Regla de uso.</b> Para hablar de <i>personas</i> '
-      '(escolaridad, conocimiento, capacitación) se usan las fichas principales. '
-      'Para hablar de <i>territorio o producción</i> (superficie, cultivos, ganado) '
-      'se usan todas las fichas, porque cada predio produce. Nunca deben sumarse '
-      'ambos universos.</div>')
+    A('<p>En el resto del informe, las cifras sobre <i>personas</i> —escolaridad, '
+      'conocimiento, capacitación, tenencia— se calculan sobre las fichas '
+      'principales, y las cifras sobre <i>territorio y producción</i> —superficie, '
+      'cultivos, ganado— sobre todas las fichas, porque cada predio produce. Los '
+      'dos universos no se suman entre sí.</p>')
+    b64 = G.g_donut('estructura-composicion',
+                    [('Fichas principales', len(pri), '#3b82f6'),
+                     ('Fichas adicionales', len(hij), '#10b981')],
+                    G.fnum, centro=f'{N:,}')
+    A(E.figura(b64, 'Composición del padrón', f'Fichas de predio, {N:,}.'))
 
     A('<h2>2. Cuántos predios tiene cada titular</h2>')
     A('<table class="evitar-corte"><tr><th>Predios por titular</th>'
@@ -206,6 +213,11 @@ def main():
     A(f'<tr><td>7 o más</td><td class="n">{mas:,}</td>'
       f'<td>{E.barra(pct(mas, personas))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('estructura-predios-titular',
+                       [(f'{k}', dist[k]) for k in sorted(dist) if k <= 6] +
+                       [('7 o más', mas)],
+                       lambda i, n: '#3b82f6')
+    A(E.figura(b64, 'Predios por titular', f'Titulares del padrón, {personas:,}.'))
     A(f'<p>El <b>{pct(dist[1], personas):.1f} % de los titulares tiene un solo '
       f'predio</b>. El resto —{multi:,} personas— posee dos o más parcelas, con un '
       f'máximo de {max(dist)} predios en un mismo titular. Esta dispersión explica '
@@ -213,11 +225,10 @@ def main():
       'predios adicionales fue necesario.</p>')
 
     A('<h2>3. Distribución de la tierra</h2>')
-    A('<div class="nota"><b>Advertencia de lectura.</b> Los mayores tenedores del '
-      'padrón <b>no son personas acumulando tierra</b>: son la propia comunidad de '
-      'Monteserrín Bajo, comités pro mejoras, comunas y una empresa. Presentar la '
-      'concentración sin separarlos sugeriría un acaparamiento privado que no '
-      'existe. Por eso se calculan por separado.</div>')
+    A('<p>Los mayores tenedores del padrón <b>no son personas acumulando '
+      'tierra</b>: son la propia comunidad de Monteserrín Bajo, comités pro '
+      'mejoras, comunas y una empresa. Por eso la distribución se presenta por '
+      'separado para los titulares colectivos y para las personas naturales.</p>')
     A('<h3>Titulares colectivos</h3>')
     A(f'<p><b>{len(colectivos)} titulares</b> del padrón son organizaciones —comunas, '
       f'comités, asociaciones, haciendas o empresas— y reúnen <b>{sup_col / 10000:,.1f} '
@@ -258,10 +269,17 @@ def main():
           f'<td>{E.barra(pct(n, len(hij)))}</td></tr>')
     A('</table>')
     pend = estados.get('pendiente_produccion', 0)
-    A(f'<p>Quedan <b>{pend:,} predios adicionales</b> por completar '
-      f'({pct(pend, len(hij)):.1f} % de los adicionales). Es el trabajo de campo '
-      'pendiente a la fecha de corte y la razón por la que las cifras de este '
-      'informe son provisionales.</p>')
+    if pend:
+        A(f'<p>Quedan <b>{pend:,} predios adicionales</b> por completar '
+          f'({pct(pend, len(hij)):.1f} % de los adicionales). Es el trabajo de campo '
+          'pendiente a la fecha de corte y la razón por la que las cifras de este '
+          'informe son provisionales.</p>')
+    else:
+        # Campo cerrado (JAVIKO, 31-ago-2026): el texto de «provisional» solo
+        # vuelve si algún día reaparecen adicionales pendientes.
+        A('<p>No queda ningún predio adicional por completar: <b>el levantamiento '
+          'de campo está cerrado</b>. Las cifras solo cambian con las depuraciones '
+          'de gabinete, y por eso se citan siempre con su fecha de corte.</p>')
     A(f'<p>Adicionalmente, <b>{obs:,} fichas</b> incluyen observaciones escritas por '
       'el técnico, una fuente cualitativa que documenta casos particulares del '
       'levantamiento.</p>')
@@ -280,8 +298,9 @@ def main():
       'una anomalía.</li>')
     A(f'<li>Entre personas naturales, el 10 % mayor reúne el {c10:.0f} % de la '
       'tierra privada.</li>')
-    A(f'<li>Restan <b>{pend:,} predios adicionales</b> por completar para cerrar '
-      'el levantamiento.</li>')
+    if pend:
+        A(f'<li>Restan <b>{pend:,} predios adicionales</b> por completar para '
+          'cerrar el levantamiento.</li>')
     A('</ul>')
     A(E.pie(corte_txt))
 

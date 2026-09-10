@@ -45,6 +45,7 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico  # noqa: E402
+import informe_estilo as E  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -110,21 +111,19 @@ def cargar():
         crudo = p.get('comunidad') or ''
         p['_comk'] = canonica(crudo) or '(sin comunidad)'
         vistos[p['_comk']][nombre_publico(crudo) or '(sin comunidad)'] += 1
-        p['_sec'] = (p.get('sector_investigacion') or '(sin sector)').strip()
     display = {}
     for k, c in vistos.items():
         validas = [(nom, n) for nom, n in c.most_common() if normalizar(nom) == k]
         display[k] = validas[0][0] if validas else k
 
-    # El sector se deriva de la COMUNIDAD cuando el campo viene vacío: 553 fichas
-    # perdieron sector_investigacion en campo, y un informe formal no puede
-    # mostrar una fila "(sin sector)" con el 13% de las entrevistas. Es el mismo
-    # criterio que usa la web (App.tsx): la comunidad manda sobre el sector.
+    # El sector lo da la comunidad (catálogo oficial), como en la web (App.tsx).
     from generar_capas_sectores_comunidades import COM_A_SECTOR
     for p in pri:
         p['_com'] = display[p['_comk']]
-        if p['_sec'] in ('', '(sin sector)', 'None'):
-            p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
+        # El sector es el de la COMUNIDAD según el catálogo oficial, como la
+        # web y los informes del sociólogo (decisión de JAVIKO, 4-sep-2026;
+        # antes mandaba el campo `sector_investigacion` de la ficha).
+        p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
     return pri
 
 
@@ -424,8 +423,6 @@ def main():
     print(f'  informe : {os.path.relpath(MD, BASE)}')
 
     # ── capítulo del informe técnico (HTML imprimible) ──
-    # El levantamiento sigue en curso: la fecha de corte es la de la última
-    # actividad registrada en campo, no la del día en que se genera el archivo.
     con = sqlite3.connect(GPKG)
     k = con.cursor()
     k.execute(f'SELECT MAX(fecha_creacion), MAX(fecha_completado) FROM "{T}"')
@@ -434,11 +431,9 @@ def main():
               f'coalesce(estado_investigacion, "pendiente_produccion") != "completada"')
     pendientes_s4 = k.fetchone()[0]
     con.close()
-    corte = max(str(f_creada or '')[:10], str(f_completada or '')[:10])
-    MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-             'octubre noviembre diciembre').split()
-    corte_texto = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                   if corte else 'la fecha de generación')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg (decisión de JAVIKO, 4-sep-2026).
+    corte_texto = E.FECHA_CORTE
 
     # personas que solo existen como predio adicional de otro titular
     con = sqlite3.connect(GPKG)

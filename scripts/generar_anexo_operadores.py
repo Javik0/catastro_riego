@@ -39,8 +39,6 @@ T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 HTML = os.path.join(BASE, 'docs', 'ANEXO-operadores-por-comunidad.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Operadores_por_Comunidad.xlsx')
-MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-         'octubre noviembre diciembre').split()
 
 # Numeración oficial del listado "SECTORES Y COMUNIDADES" de Armando.
 ORDEN = {}
@@ -79,9 +77,9 @@ def main():
     cur.execute(f'SELECT MAX(fecha_creacion), MAX(fecha_completado) FROM "{T}"')
     f1, f2 = cur.fetchone()
     con.close()
-    corte = max(str(f1 or '')[:10], str(f2 or '')[:10])
-    corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                 if corte else '')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg (decisión de JAVIKO, 4-sep-2026).
+    corte_txt = E.FECHA_CORTE
 
     from generar_capas_sectores_comunidades import COM_A_SECTOR
 
@@ -126,9 +124,9 @@ def main():
                  'Anexo del informe técnico · Padrón de Usuarios'))
     A(f'<div class="corte"><b>Datos con corte al {corte_txt}.</b> '
       'El operador de cada comunidad se establece a partir de lo que declaran sus '
-      'propios titulares durante el empadronamiento. El levantamiento sigue en '
-      'curso, de modo que este listado puede completarse en próximas '
-      'actualizaciones.</div>')
+      'propios titulares durante el empadronamiento. El levantamiento de campo '
+      'está cerrado; el listado se actualiza solo con las depuraciones de '
+      'gabinete.</div>')
 
     con_op = sum(1 for f in filas if limpiar(f.get('operador_sector')))
     A(E.kpis([

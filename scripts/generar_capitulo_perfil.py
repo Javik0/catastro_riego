@@ -28,14 +28,13 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
+import informe_graficos as G  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
 BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 HTML = os.path.join(BASE, 'docs', 'CAPITULO-perfil-del-titular.html')
 XLSX = os.path.join(BASE, 'build_entrega', 'Perfil_del_Titular.xlsx')
-MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-         'octubre noviembre diciembre').split()
 
 # Nombres inequívocos en la zona. Lo que no esté aquí ni siga una terminación
 # clara se deja SIN DETERMINAR: es preferible a inventar una clasificación.
@@ -118,19 +117,23 @@ def cargar():
         crudo = p.get('comunidad') or ''
         p['_comk'] = canonica(crudo) or '(sin comunidad)'
         vistos[p['_comk']][nombre_publico(crudo) or '(sin comunidad)'] += 1
-        p['_sec'] = (p.get('sector_investigacion') or '').strip()
     display = {}
     for k, c in vistos.items():
         val = [(n_, v) for n_, v in c.most_common() if normalizar(n_) == k]
         display[k] = val[0][0] if val else k
     for p in pri:
         p['_com'] = display[p['_comk']]
-        if p['_sec'] in ('', 'None'):
-            p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
+        # El sector es el de la COMUNIDAD según el catálogo oficial, como la
+        # web y los informes del sociólogo. Hasta el 4-sep-2026 mandaba el
+        # campo `sector_investigacion` de la ficha (vacío en 556 principales
+        # y contradictorio con su comunidad en otras 27), y los cortes por
+        # sector no cuadraban entre documentos. Decisión de JAVIKO.
+        p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
 
-    corte = max(str(f1 or '')[:10], str(f2 or '')[:10])
-    corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                 if corte else 'la fecha de generación')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg: las depuraciones de gabinete
+    # posteriores no mueven esas fechas (decisión de JAVIKO, 4-sep-2026).
+    corte_txt = E.FECHA_CORTE
     return pri, corte_txt, pendientes
 
 
@@ -168,6 +171,16 @@ def main():
         sin_titulo.append((com, st_, len(ps), pct(st_, len(ps))))
     sin_titulo.sort(key=lambda x: -x[3])
 
+    # Gráficos con equivalente en el tablero web: se toman del motor
+    # compartido (informe_graficos.datos_dashboard) para coincidir con la
+    # pantalla y con el informe por sector.
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), 'graficos-capitulos')
+    W = G.sistema()
+    if dict(W['instruccion']) != {k: v for k, v in instr.items()}:
+        print('  ⚠ instrucción: el capítulo y el tablero no cuentan igual',
+              dict(W['instruccion']), dict(instr))
+
     B = []
     A = B.append
     A(E.cabecera('Perfil del titular',
@@ -196,15 +209,18 @@ def main():
             A(f'<tr><td>{k}</td><td class="n">{instr[k]:,}</td>'
               f'<td>{E.barra(pct(instr[k], n_ins))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_h('perfil-instruccion', W['instruccion'],
+                       lambda i, n: G.COLORES_INSTRUCCION.get(n, G.PIE_COLORS[i % 8]))
+    A(E.figura(b64, 'Nivel de instrucción',
+               f'Fichas principales con el dato, {n_ins:,} de {N:,}.'))
     basica = instr['Ninguno'] + instr['Alfabetizado'] + instr['Primaria']
-    A(f'<div class="hallazgo"><b>Hallazgo.</b> El '
-      f'<b>{pct(basica, n_ins):.1f} % de los titulares alcanzó como máximo la '
+    A(f'<p>El <b>{pct(basica, n_ins):.1f} % de los titulares alcanzó como máximo la '
       f'primaria</b>, y un <b>{pct(instr["Ninguno"], n_ins):.1f} % no cursó ningún '
       f'nivel formal</b>. Solo el {pct(instr["Superior"], n_ins):.1f} % tiene '
       'estudios superiores. Toda comunicación técnica, reglamento o material de '
       'capacitación debe diseñarse en lenguaje sencillo y con apoyo visual: un '
       'documento escrito en registro administrativo no llega a la mayoría de los '
-      'usuarios.</div>')
+      'usuarios.</p>')
 
     A('<h2>3. Titularidad y participación de la mujer</h2>')
     A(f'<p>De los {n_gen:,} titulares cuyo nombre permite estimar el género, '
@@ -216,13 +232,18 @@ def main():
         A(f'<tr><td>{k}</td><td class="n">{gen[k]:,}</td>'
           f'<td>{E.barra(pct(gen[k], n_gen))}</td></tr>')
     A('</table>')
-    A('<div class="nota"><b>Cómo se obtuvo este dato.</b> La ficha no pregunta el '
-      'sexo del titular. La cifra es una <b>estimación</b> a partir del primer '
-      'nombre, usando una lista de nombres inequívocos de la zona; los casos '
-      f'ambiguos ({gen[None]:,}) quedan sin clasificar en lugar de asignarse por '
-      'aproximación. Debe leerse como orden de magnitud, no como registro censal. '
-      '<b>Se recomienda incorporar el campo de sexo al formulario</b> para futuras '
-      'actualizaciones del padrón.</div>')
+    b64 = G.g_donut('perfil-titularidad',
+                    [('Mujeres', gen['Mujer'], '#ec4899'),
+                     ('Hombres', gen['Hombre'], '#3b82f6')],
+                    G.fnum, centro=f'{n_gen:,}')
+    A(E.figura(b64, 'Titularidad por sexo (estimación)',
+               f'Fichas principales con nombre clasificable, {n_gen:,} de {N:,}.'))
+    A('<p>La ficha no pregunta el sexo del titular: la cifra es una '
+      '<b>estimación</b> a partir del primer nombre, con una lista de nombres '
+      f'inequívocos de la zona; los {gen[None]:,} casos ambiguos quedan sin '
+      'clasificar. Se lee como orden de magnitud. Registrar el sexo del titular en '
+      'las próximas actualizaciones del padrón convertiría la estimación en un '
+      'dato.</p>')
 
     A('<h2>4. Tenencia de la tierra</h2>')
     A('<table class="evitar-corte"><tr><th>Forma de tenencia</th>'
@@ -231,13 +252,16 @@ def main():
         A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
           f'<td>{E.barra(pct(n, n_ten))}</td></tr>')
     A('</table>')
+    b64 = G.g_donut('perfil-tenencia',
+                    [(n_, v, G.PIE_COLORS[i % 8]) for i, (n_, v) in enumerate(W['tenencia'])],
+                    G.fnum, centro=G.fnum(sum(v for _, v in W['tenencia'])))
+    A(E.figura(b64, 'Tenencia del predio', f'Fichas principales, {N:,}.'))
     sp = ten['Posesión sin Título'] + ten['Herencia sin Legalizar']
-    A(f'<div class="hallazgo"><b>Hallazgo.</b> <b>{sp:,} titulares '
-      f'({pct(sp, n_ten):.1f} %) ocupan su predio sin título de propiedad</b>, sea '
-      'por posesión o por herencia no legalizada. Es casi un tercio del padrón. '
-      'La inseguridad jurídica limita el acceso a crédito y a programas públicos, '
-      'y condiciona cualquier inversión predial que se quiera promover desde el '
-      'sistema de riego.</div>')
+    A(f'<p><b>{sp:,} titulares ({pct(sp, n_ten):.1f} %) ocupan su predio sin '
+      'título de propiedad</b>, sea por posesión o por herencia no legalizada: '
+      'casi un tercio del padrón. La inseguridad jurídica limita el acceso a '
+      'crédito y a programas públicos, y condiciona cualquier inversión predial '
+      'que se quiera promover desde el sistema de riego.</p>')
     A('<h3>Comunidades con mayor proporción sin título</h3>')
     A('<p>Comunidades de veinte o más fichas principales, ordenadas por peso de la posesión '
       'sin título. Son el foco natural de un programa de regularización:</p>')
@@ -261,6 +285,11 @@ def main():
         A(f'<tr><td>{et}</td><td class="n">{dist[k]:,}</td>'
           f'<td>{E.barra(pct(dist[k], len(hijos)))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('perfil-hijos', [('Hombres', int(h_var)), ('Mujeres', int(h_muj))],
+                       ['#3b82f6', '#ec4899'])
+    A(E.figura(b64, 'Hijos por familia',
+               f'Fichas principales con el dato, {len(con_hijos):,} familias; '
+               f'{sum(hijos):,.0f} hijos, {st.mean(hijos):.1f} por familia.'))
     A(f'<p>Tomando el promedio declarado, los {N:,} predios empadronados '
       f'representan una población aproximada de <b>{N * (st.mean(hijos) + 2):,.0f} '
       'personas</b> vinculadas al sistema de riego, contando titular, pareja e '
@@ -268,15 +297,22 @@ def main():
       'sistema.</p>')
 
     A('<h2>6. Distribución territorial</h2>')
-    A('<table class="evitar-corte"><tr><th>Parroquia</th><th class="n">Fichas principales</th>'
-      '<th>Peso</th></tr>')
-    for k, n in parr.most_common():
+    # Por parroquia se cuentan TODAS las fichas (cada ficha es un predio con
+    # su parroquia), como la web; las principales van en columna aparte.
+    todas_parr = [(k.title(), v) for k, v in W['parroquias']]
+    n_todas = sum(v for _, v in todas_parr)
+    A('<table class="evitar-corte"><tr><th>Parroquia</th><th class="n">Fichas</th>'
+      '<th class="n">Fichas principales</th><th>Peso</th></tr>')
+    for k, n in todas_parr:
         A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
-          f'<td>{E.barra(pct(n, sum(parr.values())))}</td></tr>')
+          f'<td class="n">{parr.get(k, 0):,}</td>'
+          f'<td>{E.barra(pct(n, n_todas))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('perfil-parroquias', todas_parr, lambda i, n: '#8b5cf6')
+    A(E.figura(b64, 'Fichas por parroquia', f'Todas las fichas, {n_todas:,}.'))
     A(f'<p>El sistema es esencialmente un servicio de la parroquia '
-      f'<b>{parr.most_common(1)[0][0]}</b>, que concentra el '
-      f'{pct(parr.most_common(1)[0][1], sum(parr.values())):.1f} % de los usuarios.</p>')
+      f'<b>{todas_parr[0][0]}</b>, que concentra el '
+      f'{pct(todas_parr[0][1], n_todas):.1f} % de las fichas.</p>')
     A(f'<p>Se dispone de <b>teléfono de contacto para {tel:,} titulares</b> '
       f'({pct(tel, N):.1f} %), lo que permite una convocatoria directa para '
       'asambleas, capacitaciones o socialización del proyecto.</p>')

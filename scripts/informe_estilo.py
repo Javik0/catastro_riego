@@ -22,9 +22,13 @@ CSS = """
   h3 { font-size: 11pt; margin: 16px 0 6px; color: #24405e; }
   p { margin: 7px 0; text-align: justify; }
 
-  .corte { background: #fff8e6; border: 1px solid #e0a800; border-left: 5px solid #e0a800;
-           padding: 9px 13px; margin: 12px 0 18px; font-size: 9.5pt; border-radius: 4px; }
-  .corte b { color: #8a6100; }
+  .corte { color: #445; padding: 6px 0 8px; margin: 8px 0 14px; font-size: 9.5pt;
+           border-bottom: 1px solid #dbe3ee; }
+  .corte b { color: #1e4d8c; }
+  .fig { margin: 8px 0 4px; }
+  .fig img { max-width: 100%; border: 1px solid #dbe3ee; border-radius: 7px;
+             background: #fff; padding: 6px; }
+  .pie-fig { font-size: 8.5pt; color: #667; margin: 2px 0 14px; text-align: left; }
 
   .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin: 14px 0; }
   .kpi { border: 1px solid #dbe3ee; border-radius: 7px; padding: 9px 11px; background: #f8fafc; }
@@ -58,6 +62,14 @@ CSS = """
   @media print { body { font-size: 10pt; } }
 """
 
+# Fecha de corte EDITORIAL de todo el paquete de entrega: capítulos, consolidado,
+# anexo e informes del sociólogo citan esta misma fecha. Hasta el 4-sep-2026
+# los capítulos tomaban la última fecha de ficha del gpkg («5 de agosto») y
+# los informes del sociólogo esta constante («19 de agosto»); JAVIKO decidió
+# unificarlas aquí. Las depuraciones de gabinete no mueven las fechas de las
+# fichas, así que la fecha del gpkg ya no describe el corte real.
+FECHA_CORTE = '19 de agosto de 2026'
+
 PIE_INSTITUCION = ('Padrón de Usuarios · Sistema de Riego Comunitario '
                    'Guanguilquí–Porotog')
 
@@ -78,27 +90,35 @@ def cabecera(titulo, subtitulo):
 
 
 def aviso_corte(corte_texto, entrevistas, pendientes):
-    """Aviso de cabecera de cada capítulo.
+    """Línea de corte de cada capítulo.
 
-    El levantamiento de campo se cerró (JAVIKO, 31-ago-2026: todas las
-    secciones de la ficha están completadas), así que el texto ya no dice
-    «sigue en curso». Si algún día vuelven a quedar adicionales pendientes,
-    el aviso lo detecta y vuelve a hablar de levantamiento abierto.
+    Con el campo cerrado (JAVIKO, 31-ago-2026) es una línea informativa, no
+    una advertencia: fecha, tamaño del padrón y estado del levantamiento. Si
+    algún día vuelven a quedar adicionales pendientes, vuelve a decirlo.
 
-    La frase «se registran N fichas principales y quedan M predios
-    adicionales» la LEE con un regex `generar_informe_consolidado.py`: si se
-    reescribe, hay que actualizar el regex a la par.
+    La cifra «N fichas principales» la LEE `generar_informe_consolidado.py`
+    con un regex: si se reescribe, actualizar el regex a la par.
     """
-    estado = ('El levantamiento de campo está <b>cerrado</b>: todas las '
-              'secciones de la ficha se completaron.' if not pendientes else
-              'El levantamiento del padrón <b>sigue en curso</b>.')
-    return ('<div class="corte"><b>Datos al '
-            f'{corte_texto}.</b> {estado} '
-            f'A la fecha de corte se registran <b>{entrevistas:,} fichas principales</b> '
-            f'y quedan <b>{pendientes:,} predios adicionales</b> por completar. Las '
-            'cifras se recalculan con cada depuración de gabinete; deben '
-            'citarse siempre acompañadas de su fecha de corte.'
-            '</div>')
+    if pendientes:
+        estado = (f'levantamiento en curso, {pendientes:,} predios adicionales '
+                  'por completar')
+    else:
+        estado = 'levantamiento de campo cerrado'
+    return (f'<div class="corte"><b>Datos al {corte_texto}.</b> '
+            f'{entrevistas:,} fichas principales · {estado}.</div>')
+
+
+def figura(b64, titulo, pie='', nivel='h3'):
+    """Gráfico con el estilo de la casa: título opcional, imagen y un pie de
+    UNA línea que nombra el universo («Fichas principales, 4.307»)."""
+    h = []
+    if titulo:
+        h.append(f'<{nivel}>{titulo}</{nivel}>')
+    h.append(f'<div class="fig evitar-corte"><img src="data:image/png;base64,{b64}" '
+             f'alt="{titulo or pie}"></div>')
+    if pie:
+        h.append(f'<p class="pie-fig">{pie}</p>')
+    return '\n'.join(h)
 
 
 def kpis(pares):

@@ -1,7 +1,7 @@
 # Encuesta a los regantes — conocimiento de la Junta y del sistema
 
 **Padrón de Usuarios · Sistema de Riego Comunitario Guanguilquí–Porotog**  
-Generado el 02/09/2026 desde el `data.gpkg` de campo.
+Generado el 04/09/2026 desde el `data.gpkg` de campo.
 
 Corresponde a la sección **"5. Datos de la comunidad y conocimiento de la Junta de Agua"** de la ficha de papel (pestaña "5. ENCUESTA" en QField).
 
@@ -39,8 +39,8 @@ Respondieron **4,132 de 4,307** fichas principales (95.9%).
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
 | Sector 1 | 1,545 | 217 | 87.7% |
-| Sector 2 | 1,452 | 185 | 88.7% |
-| Sector 3 | 610 | 123 | 83.2% |
+| Sector 2 | 1,451 | 185 | 88.7% |
+| Sector 3 | 611 | 123 | 83.2% |
 
 Comunidades con el **menor** porcentaje de "Sí" (20+ entrevistados — donde enfocar la socialización):
 
@@ -174,8 +174,8 @@ Respondieron **4,110 de 4,307** fichas principales (95.4%).
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
 | Sector 1 | 1,323 | 434 | 75.3% |
-| Sector 2 | 1,359 | 263 | 83.8% |
-| Sector 3 | 503 | 228 | 68.8% |
+| Sector 2 | 1,358 | 263 | 83.8% |
+| Sector 3 | 504 | 228 | 68.9% |
 
 Comunidades con el **menor** porcentaje de "Sí" (20+ entrevistados — donde enfocar la socialización):
 
@@ -202,8 +202,8 @@ Respondieron **4,038 de 4,307** fichas principales (93.8%).
 | Sector | Sí | No | % Sí |
 |---|---|---|---|
 | Sector 1 | 1,653 | 96 | 94.5% |
-| Sector 2 | 1,400 | 158 | 89.9% |
-| Sector 3 | 630 | 101 | 86.2% |
+| Sector 2 | 1,399 | 158 | 89.9% |
+| Sector 3 | 631 | 101 | 86.2% |
 
 ### Cruce: demanda de capacitación no atendida
 

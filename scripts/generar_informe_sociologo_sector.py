@@ -79,7 +79,6 @@ Se corre con el Python del PATH (C:\\Python314): nada de aquí lee el data.gpkg.
 """
 
 import base64
-import io
 import os
 import statistics as st
 import sys
@@ -108,19 +107,14 @@ SECTORES = ('Sector 1', 'Sector 2', 'Sector 3')
 # rango de superficie»: se importan para que las tres salidas no se separen.
 from generar_informe_sociologo import RANGOS_PREDIO  # noqa: E402
 
-# La paleta del Dashboard (PIE_COLORS de DashboardHome.tsx), en el mismo orden.
-PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444',
-              '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16']
-COLORES_INSTRUCCION = {'Ninguno': '#94a3b8', 'Alfabetizado': '#22d3ee',
-                       'Primaria': '#3b82f6', 'Secundaria': '#6366f1',
-                       'Superior': '#8b5cf6'}
-NIVELES_INSTRUCCION = ['Ninguno', 'Alfabetizado', 'Primaria',
-                       'Secundaria', 'Superior']
+# La paleta del Dashboard y la escala de instrucción viven en
+# informe_graficos.py (compartidas con los capítulos).
+from informe_graficos import (  # noqa: E402
+    COLORES_INSTRUCCION, NIVELES_INSTRUCCION, PIE_COLORS,
+)
 
-NOTA_UNIV_TODAS = ('Universo: todas las fichas del corte (principales + '
-                   'adicionales completadas). Cada ficha es un predio.')
-NOTA_UNIV_PRI = ('Universo: fichas principales (una por titular entrevistado; '
-                 'las adicionales duplicarían su respuesta).')
+NOTA_UNIV_TODAS = 'Todas las fichas del corte (cada ficha es un predio).'
+NOTA_UNIV_PRI = 'Fichas principales (una por titular entrevistado).'
 
 
 def es_hija(p):
@@ -190,7 +184,12 @@ def datos_graficos(todas, pri, cultivos, animales, coms_sup):
 
     # 3 — Destino de la Producción Agrícola (registros de cultivo que declaran
     #     cada destino; un registro puede declarar varios)
-    d['destino'] = [(nom, sum(1 for c in cultivos if c.get(campo)), color)
+    # El campo trae '1', '0' o vacío: solo el '1' declara el destino. Hasta el
+    # 4-sep-2026 se contaba «truthy» y los '0' pasaban por sí (el tablero web
+    # arrastra el mismo error en JavaScript, reportado a JAVIKO ese día).
+    d['destino'] = [(nom, sum(1 for c in cultivos
+                              if str(c.get(campo) or '').strip() in ('1', 'True')),
+                     color)
                     for nom, campo, color in
                     (('Autoconsumo', 'es_autoconsumo', '#10b981'),
                      ('Mercado / Venta', 'es_mercado', '#3b82f6'),
@@ -305,126 +304,11 @@ def datos_graficos(todas, pri, cultivos, animales, coms_sup):
     return d
 
 
-# ─── Dibujo: los mismos gráficos, en matplotlib ──────────────────────────────
-
-_ARCHIVOS = {}  # clave → ruta relativa a docs/, para el Markdown
-
-
-def _guardar(fig, clave):
-    """PNG en base64 para el HTML y archivo en disco para el Markdown/Word."""
-    import matplotlib.pyplot as plt
-    buf = io.BytesIO()
-    fig.savefig(buf, format='png', dpi=150, facecolor='white',
-                bbox_inches='tight')
-    carpeta = os.path.join(BASE, 'docs', DIR_GRAF)
-    os.makedirs(carpeta, exist_ok=True)
-    ruta = os.path.join(carpeta, clave + '.png')
-    fig.savefig(ruta, format='png', dpi=200, facecolor='white',
-                bbox_inches='tight')
-    _ARCHIVOS[clave] = f'{DIR_GRAF}/{clave}.png'
-    plt.close(fig)
-    return base64.b64encode(buf.getvalue()).decode('ascii')
-
-
-def _ejes(fig, ax):
-    ax.spines[:].set_visible(False)
-    ax.tick_params(length=0, labelsize=8.5, colors='#556070')
-    ax.set_axisbelow(True)
-
-
-def g_donut(clave, series, fmt, centro=None):
-    """Anillo como los Pie de recharts: (nombre, valor, color) con la leyenda
-    de cifras debajo, no como etiquetas radiales."""
-    import matplotlib.pyplot as plt
-    fig, ax = plt.subplots(figsize=(5.4, 3.4))
-    vals = [v for _, v, _ in series]
-    cols = [c for _, _, c in series]
-    ax.pie(vals, colors=cols, startangle=90, counterclock=False,
-           wedgeprops=dict(width=0.38, edgecolor='white', linewidth=2))
-    if centro:
-        ax.text(0, 0, centro, ha='center', va='center', fontsize=10,
-                fontweight='bold', color='#24405e')
-    ax.set(aspect='equal')
-    leyenda = '    '.join(f'{n}: {fmt(v)}' for n, v, _ in series)
-    fig.text(0.5, 0.02, leyenda, ha='center', fontsize=8.5, color='#374151')
-    return _guardar(fig, clave)
-
-
-def g_barras_h(clave, items, colores, fmt=fnum, alto=None):
-    """Barras horizontales con la cifra al final, como los BarChart layout=
-    vertical de recharts. `items`: [(nombre, valor)] de mayor a menor."""
-    import matplotlib.pyplot as plt
-    n = len(items)
-    fig, ax = plt.subplots(figsize=(6.4, alto or max(1.6, 0.5 * n + 0.6)))
-    nombres = [x[0] for x in items][::-1]
-    vals = [x[1] for x in items][::-1]
-    cols = ([colores(i, nom) for i, (nom, _) in enumerate(items)][::-1]
-            if callable(colores) else list(colores)[::-1])
-    barras = ax.barh(range(n), vals, color=cols, height=0.62)
-    ax.set_yticks(range(n), nombres)
-    ax.xaxis.grid(True, linestyle=(0, (3, 3)), color='#dbe3ee', linewidth=0.8)
-    _ejes(fig, ax)
-    vmax = max(vals) if vals else 1
-    for b, v in zip(barras, vals):
-        dentro = v > vmax * 0.18
-        ax.text(v - vmax * 0.015 if dentro else v + vmax * 0.015,
-                b.get_y() + b.get_height() / 2, fmt(v),
-                ha='right' if dentro else 'left', va='center', fontsize=8,
-                fontweight='bold', color='white' if dentro else '#556070')
-    ax.margins(x=0.06)
-    return _guardar(fig, clave)
-
-
-def g_barras_v(clave, items, colores, fmt=fnum, rot=0):
-    """Barras verticales con la cifra dentro, como los BarChart de recharts."""
-    import matplotlib.pyplot as plt
-    n = len(items)
-    fig, ax = plt.subplots(figsize=(max(4.6, 0.62 * n + 1.6), 3.2))
-    nombres = [x[0] for x in items]
-    vals = [x[1] for x in items]
-    cols = ([colores(i, nom) for i, (nom, _) in enumerate(items)]
-            if callable(colores) else list(colores))
-    barras = ax.bar(range(n), vals, color=cols, width=0.62)
-    ax.set_xticks(range(n), nombres, rotation=rot,
-                  ha='right' if rot else 'center', fontsize=8)
-    ax.yaxis.grid(True, linestyle=(0, (3, 3)), color='#dbe3ee', linewidth=0.8)
-    _ejes(fig, ax)
-    vmax = max(vals) if vals else 1
-    for b, v in zip(barras, vals):
-        dentro = v > vmax * 0.12
-        ax.text(b.get_x() + b.get_width() / 2,
-                v - vmax * 0.02 if dentro else v + vmax * 0.02, fmt(v),
-                ha='center', va='top' if dentro else 'bottom', fontsize=8,
-                fontweight='bold', color='white' if dentro else '#556070')
-    ax.margins(y=0.08)
-    return _guardar(fig, clave)
-
-
-def g_si_no(clave, filas):
-    """Pares Sí/No en horizontal (verde Sí, rojo No), como «Represa y
-    Capacitación». `filas`: [(nombre, sí, no)]."""
-    import matplotlib.pyplot as plt
-    n = len(filas)
-    fig, ax = plt.subplots(figsize=(6.4, 0.9 * n + 0.7))
-    ys = range(n)
-    si = [f[1] for f in filas][::-1]
-    no = [f[2] for f in filas][::-1]
-    nombres = [f[0] for f in filas][::-1]
-    b1 = ax.barh([y + 0.19 for y in ys], si, height=0.34, color='#10b981',
-                 label='Sí')
-    b2 = ax.barh([y - 0.19 for y in ys], no, height=0.34, color='#ef4444',
-                 label='No')
-    ax.set_yticks(list(ys), nombres, fontsize=8.5)
-    ax.xaxis.grid(True, linestyle=(0, (3, 3)), color='#dbe3ee', linewidth=0.8)
-    _ejes(fig, ax)
-    vmax = max(si + no) or 1
-    for barras, vals in ((b1, si), (b2, no)):
-        for b, v in zip(barras, vals):
-            ax.text(v + vmax * 0.015, b.get_y() + b.get_height() / 2, fnum(v),
-                    va='center', fontsize=8, fontweight='bold', color='#556070')
-    ax.margins(x=0.09)
-    ax.legend(loc='lower right', fontsize=8, frameon=False)
-    return _guardar(fig, clave)
+# ─── Dibujo: las piezas compartidas de informe_graficos.py ─────────────────
+# (vivieron aquí hasta el 4-sep-2026; ahora las usan también los capítulos)
+from informe_graficos import (  # noqa: E402
+    ARCHIVOS as _ARCHIVOS, g_barras_h, g_barras_v, g_donut, g_si_no,
+)
 
 
 def dibujar_graficos(slug, d):
@@ -478,64 +362,48 @@ def dibujar_graficos(slug, d):
 # ─── Los títulos y notas de cada gráfico ─────────────────────────────────────
 
 def titulos_y_notas(d, nombre_corte):
+    """Título y pie de cada gráfico. El pie es UNA línea que nombra el
+    universo y la cifra base; las explicaciones de método van en la
+    presentación del documento, no bajo cada figura (acento aprobado por
+    JAVIKO el 4-sep-2026)."""
     granja = d['pecuario_granja_excluida']
+    todas = f"{NOTA_UNIV_TODAS} {fnum(d['n_todas'])} fichas."
+    pri = f"{NOTA_UNIV_PRI} {fnum(d['n_pri'])} fichas."
     return {
-        11: ('Tamaño de los Predios',
-             ['Los predios catastrales del corte por rango de superficie. Se '
-              'cuenta por PREDIO, no por ficha: los predios familiares tienen '
-              'varias fichas y contarlos por ficha multiplicaría los tramos '
-              'grandes. La superficie es la del catastro municipal.',
-              f"{fnum(d['tamanos_total'])} predios con superficie en el "
-              'catastro. El detalle a nivel de sistema, con la comparación '
-              'entre contar por predio y por ficha, está en el reporte '
-              '«Terrenos por rango de superficie».']),
         1: ('Uso del Suelo: Con Riego vs Sin Riego (ha)',
             [f"Medición catastral de las {d['uso_suelo']['n_com']} comunidades "
-             f"de {nombre_corte}: riego ajustado y resto del polígono, cada "
-             'predio contado una sola vez (fuente única '
-             'superficie_por_comunidad.json). La superficie declarada por los '
-             'comuneros es otra medición del mismo territorio y se cita en la '
-             'lectura del sector; las dos familias no se suman entre sí.']),
+             f"de {nombre_corte}: {f2(d['uso_suelo']['catastral'])} ha, cada "
+             'predio contado una sola vez.']),
         2: ('Especies Pecuarias Principales (Cabezas)',
-            [NOTA_UNIV_TODAS + ' Las cinco especies con más cabezas, tal '
-             'como las registró el técnico.',
-             (f'Se excluyen {fnum(granja)} aves de la granja avícola de '
-              'Asociación Rosalía (registros de 10.000 aves por titular sobre '
-              'el mismo predio, pendiente de terceros del proyecto); el '
-              'tablero web no aplica esta exclusión.') if granja else None]),
+            [todas + ' Las cinco especies con más cabezas.' +
+             (f' No incluye la explotación avícola industrial de {fnum(granja)} '
+              'aves de Asociación Rosalía.' if granja else '')]),
         3: ('Destino de la Producción Agrícola',
-            [NOTA_UNIV_TODAS + ' Registros de cultivo que declaran cada '
-             'destino; un mismo cultivo puede declarar varios, así que las '
-             'barras no suman el total de registros.']),
+            [todas + ' Registros de cultivo por destino; un cultivo puede '
+             'declarar más de uno.']),
         4: ('Nivel de Instrucción',
-            [NOTA_UNIV_PRI + f" {fnum(d['instruccion_con_dato'])} de "
-             f"{fnum(d['n_pri'])} titulares entrevistados con el dato "
-             'registrado.']),
+            [f"{NOTA_UNIV_PRI} {fnum(d['instruccion_con_dato'])} de "
+             f"{fnum(d['n_pri'])} con el dato."]),
         5: ('Hijos por Familia',
-            [NOTA_UNIV_PRI + f" {fnum(d['hijos']['hombres'] + d['hijos']['mujeres'])} "
-             f"hijos declarados por {fnum(d['hijos']['familias'])} familias · "
-             f"promedio {d['hijos']['promedio']:,.1f} por familia".replace(
-                 '.', ',')]),
+            [f"{NOTA_UNIV_PRI} "
+             f"{fnum(d['hijos']['hombres'] + d['hijos']['mujeres'])} hijos en "
+             f"{fnum(d['hijos']['familias'])} familias, "
+             f"{d['hijos']['promedio']:.1f} por familia."]),
         6: ('Represa y Capacitación',
-            [NOTA_UNIV_PRI + ' Verde Sí, rojo No; solo se cuentan las fichas '
-             'con respuesta.']),
+            [pri + ' Verde Sí, rojo No.']),
         7: ('Método de Riego (promedio %)',
-            ['Promedio simple del porcentaje declarado en cada ficha, sobre '
-             'todas las fichas del corte —incluidas las que no declaran '
-             'método—, redondeado a enteros: es la misma cifra del tablero '
-             'web. Por el redondeo, la suma puede no dar 100.']),
+            [todas + ' Promedio simple del porcentaje declarado en cada '
+             'ficha, redondeado a enteros.']),
         8: ('Cultivos Más Frecuentes',
-            [NOTA_UNIV_TODAS + ' Número de registros de cultivo, no '
-             'superficie: los doce más registrados de '
-             f"{fnum(d['cultivos_registros'])} registros del corte."]),
+            [todas + f" Los doce cultivos con más registros, de "
+             f"{fnum(d['cultivos_registros'])}."]),
         9: ('Tenencia del Predio',
-            [NOTA_UNIV_PRI + ' El tablero web cuenta aquí todas las fichas '
-             '(las adicionales heredan la tenencia del titular), por lo que '
-             'sus cifras son mayores; en este informe manda la regla del '
-             'proyecto: los datos de las personas salen solo de las fichas '
-             'principales.']),
+            [pri]),
         10: ('Fichas por Parroquia',
-             [NOTA_UNIV_TODAS]),
+             [todas]),
+        11: ('Tamaño de los Predios',
+             [f"{fnum(d['tamanos_total'])} predios catastrales, cada uno "
+              'contado una sola vez; superficie del catastro municipal.']),
     }
 
 
@@ -571,15 +439,13 @@ def lectura_corte(nombre, d, coms, caudal_ls, es_sistema=False,
         frase_caudal = (f'El caudal del sistema es de '
                         f'{f2(caudal_totales["caudal_sistema_ls"])} l/s: '
                         f'{f2(caudal_totales["caudal_comunidades_ls"])} l/s '
-                        'que reciben las comunidades (moda por comunidad, '
-                        'nunca suma de fichas) más '
+                        'que reciben las comunidades (un caudal por '
+                        'comunidad) más '
                         f'{f2(caudal_totales["caudal_individual_ls"])} l/s de '
                         'tomas individuales.')
     else:
-        frase_caudal = (f'Sus comunidades reciben {f1(caudal_ls)} l/s (moda '
-                        'por comunidad, nunca suma de fichas; los caudales '
-                        'heredados se muestran en el informe por comunidad y '
-                        'no se suman).')
+        frase_caudal = (f'Sus comunidades reciben {f1(caudal_ls)} l/s, un '
+                        'caudal por comunidad.')
     p1 = (f'{"El sistema" if es_sistema else nombre} agrupa '
           f'{fnum(len(coms))} comunidades con {fnum(d["n_todas"])} fichas '
           f'catastrales ({fnum(d["n_pri"])} principales y '
@@ -623,17 +489,18 @@ def construir_documento(comunidades, sup, caudal, datos_por_corte, mapas):
         'puesto. Es el complemento gráfico del Informe por Comunidad: aquella '
         'entrega responde cada pregunta de la ficha comunidad por comunidad; '
         'esta muestra el retrato de cada sector de un vistazo.',
-        'Dos universos conviven en los gráficos y cada uno nombra el suyo al '
-        'pie: los datos de tierra y producción salen de TODAS las fichas '
-        '(cada ficha es un predio); los datos de las personas —instrucción, '
-        'hijos, represa y capacitación, tenencia— salen SOLO de las fichas '
-        'principales, porque las adicionales pertenecen al mismo titular y '
-        'duplicarían su respuesta.',
-        'Dos mediciones de superficie conviven también, y no se suman entre '
-        'sí: la DECLARADA por los comuneros en la entrevista (el universo de '
-        'este material) y la CATASTRAL de los polígonos municipales, que es '
-        'la que usa el gráfico de uso del suelo — la misma elección del '
-        'tablero web, y así lo etiqueta cada gráfico.',
+        'Cada gráfico nombra al pie su universo. Los datos de tierra y '
+        'producción salen de todas las fichas, porque cada ficha es un predio; '
+        'los datos de las personas —instrucción, hijos, represa y capacitación, '
+        'tenencia— salen solo de las fichas principales, una por titular '
+        'entrevistado. El inventario pecuario no incluye una explotación '
+        'avícola industrial de 60.000 aves registrada en Asociación Rosalía, '
+        'ajena a la producción familiar que describe este material.',
+        'Dos mediciones de superficie conviven y no se suman entre sí: la '
+        'declarada por los comuneros en la entrevista y la catastral de los '
+        'polígonos municipales, que es la que usa el gráfico de uso del suelo. '
+        'El método de riego es el promedio simple del porcentaje declarado en '
+        'cada ficha; la tenencia se cuenta sobre fichas principales.',
         f'Las cifras corresponden al padrón al {FECHA_CORTE}, la misma fecha '
         'de referencia de los demás documentos entregados al consorcio. El '
         'levantamiento de campo está cerrado.',
@@ -881,14 +748,11 @@ def verificar(datos_por_corte, comunidades, sup, caudal):
 
 # ─── main ────────────────────────────────────────────────────────────────────
 
-def main():
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    plt.rcParams.update({'font.family': ['Segoe UI', 'DejaVu Sans'],
-                         'axes.edgecolor': '#dbe3ee',
-                         'figure.facecolor': 'white'})
-
+def calcular_datos_por_corte(dibujar=False):
+    """Las matrices de los gráficos, para el sistema y cada sector. Es el
+    ÚNICO sitio donde se calculan: el informe por sector las dibuja y los
+    capítulos del informe técnico las reutilizan (informe_graficos.
+    datos_dashboard) para coincidir con la pantalla."""
     comunidades, sup, caudal, corte_txt, fichas = agregar_todo()
 
     # El sector del INFORME es el del catálogo oficial (constants.ts), el
@@ -949,11 +813,24 @@ def main():
                 'catastral': sup['total']['superficie_catastral_ha'],
                 'n_com': len(coms_sup),
             }
-        slug = 'sistema' if sector is None else sector.lower().replace(' ', '-')
-        graficos = dibujar_graficos(slug, d)
-        # re-mapear al índice fijo de claves para el documento
-        d['_graficos'] = graficos
+        if dibujar:
+            slug = 'sistema' if sector is None else sector.lower().replace(' ', '-')
+            d['_graficos'] = dibujar_graficos(slug, d)
         datos_por_corte[nombre] = d
+    return {'datos': datos_por_corte, 'comunidades': comunidades, 'sup': sup,
+            'caudal': caudal, 'fichas': fichas, 'todas': todas, 'pri': pri,
+            'cultivos': cultivos, 'animales': animales,
+            'sector_de_key': sector_de_key}
+
+
+def main():
+    import informe_graficos as G
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), DIR_GRAF)
+    r = calcular_datos_por_corte(dibujar=True)
+    datos_por_corte, comunidades, sup, caudal = (r['datos'], r['comunidades'],
+                                                 r['sup'], r['caudal'])
+
 
     verificar(datos_por_corte, comunidades, sup, caudal)
 

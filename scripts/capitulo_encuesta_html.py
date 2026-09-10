@@ -6,13 +6,23 @@ Lo llama generar_informe_encuesta.py con las cifras ya calculadas y produce un
 HTML imprimible (A4) con la identidad del padrón, listo para anexar al informe
 del Consorcio o entregarse suelto.
 
-CORTE PARCIAL
--------------
-El levantamiento sigue en curso, así que el capítulo lleva en portada la FECHA
-DE CORTE y una advertencia visible: las cifras son de avance y se recalculan en
-cada actualización. Sin eso, un lector podría citar un porcentaje como
-definitivo cuando todavía entran fichas cada jornada.
+FECHA DE CORTE
+--------------
+El capítulo lleva en portada la fecha de corte editorial del paquete
+(informe_estilo.FECHA_CORTE) con el mismo aviso que los demás capítulos
+(informe_estilo.aviso_corte): si vuelven a quedar adicionales pendientes, el
+aviso lo dice solo. Hasta el 4-sep-2026 tenía un aviso propio que hablaba de
+«levantamiento en curso» y de «entrevistas» con el campo ya cerrado.
 """
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import informe_estilo as E  # noqa: E402
+import informe_graficos as G  # noqa: E402
+
+BASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 
 CSS = """
   @page { size: A4; margin: 16mm 15mm; }
@@ -73,11 +83,15 @@ def barra(p, ancho=100):
 
 def construir(d):
     """d: dict con todas las cifras que calcula generar_informe_encuesta."""
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), 'graficos-capitulos')
+    W = G.sistema()   # matrices del tablero web (motor compartido)
+    from generar_informe_sociologo import COLOR_SECTOR
     H = []
     A = H.append
     A('<!doctype html><html lang="es"><head><meta charset="utf-8">')
     A('<title>Conocimiento y gobernanza del sistema — Padrón Guanguilquí–Porotog</title>')
-    A(f'<style>{CSS}</style></head><body>')
+    A(f'<style>{E.CSS}</style></head><body>')
 
     A('<header><div>')
     A('<h1>Conocimiento y gobernanza del sistema de riego</h1>')
@@ -87,12 +101,7 @@ def construir(d):
       'Padrón de Usuarios<br>Sistema de Riego Comunitario Guanguilquí–Porotog<br>'
       'Consorcio Cayambe SPT</div></header>')
 
-    A('<div class="corte"><b>Datos de avance al '
-      f'{d["corte_texto"]}.</b> El levantamiento del padrón <b>sigue en curso</b>: '
-      f'a la fecha de corte se registran <b>{d["total"]:,} entrevistas</b> y quedan '
-      f'<b>{d["pendientes_s4"]:,} predios adicionales</b> por completar. Las cifras '
-      'de este capítulo son parciales y se recalculan en cada actualización; deben '
-      'citarse siempre acompañadas de su fecha de corte.</div>')
+    A(E.aviso_corte(d['corte_texto'], d['total'], d['pendientes_s4']))
 
     # ── KPIs ──
     A('<div class="kpis">')
@@ -112,15 +121,13 @@ def construir(d):
       f'sistema durante el empadronamiento. El universo son las <b>{d["total"]:,} '
       f'fichas principales</b> registradas hasta el corte: una por titular '
       f'entrevistado.</p>')
-    A('<div class="nota"><b>Sobre el universo.</b> Un mismo titular puede tener varios '
-      f'predios: {d["con_adicionales"]:,} de los entrevistados declararon predios '
-      'adicionales. La entrevista se realiza <b>una sola vez por persona</b>, de modo '
-      'que sus fichas adicionales no se contabilizan como entrevistas independientes; '
-      'lo contrario multiplicaría la misma respuesta y distorsionaría los porcentajes. '
-      f'Quedan fuera {d["solo_adicionales"]} personas que constan únicamente como '
-      'predio adicional de otro titular y cuyas respuestas se heredaron de la ficha '
-      f'de origen. El padrón de usuarios asciende, por tanto, a {d["padron_personas"]:,} '
-      'personas, cifra distinta del número de entrevistas.</p></div>')
+    A(f'<p>Un mismo titular puede tener varios predios: {d["con_adicionales"]:,} '
+      'de los entrevistados declararon predios adicionales. La entrevista se '
+      'realiza <b>una sola vez por persona</b>, de modo que sus fichas adicionales '
+      f'no se cuentan como entrevistas independientes. Otras {d["solo_adicionales"]} '
+      'personas constan únicamente como predio adicional de otro titular y '
+      'heredan las respuestas de la ficha de origen; el padrón de usuarios '
+      f'asciende, por tanto, a {d["padron_personas"]:,} personas.</p>')
     A('<p>La tasa de respuesta supera el 93 % en todas las preguntas cerradas. Los '
       'nombres propios se agrupan sin acentos ni espacios sobrantes para no fragmentar '
       'a una misma persona en variantes de escritura.</p>')
@@ -144,10 +151,17 @@ def construir(d):
         A(f'<tr><td>{sec}</td><td class="n">{si:,}</td><td class="n">{no:,}</td>'
           f'<td>{barra(p)}</td></tr>')
     A('</table>')
+    filas_presa = [(sec, round(100.0 * si / (si + no), 1) if si + no else 0)
+                   for sec, (si, no) in sorted(d['presa_sector'].items())
+                   if not sec.startswith('(')]
+    b64 = G.g_barras_v('conocimiento-presa-sector', filas_presa,
+                       [COLOR_SECTOR.get(sec, '#3b82f6') for sec, _ in filas_presa],
+                       fmt=lambda v: f'{v:.1f} %')
+    A(E.figura(b64, 'Conoce el proyecto de la presa, por sector (% Sí)',
+               f'Fichas principales con respuesta, {d["presa_resp"]:,}.'))
     if sin_sector:
-        A(f'<p style="font-size:9pt;color:#667;margin-top:-8px">'
-          f'No se incluyen {sin_sector} entrevistas cuyo sector no pudo determinarse '
-          f'({100.0 * sin_sector / d["presa_resp"]:.1f} % del total).</p>')
+        A(f'<p class="pie-fig">No se incluyen {sin_sector} fichas cuyo sector no '
+          f'pudo determinarse ({100.0 * sin_sector / d["presa_resp"]:.1f} % del total).</p>')
     A('<h3>Comunidades con menor difusión</h3>')
     A('<p>Comunidades con veinte o más entrevistados donde el conocimiento del proyecto '
       'es más bajo. Constituyen el foco prioritario de socialización:</p>')
@@ -206,17 +220,24 @@ def construir(d):
     A(f'<tr><td>No solicita capacitación</td><td class="n">{d["cap_no_quiere"]:,}</td>'
       f'<td class="n">{d["pct_no_quiere"]:.1f}%</td></tr>')
     A('</table>')
-    A(f'<div class="hallazgo"><b>Hallazgo principal.</b> '
-      f'{d["demanda_no_atendida"]:,} titulares nunca han recibido capacitación y '
-      'manifiestan querer recibirla. Constituyen la población objetivo directa e '
-      'inmediata de un plan de formación, sin necesidad de estudios adicionales para '
-      'identificarla: están nominados en el padrón, con su comunidad y su sector.</div>')
+    b64 = G.g_si_no('conocimiento-comunitaria', W['comunitaria'])
+    A(E.figura(b64, 'Represa y capacitación',
+               'Fichas principales con respuesta; verde Sí, rojo No.'))
+    A(f'<p><b>{d["demanda_no_atendida"]:,} titulares nunca han recibido capacitación '
+      'y manifiestan querer recibirla.</b> Constituyen la población objetivo directa '
+      'e inmediata de un plan de formación, sin necesidad de estudios adicionales '
+      'para identificarla: están nominados en el padrón, con su comunidad y su '
+      'sector.</p>')
     A('<h3>Temas solicitados</h3>')
     A('<table class="evitar-corte"><tr><th>Categoría temática</th>'
       '<th class="n">Menciones</th><th>Peso</th></tr>')
     for cat, n, p in d['temas']:
         A(f'<tr><td>{cat}</td><td class="n">{n:,}</td><td>{barra(p)}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_h('conocimiento-temas', [(cat, n) for cat, n, _ in d['temas']],
+                       lambda i, n: G.PIE_COLORS[i % 8])
+    A(E.figura(b64, 'Temas de capacitación solicitados',
+               f'Menciones, {sum(n for _, n, _ in d["temas"]):,}.'))
     A(f'<p>La demanda se concentra de forma abrumadora en el <b>manejo del riego</b>, '
       'coherente con el objeto del sistema y con la expectativa que genera el proyecto '
       'de la presa.</p>')
@@ -237,10 +258,9 @@ def construir(d):
       'expresamente, y el tema prioritario es el manejo del riego.</li>')
     A('</ul>')
 
-    A('<div class="nota"><b>Limitación documentada.</b> La ficha de campo en papel '
-      'contempla dos preguntas sobre si la Junta cuenta con <i>estatutos</i> y '
-      '<i>reglamentos</i>. Esos campos no fueron incorporados al formulario digital, '
-      'por lo que no existe registro sistemático y no se reportan en este capítulo.</div>')
+    A('<p>La ficha de campo en papel contempla dos preguntas sobre si la Junta '
+      'cuenta con <i>estatutos</i> y <i>reglamentos</i>; esos campos no se '
+      'incorporaron al formulario digital y por eso no se reportan aquí.</p>')
 
     A(f'<footer><span>Padrón de Usuarios · Sistema de Riego Comunitario '
       f'Guanguilquí–Porotog</span><span>Corte: {d["corte_texto"]}</span></footer>')

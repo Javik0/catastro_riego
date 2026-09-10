@@ -36,6 +36,7 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
+import informe_graficos as G  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -48,8 +49,6 @@ SUPERFICIE_JSON = os.path.join(BASE, 'public', 'geo', 'superficie_por_comunidad.
 
 # Comunidad cuyas tarifas no son comparables (ver encabezado).
 TARIFA_ANOMALA = 'ALPAKA'
-MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-         'octubre noviembre diciembre').split()
 
 
 def num(p, k):
@@ -86,20 +85,49 @@ def cargar():
         crudo = p.get('comunidad') or ''
         p['_comk'] = canonica(crudo) or '(sin comunidad)'
         vistos[p['_comk']][nombre_publico(crudo) or '(sin comunidad)'] += 1
-        p['_sec'] = (p.get('sector_investigacion') or '').strip()
     display = {}
     for k, c in vistos.items():
         validas = [(n_, v) for n_, v in c.most_common() if normalizar(n_) == k]
         display[k] = validas[0][0] if validas else k
     for p in pri:
         p['_com'] = display[p['_comk']]
-        if p['_sec'] in ('', 'None'):
-            p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
+        # El sector es el de la COMUNIDAD según el catálogo oficial, como la
+        # web y los informes del sociólogo. Hasta el 4-sep-2026 mandaba el
+        # campo `sector_investigacion` de la ficha (vacío en 556 principales
+        # y contradictorio con su comunidad en otras 27), y los cortes por
+        # sector no cuadraban entre documentos. Decisión de JAVIKO.
+        p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
 
-    corte = max(str(f1 or '')[:10], str(f2 or '')[:10])
-    corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                 if corte else 'la fecha de generación')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg: las depuraciones de gabinete
+    # posteriores no mueven esas fechas (decisión de JAVIKO, 4-sep-2026).
+    corte_txt = E.FECHA_CORTE
     return pri, corte_txt, pendientes
+
+
+def tamanos_por_predio():
+    """Superficie catastral de cada predio distinto del padrón publicado y su
+    distribución por los rangos del proyecto. Devuelve (áreas en m², [(rango, n)])."""
+    import json
+    from generar_informe_sociologo import RANGOS_PREDIO
+    from generar_informe_sociologo_sector import area_por_clave
+    with open(os.path.join(BASE, 'public', 'geo', 'fichas_predios.geojson'),
+              encoding='utf-8') as f:
+        fichas = [x['properties'] for x in json.load(f)['features']]
+    areas_clave = area_por_clave()
+    vistas, areas = set(), []
+    for p in fichas:
+        if p.get('es_ficha_hija') == 1 and                 (p.get('estado_investigacion') or '') != 'completada':
+            continue
+        clave = (str(p.get('clave_catastral') or '').strip() or
+                 str(p.get('cod_poligono') or '').strip())
+        if not clave or clave in vistas or clave not in areas_clave:
+            continue
+        vistas.add(clave)
+        areas.append(float(areas_clave[clave]))
+    areas.sort()
+    dist = [(et, sum(1 for a in areas if lo <= a < hi)) for lo, hi, et in RANGOS_PREDIO]
+    return areas, dist
 
 
 def metodo_predominante(p):
@@ -134,12 +162,16 @@ def main():
     # que las superficies por método —que salen de las fichas— se expresan
     # sobre el riego ajustado, repartiendo el recorte en proporción.
     AJUSTE = (ha_r / ha_r_dec) if ha_r_dec else 1.0
-    areas = sorted(num(p, 'area_total') for p in pri if num(p, 'area_total') > 0)
+    # Tamaño del predio: por PREDIO CATASTRAL, no por ficha. Es la misma regla
+    # del informe por sector y del reporte «Terrenos por rango de superficie»:
+    # los predios familiares tienen varias fichas y contarlos por ficha
+    # multiplica los tramos grandes; y la superficie es la del catastro, que
+    # es la familia de toda esta sección (regla 12). Hasta el 4-sep-2026 esta
+    # tabla contaba fichas principales por área declarada; JAVIKO decidió
+    # unificarla. Las claves salen de las fichas publicadas (regla 14:
+    # clave_catastral manda, cod_poligono es el respaldo).
+    areas, dist_area = tamanos_por_predio()
     med_area = st.median(areas)
-    tramos = [('Menos de 1.000 m²', 0, 1000), ('1.000 – 5.000 m²', 1000, 5000),
-              ('5.000 m² – 1 ha', 5000, 10000), ('1 – 5 ha', 10000, 50000),
-              ('Más de 5 ha', 50000, float('inf'))]
-    dist_area = [(et, sum(1 for a in areas if lo <= a < hi)) for et, lo, hi in tramos]
 
     # ── caudal (fuente única) ──
     with open(CAUDAL_JSON, encoding='utf-8') as f:
@@ -198,6 +230,10 @@ def main():
     n_res = sum(reserv.values())
 
     # ── documento ──
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), 'graficos-capitulos')
+    W = G.sistema()   # matrices del tablero web (motor compartido)
+    from generar_informe_sociologo import COLOR_SECTOR
     B = []
     A = B.append
     A(E.cabecera('El predio y el acceso al agua',
@@ -219,26 +255,32 @@ def main():
       # (12-ago-2026) y los informes usan el mismo término: «sin riego».
       'corresponde a áreas sin dotación: pastos sin riego, bosque o terreno no '
       'cultivable dentro del mismo predio.</p>')
-    A('<div class="nota"><p><b>Cómo se mide esta superficie.</b> Sumando la '
-      'superficie de cada predio <b>una sola vez</b>, según el polígono del '
-      'catastro municipal. No sumando lo que declara cada ficha: en los predios '
-      f'de herederos —{SUP["predios_compartidos"]} predios del padrón tienen '
-      'varias fichas— cada titular declara el terreno familiar completo, y al '
-      'sumar fichas ese terreno se contaría tantas veces como herederos '
-      'tenga.</p>'
-      f'<p>Lo que los titulares declaran suma <b>{ha_dec:,.1f} ha</b>, '
-      f'{ha_dec - ha_t:,.0f} más que la superficie real del territorio. Esa '
-      'diferencia no es un error de nadie y no se ha corregido: es lo que cada '
-      'familia considera suyo, y como tal se conserva en la base de datos para '
-      'el análisis social. Para medir el sistema, en cambio, cada hectárea debe '
-      'contarse una vez.</p></div>')
-    A(f'<p>El predio tiene una superficie <b>mediana de {med_area:,.0f} m²</b>. '
-      'La distribución muestra una estructura de <b>minifundio</b>:</p>')
-    A('<table class="evitar-corte"><tr><th>Tamaño del predio</th>'
+    A('<p>Esta superficie se mide sumando cada predio <b>una sola vez</b>, según '
+      'el polígono del catastro municipal. Lo que los titulares declaran en la '
+      f'entrevista suma <b>{ha_dec:,.1f} ha</b>: en los {SUP["predios_compartidos"]} '
+      'predios de herederos cada titular declara el terreno familiar completo, y '
+      'esa cifra se conserva como dato social. Las dos mediciones describen el '
+      'mismo territorio y no se suman entre sí.</p>')
+    b64 = G.g_donut('riego-uso-suelo',
+                    [('Con riego', ha_r, '#3b82f6'),
+                     ('Sin riego', SUP['sin_riego_catastral_ha'], '#f59e0b')],
+                    lambda v: f'{v:,.2f} ha', centro=f'{ha_t:,.2f} ha')
+    A(E.figura(b64, 'Uso del suelo: con riego y sin riego (ha)',
+               f'Medición catastral, {ha_t:,.2f} ha en {SUP["predios_catastrales"]:,} '
+               'predios; riego ajustado al polígono.'))
+    A(f'<p>El predio catastral tiene una superficie <b>mediana de {med_area:,.0f} m²</b> '
+      f'({len(areas):,} predios distintos, cada uno contado una sola vez aunque '
+      'tenga varias fichas). La distribución muestra una estructura de '
+      '<b>minifundio</b>:</p>')
+    A('<table class="evitar-corte"><tr><th>Tamaño del predio (catastral)</th>'
       '<th class="n">Predios</th><th>Peso</th></tr>')
     for et, n in dist_area:
         A(f'<tr><td>{et}</td><td class="n">{n:,}</td><td>{E.barra(pct(n, len(areas)))}</td></tr>')
     A('</table>')
+    if dist_area != W['tamanos']:
+        print('  ⚠ tamaños: el capítulo y el tablero no cuentan igual')
+    b64 = G.g_barras_h('riego-tamanos', dist_area, lambda i, n: '#0ea5e9', alto=3.4)
+    A(E.figura(b64, 'Tamaño de los predios', f'Predios catastrales, {len(areas):,}.'))
     A('<p>Esta estructura condiciona cualquier intervención: el sistema atiende a '
       'una mayoría de productores con parcelas pequeñas, para quienes el acceso al '
       'agua es determinante de la viabilidad productiva.</p>')
@@ -249,12 +291,9 @@ def main():
       f'comunidades</b> ({tot_c["caudal_comunidades_ls"]:,.2f} l/s) y las '
       f'{tot_c["fichas_individuales"]} concesiones individuales '
       f'({tot_c["caudal_individual_ls"]:,.2f} l/s).</p>')
-    A('<div class="nota"><b>Nota metodológica.</b> El caudal <b>no se suma ficha '
-      'a ficha</b>. Los técnicos anotaron en cada ficha el caudal que recibe '
-      '<i>su comunidad</i>, de modo que el mismo valor se repite en todas las '
-      'fichas de esa comunidad; sumarlo daría un caudal físicamente imposible. '
-      'Se contabiliza una sola vez por comunidad. El procedimiento completo está '
-      'en el documento de metodología del caudal.</div>')
+    A('<p>El caudal se contabiliza <b>una sola vez por comunidad</b>: los '
+      'técnicos anotaron en cada ficha el caudal que recibe su comunidad, de modo '
+      'que el mismo valor se repite en todas las fichas de esa comunidad.</p>')
     # Solo comunidades con llave propia: las de caudal heredado repiten el valor
     # de otra y aparecerían como si aportaran un caudal que no existe.
     #
@@ -279,10 +318,9 @@ def main():
     A('</table>')
     heredadas = caudal.get('caudal_heredado', {})
     if heredadas:
-        A(f'<p style="font-size:9pt;color:#667;margin-top:-8px">No se listan '
-          f'{len(heredadas)} usuarios individuales cuyo caudal declarado coincide '
-          'con el de su comunidad de origen: comparten la misma llave y su valor no '
-          'se contabiliza por separado.</p>')
+        A(f'<p class="pie-fig">{len(heredadas)} usuarios individuales comparten la '
+          'llave de su comunidad de origen y su caudal está incluido en el de '
+          'ella.</p>')
 
     A('<h2>3. Frecuencia y turnos de riego</h2>')
     A('<table class="evitar-corte"><tr><th>Frecuencia</th><th class="n">Predios</th>'
@@ -291,6 +329,10 @@ def main():
         A(f'<tr><td>{k}</td><td class="n">{n:,}</td>'
           f'<td>{E.barra(pct(n, sum(frec.values())))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('riego-frecuencia', frec.most_common(),
+                       lambda i, n: G.PIE_COLORS[i % 8])
+    A(E.figura(b64, 'Frecuencia de riego',
+               f'Fichas principales con el dato, {sum(frec.values()):,}.'))
     A(f'<p>El turno <b>semanal</b> es el régimen dominante '
       f'({pct(frec.get("Semanal", 0), sum(frec.values())):.1f} %). La mediana es de '
       f'<b>{st.median(dias_ok):.0f} días de riego</b> por turno y '
@@ -308,13 +350,22 @@ def main():
           f'<td class="n">{pred.get(met, 0):,}</td>'
           f'<td>{E.barra(pct(sup_met[met], sup_total_met))}</td></tr>')
     A('</table>')
-    A(f'<div class="hallazgo"><b>Hallazgo.</b> El '
-      f'<b>{pct(tecnificada, sup_total_met):.1f} % de la superficie regada ya usa '
-      f'métodos tecnificados</b> (aspersión o goteo): {tecnificada / 10000:,.1f} ha '
+    A(f'<p>El <b>{pct(tecnificada, sup_total_met):.1f} % de la superficie regada '
+      f'ya usa métodos tecnificados</b> (aspersión o goteo): {tecnificada / 10000:,.1f} ha '
       f'de {sup_total_met / 10000:,.1f} ha. La aspersión es el método dominante del '
       f'sistema, mientras el goteo apenas alcanza {sup_met["Goteo"] / 10000:,.1f} ha '
       f'({pct(sup_met["Goteo"], sup_total_met):.1f} %) y representa el mayor margen '
-      'de mejora en eficiencia.</div>')
+      'de mejora en eficiencia.</p>')
+    met_web = {n_: v for n_, v, _ in W['metodo']}
+    A(f'<p>Contado por ficha y no por hectárea —el promedio simple del porcentaje '
+      f'que declara cada ficha—, el reparto es {met_web.get("Aspersión", 0)} % '
+      f'aspersión, {met_web.get("Gravedad", 0)} % gravedad y '
+      f'{met_web.get("Goteo", 0)} % goteo.</p>')
+    b64 = G.g_donut('riego-metodo', [(n_, v, c) for n_, v, c in W['metodo']],
+                    lambda v: f'{v} %')
+    A(E.figura(b64, 'Método de riego (promedio %)',
+               f'Todas las fichas, {W["n_todas"]:,}; promedio simple del porcentaje '
+               'declarado en cada ficha, redondeado a enteros.'))
     A('<h3>Tecnificación por sector</h3>')
     A('<table class="evitar-corte"><tr><th>Sector</th>'
       '<th class="n">Superficie regada (ha)</th><th class="n">Tecnificada (ha)</th>'
@@ -323,25 +374,28 @@ def main():
         A(f'<tr><td>{sec}</td><td class="n">{s_tot:,.1f}</td>'
           f'<td class="n">{s_tec:,.1f}</td><td>{E.barra(p)}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('riego-tecnificacion-sector',
+                       [(sec, round(p, 1)) for sec, (_, _, p) in sorted(tec_sector.items())],
+                       [COLOR_SECTOR.get(sec, '#3b82f6') for sec in sorted(tec_sector)],
+                       fmt=lambda v: f'{v:.1f} %')
+    A(E.figura(b64, 'Riego tecnificado por sector (% de la superficie regada)',
+               'Fichas principales; superficie ponderada por el porcentaje '
+               'declarado de cada método.'))
 
     A('<h2>5. Tarifas y reservorios</h2>')
     A(f'<p>La tarifa <b>fija mensual</b> es la modalidad más extendida '
       f'({len(t_mes):,} predios), con una <b>mediana de {st.median(t_mes):,.2f} USD</b>. '
       f'La modalidad <b>anual</b> ({len(t_anio):,} predios) tiene una mediana de '
       f'<b>{st.median(t_anio):,.2f} USD</b>.</p>')
-    A('<div class="nota"><b>Por qué se usa la mediana.</b> Unos pocos registros con '
-      'valores muy altos desplazan el promedio hasta cifras que no representan a '
-      'ningún titular real. La mediana —el valor central— describe lo que paga '
-      'efectivamente la mayoría.</div>')
+    A('<p>Se reporta la mediana —el valor central— porque describe lo que paga '
+      'efectivamente la mayoría; unos pocos registros altos desplazarían el '
+      'promedio hasta una cifra que no representa a ningún titular.</p>')
     if anomalas:
-        A(f'<div class="alerta"><b>Dato a verificar en campo.</b> '
-          f'{len(anomalas)} fichas de {TARIFA_ANOMALA} registran tarifas de '
+        A(f'<p>Las {len(anomalas)} fichas del fraccionamiento {TARIFA_ANOMALA.title()} '
+          'registran valores de '
           + ' y '.join(f'{v:,.0f}' for v, _ in val_anom.most_common(2))
-          + ' USD como <i>fijo mensual</i>, frente a una mediana de '
-          f'{st.median(t_mes):,.2f} USD en el resto del sistema. Por su magnitud no '
-          'corresponden a una tarifa mensual de riego sino, probablemente, a otro '
-          'concepto del proceso de fraccionamiento. <b>Se excluyen de las cifras '
-          'de este capítulo</b> hasta que se verifiquen con los usuarios.</div>')
+          + ' USD que corresponden a otro concepto del proceso de fraccionamiento, '
+          'no a la tarifa de riego, y no entran en este cálculo.</p>')
     A('<h3>Reservorios</h3>')
     A('<table class="evitar-corte"><tr><th>Tipo de reservorio</th>'
       '<th class="n">Predios</th><th>Peso</th></tr>')
@@ -349,6 +403,11 @@ def main():
         et = {'No': 'Sin reservorio'}.get(k, f'Reservorio {k.lower()}')
         A(f'<tr><td>{et}</td><td class="n">{n:,}</td><td>{E.barra(pct(n, n_res))}</td></tr>')
     A('</table>')
+    b64 = G.g_donut('riego-reservorios',
+                    [({'No': 'Sin reservorio'}.get(k, f'Reservorio {k.lower()}'), n,
+                      G.PIE_COLORS[i % 8]) for i, (k, n) in enumerate(reserv.most_common())],
+                    G.fnum, centro=f'{n_res:,}')
+    A(E.figura(b64, 'Reservorios', f'Fichas principales con el dato, {n_res:,}.'))
     A(f'<p>El <b>{pct(reserv.get("Comunitario", 0), n_res):.1f} %</b> de los predios '
       'se sirve de un <b>reservorio comunitario</b>, lo que confirma el carácter '
       'colectivo de la infraestructura de almacenamiento: la gestión del agua no '
@@ -398,7 +457,7 @@ def main():
         ['Predios registrados', N], ['Superficie total (ha)', round(ha_t, 2)],
         ['Superficie con riego (ha)', round(ha_r, 2)],
         ['% con riego', round(pct(a_riego, a_total), 1)],
-        ['Superficie mediana del predio (m2)', round(med_area)],
+        ['Superficie mediana del predio catastral (m2)', round(med_area)],
         ['Caudal del sistema (l/s)', tot_c['caudal_sistema_ls']],
         ['Superficie tecnificada (ha)', round(tecnificada / 10000, 1)],
         ['% tecnificado', round(pct(tecnificada, sup_total_met), 1)],

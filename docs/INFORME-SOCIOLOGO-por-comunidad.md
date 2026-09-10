@@ -133,7 +133,9 @@ Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta po
 | 22. MATIAS IMBAGO | 0 | 0 | 3 | 1 | 2 | 0 | 0 | 0 | 6 |
 | **Total del sector** | **181** | **1,154** | **864** | **558** | **184** | **65** | **27** | **73** | **3,106** |
 
-*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal. Cada predio se asigna a la comunidad de sus fichas, no a la etiqueta del catastro.*
+
+*Un puñado de predios tiene fichas en dos comunidades vecinas y aparece en ambas, así que la suma de las 50 comunidades supera en 20 los 5.987 predios del sistema.*
 
 *El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
 
@@ -492,29 +494,29 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 <!-- tabla-completa -->
 | Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
 |---|---|---|---|---|---|---|---|---|---|
-| 1. LARCACHACA | 85 | 57.0 % | 82 | 96.5 % | 73 | 85.9 % | 134 | 89.9 % | 149 |
-| 2. LA LIBERTAD | 81 | 68.6 % | 77 | 95.1 % | 67 | 82.7 % | 110 | 93.2 % | 118 |
-| 3. SAN ANTONIO | 75 | 75.0 % | 74 | 98.7 % | 72 | 96.0 % | 78 | 78.0 % | 100 |
-| 4. SAN JOSE | 80 | 72.7 % | 75 | 93.8 % | 67 | 83.8 % | 98 | 89.1 % | 110 |
-| 5. MILAGRO | 41 | 89.1 % | 41 | 100.0 % | 36 | 87.8 % | 40 | 87.0 % | 46 |
-| 6. CHAMBITOLA | 92 | 79.3 % | 88 | 95.7 % | 83 | 90.2 % | 104 | 89.7 % | 116 |
-| 7. LA CANDELARIA | 126 | 73.7 % | 125 | 99.2 % | 119 | 94.4 % | 160 | 93.6 % | 171 |
-| 8. CARRERA | 234 | 80.4 % | 226 | 96.6 % | 220 | 94.0 % | 271 | 93.1 % | 291 |
-| 9. COCHAPAMBA | 157 | 65.7 % | 152 | 96.8 % | 149 | 94.9 % | 177 | 74.1 % | 239 |
-| 10. JESUS DE GRAN PODER | 32 | 71.1 % | 30 | 93.8 % | 30 | 93.8 % | 39 | 86.7 % | 45 |
+| 1. LARCACHACA | 85 | 57.0 % | 81 | 95.3 % | 69 | 81.2 % | 134 | 89.9 % | 149 |
+| 2. LA LIBERTAD | 81 | 68.6 % | 75 | 92.6 % | 65 | 80.2 % | 110 | 93.2 % | 118 |
+| 3. SAN ANTONIO | 75 | 75.0 % | 73 | 97.3 % | 68 | 90.7 % | 78 | 78.0 % | 100 |
+| 4. SAN JOSE | 80 | 72.7 % | 75 | 93.8 % | 66 | 82.5 % | 98 | 89.1 % | 110 |
+| 5. MILAGRO | 41 | 89.1 % | 40 | 97.6 % | 35 | 85.4 % | 40 | 87.0 % | 46 |
+| 6. CHAMBITOLA | 92 | 79.3 % | 88 | 95.7 % | 82 | 89.1 % | 104 | 89.7 % | 116 |
+| 7. LA CANDELARIA | 126 | 73.7 % | 124 | 98.4 % | 114 | 90.5 % | 160 | 93.6 % | 171 |
+| 8. CARRERA | 234 | 80.4 % | 224 | 95.7 % | 216 | 92.3 % | 271 | 93.1 % | 291 |
+| 9. COCHAPAMBA | 157 | 65.7 % | 149 | 94.9 % | 141 | 89.8 % | 177 | 74.1 % | 239 |
+| 10. JESUS DE GRAN PODER | 32 | 71.1 % | 30 | 93.8 % | 29 | 90.6 % | 39 | 86.7 % | 45 |
 | 11. AS. SANTA BARBARA | 2 | 28.6 % | 2 | 100.0 % | 2 | 100.0 % | 7 | 100.0 % | 7 |
-| 12. ASO. POROTOG | 34 | 79.1 % | 32 | 94.1 % | 33 | 97.1 % | 33 | 76.7 % | 43 |
-| 13. COMUNA POROTOG | 63 | 79.7 % | 62 | 98.4 % | 59 | 93.7 % | 71 | 89.9 % | 79 |
-| 14. ASO. 17 DE JUNIO | 22 | 78.6 % | 22 | 100.0 % | 22 | 100.0 % | 26 | 92.9 % | 28 |
+| 12. ASO. POROTOG | 34 | 79.1 % | 31 | 91.2 % | 32 | 94.1 % | 33 | 76.7 % | 43 |
+| 13. COMUNA POROTOG | 63 | 79.7 % | 61 | 96.8 % | 58 | 92.1 % | 71 | 89.9 % | 79 |
+| 14. ASO. 17 DE JUNIO | 22 | 78.6 % | 21 | 95.5 % | 22 | 100.0 % | 26 | 92.9 % | 28 |
 | 15. ELIOT AVELLANEDA | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
-| 16. CORDILLERA LOS ANDES | 32 | 82.1 % | 29 | 90.6 % | 30 | 93.8 % | 36 | 92.3 % | 39 |
-| 17. COMUNA JURIDICA IZACATA | 42 | 63.6 % | 42 | 100.0 % | 39 | 92.9 % | 59 | 89.4 % | 66 |
+| 16. CORDILLERA LOS ANDES | 32 | 82.1 % | 29 | 90.6 % | 27 | 84.4 % | 36 | 92.3 % | 39 |
+| 17. COMUNA JURIDICA IZACATA | 42 | 63.6 % | 40 | 95.2 % | 36 | 85.7 % | 59 | 89.4 % | 66 |
 | 18. IZACATA GRANDE | 27 | 64.3 % | 27 | 100.0 % | 26 | 96.3 % | 35 | 83.3 % | 42 |
-| 19. LOS ANDES IZACTA | 29 | 59.2 % | 28 | 96.6 % | 26 | 89.7 % | 37 | 75.5 % | 49 |
-| 20. ASO. LOMA GORDA | 35 | 79.5 % | 33 | 94.3 % | 12 | 34.3 % | 37 | 84.1 % | 44 |
+| 19. LOS ANDES IZACTA | 29 | 59.2 % | 28 | 96.6 % | 25 | 86.2 % | 37 | 75.5 % | 49 |
+| 20. ASO. LOMA GORDA | 35 | 79.5 % | 33 | 94.3 % | 11 | 31.4 % | 37 | 84.1 % | 44 |
 | 21. ASO. SAN JACINTO | 3 | 50.0 % | 3 | 100.0 % | 3 | 100.0 % | 6 | 100.0 % | 6 |
 | 22. MATIAS IMBAGO | 0 | 0.0 % | 0 | 0.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 |
-| **Total del sector** | **1,293** | **72.2 %** | **1,251** | **96.8 %** | **1,169** | **90.4 %** | **1,560** | **87.2 %** | **1,790** |
+| **Total del sector** | **1,293** | **72.2 %** | **1,235** | **95.5 %** | **1,128** | **87.2 %** | **1,560** | **87.2 %** | **1,790** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
@@ -749,7 +751,9 @@ Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta po
 | 35. PAMBAMARCA | 4 | 22 | 34 | 31 | 4 | 1 | 2 | 3 | 101 |
 | **Total del sector** | **88** | **665** | **414** | **541** | **134** | **45** | **32** | **37** | **1,956** |
 
-*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal. Cada predio se asigna a la comunidad de sus fichas, no a la etiqueta del catastro.*
+
+*Un puñado de predios tiene fichas en dos comunidades vecinas y aparece en ambas, así que la suma de las 50 comunidades supera en 20 los 5.987 predios del sistema.*
 
 *El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
 
@@ -1027,19 +1031,19 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 | Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
 |---|---|---|---|---|---|---|---|---|---|
 | 23. CUARTO LOTE | 39 | 83.0 % | 38 | 97.4 % | 37 | 94.9 % | 41 | 87.2 % | 47 |
-| 24. ASO. SAN VICENTE BAJO | 73 | 67.6 % | 71 | 97.3 % | 57 | 78.1 % | 97 | 89.8 % | 108 |
-| 25. STA. ROSA DE PACCHA | 45 | 80.4 % | 44 | 97.8 % | 44 | 97.8 % | 55 | 98.2 % | 56 |
+| 24. ASO. SAN VICENTE BAJO | 73 | 67.6 % | 71 | 97.3 % | 55 | 75.3 % | 97 | 89.8 % | 108 |
+| 25. STA. ROSA DE PACCHA | 45 | 80.4 % | 44 | 97.8 % | 42 | 93.3 % | 55 | 98.2 % | 56 |
 | 26. ASO. SAN VICENTE ALTO | 51 | 75.0 % | 50 | 98.0 % | 47 | 92.2 % | 65 | 95.6 % | 68 |
-| 27. PUCARA | 136 | 68.7 % | 128 | 94.1 % | 124 | 91.2 % | 183 | 92.4 % | 198 |
+| 27. PUCARA | 136 | 68.7 % | 126 | 92.6 % | 123 | 90.4 % | 183 | 92.4 % | 198 |
 | 28. ASO. SAN PEDRO | 19 | 57.6 % | 18 | 94.7 % | 14 | 73.7 % | 30 | 90.9 % | 33 |
-| 29. PITANA ALTO | 93 | 79.5 % | 83 | 89.2 % | 85 | 91.4 % | 107 | 91.5 % | 117 |
+| 29. PITANA ALTO | 93 | 79.5 % | 83 | 89.2 % | 83 | 89.2 % | 107 | 91.5 % | 117 |
 | 30. ALPAKA | 0 | 0.0 % | 0 | 0.0 % | 0 | 0.0 % | 491 | 99.8 % | 492 |
-| 31. ASO. PITANA BAJO | 43 | 71.7 % | 39 | 90.7 % | 33 | 76.7 % | 58 | 96.7 % | 60 |
-| 32. PRO MEJORAS PITANA BAJO | 112 | 70.9 % | 108 | 96.4 % | 107 | 95.5 % | 151 | 95.6 % | 158 |
+| 31. ASO. PITANA BAJO | 43 | 71.7 % | 39 | 90.7 % | 32 | 74.4 % | 58 | 96.7 % | 60 |
+| 32. PRO MEJORAS PITANA BAJO | 112 | 70.9 % | 108 | 96.4 % | 104 | 92.9 % | 151 | 95.6 % | 158 |
 | 33. STA. ROSA DE PINGULMI | 74 | 86.0 % | 74 | 100.0 % | 72 | 97.3 % | 83 | 96.5 % | 86 |
-| 34. STA. MARIANITA DE PINGULMI | 157 | 75.5 % | 151 | 96.2 % | 149 | 94.9 % | 202 | 97.1 % | 208 |
-| 35. PAMBAMARCA | 55 | 56.7 % | 50 | 90.9 % | 51 | 92.7 % | 81 | 83.5 % | 97 |
-| **Total del sector** | **897** | **51.9 %** | **854** | **95.2 %** | **820** | **91.4 %** | **1,644** | **95.1 %** | **1,728** |
+| 34. STA. MARIANITA DE PINGULMI | 157 | 75.5 % | 150 | 95.5 % | 148 | 94.3 % | 202 | 97.1 % | 208 |
+| 35. PAMBAMARCA | 55 | 56.7 % | 49 | 89.1 % | 50 | 90.9 % | 81 | 83.5 % | 97 |
+| **Total del sector** | **897** | **51.9 %** | **850** | **94.8 %** | **807** | **90.0 %** | **1,644** | **95.1 %** | **1,728** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 
@@ -1242,7 +1246,9 @@ Cómo se reparte la tierra por tamaño de predio en cada comunidad. Se cuenta po
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 4 | 30 | 7 | 2 | 1 | 0 | 1 | 3 | 48 |
 | **Total del sector** | **176** | **468** | **137** | **100** | **26** | **8** | **5** | **25** | **945** |
 
-*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal.*
+*Universo: los predios catastrales investigados de la comunidad, con la superficie que les da el catastro municipal. Cada predio se asigna a la comunidad de sus fichas, no a la etiqueta del catastro.*
+
+*Un puñado de predios tiene fichas en dos comunidades vecinas y aparece en ambas, así que la suma de las 50 comunidades supera en 20 los 5.987 predios del sistema.*
 
 *El detalle a nivel de sistema, con la comparación de contar por predio frente a contar por ficha, está en el reporte «Terrenos por rango de superficie».*
 
@@ -1531,22 +1537,22 @@ Cuántas fichas principales declaran una vivienda en el predio y qué servicios 
 <!-- tabla-completa -->
 | Comunidad | Con vivienda | % con vivienda | Agua de consumo | % de las viviendas | Energía eléctrica | % de las viviendas | Teléfono | % de las fichas | Fichas principales |
 |---|---|---|---|---|---|---|---|---|---|
-| 36. OTONCITO | 54 | 69.2 % | 54 | 100.0 % | 54 | 100.0 % | 68 | 87.2 % | 78 |
+| 36. OTONCITO | 54 | 69.2 % | 53 | 98.1 % | 54 | 100.0 % | 68 | 87.2 % | 78 |
 | 37. PAMBAMARQUITO | 58 | 87.9 % | 58 | 100.0 % | 58 | 100.0 % | 61 | 92.4 % | 66 |
 | 38. HERNAN TIMPE | 1 | 100.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
-| 39. HDA. SAN FRANCISCO | 1 | 100.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
-| 40. MONTESERRIN ALTO | 12 | 42.9 % | 11 | 91.7 % | 10 | 83.3 % | 25 | 89.3 % | 28 |
-| 41. CHAUPIESTANCIA | 80 | 57.6 % | 79 | 98.8 % | 78 | 97.5 % | 122 | 87.8 % | 139 |
-| 42. PUEBLO DE OTON | 111 | 72.5 % | 110 | 99.1 % | 110 | 99.1 % | 137 | 89.5 % | 153 |
-| 43. CANGAHUAPUNGO | 105 | 80.2 % | 105 | 100.0 % | 104 | 99.0 % | 126 | 96.2 % | 131 |
+| 39. HDA. SAN FRANCISCO | 1 | 100.0 % | 0 | 0.0 % | 0 | 0.0 % | 1 | 100.0 % | 1 |
+| 40. MONTESERRIN ALTO | 12 | 42.9 % | 11 | 91.7 % | 9 | 75.0 % | 25 | 89.3 % | 28 |
+| 41. CHAUPIESTANCIA | 80 | 57.6 % | 78 | 97.5 % | 76 | 95.0 % | 122 | 87.8 % | 139 |
+| 42. PUEBLO DE OTON | 111 | 72.5 % | 110 | 99.1 % | 109 | 98.2 % | 137 | 89.5 % | 153 |
+| 43. CANGAHUAPUNGO | 105 | 80.2 % | 103 | 98.1 % | 101 | 96.2 % | 126 | 96.2 % | 131 |
 | 44. CHINCHIN LOMA | 64 | 72.7 % | 62 | 96.9 % | 63 | 98.4 % | 80 | 90.9 % | 88 |
-| 45. ASO. ROSALIA | 22 | 56.4 % | 14 | 63.6 % | 19 | 86.4 % | 36 | 92.3 % | 39 |
+| 45. ASO. ROSALIA | 22 | 56.4 % | 13 | 59.1 % | 19 | 86.4 % | 36 | 92.3 % | 39 |
 | 46. SR. COLOMA MONT. BAJO | 4 | 100.0 % | 4 | 100.0 % | 4 | 100.0 % | 4 | 100.0 % | 4 |
 | 47. HDA. GUANGULQUI | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 | 100.0 % | 1 |
 | 48. PUEBLO DE ASCAZUBI | 2 | 100.0 % | 2 | 100.0 % | 1 | 50.0 % | 2 | 100.0 % | 2 |
-| 49. ASO. EL MANZANO | 14 | 77.8 % | 13 | 92.9 % | 13 | 92.9 % | 17 | 94.4 % | 18 |
+| 49. ASO. EL MANZANO | 14 | 77.8 % | 12 | 85.7 % | 13 | 92.9 % | 17 | 94.4 % | 18 |
 | 50. JUNTA ADMISIS. RIEGO SAN LUIS | 28 | 70.0 % | 26 | 92.9 % | 25 | 89.3 % | 38 | 95.0 % | 40 |
-| **Total del sector** | **557** | **70.6 %** | **539** | **96.8 %** | **542** | **97.3 %** | **719** | **91.1 %** | **789** |
+| **Total del sector** | **557** | **70.6 %** | **533** | **95.7 %** | **534** | **95.9 %** | **719** | **91.1 %** | **789** |
 
 *Universo: fichas PRINCIPALES (una por titular entrevistado; las adicionales heredan datos de su ficha principal y duplicarían la respuesta).*
 

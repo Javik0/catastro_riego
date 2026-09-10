@@ -34,6 +34,7 @@ from collections import Counter, defaultdict
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica, nombre_publico, normalizar  # noqa: E402
 import informe_estilo as E  # noqa: E402
+import informe_graficos as G  # noqa: E402
 
 GPKG = r"C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg"
 T = 'Fichas_Predios_880eb10d_d887_4fc6_99a2_8af3ac63877e'
@@ -45,8 +46,6 @@ XLSX = os.path.join(BASE, 'build_entrega', 'Produccion_Agropecuaria.xlsx')
 
 # Explotación cuyo ganado está declarado varias veces sobre el mismo predio.
 GRANJA_DUPLICADA = ('CEVALLOS GORDON', 10000)
-MESES = ('enero febrero marzo abril mayo junio julio agosto septiembre '
-         'octubre noviembre diciembre').split()
 
 
 def num(v):
@@ -91,19 +90,23 @@ def cargar():
         crudo = p.get('comunidad') or ''
         p['_comk'] = canonica(crudo) or '(sin comunidad)'
         vistos[p['_comk']][nombre_publico(crudo) or '(sin comunidad)'] += 1
-        p['_sec'] = (p.get('sector_investigacion') or '').strip()
     display = {}
     for k, c in vistos.items():
         val = [(n_, v) for n_, v in c.most_common() if normalizar(n_) == k]
         display[k] = val[0][0] if val else k
     for p in fichas.values():
         p['_com'] = display[p['_comk']]
-        if p['_sec'] in ('', 'None'):
-            p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
+        # El sector es el de la COMUNIDAD según el catálogo oficial, como la
+        # web y los informes del sociólogo. Hasta el 4-sep-2026 mandaba el
+        # campo `sector_investigacion` de la ficha (vacío en 556 principales
+        # y contradictorio con su comunidad en otras 27), y los cortes por
+        # sector no cuadraban entre documentos. Decisión de JAVIKO.
+        p['_sec'] = COM_A_SECTOR.get(p['_comk'], '(sin sector)')
 
-    corte = max(str(f1 or '')[:10], str(f2 or '')[:10])
-    corte_txt = (f'{int(corte[8:10])} de {MESES[int(corte[5:7]) - 1]} de {corte[:4]}'
-                 if corte else 'la fecha de generación')
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # no la última fecha de ficha del gpkg: las depuraciones de gabinete
+    # posteriores no mueven esas fechas (decisión de JAVIKO, 4-sep-2026).
+    corte_txt = E.FECHA_CORTE
     return fichas, cultivos, animales, corte_txt, pendientes
 
 
@@ -117,14 +120,17 @@ def main():
         t = titulo(x.get('tipo_cultivo'))
         if t.lower() in ('otro', 'otros') and (x.get('tipo_cultivo_otro') or '').strip():
             t = titulo(x['tipo_cultivo_otro'])
-        if not t:
-            continue
-        frec[t] += 1
-        sup[t] += num(x.get('superficie_m2'))
+        # El destino se cuenta sobre TODOS los registros de cultivo, tengan o
+        # no nombre (como la web y el informe por sector); solo la superficie
+        # y la frecuencia necesitan el nombre del cultivo.
         for campo, et in (('es_autoconsumo', 'Autoconsumo'), ('es_mercado', 'Mercado'),
                           ('es_agroindustria', 'Agroindustria'), ('es_exportacion', 'Exportación')):
             if str(x.get(campo) or '') in ('1', 'True'):
                 destino_c[et] += 1
+        if not t:
+            continue
+        frec[t] += 1
+        sup[t] += num(x.get('superficie_m2'))
     sup_total = sum(sup.values())
     predios_c = len({x['ficha_id'] for x in cultivos})
 
@@ -211,6 +217,13 @@ def main():
     total_pec = total_cab - cab_acui
 
     # ── documento ──
+    G.preparar()
+    G.configurar(os.path.join(BASE, 'docs'), 'graficos-capitulos')
+    W = G.sistema()   # matrices del tablero web (motor compartido)
+    if {n_: v for n_, v, _ in W['destino']} != {
+            {'Mercado': 'Mercado / Venta'}.get(k, k): v for k, v in destino_c.items() if v}:
+        print('  ⚠ destino: el capítulo y el tablero no cuentan igual',
+              W['destino'], dict(destino_c))
     B = []
     A = B.append
     A(E.cabecera('Producción agropecuaria',
@@ -241,6 +254,12 @@ def main():
         A(f'<tr><td>{g}</td><td class="n">{s / 10000:,.1f}</td>'
           f'<td>{E.barra(pct(s, sup_total))}</td></tr>')
     A('</table>')
+    b64 = G.g_donut('produccion-grupos',
+                    [(g, s / 10000, G.PIE_COLORS[i % 8]) for i, (g, s) in
+                     enumerate(sorted(sup_grupo.items(), key=lambda x: -x[1]))],
+                    lambda v: f'{v:,.0f} ha', centro=f'{sup_total / 10000:,.0f} ha')
+    A(E.figura(b64, 'Superficie cultivada por grupo (ha)',
+               f'Todas las fichas; {len(cultivos):,} registros de cultivo.'))
     past = sup_grupo['Pastos y forraje']
     A(f'<p>El dato dominante es que <b>{pct(past, sup_total):.1f} % de la superficie '
       f'cultivada son pastos</b> ({past / 10000:,.1f} ha), destinados a sostener la '
@@ -253,6 +272,11 @@ def main():
         A(f'<tr><td>{t}</td><td class="n">{s / 10000:,.1f}</td>'
           f'<td class="n">{frec[t]:,}</td><td class="n">{s / frec[t]:,.0f}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_v('produccion-cultivos', W['cultivos_frec'],
+                       lambda i, n: G.PIE_COLORS[i % 8], rot=45)
+    A(E.figura(b64, 'Cultivos más frecuentes (registros)',
+               f'Todas las fichas; los doce cultivos con más registros, de '
+               f'{W["cultivos_registros"]:,}.'))
 
     A('<h2>3. Ganadería</h2>')
     A(f'<p>Se contabilizan <b>{total_pec:,} animales</b> en {predios_a:,} predios. '
@@ -265,6 +289,11 @@ def main():
         A(f'<tr><td>{e}</td><td class="n">{n:,}</td><td class="n">{reg_esp[e]:,}</td>'
           f'<td>{E.barra(pct(n, total_pec))}</td></tr>')
     A('</table>')
+    b64 = G.g_barras_h('produccion-pecuario', W['pecuario'],
+                       lambda i, n: G.PIE_COLORS[i % 8])
+    A(E.figura(b64, 'Especies pecuarias principales (cabezas)',
+               'Todas las fichas; las cinco especies con más cabezas, tal como '
+               'las registró el técnico.'))
     if acuicola:
         det = ', '.join(f'{n:,} {e.lower()}' for e, n in
                         sorted(acuicola.items(), key=lambda x: -x[1]))
@@ -272,15 +301,10 @@ def main():
           f'{sum(reg_esp[e] for e in acuicola)} predios. Se contabiliza aparte por '
           'tratarse de una actividad de naturaleza distinta a la ganadería.</p>')
     if cabezas_dup:
-        A(f'<div class="alerta"><b>Dato excluido, a verificar en campo.</b> '
-          f'Seis fichas de una misma familia en ASOCIACIÓN ROSALÍA declaran '
-          f'<b>10.000 gallinas cada una</b> —{cabezas_dup:,} en total— sobre el '
-          '<b>mismo predio</b> de 9,8 ha. Se trata, con toda probabilidad, de una '
-          'única granja avícola contabilizada una vez por cada titular. Incluirla '
-          f'elevaría el hato a {total_pec + cabezas_dup:,} animales y haría que una '
-          'sola explotación representara el 35 % del ganado del sistema. '
-          '<b>Se excluye de las cifras de este capítulo</b> hasta confirmar cuántas '
-          'aves existen realmente.</div>')
+        A(f'<p>El inventario no incluye una <b>explotación avícola industrial de '
+          f'{cabezas_dup:,} aves</b> registrada en Asociación Rosalía —seis fichas '
+          'de una misma familia sobre un mismo predio—, ajena a la producción '
+          'familiar que describe este capítulo.</p>')
 
     A('<h2>4. Destino de la producción</h2>')
     A('<p>Cada declaración indica a qué se destina lo producido. Un mismo cultivo o '
@@ -294,14 +318,18 @@ def main():
           f'<td class="n">{destino_a[et]:,}</td>'
           f'<td>{E.barra(pct(destino_c[et], tot_dc))}</td></tr>')
     A('</table>')
-    A(f'<div class="hallazgo"><b>Hallazgo.</b> La producción del sistema es '
-      f'predominantemente de <b>autoconsumo</b>: '
+    b64 = G.g_barras_v('produccion-destino', [(n_, v) for n_, v, _ in W['destino']],
+                       [c for _, _, c in W['destino']])
+    A(E.figura(b64, 'Destino de la producción agrícola (registros)',
+               f'Todas las fichas; {len(cultivos):,} registros de cultivo, cada uno '
+               'con uno o más destinos.'))
+    A(f'<p>La producción del sistema es predominantemente de <b>autoconsumo</b>: '
       f'{pct(destino_c["Autoconsumo"], tot_dc):.1f} % de las declaraciones agrícolas y '
       f'{pct(destino_a["Autoconsumo"], tot_da):.1f} % de las pecuarias se destinan a '
       'la alimentación familiar. El mercado es el segundo destino y la agroindustria '
       'y la exportación son marginales. <b>El riego sostiene aquí la seguridad '
       'alimentaria de las familias antes que una cadena comercial</b>, un dato central '
-      'para dimensionar el impacto social del sistema.</div>')
+      'para dimensionar el impacto social del sistema.</p>')
     if sob:
         A(f'<p>Consistentemente, los titulares declaran destinar en promedio el '
           f'<b>{sob_media:.0f} % de su producción a la soberanía alimentaria</b> '
@@ -330,8 +358,6 @@ def main():
     A(f'<li>El <b>autoconsumo es el destino principal</b> '
       f'({pct(destino_c["Autoconsumo"], tot_dc):.0f} % de las declaraciones agrícolas): '
       'el sistema de riego sostiene la seguridad alimentaria de las familias.</li>')
-    A('<li>Dos registros requieren verificación en campo antes de su uso oficial: la '
-      'granja avícola de Asociación Rosalía y los cultivos declarados como "Otros".</li>')
     A('</ul>')
     A(E.pie(corte_txt))
 

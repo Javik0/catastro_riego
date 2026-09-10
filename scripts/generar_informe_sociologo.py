@@ -106,7 +106,9 @@ DIR_MAPAS = 'mapas-sociologo'
 # depuración posterior (corrección de Coyago, 30-ago) no alteró ningún
 # agregado. Si una sincronización futura cambia las cifras, hay que mover esta
 # fecha o el documento estaría citando datos que no son los de ese día.
-FECHA_CORTE = '19 de agosto de 2026'
+# La fecha de corte vive en informe_estilo.py desde el 4-sep-2026 (única para
+# todo el paquete); se re-exporta aquí porque el generador por sector la importa.
+FECHA_CORTE = E.FECHA_CORTE
 
 NOTA_P001 = ('ALPAKA: el dato de las fichas P001 (representación del total del '
              'fraccionamiento) queda pendiente a lo que las comunidades definan.')
@@ -125,6 +127,11 @@ def num(d, k):
         return float(d.get(k) or 0)
     except (TypeError, ValueError):
         return 0.0
+
+
+def dispone(v):
+    """Servicio de la vivienda: 1/Sí es dispone; 0/No y vacío no lo son."""
+    return str(v).strip() in ('1', 'True', 'true', 'Sí', 'Si', 'SI', 'SÍ')
 
 
 def lleno(v):
@@ -413,11 +420,17 @@ def agregar_comunidad(key, todas, pri, cult_por_ficha, anim_por_ficha,
     # material de construcción, no todas. Regla 2 del cliente (9-ago-2026):
     # «sin material de construcción no hay vivienda: agua y luz vacías son la
     # respuesta correcta, no una omisión». Con el denominador completo el agua
-    # aparentaría 64,9 % cuando entre viviendas es 96,3 %.
+    # aparentaría 64,9 % cuando entre viviendas es 95,3 %.
+    #
+    # El campo trae 1 (dispone), 0 (no dispone) o vacío (sin dato: son los
+    # 103 + 216 de la revisión de campo). Hasta el 4-sep-2026 se contaba
+    # «lleno», y los ceros pasaban por sí: 96,3 % y 92,1 % publicados en
+    # vez de 95,3 % y 89,9 %. Se cuenta solo el 1, como el capítulo de
+    # servicios del informe técnico.
     con_viv = [p for p in pri if lleno(p.get('material_construccion'))]
     a['con_vivienda'] = len(con_viv)
-    a['agua_consumo'] = sum(1 for p in con_viv if lleno(p.get('agua_consumo')))
-    a['energia'] = sum(1 for p in con_viv if lleno(p.get('energia_electrica')))
+    a['agua_consumo'] = sum(1 for p in con_viv if dispone(p.get('agua_consumo')))
+    a['energia'] = sum(1 for p in con_viv if dispone(p.get('energia_electrica')))
     # El teléfono es dato de contacto de la persona, no de la casa: su
     # denominador sí son todas las fichas principales.
     a['telefono'] = sum(1 for p in pri if lleno(p.get('telefono_celular')) or
