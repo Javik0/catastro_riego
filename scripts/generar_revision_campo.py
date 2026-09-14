@@ -277,13 +277,39 @@ def contar(ds, t, cond, universo=None):
                      .format(t, cond, universo or DE_CAMPO))[0][0]
 
 
+# Codigo del padron por ficha (S01-C22-R001-F01). NO esta en el data.gpkg —y
+# por eso tampoco en QField—: lo asigna generar_fichas_pdf.py y vive en
+# public/geo/codificacion_fichas.json. Sirve para encontrar la ficha en la web
+# o su PDF; en la tablet se sigue buscando por clave catastral.
+CODIGOS = None   # se carga sola en el primer codigo_de()
+
+
+def cargar_codigos():
+    import json
+    ruta = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                        '..', 'public', 'geo', 'codificacion_fichas.json')
+    if not os.path.exists(ruta):
+        print("  aviso: sin codificacion_fichas.json, las tablas salen sin codigo")
+        return {}
+    with open(ruta, encoding='utf-8') as f:
+        return json.load(f).get('fichas', {})
+
+
+def codigo_de(fid):
+    global CODIGOS
+    if CODIGOS is None:
+        CODIGOS = cargar_codigos()
+    return CODIGOS.get(fid or '', '—')
+
+
 def fichas_de(ds, t, cond, universo=None, extra=''):
     """Las fichas que cumplen una condición, ordenadas por comunidad y clave."""
     return consultar(ds,
         "SELECT COALESCE(NULLIF(TRIM(comunidad),''),'(sin comunidad)') com, "
         "COALESCE(clave_catastral,'') clave, "
         "TRIM(COALESCE(apellidos,'') || ' ' || COALESCE(nombres,'')) nombre, "
-        "COALESCE(cedula,'') ced, COALESCE(creado_por,'') tec{extra} "
+        "COALESCE(cedula,'') ced, COALESCE(creado_por,'') tec, "
+        "COALESCE(id,'') fid{extra} "
         "FROM {t} WHERE {cond} AND {uni} ORDER BY com, clave"
         .format(t=t, cond=cond, uni=universo or DE_CAMPO, extra=extra))
 
@@ -296,6 +322,10 @@ def main():
     if not os.path.exists(GPKG):
         print("ERROR: no se encuentra el data.gpkg de QField:\n  {}".format(GPKG))
         return 1
+
+    codigo_de('')          # fuerza la carga para poder informarla
+    if CODIGOS:
+        print("  codigo del padron: {} fichas".format(num(len(CODIGOS))))
 
     ds = ogr.Open(GPKG, 0)          # SOLO LECTURA: es la fuente de campo
     if ds is None:
@@ -353,10 +383,13 @@ def main():
     w("2. En el detalle de cada comunidad tienes las fichas por **clave catastral** "
       "y nombre del regante: búscalas en QField por la clave catastral.")
     w("")
-    w("> ⚠️ **No busques por el «código» de la ficha.** El campo `codigo_final` no "
-      "identifica nada: vale `S-C-P001` en 5.529 de las 6.831 fichas, porque es el "
-      "valor por defecto del formulario y casi nunca se cambió. La clave catastral "
-      "sí está en todas las fichas y es la que sirve para encontrarlas.\n")
+    w("> **En la tablet, busca por la clave catastral.** El «código» que "
+      "muestra QField (`codigo_final`) vale `S-C-P001` en 5.529 de las "
+      "6.831 fichas: es el valor por defecto del formulario y casi nunca "
+      "se cambió, así que no identifica a ninguna. La columna **Código** de "
+      "las tablas de abajo es otra cosa —el código del padrón, "
+      "`S01-C22-R001-F01`, único por ficha— y sirve para encontrar la ficha "
+      "en la web o su PDF, pero no existe dentro de QField.\n")
     w("3. Completa lo que falte **en la ficha existente**. No crees una ficha nueva: "
       "se duplicaría el predio.")
     w("4. Si el dato no se puede obtener (el regante no está, no quiere darlo, el "
@@ -403,20 +436,21 @@ def main():
             w("> {}\n".format(NOTA_BLOQUE[campo]))
 
         por_com = {}
-        for com, clave, nombre, ced, tec in fichas_de(ds, t, cond):
-            por_com.setdefault(com, []).append((clave, nombre, ced, tec))
+        for com, clave, nombre, ced, tec, fid in fichas_de(ds, t, cond):
+            por_com.setdefault(com, []).append((clave, nombre, ced, tec, fid))
 
         for com in sorted(por_com):
             fichas = por_com[com]
             w("**{}** — {} ficha{}\n".format(
                 com, num(len(fichas)), 's' if len(fichas) != 1 else ''))
-            w("| Clave catastral | Regante | Cédula | Levantó |")
-            w("|---|---|---|---|")
-            for clave, nombre, ced, tec in fichas[:LIMITE_LISTADO]:
-                w("| {} | {} | {} | {} |".format(clave or '—', nombre or '—',
-                                                 ced or '—', tec or '—'))
+            w("| Código | Clave catastral | Regante | Cédula | Levantó |")
+            w("|---|---|---|---|---|")
+            for clave, nombre, ced, tec, fid in fichas[:LIMITE_LISTADO]:
+                w("| {} | {} | {} | {} | {} |".format(
+                    codigo_de(fid), clave or '—', nombre or '—',
+                    ced or '—', tec or '—'))
             if len(fichas) > LIMITE_LISTADO:
-                w("| … | _y {} fichas más en esta comunidad_ | | |"
+                w("| … | | _y {} fichas más en esta comunidad_ | | |"
                   .format(num(len(fichas) - LIMITE_LISTADO)))
             w("")
         w("---\n")
@@ -495,15 +529,15 @@ def main():
 
     filas = fichas_de(ds, t, OFICINA[2], PRINCIPALES,
                       extra=", COALESCE(coord_x_utm,0) x, COALESCE(coord_y_utm,0) y")
-    w("| Clave catastral | Regante | Cédula | Levantó | X (UTM 17S) | Y (UTM 17S) |")
-    w("|---|---|---|---|---:|---:|")
-    for _com, clave, nombre, ced, tec, x, y in filas[:LIMITE_LISTADO]:
-        w("| {} | {} | {} | {} | {} | {} |"
-          .format(clave or '—', nombre or '—', ced or '—', tec or '—',
+    w("| Código | Clave catastral | Regante | Cédula | Levantó | X (UTM 17S) | Y (UTM 17S) |")
+    w("|---|---|---|---|---|---:|---:|")
+    for _com, clave, nombre, ced, tec, fid, x, y in filas[:LIMITE_LISTADO]:
+        w("| {} | {} | {} | {} | {} | {} | {} |"
+          .format(codigo_de(fid), clave or '—', nombre or '—', ced or '—', tec or '—',
                   '{:,.0f}'.format(x).replace(',', '.') if x else '— sin coordenada',
                   '{:,.0f}'.format(y).replace(',', '.') if y else '—'))
     if len(filas) > LIMITE_LISTADO:
-        w("| … | _y {} fichas más_ | | | | |"
+        w("| … | | _y {} fichas más_ | | | | |"
           .format(num(len(filas) - LIMITE_LISTADO)))
     w("")
     w("---\n")

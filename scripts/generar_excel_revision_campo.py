@@ -197,12 +197,16 @@ def main():
 
     def recoger(cond, etq, universo=None):
         salida = []
-        for com, clave, nombre, ced, tec, uid in _rc.fichas_de(
+        # fichas_de devuelve el id de QField como 6ª columna (`fid`) desde que
+        # las tablas del documento muestran el código del padrón; `uid` llega
+        # del extra y vale lo mismo. La clave de seguimiento sigue siendo el id.
+        for com, clave, nombre, ced, tec, fid, uid in _rc.fichas_de(
                 ds, t, cond, universo, extra=UID):
             falta = etq.replace('Sin ', '')
             salida.append({
                 'comunidad': com, 'clave': clave, 'regante': nombre,
                 'cedula': ced, 'falta': falta, 'tecnico': tec, 'uid': uid,
+                'codigo': _rc.codigo_de(fid),
                 'clave_seg': '{}|{}'.format(uid or clave, falta),
             })
         return salida
@@ -400,36 +404,36 @@ def main():
 
     # ── 3. Pendientes ──
     ws = wb.create_sheet('Pendientes')
-    titulos = ['Comunidad', 'Clave catastral', 'Regante', 'Cédula',
+    titulos = ['Código', 'Comunidad', 'Clave catastral', 'Regante', 'Cédula',
                'Qué falta', 'Levantó', 'ESTADO', 'Fecha revisión', 'OBSERVACIÓN',
                'id (no tocar)']
-    cabecera(ws, 1, titulos, [30, 18, 34, 13, 24, 16, 24, 14, 46, 12])
+    cabecera(ws, 1, titulos, [17, 30, 18, 34, 13, 24, 16, 24, 14, 46, 12])
     r = 2
     for f in sorted(filas, key=lambda x: (x['comunidad'], x['clave'], x['falta'])):
         estado, fecha, obs = notas.get(f['clave_seg'], ('Pendiente', None, None))
-        vals = [f['comunidad'], f['clave'], f['regante'], f['cedula'],
+        vals = [f['codigo'], f['comunidad'], f['clave'], f['regante'], f['cedula'],
                 f['falta'], f['tecnico'], estado or 'Pendiente', fecha, obs,
                 f['uid']]
         for i, v in enumerate(vals, start=1):
             c = ws.cell(row=r, column=i, value=v)
             c.border = BORDE
             c.font = Font(size=10)
-            if i in (7, 8, 9):
+            if i in (8, 9, 10):
                 c.fill = relleno(GRIS)
         if estado and estado != 'Pendiente':
-            ws.cell(row=r, column=7).fill = relleno(VERDE)
+            ws.cell(row=r, column=8).fill = relleno(VERDE)
         r += 1
 
     dv = DataValidation(type='list', formula1='"{}"'.format(','.join(ESTADOS)),
                         allow_blank=True, showDropDown=False)
     dv.error = 'Elige una opción de la lista'
     ws.add_data_validation(dv)
-    dv.add('G2:G{}'.format(max(r - 1, 2)))
-    ws.auto_filter.ref = 'A1:J{}'.format(max(r - 1, 1))
-    ws.freeze_panes = 'C2'
+    dv.add('H2:H{}'.format(max(r - 1, 2)))
+    ws.auto_filter.ref = 'A1:K{}'.format(max(r - 1, 1))
+    ws.freeze_panes = 'D2'
     # el id es lo que permite reencontrar cada fila al regenerar el archivo y
     # devolverle sus notas; se deja oculto para no invitar a editarlo
-    ws.column_dimensions['J'].hidden = True
+    ws.column_dimensions['K'].hidden = True
 
     # ── 4. Fuera de campo ──
     # Estas filas NO llevan columna de ESTADO a propósito: no son tareas del
