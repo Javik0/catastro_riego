@@ -612,7 +612,12 @@ def main():
     # ── tablas de atributos: fichas, cultivos, animales ──
     print("\n[5/6] Tablas de fichas, cultivos y animales...")
     CAMPOS_FICHA = [
-        ('ficha_id', 'TEXT'), ('clave_catastral', 'TEXT'), ('codigo_predio', 'TEXT'),
+        # `codigo_ficha` es el codigo del padron (S01-C22-R001-F01) con el que se
+        # nombran las fichas individuales en PDF: permite ir del mapa al documento.
+        # `codigo_predio` es el codigo_final del gpkg de campo (S-C-P001), que se
+        # repite entre fichas y no identifica a ninguna por si solo.
+        ('ficha_id', 'TEXT'), ('codigo_ficha', 'TEXT'),
+        ('clave_catastral', 'TEXT'), ('codigo_predio', 'TEXT'),
         ('tipo_ficha', 'TEXT'), ('estado_investigacion', 'TEXT'), ('regante_principal', 'TEXT'),
         ('ficha_madre_id', 'TEXT'),
         ('apellidos', 'TEXT'), ('nombres', 'TEXT'), ('cedula', 'TEXT'),
@@ -635,6 +640,12 @@ def main():
     crear_tabla(cur, 'fichas', CAMPOS_FICHA, con_geom=True, tipo_geom='POINT')
 
     por_id = {f.get('id'): f for f in fichas}
+    # codigo del padron por ficha (fuente unica: la asigna generar_fichas_pdf.py)
+    try:
+        cod_ficha = cargar('codificacion_fichas.json').get('fichas', {})
+    except FileNotFoundError:
+        cod_ficha = {}
+        print('      aviso: sin codificacion_fichas.json, las fichas van sin codigo del padron')
     geom_ficha = {}
     for ft in cargar('fichas_predios.geojson')['features']:
         g = ft.get('geometry')
@@ -686,7 +697,8 @@ def main():
             bbf[0] = min(bbf[0], e[0]); bbf[1] = max(bbf[1], e[1])
             bbf[2] = min(bbf[2], e[2]); bbf[3] = max(bbf[3], e[3])
         cur.execute(ins_f, (gb,
-            txt(f.get('id')), txt(f.get('clave_catastral')) or txt(f.get('cod_poligono')),
+            txt(f.get('id')), txt(cod_ficha.get(f.get('id'))),
+            txt(f.get('clave_catastral')) or txt(f.get('cod_poligono')),
             txt(f.get('codigo_final')),
             'Ficha adicional' if hija else 'Ficha principal',
             ('Pendiente Sección 4' if pendiente(f) else 'Investigada') if hija else 'Investigada',
