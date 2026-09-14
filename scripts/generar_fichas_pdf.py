@@ -723,11 +723,17 @@ def construir_historia(ficha, ctx, con_mapa, con_foto=False):
         historia.append(Paragraph(f'<b>FICHA ADICIONAL</b>{esc(ref)}',
                                   ParagraphStyle('hija', parent=ST_NOTA, alignment=1)))
 
-    # ── 1. Datos del propietario ──
-    historia += titulo_seccion('1. Datos del Propietario / Titular')
-    nombre = texto(p.get('propietario')) if p.get('propietario') else \
-        f"{texto(p.get('apellidos'), '')} {texto(p.get('nombres'), '')}".strip() or '—'
-    historia.append(grid([
+    # ── 1. Datos del titular ──
+    # "Apellidos y Nombres" es SIEMPRE el titular entrevistado en campo
+    # (apellidos+nombres), nunca `propietario` (el dueño según el catastro
+    # municipal). En 2.223 fichas (32,5 %) son personas distintas — antes el
+    # nombre del catastro salía junto a la cédula y el teléfono del
+    # entrevistado, que le pertenecen a otra persona. El dato del catastro se
+    # conserva aparte, con su propia fila, solo cuando difiere del titular.
+    # Corregido 14-sep-2026, misma lógica que FichaImpresion.tsx (web).
+    historia += titulo_seccion('1. Datos del Titular')
+    nombre = f"{texto(p.get('apellidos'), '')} {texto(p.get('nombres'), '')}".strip() or '—'
+    filas_sec1 = [
         [('Apellidos y Nombres', nombre, 2),
          ('Cédula Identidad', texto(p.get('cedula')), 1),
          ('Teléfono Celular', texto(p.get('telefono_celular')), 1)],
@@ -739,7 +745,11 @@ def construir_historia(ficha, ctx, con_mapa, con_foto=False):
          ('Hijas Mujeres', texto(p.get('hijos_mujeres'), '0'), 1),
          ('Tenencia del Predio', texto(p.get('tenencia_predio')), 1),
          ('Instrucción', texto(p.get('nivel_instruccion')), 1)],
-    ]))
+    ]
+    propietario = texto(p.get('propietario'), '')
+    if propietario and propietario.strip().upper() != nombre.upper():
+        filas_sec1.append([('Propietario Según Catastro Municipal', propietario, 4)])
+    historia.append(grid(filas_sec1))
 
     # ── 2. Predio y riego ──
     historia += titulo_seccion('2. Información del Predio y de Riego')
@@ -1188,7 +1198,7 @@ def generar_leeme(fichas, salida):
 
     h += titulo_seccion('Contenido de cada ficha')
     h += [Paragraph('Cada ficha ocupa dos páginas A4 y reúne siete secciones: datos '
-                    'del propietario o titular; información del predio y de riego; '
+                    'del titular; información del predio y de riego; '
                     'otros predios del titular en la comunidad; servicios básicos e '
                     'infraestructura; producción y actividad agropecuaria; '
                     'organización comunitaria y auditoría; y la ubicación regional y '
@@ -1288,8 +1298,10 @@ def main():
     for p in lote:
         carpeta = os.path.join(args.salida, sanear_nombre(p['_sector']),
                                sanear_nombre(p['_com']))
-        titular = texto(p.get('propietario')) if p.get('propietario') else \
-            f"{texto(p.get('apellidos'), '')} {texto(p.get('nombres'), '')}".strip() or 'SIN NOMBRE'
+        # el titular del nombre de archivo es SIEMPRE el entrevistado (coherente
+        # con el código R, que identifica por cédula/apellidos del titular, no
+        # del propietario catastral — ver la nota de la sección 1 más arriba)
+        titular = f"{texto(p.get('apellidos'), '')} {texto(p.get('nombres'), '')}".strip() or 'SIN NOMBRE'
         base = sanear_nombre(f"{texto(p.get('_codigo'), 'SIN-CODIGO')} - "
                              f"{texto(p.get('clave_catastral'), 'SIN-CLAVE')} - "
                              f"{titular[:60]}")
