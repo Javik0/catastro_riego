@@ -42,10 +42,20 @@ export interface FichaPredio {
   fid?: number;
   cod_poligono: string;
   num_predio: number;
+  /** Código del formulario de campo (S-C-P001). Se REPITE entre fichas: no
+   *  identifica a ninguna. Para identificar una ficha, `codigo_ficha`. */
   codigo_final: string;
+  /** Código del padrón (S01-C22-R001-F01): sector, comunidad, titular y ficha.
+   *  Único por ficha. Es el mismo que nombra las fichas en PDF y el que lleva
+   *  la capa fichas.shp del entregable. Lo asigna generar_fichas_pdf.py. */
+  codigo_ficha?: string;
 
   // Propietario
+  /** Titular entrevistado en campo (apellidos + nombres). */
   propietario: string;
+  /** Propietario según el catastro municipal. Distinto del titular en 2.223
+   *  fichas: el predio sigue a nombre del padre o de "HEREDEROS DE…". */
+  propietario_catastro?: string;
   apellidos: string;
   nombres: string;
   cedula: string;

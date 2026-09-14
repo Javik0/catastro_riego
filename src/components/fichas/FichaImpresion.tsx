@@ -497,7 +497,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <div className="absolute -bottom-1.5 left-[15%] right-[15%] h-[2px] bg-blue-500/60 rounded-full"></div>
         </h3>
         <div className="flex gap-4 mt-3.5 text-[7.5pt] font-mono text-slate-700 bg-slate-50/80 px-4 py-1.5 rounded-md border border-slate-200 shadow-sm">
-          <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">CÓDIGO:</span> <b className="text-slate-900">{ficha.codigo_final}</b></span>
+          <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">CÓDIGO:</span> <b className="text-slate-900">{ficha.codigo_ficha || ficha.codigo_final}</b></span>
           <span className="text-slate-300">|</span>
           <span><span className="text-slate-400 font-sans font-bold uppercase tracking-widest text-[6pt] mr-1">CLAVE:</span> <span className="text-slate-900">{ficha.clave_catastral || 'S/N'}</span></span>
           <span className="text-slate-300">|</span>
@@ -505,14 +505,20 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         </div>
       </div>
 
-      {/* ── SECCIÓN 1: DATOS PROPIETARIO ── */}
+      {/* ── SECCIÓN 1: DATOS DEL TITULAR ──
+          Misma composición que la ficha en PDF del paquete de entrega
+          (scripts/generar_fichas_pdf.py): "Apellidos y Nombres" es SIEMPRE el
+          titular entrevistado en campo, y el propietario según el catastro
+          municipal va aparte, abajo, solo cuando difiere. En 2.223 fichas
+          (32,5 %) son personas distintas, y juntarlos ponía el nombre de una
+          con la cédula y el teléfono de la otra. */}
       <div className="report-section-title">
-        <span>1. Datos del Propietario / Regante</span>
+        <span>1. Datos del Titular</span>
       </div>
       <div className="grid-details">
         <div className="detail-item col-2">
           <p className="detail-label">Apellidos y Nombres</p>
-          <p className="detail-value">{ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}</p>
+          <p className="detail-value">{`${ficha.apellidos} ${ficha.nombres}`.trim() || ficha.propietario}</p>
         </div>
         <div className="detail-item">
           <p className="detail-label">Cédula Identidad</p>
@@ -554,6 +560,14 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
           <p className="detail-label">Instrucción</p>
           <p className="detail-value">{ficha.nivel_instruccion || '—'}</p>
         </div>
+        {ficha.propietario_catastro &&
+          ficha.propietario_catastro.trim().toUpperCase() !==
+            `${ficha.apellidos} ${ficha.nombres}`.trim().toUpperCase() && (
+          <div className="detail-item col-4">
+            <p className="detail-label">Propietario Según Catastro Municipal</p>
+            <p className="detail-value">{ficha.propietario_catastro}</p>
+          </div>
+        )}
       </div>
 
       {/* ── SECCIÓN 2: DATOS DEL PREDIO Y RIEGO ── */}
@@ -773,7 +787,7 @@ export default function FichaImpresion({ ficha, cultivos, animales, prediosAdici
         <img src="/logo-izq.png" alt="Pichincha" className="report-logo" />
         <div className="report-title-block">
           <h1 className="text-[10px] font-bold text-slate-900 uppercase tracking-tight">{PROJECT_TITLE}</h1>
-          <p className="text-[7px] text-slate-400 font-mono">Código Predio: {ficha.codigo_final}</p>
+          <p className="text-[7px] text-slate-400 font-mono">Código: {ficha.codigo_ficha || ficha.codigo_final}</p>
         </div>
         <img src="/logo-der.png" alt="Consorcio" className="report-logo" />
       </div>

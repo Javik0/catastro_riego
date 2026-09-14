@@ -39,6 +39,23 @@ function useLocalData() {
     async function load() {
       try {
         const timestamp = Date.now();
+
+        // Código del padrón por ficha (S01-C22-R001-F01). Es el mismo con el que
+        // se nombran las fichas individuales en PDF y el que lleva la capa
+        // fichas.shp del entregable: así el código que se ve en pantalla, en el
+        // documento y en el mapa es siempre el mismo. Lo asigna
+        // scripts/generar_fichas_pdf.py y vive en codificacion_fichas.json.
+        // El `codigo_final` que trae el gpkg de campo (S-C-P001) se repite entre
+        // fichas —5 fichas del mismo predio comparten el suyo— y no identifica
+        // a ninguna.
+        let codigosPadron: Record<string, string> = {};
+        try {
+          const codRes = await fetch(`/geo/codificacion_fichas.json?t=${timestamp}`);
+          codigosPadron = (await codRes.json())?.fichas || {};
+        } catch (e) {
+          console.warn('No se pudo cargar codificacion_fichas.json:', e);
+        }
+
         const fichasRes = await fetch(`/geo/fichas_predios.geojson?t=${timestamp}`);
         const fichasGeo = await fichasRes.json();
         const fichasData: FichaPredio[] = fichasGeo.features.map((f: any) => {
@@ -117,7 +134,14 @@ function useLocalData() {
               lng: f.geometry.coordinates[0],
             } : undefined,
             _geojson: f.geometry,
+            codigo_ficha: codigosPadron[f.properties.id] || '',
+            // `propietario` es el TITULAR entrevistado en campo; el nombre que
+            // consta en el catastro municipal se conserva aparte porque en 2.223
+            // fichas (32,5 %) son personas distintas —el predio suele seguir a
+            // nombre del padre o de "HEREDEROS DE…"— y mezclarlos ponía el
+            // nombre de uno junto a la cédula del otro.
             propietario: `${f.properties.apellidos || ''} ${f.properties.nombres || ''}`.trim() || f.properties.propietario || '',
+            propietario_catastro: f.properties.propietario || '',
             area_total: f.properties.area_total || 0,
             area_riego: f.properties.area_riego || 0,
             area_sin_riego: f.properties.area_sin_riego || 0,

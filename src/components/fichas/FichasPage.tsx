@@ -18,7 +18,7 @@ const PAGE_SIZES = [25, 50, 100];
 
 const COLUMNS: { key: keyof FichaPredio; label: string; width?: string }[] = [
   { key: 'es_ficha_hija', label: 'Tipo', width: '70px' },
-  { key: 'codigo_final', label: 'Código', width: '90px' },
+  { key: 'codigo_ficha', label: 'Código', width: '132px' },
   { key: 'propietario', label: 'Propietario' },
   { key: 'cedula', label: 'Cédula', width: '100px' },
   { key: 'parroquia', label: 'Parroquia', width: '110px' },
@@ -59,6 +59,7 @@ export default function FichasPage({ fichas, loading }: Props) {
         f.nombres?.toLowerCase().includes(q) ||
         f.cedula?.includes(q) ||
         f.codigo_final?.toLowerCase().includes(q) ||
+        f.codigo_ficha?.toLowerCase().includes(q) ||
         f.clave_catastral?.includes(q)
     );
   }, [fichas, search, filtroTipo]);
@@ -104,7 +105,9 @@ export default function FichasPage({ fichas, loading }: Props) {
   };
 
   const formatCell = (ficha: FichaPredio, key: keyof FichaPredio): React.ReactNode => {
-    const val = ficha[key];
+    const val = key === 'codigo_ficha'
+      ? (ficha.codigo_ficha || ficha.codigo_final)   // respaldo: el código de campo
+      : ficha[key];
     // 'es_ficha_hija' es null en las fichas principales — el badge lo resuelve
     if (val == null && key !== 'es_ficha_hija') return '—';
 

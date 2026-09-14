@@ -128,10 +128,20 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
       case 'propietario':
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Field label="Código del Predio" value={ficha.codigo_final} icon={Hash} />
+            <Field label="Código de la Ficha" value={ficha.codigo_ficha || ficha.codigo_final} icon={Hash} />
             <Field label="Clave Catastral" value={ficha.clave_catastral} icon={CreditCard} />
             <Field label="Apellidos" value={ficha.apellidos} icon={User} />
             <Field label="Nombres" value={ficha.nombres} icon={User} />
+            {/* El catastro municipal suele tener el predio a nombre del padre o
+                de "HEREDEROS DE…", distinto del titular entrevistado. Se muestra
+                solo cuando difiere, con su etiqueta, para no confundirlo con
+                quien dio la entrevista y es dueño de la cédula de al lado. */}
+            {ficha.propietario_catastro &&
+              ficha.propietario_catastro.trim().toUpperCase() !==
+                `${ficha.apellidos} ${ficha.nombres}`.trim().toUpperCase() && (
+              <Field label="Propietario según catastro municipal"
+                     value={ficha.propietario_catastro} icon={Building} />
+            )}
             <Field label="Cédula" value={ficha.cedula} icon={CreditCard} />
             <Field label="Parroquia" value={ficha.parroquia} icon={MapPin} />
             <Field label="Sector" value={ficha.sector} icon={MapPin} />
@@ -339,7 +349,7 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
                                 : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
                             }`}
                           >
-                            {pendiente ? '⚪' : '✅'} Ver ficha adicional generada: {hija.codigo_final} →
+                            {pendiente ? '⚪' : '✅'} Ver ficha adicional generada: {hija.codigo_ficha || hija.codigo_final} →
                           </button>
                         </div>
                       );
@@ -479,7 +489,7 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
               {ficha.propietario || `${ficha.apellidos} ${ficha.nombres}`}
             </h2>
             <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
-              <span className="px-1.5 py-0.5 rounded bg-blue-900/20 text-blue-400 border border-blue-500/10 font-mono text-[10px]">{ficha.codigo_final}</span>
+              <span className="px-1.5 py-0.5 rounded bg-blue-900/20 text-blue-400 border border-blue-500/10 font-mono text-[10px]">{ficha.codigo_ficha || ficha.codigo_final}</span>
               <span className="text-slate-600">•</span>
               <span>{ficha.parroquia}</span>
               <span className="text-slate-600">•</span>
@@ -526,7 +536,7 @@ export default function FichaDetailModal({ ficha, onClose, todasFichas, onSelect
                 onClick={() => onSelectFicha(fichaMadre)}
                 className="ml-auto px-2.5 py-1 rounded-lg bg-blue-600/10 border border-blue-500/30 text-blue-400 font-semibold hover:bg-blue-600/20 transition-colors cursor-pointer text-[11px]"
               >
-                Ver ficha principal: {fichaMadre.codigo_final} →
+                Ver ficha principal: {fichaMadre.codigo_ficha || fichaMadre.codigo_final} →
               </button>
             )}
             {ficha.completado_por && (
