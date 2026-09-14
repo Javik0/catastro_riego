@@ -8324,7 +8324,6 @@
   "{ae57988f-80f1-4778-8fcb-9b5d4fa7f198}": "S01-C01-R023-F01",
   "{823daf3c-58b2-4ece-9a4f-58505c4253a8}": "S01-C01-R024-F01",
   "{345d5e74-f993-4843-819f-c73f65eadef1}": "S01-C01-R025-F01",
-  "{575c59c5-ccfe-4013-a274-cbca3aa23adc}": "S01-C01-R026-F01",
   "{2402adf5-e80c-48be-b0cc-fb1d44387f3e}": "S01-C01-R027-F01",
   "{6d190362-8da4-4db9-9b7f-ff84668c6a74}": "S01-C01-R028-F01",
   "{d6d42ec9-10cf-45b1-a344-3d5c64e11215}": "S01-C01-R028-F02",
@@ -8510,7 +8509,6 @@
   "{cf8b653c-1358-4cf9-8101-5121e8ac1de6}": "S01-C01-R131-F01",
   "{4bd1d519-bdf8-4ee8-b217-b5ec79d648b6}": "S01-C01-R132-F01",
   "{4a7321dc-edbd-42c6-809d-794fa8505eaa}": "S01-C01-R132-F02",
-  "{b53f5c89-a193-4e7b-9bb2-2bacdd20c6dd}": "S01-C01-R133-F01",
   "{b5d391db-3eb7-402d-916a-a70be6f909a5}": "S01-C01-R134-F01",
   "{82e84f62-3539-41c4-b28b-212f0065045e}": "S01-C01-R134-F02",
   "{7f828e67-4af5-4580-91ca-9768697989b4}": "S01-C01-R135-F01",
@@ -11052,7 +11050,14 @@
   "{3afc83ee-3851-4ba3-b339-7159f70c9ffa}": "S03-C46-R118-F01",
   "{af474fe6-231d-4b71-820c-d4935b5095c4}": "S03-C46-R119-F01",
   "{a4e2baca-46b9-4f3d-94ce-7ae542778990}": "S03-C46-R120-F01",
-  "{ceb0b40f-e419-4d7b-9d16-40b0a2dc3f55}": "S03-C38-R001-F01"
+  "{ceb0b40f-e419-4d7b-9d16-40b0a2dc3f55}": "S03-C38-R001-F01",
+  "{575c59c5-ccfe-4013-a274-cbca3aa23adc}": "S01-C01-R027-F02",
+  "{b53f5c89-a193-4e7b-9bb2-2bacdd20c6dd}": "S01-C01-R132-F03"
  },
- "actualizado": "2026-09-04"
+ "actualizado": "2026-09-10",
+ "numeros_sin_uso": {
+  "LARCACHACA|1725933936": 26,
+  "LARCACHACA|1717276448": 133
+ },
+ "nota_numeros_sin_uso": "Titulares que dejaron de existir al corregirse su cedula (10-sep-2026). Se conservan para que su numero R nunca se reasigne a otro titular: esos codigos ya se imprimieron."
 }
