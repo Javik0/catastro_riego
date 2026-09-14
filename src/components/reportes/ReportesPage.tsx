@@ -172,7 +172,20 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         }
         break;
     }
-    return result;
+
+    // Ordenado por el código del padrón, que es como se lee un padrón: sector,
+    // luego comunidad, y dentro de ella los titulares por apellido (así se
+    // asignó la R). El PDF y el Excel salen del mismo orden, y sus códigos
+    // corren seguidos en vez de aparecer salteados. Lo que no tenga código
+    // todavía va al final, por nombre.
+    return [...result].sort((a, b) => {
+      const ca = a.codigo_ficha || '';
+      const cb = b.codigo_ficha || '';
+      if (ca && cb) return ca.localeCompare(cb);
+      if (ca) return -1;
+      if (cb) return 1;
+      return (a.propietario || '').localeCompare(b.propietario || '');
+    });
   };
 
   const buildPdfDoc = async (dataToRender: FichaPredio[], subtitleText: string, showAuditoria: boolean = false) => {
