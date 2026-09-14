@@ -120,6 +120,23 @@ def main():
     properties_list = [feat['properties'] for feat in geojson_data['features']]
     df_fichas = pd.DataFrame(properties_list)
 
+    # Codigo del padron (S01-C22-R001-F01): el unico que identifica una ficha.
+    # `codigo_final` vale S-C-P001 en 5.529 de las 6.830 fichas -- es el valor
+    # por defecto del formulario de campo y casi nunca se cambio, asi que no
+    # sirve para buscar ni para cruzar nada. Es el mismo codigo con el que se
+    # nombran las fichas en PDF, el que muestra la web y el que lleva la capa
+    # fichas.shp del entregable. Fuente: public/geo/codificacion_fichas.json,
+    # lo asigna generar_fichas_pdf.py.
+    _cod_path = os.path.join(GEO_DIR, 'codificacion_fichas.json')
+    _codigos = {}
+    if os.path.exists(_cod_path):
+        with open(_cod_path, encoding='utf-8') as _fc:
+            _codigos = json.load(_fc).get('fichas', {})
+        print(f"Codigo del padron cargado para {len(_codigos):,} fichas.")
+    else:
+        print("  ⚠ Sin codificacion_fichas.json: el Excel sale sin el codigo del padron.")
+    df_fichas['codigo_ficha'] = df_fichas['id'].map(_codigos).fillna('')
+
     # Estado de investigación de cada ficha adicional (id -> texto), calculado
     # ANTES de excluirlas del padrón, para la pestaña "Lotes Adicionales".
     estados_adicionales = {}
@@ -186,7 +203,7 @@ def main():
 
     # Columnas requeridas
     columnas_requeridas = [
-        'id', 'codigo_final', 'propietario', 'apellidos', 'nombres', 'cedula', 'clave_catastral',
+        'id', 'codigo_ficha', 'codigo_final', 'propietario', 'apellidos', 'nombres', 'cedula', 'clave_catastral',
         'parroquia', 'comunidad', 'sector_comunidad', 'canal', 'sector', 'area_total', 'area_riego',
         'area_sin_riego', 'tiene_reservorio', 'dias_riego', 'horas_turno', 'agua_consumo',
         'energia_electrica', 'frecuencia_riego', 'metodo_gravedad_pct', 'metodo_aspersion_pct',
@@ -329,7 +346,8 @@ def main():
         "ÁREA TOTAL (m²)", "ÁREA CON RIEGO (m²)", "ÁREA SIN RIEGO (m²)",
         "TIENE RESERVORIO", "DÍAS DE RIEGO", "HORAS DE TURNO", "CONSTRUCCIÓN: AGUA", "CONSTRUCCIÓN: ENERGÍA",
         "FRECUENCIA", "GRAVEDAD %", "ASPERSIÓN %", "GOTEO %", "TARIFA ($)", "TIPO TARIFA",
-        "TÉCNICO", "FECHA REGISTRO", "CULTIVOS", "ANIMALES", "LOTES ADIC."
+        "TÉCNICO", "FECHA REGISTRO", "CULTIVOS", "ANIMALES", "LOTES ADIC.",
+        "CÓDIGO DE FICHA"
     ]
     
     for col_idx, h in enumerate(headers_padron, start=1):
@@ -348,6 +366,12 @@ def main():
         padron_indices[uuid_val] = r_num
         
         ws_padron.cell(row=r_num, column=1, value=idx + 1).alignment = align_center
+
+        # Codigo del padron (S01-C22-R001-F01): identifica la ficha y es el mismo
+        # con el que se nombra su PDF, asi que desde esta fila se llega al
+        # documento. Va en la ultima columna por lo explicado en los encabezados.
+        _cf = ws_padron.cell(row=r_num, column=34, value=row.get('codigo_ficha') or '')
+        _cf.alignment = align_center
         
         # Cédula / RUC
         ced_cell = ws_padron.cell(row=r_num, column=2, value=row['cedula'])
@@ -444,7 +468,7 @@ def main():
         f_id = row['ficha_id']
         if f_id in df_fichas_lookup.index:
             ficha = df_fichas_lookup.loc[f_id]
-            codigo_final = ficha['codigo_final']
+            codigo_final = ficha['codigo_ficha'] or ficha['codigo_final']
             propietario = ficha['propietario']
             parroquia = ficha['parroquia']
             comunidad = ficha['comunidad']
@@ -499,7 +523,7 @@ def main():
         f_id = row['ficha_id']
         if f_id in df_fichas_lookup.index:
             ficha = df_fichas_lookup.loc[f_id]
-            codigo_final = ficha['codigo_final']
+            codigo_final = ficha['codigo_ficha'] or ficha['codigo_final']
             propietario = ficha['propietario']
             comunidad = ficha['comunidad']
             
@@ -549,7 +573,7 @@ def main():
         f_id = row['ficha_id']
         if f_id in df_fichas_lookup.index:
             ficha = df_fichas_lookup.loc[f_id]
-            codigo_final = ficha['codigo_final']
+            codigo_final = ficha['codigo_ficha'] or ficha['codigo_final']
             propietario = ficha['propietario']
             comunidad = ficha['comunidad']
             

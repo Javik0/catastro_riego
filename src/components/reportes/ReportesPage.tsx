@@ -274,7 +274,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // Ficha Principal
         rows.push([
           i + 1,
-          f.codigo_final,
+          f.codigo_ficha || f.codigo_final,
           f.propietario || `${f.apellidos} ${f.nombres}`.trim() || 'No registrado',
           f.telefono_celular || f.telefono_casa || '—',
           [
@@ -694,7 +694,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
       data.forEach((f) => {
         // Ficha Principal
         fichasRows.push({
-          'Código': f.codigo_final,
+          'Código': f.codigo_ficha || f.codigo_final,
           'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
           'Cédula': f.cedula,
           'Celular': f.telefono_celular || '',
