@@ -436,15 +436,23 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           fillColor: [255, 255, 255] 
         },
         margin: { left: 10, right: 10 },
-        didDrawPage: (d) => {
-          const pc = doc.getNumberOfPages();
-          doc.setFontSize(6); doc.setTextColor(128);
-          doc.text(
-            pdfSafe(`Página ${d.pageNumber} de ${pc} | Consorcio Cayambe SPT — Prefectura de Pichincha`),
-            pageWidth / 2, doc.internal.pageSize.getHeight() - 5, { align: 'center' }
-          );
-        },
       });
+
+    // El pie se escribe AL FINAL, recorriendo el documento ya terminado.
+    // Hacerlo dentro de didDrawPage daba "Página 1 de 1", "Página 2 de 2"…:
+    // esa función corre mientras la tabla se construye, así que
+    // getNumberOfPages() devolvía las páginas que llevaba hasta ese momento y
+    // el total se reescribía en cada hoja, sin decir nunca cuántas son.
+    const totalPaginas = doc.getNumberOfPages();
+    for (let p = 1; p <= totalPaginas; p++) {
+      doc.setPage(p);
+      doc.setFontSize(6);
+      doc.setTextColor(128);
+      doc.text(
+        pdfSafe(`Página ${p} de ${totalPaginas} | Consorcio Cayambe SPT — Prefectura de Pichincha`),
+        pageWidth / 2, doc.internal.pageSize.getHeight() - 5, { align: 'center' }
+      );
+    }
 
     return doc;
   };
