@@ -308,8 +308,15 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // Desglose de predios adicionales (tanto físicos como unificados virtuales)
         const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
-          // Buscamos si es una ficha virtual que tiene su respectivo registro original en las fichas para recuperar datos geográficos reales
-          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional);
+          // La ficha adicional real, si el formulario llegó a generarla.
+          // `id_adicional` es el id del REGISTRO DEL LOTE, no el de una ficha:
+          // por sí solo no resuelve ninguna de las 2.690 filas, y por eso los
+          // predios adicionales salían sin ubicación. El enlace bueno es
+          // `ficha_hija_generada_id`, que resuelve 2.408 de ellas.
+          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional)
+            || (pa.ficha_hija_generada_id
+                ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
+                : undefined);
 
           // Estado de investigación del lote (ficha adicional generada desde la Sección 7)
           const fichaAdic = pa.ficha_hija_generada_id
@@ -324,26 +331,58 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           const ubicacionAdicional = [
             fichaAdicionalFisica?.parroquia,
             fichaAdicionalFisica?.sector,
-            fichaAdicionalFisica?.comunidad
+            (fichaAdicionalFisica?.comunidad || '').trim()
           ].filter(Boolean).join(' / ');
+
+          // Un predio adicional es OTRO PREDIO DEL MISMO TITULAR, así que el
+          // nombre, la cédula y el teléfono son los suyos. Antes estas celdas
+          // iban vacías a propósito y la fila no decía de quién era el lote.
+          const titularAdicional = fichaAdicionalFisica
+            ? (fichaAdicionalFisica.propietario
+               || `${fichaAdicionalFisica.apellidos} ${fichaAdicionalFisica.nombres}`.trim())
+            : (f.propietario || `${f.apellidos} ${f.nombres}`.trim());
+          const telefonoAdicional = fichaAdicionalFisica?.telefono_celular
+            || fichaAdicionalFisica?.telefono_casa
+            || f.telefono_celular || f.telefono_casa || '';
+          const cedulaAdicional = fichaAdicionalFisica?.cedula || f.cedula || '';
+          const codigoAdicional = fichaAdicionalFisica?.codigo_ficha || '';
 
           const areaTotalAdicional = pa.area_total_otro || pa.area_lote_asignado_otro || 0;
 
+          const fondoAdic = { fillColor: [248, 250, 252] as [number, number, number],
+                              lineColor: [241, 245, 249] as [number, number, number] };
+          const textoAdic = { ...fondoAdic, textColor: [71, 85, 105] as [number, number, number],
+                              fontSize: 5.5 };
+
           rows.push([
-            { content: '', styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } }, // #
+            { content: '', styles: { ...fondoAdic } }, // #
+            // El código de la ficha adicional. Si el lote se declaró pero nunca
+            // llegó a tener ficha propia no hay código que poner: en ese caso la
+            // etiqueta ocupa las dos primeras columnas, como antes.
+            ...(codigoAdicional
+              ? [{
+                  content: codigoAdicional,
+                  styles: { ...textoAdic, fontStyle: 'italic' as const },
+                }, {
+                  content: `${etiquetaAdicional.trim()} · ${titularAdicional}`,
+                  styles: { ...textoAdic, fontStyle: 'italic' as const },
+                }]
+              : [{
+                  content: etiquetaAdicional,
+                  colSpan: 2,
+                  styles: { ...textoAdic, fontStyle: 'italic' as const, font: 'helvetica' },
+                }]),
             {
-              content: etiquetaAdicional,
-              colSpan: 2,
-              styles: { fontStyle: 'italic', textColor: [71, 85, 105], fillColor: [248, 250, 252], font: 'helvetica', fontSize: 5.5, lineColor: [241, 245, 249] }
-            }, // Código + Propietario
+              content: telefonoAdicional,
+              styles: { ...textoAdic },
+            }, // Celular / Teléfono
             { 
-              content: '', 
-              styles: { fillColor: [248, 250, 252], lineColor: [241, 245, 249] } 
-            }, // Celular / Teléfono (vacío en predio adicional)
-            { 
-              content: pa.clave_catastral_otro ? `ClvP ${pa.clave_catastral_otro}` : '', 
-              styles: { textColor: [71, 85, 105], fillColor: [248, 250, 252], fontSize: 5.5, lineColor: [241, 245, 249] } 
-            }, // Identificación (Clave)
+              content: [
+                cedulaAdicional ? `C.I. ${cedulaAdicional}` : '',
+                pa.clave_catastral_otro ? `ClvP ${pa.clave_catastral_otro}` : '',
+              ].filter(Boolean).join('\n'),
+              styles: { ...textoAdic } 
+            }, // Identificación (Cédula / Clave)
             { 
               content: ubicacionAdicional ? `Ubic: ${ubicacionAdicional}` : '', 
               styles: { textColor: [100, 116, 139], fillColor: [248, 250, 252], fontSize: 5, lineColor: [241, 245, 249] } 
@@ -750,7 +789,12 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           const propio = fichaAdicionalFisica;   // lo que la ficha hija sí trae
 
           fichasRows.push({
-            'Código': '  ↳ Predio Adic.',
+            // El código de la ficha adicional, con la flecha que la sangra bajo
+            // su principal. Los lotes declarados que nunca llegaron a tener
+            // ficha propia no tienen código: ahí se queda la etiqueta sola.
+            'Código': propio?.codigo_ficha
+              ? `  ↳ ${propio.codigo_ficha}`
+              : '  ↳ Predio Adic.',
             'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
             'Cédula': f.cedula,
             'Celular': f.telefono_celular || '',
