@@ -82,3 +82,11 @@ scripts/photos_sync_log.json
 # Mapas intermedios del informe del sociólogo: los regenera
 # generar_informe_sociologo.py y ya van embebidos en el HTML y el Word.
 docs/mapas-sociologo/
+
+# Capturas en bruto del manual (18 MB): se rehacen con
+# scripts/capturar_manual.mjs. Al repositorio va solo el indice y las
+# versiones anotadas, que son las que el PDF necesita.
+docs/manual/capturas/*.png
+# ...pero las anotadas si: sin ellas el manual no se puede rehacer sin
+# levantar el servidor de desarrollo.
+!docs/manual/anotadas/*.jpg

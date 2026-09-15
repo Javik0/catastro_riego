@@ -14,6 +14,7 @@ Todo lo que se describe se verificó entrando a la plataforma con ese perfil.
 Uso:
     python -X utf8 scripts/generar_manual_geovisor.py
 """
+import io
 import json
 import os
 import sys
@@ -25,19 +26,37 @@ from generar_fichas_pdf import (  # noqa: E402
     ParagraphStyle, Spacer, tabla_datos, titulo_seccion,
 )
 from informe_estilo import FECHA_CORTE  # noqa: E402
-from reportlab.platypus import SimpleDocTemplate  # noqa: E402
+from PIL import Image as PILImage  # noqa: E402
+from reportlab.platypus import (  # noqa: E402
+    Image, KeepTogether, SimpleDocTemplate,
+)
 
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 GEO = os.path.join(BASE, 'public', 'geo')
 ENTREGA = r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTOG'
 SALIDA = os.path.join(ENTREGA, '0 - MANUAL DE USO DEL GEOVISOR.pdf')
+FIGURAS = os.path.join(BASE, 'docs', 'manual', 'anotadas')
+INDICE_FIGURAS = os.path.join(BASE, 'docs', 'manual', 'capturas', 'capturas.json')
 URL = 'https://invs-riego-comunitario.web.app'
+
+
+def _cargar_figuras():
+    """Las capturas y sus llamadas, tal como las dejaron los dos scripts previos.
+
+    Si no estan, el manual se arma igual pero sin ilustrar: asi el documento
+    nunca queda bloqueado por no haber levantado el servidor de desarrollo.
+    """
+    if not os.path.exists(INDICE_FIGURAS):
+        return {}
+    with io.open(INDICE_FIGURAS, encoding='utf-8') as f:
+        return {t['id']: t for t in json.load(f)}
 
 
 def main():
     with open(os.path.join(GEO, 'stats.json'), encoding='utf-8') as f:
         s = json.load(f)
     total = s['fichas'] + s['fichas_hijas']
+    figuras = _cargar_figuras()
 
     doc = SimpleDocTemplate(
         SALIDA, pagesize=A4, leftMargin=10 * mm, rightMargin=10 * mm,
@@ -60,6 +79,37 @@ def main():
     def paso(n, txt):
         return Paragraph('<b>{}.</b>  {}'.format(n, txt), st_paso)
 
+    st_pie = ParagraphStyle('pie', fontName='Helvetica', fontSize=7.5, leading=10,
+                            alignment=1, textColor=colors.HexColor('#475569'),
+                            spaceBefore=1.5 * mm)
+
+    def figura(id_toma, ancho=155 * mm):
+        """Intercala una captura con la leyenda de sus llamadas numeradas.
+
+        Los numeros de la leyenda son los que el anotador dibujo sobre la
+        imagen, en el mismo orden, asi que no hay forma de que texto e imagen
+        se desincronicen.
+        """
+        toma = figuras.get(id_toma)
+        if not toma:
+            return []
+        ruta = os.path.join(FIGURAS, toma['archivo'].replace('.png', '.jpg'))
+        if not os.path.exists(ruta):
+            return []
+        with PILImage.open(ruta) as im:
+            proporcion = im.height / im.width
+        bloque = [Spacer(0, 3 * mm),
+                  Image(ruta, width=ancho, height=ancho * proporcion)]
+        if toma['marcas']:
+            leyenda = '&nbsp;&nbsp;&nbsp;'.join(
+                '<b>{}</b>&nbsp;{}'.format(i, m['nota'])
+                for i, m in enumerate(toma['marcas'], start=1))
+            bloque.append(Paragraph(leyenda, st_pie))
+        else:
+            bloque.append(Paragraph(toma['titulo'], st_pie))
+        bloque.append(Spacer(0, 4 * mm))
+        return [KeepTogether(bloque)]
+
     h = [Paragraph('Manual de uso del geovisor', st_h), Spacer(0, 1.5 * mm),
          Paragraph('Catastro socioeconómico y productivo predial · Sistema de riego '
                    'comunitario Guanguilquí–Porotog', st_sub), Spacer(0, 5 * mm),
@@ -80,6 +130,7 @@ def main():
           Paragraph('El botón <b>Claro / Oscuro</b>, arriba a la derecha, cambia el tema '
                     'de la pantalla; el de <b>Salir</b>, cierra la sesión. Si el menú de '
                     'la izquierda está plegado, se despliega con la flecha de su borde.', st_p)]
+    h += figura('01-tablero')
 
     # ── filtros ──
     h += titulo_seccion('Los filtros: valen para toda la plataforma')
@@ -92,6 +143,7 @@ def main():
                     'comunidad, el tablero recalcula sus indicadores, el mapa muestra solo '
                     'esos predios y el listado de fichas se reduce a ellos. Para volver a '
                     'ver todo, pulse <b>Limpiar</b>.', st_p)]
+    h += figura('02-filtros', ancho=170 * mm)
 
     # ── tablero ──
     h += titulo_seccion('Tablero: las cifras del padrón')
@@ -128,6 +180,9 @@ def main():
           Spacer(0, 2 * mm),
           Paragraph('La lupa busca un predio por su clave catastral. Los controles + y − '
                     'acercan y alejan; también funciona la rueda del ratón.', st_p)]
+    h += figura('03-mapa-investigacion')
+    h += figura('04-mapa-riego')
+    h += figura('06-mapa-predio')
 
     # ── fichas ──
     h += titulo_seccion('Fichas: buscar y leer una ficha')
@@ -145,6 +200,9 @@ def main():
           Paragraph('Las columnas del listado se ordenan pulsando su encabezado, y el '
                     'selector de la derecha permite ver todas las fichas o solo las '
                     'principales.', st_p)]
+    h += figura('05-fichas-listado')
+    h += figura('08-fichas-busqueda')
+    h += figura('09-ficha-detalle')
 
     # ── el codigo ──
     h += titulo_seccion('El código de cada ficha')
@@ -175,6 +233,7 @@ def main():
                     'viene configurada. La entrega incluye además las mismas capas en '
                     'Shapefile y en CAD, y el diccionario de datos con el detalle de cada '
                     'campo.', st_p)]
+    h += figura('07-mapa-qgis')
 
     # ── dudas frecuentes ──
     h += titulo_seccion('Para leer bien las cifras')

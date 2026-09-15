@@ -1,0 +1,191 @@
+[
+  {
+    "id": "01-tablero",
+    "titulo": "Tablero de entrada",
+    "archivo": "01-tablero.png",
+    "marcas": [
+      {
+        "nota": "Tablero: las cifras del padrón",
+        "x": 8,
+        "y": 68,
+        "width": 223,
+        "height": 40
+      },
+      {
+        "nota": "Mapa: el catastro sobre imagen satelital",
+        "x": 8,
+        "y": 112,
+        "width": 223,
+        "height": 40
+      },
+      {
+        "nota": "Fichas: el listado del padrón",
+        "x": 8,
+        "y": 156,
+        "width": 223,
+        "height": 40
+      },
+      {
+        "nota": "Cambia entre tema claro y oscuro",
+        "x": 1120.421875,
+        "y": 13,
+        "width": 74.359375,
+        "height": 30
+      }
+    ]
+  },
+  {
+    "id": "02-filtros",
+    "titulo": "Barra de filtros",
+    "archivo": "02-filtros.png",
+    "marcas": [
+      {
+        "nota": "Buscador por propietario o cédula",
+        "x": 48,
+        "y": 66,
+        "width": 170,
+        "height": 30
+      },
+      {
+        "nota": "Filtros: parroquia, sector, comunidad, técnico y fechas",
+        "x": 216,
+        "y": 65,
+        "width": 110,
+        "height": 32
+      }
+    ]
+  },
+  {
+    "id": "03-mapa-investigacion",
+    "titulo": "Mapa — vista Investigación",
+    "archivo": "03-mapa-investigacion.png",
+    "marcas": [
+      {
+        "nota": "Vista Investigación: color según el estado de la ficha",
+        "x": 291,
+        "y": 237,
+        "width": 93.5,
+        "height": 23
+      },
+      {
+        "nota": "Vista Riego: color según la condición de riego",
+        "x": 384.5,
+        "y": 237,
+        "width": 93.5,
+        "height": 23
+      },
+      {
+        "nota": "Descarga la cartografía para QGIS",
+        "x": 1277.53125,
+        "y": 143,
+        "width": 73.46875,
+        "height": 34
+      },
+      {
+        "nota": "Busca un predio por su clave catastral",
+        "x": 321,
+        "y": 143,
+        "width": 38,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "id": "04-mapa-riego",
+    "titulo": "Mapa — vista Riego",
+    "archivo": "04-mapa-riego.png",
+    "marcas": [
+      {
+        "nota": "La vista Riego, activada",
+        "x": 384.5,
+        "y": 237,
+        "width": 93.5,
+        "height": 23
+      }
+    ]
+  },
+  {
+    "id": "05-fichas-listado",
+    "titulo": "Listado de fichas",
+    "archivo": "05-fichas-listado.png",
+    "marcas": [
+      {
+        "nota": "Busca por nombre, cédula, clave catastral o código",
+        "x": 264,
+        "y": 130,
+        "width": 800.1640625,
+        "height": 38
+      },
+      {
+        "nota": "Ver todas las fichas o solo las principales",
+        "x": 1076.1640625,
+        "y": 131,
+        "width": 207,
+        "height": 36
+      },
+      {
+        "nota": "Abre la ficha",
+        "x": 1661.5703125,
+        "y": 263,
+        "width": 28,
+        "height": 28
+      }
+    ]
+  },
+  {
+    "id": "06-mapa-predio",
+    "titulo": "Mapa — ficha de un predio",
+    "archivo": "06-mapa-predio.png",
+    "marcas": [
+      {
+        "nota": "Abre la ficha completa del titular",
+        "x": 1136.625,
+        "y": 475.671875,
+        "width": 120.375,
+        "height": 21.328125
+      }
+    ]
+  },
+  {
+    "id": "07-mapa-qgis",
+    "titulo": "Mapa — descarga de la cartografía",
+    "archivo": "07-mapa-qgis.png",
+    "marcas": [
+      {
+        "nota": "El botón QGIS y lo que descarga",
+        "x": 1277.53125,
+        "y": 143,
+        "width": 73.46875,
+        "height": 34
+      }
+    ]
+  },
+  {
+    "id": "08-fichas-busqueda",
+    "titulo": "Buscar una ficha por su código",
+    "archivo": "08-fichas-busqueda.png",
+    "marcas": [
+      {
+        "nota": "El código escrito en el buscador deja una sola ficha",
+        "x": 264,
+        "y": 130,
+        "width": 819.5703125,
+        "height": 38
+      }
+    ]
+  },
+  {
+    "id": "09-ficha-detalle",
+    "titulo": "La ficha abierta",
+    "archivo": "09-ficha-detalle.png",
+    "marcas": [
+      {
+        "nota": "Genera la ficha en A4, igual que la del expediente",
+        "x": 1009.859375,
+        "y": 130.75,
+        "width": 91.140625,
+        "height": 32
+      }
+    ]
+  }
+]
