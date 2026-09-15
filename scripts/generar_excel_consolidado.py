@@ -339,15 +339,14 @@ def main():
     ws_padron.views.sheetView[0].showGridLines = True
     
     headers_padron = [
-        "N° REGISTRO", "CÉDULA / RUC", "CLAVE CATASTRAL", "APELLIDOS Y NOMBRES",
+        "CÓDIGO DE FICHA", "N° REGISTRO", "CÉDULA / RUC", "CLAVE CATASTRAL", "APELLIDOS Y NOMBRES",
         "CELULAR",
         "HIJOS HOMBRES", "HIJOS MUJERES", "NIVEL INSTRUCCIÓN", "TENENCIA PREDIO",
         "PARROQUIA", "SECTOR INVESTIGACIÓN", "COMUNIDAD", "SECTOR COMUNIDAD", "CANAL DE RIEGO", 
         "ÁREA TOTAL (m²)", "ÁREA CON RIEGO (m²)", "ÁREA SIN RIEGO (m²)",
         "TIENE RESERVORIO", "DÍAS DE RIEGO", "HORAS DE TURNO", "CONSTRUCCIÓN: AGUA", "CONSTRUCCIÓN: ENERGÍA",
         "FRECUENCIA", "GRAVEDAD %", "ASPERSIÓN %", "GOTEO %", "TARIFA ($)", "TIPO TARIFA",
-        "TÉCNICO", "FECHA REGISTRO", "CULTIVOS", "ANIMALES", "LOTES ADIC.",
-        "CÓDIGO DE FICHA"
+        "TÉCNICO", "FECHA REGISTRO", "CULTIVOS", "ANIMALES", "LOTES ADIC."
     ]
     
     for col_idx, h in enumerate(headers_padron, start=1):
@@ -365,83 +364,83 @@ def main():
         uuid_val = row['id']
         padron_indices[uuid_val] = r_num
         
-        ws_padron.cell(row=r_num, column=1, value=idx + 1).alignment = align_center
+        ws_padron.cell(row=r_num, column=2, value=idx + 1).alignment = align_center
 
         # Codigo del padron (S01-C22-R001-F01): identifica la ficha y es el mismo
         # con el que se nombra su PDF, asi que desde esta fila se llega al
-        # documento. Va en la ultima columna por lo explicado en los encabezados.
-        _cf = ws_padron.cell(row=r_num, column=34, value=row.get('codigo_ficha') or '')
+        # documento. Va primero: es con lo que se busca una ficha en el padron.
+        _cf = ws_padron.cell(row=r_num, column=1, value=row.get('codigo_ficha') or '')
         _cf.alignment = align_center
         
         # Cédula / RUC
-        ced_cell = ws_padron.cell(row=r_num, column=2, value=row['cedula'])
+        ced_cell = ws_padron.cell(row=r_num, column=3, value=row['cedula'])
         ced_cell.number_format = '@'
         ced_cell.alignment = align_center
         
         # Clave Catastral
-        cc_cell = ws_padron.cell(row=r_num, column=3, value=row['clave_catastral'] or '')
+        cc_cell = ws_padron.cell(row=r_num, column=4, value=row['clave_catastral'] or '')
         cc_cell.number_format = '@'
         cc_cell.alignment = align_center
         
-        ws_padron.cell(row=r_num, column=4, value=row['propietario']).alignment = align_left
+        ws_padron.cell(row=r_num, column=5, value=row['propietario']).alignment = align_left
 
         # Celular (contacto del regante) — sin 'nan' cuando el dato no existe
-        cel_cell = ws_padron.cell(row=r_num, column=5, value=limpiar_texto(row.get('telefono_celular')))
+        cel_cell = ws_padron.cell(row=r_num, column=6, value=limpiar_texto(row.get('telefono_celular')))
         cel_cell.number_format = '@'
         cel_cell.alignment = align_center
 
         # Hijos hombres/mujeres
-        ws_padron.cell(row=r_num, column=6, value=row['hijos_hombres'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=7, value=row['hijos_mujeres'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=7, value=row['hijos_hombres'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=8, value=row['hijos_mujeres'] or 0).number_format = '0'
         
         # Nivel Instrucción y Tenencia Predio
-        ws_padron.cell(row=r_num, column=8, value=row['nivel_instruccion'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=9, value=row['tenencia_predio'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=9, value=row['nivel_instruccion'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=10, value=row['tenencia_predio'] or '').alignment = align_center
         
         # Parroquia, Sector Investigación, Comunidad, Sector Comunidad, Canal
-        ws_padron.cell(row=r_num, column=10, value=row['parroquia']).alignment = align_center
-        ws_padron.cell(row=r_num, column=11, value=row['sector_investigacion']).alignment = align_center
-        ws_padron.cell(row=r_num, column=12, value=row['comunidad']).alignment = align_left
-        ws_padron.cell(row=r_num, column=13, value=row['sector_comunidad'] or '').alignment = align_left
-        ws_padron.cell(row=r_num, column=14, value=row['canal'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=11, value=row['parroquia']).alignment = align_center
+        ws_padron.cell(row=r_num, column=12, value=row['sector_investigacion']).alignment = align_center
+        ws_padron.cell(row=r_num, column=13, value=row['comunidad']).alignment = align_left
+        ws_padron.cell(row=r_num, column=14, value=row['sector_comunidad'] or '').alignment = align_left
+        ws_padron.cell(row=r_num, column=15, value=row['canal'] or '').alignment = align_left
         
         # Áreas
-        ws_padron.cell(row=r_num, column=15, value=row['area_total'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=16, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
-        ws_padron.cell(row=r_num, column=17, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=16, value=row['area_total'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=17, value=row['area_riego'] or 0.0).number_format = '#,##0.00'
+        ws_padron.cell(row=r_num, column=18, value=row['area_sin_riego'] or 0.0).number_format = '#,##0.00'
         
         # Reservorio y turnos de riego
-        ws_padron.cell(row=r_num, column=18, value=row['tiene_reservorio'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=19, value=row['dias_riego'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=20, value=row['horas_turno'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=19, value=row['tiene_reservorio'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=20, value=row['dias_riego'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=21, value=row['horas_turno'] or 0).number_format = '0'
         
         # Construcción: Agua / Energía
         agua_str = "SÍ" if row['agua_consumo'] in [1, True] else "NO"
         energia_str = "SÍ" if row['energia_electrica'] in [1, True] else "NO"
-        ws_padron.cell(row=r_num, column=21, value=agua_str).alignment = align_center
-        ws_padron.cell(row=r_num, column=22, value=energia_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=22, value=agua_str).alignment = align_center
+        ws_padron.cell(row=r_num, column=23, value=energia_str).alignment = align_center
         
         # Frecuencia y métodos de riego
-        ws_padron.cell(row=r_num, column=23, value=row['frecuencia_riego'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=24, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=25, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
-        ws_padron.cell(row=r_num, column=26, value=row['metodo_goteo_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=24, value=row['frecuencia_riego'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=25, value=row['metodo_gravedad_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=26, value=row['metodo_aspersion_pct'] or 0).number_format = '0'
+        ws_padron.cell(row=r_num, column=27, value=row['metodo_goteo_pct'] or 0).number_format = '0'
         
         # Tarifa
-        ws_padron.cell(row=r_num, column=27, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
-        ws_padron.cell(row=r_num, column=28, value=row['tipo_tarifa'] or '').alignment = align_center
-        ws_padron.cell(row=r_num, column=29, value=get_tecnico_name(row['creado_por'])).alignment = align_left
+        ws_padron.cell(row=r_num, column=28, value=row['valor_tarifa'] or 0.0).number_format = '$#,##0.00'
+        ws_padron.cell(row=r_num, column=29, value=row['tipo_tarifa'] or '').alignment = align_center
+        ws_padron.cell(row=r_num, column=30, value=get_tecnico_name(row['creado_por'])).alignment = align_left
         
         # Fecha
         fecha_val = str(row['fecha_creacion'] or '')[:10]
-        ws_padron.cell(row=r_num, column=30, value=fecha_val).alignment = align_center
+        ws_padron.cell(row=r_num, column=31, value=fecha_val).alignment = align_center
         
-        # Bordes y fuente (33 columnas totales, incluye CELULAR)
-        for c in range(1, 34):
+        # Bordes y fuente: las 34 columnas, codigo incluido
+        for c in range(1, 35):
             ws_padron.cell(row=r_num, column=c).border = cell_border
             ws_padron.cell(row=r_num, column=c).font = font_data
 
-    ws_padron.auto_filter.ref = f"A1:AG{len(df_fichas) + 1}"
+    ws_padron.auto_filter.ref = f"A1:AH{len(df_fichas) + 1}"
     ws_padron.freeze_panes = "A2"
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -630,7 +629,7 @@ def main():
         r_num = idx + 2
         f_id = row['id']
         
-        col_cultivos = ws_padron.cell(row=r_num, column=31)
+        col_cultivos = ws_padron.cell(row=r_num, column=32)
         if f_id in cultivos_indices:
             col_cultivos.value = "Ver Cultivos"
             col_cultivos.hyperlink = f"#'Cultivos y Producción'!A{cultivos_indices[f_id]}"
@@ -640,7 +639,7 @@ def main():
             col_cultivos.value = "-"
             col_cultivos.alignment = align_center
             
-        col_animales = ws_padron.cell(row=r_num, column=32)
+        col_animales = ws_padron.cell(row=r_num, column=33)
         if f_id in animales_indices:
             col_animales.value = "Ver Animales"
             col_animales.hyperlink = f"#'Inventario Pecuario'!A{animales_indices[f_id]}"
@@ -650,7 +649,7 @@ def main():
             col_animales.value = "-"
             col_animales.alignment = align_center
             
-        col_predios = ws_padron.cell(row=r_num, column=33)
+        col_predios = ws_padron.cell(row=r_num, column=34)
         if f_id in predios_indices:
             col_predios.value = "Ver Lotes"
             col_predios.hyperlink = f"#'Lotes Adicionales'!A{predios_indices[f_id]}"
