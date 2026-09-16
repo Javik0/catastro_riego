@@ -110,12 +110,34 @@ if ($aReemplazar.Count -eq 0) {
     exit 0
 }
 
+# Todas las fichas del paquete tienen que haber encontrado su pareja. Si faltan,
+# el programa NO sigue por su cuenta: reemplazar solo una parte deja el resto
+# desactualizado y nadie se entera. Se guarda la lista de las que faltan para
+# poder revisarlas.
+$frase = 'SI'
+if ($sinPareja.Count -or $repetidas.Count) {
+    $listaFaltan = Join-Path $base 'FICHAS QUE NO SE ENCONTRARON.txt'
+    Set-Content -Path $listaFaltan -Value ($sinPareja + ($repetidas | ForEach-Object { "$_  (nombre repetido)" })) -Encoding utf8
+    Write-Host ''
+    Write-Host '  ATENCION --------------------------------------------------------' -ForegroundColor Red
+    Write-Host "  Se esperaban $($nuevas.Count) fichas y solo se encontraron $($aReemplazar.Count)." -ForegroundColor Red
+    Write-Host "  Faltan $($nuevas.Count - $aReemplazar.Count). Esas NO se actualizarian." -ForegroundColor Red
+    Write-Host '  -----------------------------------------------------------------' -ForegroundColor Red
+    Write-Host ''
+    Write-Host '  Lo normal es que esto NO pase. Antes de seguir, avise y envie el' -ForegroundColor Yellow
+    Write-Host '  archivo que acabo de dejar junto a este programa:' -ForegroundColor Yellow
+    Write-Host '     FICHAS QUE NO SE ENCONTRARON.txt' -ForegroundColor Yellow
+    $faltan = $nuevas.Count - $aReemplazar.Count
+    Escribir "FALTAN $faltan fichas; lista en $listaFaltan" 'Red'
+    $frase = 'CONTINUAR IGUAL'
+}
+
 Write-Host ''
 Write-Host '  Se reemplazaran esas fichas por su version nueva.' -ForegroundColor White
 Write-Host '  Las demas no se tocan, y no se crea ninguna carpeta.' -ForegroundColor DarkGray
 Write-Host ''
-$ok = Read-Host '  Escriba SI y pulse Enter para continuar (cualquier otra cosa cancela)'
-if ($ok.Trim().ToUpper() -ne 'SI') {
+$ok = Read-Host "  Escriba $frase y pulse Enter para continuar (cualquier otra cosa cancela)"
+if ($ok.Trim().ToUpper() -ne $frase) {
     Escribir 'Cancelado por el usuario. No se hizo ningun cambio.' 'Yellow'
     Read-Host 'Pulse Enter para salir'
     exit 0

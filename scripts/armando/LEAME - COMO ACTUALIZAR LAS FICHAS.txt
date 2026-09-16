@@ -43,8 +43,13 @@ PASOS
 4. El programa busca solo las carpetas de fichas que encuentre y le muestra una
    lista. Escriba el numero de la que quiere actualizar y pulse Enter.
 
-5. Le dira cuantas fichas va a reemplazar. Si el numero le cuadra, escriba SI
-   y pulse Enter. Si escribe cualquier otra cosa, no cambia nada.
+5. Le dira cuantas fichas va a reemplazar. Escriba SI y pulse Enter. Si
+   escribe cualquier otra cosa, no cambia nada.
+
+   El programa comprueba solo que esten TODAS. Si faltara alguna, se lo avisa
+   en rojo, no acepta un simple SI, y deja un archivo llamado
+   FICHAS QUE NO SE ENCONTRARON.txt. En ese caso NO siga: avise y envie ese
+   archivo. Lo normal es que esto no pase.
 
 6. Al terminar le dice cuantas reemplazo. Listo.
 
@@ -58,8 +63,9 @@ SI ALGO NO SALE
   fichas estan en un sitio que no alcanzo a ver. Solucion: arrastre la carpeta
   de las fichas encima de ACTUALIZAR FICHAS.bat y sueltela.
 
-- Sale que algunas "no estan en la carpeta": significa que esas fichas no se
-  encontraron con ese nombre. Las demas si se reemplazan. Avise cuantas fueron.
+- Sale el aviso en rojo de que faltan fichas: significa que algunas no se
+  encontraron con ese nombre en su carpeta. No continue: avise y envie el
+  archivo FICHAS QUE NO SE ENCONTRARON.txt que queda junto al programa.
 
 - "Hubo fallos": normalmente es que tenia una ficha abierta en el lector de
   PDF. Cierrela y vuelva a ejecutar; las que ya se reemplazaron no se repiten.
