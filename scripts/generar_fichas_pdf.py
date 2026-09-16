@@ -269,6 +269,46 @@ def _titular_id(p):
     return 'NOM:' + normalizar(f"{p.get('apellidos') or ''} {p.get('nombres') or ''}")
 
 
+def _indice_por_clave(fichas):
+    """clave catastral -> fichas levantadas sobre ese predio.
+
+    Un predio puede tener varias: en los terrenos familiares cada heredero
+    declara su parte."""
+    d = defaultdict(list)
+    for p in fichas:
+        clave = (p.get('clave_catastral') or '').strip()
+        if clave:
+            d[clave].append(p)
+    return d
+
+
+def codigo_del_lote(a, madre, ctx):
+    """Codigo de la ficha que corresponde a un lote declarado en la seccion 3.
+
+    Se resuelve por identificador interno y, si ese enlace esta roto —lo esta
+    en 282 de los 2.690 declarados—, por CLAVE CATASTRAL, que identifica el
+    predio y no depende de como se genero la ficha. Devuelve el codigo y si la
+    ficha es de OTRO titular, porque entonces hay que decirlo: el lote existe
+    en el padron, pero no a nombre de quien lo declaro.
+    """
+    destino = a.get('ficha_hija_generada_id') or a.get('id_adicional') or ''
+    ficha = ctx['fichas_por_id'].get(destino)
+    if not ficha:
+        candidatas = ctx['fichas_por_clave'].get(
+            (a.get('clave_catastral_otro') or '').strip(), [])
+        ficha = candidatas[0] if len(candidatas) == 1 else None
+        if ficha is not None and ficha.get('id') == madre.get('id'):
+            ficha = None
+    if ficha is None:
+        # El lote no tiene ficha propia, o tiene varias y no se sabe cual.
+        # Se pone el codigo de LA FICHA EN QUE SE DECLARO, para que conste
+        # quien lo declaro; «(declarado)» evita leerlo como si ese lote fuera
+        # esa ficha. Decision de JAVIKO, 16-sep-2026.
+        return texto(madre.get('_codigo'), ''), 'declarado'
+    de_otro = (ficha.get('cedula') or '') != (madre.get('cedula') or '')
+    return texto(ficha.get('_codigo'), ''), ('otro' if de_otro else '')
+
+
 def asignar_codigos(fichas):
     """Asigna (o relee) el código S-C-R-F de cada ficha y persiste el JSON.
     Deja el código en p['_codigo']."""
@@ -785,17 +825,33 @@ def construir_historia(ficha, ctx, con_mapa, con_foto=False):
         historia.append(Paragraph(
             'No se registraron predios adicionales asociados a este titular.', ST_NOTA))
     else:
-        filas = [[texto(a.get('clave_catastral_otro')),
-                  f"{fmt_num(a.get('area_total_otro'), 2)} m²",
-                  f"{fmt_num(a.get('area_lote_asignado_otro'), 2)} m²",
-                  f"{fmt_num(a.get('area_riego_otro'), 2)} m²",
-                  f"{fmt_num(a.get('area_sin_riego_otro'), 2)} m²",
-                  obs_lote(a.get('observaciones_otro'))]
-                 for a in adicionales]
+        filas = []
+        for a in adicionales:
+            cod, marca = codigo_del_lote(a, p, ctx)
+            if marca == 'otro':
+                celda_ficha = f'{cod} (otro titular)'
+            elif marca == 'declarado':
+                celda_ficha = f'{cod} (declarado)'
+            else:
+                celda_ficha = cod or '—'
+            filas.append([
+                texto(a.get('clave_catastral_otro')),
+                # La ficha de ese lote, para ir de este documento al suyo. Si
+                # esta a nombre de otro titular se dice; y si el lote no tiene
+                # ficha propia, se deja constancia de en cual se declaro.
+                celda_ficha,
+                f"{fmt_num(a.get('area_total_otro'), 2)} m²",
+                f"{fmt_num(a.get('area_lote_asignado_otro'), 2)} m²",
+                f"{fmt_num(a.get('area_riego_otro'), 2)} m²",
+                f"{fmt_num(a.get('area_sin_riego_otro'), 2)} m²",
+                obs_lote(a.get('observaciones_otro')),
+            ])
         historia.append(tabla_datos(
-            ['Clave Catastral Adicional', 'Área Total', 'Área Lote Asignado',
-             'Área Riego', 'Área sin Riego', 'Observaciones del Lote'],
-            filas, [36 * mm, 24 * mm, 27 * mm, 24 * mm, 24 * mm, 55 * mm]))
+            ['Clave Catastral Adicional', 'Ficha', 'Área Total',
+             'Área Lote Asignado', 'Área Riego', 'Área sin Riego',
+             'Observaciones del Lote'],
+            filas,
+            [34 * mm, 30 * mm, 22 * mm, 25 * mm, 22 * mm, 22 * mm, 35 * mm]))
 
     # ── 4. Servicios y ubicación ──
     historia += titulo_seccion('4. Servicios Básicos e Infraestructura')
@@ -1033,6 +1089,7 @@ def cargar_contexto(con_mapa):
         'animales': agrupar('animales.json'),
         'adicionales': agrupar('predios_adicionales.json'),
         'fichas_por_id': {p.get('id') or '': p for p in fichas},
+        'fichas_por_clave': _indice_por_clave(fichas),
     }
 
     # Investigador a mostrar. En las hijas generadas en bloque (creado_por

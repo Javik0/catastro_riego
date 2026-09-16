@@ -427,13 +427,16 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   styles: { ...textoAdic, fontStyle: 'italic' as const },
                 }]
               : [{
-                  // Sin ficha propia no hay código que poner, pero el titular
-                  // sí se conoce: es el dueño de la ficha madre. Antes aquí
-                  // iba la etiqueta sola y la fila no decía de quién era el
-                  // lote, que es justo lo que se reportó desde el campo.
+                  // El lote no tiene ficha propia —o tiene varias y no se sabe
+                  // cuál— así que se pone el código de LA FICHA EN QUE SE
+                  // DECLARÓ. Deja constancia de quién lo declaró y hace la
+                  // fila identificable; «(declarado)» evita leerlo como si ese
+                  // lote fuera esa ficha. Decisión de JAVIKO, 16-sep-2026.
+                  content: `${f.codigo_ficha || f.codigo_final || ''}\n(declarado)`,
+                  styles: { ...textoAdic, fontStyle: 'italic' as const },
+                }, {
                   content: `${etiquetaAdicional.trim()} · ${titularAdicional}`,
-                  colSpan: 2,
-                  styles: { ...textoAdic, fontStyle: 'italic' as const, font: 'helvetica' },
+                  styles: { ...textoAdic, fontStyle: 'italic' as const },
                 }]),
             {
               content: telefonoAdicional,
@@ -469,8 +472,12 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
 
       autoTable(doc, {
         head: [headers], body: rows, startY: tableStartY,
-        styles: { 
-          fontSize: 5.5, 
+        // Una fila no se parte entre dos hojas: las de predio adicional llevan
+        // dos renglones —el código y su aclaración— y al cortarse dejaban el
+        // código en una página y «(otro titular)» en la siguiente.
+        rowPageBreak: 'avoid',
+        styles: {
+          fontSize: 5.5,
           cellPadding: 1.2,
           valign: 'middle',
           lineColor: [226, 232, 240], // Bordes muy finos de color Slate-200
@@ -866,7 +873,9 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             // ficha propia no tienen código: ahí se queda la etiqueta sola.
             'Código': fichaAdicionalFisica?.codigo_ficha
               ? `  ↳ ${fichaAdicionalFisica.codigo_ficha}${deOtroTitular ? ' (otro titular)' : ''}`
-              : '  ↳ Predio Adic.',
+              // Sin ficha propia se pone la ficha EN QUE SE DECLARÓ el lote,
+              // para que conste quién lo declaró.
+              : `  ↳ ${f.codigo_ficha || f.codigo_final || ''} (declarado)`,
             'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
             'Cédula': f.cedula,
             'Celular': f.telefono_celular || '',
