@@ -1317,6 +1317,9 @@ def main():
                     help='incrustar la foto de campo (retrato del titular): NO se usa '
                          'en la entrega al consorcio, ver la nota en construir_historia')
     ap.add_argument('--rehacer', action='store_true', help='regenerar aunque el PDF exista')
+    ap.add_argument('--solo-con-adicionales', action='store_true',
+                    help='solo las fichas que tienen predios adicionales en la sección 3; '
+                         'sirve para rehacer ese bloque sin tocar las demás')
     ap.add_argument('--indice', action='store_true', help='solo escribir el índice Excel')
     ap.add_argument('--leeme', action='store_true',
                     help='solo escribir el documento que presenta el paquete')
@@ -1336,7 +1339,9 @@ def main():
     filtro_clave = {c.strip() for c in args.clave}
     lote = [p for p in fichas
             if (not filtro_com or normalizar(p['_com']) in filtro_com)
-            and (not filtro_clave or (p.get('clave_catastral') or '').strip() in filtro_clave)]
+            and (not filtro_clave or (p.get('clave_catastral') or '').strip() in filtro_clave)
+            and (not args.solo_con_adicionales
+                 or ctx['adicionales'].get(p.get('id') or ''))]
     lote.sort(key=lambda p: (p['_sector'] or 'Z', p['_com'],
                              p.get('_codigo') or 'Z', p.get('clave_catastral') or ''))
     if args.limite:
