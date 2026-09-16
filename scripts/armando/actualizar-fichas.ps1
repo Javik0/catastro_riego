@@ -111,10 +111,11 @@ if ($aReemplazar.Count -eq 0) {
 }
 
 # Todas las fichas del paquete tienen que haber encontrado su pareja. Si faltan,
-# el programa NO sigue por su cuenta: reemplazar solo una parte deja el resto
-# desactualizado y nadie se entera. Se guarda la lista de las que faltan para
-# poder revisarlas.
-$frase = 'SI'
+# reemplazar solo una parte deja el resto desactualizado y nadie se entera. La
+# proteccion esta en DECIRLE lo que va a pasar, no en pedirle una frase dificil:
+# una frase larga se escribe mal y acaba tecleando cualquier cosa. Se guarda
+# ademas la lista de las que faltan para poder revisarlas.
+$pregunta = '  Escriba SI y pulse Enter para continuar (cualquier otra cosa cancela)'
 if ($sinPareja.Count -or $repetidas.Count) {
     $listaFaltan = Join-Path $base 'FICHAS QUE NO SE ENCONTRARON.txt'
     Set-Content -Path $listaFaltan -Value ($sinPareja + ($repetidas | ForEach-Object { "$_  (nombre repetido)" })) -Encoding utf8
@@ -129,15 +130,16 @@ if ($sinPareja.Count -or $repetidas.Count) {
     Write-Host '     FICHAS QUE NO SE ENCONTRARON.txt' -ForegroundColor Yellow
     $faltan = $nuevas.Count - $aReemplazar.Count
     Escribir "FALTAN $faltan fichas; lista en $listaFaltan" 'Red'
-    $frase = 'CONTINUAR IGUAL'
+    $pregunta = "  Esas $faltan fichas quedarian SIN actualizar. Escriba SI para continuar igual"
 }
 
 Write-Host ''
 Write-Host '  Se reemplazaran esas fichas por su version nueva.' -ForegroundColor White
 Write-Host '  Las demas no se tocan, y no se crea ninguna carpeta.' -ForegroundColor DarkGray
 Write-Host ''
-$ok = Read-Host "  Escriba $frase y pulse Enter para continuar (cualquier otra cosa cancela)"
-if ($ok.Trim().ToUpper() -ne $frase) {
+$ok = Read-Host $pregunta
+# Se aceptan las formas cortas de decir que si; cualquier otra cosa cancela.
+if ($ok.Trim().ToUpper() -notin @('SI', 'S', 'Y', 'YES', 'SÍ')) {
     Escribir 'Cancelado por el usuario. No se hizo ningun cambio.' 'Yellow'
     Read-Host 'Pulse Enter para salir'
     exit 0

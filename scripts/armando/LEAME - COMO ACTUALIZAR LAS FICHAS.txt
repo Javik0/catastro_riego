@@ -47,9 +47,10 @@ PASOS
    escribe cualquier otra cosa, no cambia nada.
 
    El programa comprueba solo que esten TODAS. Si faltara alguna, se lo avisa
-   en rojo, no acepta un simple SI, y deja un archivo llamado
-   FICHAS QUE NO SE ENCONTRARON.txt. En ese caso NO siga: avise y envie ese
-   archivo. Lo normal es que esto no pase.
+   en rojo, le dice cuantas quedarian sin actualizar, y deja un archivo
+   llamado FICHAS QUE NO SE ENCONTRARON.txt. En ese caso NO responda que si:
+   pulse Enter para cancelar, avise y envie ese archivo. Lo normal es que
+   esto no pase.
 
 6. Al terminar le dice cuantas reemplazo. Listo.
 
