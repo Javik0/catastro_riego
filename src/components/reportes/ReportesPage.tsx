@@ -328,10 +328,14 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                 : '   - Predio Adicional (investigado)')
             : '   - Predio Adicional';
 
+          // La ubicación sale de la ficha adicional cuando la tiene; si el lote
+          // se declaró y nunca llegó a ficha propia, se hereda la del titular.
+          // Antes esta celda salía vacía en esas filas: el lote quedaba sin
+          // comunidad y no se sabía dónde estaba.
           const ubicacionAdicional = [
-            fichaAdicionalFisica?.parroquia,
-            fichaAdicionalFisica?.sector,
-            (fichaAdicionalFisica?.comunidad || '').trim()
+            fichaAdicionalFisica?.parroquia || f.parroquia,
+            fichaAdicionalFisica?.sector || f.sector,
+            (fichaAdicionalFisica?.comunidad || f.comunidad || '').trim()
           ].filter(Boolean).join(' / ');
 
           // Un predio adicional es OTRO PREDIO DEL MISMO TITULAR, así que el
@@ -368,7 +372,11 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
                   styles: { ...textoAdic, fontStyle: 'italic' as const },
                 }]
               : [{
-                  content: etiquetaAdicional,
+                  // Sin ficha propia no hay código que poner, pero el titular
+                  // sí se conoce: es el dueño de la ficha madre. Antes aquí
+                  // iba la etiqueta sola y la fila no decía de quién era el
+                  // lote, que es justo lo que se reportó desde el campo.
+                  content: `${etiquetaAdicional.trim()} · ${titularAdicional}`,
                   colSpan: 2,
                   styles: { ...textoAdic, fontStyle: 'italic' as const, font: 'helvetica' },
                 }]),
