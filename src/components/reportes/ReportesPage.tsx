@@ -117,6 +117,56 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
     ...(adicionalesSinSeccion7.get(fichaId) || []),
   ];
 
+  // clave catastral → fichas levantadas sobre ese predio. Un predio puede tener
+  // varias: en los terrenos familiares cada heredero declara su parte.
+  const fichasPorClave = useMemo(() => {
+    const m = new Map<string, FichaPredio[]>();
+    for (const f of allFichas) {
+      const clave = (f.clave_catastral || '').trim();
+      if (!clave) continue;
+      const lista = m.get(clave) || [];
+      lista.push(f);
+      m.set(clave, lista);
+    }
+    return m;
+  }, [allFichas]);
+
+  /**
+   * Resuelve a qué ficha corresponde un predio adicional declarado.
+   *
+   * El enganche por identificador interno está roto en 282 de los 2.690
+   * declarados, así que cuando falla se busca por CLAVE CATASTRAL, que es el
+   * identificador del predio y no depende de cómo se generó la ficha. Eso
+   * destapa tres situaciones que hasta ahora salían todas como «Predio
+   * Adicional» sin distinguirse:
+   *
+   *  - El lote es otra ficha DEL MISMO titular (29 casos): tiene código propio
+   *    y es el que hay que mostrar. Esto era, sencillamente, un enlace roto.
+   *  - El lote está catastrado A NOMBRE DE OTRO titular (119 casos): tiene
+   *    código, pero atribuírselo al de la fila sería falso. Se muestra
+   *    advirtiendo de quién es.
+   *  - El lote declarado es EL PROPIO PREDIO de la ficha madre (31 casos), la
+   *    clave tiene varias fichas y no se sabe cuál (64), o nunca se levantó
+   *    (39). En los tres no hay código que poner y se queda la etiqueta.
+   */
+  const resolverAdicional = (pa: PredioAdicional, madre: FichaPredio) => {
+    const directa = allFichas.find((x) => x.id === pa.id_adicional)
+      || (pa.ficha_hija_generada_id
+          ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
+          : undefined);
+    if (directa) return { ficha: directa, deOtroTitular: false };
+
+    const clave = (pa.clave_catastral_otro || '').trim();
+    const candidatas = clave ? (fichasPorClave.get(clave) || []) : [];
+    if (candidatas.length !== 1) return { ficha: undefined, deOtroTitular: false };
+
+    const unica = candidatas[0];
+    if (unica.id === madre.id) return { ficha: undefined, deOtroTitular: false };
+
+    const mismaPersona = (unica.cedula || '') === (madre.cedula || '');
+    return { ficha: unica, deOtroTitular: !mismaPersona };
+  };
+
   /**
    * Comuneros levantados en una comunidad, para medir el avance.
    *
@@ -308,15 +358,9 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // Desglose de predios adicionales (tanto físicos como unificados virtuales)
         const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
-          // La ficha adicional real, si el formulario llegó a generarla.
-          // `id_adicional` es el id del REGISTRO DEL LOTE, no el de una ficha:
-          // por sí solo no resuelve ninguna de las 2.690 filas, y por eso los
-          // predios adicionales salían sin ubicación. El enlace bueno es
-          // `ficha_hija_generada_id`, que resuelve 2.408 de ellas.
-          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional)
-            || (pa.ficha_hija_generada_id
-                ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
-                : undefined);
+          // La ficha del lote: por identificador interno y, si ese enlace está
+          // roto, por clave catastral. Ver `resolverAdicional`.
+          const { ficha: fichaAdicionalFisica, deOtroTitular } = resolverAdicional(pa, f);
 
           // Estado de investigación del lote (ficha adicional generada desde la Sección 7)
           const fichaAdic = pa.ficha_hija_generada_id
@@ -341,14 +385,18 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
           // Un predio adicional es OTRO PREDIO DEL MISMO TITULAR, así que el
           // nombre, la cédula y el teléfono son los suyos. Antes estas celdas
           // iban vacías a propósito y la fila no decía de quién era el lote.
-          const titularAdicional = fichaAdicionalFisica
-            ? (fichaAdicionalFisica.propietario
-               || `${fichaAdicionalFisica.apellidos} ${fichaAdicionalFisica.nombres}`.trim())
+          // Cuando el lote está catastrado a nombre de otra persona, la fila
+          // sigue siendo del titular QUE LO DECLARÓ: son sus datos los que van
+          // en nombre, cédula y teléfono. Lo del otro se dice en el código.
+          const propiaDelTitular = deOtroTitular ? undefined : fichaAdicionalFisica;
+          const titularAdicional = propiaDelTitular
+            ? (propiaDelTitular.propietario
+               || `${propiaDelTitular.apellidos} ${propiaDelTitular.nombres}`.trim())
             : (f.propietario || `${f.apellidos} ${f.nombres}`.trim());
-          const telefonoAdicional = fichaAdicionalFisica?.telefono_celular
-            || fichaAdicionalFisica?.telefono_casa
+          const telefonoAdicional = propiaDelTitular?.telefono_celular
+            || propiaDelTitular?.telefono_casa
             || f.telefono_celular || f.telefono_casa || '';
-          const cedulaAdicional = fichaAdicionalFisica?.cedula || f.cedula || '';
+          const cedulaAdicional = propiaDelTitular?.cedula || f.cedula || '';
           const codigoAdicional = fichaAdicionalFisica?.codigo_ficha || '';
 
           const areaTotalAdicional = pa.area_total_otro || pa.area_lote_asignado_otro || 0;
@@ -365,10 +413,17 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
             // etiqueta ocupa las dos primeras columnas, como antes.
             ...(codigoAdicional
               ? [{
-                  content: codigoAdicional,
+                  // Si el lote está catastrado a nombre de otra persona se dice
+                  // aquí: el código es real, pero no es de quien encabeza la
+                  // fila, y atribuírselo sería falso.
+                  content: deOtroTitular
+                    ? `${codigoAdicional}\n(otro titular)`
+                    : codigoAdicional,
                   styles: { ...textoAdic, fontStyle: 'italic' as const },
                 }, {
-                  content: `${etiquetaAdicional.trim()} · ${titularAdicional}`,
+                  content: deOtroTitular
+                    ? `${etiquetaAdicional.trim()} · ${titularAdicional}\nLote catastrado a nombre de otro titular`
+                    : `${etiquetaAdicional.trim()} · ${titularAdicional}`,
                   styles: { ...textoAdic, fontStyle: 'italic' as const },
                 }]
               : [{
@@ -798,18 +853,19 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // titular y toman del gpkg lo que la ficha adicional tenga propio.
         const adicionales = adicionalesDe(f.id);
         adicionales.forEach((pa) => {
-          const fichaAdicionalFisica = allFichas.find((x) => x.id === pa.id_adicional)
-            || (pa.ficha_hija_generada_id
-                ? allFichas.find((x) => x.id === pa.ficha_hija_generada_id)
-                : undefined);
-          const propio = fichaAdicionalFisica;   // lo que la ficha hija sí trae
+          // Misma resolución que en el PDF: por identificador interno y, si ese
+          // enlace está roto, por clave catastral. Ver `resolverAdicional`.
+          const { ficha: fichaAdicionalFisica, deOtroTitular } = resolverAdicional(pa, f);
+          // Solo se heredan datos de la ficha del lote cuando es del MISMO
+          // titular; si está a nombre de otro, sus datos no son los de esta fila.
+          const propio = deOtroTitular ? undefined : fichaAdicionalFisica;
 
           fichasRows.push({
             // El código de la ficha adicional, con la flecha que la sangra bajo
             // su principal. Los lotes declarados que nunca llegaron a tener
             // ficha propia no tienen código: ahí se queda la etiqueta sola.
-            'Código': propio?.codigo_ficha
-              ? `  ↳ ${propio.codigo_ficha}`
+            'Código': fichaAdicionalFisica?.codigo_ficha
+              ? `  ↳ ${fichaAdicionalFisica.codigo_ficha}${deOtroTitular ? ' (otro titular)' : ''}`
               : '  ↳ Predio Adic.',
             'Propietario': f.propietario || `${f.apellidos} ${f.nombres}`,
             'Cédula': f.cedula,
