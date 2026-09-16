@@ -1,0 +1,79 @@
+===============================================================================
+  ACTUALIZAR LAS FICHAS DEL PADRON
+  Sistema de riego comunitario Guanguilqui-Porotog
+===============================================================================
+
+QUE ES ESTO
+-----------
+Las fichas en PDF se actualizaron. Este programa reemplaza las que usted ya
+tiene por su version nueva, sin que tenga que buscarlas una por una.
+
+Funciona aunque usted haya renombrado las carpetas de las comunidades (por
+ejemplo "1 ASOCIACION 17 DE JUNIO" en vez de "ASOCIACION 17 DE JUNIO"): busca
+cada ficha por su codigo, que es unico, y la reemplaza donde este. No crea
+carpetas nuevas ni cambia la organizacion que usted le dio.
+
+
+QUE CAMBIA EN LAS FICHAS
+------------------------
+1. En "OTROS PREDIOS DEL TITULAR" hay una columna nueva, FICHA, que dice a que
+   ficha corresponde cada lote declarado. Antes solo se veia la clave
+   catastral. Donde el lote esta registrado a nombre de otra persona, lo
+   advierte; y donde el lote no tiene ficha propia, deja constancia de en cual
+   se declaro.
+
+2. El titulo de la primera seccion queda igual en todas: "1. DATOS DEL
+   TITULAR". Algunas habian quedado con la redaccion anterior.
+
+Ningun codigo de ficha cambia. Ningun dato del levantamiento cambia.
+
+
+PASOS
+-----
+1. DESCOMPRIMA este ZIP en una carpeta. Es importante: no funciona ejecutandolo
+   desde dentro del ZIP.
+   Descomprimalo en un sitio de nombre corto -el Escritorio esta bien-. Si lo
+   deja dentro de muchas carpetas anidadas, Windows puede no alcanzar los
+   archivos por lo larga que queda la ruta.
+
+2. Conecte la memoria (flash) donde tiene las fichas.
+
+3. Haga doble clic en:   ACTUALIZAR FICHAS.bat
+
+4. El programa busca solo las carpetas de fichas que encuentre y le muestra una
+   lista. Escriba el numero de la que quiere actualizar y pulse Enter.
+
+5. Le dira cuantas fichas va a reemplazar. Si el numero le cuadra, escriba SI
+   y pulse Enter. Si escribe cualquier otra cosa, no cambia nada.
+
+6. Al terminar le dice cuantas reemplazo. Listo.
+
+
+SI ALGO NO SALE
+---------------
+- "No encuentro la carpeta FICHAS NUEVAS": no descomprimio el ZIP. Vuelva al
+  paso 1.
+
+- "No encontre ninguna carpeta de fichas": la memoria no esta conectada, o las
+  fichas estan en un sitio que no alcanzo a ver. Solucion: arrastre la carpeta
+  de las fichas encima de ACTUALIZAR FICHAS.bat y sueltela.
+
+- Sale que algunas "no estan en la carpeta": significa que esas fichas no se
+  encontraron con ese nombre. Las demas si se reemplazan. Avise cuantas fueron.
+
+- "Hubo fallos": normalmente es que tenia una ficha abierta en el lector de
+  PDF. Cierrela y vuelva a ejecutar; las que ya se reemplazaron no se repiten.
+
+El programa deja un archivo ACTUALIZACION.log con el detalle de lo que hizo.
+Si algo sale raro, envie ese archivo.
+
+
+UNA ACLARACION
+--------------
+El programa NO borra nada y NO toca las fichas que no estan en la lista. Solo
+sobrescribe las que se actualizaron. Si prefiere, haga antes una copia de la
+carpeta.
+
+===============================================================================
+AP&CATASTROS  -  Consorcio Cayambe SPT  -  Prefectura de Pichincha
+===============================================================================
