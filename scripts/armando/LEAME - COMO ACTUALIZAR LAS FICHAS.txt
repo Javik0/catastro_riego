@@ -32,9 +32,14 @@ PASOS
 -----
 1. DESCOMPRIMA este ZIP en una carpeta. Es importante: no funciona ejecutandolo
    desde dentro del ZIP.
-   Descomprimalo en un sitio de nombre corto -el Escritorio esta bien-. Si lo
-   deja dentro de muchas carpetas anidadas, Windows puede no alcanzar los
-   archivos por lo larga que queda la ruta.
+
+   Da igual donde lo descomprima: NO tiene que estar junto a las carpetas
+   Sector 1, Sector 2 y Sector 3. El Escritorio esta bien. El programa busca
+   solo el paquete de fichas, este en la memoria o en el disco.
+
+   Un consejo: elija un sitio de nombre corto. Si lo mete dentro de muchas
+   carpetas anidadas, la ruta se hace muy larga y Windows puede tener
+   problemas para alcanzar los archivos.
 
 2. Conecte la memoria (flash) donde tiene las fichas.
 

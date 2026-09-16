@@ -23,6 +23,15 @@ function Escribir($texto, $color = 'Gray') {
     Add-Content -Path $log -Value $texto -Encoding utf8
 }
 
+# ¿Esta esa ruta dentro de la carpeta del propio programa? Hace falta porque el
+# ZIP se puede descomprimir DENTRO del paquete de fichas. Si no se excluyera,
+# al recorrer el destino se encontrarian tambien las fichas nuevas, cada nombre
+# saldria dos veces y el programa las descartaria todas por repetidas.
+function EsDelPrograma($ruta) {
+    $b = [IO.Path]::GetFullPath($base).TrimEnd('\') + '\'
+    return ([IO.Path]::GetFullPath($ruta) + '\').StartsWith($b, 'OrdinalIgnoreCase')
+}
+
 Set-Content -Path $log -Value "Actualización de fichas — $(Get-Date -Format 'dd/MM/yyyy HH:mm')" -Encoding utf8
 Write-Host ''
 Write-Host '  ACTUALIZAR LAS FICHAS DEL PADRON' -ForegroundColor Cyan
@@ -48,7 +57,10 @@ if (-not $Destino) {
         try {
             $hallados = Get-ChildItem -Path $u.Root -Directory -Recurse -Depth 3 `
                           -Filter 'Sector 1' -ErrorAction SilentlyContinue
-            foreach ($h in $hallados) { $candidatos += (Split-Path -Parent $h.FullName) }
+            foreach ($h in $hallados) {
+                $padre = Split-Path -Parent $h.FullName
+                if (-not (EsDelPrograma $padre)) { $candidatos += $padre }
+            }
         } catch { }
     }
     $candidatos = @($candidatos | Sort-Object -Unique)
@@ -85,6 +97,9 @@ Escribir "Carpeta a actualizar: $Destino" 'White'
 # el apellido corregido y su nombre cambio de "lanchimba" a "LANCHIMBA".
 $porNombre = @{}
 foreach ($f in (Get-ChildItem -Path $Destino -Filter *.pdf -Recurse -File)) {
+    # Las fichas nuevas no cuentan como destino, aunque el ZIP se haya
+    # descomprimido dentro del paquete.
+    if (EsDelPrograma $f.FullName) { continue }
     if ($porNombre.ContainsKey($f.Name)) { $porNombre[$f.Name] += @($f.FullName) }
     else { $porNombre[$f.Name] = @($f.FullName) }
 }
