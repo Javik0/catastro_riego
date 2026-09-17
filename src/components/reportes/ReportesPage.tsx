@@ -168,6 +168,28 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
   };
 
   /**
+   * Los predios adicionales de una ficha, en un orden que se pueda seguir.
+   *
+   * Venían tal como estaban guardados, que es sin criterio: bajo un mismo
+   * titular aparecían F03, F04, F01 y F02 mezclados con el lote de otra
+   * persona. Ahora van en tres bloques —primero los predios que son fichas
+   * suyas, luego los que declaró sin ficha propia, y al final los que están
+   * catastrados a nombre de otro— y dentro de cada bloque por código.
+   */
+  const adicionalesOrdenados = (f: FichaPredio): PredioAdicional[] =>
+    [...adicionalesDe(f.id)]
+      .map((pa) => {
+        const { ficha, deOtroTitular } = resolverAdicional(pa, f);
+        return {
+          pa,
+          bloque: deOtroTitular ? 2 : (ficha ? 0 : 1),
+          orden: ficha?.codigo_ficha || pa.clave_catastral_otro || '',
+        };
+      })
+      .sort((a, b) => a.bloque - b.bloque || a.orden.localeCompare(b.orden))
+      .map((x) => x.pa);
+
+  /**
    * Comuneros levantados en una comunidad, para medir el avance.
    *
    * META_COMUNEROS cuenta PERSONAS planificadas en el catastro base, así que
@@ -356,7 +378,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         ]);
 
         // Desglose de predios adicionales (tanto físicos como unificados virtuales)
-        const adicionales = adicionalesDe(f.id);
+        const adicionales = adicionalesOrdenados(f);
         adicionales.forEach((pa) => {
           // La ficha del lote: por identificador interno y, si ese enlace está
           // roto, por clave catastral. Ver `resolverAdicional`.
@@ -858,7 +880,7 @@ export default function ReportesPage({ fichas, allFichas, cultivosData, animales
         // sin la columna de celular siquiera— y quien recibía el Excel no podía
         // saber de quién era el lote. Ahora heredan los datos de contacto del
         // titular y toman del gpkg lo que la ficha adicional tenga propio.
-        const adicionales = adicionalesDe(f.id);
+        const adicionales = adicionalesOrdenados(f);
         adicionales.forEach((pa) => {
           // Misma resolución que en el PDF: por identificador interno y, si ese
           // enlace está roto, por clave catastral. Ver `resolverAdicional`.
