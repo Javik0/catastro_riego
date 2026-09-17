@@ -696,6 +696,12 @@ def destino(item):
 
 
 def cabecera_pie(canv, doc, ficha):
+    # Con MEMBRETE_PREFECTURA=1 la hoja va membretada por la Prefectura: lo
+    # piden los documentos del contrato. Las fichas del padron siguen saliendo
+    # con la cabecera del estudio, que es la que llevan las 6.830 entregadas.
+    import membrete_prefectura
+    if membrete_prefectura.activo():
+        return membrete_prefectura.cabecera_pie(canv, doc, ficha)
     canv.saveState()
     w, h = A4
     # cabecera: logos + títulos

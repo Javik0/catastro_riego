@@ -21,6 +21,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import membrete_prefectura  # noqa: E402
+
 from generar_fichas_pdf import (  # noqa: E402
     A4, AZUL, TINTA, cabecera_pie, colors, mm, Paragraph,
     ParagraphStyle, Spacer, tabla_datos, titulo_seccion,
@@ -55,9 +57,11 @@ CARPETAS = [
 
 def _doc(ruta, titulo):
     return SimpleDocTemplate(
-        ruta, pagesize=A4, leftMargin=10 * mm, rightMargin=10 * mm,
-        topMargin=27 * mm, bottomMargin=13 * mm, title=titulo,
-        author='AP&CATASTROS — Padrón Guanguilquí–Porotog')
+        ruta, pagesize=A4, title=titulo,
+        author='AP&CATASTROS — Padrón Guanguilquí–Porotog',
+        **membrete_prefectura.margenes(dict(
+            leftMargin=10 * mm, rightMargin=10 * mm,
+            topMargin=27 * mm, bottomMargin=13 * mm)))
 
 
 def _estilos():

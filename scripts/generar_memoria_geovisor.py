@@ -24,6 +24,8 @@ import json
 import os
 import sys
 
+import membrete_prefectura  # noqa: E402
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from generar_fichas_pdf import (  # noqa: E402
@@ -35,7 +37,9 @@ from reportlab.platypus import SimpleDocTemplate  # noqa: E402
 
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 GEO = os.path.join(BASE, 'public', 'geo')
-ENTREGA = r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTOG'
+ENTREGA = os.environ.get(
+    'SALIDA_MEMBRETE',
+    r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTOG')
 SALIDA = os.path.join(ENTREGA, '0 - MEMORIA TECNICA DEL GEOVISOR.pdf')
 
 URL = 'https://invs-riego-comunitario.web.app'
@@ -60,8 +64,9 @@ def main():
     total_fichas = principales + adicionales
 
     doc = SimpleDocTemplate(
-        SALIDA, pagesize=A4, leftMargin=10 * mm, rightMargin=10 * mm,
-        topMargin=27 * mm, bottomMargin=13 * mm,
+        SALIDA, pagesize=A4, **membrete_prefectura.margenes(dict(
+            leftMargin=10 * mm, rightMargin=10 * mm,
+            topMargin=27 * mm, bottomMargin=13 * mm)),
         title='Memoria técnica de diseño del geovisor',
         author='AP&CATASTROS — Padrón Guanguilquí–Porotog')
 

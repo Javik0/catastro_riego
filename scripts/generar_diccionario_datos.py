@@ -22,6 +22,8 @@ import os
 import sqlite3
 import sys
 
+import membrete_prefectura  # noqa: E402
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from generar_fichas_pdf import (  # noqa: E402
@@ -34,7 +36,9 @@ from reportlab.platypus import SimpleDocTemplate  # noqa: E402
 
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 GPKG = os.path.join(BASE, 'build_entrega', 'padron_riego_porotog.gpkg')
-ENTREGA = r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTOG'
+ENTREGA = os.environ.get(
+    'SALIDA_MEMBRETE',
+    r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTOG')
 
 # Orden de presentación y para qué sirve cada capa.
 CAPAS = [
@@ -257,8 +261,9 @@ def escribir_excel(estructura, ruta):
 
 def escribir_pdf(estructura, ruta):
     doc = SimpleDocTemplate(
-        ruta, pagesize=A4, leftMargin=10 * mm, rightMargin=10 * mm,
-        topMargin=27 * mm, bottomMargin=13 * mm,
+        ruta, pagesize=A4, **membrete_prefectura.margenes(dict(
+            leftMargin=10 * mm, rightMargin=10 * mm,
+            topMargin=27 * mm, bottomMargin=13 * mm)),
         title='Diccionario de datos — Catastro socioeconómico y productivo predial',
         author='AP&CATASTROS — Padrón Guanguilquí–Porotog')
 
