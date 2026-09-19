@@ -222,7 +222,12 @@ def _imagen(buf, ancho_mm=160):
     with PILImage.open(buf) as im:
         proporcion = im.height / im.width
     buf.seek(0)
-    return Image(buf, width=ancho_mm * mm, height=ancho_mm * mm * proporcion)
+    imagen = Image(buf, width=ancho_mm * mm, height=ancho_mm * mm * proporcion)
+    # reportlab guarda `str(buf)` como filename, no el buffer: el BytesIO
+    # original se pierde. a_word.py necesita los bytes de verdad para poner
+    # este mismo gráfico en el Word, así que se dejan aparte.
+    imagen._png_bytes = buf.getvalue()
+    return imagen
 
 
 def main():
