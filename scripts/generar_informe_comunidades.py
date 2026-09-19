@@ -39,6 +39,9 @@ import sys
 import unicodedata
 from datetime import datetime
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from informe_estilo import FECHA_CORTE  # noqa: E402
+
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 GEO = os.path.join(BASE, 'public', 'geo')
 DOCS = os.path.join(BASE, 'docs')
@@ -130,7 +133,12 @@ def main():
     with open(os.path.join(GEO, 'caudal_por_comunidad.json'), encoding='utf-8') as f:
         CAU = json.load(f)
     with open(os.path.join(GEO, 'auditoria_areas.json'), encoding='utf-8') as f:
-        corte = json.load(f)['corte']
+        _ = json.load(f)  # se sigue leyendo por si otro campo se usa más abajo
+    # Fecha de corte editorial única del paquete (informe_estilo.FECHA_CORTE),
+    # NO auditoria_areas.json['corte']: ese campo quedó fijo en 5 de agosto
+    # aunque el archivo se regeneró después, y este informe salía con una
+    # fecha desactualizada frente al resto de reportes del proyecto.
+    corte = FECHA_CORTE
 
     todos = args.sector.lower() == 'todos'
     coms = [c for c in SUP['comunidades'] if todos or c['sector'] == args.sector]
@@ -159,7 +167,7 @@ def main():
         'nuestras comunidades' if todos else 'el ' + args.sector))
     A('<div class="sub">Sistema de riego comunitario Guanguilquí–Porotog · '
       'Cangahua, Cayambe<br>Información levantada casa por casa hasta el {}</div>'
-      .format(fecha_larga(corte)))
+      .format(corte))
     A('</header>')
 
     # ── las cifras de arriba ──
@@ -257,7 +265,7 @@ def main():
     A('<div class="pie">Padrón de usuarios del sistema de riego comunitario '
       'Guanguilquí–Porotog · Prefectura de Pichincha · Consorcio Cayambe SPT<br>'
       'Datos al {} · documento generado el {}</div>'
-      .format(fecha_larga(corte), fecha_larga(datetime.now().strftime('%Y-%m-%d'))))
+      .format(corte, fecha_larga(datetime.now().strftime('%Y-%m-%d'))))
     A('</div>')
 
     nombre = 'INFORME-COMUNIDADES-{}.html'.format(
@@ -277,11 +285,20 @@ def main():
     print('  archivo     : docs/{}  ({:,.0f} KB)'.format(nombre, os.path.getsize(ruta) / 1024))
     if os.path.isdir(ENTREGA):
         etiqueta = ('todo el sistema' if todos else args.sector)
-        destino = os.path.join(
-            ENTREGA, '21 - Informe para la comunidad ({}).html'.format(etiqueta))
+        # La numeración de la carpeta de entrega se asignó a mano el 15-ago:
+        # 21 = todo el sistema, 22 = Sector 1 (el único sector que tuvo
+        # asamblea hasta ahora). Un Sector 2 o 3 nuevo no tiene número
+        # reservado, así que no se inventa uno: se guarda sin numerar y se
+        # avisa, para que quien reciba la carpeta le asigne el que corresponda.
+        numero = {'todo el sistema': '21', 'Sector 1': '22'}.get(etiqueta)
+        nombre_destino = (f'{numero} - Informe para la comunidad ({etiqueta}).html'
+                          if numero else f'Informe para la comunidad ({etiqueta}) - SIN NUMERAR.html')
+        destino = os.path.join(ENTREGA, nombre_destino)
         with open(ruta, encoding='utf-8') as o, open(destino, 'w', encoding='utf-8') as d:
             d.write(o.read())
         print('  copia       : {}'.format(destino))
+        if not numero:
+            print('  ! sin numero asignado en la carpeta de entrega — revisar a mano')
     print('=' * 74)
     return 0
 
