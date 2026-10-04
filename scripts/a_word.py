@@ -76,12 +76,36 @@ def _texto_celda(c):
     return str(c)
 
 
+def _aplicar_anchos(doc, t, anchos_pt):
+    """Copia al Word los anchos de columna que la tabla traía para el PDF.
+
+    Sin esto Word reparte el ancho a partes iguales y la columna de texto largo
+    queda tan angosta como la de un numero. Los anchos del PDF vienen en puntos;
+    se reducen en proporcion si no caben en el area util de la pagina.
+    """
+    if not anchos_pt or len(anchos_pt) != len(t.columns) or any(a is None for a in anchos_pt):
+        return
+    from docx.shared import Mm
+    s = doc.sections[-1]
+    util_mm = (s.page_width - s.left_margin - s.right_margin) / 36000   # EMU -> mm
+    anchos_mm = [a / 72 * 25.4 for a in anchos_pt]
+    total = sum(anchos_mm)
+    if total > util_mm:
+        anchos_mm = [a * util_mm / total for a in anchos_mm]
+    t.autofit = False
+    for col, ancho in zip(t.columns, anchos_mm):
+        col.width = Mm(ancho)
+        for celda in col.cells:
+            celda.width = Mm(ancho)
+
+
 def _poner_tabla(doc, tabla):
     filas = tabla._cellvalues
     if not filas:
         return
     t = doc.add_table(rows=len(filas), cols=len(filas[0]))
     t.style = 'Table Grid'
+    _aplicar_anchos(doc, t, getattr(tabla, '_colWidths', None))
     for i, fila in enumerate(filas):
         for j, celda in enumerate(fila):
             if j >= len(t.columns):

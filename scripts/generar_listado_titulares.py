@@ -154,6 +154,28 @@ def escribir_hoja(ws, cabeceras, anchos, filas, texto=()):
     ws.row_dimensions[1].height = 30
 
 
+def casos_para_revisar(filas):
+    """Las fichas cuya cédula hay que confirmar, con el motivo en texto.
+
+    Una sola definición para todo lo que la use —la hoja PARA REVISAR de este
+    Excel y la solicitud a campo (`generar_verificacion_cedulas.py`)—: si dos
+    sitios decidieran por separado qué fichas son «a revisar», las cuentas se
+    separarían sin que nadie lo notara.
+    """
+    revisar = []
+    for x in filas:
+        motivos = []
+        if x['estado_ced'] == 'Sin cédula':
+            motivos.append('Sin cédula registrada')
+        elif x['estado_ced'] == 'Dígito verificador NO válido':
+            motivos.append('Dígito verificador no válido')
+        if x['otras']:
+            motivos.append(f"Misma cédula en {len(x['otras']) + 1} fichas principales")
+        if motivos:
+            revisar.append((x, '; '.join(motivos)))
+    return revisar
+
+
 def main():
     filas, por_cedula = cargar()
     N = len(filas)
@@ -298,17 +320,7 @@ def main():
             c.number_format = p0
 
     # ── PARA REVISAR ─────────────────────────────────────────────────────
-    revisar = []
-    for x in filas:
-        motivos = []
-        if x['estado_ced'] == 'Sin cédula':
-            motivos.append('Sin cédula registrada')
-        elif x['estado_ced'] == 'Dígito verificador NO válido':
-            motivos.append('Dígito verificador no válido')
-        if x['otras']:
-            motivos.append(f"Misma cédula en {len(x['otras']) + 1} fichas principales")
-        if motivos:
-            revisar.append((x, '; '.join(motivos)))
+    revisar = casos_para_revisar(filas)
     cab_r = ['N°', 'Código de ficha', 'Sector', 'Comunidad', 'Cédula', 'Apellidos y nombres',
              '¿Conoce el proyecto?', 'Qué revisar', 'Otras fichas con la misma cédula']
     filas_r = [[i, x['codigo'], x['sector'], x['comunidad'], x['cedula'], x['nombre'],
