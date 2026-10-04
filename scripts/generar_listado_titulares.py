@@ -22,13 +22,18 @@ mezclen.
 «Existen» se apoya en la cédula, y solo hasta donde el dato alcanza: el
 dígito verificador comprueba que el número está bien formado, NO que figure
 en el Registro Civil. Y 4.307 fichas no son 4.307 personas: 217 cédulas
-aparecen en más de una ficha principal. La hoja PARA REVISAR lista esos
-casos, los de cédula inválida y los que no la tienen, para que campo los
-resuelva antes de que alguien más los encuentre.
+aparecen en más de una ficha principal.
+
+Lo que NO sale en el archivo que se entrega (decisión del 4-oct-2026)
+---------------------------------------------------------------------
+La hoja PARA REVISAR (627 fichas con cédula por confirmar) se quitó del
+Excel: no se entrega una lista de dudas antes de resolverlas. Esos casos
+siguen definidos en `casos_para_revisar()` y son el insumo de la solicitud a
+campo (`generar_verificacion_cedulas.py`).
 
 El campo `consentimiento_inform` está vacío en las 4.307: no hay
-consentimiento informado registrado en el dato y por eso no se usa como
-evidencia.
+consentimiento informado registrado en el dato, así que ningún documento lo
+cita como evidencia.
 
 Uso:  python -X utf8 scripts/generar_listado_titulares.py
 """
@@ -157,10 +162,10 @@ def escribir_hoja(ws, cabeceras, anchos, filas, texto=()):
 def casos_para_revisar(filas):
     """Las fichas cuya cédula hay que confirmar, con el motivo en texto.
 
-    Una sola definición para todo lo que la use —la hoja PARA REVISAR de este
-    Excel y la solicitud a campo (`generar_verificacion_cedulas.py`)—: si dos
-    sitios decidieran por separado qué fichas son «a revisar», las cuentas se
-    separarían sin que nadie lo notara.
+    Una sola definición para todo lo que la use —la solicitud a campo
+    (`generar_verificacion_cedulas.py`) y cualquier cuenta de «fichas por
+    confirmar»—: si dos sitios decidieran por separado qué fichas son «a
+    revisar», las cuentas se separarían sin que nadie lo notara.
     """
     revisar = []
     for x in filas:
@@ -263,8 +268,7 @@ def main():
         'El dígito verificador comprueba que el número de cédula está bien formado; no certifica '
         'que figure en el Registro Civil.',
         'Las fichas principales son entrevistas, no personas: una misma cédula puede tener varias '
-        'fichas principales (la hoja PARA REVISAR las lista).',
-        'El campo de consentimiento informado está vacío en todas las fichas; no se usa como evidencia.',
+        'fichas principales (se reconocen por el código de ficha en LISTADO COMPLETO).',
         'El 87 % del informe del sociólogo se calcula sobre quienes respondieron '
         '(fila «Dicen que SÍ», última columna).',
     ]
@@ -319,17 +323,6 @@ def main():
         if cc in (9, 10, 11):
             c.number_format = p0
 
-    # ── PARA REVISAR ─────────────────────────────────────────────────────
-    revisar = casos_para_revisar(filas)
-    cab_r = ['N°', 'Código de ficha', 'Sector', 'Comunidad', 'Cédula', 'Apellidos y nombres',
-             '¿Conoce el proyecto?', 'Qué revisar', 'Otras fichas con la misma cédula']
-    filas_r = [[i, x['codigo'], x['sector'], x['comunidad'], x['cedula'], x['nombre'],
-                x['conoce'], m,
-                ', '.join(x['otras'][:6]) + (' …' if len(x['otras']) > 6 else '')]
-               for i, (x, m) in enumerate(revisar, 1)]
-    escribir_hoja(wb.create_sheet('PARA REVISAR'), cab_r,
-                  [7, 18, 10, 30, 14, 44, 16, 44, 60], filas_r, texto=(5,))
-
     wb.save(SALIDA)
 
     # Se vuelve a leer el archivo y se cuadran las cuentas: lo que se entrega
@@ -354,7 +347,6 @@ def main():
     print(f'  respondieron     : {pt(resp)} ({pct(resp, N) * 100:.1f} %)')
     print(f'  dicen que SÍ     : {pt(len(si))} ({pct(len(si), N) * 100:.1f} % de las fichas · '
           f'{pct(len(si), resp) * 100:.1f} % de quienes respondieron)')
-    print(f'  hoja PARA REVISAR: {len(revisar)} fichas')
     print('Cuentas cuadradas tras releer el archivo: listado, Sí y suma por comunidad.')
     print('✔', SALIDA)
     return 0
