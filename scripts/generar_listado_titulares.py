@@ -26,6 +26,10 @@ aparecen en más de una ficha principal.
 
 Lo que NO sale en el archivo que se entrega (decisión del 4-oct-2026)
 ---------------------------------------------------------------------
+El técnico que levantó cada ficha no se muestra (ni columna ni conteo): no se
+pide y solo abre preguntas. Sigue en `cargar()` porque la solicitud a campo lo
+usa. Los bloques del Resumen sí se conservan, por decisión de JAVIKO.
+
 La hoja PARA REVISAR (627 fichas con cédula por confirmar) se quitó del
 Excel: no se entrega una lista de dudas antes de resolverlas. Esos casos
 siguen definidos en `casos_para_revisar()` y son el insumo de la solicitud a
@@ -233,12 +237,10 @@ def main():
                 ['Sin respuesta registrada', len(sr), pct(len(sr), N), None]],
                [n0, p0, p0])
     con_fecha = sum(1 for x in filas if x['fecha'])
-    con_tec = sum(1 for x in filas if x['tecnico'])
     con_gps = sum(1 for x in filas if x['gps'])
     r = bloque(r, '2. ¿Fueron entrevistados? Lo que consta en cada ficha',
                ['Evidencia', 'Fichas', '% de las fichas'],
                [['Con fecha de levantamiento', con_fecha, pct(con_fecha, N)],
-                ['Con técnico investigador registrado', con_tec, pct(con_tec, N)],
                 ['Con coordenadas del punto de levantamiento', con_gps, pct(con_gps, N)]],
                [n0, p0])
     ced = collections.Counter(x['estado_ced'] for x in filas)
@@ -283,12 +285,12 @@ def main():
 
     # ── LISTADO COMPLETO y CONOCEN EL PROYECTO ───────────────────────────
     cab = ['N°', 'Código de ficha', 'Sector', 'Comunidad', 'Cédula', 'Apellidos y nombres',
-           '¿Conoce el proyecto?', 'Clave catastral', 'Fecha de levantamiento', 'Técnico']
-    anchos = [7, 18, 10, 30, 14, 44, 16, 17, 14, 22]
+           '¿Conoce el proyecto?', 'Clave catastral', 'Fecha de levantamiento']
+    anchos = [7, 18, 10, 30, 14, 44, 16, 17, 14]
 
     def fila_lista(i, x):
         return [i, x['codigo'], x['sector'], x['comunidad'], x['cedula'], x['nombre'],
-                x['conoce'], x['clave'], x['fecha'], x['tecnico']]
+                x['conoce'], x['clave'], x['fecha']]
 
     escribir_hoja(wb.create_sheet('LISTADO COMPLETO'), cab, anchos,
                   [fila_lista(i, x) for i, x in enumerate(filas, 1)], texto=(5, 8))

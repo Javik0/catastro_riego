@@ -76,6 +76,17 @@ def _texto_celda(c):
     return str(c)
 
 
+def _celdas(t):
+    """Las celdas de la tabla por fila, sin pasar por `t.cell(i, j)`.
+
+    `Table.cell()` reconstruye la rejilla completa en CADA llamada: en una tabla
+    de 150 filas el armado se vuelve cuadratico (el listado de titulares tardaba
+    mas de diez minutos). Aqui se recorre el XML una sola vez.
+    """
+    from docx.table import _Cell
+    return [[_Cell(tc, t) for tc in tr.tc_lst] for tr in t._tbl.tr_lst]
+
+
 def _aplicar_anchos(doc, t, anchos_pt):
     """Copia al Word los anchos de columna que la tabla traía para el PDF.
 
@@ -95,8 +106,19 @@ def _aplicar_anchos(doc, t, anchos_pt):
     t.autofit = False
     for col, ancho in zip(t.columns, anchos_mm):
         col.width = Mm(ancho)
-        for celda in col.cells:
+    for fila in _celdas(t):
+        for celda, ancho in zip(fila, anchos_mm):
             celda.width = Mm(ancho)
+
+
+def _repetir_cabecera(t):
+    """La primera fila se repite al comienzo de cada página (tablas largas)."""
+    from docx.oxml.ns import qn
+    from docx.oxml import OxmlElement
+    trPr = t.rows[0]._tr.get_or_add_trPr()
+    marca = OxmlElement('w:tblHeader')
+    marca.set(qn('w:val'), 'true')
+    trPr.append(marca)
 
 
 def _poner_tabla(doc, tabla):
@@ -106,18 +128,20 @@ def _poner_tabla(doc, tabla):
     t = doc.add_table(rows=len(filas), cols=len(filas[0]))
     t.style = 'Table Grid'
     _aplicar_anchos(doc, t, getattr(tabla, '_colWidths', None))
+    _repetir_cabecera(t)
+    celdas = _celdas(t)
     for i, fila in enumerate(filas):
         for j, celda in enumerate(fila):
-            if j >= len(t.columns):
+            if j >= len(celdas[i]):
                 continue
-            p = t.cell(i, j).paragraphs[0]
+            p = celdas[i][j].paragraphs[0]
             r = p.add_run(_texto_celda(celda))
             r.font.size = Pt(8.5)
             r.font.name = 'Calibri'
             if i == 0:                      # la primera fila es la cabecera
                 r.bold = True
                 r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
-                _sombrear(t.cell(i, j), '1E3A8A')
+                _sombrear(celdas[i][j], '1E3A8A')
     doc.add_paragraph()
 
 
@@ -140,6 +164,10 @@ def _pintar(doc, bloques, primero):
             continue
 
         if nombre == 'Spacer':
+            continue
+
+        if nombre == 'PageBreak':
+            doc.add_page_break()
             continue
 
         if nombre == 'Image':

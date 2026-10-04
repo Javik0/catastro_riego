@@ -2,10 +2,12 @@
 """
 Informe de sustento: titulares entrevistados y conocimiento del proyecto.
 
-Es el documento que acompaña al listado en Excel
-(`generar_listado_titulares.py`) y se entrega al sociólogo (Alexis Guerrero),
-que necesita sostener cuántos titulares fueron entrevistados y cuántos
-contestaron que conocen el proyecto.
+Es el documento que se entrega al sociólogo (Alexis Guerrero), que necesita
+sostener cuántos titulares fueron entrevistados y cuántos contestaron que
+conocen el proyecto. Lleva dentro los dos listados que él pidió —todos los
+catastrados y los que contestaron que sí, con cédula y comunidad— como anexos,
+de modo que el informe se entiende solo; el Excel trae los mismos listados
+filtrables.
 
 Tono y alcance
 --------------
@@ -14,9 +16,15 @@ cada porcentaje. No sale ninguna cifra escrita a mano: todo se cuenta del
 mismo padrón y con la misma función de carga que el Excel, para que los dos
 archivos no puedan contradecirse.
 
-Solo cita como evidencia lo que el dato tiene: fecha, técnico, coordenadas,
-clave catastral y cédula. El campo de consentimiento informado está vacío en
-las 4.307 fichas y por eso el documento no lo menciona como respaldo.
+Lo que NO lleva, por decisión del 4-oct-2026: el técnico que levantó cada
+ficha. No se pide y solo abre preguntas. Los bloques de resumen (qué consta en
+la ficha, cédulas, cédulas distintas) sí van, igual que la fecha de
+levantamiento. Todo conteo se dice en FICHAS principales: el documento nunca
+afirma que sean personas distintas.
+
+El campo de consentimiento informado está vacío en las 6.830 fichas porque el
+consentimiento se dio en la socialización, no en una casilla del formulario;
+por eso el documento no lo menciona como respaldo.
 
 Uso:  python -X utf8 scripts/generar_informe_titulares.py
 """
@@ -24,6 +32,9 @@ import collections
 import os
 import sys
 from datetime import datetime
+from xml.sax.saxutils import escape
+
+from reportlab.platypus import PageBreak
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
@@ -63,14 +74,11 @@ def main():
 
     fechas = [datetime.strptime(x['fecha'], '%d/%m/%Y') for x in filas if x['fecha']]
     n_comunidades = len({x['com_n'] for x in filas})
-    n_tecnicos = len({x['tecnico'] for x in filas if x['tecnico']})
-    n_dias = len({d.date() for d in fechas})
     con_fecha = len(fechas)
-    con_tec = sum(1 for x in filas if x['tecnico'])
-    con_gps = sum(1 for x in filas if x['gps'])
     con_clave = sum(1 for x in filas if x['clave'])
     con_nombre = sum(1 for x in filas if x['nombre'])
-
+    con_gps = sum(1 for x in filas if x['gps'])
+    n_dias = len({d.date() for d in fechas})
     ced = collections.Counter(x['estado_ced'] for x in filas)
     sin_ced = ced['Sin cédula']
     con_ced = N - sin_ced
@@ -78,15 +86,18 @@ def main():
     en_dup = sum(len(v) for v in dup.values())
 
     # Cortes por sector y por comunidad (misma regla que el Excel: el sector y
-    # la comunidad salen del código de la ficha).
+    # la comunidad salen del código de la ficha). `grupos` guarda, por
+    # comunidad, las fichas en el orden del código, para los anexos.
     por_sector = collections.OrderedDict()
     por_com = collections.OrderedDict()
+    grupos = collections.OrderedDict()
     for x in sorted(filas, key=lambda x: (x['com_n'], x['codigo'])):
+        clave = (x['com_n'], x['comunidad'], x['sector'])
         for d in (por_sector.setdefault(x['sector'], collections.Counter()),
-                  por_com.setdefault((x['com_n'], x['comunidad'], x['sector']),
-                                     collections.Counter())):
+                  por_com.setdefault(clave, collections.Counter())):
             d['n'] += 1
             d['si' if x['conoce'] == 'Sí' else 'no' if x['conoce'] == 'No' else 'sr'] += 1
+        grupos.setdefault(clave, []).append(x)
     assert sum(d['n'] for d in por_sector.values()) == N
     assert sum(d['n'] for d in por_com.values()) == N
     assert sum(d['si'] for d in por_com.values()) == si
@@ -98,6 +109,8 @@ def main():
     st_p = ParagraphStyle('p', fontName='Helvetica', fontSize=9.5, leading=13,
                           textColor=TINTA, alignment=4)
     st_li = ParagraphStyle('li', parent=st_p, leftIndent=6 * mm, spaceAfter=2)
+    st_com = ParagraphStyle('com', fontName='Helvetica-Bold', fontSize=10, leading=13,
+                            textColor=AZUL_PDF, alignment=0)
 
     b = [Paragraph('Titulares entrevistados y conocimiento del proyecto', st_h),
          Spacer(0, 1.5 * mm),
@@ -107,15 +120,15 @@ def main():
          Paragraph('Este documento resume el levantamiento del padrón de usuarios del sistema '
                    'de riego comunitario Guanguilquí–Porotog: cuántas fichas principales se '
                    'levantaron, cuántas respondieron la pregunta «¿Conoce el proyecto?» y qué '
-                   'consta en cada ficha. Acompaña al listado en Excel, que detalla cada caso '
-                   'por comunidad.', st_p)]
+                   'consta en cada ficha. Los listados completos, con cédula y comunidad, '
+                   'van en los anexos.', st_p)]
 
     # 1 ─ El levantamiento
     b += titulo_seccion('1. El levantamiento')
     b.append(Paragraph(
         f'El levantamiento se hizo casa por casa entre el {fecha_larga(min(fechas))} y el '
         f'{fecha_larga(max(fechas))}, en {esn(n_comunidades)} comunidades de los tres sectores, '
-        f'con {esn(n_tecnicos)} técnicos investigadores y {esn(n_dias)} días con registros. '
+        f'en {esn(n_dias)} días con registros. '
         f'Cada ficha principal recoge la entrevista a un titular; las fichas adicionales son '
         f'otros predios y no se cuentan como titulares. En total hay '
         f'<b>{esn(N)} fichas principales</b>.', st_p))
@@ -156,7 +169,6 @@ def main():
         [['Apellidos y nombres del titular', esn(con_nombre), pc(con_nombre, N)],
          ['Clave catastral del predio', esn(con_clave), pc(con_clave, N)],
          ['Fecha de levantamiento', esn(con_fecha), pc(con_fecha, N)],
-         ['Técnico investigador que la levantó', esn(con_tec), pc(con_tec, N)],
          ['Coordenadas del punto de levantamiento', esn(con_gps), pc(con_gps, N)]],
         [90 * mm, 30 * mm, 40 * mm]))
 
@@ -181,23 +193,24 @@ def main():
         f'comprueba que el número de cédula está bien formado; la consulta al Registro Civil '
         f'no forma parte de este levantamiento.', st_p))
 
-    # 6 ─ Archivos que acompañan
-    b += titulo_seccion('6. Listado que acompaña a este informe')
-    b.append(Paragraph('El Excel «Listado de titulares entrevistados» trae estas hojas:', st_p))
-    b.append(Spacer(0, 1 * mm))
+    # 5 ─ Listados que acompañan
+    b += titulo_seccion('6. Listados que acompañan a este informe')
     for t in [
-        f'<b>LISTADO COMPLETO:</b> las {esn(N)} fichas principales, con código de ficha, '
-        'sector, comunidad, cédula, apellidos y nombres, respuesta, clave catastral, fecha de '
-        'levantamiento y técnico.',
-        f'<b>CONOCEN EL PROYECTO:</b> las {esn(si)} fichas que respondieron que sí, con las '
-        'mismas columnas.',
-        '<b>POR COMUNIDAD:</b> fichas, respuestas y porcentajes de cada comunidad.',
-        '<b>RESUMEN:</b> las cifras de este informe.',
+        '<b>Anexo 1.</b> Respuesta por comunidad.',
+        f'<b>Anexo 2.</b> Las {esn(N)} fichas principales, por comunidad, con código de '
+        'ficha, cédula, apellidos y nombres, respuesta a «¿Conoce el proyecto?» y fecha de '
+        'levantamiento.',
+        f'<b>Anexo 3.</b> Las {esn(si)} fichas que respondieron que sí conocen el proyecto, '
+        'por comunidad, con cédula y fecha de levantamiento.',
     ]:
         b.append(Paragraph(t, st_li))
+    b.append(Spacer(0, 2 * mm))
+    b.append(Paragraph('El Excel «Listado de titulares entrevistados» contiene estos mismos '
+                       'listados, filtrables, con la clave catastral de cada ficha.', st_p))
 
-    # Anexo ─ por comunidad
-    b += titulo_seccion('Anexo. Respuesta por comunidad')
+    # Anexo 1 ─ por comunidad
+    b.append(PageBreak())
+    b += titulo_seccion('Anexo 1. Respuesta por comunidad')
     filas_c = [[nom, sec, esn(d['n']), esn(d['si'] + d['no']), esn(d['si']),
                 pc(d['si'], d['si'] + d['no'])]
                for (_, nom, sec), d in por_com.items()]
@@ -207,6 +220,42 @@ def main():
          '% Sí (sobre quienes respondieron)'],
         filas_c, [58 * mm, 20 * mm, 18 * mm, 26 * mm, 22 * mm, 34 * mm],
         ultima_negrita=True))
+
+    # Anexo 2 ─ todas las fichas principales, por comunidad
+    b.append(PageBreak())
+    b += titulo_seccion('Anexo 2. Fichas principales por comunidad')
+    n = 0
+    for (_, nom, sec), lista in grupos.items():
+        b.append(Paragraph(f'<b>{escape(nom)} · {sec} · {esn(len(lista))} fichas</b>', st_com))
+        filas_l = []
+        for x in lista:
+            n += 1
+            filas_l.append([str(n), x['codigo'], x['cedula'] or '—', x['nombre'], x['conoce'],
+                            x['fecha']])
+        b.append(tabla_datos(['N°', 'Código de ficha', 'Cédula', 'Apellidos y nombres',
+                              '¿Conoce el proyecto?', 'Fecha de levantamiento'],
+                             filas_l, [11 * mm, 32 * mm, 24 * mm, 54 * mm, 20 * mm, 24 * mm]))
+    assert n == N, (n, N)
+
+    # Anexo 3 ─ quienes respondieron que sí, por comunidad
+    b.append(PageBreak())
+    b += titulo_seccion('Anexo 3. Fichas que respondieron que sí conocen el proyecto')
+    n = 0
+    n_tablas_si = 0
+    for (_, nom, sec), lista in grupos.items():
+        lista = [x for x in lista if x['conoce'] == 'Sí']
+        if not lista:
+            continue
+        b.append(Paragraph(f'<b>{escape(nom)} · {sec} · {esn(len(lista))} fichas</b>', st_com))
+        filas_l = []
+        for x in lista:
+            n += 1
+            filas_l.append([str(n), x['codigo'], x['cedula'] or '—', x['nombre'], x['fecha']])
+        b.append(tabla_datos(['N°', 'Código de ficha', 'Cédula', 'Apellidos y nombres',
+                              'Fecha de levantamiento'],
+                             filas_l, [12 * mm, 32 * mm, 26 * mm, 62 * mm, 24 * mm]))
+        n_tablas_si += 1
+    assert n == si, (n, si)
 
     a_word.escribir(b, SALIDA, cabecera_estudio=dict(
         titulo=PROJECT_TITLE, subtitulo=PROJECT_SUBTITLE,
@@ -220,21 +269,27 @@ def main():
     import docx
     d = docx.Document(SALIDA)
     texto = '\n'.join(p.text for p in d.paragraphs)
-    for t in d.tables:
-        for r in t.rows:
-            texto += '\n' + ' | '.join(c.text for c in r.cells)
-    for esperado in (esn(N), esn(si), pc(si, resp), pc(si, N), esn(len(por_cedula))):
+    for esperado in (esn(N), esn(si), pc(si, resp), pc(si, N)):
         assert esperado in texto, f'falta «{esperado}» en el Word'
-    assert len(d.tables) == 5, len(d.tables)
-    assert len(d.tables[-1].rows) == n_comunidades + 2, len(d.tables[-1].rows)
+    # Cuerpo: respuesta, sector, ficha, cédula (4) + anexo 1 + una tabla por
+    # comunidad en el anexo 2 y en el anexo 3.
+    esperadas = 4 + 1 + len(grupos) + n_tablas_si
+    assert len(d.tables) == esperadas, (len(d.tables), esperadas)
+    t = d.tables
+    assert len(t[4].rows) == n_comunidades + 2
+    filas_anexo2 = sum(len(x.rows) - 1 for x in t[5:5 + len(grupos)])
+    filas_anexo3 = sum(len(x.rows) - 1 for x in t[5 + len(grupos):])
+    assert filas_anexo2 == N, (filas_anexo2, N)
+    assert filas_anexo3 == si, (filas_anexo3, si)
+    for palabra in ('técnico', 'Técnico'):
+        assert palabra not in texto, f'quedó «{palabra}» en el Word'
 
     print(f'Fichas principales : {esn(N)}')
     print(f'  Sí / respondieron: {esn(si)} / {esn(resp)} = {pc(si, resp)} '
           f'(sobre fichas: {pc(si, N)})')
-    print(f'  cédulas distintas: {esn(len(por_cedula))} · sin cédula {esn(sin_ced)}')
-    print(f'  levantamiento    : {fecha_larga(min(fechas))} a {fecha_larga(max(fechas))} · '
-          f'{n_tecnicos} técnicos · {n_dias} días')
-    print('Contenido releído del .docx: cifras y tablas presentes.')
+    print(f'  anexo 2: {esn(filas_anexo2)} filas en {len(grupos)} comunidades · '
+          f'anexo 3: {esn(filas_anexo3)} filas en {n_tablas_si}')
+    print('Contenido releído del .docx: cifras, tablas y filas de anexos cuadran.')
     print('✔', SALIDA)
     return 0
 
