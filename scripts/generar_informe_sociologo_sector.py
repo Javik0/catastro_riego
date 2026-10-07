@@ -86,6 +86,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import informe_estilo as E  # noqa: E402
+from excel_compat import aplicar_formatos  # noqa: E402
 # El motor de agregación y los mapas satelitales son los del informe por
 # comunidad: aquí no se recalcula nada que ya exista allá.
 from generar_informe_sociologo import (  # noqa: E402
@@ -678,6 +679,7 @@ def escribir_xlsx(datos_por_corte, ruta):
 
     os.makedirs(os.path.dirname(ruta), exist_ok=True)
     wb.save(ruta)
+    aplicar_formatos(ruta)      # sin esto el Excel local no pinta colores ni formatos
 
 
 # ─── Autoverificación contra las fuentes únicas ──────────────────────────────

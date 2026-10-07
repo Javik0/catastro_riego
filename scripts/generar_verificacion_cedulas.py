@@ -47,6 +47,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 
 from armar_entrega_final import catalogo  # noqa: E402
+from excel_compat import aplicar_formatos  # noqa: E402
 from generar_listado_titulares import cargar, casos_para_revisar  # noqa: E402
 from generar_fichas_pdf import (  # noqa: E402
     A4, AZUL as AZUL_PDF, TINTA, FECHA_CORTE, PROJECT_LOCATION, PROJECT_SUBTITLE,
@@ -250,6 +251,7 @@ def escribir_excel(casos, por, por_numero):
     ws.row_dimensions[1].height = 30
 
     wb.save(EXCEL)
+    aplicar_formatos(EXCEL)     # sin esto el Excel local no pinta colores ni formatos
 
     # Se relee lo guardado y se cuadra contra la lista de origen.
     chk = load_workbook(EXCEL, read_only=True)

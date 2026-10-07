@@ -1305,6 +1305,8 @@ def escribir_indice(filas, salida):
     ws.auto_filter.ref = ws.dimensions
     ruta = os.path.join(salida, 'INDICE DE FICHAS.xlsx')
     wb.save(ruta)
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(ruta)      # sin esto el Excel local no pinta colores ni formatos
     print(f'✔ Índice: {ruta} ({len(filas)} filas)')
 
 

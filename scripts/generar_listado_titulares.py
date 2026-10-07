@@ -59,6 +59,7 @@ sys.path.insert(0, AQUI)
 from armar_entrega_final import catalogo, CONSTANTS  # noqa: E402
 from corregir_cedulas_homonimos import cedula_valida  # noqa: E402
 from informe_estilo import FECHA_CORTE  # noqa: E402
+from excel_compat import aplicar_formatos  # noqa: E402
 
 BASE = os.path.abspath(os.path.join(AQUI, '..'))
 GEO = os.path.join(BASE, 'public', 'geo')
@@ -326,6 +327,7 @@ def main():
             c.number_format = p0
 
     wb.save(SALIDA)
+    aplicar_formatos(SALIDA)    # sin esto el Excel local no pinta colores ni formatos
 
     # Se vuelve a leer el archivo y se cuadran las cuentas: lo que se entrega
     # es lo que quedó en disco, no lo que el programa cree haber escrito.

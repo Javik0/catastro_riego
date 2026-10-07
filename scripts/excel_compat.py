@@ -19,11 +19,20 @@ que ante su ausencia heredan: el color queda en el archivo pero no se pinta.
 La prueba definitiva: al guardar el usuario su copia, Excel descartó todos los
 rellenos y bordes generados — para su parser nunca estuvieron aplicados.
 
+Lo mismo pasa con `applyNumberFormat` (7-oct-2026): sin él, este Excel muestra
+las fechas como número de serie (46163) y los miles sin separador, aunque el
+formato `dd/mm/yyyy` o `#,##0` esté en el archivo.
+
 Qué hace
 --------
 `aplicar_formatos(ruta)` reescribe el `xl/styles.xml` del archivo ya guardado,
 añadiendo `applyFont="1" applyFill="1" applyBorder="1"` a cada `<xf>` de
-`<cellXfs>` que no los traiga. No toca nada más del archivo.
+`<cellXfs>` que no los traiga, y `applyNumberFormat="1"` a los que tengan un
+formato numérico distinto de General. No toca nada más del archivo.
+
+Ojo: NO abrir y guardar el archivo con Excel desde un script (COM) para
+recalcular fórmulas: al guardar, Excel descarta los rellenos. Usar
+`wb.calculation.fullCalcOnLoad = True` y dejar que calcule al abrir.
 
 Uso
 ---
@@ -40,7 +49,10 @@ import zipfile
 
 def _parchar_xf(m):
     xf = m.group(0)
-    for attr in ('applyFont', 'applyFill', 'applyBorder'):
+    attrs = ['applyFont', 'applyFill', 'applyBorder']
+    if 'numFmtId="0"' not in xf:            # 0 = General: nada que aplicar
+        attrs.append('applyNumberFormat')
+    for attr in attrs:
         if attr not in xf:
             # insertar antes del cierre, sea '/>' o '>'
             cierre = '/>' if xf.endswith('/>') else '>'

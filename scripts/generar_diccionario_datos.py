@@ -256,6 +256,8 @@ def escribir_excel(estructura, ruta):
     ws.freeze_panes = 'A2'
     ws.auto_filter.ref = ws.dimensions
     wb.save(ruta)
+    from excel_compat import aplicar_formatos
+    aplicar_formatos(ruta)      # sin esto el Excel local no pinta colores ni formatos
     return ruta
 
 

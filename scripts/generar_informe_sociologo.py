@@ -84,6 +84,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comunidades_canon import canonica  # noqa: E402
+from excel_compat import aplicar_formatos  # noqa: E402
 import informe_estilo as E  # noqa: E402
 from informe_estilo import esn
 
@@ -1797,6 +1798,7 @@ def escribir_xlsx(comunidades, ruta):
 
     os.makedirs(os.path.dirname(ruta), exist_ok=True)
     wb.save(ruta)
+    aplicar_formatos(ruta)      # sin esto el Excel local no pinta colores ni formatos
 
 
 # ─── main ────────────────────────────────────────────────────────────────────
