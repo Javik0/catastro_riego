@@ -89,7 +89,7 @@ fila('S03', 'Mapeo de actores: 39 denominaciones frente a 50 comunidades; catál
             'rol, representatividad y clasificación interna/externa.',
      'Aporte del catastro: catálogo único de las 50 comunidades con código (C01–C50), nombre oficial, nombre usado '
      'en la base y sector, que puede servir de catálogo común para el mapeo de actores. ' + SOC,
-     'Por ejecutar: entrega del catálogo de comunidades. ' + PEND, 'Catálogo de comunidades (v1)', '', E1, '')
+     'Propuesta: entrega del catálogo de comunidades. ' + PEND, 'Catálogo de comunidades (v1)', '', E1, '')
 fila('S06', 'Línea base: metodología, fuentes, cobertura y análisis territorial; separar hogares, personas, '
             'usuarios, fichas y predios; variables, vacíos y anexos reproducibles.',
      'Aporte del catastro: universos separados y definidos desde la base (corte 19-ago-2026): 6.830 fichas '
@@ -111,8 +111,11 @@ fila('Gral.', 'Documentos de referencia citados en el informe JAFG-2026-002.',
      'catastral y productiva» (Informe-Prefectura-Observaciones-oficio-048), del que proceden los códigos C01–C18 y '
      'los hallazgos numéricos ampliados. Sin perjuicio de las respuestas de esta matriz, construidas desde la base '
      'validada, se solicita identificar ambos documentos (título, fecha, autor y versión) o remitir copia, para '
-     'contrastar cada cifra con la misma fuente y cerrar las observaciones.',
-     'Solicitud de identificación o copia de los dos documentos.', '—', '—', '—', 'Abierta')
+     'contrastar cada cifra con la misma fuente y cerrar las observaciones. Las acciones que esta matriz señala '
+     'como «Propuesta» constituyen la propuesta de subsanación de la Consultora y se ejecutarán según el cronograma '
+     'que se acuerde con la Administración del Contrato (§11.1-f).',
+     'Solicitud de identificación o copia de los dos documentos. Las acciones propuestas se ejecutan según el '
+     'cronograma de subsanación que se acuerde.', '—', '—', '—', 'Abierta')
 
 # ── 6. Catastro: agregación y universo ─────────────────────────────────────
 fila('C01', 'Seis comunidades no concilian: La Libertad 155/153; San Antonio 182/185; San José 202/200; Milagro '
@@ -122,17 +125,19 @@ fila('C01', 'Seis comunidades no concilian: La Libertad 155/153; San Antonio 182
      'adicionales); Alpaka 492 fichas principales. Se revisaron todas las versiones de la base desde el 15-ago-2026: '
      'los valores 155, 202 y 80 no aparecen en ninguna, y 182 corresponde a una versión intermedia del 18-ago-2026, '
      'previa al cierre de la depuración.',
-     'Por ejecutar: los cuadros por comunidad del informe catastral se reemplazan por el cuadro de conciliación '
-     'generado desde la base, con subtotales y totales calculados por fórmula, identificando cada valor corregido.',
-     'Informe catastral (v2)', 'Cuadros por comunidad, pp. 3–4', E1, 'En revisión')
+     'Ejecutada: cuadro de conciliación por comunidad generado desde la base, con subtotales y totales por fórmula, '
+     'para reemplazar los cuadros del documento citado una vez identificado.',
+     'Cuadro de conciliación por comunidad (Anexo A1)', 'Hoja «Anexo A1 Comunidades»', E1, 'En revisión')
 fila('C02', 'Sector 2: detalle 1.726/518 frente a subtotal 1.728/516. Otón 153 + 16 = 169 frente a 193. Las '
             'columnas suman 6.806 y las filas 6.830.',
      NOTA_I + 'La base registra en el Sector 2 1.728 fichas principales y 516 adicionales (2.244), igual al '
      'subtotal citado; el detalle de filas del informe catastral es el que no suma. En Pueblo de Otón las 40 fichas '
      'adicionales constan en el resumen R y en la base, y todas las versiones de la base desde el 15-ago-2026 '
      'registran 193 fichas: 153 + 40 = 193 es el valor correcto. Total del padrón: 4.307 + 2.523 = 6.830 fichas.',
-     'Por ejecutar: tablas 5 y 6 regeneradas desde la base, con totales por fórmula.',
-     'Informe catastral (v2)', 'Tablas 5 y 6', E1, 'En revisión')
+     'Ejecutada: subtotales y totales por sector regenerados desde la base, con fórmulas, para reemplazar las '
+     'tablas 5 y 6 del documento citado una vez identificado.',
+     'Cuadro de conciliación por comunidad (Anexo A1)', 'Anexo A1, bloque «Subtotales por sector»', E1,
+     'En revisión')
 fila('C03', '4.165 − 453 = 3.712 frente a 3.681 comuneros declarados; las filas finales suman 3.664. Fijar '
             'universo de usuarios únicos, distinto del de fichas y predios.',
      NOTA_I + 'De la operación citada, el valor 453 coincide con la meta de planificación de la comunidad San '
@@ -143,8 +148,8 @@ fila('C03', '4.165 − 453 = 3.712 frente a 3.681 comuneros declarados; las fila
      'registrada), en proceso de verificación de cédulas; (3) predios: 5.987 predios catastrales con al menos una '
      'ficha. Los listados de las 50 comunidades registran 3.681 comuneros; su conciliación por cédula se presenta '
      'en la matriz de las 50 comunidades (§11.1-g).',
-     'Por ejecutar: definición de universos en el informe catastral y en el diccionario de datos.',
-     'Informe catastral (v2); Diccionario de datos (v2)', 'pp. 1–4; sección «Universos»', E1, 'En revisión')
+     'Propuesta: incorporar la definición de los tres universos en el diccionario de datos.',
+     'Diccionario de datos (v2)', 'Sección «Universos»', E1, 'En revisión')
 fila('C04', '4.218 grupos S-C-R, 128 con varias principales y 138 sin principal; identificación coincidente con '
             'nombres diferentes. Verificar identidades; reglas y tabla de correspondencia, sin eliminar registros.',
      'Se reproduce el resultado sobre el resumen R. El código S-C-R-F agrupa a cada titular por cédula dentro de '
@@ -155,16 +160,16 @@ fila('C04', '4.218 grupos S-C-R, 128 con varias principales y 138 sin principal;
      'con dos fichas principales del mismo titular. Las identidades se contrastaron con el catastro municipal y el '
      'dígito verificador: de 627 fichas con observación de cédula, 511 quedan resueltas en oficina y 116 se '
      'verifican en campo.',
-     'Por ejecutar: tabla de correspondencia ficha–titular–predio–polígono con las reglas de codificación. Ningún '
+     'Propuesta: tabla de correspondencia ficha–titular–predio–polígono con las reglas de codificación. Ningún '
      'registro se elimina; las correcciones de identidad se aplican con registro de cambios.',
      'Tabla de correspondencia (nueva); ' + REENTREGA, 'Capa «fichas», campo de código', E4, 'En revisión')
 fila('C05', 'Se declara 100 % sin universo predial conciliado; 6.830 fichas y 5.987 filas no son unidades '
             'equivalentes. Presentar universo total, levantados, pendientes, fórmula, corte y respaldo.',
      'El documento «Porcentaje de avance y fecha de corte» expresa el 100 % sobre las propiedades declaradas por '
-     'los comuneros y advierte que no existe un universo predial de referencia. Se acoge la observación: el avance '
-     'se expresará por universo definido (fichas, titulares y predios) y el porcentaje predial se calculará con la '
+     'los comuneros y advierte que no existe un universo predial de referencia. Se acoge la observación: se propone '
+     'expresar el avance por universo definido (fichas, titulares y predios) y calcular el porcentaje predial con la '
      'matriz de las 50 comunidades contra los padrones certificados (§11.1-g), con fórmula, corte y respaldo.',
-     'Por ejecutar: documento 6 reformulado.', 'Documento 6 – Porcentaje de avance y fecha de corte (v2)',
+     'Propuesta: documento 6 reformulado.', 'Documento 6 – Porcentaje de avance y fecha de corte (v2)',
      'Sección «Avance sobre el universo»', E1, 'En revisión')
 fila('C06', 'Fechas de ejecución anteriores al inicio declarado: Sector 2, 8/06 frente a 10/06; Rosalía, 10/06 '
             'frente a 15/06. Separar programación y ejecución.',
@@ -172,9 +177,9 @@ fila('C06', 'Fechas de ejecución anteriores al inicio declarado: Sector 2, 8/06
      'identificar (ver fila «Gral.»). Los registros de campo (fecha y hora de cada ficha) confirman la ejecución: '
      'el Sector 2 inició el 8-jun-2026 (Santa Rosa de Pingulmi y Comuna Izacata) y Rosalía el 10-jun-2026; las '
      'fechas 10/06 y 15/06 corresponden, por tanto, a la programación.',
-     'Por ejecutar: el informe catastral separa programación y ejecución efectiva; la ejecución se respalda con la '
-     'primera y última ficha registrada por comunidad.',
-     'Informe catastral (v2)', 'pp. 1–2 y anexo de fechas', E1 + ' (columnas de fechas)', 'En revisión')
+     'Ejecutada: primera y última ficha registrada por comunidad, como respaldo de la ejecución efectiva.',
+     'Cuadro de conciliación por comunidad (Anexo A1)', 'Anexo A1, columnas «Primera ficha» y «Última ficha»',
+     E1 + ' (columnas de fechas)', 'En revisión')
 
 # ── 7. Conciliación y vínculos ─────────────────────────────────────────────
 fila('C07', 'Variantes de denominación (Izacata/Izacata Grande, Avellaneda/Eliot) y errores de codificación. '
@@ -183,7 +188,7 @@ fila('C07', 'Variantes de denominación (Izacata/Izacata Grande, Avellaneda/Elio
      'Izacata son tres comunidades distintas del listado oficial, no variantes. Las variantes provienen del nombre '
      'corto usado en la base frente al oficial («Avellaneda» / «Eliot Avellaneda»), del campo de sector o barrio, '
      'de texto libre, y de la capa de comunas del contratante, que conserva sus nombres originales.',
-     'Por ejecutar: catálogo C01–C50 con nombre oficial, nombre en la base y equivalencias; código y nombre oficial '
+     'Propuesta: catálogo C01–C50 con nombre oficial, nombre en la base y equivalencias; código y nombre oficial '
      'de comunidad en todas las capas. Ninguna comunidad se fusiona por similitud.',
      'Catálogo de comunidades (nuevo); ' + REENTREGA, 'Todas las capas, campos de comunidad', E1, 'En revisión')
 fila('C08', 'La diferencia entre fichas y comuneros se interpreta como nuevos usuarios: 1.624 reportado; '
@@ -193,9 +198,9 @@ fila('C08', 'La diferencia entre fichas y comuneros se interpreta como nuevos us
      'ese es el cálculo, la resta compara fichas con una meta de planificación y no mide usuarios nuevos: una ficha '
      'no es un usuario (las 4.307 fichas principales corresponden a 3.961 cédulas distintas). La base no calcula '
      'un indicador de «nuevos usuarios».',
-     'Por ejecutar: se retira el indicador del informe catastral o se redefine como usuarios únicos que no constan '
-     'en el padrón certificado, identificados por cédula en la matriz de las 50 comunidades.',
-     'Informe catastral (v2)', 'Tabla 4', E1, 'En revisión')
+     'Propuesta: no usar esa resta como indicador; medir los usuarios que no constan en el padrón certificado, por '
+     'cédula, en la matriz de las 50 comunidades (§11.1-g).',
+     '—', '—', E1, 'En revisión')
 fila('C09', 'R: 4.307 + 2.523 = 6.830 fichas. X: 4.298 + 2.523 = 6.821. Diferencia de 9 principales y de tipo en '
             '25 comunidades.',
      'La diferencia corresponde exactamente a 9 fichas principales cuyo predio no tiene polígono en el catastro del '
@@ -207,7 +212,7 @@ fila('C09', 'R: 4.307 + 2.523 = 6.830 fichas. X: 4.298 + 2.523 = 6.821. Diferenc
      'fichas sin polígono. El total de fichas no cambia, solo la comunidad en que se cuentan. El detalle de origen '
      'de esta observación procede del informe técnico de revisión, del que no se dispone de copia (ver fila '
      '«Gral.»).',
-     'Ejecutada: listado nominal de las 9 fichas con su causa y conciliación por comunidad. Por ejecutar: tabla '
+     'Ejecutada: listado nominal de las 9 fichas con su causa y conciliación por comunidad. Propuesta: tabla '
      '«fichas sin polígono» y comunidad de cada ficha en la tabla de correspondencia; confirmación de la clave de '
      'La Libertad con el titular.',
      REENTREGA + ' (tabla «fichas sin polígono»)', 'GeoPackage, capas «fichas» y «predios_investigados»',
@@ -218,7 +223,7 @@ fila('C10', '5.987 fid; 5.979 claves; 7 repetidas; 30 claves numéricas de más 
      'de 13 dígitos, 30 urbanas de 23 dígitos y 6 de 10 dígitos). Al abrir la tabla en una hoja de cálculo, las '
      'claves se leen como número y se conservan solo 15 cifras: las 30 claves urbanas se truncan y resultan '
      'exactamente 5.979 claves y 7 repetidas.',
-     'Por ejecutar: versión Excel con la clave en formato texto y tabla de relaciones ficha–titular–predio–polígono '
+     'Propuesta: versión Excel con la clave en formato texto y tabla de relaciones ficha–titular–predio–polígono '
      'con el código S-C-R-F de cada ficha.',
      REENTREGA + '; versión Excel de atributos (nueva)', 'Capa «predios_investigados», campo clave_catastral', E3,
      'En revisión')
@@ -230,7 +235,7 @@ fila('C17', 'Cultivo «500», textos mal codificados, 6 propietarios del catastr
      'abrir el DBF directamente en una hoja de cálculo. Vacíos: los 5 riego_pct son los 5 predios cuya ficha no '
      'declara condición de riego; los 6 propietarios vacíos son predios que el catastro municipal entrega sin '
      'propietario.',
-     'Por ejecutar: corrección del cultivo y del orden de lectura (prevalece el tipo de cultivo); versión Excel y '
+     'Propuesta: corrección del cultivo y del orden de lectura (prevalece el tipo de cultivo); versión Excel y '
      'nota de apertura del SHP; dominios y valores nulos en el diccionario, con registro de cambios.',
      REENTREGA + '; Diccionario de datos (v2)', 'Capas «predios_investigados» y «cultivos»', E3, 'En revisión')
 
@@ -240,18 +245,18 @@ fila('§7.1-a', 'Verificar SHP, mpk y CAD, geometrías, sistema de referencia, a
      'Se entregaron el 18-sep-2026: SHP y CAD (DXF) en EPSG:32717, GeoPackage con proyecto QGIS, diccionario de '
      'datos, enlace al geovisor, memoria técnica y manual de uso. El paquete de mapa se entregó como proyecto QGIS '
      '(.qgz), formato abierto equivalente al .mpk.',
-     'Por ejecutar: reentrega con inventario de archivos. ' + PEND + ' Confirmar si se genera además el .mpk.',
-     REENTREGA, 'Carpeta 1 de la entrega', 'Inventario de la reentrega', 'En revisión')
+     'Propuesta: reentrega con inventario de archivos. ' + PEND + ' Confirmar si se genera además el .mpk.',
+     REENTREGA, 'Carpeta 1 de la entrega', '—', 'En revisión')
 fila('§7.1-b', 'I y R declaran corte al 19-ago-2026; X no presenta corte interno y P se emite el 18-sep. '
                'Acreditar compatibilidad de versiones.',
      'X proviene de la misma base y corte que R (19-ago-2026), pero no lo declara en sus atributos.',
-     'Por ejecutar: fecha de corte y versión en los metadatos de cada capa y en el diccionario. ' + P6,
+     'Propuesta: fecha de corte y versión en los metadatos de cada capa y en el diccionario. ' + P6,
      REENTREGA + '; Diccionario de datos (v2)', 'Metadatos de cada capa', '', 'En revisión')
 fila('§7.1-c', 'El campo «sector riego» contiene sistemas o comités; validar la correspondencia con los sectores '
                '1–3.',
      'El campo registra el sistema u organización de riego que declaró el titular (Guanguilquí–Porotog, Guanguilquí, '
      'comités de Buena Esperanza y de Pitana Bajo, Porotog), no el sector 1–3.',
-     'Por ejecutar: el campo se renombra como «sistema de riego declarado» y se añade el campo «sector» (1–3) según '
+     'Propuesta: el campo se renombra como «sistema de riego declarado» y se añade el campo «sector» (1–3) según '
      'el catálogo de comunidades.', REENTREGA, 'Capa «predios_investigados»', '', 'En revisión')
 
 # ── 8. Producto 6 ───────────────────────────────────────────────────────────
@@ -259,7 +264,7 @@ fila('C11', 'P declara 6.848 registros frente a 6.830 fichas de R y 5.987 filas 
             'personal reproducible.',
      'Aporte del catastro: la base contiene 6.830 fichas; la tabla de correspondencia ficha–titular–predio (código '
      'S-C-R-F y cédula) es la llave para conciliar el universo de productores. ' + P6,
-     PEND, PEND, PEND, 'Tabla de correspondencia (C04)', '')
+     PEND, PEND, PEND, '—', '')
 fila('C12', 'P reporta 6.880,42 ha; las áreas de cultivos en X suman 6.857,29 ha (−23,13 ha).',
      'La superficie de cultivos de la base es 6.880,37 ha, la misma del Producto 6 (diferencia de 0,05 ha por '
      'versión). La suma de 6.857,29 ha se obtiene del campo de texto «cultivos_predio» de X, que es un resumen '
@@ -282,7 +287,7 @@ fila('C14', '276 filas exceden la superficie declarada en más de 0,01 ha; 22 co
      'miden; 55 de ellos tienen varias fichas (herederos que declaran el mismo terreno). Otras causas: terreno '
      'arrendado fuera del predio y áreas estimadas en la entrevista. Se presenta además el área ajustada al predio '
      'como referencia, sin alterar lo declarado.',
-     'Ejecutada para las 11 comunidades. Por ejecutar: la misma tabla de excedentes por predio para el padrón '
+     'Ejecutada para las 11 comunidades. Propuesta: la misma tabla de excedentes por predio para el padrón '
      'completo. ' + P6, I11, 'Sección 4; hojas «Sembrado vs predio» y «Predios que exceden»', I11, 'En revisión')
 fila('C15', 'El cuadro comunitario suma 3.843 bovinos; los apartados 5 y 5.1 no están desarrollados.',
      'Aporte del catastro: la base registra los bovinos por categoría (vacas en producción, vacas secas, vaconas, '
@@ -292,7 +297,7 @@ fila('C16', 'Depuración por máximos no reproducible sin llave personal; 3.092 
      'Los 3.092 campos vacíos de X corresponden a predios cuyas fichas no tienen registros en la sección pecuaria. '
      'La base guarda un registro por especie, cantidad y ficha; con la tabla de correspondencia permite armar la '
      'matriz por productor, predio y categoría. ' + P6, PEND, 'GeoPackage, capa «animales»', '',
-     'Tabla de correspondencia (C04)', '')
+     '—', '')
 fila('C18', 'La caracterización no acredita por sí sola necesidades ni viabilidad del riego; respaldos de '
             'calendarios, parámetros, balance, clima, oferta y áreas regables.', P6, PEND, PEND, PEND, PEND, '')
 fila('§8-a', 'Contradicción de maíz en el sector alto: 0,00 ha en el cuadro sectorial frente a 13,94 ha en el '
@@ -309,7 +314,7 @@ fila('§9-a', 'Áreas de X: 8.093,34 ha catastrales; 7.988,75 declaradas; 6.170,
      'fichas sin polígono, la declarada es 7.992,88 ha (6.175,07 con riego y 1.817,81 sin riego). 8.093,34 ha es '
      'la superficie catastral: cada predio medido una vez por su polígono. Ninguna de ellas es área potencialmente '
      'regable.',
-     'Por ejecutar: definición de cada superficie, con su fuente y universo, en el diccionario de datos.',
+     'Propuesta: definición de cada superficie, con su fuente y universo, en el diccionario de datos.',
      'Diccionario de datos (v2)', 'Sección «Superficies»', '', 'En revisión')
 fila('§9-b', 'Versiones de superficie irrigada: análisis previo 6.143,98 ha; informe ampliado 6.170,95 ha.',
      'No son dos versiones sino dos mediciones de la misma base y corte: 6.143,98 ha es la superficie con riego '
@@ -340,9 +345,9 @@ fila('§4-3', 'Catastro geoespacial y alfanumérico (oficio 0047, p. 3).',
      'Entregado el 18-sep-2026: SHP, CAD (DXF), GeoPackage con proyecto QGIS, diccionario de datos, enlace al '
      'geovisor, memoria técnica, manual de uso y porcentaje de avance. Las diferencias señaladas se responden en '
      'C01–C10, C17 y la sección 9.',
-     'Por ejecutar: reentrega con tabla de relaciones ficha–titular–predio–polígono, código de ficha y de comunidad '
+     'Propuesta: reentrega con tabla de relaciones ficha–titular–predio–polígono, código de ficha y de comunidad '
      'en las capas, versión Excel con claves como texto, catálogo de comunidades y fecha de corte en los metadatos.',
-     REENTREGA, 'Carpeta 1 de la entrega', 'Inventario de la reentrega', 'En revisión')
+     REENTREGA, 'Carpeta 1 de la entrega', '—', 'En revisión')
 fila('§4-4', 'Estructura e índice del modelo de gestión (oficio 0047, p. 4).', SOC + ' Ver S07.', PEND, PEND,
      PEND, PEND, '')
 fila('§4-5', 'Socialización del proyecto de construcción (oficio 0047, p. 4).', SOC + ' Ver S08.', PEND, PEND,
@@ -357,13 +362,13 @@ fila('§11-a', 'Documentos finales del Producto 5 conforme a los TDR y al format
      PEND + ' Consorcio, catastro y componente social: reestructurar los documentos finales al índice de la Guía '
      'MAATE citada en los TDR.', PEND, PEND, PEND, PEND, '')
 fila('§11.1-b', 'Informes corregidos en formato editable y PDF, bases de cálculo, archivos geoespaciales y anexos, '
-                'con inventario.', 'Se entregará un inventario único de la reentrega, archivo por archivo, con el '
-     'código de observación que atiende cada uno. ' + ADM, PEND, PEND, PEND, 'Inventario de la reentrega', '')
+                'con inventario.', 'Propuesta del catastro: inventario único de la reentrega, archivo por archivo, '
+     'con el código de observación que atiende cada uno. ' + ADM, PEND, PEND, PEND, '—', '')
 fila('§11.1-c', 'Conciliación por sector y comunidad; tabla de relaciones ficha–usuario–predio–polígono; registro '
                 'de altas, bajas, reclasificaciones y cambios de superficie.',
      'La base conserva una bitácora fechada de cada depuración y respaldos de la versión anterior a cada '
      'corrección.',
-     'Por ejecutar: conciliación por comunidad (Anexo A1), tabla de relaciones y registro de altas, bajas, '
+     'Propuesta: conciliación por comunidad (Anexo A1), tabla de relaciones y registro de altas, bajas, '
      'reclasificaciones y cambios de superficie extraído de la bitácora de depuración.',
      'Registro de cambios (nuevo); ' + REENTREGA, '', E1, 'En revisión')
 fila('§11.1-e', 'Constancia de revisión conjunta y concordancia entre los Productos 5 y 6.',
@@ -372,10 +377,12 @@ fila('§11.1-e', 'Constancia de revisión conjunta y concordancia entre los Prod
 fila('§11.1-f', 'Cronograma de subsanación y planificación territorial.', ADM, PEND, PEND, PEND, PEND, '')
 fila('§11.1-g', 'Matriz de conciliación de las 50 comunidades contra los padrones certificados de cada '
                 'organización: usuarios, investigados, predios y pendientes, justificando cada diferencia.',
-     'Se cruzará por cédula cada padrón certificado contra la base: usuarios del padrón investigados y no '
+     'Se propone cruzar por cédula cada padrón certificado contra la base: usuarios del padrón investigados y no '
      'investigados, titulares investigados que no constan en el padrón y predios asociados, justificando cada '
-     'diferencia. El cuadro por comunidad del Anexo A1 es la base de esa matriz. ' + PEND +
-     ' Requiere los padrones certificados actualizados de cada organización.', PEND, PEND, PEND, E1, '')
+     'diferencia. El cuadro por comunidad del Anexo A1 es la base de esa matriz. Su ejecución está sujeta a la '
+     'entrega de los padrones certificados actualizados de cada organización y al alcance que se acuerde con la '
+     'Administración del Contrato.',
+     'Propuesta (ver respuesta).', '—', '—', E1, 'En revisión')
 fila('§11.1-h', 'Oficio 049 (caracterización edáfica): se atenderá con la documentación completa del Producto 6.',
      P6, PEND, PEND, PEND, PEND, '')
 
