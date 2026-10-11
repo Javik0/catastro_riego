@@ -53,7 +53,7 @@ E1 = 'Anexo A1 – Conciliación por comunidad'
 E2 = 'Anexo A2 – Fichas sin polígono'
 E3 = 'Anexo A3 – Claves catastrales y hoja de cálculo'
 E4 = 'Anexo A4 – Grupos de codificación'
-I11 = 'Informe 11 comunidades – riego y cultivos (Excel y PDF)'
+I11 = 'Informe 11 comunidades – riego, cultivos y pecuario (Excel y PDF)'
 REENTREGA = 'Base geoespacial del Producto 5, v2 (SHP, GeoPackage, CAD)'
 
 # (código, observación, respuesta, acción, documento, ubicación, evidencia, estado)
@@ -290,14 +290,19 @@ fila('C14', '276 filas exceden la superficie declarada en más de 0,01 ha; 22 co
      'Ejecutada para las 11 comunidades. Propuesta: la misma tabla de excedentes por predio para el padrón '
      'completo. ' + P6, I11, 'Sección 4; hojas «Sembrado vs predio» y «Predios que exceden»', I11, 'En revisión')
 fila('C15', 'El cuadro comunitario suma 3.843 bovinos; los apartados 5 y 5.1 no están desarrollados.',
-     'Aporte del catastro: la base registra los bovinos por categoría (vacas en producción, vacas secas, vaconas, '
-     'terneros, terneras, toretes y toros) en un registro por especie y ficha; para las once comunidades suman '
-     '4.055 cabezas. ' + P6, PEND, PEND, PEND, PEND, '')
+     'Aporte del catastro: la cifra de 3.843 bovinos se reproduce exactamente desde la base. Corresponde a los '
+     'bovinos contados sin duplicar por titular: cuando un titular declara sus animales en varias de sus fichas, '
+     'para cada categoría se toma el mayor valor entre ellas. Sumando todas las fichas, la base registra 4.055 '
+     'cabezas declaradas. El detalle por categoría (vacas en producción, vacas secas, vaconas, terneros, terneras, '
+     'toretes y toros) y por comunidad está en el informe de las once comunidades. ' + P6,
+     'Ejecutada (catastro): bovinos y demás especies por comunidad, con las dos cifras. ' + PEND,
+     I11, 'Sección 5; hojas «Bovinos por categoría» y «Detalle pecuario»', I11, '')
 fila('C16', 'Depuración por máximos no reproducible sin llave personal; 3.092 campos de animales vacíos.',
      'Los 3.092 campos vacíos de X corresponden a predios cuyas fichas no tienen registros en la sección pecuaria. '
-     'La base guarda un registro por especie, cantidad y ficha; con la tabla de correspondencia permite armar la '
-     'matriz por productor, predio y categoría. ' + P6, PEND, 'GeoPackage, capa «animales»', '',
-     '—', '')
+     'La depuración por máximos es reproducible con la cédula del titular como llave: el máximo por titular y '
+     'especie da exactamente las cifras del Producto 6 (ver C15). La base guarda un registro por especie, cantidad '
+     'y ficha, que permite armar la matriz por productor, predio y categoría. ' + P6, PEND,
+     'GeoPackage, capa «animales»', '', I11, '')
 fila('C18', 'La caracterización no acredita por sí sola necesidades ni viabilidad del riego; respaldos de '
             'calendarios, parámetros, balance, clima, oferta y áreas regables.', P6, PEND, PEND, PEND, PEND, '')
 fila('§8-a', 'Contradicción de maíz en el sector alto: 0,00 ha en el cuadro sectorial frente a 13,94 ha en el '
@@ -406,22 +411,6 @@ def orden(v):
 
 F.sort(key=orden)
 
-# ── escribir sobre el modelo ───────────────────────────────────────────────
-wb = openpyxl.load_workbook(MODELO)
-ws = wb.active
-ws.delete_rows(2, ws.max_row)                    # quita la fila de ejemplo
-fuente, ajuste = Font(name='Calibri', size=11), Alignment(wrap_text=True, vertical='top')
-for i, v in enumerate(F, 2):
-    for j, x in enumerate(v, 1):
-        c = ws.cell(i, j, x); c.font = fuente; c.alignment = ajuste
-        if isinstance(x, str) and PEND in x:
-            c.fill = AMARILLO
-    ws.cell(i, 1).font = Font(name='Calibri', size=11, bold=True)
-for col, w in zip('ABCDEFGH', [10, 38, 70, 45, 30, 28, 26, 13]):
-    ws.column_dimensions[col].width = w
-ws.freeze_panes = 'C2'
-ws.auto_filter.ref = f'A1:H{len(F) + 1}'
-
 # ── Anexo C09: fichas por comunidad en el resumen R y en la tabla X ────────
 import collections  # noqa: E402
 from comunidades_canon import canonica  # noqa: E402
@@ -444,30 +433,97 @@ idx = openpyxl.load_workbook(r'C:\Users\HP\OneDrive\Escritorio\FICHAS PDF POROTO
 for r in list(idx.worksheets[0].iter_rows(values_only=True))[1:]:
     if r[2]:
         R[_n(r[1])][0 if r[6] == 'Principal' else 1] += 1
-dif = [(c, R[c], X[c]) for c in sorted(set(R) | set(X)) if R[c] != X[c]]
-an = wb.create_sheet('Anexo C09')
-cab = ['Comunidad', 'R principales', 'R adicionales', 'X principales', 'X adicionales', 'Diferencia principales',
-       'Diferencia adicionales']
-for j, h in enumerate(cab, 1):
-    c = an.cell(1, j, h); c.font = Font(name='Calibri', size=11, bold=True); c.alignment = ajuste
-for i, (c, r, x) in enumerate(dif, 2):
-    for j, v in enumerate([c, r[0], r[1], x[0], x[1], f'=D{i}-B{i}', f'=E{i}-C{i}'], 1):
-        an.cell(i, j, v).font = fuente
-t = len(dif) + 2
-an.cell(t, 1, 'Total 25 comunidades').font = Font(name='Calibri', size=11, bold=True)
-for j in range(2, 8):
-    col = openpyxl.utils.get_column_letter(j)
-    an.cell(t, j, f'=SUM({col}2:{col}{t - 1})').font = Font(name='Calibri', size=11, bold=True)
-an.cell(t + 2, 1, 'R: resumen de fichas (una fila por ficha). X: capa predios_investigados (una fila por predio, '
-                  'asignado a la comunidad de su primera ficha). La diferencia neta es −9 fichas principales: las '
-                  '9 fichas sin polígono (C09).').font = Font(name='Calibri', size=10, italic=True)
-an.column_dimensions['A'].width = 32
-for col in 'BCDEFG':
-    an.column_dimensions[col].width = 14
-assert len(dif) == 25, len(dif)
+DIF = [(c, R[c], X[c]) for c in sorted(set(R) | set(X)) if R[c] != X[c]]
+assert len(DIF) == 25, len(DIF)
 
-wb.calculation.fullCalcOnLoad = True
-wb.save(SALIDA)
-aplicar_formatos(SALIDA)
+fuente, ajuste = Font(name='Calibri', size=11), Alignment(wrap_text=True, vertical='top')
+
+
+def anexo_c09(wb):
+    an = wb.create_sheet('Anexo C09')
+    cab = ['Comunidad', 'R principales', 'R adicionales', 'X principales', 'X adicionales',
+           'Diferencia principales', 'Diferencia adicionales']
+    for j, h in enumerate(cab, 1):
+        c = an.cell(1, j, h); c.font = Font(name='Calibri', size=11, bold=True); c.alignment = ajuste
+    for i, (c, r, x) in enumerate(DIF, 2):
+        for j, v in enumerate([c, r[0], r[1], x[0], x[1], f'=D{i}-B{i}', f'=E{i}-C{i}'], 1):
+            an.cell(i, j, v).font = fuente
+    t = len(DIF) + 2
+    an.cell(t, 1, 'Total 25 comunidades').font = Font(name='Calibri', size=11, bold=True)
+    for j in range(2, 8):
+        col = openpyxl.utils.get_column_letter(j)
+        an.cell(t, j, f'=SUM({col}2:{col}{t - 1})').font = Font(name='Calibri', size=11, bold=True)
+    an.cell(t + 2, 1, 'R: resumen de fichas (una fila por ficha). X: capa predios_investigados (una fila por '
+                      'predio, asignado a la comunidad de su primera ficha). La diferencia neta es −9 fichas '
+                      'principales: las 9 fichas sin polígono (C09).').font = Font(name='Calibri', size=10,
+                                                                                    italic=True)
+    an.column_dimensions['A'].width = 32
+    for col in 'BCDEFG':
+        an.column_dimensions[col].width = 14
+
+
+def escribir(filas, salida):
+    """Escribe las filas sobre una copia del modelo, con la hoja «Anexo C09»."""
+    wb = openpyxl.load_workbook(MODELO)
+    ws = wb.active
+    ws.delete_rows(2, ws.max_row)                    # quita la fila de ejemplo
+    for i, v in enumerate(filas, 2):
+        for j, x in enumerate(v, 1):
+            c = ws.cell(i, j, x); c.font = fuente; c.alignment = ajuste
+            if isinstance(x, str) and PEND in x:
+                c.fill = AMARILLO
+        ws.cell(i, 1).font = Font(name='Calibri', size=11, bold=True)
+    for col, w in zip('ABCDEFGH', [10, 38, 70, 45, 30, 28, 26, 22]):
+        ws.column_dimensions[col].width = w
+    ws.freeze_panes = 'C2'
+    ws.auto_filter.ref = f'A1:H{len(filas) + 1}'
+    anexo_c09(wb)
+    wb.calculation.fullCalcOnLoad = True
+    wb.save(salida)
+    aplicar_formatos(salida)
+
+
+# ── 1. Matriz completa (todas las observaciones) ───────────────────────────
+escribir(F, SALIDA)
 print('OK', SALIDA, '|', len(F), 'observaciones |', sum(1 for v in F if any(PEND in str(x) for x in v)),
       'con celdas por completar')
+
+# ── 2. Versión solo del componente catastral (pedido de Armando, 11-oct) ───
+# Para mostrar al consorcio qué está atendido por el catastro. El estado usa el
+# término del propio informe (11.2: «atendida»). Donde la respuesta está
+# completa pero queda un ajuste de forma en la base entregada, se dice: ese
+# ajuste va en la reentrega y no se presenta como hecho.
+SALIDA_CAT = os.path.join(CARPETA, 'matriz_respuesta_octubre2026 - CATASTRO (atendido).xlsx')
+AJUSTE = 'Atendida; ajuste de la entrega en la reentrega'
+ESTADO_CAT = {
+    'Gral.': 'Abierta: identificación de los dos documentos',
+    'C01': 'Atendida', 'C02': 'Atendida', 'C06': 'Atendida', 'C08': 'Atendida',
+    'C03': AJUSTE, 'C07': AJUSTE, 'C09': AJUSTE, 'C10': AJUSTE, 'C17': AJUSTE,
+    'C04': 'Atendida; 116 cédulas en verificación de campo',
+    'C05': 'Atendida; el porcentaje predial depende de §11.1-g',
+    '§4-3': AJUSTE, '§7.1-a': 'Atendida; por confirmar si se requiere .mpk', '§7.1-b': AJUSTE, '§7.1-c': AJUSTE,
+    '§9-a': AJUSTE, '§9-b': 'Atendida', '§9-c': 'Atendida', '§9-d': 'Atendida',
+    '§11.1-c': AJUSTE,
+    '§11.1-g': 'Pendiente de insumo: padrones certificados',
+}
+GRAL_CAT = ('Esta versión reúne solo las observaciones del componente catastral (secciones 6, 7 y 9, y los '
+            'puntos 4-3, 7.1, 11.1-c y 11.1-g). Las del componente social, del Producto 6 y de la administración '
+            'del contrato se responden en la matriz completa. ')
+cat = []
+for v in F:
+    if v[0] not in ESTADO_CAT:
+        continue
+    v = list(v)
+    v[7] = ESTADO_CAT[v[0]]
+    if v[0] == 'Gral.':
+        v[2] = GRAL_CAT + v[2]
+    if v[0] == '§7.1-a':
+        v[3] = v[3].replace(PEND + ' Confirmar si se genera además el .mpk.',
+                            'Se confirma con la Administración si se requiere además el .mpk.')
+    # lo que le toca a otro componente no va en la versión del catastro
+    v = [x.replace(' ' + P6, '').replace(P6, '') if isinstance(x, str) else x for x in v]
+    assert not any(PEND in str(x) for x in v), v[0]
+    cat.append(v)
+assert len(cat) == len(ESTADO_CAT), (len(cat), len(ESTADO_CAT))
+escribir(cat, SALIDA_CAT)
+print('OK', SALIDA_CAT, '|', len(cat), 'observaciones del catastro')

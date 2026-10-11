@@ -26,6 +26,13 @@ De dónde sale cada dato
   Cebolla, Flores, Papa y Otros. «Otros» incluye bosque, monte y baldío para
   que el total sea el área declarada completa; su detalle va en una hoja aparte.
 
+* Producción pecuaria (11-oct-2026): `animales.json`, por grupo de especie y
+  bovinos por categoría, con dos cifras: cabezas declaradas (suma de fichas) y
+  sin duplicar por titular (mayor valor por titular y especie entre sus fichas,
+  el criterio del análisis agrícola: 3.843 bovinos). El detalle de «Otros»
+  (truchas, patos…) se lee de la base de QField en solo lectura; las truchas
+  van aparte.
+
 Uso:  python -X utf8 scripts/generar_informe_11_comunidades.py
 """
 import collections
@@ -52,7 +59,7 @@ BASE = os.path.abspath(os.path.join(AQUI, '..'))
 GEO = os.path.join(BASE, 'public', 'geo')
 ESCRITORIO = r'C:\Users\HP\OneDrive\Escritorio'
 MEMBRETE = os.path.join(ESCRITORIO, 'CAYAMBE CATASTRO RIEGO', 'membrete.docx')
-NOMBRE = 'INFORME 11 COMUNIDADES - riego y cultivos'
+NOMBRE = 'INFORME 11 COMUNIDADES - riego, cultivos y pecuario'
 XLSX = os.path.join(ESCRITORIO, NOMBRE + '.xlsx')
 DOCX = os.path.join(ESCRITORIO, NOMBRE + '.docx')
 
@@ -71,6 +78,30 @@ COMUNIDADES = [
     ('Avellaneda', 'AVELLANEDA', 'Nombre oficial: Eliot Avellaneda.'),
 ]
 PREDIOS_DISTINTOS = 0   # lo fija calcular()
+
+# ── Producción pecuaria (pedido de Armando, 11-oct-2026) ───────────────────
+# «Otros» trae el detalle en especie_otro, que el JSON publicado no lleva: se
+# lee de la base de QField en solo lectura. Las truchas van aparte (dos
+# registros suman 4.100 y distorsionarían cualquier total de cabezas).
+QFIELD_GPKG = r'C:\Users\HP\QField\cloud\porotog_levantamiento_offline\data.gpkg'
+BOVINOS = ['Vacas en producción', 'Vacas secas', 'Vaconas', 'Terneros', 'Terneras', 'Toretes', 'Toros']
+GRUPOS_PEC = [
+    ('Bovinos', BOVINOS),
+    ('Ovinos y caprinos', ['Ovejas / Cabras']),
+    ('Porcinos', ['Porcino (Chanchos)']),
+    ('Cuyes y conejos', ['Cuyes / Conejos']),
+    ('Aves', ['Gallinas de campo', 'Gallinas ponedoras', 'Pollos de engorde', 'Patos', 'Gansos', 'Palomas']),
+    ('Equinos', ['Equinos']),
+    ('Peces (truchas)', ['Truchas']),
+    ('Otros', []),
+]
+
+
+def grupo_pec(especie):
+    for g, lista in GRUPOS_PEC:
+        if especie in lista:
+            return g
+    return 'Otros'
 CLASES = ['Pasto', 'Cebolla', 'Flores', 'Papa', 'Otros']
 A_CLASE = {'Pasto no mejorado': 'Pasto', 'Pasto mejorado': 'Pasto', 'Cebolla': 'Cebolla',
            'Flores': 'Flores', 'Patrones de flores': 'Flores', 'Papas': 'Papa'}
@@ -89,6 +120,60 @@ def cargar():
     with io.open(os.path.join(GEO, 'codificacion_fichas.json'), encoding='utf-8') as f:
         codigo = json.load(f)['fichas']
     return fichas, sup, cultivos, area_predio, codigo
+
+
+def _detalle_otros():
+    """id_animal -> especie_otro, de la base de QField (solo lectura)."""
+    import sqlite3
+    try:
+        con = sqlite3.connect('file:' + QFIELD_GPKG.replace('\\', '/') + '?mode=ro', uri=True)
+        t = next(r[0] for r in con.execute(
+            "select name from sqlite_master where type='table' and name like 'Animales_Especies%'"))
+        d = {i: (o or '').strip() for i, o in con.execute(f'select id_animal, especie_otro from "{t}"')}
+        con.close()
+        return d
+    except Exception as e:  # sin la base de QField, «Otros» queda sin detalle
+        print('⚠ Sin detalle de «Otros» en animales:', e)
+        return {}
+
+
+def pecuario(fichas):
+    """Cabezas por comunidad y especie, de dos formas:
+    - declaradas: suma de lo registrado en todas las fichas;
+    - sin duplicar por titular: un titular que declara sus animales en varias de
+      sus fichas cuenta una sola vez por especie, con el mayor valor entre ellas.
+      Es el criterio del análisis agrícola (da sus 3.843 bovinos)."""
+    with io.open(os.path.join(GEO, 'animales.json'), encoding='utf-8') as f:
+        animales = json.load(f)
+    ficha = {p['id']: p for p in fichas}
+    nombres = {c for _, c, _ in COMUNIDADES}
+    det = _detalle_otros()
+
+    def especie(a):
+        e = a.get('especie') or 'Sin especie'
+        if e == 'Otros':
+            o = det.get(a.get('id_animal'), '')
+            return o.capitalize() if o else 'Otros sin detalle'
+        return e
+
+    decl = collections.defaultdict(lambda: collections.defaultdict(int))
+    mayor = {}                                    # (titular, especie) -> (cabezas, comunidad)
+    for a in animales:
+        p = ficha.get(a['ficha_id'])
+        com = (p.get('comunidad') or '').strip() if p else None
+        if com not in nombres:
+            continue
+        e, n = especie(a), a.get('cantidad') or 0
+        decl[com][e] += n
+        tit = (p.get('cedula') or '').strip() or 'NOM:{} {}'.format(p.get('apellidos') or '', p.get('nombres') or '')
+        if (tit, e) not in mayor or n > mayor[(tit, e)][0]:
+            mayor[(tit, e)] = (n, com)
+    dep = collections.defaultdict(lambda: collections.defaultdict(int))
+    for (_, e), (n, com) in mayor.items():
+        dep[com][e] += n
+    orden_g = [g for g, _ in GRUPOS_PEC]
+    especies = sorted({e for c in decl.values() for e in c}, key=lambda e: (orden_g.index(grupo_pec(e)), e))
+    return dict(decl=decl, dep=dep, especies=especies)
 
 
 def clave_de(p):
@@ -206,7 +291,7 @@ def _titulo(ws, t, sub):
     ws.sheet_view.showGridLines = False
 
 
-def excel(filas, otros, exceden):
+def excel(filas, otros, exceden, pec):
     wb = openpyxl.Workbook()
     corte = f'Datos al {FECHA_CORTE}. Fuente: padrón de usuarios de riego Guanguilquí–Porotog.'
 
@@ -322,6 +407,65 @@ def excel(filas, otros, exceden):
         c = _c(ws, i, 7, ', '.join(e['codigos'])); c.alignment = Alignment(wrap_text=True, vertical='top')
     ws.auto_filter.ref = f'A4:G{4 + len(exceden)}'; ws.freeze_panes = 'A5'
 
+    # 7. Pecuario por comunidad (grupos, cabezas declaradas)
+    grupos = [g for g, _ in GRUPOS_PEC if any(grupo_pec(e) == g for e in pec['especies'])]
+    ws = wb.create_sheet('Pecuario por comunidad')
+    _titulo(ws, 'Producción pecuaria por comunidad (cabezas declaradas)', corte + ' Suma de lo registrado en las '
+            'fichas. La hoja «Detalle pecuario» trae además las cabezas sin duplicar por titular.')
+    _cab(ws, 4, ['Comunidad'] + grupos + ['Total sin peces'], [22] + [12] * len(grupos) + [14])
+    for i, x in enumerate(filas, 5):
+        _c(ws, i, 1, x['etiqueta'], bold=True)
+        d = pec['decl'][x['com']]
+        for j, g in enumerate(grupos, 2):
+            _c(ws, i, j, sum(v for e, v in d.items() if grupo_pec(e) == g), ENT)
+        cols = [openpyxl.utils.get_column_letter(j) for j, g in enumerate(grupos, 2) if g != 'Peces (truchas)']
+        _c(ws, i, 2 + len(grupos), '=' + '+'.join(f'{c}{i}' for c in cols), ENT, True)
+    t = 5 + len(filas)
+    _c(ws, t, 1, 'Total 11 comunidades', bold=True, fill=TOTAL)
+    for j in range(2, 3 + len(grupos)):
+        col = openpyxl.utils.get_column_letter(j)
+        _c(ws, t, j, f'=SUM({col}5:{col}{t - 1})', ENT, True, TOTAL)
+    ws.cell(t + 2, 1, 'Las truchas se muestran aparte y no entran en el total de cabezas: dos registros de criadero '
+                      'suman la mayor parte.').font = Font(name=F, italic=True, size=9)
+    ws.freeze_panes = 'B5'
+
+    # 8. Bovinos por categoría y comunidad
+    ws = wb.create_sheet('Bovinos por categoría')
+    _titulo(ws, 'Bovinos por categoría y comunidad (cabezas)', corte)
+    _cab(ws, 4, ['Comunidad'] + BOVINOS + ['Total declarado', 'Sin duplicar por titular'],
+         [22] + [11] * len(BOVINOS) + [12, 14])
+    for i, x in enumerate(filas, 5):
+        _c(ws, i, 1, x['etiqueta'], bold=True)
+        for j, b in enumerate(BOVINOS, 2):
+            _c(ws, i, j, pec['decl'][x['com']].get(b, 0), ENT)
+        ult = openpyxl.utils.get_column_letter(1 + len(BOVINOS))
+        _c(ws, i, 2 + len(BOVINOS), f'=SUM(B{i}:{ult}{i})', ENT, True)
+        _c(ws, i, 3 + len(BOVINOS), sum(pec['dep'][x['com']].get(b, 0) for b in BOVINOS), ENT)
+    t = 5 + len(filas)
+    _c(ws, t, 1, 'Total 11 comunidades', bold=True, fill=TOTAL)
+    for j in range(2, 4 + len(BOVINOS)):
+        col = openpyxl.utils.get_column_letter(j)
+        _c(ws, t, j, f'=SUM({col}5:{col}{t - 1})', ENT, True, TOTAL)
+    for k, n_ in enumerate([
+            'Total declarado: suma de lo registrado en todas las fichas.',
+            'Sin duplicar por titular: si un titular declara sus animales en varias de sus fichas, cuenta una sola '
+            'vez por categoría, con el mayor valor entre ellas. Es el criterio del análisis agrícola del Producto 6.'],
+            t + 2):
+        ws.cell(k, 1, n_).font = Font(name=F, italic=True, size=9)
+    ws.freeze_panes = 'B5'
+
+    # 9. Detalle pecuario por especie
+    ws = wb.create_sheet('Detalle pecuario')
+    _titulo(ws, 'Detalle por especie (11 comunidades)', corte)
+    _cab(ws, 4, ['Grupo', 'Especie o categoría', 'Cabezas declaradas', 'Sin duplicar por titular'], [20, 26, 16, 16])
+    for i, e in enumerate(pec['especies'], 5):
+        _c(ws, i, 1, grupo_pec(e)); _c(ws, i, 2, e)
+        _c(ws, i, 3, sum(pec['decl'][c].get(e, 0) for c in pec['decl']), ENT)
+        _c(ws, i, 4, sum(pec['dep'][c].get(e, 0) for c in pec['dep']), ENT)
+    t = 5 + len(pec['especies'])
+    _c(ws, t, 1, 'Total', bold=True, fill=TOTAL); _c(ws, t, 2, '', fill=TOTAL)
+    _c(ws, t, 3, f'=SUM(C5:C{t - 1})', ENT, True, TOTAL); _c(ws, t, 4, f'=SUM(D5:D{t - 1})', ENT, True, TOTAL)
+
     wb.calculation.fullCalcOnLoad = True
     wb.save(XLSX)
     aplicar_formatos(XLSX)
@@ -372,7 +516,7 @@ def _tabla(doc, cab, filas, anchos, total=None):
     doc.add_paragraph().paragraph_format.space_after = Pt(2)
 
 
-def word(filas, otros, exceden):
+def word(filas, otros, exceden, pec):
     doc = Document(MEMBRETE)
     for p in list(doc.paragraphs):
         p._element.getparent().remove(p._element)
@@ -380,14 +524,15 @@ def word(filas, otros, exceden):
     sem = {k: sum(x['clases'][k] for x in filas) for k in CLASES}
     tot_sem = sum(sem.values())
 
-    _par(doc, 'Superficie con riego, sin riego y área sembrada', True, 16, AZUL_W, despues=2)
+    _par(doc, 'Superficie con riego, área sembrada y producción pecuaria', True, 16, AZUL_W, despues=2)
     _par(doc, 'Once comunidades del sistema Porotog · datos al ' + FECHA_CORTE, tam=10, cursiva=True,
          color=RGBColor(0x59, 0x59, 0x59), despues=10)
     _par(doc, f"Este informe reúne {esn(tot('principales') + tot('adicionales'))} fichas "
               f"({esn(tot('principales'))} principales y {esn(tot('adicionales'))} adicionales) de once "
               f"comunidades: {', '.join(x['etiqueta'] for x in filas[:-1])} y {filas[-1]['etiqueta']}. "
               f"Presenta dos mediciones que conviene leer por separado: la superficie catastral, con su parte "
-              f"con riego y sin riego, y el área sembrada que declararon los titulares en sus fichas.")
+              f"con riego y sin riego, y el área sembrada que declararon los titulares en sus fichas. Cierra con la "
+              f"producción pecuaria declarada.")
 
     _par(doc, '1. Superficie con riego y sin riego', True, 12, AZUL_W, antes=8)
     _par(doc, 'Superficie catastral: cada predio cuenta una sola vez, aunque varios herederos hayan declarado su '
@@ -437,6 +582,34 @@ def word(filas, otros, exceden):
               'una referencia de cuánto de eso cabe en los predios; el detalle de cada predio está en el Excel.',
          tam=9.5, cursiva=True, antes=4)
 
+    # 5. Producción pecuaria
+    grupos = [g for g, _ in GRUPOS_PEC if any(grupo_pec(e) == g for e in pec['especies'])]
+    gd = {g: sum(v for c in pec['decl'].values() for e, v in c.items() if grupo_pec(e) == g) for g in grupos}
+    gs = {g: sum(v for c in pec['dep'].values() for e, v in c.items() if grupo_pec(e) == g) for g in grupos}
+    sin_peces = [g for g in grupos if g != 'Peces (truchas)']
+    _par(doc, '5. Producción pecuaria', True, 12, AZUL_W, antes=8)
+    _par(doc, 'Un mismo titular puede declarar sus animales en más de una de sus fichas (la principal y las '
+              'adicionales). Por eso se presentan dos cifras: las cabezas declaradas, que suman todas las fichas, y '
+              'las cabezas sin duplicar por titular, que cuentan a cada titular una sola vez por especie con el '
+              'mayor valor entre sus fichas. La segunda es el criterio del análisis agrícola.', tam=10)
+    _tabla(doc, ['Grupo', 'Cabezas declaradas', 'Sin duplicar por titular'],
+           [[g, esn(gd[g]), esn(gs[g])] for g in sin_peces], [5.5, 4, 4.5],
+           total=['Total', esn(sum(gd[g] for g in sin_peces)), esn(sum(gs[g] for g in sin_peces))])
+    if 'Peces (truchas)' in grupos:
+        _par(doc, f"Además se declararon {esn(gd['Peces (truchas)'])} truchas en criaderos; se muestran aparte "
+                  f"porque no son cabezas de ganado y distorsionarían los totales.", tam=9.5, cursiva=True)
+    _par(doc, 'Bovinos por comunidad (cabezas declaradas)', True, 10.5, antes=6, despues=4)
+    cortos = ['Vacas en prod.', 'Vacas secas', 'Vaconas', 'Terneros', 'Terneras', 'Toretes', 'Toros']
+    bov_tot = {b: sum(pec['decl'][x['com']].get(b, 0) for x in filas) for b in BOVINOS}
+    _tabla(doc, ['Comunidad'] + cortos + ['Total'],
+           [[x['etiqueta']] + [esn(pec['decl'][x['com']].get(b, 0)) for b in BOVINOS]
+            + [esn(sum(pec['decl'][x['com']].get(b, 0) for b in BOVINOS))] for x in filas],
+           [3.2, 1.7, 1.5, 1.5, 1.6, 1.6, 1.5, 1.4, 1.7],
+           total=['Total'] + [esn(bov_tot[b]) for b in BOVINOS] + [esn(sum(bov_tot.values()))])
+    _par(doc, f"Sin duplicar por titular, los bovinos de las once comunidades son {esn(gs['Bovinos'])} cabezas, "
+              f"la misma cifra del análisis agrícola. El detalle por especie y por comunidad está en el Excel.",
+         tam=9.5, cursiva=True)
+
     _par(doc, 'Para leer bien estas cifras', True, 11, AZUL_W, antes=8)
     principales_otros = ', '.join(k.lower() for k, _ in sorted(otros.items(), key=lambda kv: -kv[1])[:6]
                                   if not k.startswith('('))
@@ -455,8 +628,12 @@ def word(filas, otros, exceden):
 def main():
     fichas, sup, cultivos, area_predio, codigo = cargar()
     filas, otros, exceden = calcular(fichas, sup, cultivos, area_predio, codigo)
-    excel(filas, otros, exceden)
-    word(filas, otros, exceden)
+    pec = pecuario(fichas)
+    bd = sum(c.get(b, 0) for c in pec['decl'].values() for b in BOVINOS)
+    bs = sum(c.get(b, 0) for c in pec['dep'].values() for b in BOVINOS)
+    print(f'Bovinos: {bd} declarados · {bs} sin duplicar por titular · especies: {len(pec["especies"])}')
+    excel(filas, otros, exceden, pec)
+    word(filas, otros, exceden, pec)
     print(f"Sembrada ajustada al predio {sum(x['ajustada'] for x in filas):.2f} ha · predios que exceden "
           f"más de 10 %: {len(exceden)} ({sum(1 for e in exceden if len(e['codigos']) > 1)} con varias fichas)")
     sem = sum(sum(x['clases'].values()) for x in filas)
