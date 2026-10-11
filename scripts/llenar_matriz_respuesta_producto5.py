@@ -146,8 +146,8 @@ fila('C03', '4.165 − 453 = 3.712 frente a 3.681 comuneros declarados; las fila
      'Se definen tres universos separados: (1) fichas: 6.830 (4.307 principales y 2.523 adicionales); (2) '
      'titulares únicos: 3.961 cédulas distintas entre las fichas principales (63 fichas principales sin cédula '
      'registrada), en proceso de verificación de cédulas; (3) predios: 5.987 predios catastrales con al menos una '
-     'ficha. Los listados de las 50 comunidades registran 3.681 comuneros; su conciliación por cédula se presenta '
-     'en la matriz de las 50 comunidades (§11.1-g).',
+     'ficha. Los listados de las 50 comunidades registran 3.681 comuneros; conciliarlos por cédula requiere los '
+     'padrones certificados de cada organización (§11.1-g).',
      'Propuesta: incorporar la definición de los tres universos en el diccionario de datos.',
      'Diccionario de datos (v2)', 'Sección «Universos»', E1, 'En revisión')
 fila('C04', '4.218 grupos S-C-R, 128 con varias principales y 138 sin principal; identificación coincidente con '
@@ -167,8 +167,8 @@ fila('C05', 'Se declara 100 % sin universo predial conciliado; 6.830 fichas y 5.
             'equivalentes. Presentar universo total, levantados, pendientes, fórmula, corte y respaldo.',
      'El documento «Porcentaje de avance y fecha de corte» expresa el 100 % sobre las propiedades declaradas por '
      'los comuneros y advierte que no existe un universo predial de referencia. Se acoge la observación: se propone '
-     'expresar el avance por universo definido (fichas, titulares y predios) y calcular el porcentaje predial con la '
-     'matriz de las 50 comunidades contra los padrones certificados (§11.1-g), con fórmula, corte y respaldo.',
+     'expresar el avance por universo definido (fichas, titulares y predios). El porcentaje sobre el total de '
+     'predios de los usuarios solo puede calcularse con los padrones certificados de cada organización (§11.1-g).',
      'Propuesta: reformular el documento «Porcentaje de avance y fecha de corte» (documento 6 de la entrega del '
      'Producto 5 del 18-sep-2026) sobre los universos definidos.',
      '«Porcentaje de avance y fecha de corte» (documento 6 de la entrega del 18-sep-2026), v2',
@@ -200,8 +200,8 @@ fila('C08', 'La diferencia entre fichas y comuneros se interpreta como nuevos us
      'ese es el cálculo, la resta compara fichas con una meta de planificación y no mide usuarios nuevos: una ficha '
      'no es un usuario (las 4.307 fichas principales corresponden a 3.961 cédulas distintas). La base no calcula '
      'un indicador de «nuevos usuarios».',
-     'Propuesta: no usar esa resta como indicador; medir los usuarios que no constan en el padrón certificado, por '
-     'cédula, en la matriz de las 50 comunidades (§11.1-g).',
+     'Propuesta: no usar esa resta como indicador. Los usuarios que no constan en un padrón solo pueden '
+     'identificarse con los padrones certificados de cada organización (§11.1-g).',
      '—', '—', E1, 'En revisión')
 fila('C09', 'R: 4.307 + 2.523 = 6.830 fichas. X: 4.298 + 2.523 = 6.821. Diferencia de 9 principales y de tipo en '
             '25 comunidades.',
@@ -384,12 +384,9 @@ fila('§11.1-e', 'Constancia de revisión conjunta y concordancia entre los Prod
 fila('§11.1-f', 'Cronograma de subsanación y planificación territorial.', ADM, PEND, PEND, PEND, PEND, '')
 fila('§11.1-g', 'Matriz de conciliación de las 50 comunidades contra los padrones certificados de cada '
                 'organización: usuarios, investigados, predios y pendientes, justificando cada diferencia.',
-     'Se propone cruzar por cédula cada padrón certificado contra la base: usuarios del padrón investigados y no '
-     'investigados, titulares investigados que no constan en el padrón y predios asociados, justificando cada '
-     'diferencia. El cuadro por comunidad del Anexo A1 es la base de esa matriz. Su ejecución está sujeta a la '
-     'entrega de los padrones certificados actualizados de cada organización y al alcance que se acuerde con la '
-     'Administración del Contrato.',
-     'Propuesta (ver respuesta).', '—', '—', E1, 'En revisión')
+     'La Consultora no dispone de padrones de usuarios certificados por las organizaciones. Para elaborar esta '
+     'matriz se requiere que la Administración del Contrato o las propias organizaciones remitan esos padrones.',
+     'Ninguna mientras no se reciban los padrones certificados.', '—', '—', '—', 'Abierta')
 fila('§11.1-h', 'Oficio 049 (caracterización edáfica): se atenderá con la documentación completa del Producto 6.',
      P6, PEND, PEND, PEND, PEND, '')
 
@@ -420,20 +417,20 @@ SIN_CODIGO = ('OBSERVACIONES SIN CÓDIGO — El informe también plantea requeri
               'y una letra (por ejemplo, 7.1-a).')
 TITULOS = [
     ('Gral.', 'DOCUMENTOS DE REFERENCIA CITADOS EN EL INFORME'),
-    ('S', 'SECCIÓN 5 DEL INFORME — Expediente social (códigos S01 a S08). Responde el componente social.'),
-    ('C6', 'SECCIÓN 6 DEL INFORME — Observaciones catastrales: agregación y universo (códigos C01 a C06). '
+    ('S', 'SECCIÓN 5 DEL INFORME (pág. 3) — Expediente social (códigos S01 a S08). Responde el componente social.'),
+    ('C6', 'SECCIÓN 6 DEL INFORME (pág. 4) — Observaciones catastrales: agregación y universo (códigos C01 a C06). '
            'Responde el catastro.'),
-    ('C7', 'SECCIÓN 7 DEL INFORME — Observaciones catastrales: conciliación y vínculos (códigos C07 a C10 y C17). '
+    ('C7', 'SECCIÓN 7 DEL INFORME (pág. 5) — Observaciones catastrales: conciliación y vínculos (códigos C07 a C10 y C17). '
            'Responde el catastro.'),
-    ('C8', 'SECCIÓN 8 DEL INFORME — Articulación con el Producto 6 (códigos C11 a C16 y C18). Responde el '
+    ('C8', 'SECCIÓN 8 DEL INFORME (pág. 6) — Articulación con el Producto 6 (códigos C11 a C16 y C18). Responde el '
            'agrónomo, con aporte del catastro.'),
-    ('§4-', 'SECCIÓN 4 — Los cinco avances que pidió el oficio 0047.'),
-    ('§4.1-', 'SECCIÓN 4.1 — Condiciones transversales. Responde la administración del contrato.'),
-    ('§7.1-', 'SECCIÓN 7.1 — Archivos y documentación de revisión obligatoria (SHP, CAD, geovisor, corte). '
+    ('§4-', 'SECCIÓN 4 DEL INFORME (pág. 2), cuadro «Contraste de los cinco avances solicitados» — Los cinco avances que pidió el oficio 0047.'),
+    ('§4.1-', 'SECCIÓN 4.1 DEL INFORME (pág. 2) — Condiciones transversales. Responde la administración del contrato.'),
+    ('§7.1-', 'SECCIÓN 7.1 DEL INFORME (pág. 5) — Archivos y documentación de revisión obligatoria (SHP, CAD, geovisor, corte). '
               'Responde el catastro.'),
-    ('§8-', 'SECCIÓN 8 — Otros puntos del Producto 6. Responde el agrónomo.'),
-    ('§9-', 'SECCIÓN 9 — Superficies y precisión de los resultados. Responde el catastro.'),
-    ('§11', 'SECCIÓN 11 — Recomendaciones y contenido de la respuesta.'),
+    ('§8-', 'SECCIÓN 8 DEL INFORME (pág. 6), párrafos al pie del cuadro — Otros puntos del Producto 6. Responde el agrónomo.'),
+    ('§9-', 'SECCIÓN 9 DEL INFORME (pág. 7), cuadro «Superficies y precisión de los resultados» — Responde el catastro.'),
+    ('§11', 'SECCIONES 11 Y 11.1 DEL INFORME (págs. 8 y 9) — Recomendaciones y contenido de la respuesta.'),
 ]
 NUM_SECC = {'§4-': '4', '§4.1-': '4.1', '§7.1-': '7.1', '§8-': '8', '§9-': '9', '§11': '11'}
 
@@ -502,7 +499,7 @@ def anexo_c09(wb):
         an.column_dimensions[col].width = 14
 
 
-def escribir(filas, salida):
+def escribir(filas, salida, leyenda):
     """Escribe las filas sobre una copia del modelo, con la hoja «Anexo C09»."""
     wb = openpyxl.load_workbook(MODELO)
     ws = wb.active
@@ -520,6 +517,8 @@ def escribir(filas, salida):
         ws.row_dimensions[i].height = 32 if len(texto) > 120 else 18
         i += 1
 
+    titulo(leyenda)
+    ws.row_dimensions[i - 1].height = 62
     for v in filas:
         sec = clave_seccion(v[0])
         if sec != previa:
@@ -548,7 +547,13 @@ def escribir(filas, salida):
 
 
 # ── 1. Matriz completa (todas las observaciones) ───────────────────────────
-escribir(F, SALIDA)
+LEER = ('CÓMO LEER ESTA MATRIZ — «Respuesta»: la explicación técnica, ya hecha con la base y sus anexos. '
+        '«Acción ejecutada»: «Ejecutada» = ya está hecho y va en los anexos; «Propuesta» = corrección de los archivos '
+        'entregados que la Consultora propone y que TODAVÍA NO se ha hecho: se hará en la reentrega, según el '
+        'cronograma que se acuerde. ')
+escribir(F, SALIDA, LEER + '«Estado»: «Cerrada» = aclaración sin acción pendiente; «En revisión» = respondida, con '
+         'una propuesta pendiente. Las celdas en amarillo las completa otro responsable (componente social, '
+         'Producto 6 o administración del contrato).')
 print('OK', SALIDA, '|', len(F), 'observaciones |', sum(1 for v in F if any(PEND in str(x) for x in v)),
       'con celdas por completar')
 
@@ -564,7 +569,7 @@ ESTADO_CAT = {
     'C01': 'Atendida', 'C02': 'Atendida', 'C06': 'Atendida', 'C08': 'Atendida',
     'C03': AJUSTE, 'C07': AJUSTE, 'C09': AJUSTE, 'C10': AJUSTE, 'C17': AJUSTE,
     'C04': 'Atendida; 116 cédulas en verificación de campo',
-    'C05': 'Atendida; el porcentaje predial depende de la matriz de las 50 comunidades (§11.1-g)',
+    'C05': 'Atendida; el porcentaje predial requiere los padrones certificados (§11.1-g)',
     '§4-3': AJUSTE, '§7.1-a': 'Atendida; por confirmar si se requiere .mpk', '§7.1-b': AJUSTE, '§7.1-c': AJUSTE,
     '§9-a': AJUSTE, '§9-b': 'Atendida', '§9-c': 'Atendida', '§9-d': 'Atendida',
     '§11.1-c': AJUSTE,
@@ -589,5 +594,6 @@ for v in F:
     assert not any(PEND in str(x) for x in v), v[0]
     cat.append(v)
 assert len(cat) == len(ESTADO_CAT), (len(cat), len(ESTADO_CAT))
-escribir(cat, SALIDA_CAT)
+escribir(cat, SALIDA_CAT, LEER + '«Estado»: «Atendida» = respondida y respaldada; «ajuste de la entrega en la '
+         'reentrega» = respondida, falta corregir el archivo ya entregado.')
 print('OK', SALIDA_CAT, '|', len(cat), 'observaciones del catastro')
