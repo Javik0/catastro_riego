@@ -169,7 +169,9 @@ fila('C05', 'Se declara 100 % sin universo predial conciliado; 6.830 fichas y 5.
      'los comuneros y advierte que no existe un universo predial de referencia. Se acoge la observación: se propone '
      'expresar el avance por universo definido (fichas, titulares y predios) y calcular el porcentaje predial con la '
      'matriz de las 50 comunidades contra los padrones certificados (§11.1-g), con fórmula, corte y respaldo.',
-     'Propuesta: documento 6 reformulado.', 'Documento 6 – Porcentaje de avance y fecha de corte (v2)',
+     'Propuesta: reformular el documento «Porcentaje de avance y fecha de corte» (documento 6 de la entrega del '
+     'Producto 5 del 18-sep-2026) sobre los universos definidos.',
+     '«Porcentaje de avance y fecha de corte» (documento 6 de la entrega del 18-sep-2026), v2',
      'Sección «Avance sobre el universo»', E1, 'En revisión')
 fila('C06', 'Fechas de ejecución anteriores al inicio declarado: Sector 2, 8/06 frente a 10/06; Rosalía, 10/06 '
             'frente a 15/06. Separar programación y ejecución.',
