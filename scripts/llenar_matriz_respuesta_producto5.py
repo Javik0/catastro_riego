@@ -406,9 +406,47 @@ def orden(v):
     if c.startswith('S'):
         return (1, 0, c)
     if c.startswith('C'):
-        return (2, int(c[1:]), '')
+        return (2, 10.5 if c == 'C17' else int(c[1:]), '')   # C17 es de la sección 7, va tras C10
     pref = max((p for p in SECC if c.startswith(p)), key=len)
     return (3, SECC.index(pref), c)
+
+
+# Títulos por sección (pedido de Armando, 11-oct: «¿a qué se refieren las demás
+# respuestas?»). El informe trae observaciones con código (S, C) y otras escritas
+# en el texto de sus secciones, sin código; estas se identifican con el número
+# de sección y una letra.
+SIN_CODIGO = ('OBSERVACIONES SIN CÓDIGO — El informe también plantea requerimientos en el texto de sus secciones '
+              '{}, sin asignarles código. Deben responderse igual; aquí se identifican con el número de sección '
+              'y una letra (por ejemplo, 7.1-a).')
+TITULOS = [
+    ('Gral.', 'DOCUMENTOS DE REFERENCIA CITADOS EN EL INFORME'),
+    ('S', 'SECCIÓN 5 DEL INFORME — Expediente social (códigos S01 a S08). Responde el componente social.'),
+    ('C6', 'SECCIÓN 6 DEL INFORME — Observaciones catastrales: agregación y universo (códigos C01 a C06). '
+           'Responde el catastro.'),
+    ('C7', 'SECCIÓN 7 DEL INFORME — Observaciones catastrales: conciliación y vínculos (códigos C07 a C10 y C17). '
+           'Responde el catastro.'),
+    ('C8', 'SECCIÓN 8 DEL INFORME — Articulación con el Producto 6 (códigos C11 a C16 y C18). Responde el '
+           'agrónomo, con aporte del catastro.'),
+    ('§4-', 'SECCIÓN 4 — Los cinco avances que pidió el oficio 0047.'),
+    ('§4.1-', 'SECCIÓN 4.1 — Condiciones transversales. Responde la administración del contrato.'),
+    ('§7.1-', 'SECCIÓN 7.1 — Archivos y documentación de revisión obligatoria (SHP, CAD, geovisor, corte). '
+              'Responde el catastro.'),
+    ('§8-', 'SECCIÓN 8 — Otros puntos del Producto 6. Responde el agrónomo.'),
+    ('§9-', 'SECCIÓN 9 — Superficies y precisión de los resultados. Responde el catastro.'),
+    ('§11', 'SECCIÓN 11 — Recomendaciones y contenido de la respuesta.'),
+]
+NUM_SECC = {'§4-': '4', '§4.1-': '4.1', '§7.1-': '7.1', '§8-': '8', '§9-': '9', '§11': '11'}
+
+
+def clave_seccion(c):
+    if c == 'Gral.':
+        return 'Gral.'
+    if c.startswith('S'):
+        return 'S'
+    if c.startswith('C'):
+        n = 10.5 if c == 'C17' else int(c[1:])
+        return 'C6' if n <= 6 else ('C7' if n <= 10.5 else 'C8')
+    return max((p for p in NUM_SECC if c.startswith(p)), key=len)
 
 
 F.sort(key=orden)
@@ -469,16 +507,40 @@ def escribir(filas, salida):
     wb = openpyxl.load_workbook(MODELO)
     ws = wb.active
     ws.delete_rows(2, ws.max_row)                    # quita la fila de ejemplo
-    for i, v in enumerate(filas, 2):
+    titulos = dict(TITULOS)
+    sin_codigo = [NUM_SECC[k] for k in dict.fromkeys(clave_seccion(v[0]) for v in filas) if k in NUM_SECC]
+    titulo_fill = PatternFill('solid', fgColor='DDEBF7')
+    i, previa, aviso_sin_codigo = 2, None, False
+
+    def titulo(texto, tam=11):
+        nonlocal i
+        c = ws.cell(i, 1, texto)
+        c.font = Font(name='Calibri', size=tam, bold=True); c.alignment = ajuste; c.fill = titulo_fill
+        ws.merge_cells(start_row=i, start_column=1, end_row=i, end_column=8)
+        ws.row_dimensions[i].height = 32 if len(texto) > 120 else 18
+        i += 1
+
+    for v in filas:
+        sec = clave_seccion(v[0])
+        if sec != previa:
+            if sec in NUM_SECC and not aviso_sin_codigo:
+                titulo(SIN_CODIGO.format(', '.join(sin_codigo[:-1]) + ' y ' + sin_codigo[-1]
+                                         if len(sin_codigo) > 1 else sin_codigo[0]), 11)
+                aviso_sin_codigo = True
+            titulo(titulos[sec])
+            previa = sec
+        # «§» no se entiende fuera del equipo: en el código se quita y en el texto se dice «punto»
+        v = [v[0].replace('§', '')] + [x.replace('§', 'punto ') if isinstance(x, str) else x for x in v[1:]]
         for j, x in enumerate(v, 1):
             c = ws.cell(i, j, x); c.font = fuente; c.alignment = ajuste
             if isinstance(x, str) and PEND in x:
                 c.fill = AMARILLO
         ws.cell(i, 1).font = Font(name='Calibri', size=11, bold=True)
+        i += 1
     for col, w in zip('ABCDEFGH', [10, 38, 70, 45, 30, 28, 26, 22]):
         ws.column_dimensions[col].width = w
     ws.freeze_panes = 'C2'
-    ws.auto_filter.ref = f'A1:H{len(filas) + 1}'
+    ws.auto_filter.ref = f'A1:H{i - 1}'
     anexo_c09(wb)
     wb.calculation.fullCalcOnLoad = True
     wb.save(salida)
@@ -502,7 +564,7 @@ ESTADO_CAT = {
     'C01': 'Atendida', 'C02': 'Atendida', 'C06': 'Atendida', 'C08': 'Atendida',
     'C03': AJUSTE, 'C07': AJUSTE, 'C09': AJUSTE, 'C10': AJUSTE, 'C17': AJUSTE,
     'C04': 'Atendida; 116 cédulas en verificación de campo',
-    'C05': 'Atendida; el porcentaje predial depende de §11.1-g',
+    'C05': 'Atendida; el porcentaje predial depende de la matriz de las 50 comunidades (§11.1-g)',
     '§4-3': AJUSTE, '§7.1-a': 'Atendida; por confirmar si se requiere .mpk', '§7.1-b': AJUSTE, '§7.1-c': AJUSTE,
     '§9-a': AJUSTE, '§9-b': 'Atendida', '§9-c': 'Atendida', '§9-d': 'Atendida',
     '§11.1-c': AJUSTE,
