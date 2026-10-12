@@ -121,6 +121,17 @@ def _repetir_cabecera(t):
     trPr.append(marca)
 
 
+def _no_partir_filas(t):
+    """Ninguna fila se corta entre dos páginas: una fila partida deja la mitad
+    de un texto al pie y la otra mitad arriba, sin cabecera que la explique."""
+    from docx.oxml.ns import qn
+    from docx.oxml import OxmlElement
+    for fila in t.rows:
+        marca = OxmlElement('w:cantSplit')
+        marca.set(qn('w:val'), 'true')
+        fila._tr.get_or_add_trPr().append(marca)
+
+
 def _poner_tabla(doc, tabla):
     filas = tabla._cellvalues
     if not filas:
@@ -129,6 +140,7 @@ def _poner_tabla(doc, tabla):
     t.style = 'Table Grid'
     _aplicar_anchos(doc, t, getattr(tabla, '_colWidths', None))
     _repetir_cabecera(t)
+    _no_partir_filas(t)
     celdas = _celdas(t)
     for i, fila in enumerate(filas):
         for j, celda in enumerate(fila):
