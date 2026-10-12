@@ -369,10 +369,10 @@ def metadatos(con, resumen_cambios):
 # ── 4. SHP y proyecto QGIS ─────────────────────────────────────────────────
 def exportar_shp(gpkg):
     d = os.path.join(DESTINO, C_SHP)
-    leeme = [f for f in os.listdir(d) if f.lower().endswith('.pdf')]
+    # La guía de capas de la v1 nombra campos que cambiaron: la reemplaza el
+    # diccionario v2, que trae el nombre de cada campo en el Shapefile.
     for f in os.listdir(d):
-        if f not in leeme:
-            os.remove(os.path.join(d, f))
+        os.remove(os.path.join(d, f))
     con = sqlite3.connect(gpkg)
     capas = [r[0] for r in con.execute('select table_name from gpkg_contents')]
     con.close()
@@ -402,6 +402,8 @@ SHP_ALIAS = {
     'sistema_riego_declarado': 'SIST_RIEGO',
     'comunidad_oficial': 'COM_OFIC',
     'codigo_ficha_principal': 'COD_PRINC',
+    'telefono_celular': 'TEL_CEL',            # igual que en la v1
+    'telefono_casa': 'TEL_CASA',              # igual que en la v1
 }
 
 
@@ -473,6 +475,19 @@ def main():
     print('SHP exportados:', capas)
     ajustar_qgz()
     print('Excel:', excel(gpkg))
+    # fase C: documentos
+    import reentrega_documentos as rd
+    d_dic = os.path.join(DESTINO, '2 - DICCIONARIO DE DATOS')
+    for f in os.listdir(d_dic):
+        os.remove(os.path.join(d_dic, f))
+    pdf, xls, sin_desc = rd.diccionario_v2(gpkg, os.path.join(DESTINO, C_SHP), d_dic)
+    print('Diccionario v2:', os.path.basename(pdf), os.path.basename(xls), '| campos sin descripción:', sin_desc)
+    print('Nota C05:', rd.nota_avance(gpkg, os.path.join(DESTINO, '6 - PORCENTAJE DE AVANCE Y FECHA DE CORTE')))
+    frase = (f"{esn(tipos.get('Modificación', 0))} modificaciones de datos, {esn(tipos.get('Alta', 0))} "
+             f"alta y {esn(tipos.get('Baja', 0))} bajas de fichas")
+    print('Guía v2:', rd.guia_v2(DESTINO, frase))
+    inv, estados, retirados = rd.inventario(DESTINO, ENTREGA_V1)
+    print('Inventario:', dict(estados), '| sustituidos:', retirados)
     print('✔', DESTINO)
 
 

@@ -100,22 +100,21 @@ fila('S-adic.', 'Corregir fechas marzo/abril, encabezados de sector, nombres y h
                 'informes (sección 5).', SOC, PEND, PEND, PEND, PEND, '')
 
 # ── Documentos citados que no se pudieron identificar ───────────────────────
-NOTA_I = ('Las cifras observadas proceden del «informe catastral» (I), documento que la Consultora no ha podido '
-          'identificar (ver fila «Gral.»). ')
+# El «informe catastral» (I) es el informe remitido por la Consultora (lo
+# confirmó Armando el 11-oct-2026). Lo que no se identificó es el informe técnico
+# de revisión de la Prefectura.
+NOTA_I = ('Las cifras observadas proceden del informe catastral (I) remitido por la Consultora y no coinciden con '
+          'la base validada; se actualizan aquí con la base (corte 19-ago-2026). ')
 fila('Gral.', 'Documentos de referencia citados en el informe JAFG-2026-002.',
-     'El informe se apoya en dos documentos que la Consultora no ha podido identificar o de los que no dispone de '
-     'copia: (1) el «informe catastral» (referencia I), fuente de las cifras observadas en C01, C02, C03, C06 y C08. '
-     'No corresponde a los documentos del componente catastral entregados el 18-sep-2026 (base geoespacial, '
-     'diccionario de datos, enlace al geovisor, memoria técnica, manual de uso y porcentaje de avance), y varias de '
-     'sus cifras no coinciden con ninguna versión de la base validada. (2) El «Informe técnico integral de revisión '
-     'catastral y productiva» (Informe-Prefectura-Observaciones-oficio-048), del que proceden los códigos C01–C18 y '
-     'los hallazgos numéricos ampliados. Sin perjuicio de las respuestas de esta matriz, construidas desde la base '
-     'validada, se solicita identificar ambos documentos (título, fecha, autor y versión) o remitir copia, para '
-     'contrastar cada cifra con la misma fuente y cerrar las observaciones. Las acciones que esta matriz señala '
-     'como «Propuesta» constituyen la propuesta de subsanación de la Consultora y se ejecutarán según el cronograma '
-     'que se acuerde con la Administración del Contrato (§11.1-f).',
-     'Solicitud de identificación o copia de los dos documentos. Las acciones propuestas se ejecutan según el '
-     'cronograma de subsanación que se acuerde.', '—', '—', '—', 'Abierta')
+     'Las cifras de C01, C02, C03, C06 y C08 que el informe atribuye al «informe catastral» (referencia I) '
+     'corresponden al informe remitido por la Consultora; las respuestas de esta matriz las actualizan con la base '
+     'validada (corte 19-ago-2026) y la reentrega v2 de la base geoespacial. Los códigos C01–C18 y los hallazgos '
+     'numéricos ampliados proceden del «Informe técnico integral de revisión catastral y productiva» '
+     '(Informe-Prefectura-Observaciones-oficio-048), del que la Consultora no dispone de copia: se solicita '
+     'remitirlo para contrastar cada cifra con la misma fuente. Las acciones que esta matriz señala como '
+     '«Propuesta» constituyen la propuesta de subsanación de la Consultora y se ejecutarán según el cronograma que '
+     'se acuerde con la Administración del Contrato (§11.1-f).',
+     'Solicitud de copia del informe técnico de revisión.', '—', '—', '—', 'Abierta')
 
 # ── 6. Catastro: agregación y universo ─────────────────────────────────────
 fila('C01', 'Seis comunidades no concilian: La Libertad 155/153; San Antonio 182/185; San José 202/200; Milagro '
@@ -175,8 +174,8 @@ fila('C05', 'Se declara 100 % sin universo predial conciliado; 6.830 fichas y 5.
      'Sección «Avance sobre el universo»', E1, 'En revisión')
 fila('C06', 'Fechas de ejecución anteriores al inicio declarado: Sector 2, 8/06 frente a 10/06; Rosalía, 10/06 '
             'frente a 15/06. Separar programación y ejecución.',
-     'Las fechas 10/06 y 15/06 constan en el «informe catastral» (I), documento que la Consultora no ha podido '
-     'identificar (ver fila «Gral.»). Los registros de campo (fecha y hora de cada ficha) confirman la ejecución: '
+     'Las fechas 10/06 y 15/06 constan como inicio en el informe catastral (I) remitido por la Consultora. Los '
+     'registros de campo (fecha y hora de cada ficha) confirman la ejecución: '
      'el Sector 2 inició el 8-jun-2026 (Santa Rosa de Pingulmi y Comuna Izacata) y Rosalía el 10-jun-2026; las '
      'fechas 10/06 y 15/06 corresponden, por tanto, a la programación.',
      'Ejecutada: primera y última ficha registrada por comunidad, como respaldo de la ejecución efectiva.',
@@ -448,6 +447,64 @@ def clave_seccion(c):
 
 F.sort(key=orden)
 
+# ── Reentrega v2 (11-oct-2026): lo propuesto para el catastro ya está hecho ──
+# `armar_reentrega_producto5.py` arma la v2; aquí cada fila dice dónde está.
+RV2 = 'Reentrega v2 de la base (PRODUCTO 5 - REENTREGA v2)'
+EJECUTADO_V2 = {
+    'C03': ('Ejecutada: los tres universos (fichas, titulares únicos y predios) están definidos en el diccionario de '
+            'datos v2.', 'Diccionario de datos v2', 'Sección «Universos»', RV2 + ', carpeta 2'),
+    'C04': ('Ejecutada: tabla correspondencia_fichas (ficha – titular – predio – polígono) con marcas de revisión, y '
+            'códigos de ficha en la capa de predios. Ningún registro se elimina: los posibles registros duplicados y '
+            'las cédulas en verificación quedan marcados.', 'GeoPackage, Shapefile y Excel v2',
+            'Tabla correspondencia_fichas; campo codigos_ficha', RV2 + ', carpetas 1.1, 1.3 y 1.4'),
+    'C05': ('Ejecutada: nota aclaratoria sobre los universos del avance; el documento «Porcentaje de avance y fecha '
+            'de corte» se mantiene sin cambios.', 'Nota aclaratoria al porcentaje de avance', 'Carpeta 6',
+            RV2 + ', carpeta 6'),
+    'C07': ('Ejecutada: catálogo de las 50 comunidades, y código y nombre oficial de comunidad en las capas.',
+            'GeoPackage, Shapefile y Excel v2', 'Tabla catalogo_comunidades; campos codigo_comunidad y '
+            'comunidad_oficial', RV2 + ', carpetas 1.1, 1.3 y 1.4'),
+    'C08': ('Aclaración: la resta no se usa como indicador.', '—', '—', '—'),
+    'C09': ('Ejecutada: tabla fichas_sin_poligono con la causa de cada ficha, y conciliación por comunidad. '
+            'Pendiente: confirmar con el titular la clave de La Libertad.', 'GeoPackage, Shapefile y Excel v2',
+            'Tabla fichas_sin_poligono', E2 + '; ' + RV2),
+    'C10': ('Ejecutada: tablas en Excel con las claves como texto, códigos de ficha en la capa de predios y tabla de '
+            'correspondencia.', 'Excel v2 «TABLAS DE ATRIBUTOS v2»', 'Carpeta 1.4', E3 + '; ' + RV2 + ', carpeta 1.4'),
+    'C17': ('Ejecutada: en cultivos manda el tipo y el detalle va en cultivo_detalle (10 registros; el «500» es '
+            '«Pasto no mejorado»); versión Excel; dominios y vacíos de cada campo en el diccionario v2; registro de '
+            'cambios.', 'GeoPackage, Shapefile y Excel v2; Diccionario de datos v2',
+            'Tabla cultivos; diccionario, columna «Vacíos»', RV2),
+    '§4-3': ('Ejecutada: reentrega v2 de la base geoespacial con las tablas nuevas, el diccionario v2 y el inventario '
+             'de archivos.', 'Reentrega v2', 'Carpetas 0, 1, 2 y 6', RV2 + ' — «0 - QUE CAMBIA EN LA VERSION 2»'),
+    '§7.1-a': ('Ejecutada: reentrega v2 con inventario de archivos y Shapefile con todos los campos. El paquete de '
+               'mapa .mpk se genera en ArcGIS a partir del GeoPackage v2.', 'Reentrega v2',
+               'Carpeta 1; «0 - INVENTARIO DE ARCHIVOS»', RV2),
+    '§7.1-b': ('Ejecutada: fecha de corte y versión en las capas, tabla metadatos y diccionario v2.',
+               'GeoPackage, Shapefile y Excel v2', 'Campos fecha_corte y version; tabla metadatos', RV2),
+    '§7.1-c': ('Ejecutada: el campo pasa a «sistema_riego_declarado» y se añade «sector» (1–3) según el catálogo.',
+               'GeoPackage, Shapefile y Excel v2', 'Capa predios_investigados', RV2),
+    '§9-a': ('Ejecutada: definición de cada superficie, con su fuente y universo, en el diccionario v2.',
+             'Diccionario de datos v2', 'Sección «Superficies»', RV2 + ', carpeta 2'),
+    '§11.1-c': ('Ejecutada: conciliación por comunidad (Anexo A1), tabla de correspondencia y registro de cambios '
+                'ficha por ficha desde el 18-ago-2026.', 'GeoPackage, Shapefile y Excel v2',
+                'Tablas correspondencia_fichas y registro_cambios', E1 + '; ' + RV2),
+}
+ESTADO = {
+    'Gral.': 'Abierta: falta el informe técnico de revisión',
+    'C04': 'Atendida; 116 cédulas en verificación de campo',
+    'C05': 'Atendida; el porcentaje predial requiere los padrones certificados (§11.1-g)',
+    'C09': 'Atendida; una clave por confirmar con el titular',
+    '§7.1-a': 'Atendida; el .mpk se genera en ArcGIS',
+    '§11.1-g': 'Pendiente de insumo: padrones certificados',
+    'C13': 'Atendida (aporte del catastro)',
+}
+for v in F:
+    if v[0] in EJECUTADO_V2:
+        v[3], v[4], v[5], v[6] = EJECUTADO_V2[v[0]]
+    if v[0] in ESTADO:
+        v[7] = ESTADO[v[0]]
+    elif v[0] in EJECUTADO_V2 or v[0] in ('C01', 'C02', 'C06', '§9-b', '§9-c', '§9-d'):
+        v[7] = 'Atendida'
+
 # ── Anexo C09: fichas por comunidad en el resumen R y en la tabla X ────────
 import collections  # noqa: E402
 from comunidades_canon import canonica  # noqa: E402
@@ -548,12 +605,14 @@ def escribir(filas, salida, leyenda):
 
 # ── 1. Matriz completa (todas las observaciones) ───────────────────────────
 LEER = ('CÓMO LEER ESTA MATRIZ — «Respuesta»: la explicación técnica, ya hecha con la base y sus anexos. '
-        '«Acción ejecutada»: «Ejecutada» = ya está hecho y va en los anexos; «Propuesta» = corrección de los archivos '
-        'entregados que la Consultora propone y que TODAVÍA NO se ha hecho: se hará en la reentrega, según el '
-        'cronograma que se acuerde. ')
-escribir(F, SALIDA, LEER + '«Estado»: «Cerrada» = aclaración sin acción pendiente; «En revisión» = respondida, con '
-         'una propuesta pendiente. Las celdas en amarillo las completa otro responsable (componente social, '
-         'Producto 6 o administración del contrato).')
+        '«Acción ejecutada»: «Ejecutada» = ya está hecho y está en los anexos o en la reentrega v2 de la base; '
+        '«Propuesta» = acción que la Consultora propone y que TODAVÍA NO se ha hecho, según el cronograma que se '
+        'acuerde. ')
+ESTADOS_LEER = ('«Estado»: «Atendida» = respondida y, cuando correspondía, ejecutada en la reentrega v2; '
+                '«En revisión» = respondida, con una propuesta pendiente; «Abierta» o «Pendiente de insumo» = '
+                'depende de información de terceros. ')
+escribir(F, SALIDA, LEER + ESTADOS_LEER + 'Las celdas en amarillo las completa otro responsable (componente '
+         'social, Producto 6 o administración del contrato).')
 print('OK', SALIDA, '|', len(F), 'observaciones |', sum(1 for v in F if any(PEND in str(x) for x in v)),
       'con celdas por completar')
 
@@ -563,18 +622,10 @@ print('OK', SALIDA, '|', len(F), 'observaciones |', sum(1 for v in F if any(PEND
 # completa pero queda un ajuste de forma en la base entregada, se dice: ese
 # ajuste va en la reentrega y no se presenta como hecho.
 SALIDA_CAT = os.path.join(CARPETA, 'matriz_respuesta_octubre2026 - CATASTRO (atendido).xlsx')
-AJUSTE = 'Atendida; ajuste de la entrega en la reentrega'
-ESTADO_CAT = {
-    'Gral.': 'Abierta: identificación de los dos documentos',
-    'C01': 'Atendida', 'C02': 'Atendida', 'C06': 'Atendida', 'C08': 'Atendida',
-    'C03': AJUSTE, 'C07': AJUSTE, 'C09': AJUSTE, 'C10': AJUSTE, 'C17': AJUSTE,
-    'C04': 'Atendida; 116 cédulas en verificación de campo',
-    'C05': 'Atendida; el porcentaje predial requiere los padrones certificados (§11.1-g)',
-    '§4-3': AJUSTE, '§7.1-a': 'Atendida; por confirmar si se requiere .mpk', '§7.1-b': AJUSTE, '§7.1-c': AJUSTE,
-    '§9-a': AJUSTE, '§9-b': 'Atendida', '§9-c': 'Atendida', '§9-d': 'Atendida',
-    '§11.1-c': AJUSTE,
-    '§11.1-g': 'Pendiente de insumo: padrones certificados',
-}
+# Filas del componente catastral; el estado ya viene puesto arriba (reentrega v2).
+ESTADO_CAT = dict.fromkeys(['Gral.', 'C01', 'C02', 'C03', 'C04', 'C05', 'C06', 'C07', 'C08', 'C09', 'C10', 'C17',
+                            '§4-3', '§7.1-a', '§7.1-b', '§7.1-c', '§9-a', '§9-b', '§9-c', '§9-d', '§11.1-c',
+                            '§11.1-g'])
 GRAL_CAT = ('Esta versión reúne solo las observaciones del componente catastral (secciones 6, 7 y 9, y los '
             'puntos 4-3, 7.1, 11.1-c y 11.1-g). Las del componente social, del Producto 6 y de la administración '
             'del contrato se responden en la matriz completa. ')
@@ -583,17 +634,12 @@ for v in F:
     if v[0] not in ESTADO_CAT:
         continue
     v = list(v)
-    v[7] = ESTADO_CAT[v[0]]
     if v[0] == 'Gral.':
         v[2] = GRAL_CAT + v[2]
-    if v[0] == '§7.1-a':
-        v[3] = v[3].replace(PEND + ' Confirmar si se genera además el .mpk.',
-                            'Se confirma con la Administración si se requiere además el .mpk.')
     # lo que le toca a otro componente no va en la versión del catastro
     v = [x.replace(' ' + P6, '').replace(P6, '') if isinstance(x, str) else x for x in v]
     assert not any(PEND in str(x) for x in v), v[0]
     cat.append(v)
 assert len(cat) == len(ESTADO_CAT), (len(cat), len(ESTADO_CAT))
-escribir(cat, SALIDA_CAT, LEER + '«Estado»: «Atendida» = respondida y respaldada; «ajuste de la entrega en la '
-         'reentrega» = respondida, falta corregir el archivo ya entregado.')
+escribir(cat, SALIDA_CAT, LEER + ESTADOS_LEER)
 print('OK', SALIDA_CAT, '|', len(cat), 'observaciones del catastro')
