@@ -29,6 +29,9 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from excel_compat import aplicar_formatos  # noqa: E402
 from informe_estilo import esn  # noqa: E402
+import cedulas_declaradas  # noqa: E402
+
+CD = cedulas_declaradas.conteo()   # las 116 cédulas conservadas según lo declarado
 
 CARPETA = os.path.join(r'C:\Users\HP\OneDrive\Escritorio\CAYAMBE CATASTRO RIEGO', 'CONTRATO Y FISCALIZACION',
                        'RESPUESTA OBSERVACIONES PRODUCTO 5')
@@ -107,7 +110,8 @@ NOTA_I = ('Las cifras observadas proceden del informe catastral (I) remitido por
           'la base validada; se actualizan aquí con la base (corte 19-ago-2026). ')
 fila('Gral.', 'Documentos de referencia citados en el informe JAFG-2026-002.',
      'Las cifras de C01, C02, C03, C06 y C08 que el informe atribuye al «informe catastral» (referencia I) '
-     'corresponden al informe remitido por la Consultora; las respuestas de esta matriz las actualizan con la base '
+     'corresponden al informe remitido por la Consultora («Informe Producto 5. Componente social: catastro '
+     'socioeconómico y productivo predial», 15-sep-2026); las respuestas de esta matriz las actualizan con la base '
      'validada (corte 19-ago-2026) y la reentrega v2 de la base geoespacial. Los códigos C01–C18 y los hallazgos '
      'numéricos ampliados proceden del «Informe técnico integral de revisión catastral y productiva» '
      '(Informe-Prefectura-Observaciones-oficio-048), del que la Consultora no dispone de copia: se solicita '
@@ -125,26 +129,31 @@ fila('C01', 'Seis comunidades no concilian: La Libertad 155/153; San Antonio 182
      'los valores 155, 202 y 80 no aparecen en ninguna, y 182 corresponde a una versión intermedia del 18-ago-2026, '
      'previa al cierre de la depuración.',
      'Ejecutada: cuadro de conciliación por comunidad generado desde la base, con subtotales y totales por fórmula, '
-     'para reemplazar los cuadros del documento citado una vez identificado.',
+     'para corregir las tablas 4 a 7 del informe catastral (I).',
      'Cuadro de conciliación por comunidad (Anexo A1)', 'Hoja «Anexo A1 Comunidades»', E1, 'En revisión')
 fila('C02', 'Sector 2: detalle 1.726/518 frente a subtotal 1.728/516. Otón 153 + 16 = 169 frente a 193. Las '
             'columnas suman 6.806 y las filas 6.830.',
      NOTA_I + 'La base registra en el Sector 2 1.728 fichas principales y 516 adicionales (2.244), igual al '
-     'subtotal citado; el detalle de filas del informe catastral es el que no suma. En Pueblo de Otón las 40 fichas '
+     'subtotal citado; el detalle de filas del informe catastral es el que no suma: Alpaka figura con 490 '
+     'principales y 2 adicionales, y en la base son 492 principales y ninguna adicional. En Pueblo de Otón las 40 fichas '
      'adicionales constan en el resumen R y en la base, y todas las versiones de la base desde el 15-ago-2026 '
      'registran 193 fichas: 153 + 40 = 193 es el valor correcto. Total del padrón: 4.307 + 2.523 = 6.830 fichas.',
      'Ejecutada: subtotales y totales por sector regenerados desde la base, con fórmulas, para reemplazar las '
-     'tablas 5 y 6 del documento citado una vez identificado.',
+     'tablas 5 y 6 del informe catastral (I).',
      'Cuadro de conciliación por comunidad (Anexo A1)', 'Anexo A1, bloque «Subtotales por sector»', E1,
      'En revisión')
 fila('C03', '4.165 − 453 = 3.712 frente a 3.681 comuneros declarados; las filas finales suman 3.664. Fijar '
             'universo de usuarios únicos, distinto del de fichas y predios.',
-     NOTA_I + 'De la operación citada, el valor 453 coincide con la meta de planificación de la comunidad San '
-     'Vicente de Guayllabamba, que figura en el listado de comunidades pero no tiene fichas en el padrón; los '
-     'valores 4.165 y 3.664 no se pudieron identificar. '
+     NOTA_I + 'En el informe catastral, 4.165 es la suma de los comuneros de las tablas de programación de los '
+     'tres sectores (1.786 + 1.031 + 1.348), que incluyen a San Vicente de Guayllabamba (453 miembros), comunidad '
+     'que usa el agua solo para consumo humano y no tiene fichas en el padrón; 3.664 es la suma de las filas de las '
+     'tablas de resumen (1.769 + 1.031 + 864). Las diferencias provienen de cuatro comunidades con distinto número '
+     'de comuneros en la programación y en el resumen: Milagro (52 y 38), Asociación 17 de junio (35 y 32), Hernán '
+     'Timpe (17 y 1) y Hacienda San Francisco (16 y 1); las dos últimas explican los 31 comuneros que separan 3.712 '
+     'de 3.681. El número de comuneros proviene de los listados de cada comunidad, no de la base del catastro. '
      'Se definen tres universos separados: (1) fichas: 6.830 (4.307 principales y 2.523 adicionales); (2) '
      'titulares únicos: 3.961 cédulas distintas entre las fichas principales (63 fichas principales sin cédula '
-     'registrada), en proceso de verificación de cédulas; (3) predios: 5.987 predios catastrales con al menos una '
+     'registrada; la identificación se conserva como la declaró cada titular, ver C04); (3) predios: 5.987 predios catastrales con al menos una '
      'ficha. Los listados de las 50 comunidades registran 3.681 comuneros; conciliarlos por cédula requiere los '
      'padrones certificados de cada organización (§11.1-g).',
      'Propuesta: incorporar la definición de los tres universos en el diccionario de datos.',
@@ -157,8 +166,16 @@ fila('C04', '4.218 grupos S-C-R, 128 con varias principales y 138 sin principal;
      'ficha principal está en otra comunidad; 32 adicionales sin cédula. Grupos con varias principales (128): 96 '
      'titulares con fichas principales sobre predios distintos; 25 cédulas compartidas entre familiares; 7 predios '
      'con dos fichas principales del mismo titular. Las identidades se contrastaron con el catastro municipal y el '
-     'dígito verificador: de 627 fichas con observación de cédula, 511 quedan resueltas en oficina y 116 se '
-     'verifican en campo.',
+     'dígito verificador: de 627 fichas con observación de cédula, 511 quedan resueltas en oficina. Las '
+     f'{sum(CD.values())} restantes conservan la identificación tal como la declaró el titular en las reuniones '
+     'comunitarias o en la visita al predio, según el listado de cada comunidad: '
+     f'{CD["organizacion"]} corresponden a organizaciones (comunidades, comités, una junta de agua, una iglesia y '
+     'empresas), a las que no aplica la cédula y cuyo RUC no fue proporcionado o está incompleto; '
+     f'{CD["no_valida"]} a cédulas declaradas que no superan el dígito verificador; {CD["repetida"]} a cédulas que '
+     'constan en más de una ficha principal y que no se pudieron atribuir a un mismo titular; y '
+     f'{CD["sin_cedula"]} a titulares que no la proporcionaron. Quedan marcadas en la tabla de correspondencia sin '
+     'alterar el dato declarado; su conciliación definitiva corresponde a los padrones certificados de cada '
+     'organización (§11.1-g).',
      'Propuesta: tabla de correspondencia ficha–titular–predio–polígono con las reglas de codificación. Ningún '
      'registro se elimina; las correcciones de identidad se aplican con registro de cambios.',
      'Tabla de correspondencia (nueva); ' + REENTREGA, 'Capa «fichas», campo de código', E4, 'En revisión')
@@ -194,11 +211,12 @@ fila('C07', 'Variantes de denominación (Izacata/Izacata Grande, Avellaneda/Elio
      'Catálogo de comunidades (nuevo); ' + REENTREGA, 'Todas las capas, campos de comunidad', E1, 'En revisión')
 fila('C08', 'La diferencia entre fichas y comuneros se interpreta como nuevos usuarios: 1.624 reportado; '
             '3.410 − 1.769 = 1.641.',
-     NOTA_I + 'La operación coincide con el Sector 1: 3.410 son sus fichas (1.790 principales y 1.620 '
-     'adicionales) y 1.769 se aproxima a la meta de comuneros planificados del Sector 1 en el sistema (1.768). Si '
-     'ese es el cálculo, la resta compara fichas con una meta de planificación y no mide usuarios nuevos: una ficha '
-     'no es un usuario (las 4.307 fichas principales corresponden a 3.961 cédulas distintas). La base no calcula '
-     'un indicador de «nuevos usuarios».',
+     NOTA_I + 'La operación corresponde a la tabla del Sector 1 del informe catastral: 3.410 son sus fichas '
+     '(1.790 principales y 1.620 adicionales); 1.786 es el total de comuneros que indica la tabla, igual al de '
+     'la programación, y 1.769 es la suma de sus filas. La diferencia de 17 se debe a Milagro (52 comuneros en la '
+     'programación y 38 en el resumen) y a la Asociación 17 de junio (35 y 32). En cualquier caso, la resta compara '
+     'fichas con comuneros y no mide usuarios nuevos: una ficha no es un usuario (las 4.307 fichas principales '
+     'corresponden a 3.961 cédulas distintas). La base no calcula un indicador de «nuevos usuarios».',
      'Propuesta: no usar esa resta como indicador. Los usuarios que no constan en un padrón solo pueden '
      'identificarse con los padrones certificados de cada organización (§11.1-g).',
      '—', '—', E1, 'En revisión')
@@ -455,7 +473,7 @@ EJECUTADO_V2 = {
             'datos v2.', 'Diccionario de datos v2', 'Sección «Universos»', RV2 + ', carpeta 2'),
     'C04': ('Ejecutada: tabla correspondencia_fichas (ficha – titular – predio – polígono) con marcas de revisión, y '
             'códigos de ficha en la capa de predios. Ningún registro se elimina: los posibles registros duplicados y '
-            'las cédulas en verificación quedan marcados.', 'GeoPackage, Shapefile y Excel v2',
+            'las cédulas conservadas según lo declarado quedan marcados.', 'GeoPackage, Shapefile y Excel v2',
             'Tabla correspondencia_fichas; campo codigos_ficha', RV2 + ', carpetas 1.1, 1.3 y 1.4'),
     'C05': ('Ejecutada: nota aclaratoria sobre los universos del avance; el documento «Porcentaje de avance y fecha '
             'de corte» se mantiene sin cambios.', 'Nota aclaratoria al porcentaje de avance', 'Carpeta 6',
@@ -490,7 +508,6 @@ EJECUTADO_V2 = {
 }
 ESTADO = {
     'Gral.': 'Abierta: falta el informe técnico de revisión',
-    'C04': 'Atendida; 116 cédulas en verificación de campo',
     'C05': 'Atendida; el porcentaje predial requiere los padrones certificados (§11.1-g)',
     'C09': 'Atendida; una clave por confirmar con el titular',
     '§7.1-a': 'Atendida; el .mpk se genera en ArcGIS',
