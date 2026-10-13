@@ -235,16 +235,9 @@ def tablas_nuevas(con, cat):
         if f[2] == 'Ficha principal':
             grupos[(n(f'{f[4]} {f[5]}'), (f[10] or '').strip(), (f[12] or '')[:10], f[13])].append(f[1])
     dup = {c: g for g in grupos.values() if len(g) > 1 for c in g}
-    # cédulas en verificación de campo (solicitud del 4-oct, lo que no se resolvió en oficina)
-    en_campo = set()
-    vf = os.path.join(RAIZ, 'CONTRATO Y FISCALIZACION', 'RESPUESTA OBSERVACIONES PRODUCTO 5',
-                      'VERIFICACIONES EN OFICINA (7-oct-2026).xlsx')
-    if os.path.exists(vf):
-        import openpyxl
-        ws = openpyxl.load_workbook(vf, read_only=True)['Solicitud 4-oct']
-        for r in ws.iter_rows(min_row=5, values_only=True):
-            if r[0] and 'requiere campo' in str(r[5] or ''):
-                en_campo.add(r[0])
+    # cédulas que se conservan según lo declarado (las 116 que la oficina no resolvió; ver cedulas_declaradas)
+    import cedulas_declaradas as cd
+    declaradas = cd.leer()
     filas, sinpol = [], []
     for (fid, cod, tipo, madre, ape, nom, ced, ccom, cofi, sec, clave, obs, fecha, area) in fichas:
         tiene = 'Sí' if (clave or '').strip() in claves_pol else 'No'
@@ -260,8 +253,8 @@ def tablas_nuevas(con, cat):
             otros = [c for c in dup[cod] if c != cod]
             marca.append('Posible registro duplicado de la misma entrevista (igual a ' + ', '.join(otros)
                          + '); se conserva')
-        if cod in en_campo:
-            marca.append('Cédula en verificación de campo')
+        if cod in declaradas:
+            marca.append(cd.MARCA[declaradas[cod]] + cd.SUFIJO_MARCA)
         filas.append((cod, fid, tipo, cod_de.get(madre, ''), f'{ape or ""} {nom or ""}'.strip(), ced, ccom, cofi,
                       sec, clave, tiene, '; '.join(marca)))
     crear_tabla(con, 'correspondencia_fichas',
@@ -285,7 +278,7 @@ def tablas_nuevas(con, cat):
                 [(c['codigo'], c['num'], c['oficial'], c['datos'], c['sector'], fpc.get(c['codigo'], 0),
                   ppc.get(c['codigo'], 0)) for c in sorted(cat.values(), key=lambda c: c['num'])],
                 'Catálogo de las 50 comunidades: código único, nombre oficial y nombre usado en la base.')
-    return len(filas), len(sinpol), len(dup), len(en_campo & set(cod_de.values()))
+    return len(filas), len(sinpol), len(dup), len(set(declaradas) & set(cod_de.values()))
 
 
 def registro_cambios(con):
@@ -465,7 +458,7 @@ def main():
           f'cambió además del formato: {textos} · predios sin comunidad de catálogo: {sin_com}')
     nf, nsp, ndup, ncampo = tablas_nuevas(con, cat)
     print(f'Correspondencia: {nf} fichas · sin polígono: {nsp} · duplicados marcados: {ndup} · '
-          f'cédulas en campo marcadas: {ncampo}')
+          f'cédulas según lo declarado marcadas: {ncampo}')
     tipos, campos = registro_cambios(con)
     res = ', '.join(f'{k}: {esn(v)}' for k, v in tipos.items())
     print('Registro de cambios:', dict(tipos), dict(campos))

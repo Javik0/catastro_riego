@@ -147,6 +147,13 @@ def _poner_tabla(doc, tabla):
             if j >= len(celdas[i]):
                 continue
             p = celdas[i][j].paragraphs[0]
+            # La celda heredaría el estilo Normal de la plantilla (justificado e
+            # interlineado amplio): en columnas angostas abre huecos entre las
+            # palabras y alarga las tablas al doble de páginas.
+            p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+            p.paragraph_format.space_before = Pt(0)
+            p.paragraph_format.space_after = Pt(0)
+            p.paragraph_format.line_spacing = 1.0
             r = p.add_run(_texto_celda(celda))
             r.font.size = Pt(8.5)
             r.font.name = 'Calibri'

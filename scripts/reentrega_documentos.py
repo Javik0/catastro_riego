@@ -81,8 +81,9 @@ DESC_V2 = {
         'sector': 'Sector de investigación (Sector 1, 2 o 3).',
         'clave_catastral': 'Clave catastral del predio de la ficha.',
         'tiene_poligono': 'Sí, si el predio está en el catastro del cantón Cayambe; No, en caso contrario.',
-        'marcas_revision': 'Revisiones en curso: ficha sin polígono y su causa, posible registro duplicado de la misma '
-                           'entrevista o cédula en verificación de campo. Vacío = sin observación.',
+        'marcas_revision': 'Observaciones de la ficha: sin polígono y su causa, posible registro duplicado de la '
+                           'misma entrevista, o cédula conservada según lo declarado por el titular (organización, '
+                           'cédula que no valida, repetida o no proporcionada). Vacío = sin observación.',
     },
     'fichas_sin_poligono': {
         'codigo_ficha': 'Código único de la ficha.', 'titular': 'Titular de la ficha.',
@@ -178,7 +179,8 @@ def _tabla_universos(u):
          '(otros predios del mismo titular).'],
         ['Titulares únicos', esn(u['cedulas']),
          f"Cédulas distintas entre las fichas principales. {esn(u['sin_cedula'])} fichas principales no registran "
-         'cédula; la verificación de cédulas está en curso.'],
+         'cédula. La identificación se conserva como la declaró cada titular; su conciliación definitiva '
+         'corresponde a los padrones certificados de cada organización.'],
         ['Predios', esn(u['predios']),
          f"Predios del catastro del cantón con al menos una ficha ({esn(u['cat_ha'], 2)} ha catastrales). Un predio "
          'puede tener varias fichas.'],
@@ -360,7 +362,7 @@ def guia_v2(destino, cambios):
     h += titulo_seccion('Lo que no cambia')
     h += [Paragraph('Las fichas, los predios, las geometrías, las superficies, los cultivos y los animales son los '
                     'mismos de la versión 1. No se eliminó ni se fusionó ningún registro: los posibles registros '
-                    'duplicados y las cédulas en verificación quedan marcados en la tabla de correspondencia. El '
+                    'duplicados y las cédulas conservadas según lo declarado quedan marcados en la tabla de correspondencia. El '
                     'formato CAD, la memoria técnica, el manual y el enlace a la plataforma no cambian.', st['p'])]
     h += titulo_seccion('Registro de cambios')
     h += [Paragraph(f'Desde el 18 de agosto de 2026 la base registra {cambios}. El detalle, ficha por ficha y con '
