@@ -94,37 +94,16 @@ function useLocalData() {
             }
           }
 
-          // Cambio de comunidad solicitado por técnicos (de Milagro a San José) para regantes específicos
-          const ced = (f.properties.cedula || '').trim();
-          const clav = (f.properties.clave_catastral || '').trim();
-          const cidsToSanJose = [
-            '1711308682', '1717858011', '1716464753', '1715022719', 
-            '1722217930', '1707701726', '1714912233', '1712437407', '1707701700',
-            '1708098619', '1715377154'
-          ];
-          const clavesToSanJose = [
-            '1702520560029', '1702520560018', '1702520560013', '1702520560004',
-            '1702520560048', '1702520550007', '1702520980102', '1702520560039', '1702520980069',
-            '1702520560058', '1702521400047', '170251400047'
-          ];
-
-          if (cidsToSanJose.includes(ced) || clavesToSanJose.includes(clav)) {
-            com = 'SAN JOSÉ';
-          }
-
-          const cidsToLaLibertad = ['1715033013', '1708546179', '1711492486', '1718241027', '1721253639', '1711492148', '1711589687'];
-          const clavesToLaLibertad = ['1702520540066', '1702520530014', '1702521020084', '1702520690010', '1702521100076', '1702520540014', '1702521020030'];
-
-          if (cidsToLaLibertad.includes(ced) || clavesToLaLibertad.includes(clav)) {
-            com = 'LA LIBERTAD';
-          }
-
-          const cidsToSanAntonio = ['1709870602'];
-          const clavesToSanAntonio = ['1702520680118'];
-
-          if (cidsToSanAntonio.includes(ced) || clavesToSanAntonio.includes(clav)) {
-            com = 'SAN ANTONIO';
-          }
+          // Aquí había listas fijas de cédulas y claves que cambiaban la comunidad
+          // de ciertas fichas a San José, La Libertad o San Antonio. Se retiraron
+          // el 13-oct-2026: la base (QField) ya incorpora esos cambios
+          // (scripts/depurar_gpkg_fisico.py), y las 4 fichas que seguían distintas
+          // se dejan en su comunidad original por decisión de Armando. Dos de ellas
+          // las movía la lista por error: una cédula compartida entre dos personas
+          // y un segundo predio en otra comunidad. Con las listas, la web mostraba
+          // La Libertad 155 frente a 153 en la base y en lo entregado (observación
+          // C01 del informe JAFG-2026-002). La comunidad de una ficha se corrige en
+          // la base, no aquí.
 
           return {
             ...f.properties,

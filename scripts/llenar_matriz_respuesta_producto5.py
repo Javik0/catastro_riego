@@ -125,11 +125,14 @@ fila('C01', 'Seis comunidades no concilian: La Libertad 155/153; San Antonio 182
             '80/81; Alpaka cambia tipo de ficha; Otón con error de suma.',
      NOTA_I + 'Desde la base validada (corte 19-ago-2026), que coincide con el resumen de fichas (R): La Libertad '
      '153, San Antonio 185, San José 200 y Milagro 81 fichas; Pueblo de Otón 193 (153 principales y 40 '
-     'adicionales); Alpaka 492 fichas principales. Se revisaron todas las versiones de la base desde el 15-ago-2026: '
-     'los valores 155, 202 y 80 no aparecen en ninguna, y 182 corresponde a una versión intermedia del 18-ago-2026, '
-     'previa al cierre de la depuración.',
+     'adicionales); Alpaka 492 fichas principales. Los valores 155, 182, 202 y 80 corresponden a la vista de la '
+     'plataforma web, que reasignaba de comunidad 4 fichas mediante una lista elaborada durante el levantamiento y '
+     'no aplicada en la base: dos por una cédula compartida entre dos personas o por un segundo predio en otra '
+     'comunidad, y dos por reasignaciones que se resolvió no aplicar. La base y lo entregado conservan esas fichas '
+     'en su comunidad original; desde el 13-oct-2026 la plataforma muestra las mismas cifras de la base.',
      'Ejecutada: cuadro de conciliación por comunidad generado desde la base, con subtotales y totales por fórmula, '
-     'para corregir las tablas 4 a 7 del informe catastral (I).',
+     'para corregir las tablas 4 a 7 del informe catastral (I); plataforma web ajustada el 13-oct-2026 para mostrar '
+     'las cifras de la base.',
      'Cuadro de conciliación por comunidad (Anexo A1)', 'Hoja «Anexo A1 Comunidades»', E1, 'En revisión')
 fila('C02', 'Sector 2: detalle 1.726/518 frente a subtotal 1.728/516. Otón 153 + 16 = 169 frente a 193. Las '
             'columnas suman 6.806 y las filas 6.830.',
