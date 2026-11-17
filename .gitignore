@@ -66,7 +66,8 @@ desktop.ini
 # Se regenera con scripts/generar_gpkg_cliente.py y
 # scripts/generar_proyecto_qgis_cliente.py. Son binarios derivados de
 # public/geo, así que no se versionan: se generan antes de desplegar.
-public/descargas/
+public/descargas/*
+!public/descargas/*.xlsx
 build_entrega/
 
 # ─── Python cache ────────────────────────────────────────────

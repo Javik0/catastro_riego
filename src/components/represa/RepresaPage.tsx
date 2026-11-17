@@ -20,7 +20,7 @@ import {
 import L, { type PathOptions } from 'leaflet';
 import 'leaflet/dist/leaflet.css';   // cada pantalla con mapa lo importa (igual que MapPage)
 import {
-  Map as MapIcon, Mountain, Loader2, AlertTriangle, Layers, Droplets, Maximize2, ChevronDown, ChevronRight,
+  Map as MapIcon, Mountain, Loader2, AlertTriangle, Layers, Droplets, Maximize2, ChevronDown, ChevronRight, Download,
 } from 'lucide-react';
 import { useData } from '../../App';
 import { type FichaPredio, esFichaHija, esHijaPendiente } from '../../lib/types';
@@ -1083,6 +1083,17 @@ export default function RepresaPage() {
                       {verListaVia ? 'Ocultar' : `Lista (${magnitud.via_acceso.total_predios})`}
                     </button>
                   </div>
+
+                  <a
+                    href="/descargas/predios_afectados_via_acceso_represa.xlsx"
+                    download="PREDIOS_AFECTADOS_VIA_ACCESO_REPRESA.xlsx"
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-md
+                               bg-emerald-600/15 hover:bg-emerald-600/25 border border-emerald-500/40
+                               text-emerald-700 dark:text-emerald-300 font-semibold text-[11px] transition-colors"
+                    title="Descargar listado maestro de 28 predios en formato Excel (.xlsx) con filtros, progresivas y obras"
+                  >
+                    <Download className="w-3.5 h-3.5" /> Descargar Listado Excel (28 Predios)
+                  </a>
 
                   {verListaVia && (
                     <div className="mt-2 pt-2 border-t space-y-2 max-h-72 overflow-y-auto pr-1"

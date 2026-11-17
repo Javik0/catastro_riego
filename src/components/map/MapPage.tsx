@@ -1477,7 +1477,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         )}
 
         {(viaAccesoData || prediosViaData) && (
-          <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+          <div className="mt-2 pt-2 border-t space-y-1" style={{ borderColor: 'var(--border-color)' }}>
             <button
               onClick={() => setFlyViaTrigger((n) => n + 1)}
               className="w-full text-left text-[10px] font-semibold px-2 py-1 rounded border cursor-pointer transition-colors hover:bg-orange-500/10"
@@ -1486,6 +1486,14 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
             >
               🛣️ Zona Represa / Vía (28 predios)
             </button>
+            <a
+              href="/descargas/predios_afectados_via_acceso_represa.xlsx"
+              download="PREDIOS_AFECTADOS_VIA_ACCESO_REPRESA.xlsx"
+              className="w-full flex items-center justify-center gap-1 text-[9.5px] font-semibold px-2 py-1 rounded border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 transition-colors"
+              title="Descargar listado maestro de 28 predios en Excel (.xlsx) con filtros y balances"
+            >
+              <Download className="w-3 h-3" /> Descargar Excel (28 Predios)
+            </a>
           </div>
         )}
 
