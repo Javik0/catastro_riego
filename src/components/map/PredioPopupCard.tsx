@@ -16,6 +16,25 @@ interface PredioCatastral {
   nombres?: string;
   cedula?: string;
   comunidad?: string;
+  via_m2?: number;
+  via_eje_m?: number;
+  via_pct?: number;
+  via_condicion?: string | null;
+}
+
+export function BannerViaAcceso({ predio }: { predio: PredioCatastral }) {
+  if (predio.via_m2 == null && !predio.via_eje_m) return null;
+  return (
+    <div className="mb-2 rounded-md border border-orange-300 bg-orange-50 px-2 py-1.5 text-[10px] text-orange-900">
+      <div className="font-bold">🛣️ Afectación vía de acceso (CAD berma1)</div>
+      <div>
+        Franja ocupada: <b>{Number(predio.via_m2 ?? 0).toLocaleString('es-EC', { maximumFractionDigits: 1 })} m²</b>
+        {predio.via_pct != null ? ` (${Number(predio.via_pct).toLocaleString('es-EC', { maximumFractionDigits: 2 })}%)` : ''}
+        {predio.via_eje_m ? ` · Eje: ${Number(predio.via_eje_m).toLocaleString('es-EC', { maximumFractionDigits: 1 })} m` : ''}
+      </div>
+      {predio.via_condicion && <div className="mt-0.5 font-medium">{predio.via_condicion}</div>}
+    </div>
+  );
 }
 
 interface Props {
@@ -72,6 +91,7 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
             </div>
           ))}
         </div>
+        <BannerViaAcceso predio={predio} />
         <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-2 py-1.5 text-[10px] text-gray-600 text-center">
           Datos del catastro rural del GAD Cayambe (Depto. de Avalúos y Catastros), tal como fueron entregados
         </div>
@@ -126,6 +146,7 @@ export default function PredioPopupCard({ predio, fichas, cultivosPorFicha, anim
         <div className="text-[10px] opacity-70 font-mono mt-0.5">
           {predio.clave_cata}{ficha.comunidad ? ` · ${ficha.comunidad}` : ''}
         </div>
+        <BannerViaAcceso predio={predio} />
         {/* Varias fichas en el mismo polígono (multi-declarante / herencias / fraccionamiento) */}
         {fichas.length > 1 && (
           <div className="mt-1.5">

@@ -61,6 +61,7 @@ GEO = os.path.join(BASE, 'public', 'geo')
 WEB = os.path.join(GEO, 'represa')
 
 FICHAS = os.path.join(GEO, 'fichas_predios.geojson')
+CODIFICACION = os.path.join(GEO, 'codificacion_fichas.json')
 SECTORES = os.path.join(GEO, 'sectores.geojson')
 CATASTRO = os.path.join(GEO, 'catastro_geo.geojson')
 LIMITE = os.path.join(WEB, 'limite_proyecto.geojson')
@@ -171,9 +172,14 @@ def indice_fichas_por_clave():
     """
     with open(FICHAS, encoding='utf-8') as f:
         datos = json.load(f)
+    cods = {}
+    if os.path.exists(CODIFICACION):
+        with open(CODIFICACION, encoding='utf-8') as f:
+            cods = json.load(f).get('fichas', {})
     idx = {}
     for ft in datos.get('features', []):
-        p = ft.get('properties') or {}
+        p = dict(ft.get('properties') or {})
+        p['_codigo_ficha'] = cods.get(p.get('id'), '') or p.get('codigo_final')
         claves = {str(p.get('clave_catastral') or '').strip(),
                   str(p.get('cod_poligono') or '').strip()}
         for c in claves:
@@ -270,7 +276,7 @@ def ocupacion_del_vaso(limite, tr):
             'propietario': nombre or None,
             'cedula': (ficha or {}).get('cedula'),
             'comunidad': (ficha or {}).get('comunidad'),
-            'codigo_ficha': (ficha or {}).get('codigo_final'),
+            'codigo_ficha': (ficha or {}).get('_codigo_ficha') or (ficha or {}).get('codigo_final'),
             'tenencia': (ficha or {}).get('tenencia_predio'),
             'caudal_ls': (ficha or {}).get('caudal_valor'),
             'observaciones': ((ficha or {}).get('observaciones') or '').strip() or None,
@@ -473,6 +479,14 @@ def main():
 
     riego = sum(s['area_riego_ha'] for s in sectores)
     huella = sum(s['area_dissolve_ha'] for s in sectores)
+    ruta_mag = os.path.join(WEB, 'magnitud.json')
+    via_acceso_previa = None
+    if os.path.exists(ruta_mag):
+        try:
+            with open(ruta_mag, encoding='utf-8') as f:
+                via_acceso_previa = json.load(f).get('via_acceso')
+        except Exception:
+            via_acceso_previa = None
     magnitud = {
         'represa_ha': round(area_represa, 2),
         'riego_ha': round(riego, 1),
@@ -483,7 +497,9 @@ def main():
                       'area_riego_ha': round(s['area_riego_ha'], 1)} for s in sectores],
         'vaso': vaso,
     }
-    with open(os.path.join(WEB, 'magnitud.json'), 'w', encoding='utf-8') as f:
+    if via_acceso_previa is not None:
+        magnitud['via_acceso'] = via_acceso_previa
+    with open(ruta_mag, 'w', encoding='utf-8') as f:
         json.dump(magnitud, f, ensure_ascii=False, indent=2)
 
     print("\n  magnitud del proyecto")

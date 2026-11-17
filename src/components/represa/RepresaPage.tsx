@@ -138,6 +138,29 @@ const CAPAS: Capa[] = [
     activaPorDefecto: true,
     nota: 'de cada predio se dibujan dos formas: contorno punteado = el predio completo, relleno = la parte que ocupa la obra · rojo si tiene ficha del padrón',
   },
+  {
+    id: 'via_acceso', grupo: 'obra', archivo: 'via_acceso', nombre: 'Vía de acceso CAD (berma 6 m y eje)',
+    estilo: { color: '#ea580c', weight: 2.5, fillColor: '#fb923c', fillOpacity: 0.45 },
+    activaPorDefecto: true,
+    nota: '6,01 km (3,55 ha) · desde Izacata (K0+000) hasta el vaso de la presa · fuente: PROYECTO PLOTER V1.dwg',
+  },
+  {
+    id: 'predios_via', grupo: 'obra', archivo: 'predios_via_acceso', nombre: 'Predios que intervienen en la vía (28)',
+    estilo: { color: '#dc2626', weight: 2, fillOpacity: 0.35 },
+    activaPorDefecto: true,
+    nota: '28 predios tocados por berma1: 7 del padrón (rojo), 9 con titular municipal (azul) y 12 sin titular (ámbar)',
+  },
+  {
+    id: 'obras_via', grupo: 'obra', archivo: 'obras_via_acceso', nombre: 'Obras viales, alcantarillas y campamento',
+    estilo: { color: '#a855f7', weight: 2, fillOpacity: 0.35 },
+    activaPorDefecto: true,
+    nota: '7 alcantarillas nuevas (ALC-06 a 12), muro H.A., cruce de canal, campamento y PKs',
+  },
+  {
+    id: 'curvas_via', grupo: 'entorno', archivo: 'curvas_via_acceso', nombre: 'Curvas de nivel corredor vial (5 m)',
+    estilo: { color: '#b45309', weight: 0.7, opacity: 0.65 },
+    nota: '1.454 curvas maestras con cota 3D del levantamiento vial (capa CVL_CURV_G)',
+  },
 
   // ── el sistema de riego al que va a servir la obra ──
   {
@@ -198,6 +221,29 @@ interface PredioEnVaso {
   nota_parque?: string | null;
 }
 
+interface PredioEnVia {
+  clave: string;
+  nombre_predio: string | null;
+  tipo_predio: string | null;
+  condicion: string | null;
+  detalle_condicion: string | null;
+  investigado: boolean;
+  fuente_propietario: 'padron' | 'catastro_municipal' | null;
+  propietario: string | null;
+  cedula: string | null;
+  comunidad: string | null;
+  codigo_ficha: string | null;
+  tenencia: string | null;
+  caudal_ls: number | null;
+  observaciones: string | null;
+  fichas_en_el_predio: number;
+  area_predio_ha: number;
+  m2_en_via: number;
+  ha_en_via: number;
+  longitud_eje_m: number;
+  pct_del_predio: number;
+}
+
 interface Magnitud {
   represa_ha: number;
   riego_ha: number;
@@ -212,6 +258,22 @@ interface Magnitud {
     /** Superficie de la obra sobre predios con ficha del padrón. */
     investigada_ha: number;
     predios: PredioEnVaso[];
+  } | null;
+  via_acceso?: {
+    longitud_km: number;
+    longitud_m: number;
+    ancho_m: number;
+    area_ha: number;
+    area_m2: number;
+    total_predios: number;
+    predios_padron: number;
+    predios_catastro_muni: number;
+    predios_sin_titular: number;
+    m2_padron: number;
+    m2_catastro_muni: number;
+    m2_sin_titular: number;
+    alcantarillas: number;
+    predios: PredioEnVia[];
   } | null;
 }
 
@@ -357,6 +419,69 @@ function popupDeVaso(p: Record<string, unknown>) {
     </div>`;
 }
 
+function colorPredioVia(p: Record<string, unknown> | undefined) {
+  if (p?.investigado) return '#dc2626';
+  if (p?.fuente_propietario === 'catastro_municipal') return '#2563eb';
+  return '#f59e0b';
+}
+
+function etiquetaFuenteVia(p: Record<string, unknown>) {
+  if (p.investigado) return 'Ficha del padrón';
+  if (p.fuente_propietario === 'catastro_municipal') return 'Catastro municipal GADM';
+  return 'Sin titular registrado';
+}
+
+/** Detalle de un predio cruzado por la vía de acceso del CAD (berma1). */
+function popupDePredioVia(p: Record<string, unknown>) {
+  const esSolape = p.tipo === 'solape';
+  const color = colorPredioVia(p);
+  const titulo = String(p.propietario ?? p.nombre_predio ?? `Predio ${p.clave ?? '—'}`);
+  return `
+    <div style="font-size:12px;line-height:1.5;min-width:240px">
+      <div style="font-weight:700;font-size:13px;color:${color};margin-bottom:2px">
+        ${esSolape ? 'Franja ocupada por vía de acceso (berma1)' : 'Predio afectado por vía de acceso'}
+      </div>
+      <div style="font-weight:600;margin-bottom:4px">${titulo}</div>
+      <div style="display:inline-block;font-size:10px;padding:1px 6px;border-radius:99px;
+                  margin-bottom:6px;background:${color}22;color:${color};border:1px solid ${color}66">
+        ${etiquetaFuenteVia(p)}
+      </div>
+      ${linea('Clave catastral', p.clave)}
+      ${linea('Cédula / RUC', p.cedula)}
+      ${linea('Comunidad', p.comunidad)}
+      ${linea('Ficha padrón', p.codigo_ficha)}
+      ${linea('Condición', p.condicion)}
+      ${linea('Predio completo', `${num(Number(p.area_predio_ha ?? 0), 2)} ha`)}
+      ${linea('Área en berma1', `${num(Number(p.m2_en_via ?? 0), 1)} m² (${num(Number(p.pct_del_predio ?? 0), 2)}%)`)}
+      ${Number(p.longitud_eje_m ?? 0) > 0
+        ? linea('Longitud Eje 1', `${num(Number(p.longitud_eje_m), 1)} m`)
+        : ''}
+      <div style="margin-top:6px;padding-top:6px;border-top:1px solid currentColor;opacity:.75">
+        Cruce de berma1 (PROYECTO PLOTER V1.dwg) con el catastro rural GADM en UTM 17S.
+      </div>
+    </div>`;
+}
+
+function colorObraVia(tipoObra: unknown) {
+  if (tipoObra === 'alcantarilla') return '#a855f7';
+  if (tipoObra === 'estructura_vial') return '#ec4899';
+  if (tipoObra === 'campamento') return '#10b981';
+  return '#38bdf8';
+}
+
+function popupDeObraVia(p: Record<string, unknown>) {
+  const color = colorObraVia(p.tipo_obra);
+  return `
+    <div style="font-size:12px;line-height:1.5;min-width:210px">
+      <div style="font-weight:700;font-size:13px;color:${color};margin-bottom:2px">
+        ${String(p.nombre ?? 'Obra CAD')}
+      </div>
+      ${p.detalle ? `<div style="margin-bottom:4px">${String(p.detalle)}</div>` : ''}
+      ${linea('Capa CAD', p.capa_cad)}
+      ${linea('Fuente', p.fuente)}
+    </div>`;
+}
+
 /**
  * Encuadra al predio que ocupa la obra cuando se pulsa «Ver en el mapa».
  *
@@ -380,6 +505,26 @@ function IrAlPredioOcupado({ trigger, datos }: { trigger: number; datos: unknown
   return null;
 }
 
+function IrAPredioVia({ clave, datos }: { clave: string | null; datos: unknown }) {
+  const mapa = useMap();
+  useEffect(() => {
+    if (!clave || !datos) return;
+    try {
+      const fc = datos as any;
+      if (!fc?.features) return;
+      const feat = fc.features.find((f: any) => f.properties?.clave === clave);
+      if (!feat) return;
+      const geoLayer = L.geoJSON(feat);
+      const bounds = geoLayer.getBounds();
+      if (bounds.isValid()) {
+        mapa.fitBounds(bounds, { padding: [50, 50], maxZoom: 18 });
+      }
+    } catch { /* ignorar */ }
+  }, [clave, datos, mapa]);
+
+  return null;
+}
+
 
 export default function RepresaPage() {
   const [vista, setVista] = useState<'mapa' | 'relieve'>('mapa');
@@ -399,6 +544,9 @@ export default function RepresaPage() {
   const [encuadre, setEncuadre] = useState<'obra' | 'sistema'>('obra');
   /** Contador: cada pulsación de «Ver en el mapa» encuadra al predio ocupado. */
   const [irAlVaso, setIrAlVaso] = useState(0);
+  const [irALaVia, setIrALaVia] = useState(0);
+  const [verListaVia, setVerListaVia] = useState(false);
+  const [predioViaEnfocado, setPredioViaEnfocado] = useState<string | null>(null);
 
   // Las fichas del padrón ya están cargadas para toda la aplicación: aquí no se
   // vuelven a pedir, solo se indexan por clave catastral. Son las que dicen de
@@ -874,6 +1022,111 @@ export default function RepresaPage() {
                 </div>
               )}
 
+              {magnitud?.via_acceso && (
+                <div className="mt-3 rounded-lg p-3 text-[11px] leading-relaxed border"
+                     style={{ background: 'var(--bg-primary)', borderColor: '#ea580c66',
+                              color: 'var(--text-muted)' }}>
+                  <div className="flex items-center gap-1.5 mb-1.5 font-semibold text-orange-700 dark:text-orange-400">
+                    <AlertTriangle className="w-3.5 h-3.5" /> Predios en la vía de acceso (CAD)
+                  </div>
+                  <p className="mb-2">
+                    La vía de acceso (<b>{num(magnitud.via_acceso.longitud_km, 2)} km</b>, calzada{' '}
+                    <code>berma1</code> de {num(magnitud.via_acceso.ancho_m, 0)} m) ocupa{' '}
+                    <b>{num(magnitud.via_acceso.area_ha, 2)} ha</b> e interseca{' '}
+                    <b>{magnitud.via_acceso.total_predios} predios</b> del catastro rural:
+                  </p>
+                  <div className="space-y-1 mb-2">
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: '#dc2626' }} />
+                        Con ficha del padrón
+                      </span>
+                      <b>{magnitud.via_acceso.predios_padron} ({num(magnitud.via_acceso.m2_padron, 1)} m²)</b>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: '#2563eb' }} />
+                        Con titular municipal
+                      </span>
+                      <b>{magnitud.via_acceso.predios_catastro_muni} ({num(magnitud.via_acceso.m2_catastro_muni, 1)} m²)</b>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: '#f59e0b' }} />
+                        Sin titular registrado
+                      </span>
+                      <b>{magnitud.via_acceso.predios_sin_titular} ({num(magnitud.via_acceso.m2_sin_titular, 0)} m²)</b>
+                    </div>
+                    <div className="flex justify-between pt-1 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                      <span>Alcantarillas proyectadas</span>
+                      <b>{magnitud.via_acceso.alcantarillas} (ALC-06 a ALC-12)</b>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-1.5">
+                    <button
+                      onClick={() => {
+                        setActivas((prev) => new Set([...prev, 'via_acceso', 'predios_via', 'obras_via']));
+                        setIrALaVia((n) => n + 1);
+                      }}
+                      className="flex-1 flex items-center justify-center gap-1 px-2 py-1
+                                 rounded-md cursor-pointer hover:bg-white/10 border"
+                      style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+                    >
+                      <Maximize2 className="w-3 h-3" /> Ver vía y predios
+                    </button>
+                    <button
+                      onClick={() => setVerListaVia((v) => !v)}
+                      className="px-2 py-1 rounded-md cursor-pointer hover:bg-white/10 border"
+                      style={{ borderColor: 'var(--border-color)', color: 'var(--text-secondary)' }}
+                    >
+                      {verListaVia ? 'Ocultar' : `Lista (${magnitud.via_acceso.total_predios})`}
+                    </button>
+                  </div>
+
+                  {verListaVia && (
+                    <div className="mt-2 pt-2 border-t space-y-2 max-h-72 overflow-y-auto pr-1"
+                         style={{ borderColor: 'var(--border-color)' }}>
+                      {magnitud.via_acceso.predios.map((r) => {
+                        const col = r.investigado
+                          ? '#dc2626'
+                          : r.fuente_propietario === 'catastro_municipal'
+                            ? '#2563eb'
+                            : '#f59e0b';
+                        return (
+                          <button
+                            key={r.clave}
+                            type="button"
+                            onClick={() => {
+                              setActivas((prev) => new Set([...prev, 'predios_via', 'via_acceso']));
+                              setPredioViaEnfocado(r.clave);
+                            }}
+                            className="w-full text-left pb-1.5 border-b last:border-b-0 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 p-1 rounded transition-colors"
+                            style={{ borderColor: 'var(--border-color)' }}
+                            title="Clic para centrar este predio en el mapa"
+                          >
+                            <div className="font-semibold flex items-center gap-1.5"
+                                 style={{ color: 'var(--text-secondary)' }}>
+                              <span className="w-2 h-2 rounded-full shrink-0" style={{ background: col }} />
+                              <span className="truncate">{r.propietario ?? r.nombre_predio ?? `Predio ${r.clave}`}</span>
+                            </div>
+                            <div className="text-[10px]">
+                              {r.clave}
+                              {r.comunidad ? ` · ${r.comunidad}` : ''}
+                              {r.codigo_ficha ? ` · ${r.codigo_ficha}` : ''}
+                            </div>
+                            <div className="text-[10px]">
+                              <b>{num(r.m2_en_via, 1)} m²</b> en vía ({num(r.pct_del_predio, 2)}% de {num(r.area_predio_ha, 2)} ha)
+                              {r.longitud_eje_m > 0 ? ` · eje ${num(r.longitud_eje_m, 1)} m` : ''}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
+
             </div>
           </aside>
         )}
@@ -922,6 +1175,8 @@ export default function RepresaPage() {
                 modo={encuadre}
               />
               <IrAlPredioOcupado trigger={irAlVaso} datos={datos['vaso']} />
+              <IrAlPredioOcupado trigger={irALaVia} datos={datos['via_acceso'] ?? datos['predios_via']} />
+              <IrAPredioVia clave={predioViaEnfocado} datos={datos['predios_via']} />
               <LayersControl position="topright">
                 <LayersControl.BaseLayer checked name="Satélite">
                   <TileLayer
@@ -964,14 +1219,47 @@ export default function RepresaPage() {
                         ? { color: col, weight: 1, fillColor: col, fillOpacity: 0.5 }
                         : { color: col, weight: 2, dashArray: '5 4', fillOpacity: 0.04 };
                     }
+                    if (c.id === 'via_acceso') {
+                      if (f?.properties?.tipo === 'eje') {
+                        return { color: '#ea580c', weight: 2.5, dashArray: '6 4', opacity: 0.95 };
+                      }
+                      if (f?.properties?.tipo === 'calzada') {
+                        return { color: '#fb923c', weight: 1.2, fillColor: '#fb923c', fillOpacity: 0.35 };
+                      }
+                      return { color: '#fdba74', weight: 1, opacity: 0.7 };
+                    }
+                    if (c.id === 'predios_via') {
+                      const col = colorPredioVia(f?.properties);
+                      return f?.properties?.tipo === 'solape'
+                        ? { color: col, weight: 1.5, fillColor: col, fillOpacity: 0.55 }
+                        : { color: col, weight: 2, dashArray: '5 4', fillOpacity: 0.05 };
+                    }
+                    if (c.id === 'obras_via') {
+                      const col = colorObraVia(f?.properties?.tipo_obra);
+                      return { color: col, weight: 1.8, fillColor: col, fillOpacity: 0.35 };
+                    }
                     return c.estilo;
                   }}
-                  pointToLayer={(f, latlng) => L.circleMarker(latlng, {
-                    ...c.estilo,
-                    radius: 2.5,
-                    color: colorDeSector(f?.properties?.sector),
-                    fillColor: colorDeSector(f?.properties?.sector),
-                  })}
+                  pointToLayer={(f, latlng) => {
+                    if (c.id === 'obras_via') {
+                      const tObra = f?.properties?.tipo_obra;
+                      const col = colorObraVia(tObra);
+                      const radius = tObra === 'abscisa' ? 3.5 : 5;
+                      return L.circleMarker(latlng, {
+                        radius,
+                        color: '#ffffff',
+                        weight: 1.2,
+                        fillColor: col,
+                        fillOpacity: 0.95,
+                      });
+                    }
+                    return L.circleMarker(latlng, {
+                      ...c.estilo,
+                      radius: 2.5,
+                      color: colorDeSector(f?.properties?.sector),
+                      fillColor: colorDeSector(f?.properties?.sector),
+                    });
+                  }}
                   onEachFeature={(f, layer) => {
                     const p = (f.properties ?? {}) as Record<string, unknown>;
 
@@ -994,6 +1282,29 @@ export default function RepresaPage() {
 
                     if (c.id === 'vaso') {
                       layer.bindPopup(popupDeVaso(p), { maxWidth: 320 });
+                      return;
+                    }
+
+                    if (c.id === 'predios_via') {
+                      layer.bindPopup(() => popupDePredioVia(p), { maxWidth: 320 });
+                      layer.bindTooltip(
+                        `<b>${String(p.propietario ?? p.nombre_predio ?? `Predio ${p.clave ?? '—'}`)}</b><br/>
+                         ${String(p.clave ?? '—')} · ${num(Number(p.m2_en_via ?? 0), 1)} m² en vía`,
+                        { sticky: true, opacity: 0.92 },
+                      );
+                      return;
+                    }
+
+                    if (c.id === 'obras_via') {
+                      layer.bindPopup(() => popupDeObraVia(p), { maxWidth: 300 });
+                      if (p.nombre) {
+                        layer.bindTooltip(String(p.nombre), { sticky: true, opacity: 0.9 });
+                      }
+                      return;
+                    }
+
+                    if (c.id === 'curvas_via' && p.cota !== undefined) {
+                      layer.bindTooltip(`Cota ${String(p.cota)} msnm`, { sticky: true, opacity: 0.85 });
                       return;
                     }
 

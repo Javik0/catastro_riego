@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import {
   MapContainer, TileLayer, GeoJSON, CircleMarker, Popup,
-  LayersControl, useMap, Tooltip, Marker,
+  LayersControl, LayerGroup, useMap, Tooltip, Marker,
 } from 'react-leaflet';
 import L from 'leaflet';
 import type { CircleMarker as LeafletCircleMarker, LeafletMouseEvent } from 'leaflet';
@@ -9,7 +9,7 @@ import type { FeatureCollection, Geometry } from 'geojson';
 import { Loader2, MapPin, Eye, EyeOff, Search, X, Download } from 'lucide-react';
 import { type FichaPredio, safeToDate, esFichaHija, esHijaPendiente, esLoteFraccionamiento, usuarioDeFicha } from '../../lib/types';
 import { getNombreTecnico, getColorTecnico, TECNICOS } from '../../lib/constants';
-import PredioPopupCard from './PredioPopupCard';
+import PredioPopupCard, { BannerViaAcceso } from './PredioPopupCard';
 import FichaDetailModal from '../fichas/FichaDetailModal';
 import { useMapNav } from '../../hooks/useMapNav';
 import { useFiltros } from '../../hooks/useFiltros';
@@ -470,7 +470,22 @@ function FlyToSearch(
   return null;
 }
 
-// ── Buscador de predios catastrales ──────────────────────────
+// ── FlyToViaRepresa: encuadra la zona de la represa y vía de acceso ──
+function FlyToViaRepresa({ trigger, data }: { trigger: number; data: FeatureCollection | null }) {
+  const map = useMap();
+  const last = useRef(0);
+  useEffect(() => {
+    if (!trigger || trigger === last.current || !data || data.features.length === 0) return;
+    try {
+      const bounds = L.geoJSON(data as any).getBounds();
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [30, 30], maxZoom: 16, animate: true });
+        last.current = trigger;
+      }
+    } catch {}
+  }, [trigger, data, map]);
+  return null;
+}
 // v4.7: colapsado a un ícono por defecto — desplegado tapaba los popups de los
 // predios. Se expande al tocarlo y se repliega al cerrar o al perder el foco
 // sin texto.
@@ -548,9 +563,10 @@ function MapSearchBar({ onSelect }: { onSelect: (item: CatastroBusqueda) => void
       className="absolute top-3 left-14 z-[1000] w-[340px] max-w-[calc(100vw-120px)]"
       onFocus={() => setFocused(true)}
       onBlur={(e) => {
+        const container = e.currentTarget;
         // Delay para permitir click en resultado
         setTimeout(() => {
-          if (!e.currentTarget.contains(document.activeElement)) {
+          if (!container || !container.contains(document.activeElement)) {
             setFocused(false);
             // sin texto ni resultado activo, volver al ícono para no tapar el mapa
             if (!inputRef.current?.value) setAbierto(false);
@@ -1069,6 +1085,12 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
   const [ramalesData, setRamalesData] = useState<FeatureCollection | null>(null);
   const [sectoresData, setSectoresData] = useState<FeatureCollection | null>(null);
   const [comunasOficialesData, setComunasOficialesData] = useState<FeatureCollection | null>(null);
+  const [represaLimiteData, setRepresaLimiteData] = useState<FeatureCollection | null>(null);
+  const [viaAccesoData, setViaAccesoData] = useState<FeatureCollection | null>(null);
+  const [obrasViaData, setObrasViaData] = useState<FeatureCollection | null>(null);
+  const [prediosViaData, setPrediosViaData] = useState<FeatureCollection | null>(null);
+  const [curvasViaData, setCurvasViaData] = useState<FeatureCollection | null>(null);
+  const [flyViaTrigger, setFlyViaTrigger] = useState(0);
   const [layerInfo, setLayerInfo] = useState({ catastro: 0, ramales: 0 });
 
   // v4.7: catastro que se dibuja = catastro cargado ∩ filtros activos
@@ -1202,6 +1224,21 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         setComunasOficialesData({ type: 'FeatureCollection', features: valid });
       }).catch(() => {});
 
+    // Capas CAD de la zona de la represa y vía de acceso (PROYECTO PLOTER V1.dwg)
+    const cargarGeoRepresa = (archivo: string, setter: (fc: FeatureCollection) => void) => {
+      fetch(`/geo/represa/${archivo}?t=${timestamp}`)
+        .then((r) => r.json())
+        .then((data: FeatureCollection) => {
+          const valid = data.features?.filter((f) => f.geometry != null) || [];
+          setter({ type: 'FeatureCollection', features: valid });
+        }).catch(() => {});
+    };
+    cargarGeoRepresa('limite_proyecto.geojson', setRepresaLimiteData);
+    cargarGeoRepresa('via_acceso.geojson', setViaAccesoData);
+    cargarGeoRepresa('obras_via_acceso.geojson', setObrasViaData);
+    cargarGeoRepresa('predios_via_acceso.geojson', setPrediosViaData);
+    cargarGeoRepresa('curvas_via_acceso.geojson', setCurvasViaData);
+
     // Cargar polígonos catastrales en background (lazy, ~4MB gzip)
     fetch(`/geo/catastro_poligonos.json?t=${timestamp}`)
       .then((r) => r.json())
@@ -1212,6 +1249,36 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
 
     return () => clearMapSelection();
   }, []);
+
+  // Índice clave -> afectación por vía de acceso (CAD berma1)
+  const viaInfoPorClave = useMemo(() => {
+    const mapa = new Map<string, any>();
+    if (!prediosViaData?.features) return mapa;
+    for (const f of prediosViaData.features) {
+      const p = f.properties;
+      if (p?.clave) {
+        mapa.set(String(p.clave).trim(), p);
+      }
+    }
+    return mapa;
+  }, [prediosViaData]);
+
+  const predioSeleccionadoConVia = useMemo(() => {
+    if (!predioSeleccionado) return null;
+    const clave = String(predioSeleccionado.props?.clave_cata || '').trim();
+    const viaInfo = viaInfoPorClave.get(clave);
+    if (!viaInfo) return predioSeleccionado;
+    return {
+      ...predioSeleccionado,
+      props: {
+        ...predioSeleccionado.props,
+        via_m2: Number(viaInfo.m2_en_via ?? predioSeleccionado.props.via_m2 ?? 0),
+        via_eje_m: Number(viaInfo.longitud_eje_m ?? predioSeleccionado.props.via_eje_m ?? 0),
+        via_pct: Number(viaInfo.pct_del_predio ?? predioSeleccionado.props.via_pct ?? 0),
+        via_condicion: viaInfo.condicion || predioSeleccionado.props.via_condicion || null,
+      },
+    };
+  }, [predioSeleccionado, viaInfoPorClave]);
 
   // Cuando se selecciona un resultado de búsqueda, buscar su polígono
   useEffect(() => {
@@ -1406,6 +1473,19 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
               {fichasConGeo.length.toLocaleString('es-EC')} fichas sobre {(catastroVisible?.features.length ?? 0).toLocaleString('es-EC')} predios: en los terrenos
               familiares cada heredero llena la suya.
             </div>
+          </div>
+        )}
+
+        {(viaAccesoData || prediosViaData) && (
+          <div className="mt-2 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+            <button
+              onClick={() => setFlyViaTrigger((n) => n + 1)}
+              className="w-full text-left text-[10px] font-semibold px-2 py-1 rounded border cursor-pointer transition-colors hover:bg-orange-500/10"
+              style={{ borderColor: '#ea580c66', color: '#ea580c' }}
+              title="Acercar el visor al corredor de la vía de acceso CAD (6,01 km) y sus 28 predios"
+            >
+              🛣️ Zona Represa / Vía (28 predios)
+            </button>
           </div>
         )}
 
@@ -1637,6 +1717,161 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
               />
             </LayersControl.Overlay>
           )}
+
+          {/* ── Overlay: Zona Represa y Vía de Acceso (CAD) ── */}
+          {(represaLimiteData || viaAccesoData || obrasViaData) && (
+            <LayersControl.Overlay checked name="Zona Represa y Vía de Acceso (CAD)">
+              <LayerGroup>
+                {represaLimiteData && represaLimiteData.features.length > 0 && (
+                  <GeoJSON
+                    key="map-represa-limite"
+                    data={represaLimiteData}
+                    style={{ color: '#ef4444', weight: 2.5, fillColor: '#ef4444', fillOpacity: 0.08 }}
+                    onEachFeature={(feature, layer) => {
+                      const p = feature.properties || {};
+                      layer.bindTooltip(
+                        `<b>${p.nombre || 'Límite de proyecto (Represa)'}</b><br/>Área: ${p.area_ha ?? '63.59'} ha`,
+                        { sticky: true },
+                      );
+                    }}
+                  />
+                )}
+                {viaAccesoData && viaAccesoData.features.length > 0 && (
+                  <GeoJSON
+                    key="map-via-acceso"
+                    data={viaAccesoData}
+                    style={(feature) => {
+                      const t = feature?.properties?.tipo;
+                      if (t === 'eje') return { color: '#ea580c', weight: 2.5, dashArray: '6 4', opacity: 0.95 };
+                      if (t === 'calzada') return { color: '#fb923c', weight: 1.5, fillColor: '#fb923c', fillOpacity: 0.4 };
+                      return { color: '#fdba74', weight: 1, opacity: 0.7 };
+                    }}
+                    onEachFeature={(feature, layer) => {
+                      const p = feature.properties || {};
+                      layer.bindTooltip(
+                        `<b>${p.nombre || 'Vía de acceso CAD'}</b>` +
+                        (p.longitud_m ? `<br/>Longitud: ${Number(p.longitud_m).toLocaleString('es-EC')} m` : '') +
+                        (p.area_ha ? `<br/>Área calzada: ${p.area_ha} ha` : ''),
+                        { sticky: true },
+                      );
+                    }}
+                  />
+                )}
+                {obrasViaData && obrasViaData.features.length > 0 && (
+                  <GeoJSON
+                    key="map-obras-via"
+                    data={obrasViaData}
+                    style={(feature) => {
+                      const t = feature?.properties?.tipo_obra;
+                      const col = t === 'campamento' ? '#10b981' : t === 'estructura_vial' ? '#ec4899' : '#a855f7';
+                      return { color: col, weight: 2, fillColor: col, fillOpacity: 0.35 };
+                    }}
+                    pointToLayer={(feature, latlng) => {
+                      const t = feature?.properties?.tipo_obra;
+                      const col = t === 'alcantarilla'
+                        ? '#a855f7'
+                        : t === 'estructura_vial'
+                          ? '#ec4899'
+                          : t === 'campamento'
+                            ? '#10b981'
+                            : '#38bdf8';
+                      return L.circleMarker(latlng, {
+                        radius: t === 'abscisa' ? 3.5 : 5,
+                        color: '#ffffff',
+                        weight: 1.2,
+                        fillColor: col,
+                        fillOpacity: 0.95,
+                      });
+                    }}
+                    onEachFeature={(feature, layer) => {
+                      const p = feature.properties || {};
+                      if (p.nombre) {
+                        layer.bindTooltip(
+                          `<b>${p.nombre}</b>${p.detalle ? `<br/>${p.detalle}` : ''}`,
+                          { sticky: true },
+                        );
+                      }
+                    }}
+                  />
+                )}
+              </LayerGroup>
+            </LayersControl.Overlay>
+          )}
+
+          {/* ── Overlay: Predios Zona Represa y Vía (28) ── */}
+          {prediosViaData && prediosViaData.features.length > 0 && (
+            <LayersControl.Overlay checked name="Predios Zona Represa y Vía (28)">
+              <GeoJSON
+                key="map-predios-via"
+                data={prediosViaData}
+                style={(feature) => {
+                  const p = feature?.properties || {};
+                  const col = p.investigado
+                    ? '#dc2626'
+                    : p.fuente_propietario === 'catastro_municipal'
+                      ? '#2563eb'
+                      : '#f59e0b';
+                  return p.tipo === 'solape'
+                    ? { color: col, weight: 1.5, fillColor: col, fillOpacity: 0.55, opacity: 0.95 }
+                    : { color: col, weight: 2, dashArray: '5 4', fillColor: col, fillOpacity: 0.06, opacity: 0.9 };
+                }}
+                onEachFeature={(feature, layer) => {
+                  const p = feature.properties || {};
+                  const nombre = p.propietario || p.nombre_predio || 'Sin titular registrado';
+                  const fuenteLbl = p.investigado
+                    ? `Ficha padrón: ${p.codigo_ficha || 'Sí'}`
+                    : p.fuente_propietario === 'catastro_municipal'
+                      ? 'Titular catastro municipal'
+                      : 'Sin titular en catastro';
+                  layer.bindTooltip(
+                    `<b>${nombre}</b><br/>
+                     Clave: ${p.clave || '—'}${p.comunidad ? ` · ${p.comunidad}` : ''}<br/>
+                     ${fuenteLbl}<br/>
+                     En vía (berma1): <b>${Number(p.m2_en_via || 0).toLocaleString('es-EC', { maximumFractionDigits: 1 })} m²</b>` +
+                    (Number(p.longitud_eje_m || 0) > 0
+                      ? ` · Eje: ${Number(p.longitud_eje_m).toLocaleString('es-EC', { maximumFractionDigits: 1 })} m`
+                      : '') +
+                    `<br/><span style="color:#3b82f6;font-size:10px">Clic para abrir tarjeta del predio</span>`,
+                    { sticky: true, opacity: 0.95 },
+                  );
+                  layer.on('click', (e: LeafletMouseEvent) => {
+                    setPredioSeleccionado({
+                      props: {
+                        clave_cata: String(p.clave || ''),
+                        area_predi: Number(p.area_predio_ha || 0) * 10000,
+                        apellidos: String(p.propietario || p.nombre_predio || ''),
+                        nombres: '',
+                        cedula: String(p.cedula || ''),
+                        comunidad: String(p.comunidad || ''),
+                        via_m2: Number(p.m2_en_via || 0),
+                        via_eje_m: Number(p.longitud_eje_m || 0),
+                        via_pct: Number(p.pct_del_predio || 0),
+                        via_condicion: p.condicion || null,
+                      },
+                      latlng: [e.latlng.lat, e.latlng.lng],
+                    });
+                  });
+                }}
+              />
+            </LayersControl.Overlay>
+          )}
+
+          {/* ── Overlay: Curvas de Nivel Vía Represa (5 m) ── */}
+          {curvasViaData && curvasViaData.features.length > 0 && (
+            <LayersControl.Overlay name="Curvas de Nivel Vía Represa (5 m)">
+              <GeoJSON
+                key="map-curvas-via"
+                data={curvasViaData}
+                style={{ color: '#b45309', weight: 0.8, opacity: 0.7 }}
+                onEachFeature={(feature, layer) => {
+                  const cota = feature?.properties?.cota;
+                  if (cota !== undefined) {
+                    layer.bindTooltip(`Cota: ${cota} msnm`, { sticky: true });
+                  }
+                }}
+              />
+            </LayersControl.Overlay>
+          )}
         </LayersControl>
 
         {/* ── Fichas: NO dentro de LayersControl para evitar checkboxes ── */}
@@ -1644,6 +1879,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
         <FitBounds fichas={fichasConGeo} skip={!!selectedFichaMap || !!searchTarget} />
         <FlyToFicha ficha={selectedFichaMap} />
         <FlyToSearch searchTarget={searchTarget} polygonData={searchPolygonGeo} />
+        <FlyToViaRepresa trigger={flyViaTrigger} data={viaAccesoData ?? prediosViaData} />
 
         {/* ── Fichas: Se ocultan en zoom amplio (< 13) para evitar contaminación visual, excepto la seleccionada ── */}
         {(currentZoom >= 13 || selectedFichaMap) && fichasConGeo.map((ficha) => {
@@ -1727,6 +1963,21 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
                   <span className="opacity-60">Área:</span>
                   <span className="font-medium">{searchTarget.area_predi?.toLocaleString('es-EC')} m²</span>
                 </div>
+                {(() => {
+                  const viaItem = searchTarget ? viaInfoPorClave.get(String(searchTarget.clave_cata || '').trim()) : null;
+                  if (!viaItem) return null;
+                  return (
+                    <div className="mt-2 pt-1.5 border-t border-gray-200 dark:border-gray-700">
+                      <BannerViaAcceso predio={{
+                        clave_cata: searchTarget.clave_cata,
+                        via_m2: Number(viaItem.m2_en_via || 0),
+                        via_eje_m: Number(viaItem.longitud_eje_m || 0),
+                        via_pct: Number(viaItem.pct_del_predio || 0),
+                        via_condicion: viaItem.condicion || null,
+                      } as any} />
+                    </div>
+                  );
+                })()}
               </div>
             </Popup>
           </Marker>
@@ -1764,7 +2015,7 @@ export default function MapPage({ fichas, loading, allFichas, cultivosData = [],
             eventHandlers={{ remove: () => setPredioSeleccionado(null) }}
           >
             <PredioPopupCard
-              predio={predioSeleccionado.props}
+              predio={(predioSeleccionadoConVia || predioSeleccionado).props}
               fichas={fichasPorClave.get(String(predioSeleccionado.props.clave_cata || '').trim()) || []}
               cultivosPorFicha={cultivosPorFicha}
               animalesPorFicha={animalesPorFicha}
